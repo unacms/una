@@ -1154,10 +1154,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     public function serviceGetQuestionnaire($sSource, $sObject, $sAction, $iContentProfileId)
     {
         $CNF = &$this->_oConfig->CNF;
+        $sMsg = _t('_sys_txt_not_found');
 
         $aContentInfo = $this->_oDb->getContentInfoByProfileId($iContentProfileId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return ['code' => 1];
+            return $this->_bIsApi ? [bx_api_get_msg($sMsg)] : ['code' => 1, 'msg' => $sMsg];
         
         $oForm = null;
         if(($oConnection = BxDolConnection::getObjectInstance($sObject)) !== false) {
@@ -1166,10 +1167,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ]]);
 
             if($oForm === false)
-                return ['code' => 3];
+                return $this->_bIsApi ? [bx_api_get_msg($sMsg)] : ['code' => 3, 'msg' => $sMsg];
         }
         else
-            return ['code' => 2];
+            return $this->_bIsApi ? [bx_api_get_msg($sMsg)] : ['code' => 2, 'msg' => $sMsg];
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -1179,8 +1180,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             foreach($aQuestions as $aQuestion)
                 $this->_oDb->insertAnswer((int)$aQuestion['id'], $iProfileId, $oForm->getCleanValue('question_' . $aQuestion['id']));
 
-            return ['code' => 0, 'o' => $sObject, 'a' => $sAction, 'cpi' => $iContentProfileId, 'ci' => $aContentInfo[$CNF['FIELD_ID']], 'eval' => $this->_oConfig->getJsObject($sSource) . '.connActionPerformed(oData)'];
+            return $this->_bIsApi ? [] : ['code' => 0, 'o' => $sObject, 'a' => $sAction, 'cpi' => $iContentProfileId, 'ci' => $aContentInfo[$CNF['FIELD_ID']], 'eval' => $this->_oConfig->getJsObject($sSource) . '.connActionPerformed(oData)'];
         }
+
+        if($this->_bIsApi)
+            return [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => [
+                'name' => $this->_oModule->getName(), 
+                'request' => ['url' => $oForm->aFormAttrs['action'], 'immutable' => true]]
+            ])];
 
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oConfig->getHtmlIds('popup_questionnaire'), _t($CNF['T']['popup_title_questionnaire']), $this->_oTemplate->parseHtmlByName('popup_qnr_questionnaire.html', [

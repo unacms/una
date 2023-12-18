@@ -47,8 +47,9 @@ class BxBaseServiceConnections extends BxDol
         if(!$oConnection)
             return ['code' => 2];
 
-        $sMethod = 'hasQuestionnaire';
-        if($aParams['a'] == 'add' && method_exists($oConnection, $sMethod) && $oConnection->$sMethod($aParams['cid'])) {
+        $sMethodHas = 'hasQuestionnaire';
+        $sMethodIsAnswered = 'isQuestionnaireAnswered';
+        if($aParams['a'] == 'add' && method_exists($oConnection, $sMethodHas) && $oConnection->$sMethodHas($aParams['cid']) && method_exists($oConnection, $sMethodIsAnswered) && !$oConnection->$sMethodIsAnswered($aParams['cid'], $aParams['iid'])) {
             $sModule = $oConnection->getModule();
 
             return [

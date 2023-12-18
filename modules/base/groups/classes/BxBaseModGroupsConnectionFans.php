@@ -29,8 +29,26 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
     {
         return $this->_sModule;
     }
+    
+    public function actionRemove($iContent = 0, $iInitiator = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
-    public function getActionTitle ($sAction, $iInitiatorId, $iContentId, $bFlip = false)
+        $aResult = parent::actionRemove($iContent, $iInitiator);
+
+        if($aResult['err'] == false) {
+            if(!$iContent)
+                $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoByProfileId($iContent);
+            if(!empty($aContentInfo) && is_array($aContentInfo))
+                $this->_oModule->_oDb->deleteAnswersProfileId($aContentInfo[$CNF['FIELD_ID']], $iInitiator ? $iInitiator : bx_get_logged_profile_id());
+        }
+
+        return $aResult;
+    }
+
+    public function getActionTitle($sAction, $iInitiatorId, $iContentId, $bFlip = false)
     {
         $aResult = [];
         if($this->isConnectedNotMutual($iInitiatorId, $iContentId))
@@ -73,6 +91,25 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
             return false;
 
         return (int)$aContentInfo[$CNF['FIELD_JOIN_CONFIRMATION']] != 0 && $this->_oModule->_oDb->hasQuestions($aContentInfo[$CNF['FIELD_ID']]);
+    }
+    
+    public function isQuestionnaireAnswered($iContentProfileId, $iProfileId = 0)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return false;
+
+        if(!$this->_bQuestionnaire || empty($CNF['FIELD_JOIN_CONFIRMATION']))
+            return false;
+
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoByProfileId($iContentProfileId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return false;
+
+        return (int)$aContentInfo[$CNF['FIELD_JOIN_CONFIRMATION']] != 0 && $this->_oModule->_oDb->areQuestionsAnswered($aContentInfo[$CNF['FIELD_ID']], $iProfileId);
     }
 
     public function getQuestionnaireForm($sAction, $iContentProfileId, $aParams = [])

@@ -533,6 +533,17 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
 
         return !empty($aQuestions) && is_array($aQuestions);
     }
+    
+    public function areQuestionsAnswered($iContentId, $iProfileId)
+    {
+        $aQuestions = $this->getQuestions([
+            'sample' => 'answers', 
+            'content_id' => $iContentId,
+            'profile_id' => $iProfileId
+        ]);
+
+        return !empty($aQuestions) && is_array($aQuestions);
+    }
 
     public function getQuestionOrderMax($iContentId)
     {
@@ -556,6 +567,16 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         return $this->query("INSERT INTO `" . $CNF['TABLE_ANSWERS'] . "` SET " . $sSetClause . ", `added`=UNIX_TIMESTAMP() ON DUPLICATE KEY UPDATE `answer`=:answer, `added`=UNIX_TIMESTAMP()", [
             'answer' => $sAnswer
         ]) !== false ? (int)$this->lastId() : false;
+    }
+
+    public function deleteAnswersProfileId($iContentId, $iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->query("DELETE FROM `ta` USING `" . $CNF['TABLE_QUESTIONS'] . "` AS `tq` LEFT JOIN `" . $CNF['TABLE_ANSWERS'] . "` AS `ta` ON `tq`.`id`=`ta`.`question_id` WHERE `tq`.`content_id`=:content_id AND `ta`.`profile_id`=:profile_id", [
+            'content_id' => $iContentId,
+            'profile_id' => $iProfileId
+        ]) !== false;
     }
 
     public function deleteQuestionnaires($iContentId) 
