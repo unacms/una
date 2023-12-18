@@ -35,7 +35,6 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aResult = parent::actionRemove($iContent, $iInitiator);
-
         if($aResult['err'] == false) {
             if(!$iContent)
                 $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
@@ -47,7 +46,24 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
 
         return $aResult;
     }
+    
+    public function actionReject ($iInitiator = 0, $iContent = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $aResult = parent::actionReject($iInitiator, $iContent);
+        if($aResult['err'] == false) {
+            if(!$iContent)
+                $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoByProfileId($iContent);
+            if(!empty($aContentInfo) && is_array($aContentInfo))
+                $this->_oModule->_oDb->deleteAnswersProfileId($aContentInfo[$CNF['FIELD_ID']], $iInitiator ? $iInitiator : bx_get_logged_profile_id());
+        }
+
+        return $aResult;
+    }
+    
     public function getActionTitle($sAction, $iInitiatorId, $iContentId, $bFlip = false)
     {
         $aResult = [];

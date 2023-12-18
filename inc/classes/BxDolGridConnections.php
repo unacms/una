@@ -96,7 +96,7 @@ class BxDolGridConnections extends BxTemplGrid
         list ($iId, $iViewedId) = $this->_prepareIds();
 
         if ($this->_oConnection->isConnected($iViewedId, $iId, true))
-            $a = $this->_oConnection->actionRemove($iId, $iViewedId);
+            $a = $this->_oConnection->actionRemove($iViewedId, $iId);
         else
             $a = $this->_oConnection->actionReject($iId, $iViewedId);
 
