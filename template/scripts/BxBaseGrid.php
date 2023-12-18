@@ -756,7 +756,7 @@ class BxBaseGrid extends BxDolGrid
     protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback', 'on_callback' => 'hide_row']);
 
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }

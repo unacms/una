@@ -160,7 +160,7 @@ class BxDolGridConnections extends BxTemplGrid
             return $this->_bIsApi ? [] : '';
 
         if($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback', 'on_callback' => 'hide']);
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
@@ -174,7 +174,7 @@ class BxDolGridConnections extends BxTemplGrid
             return $this->_bIsApi ? [] : '';
 
         if($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback', 'on_callback' => 'hide']);
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }

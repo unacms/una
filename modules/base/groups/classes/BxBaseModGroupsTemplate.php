@@ -99,6 +99,10 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
                 'question' => $aAnswer['question'],
                 'answer' => $aAnswer['answer'],
             ];
+        
+        if (bx_is_api()){
+            return $aTmplVarsAnswers;
+        }
 
         return $this->parseHtmlByName('popup_qnr_answers.html', ['bx_repeat:answers' => $aTmplVarsAnswers]);
     }
