@@ -241,7 +241,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                 ];
 
                 $sWhereClause = " AND `ts`.`event_id`=:event_id";
-                $sOrderClause = "`ts`.`order` ASC";
+                $sOrderClause = "`ts`.`" . !empty($aParams['order_by']) ? $aParams['order_by'] : "order" . "` ASC";
                 break;
         }
 

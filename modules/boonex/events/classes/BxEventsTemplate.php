@@ -24,7 +24,7 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aSessions = $this->_oDb->getSessions(['sample' => 'event_id', 'event_id' => $iContentId]);
+        $aSessions = $this->_oDb->getSessions(['sample' => 'event_id', 'event_id' => $iContentId, 'order_by' => $this->_bIsApi ? 'date_start' : '']);
         if(empty($aSessions) || !is_array($aSessions))
             return '';
 
@@ -34,29 +34,25 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
 
         $aTmplVarsSession = [];
         foreach($aSessions as $aSession) {
-            
-
             $sDate = '';
             if(date('d', $aSession['date_start']) == date('d', $aSession['date_end']))
                 $sDate = date($sFormatDate, $aSession['date_start']) . ' ' . date($sFormatTime, $aSession['date_start']) . ' - ' . date($sFormatTime, $aSession['date_end']);
             else
                 $sDate = date($sFormatDateTime, $aSession['date_start']) . ' - ' . date($sFormatDateTime, $aSession['date_end']);
 
-            
             $aTmplVarsSession[] = [
                 'title' => bx_process_output($aSession['title']),
                 'date_time' =>  $sDate,
             ];
         }
-        
+
         $s = $this->parseHtmlByName('entry-sessions.html', [
             'bx_repeat:sessions' => $aTmplVarsSession
         ]);
-        
-        if (bx_is_api()){
+
+        if($this->_bIsApi)
             return [bx_api_get_block('event_sessions',  $aTmplVarsSession)];
-        }
-        
+
         return $s;
     }
 

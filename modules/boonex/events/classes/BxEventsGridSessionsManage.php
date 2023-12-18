@@ -27,14 +27,18 @@ class BxEventsGridSessionsManage extends BxTemplGrid
 
         parent::__construct ($aOptions, $oTemplate);
 
+        if($this->_bIsApi)
+            $this->_aOptions['field_order'] = 'date_start';
+
         $this->_iEventProfileId = 0;
         $this->_iEventContentId = 0;
         $this->_aEventContentInfo = [];
         if(($iEventProfileId = bx_get('profile_id')) !== false)
             $this->setProfileId($iEventProfileId);
     }
-    
-    function getFormCallBackUrlAPI($sAction, $iId = 0){
+
+    public function getFormCallBackUrlAPI($sAction, $iId = 0)
+    {
          return '/api.php?r=system/perfom_action_api/TemplServiceGrid/&params[]=&o=' . $this->_sObject . '&profile_id=' . $this->_iEventProfileId . '&a=' . $sAction . '&id=' . $iId;
     }
 
@@ -48,7 +52,7 @@ class BxEventsGridSessionsManage extends BxTemplGrid
             $this->_aEventContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iEventContentId);
         }
     }
-    
+
     public function performActionAdd()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
