@@ -79,14 +79,13 @@ class BxBaseGrid extends BxDolGrid
 
     public function performActionDelete()
     {
-        $aResult = [];
-
         $this->_replaceMarkers ();
 
+        $aResult = [];
         $iAffected = 0;
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds))
-            return echoJson($aResult);
+            return $this->_bIsApi ? $aResult : echoJson($aResult);
 
         foreach ($aIds as $mixedId)
             $iAffected += $this->_delete($mixedId) ? 1 : 0;
@@ -414,12 +413,18 @@ class BxBaseGrid extends BxDolGrid
     protected function _getRowHeadAPI()
     {
         $aHeader = [];
-        foreach($this->_aOptions['fields'] as $sKey => $aField)
-            $aHeader[] = [
-                'name' => bx_process_output($aField['name']),
-                'title' => bx_process_output($aField['title']),
-                'width' => $aField['width']
-            ];
+
+        foreach($this->_aOptions['fields'] as $sKey => $aField) {
+            $sMethod = '_getCellHeader' . $this->_genMethodName($sKey);
+            if(method_exists($this, $sMethod))
+                $aHeader[] = $this->$sMethod($sKey, $a);
+            else
+                $aHeader[] = [
+                    'name' => bx_process_output($aField['name']),
+                    'title' => bx_process_output($aField['title']),
+                    'width' => $aField['width']
+                ];
+        }
 
         return $aHeader;
     }
@@ -762,12 +767,16 @@ class BxBaseGrid extends BxDolGrid
         if ($a['icon_only'] && empty($a['attr']['title']) && !empty($a['title']))
             $a['attr']['title'] = $a['title'];
 
-        if ($this->_bIsApi){
+        if ($this->_bIsApi) {
             $sFunc = '_getAction' . $this->_genMethodName($sType . '_' . $sKey);
-            if (method_exists($this, $sFunc)){
-                return array_merge($a, ['name' => $sKey], $this->$sFunc($a, ['id'=> $aRow[$this->_aOptions['field_id']]]));
+            if (method_exists($this, $sFunc)) {
+                $aAction = $this->$sFunc($a, ['id'=> $aRow[$this->_aOptions['field_id']]]);
+                if(empty($aAction) || !is_array($aAction))
+                    return [];
+
+                return array_merge($a, ['name' => $sKey], $aAction);
             }
-            else{
+            else {
                 return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'params' => '&id=' . $aRow[$this->_aOptions['field_id']] ]);
             }
             

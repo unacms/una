@@ -71,17 +71,16 @@ class BxDolGridConnections extends BxTemplGrid
     public function performActionAccept()
     {
         list ($iId, $iViewedId) = $this->_prepareIds();
-
-        if (!$iId) {
-            echoJson(array('msg' => _t('_sys_txt_error_occured')));
-            exit;
-        }
+        if(!$iId)
+            return $this->_bIsApi ? [] : echoJson(['msg' => _t('_sys_txt_error_occured')]);
 
         $a = $this->_oConnection->actionAdd($iId, $iViewedId);
         if (isset($a['err']) && $a['err'])
-            echoJson(array('msg' => $a['msg']));
+            $aResult = ['msg' => $a['msg']];
         else
-            echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
+            $aResult = !$this->_bIsApi ? ['grid' => $this->getCode(false), 'blink' => $iId] : [];
+
+        return $this->_bIsApi ? $aResult : echoJson($aResult);
     }
 
     /**
@@ -109,6 +108,9 @@ class BxDolGridConnections extends BxTemplGrid
 
     protected function _getCellName ($mixedValue, $sKey, $aField, $aRow)
     {
+        if($this->_bIsApi)
+            return ['type' => 'profile', 'data' => BxDolProfile::getData($aRow['id'])];
+
         $oProfile = BxDolProfile::getInstance($aRow['id']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
@@ -147,14 +149,18 @@ class BxDolGridConnections extends BxTemplGrid
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!$this->_bOwner)
-            return '';
-        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+            return $this->_bIsApi ? [] : '';
+
+        return parent::_getActionDelete($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!$this->_bOwner || $aRow['mutual'])
-            return '';
+            return $this->_bIsApi ? [] : '';
+
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
@@ -162,10 +168,13 @@ class BxDolGridConnections extends BxTemplGrid
     protected function _getActionAddFriend ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!isLogged() || $this->_bOwner || $aRow['id'] == bx_get_logged_profile_id())
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if ($this->_oConnection->isConnected($aRow['id'], bx_get_logged_profile_id()) || $this->_oConnection->isConnected(bx_get_logged_profile_id(), $aRow['id']))
-            return '';
+            return $this->_bIsApi ? [] : '';
+
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }

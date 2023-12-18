@@ -182,7 +182,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
     protected function _getCellHeaderRoleAdded($sKey, $aField)
     {
         if(!$this->_bPaidJoin || !($this->_bMember || $this->_bManageMembers))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return parent::_getCellHeaderDefault ($sKey, $aField);
     }
@@ -190,15 +190,26 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
     protected function _getCellRoleAdded($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = '';
-
         if(!$this->_bPaidJoin || !($this->_bMember || $this->_bManageMembers))
-            return $mixedValue;
+            return $this->_bIsApi ? [] : $mixedValue;
 
         $iProfileId = (int)$aRow[$this->_aOptions['field_id']];
         if($this->_bManageMembers || $iProfileId == bx_get_logged_profile_id()) {
             $aRole = $this->_oModule->_oDb->getRoles(array('type' => 'by_gf_id', 'group_profile_id' => $this->_iGroupProfileId, 'fan_id' => $iProfileId));
-            if(!empty($aRole) && is_array($aRole))
-                $mixedValue = !empty($aRole['added']) ? bx_time_js($aRole['added'], BX_FORMAT_DATE, true) : '';
+            if(!empty($aRole) && is_array($aRole)) {
+                if(!empty($aRole['added'])) {
+                    if($this->_bIsApi)
+                        return ['type' => 'time', 'data' => $aRole['added']];
+
+                    $mixedValue = bx_time_js($aRole['added'], BX_FORMAT_DATE, true);
+                }
+                else {
+                    if($this->_bIsApi)
+                        return ['type' => 'text', 'data' => ''];
+
+                    $mixedValue = '';
+                }
+            }
         }
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
@@ -207,7 +218,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
     protected function _getCellHeaderRoleExpired($sKey, $aField)
     {
         if(!$this->_bPaidJoin || !($this->_bMember || $this->_bManageMembers))
-            return '';
+            return $this->_bIsApi ? [] : '';
         
         return parent::_getCellHeaderDefault ($sKey, $aField);
     }
@@ -215,15 +226,26 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
     protected function _getCellRoleExpired($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = '';
-
         if(!$this->_bPaidJoin || !($this->_bMember || $this->_bManageMembers))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $iProfileId = (int)$aRow[$this->_aOptions['field_id']];
         if($this->_bManageMembers || $iProfileId == bx_get_logged_profile_id()) {
             $aRole = $this->_oModule->_oDb->getRoles(array('type' => 'by_gf_id', 'group_profile_id' => $this->_iGroupProfileId, 'fan_id' => $iProfileId));
-            if(!empty($aRole) && is_array($aRole))
-                $mixedValue = !empty($aRole['expired']) ? bx_time_js($aRole['expired'], BX_FORMAT_DATE, true) : '';
+            if(!empty($aRole) && is_array($aRole)) {
+                if(!empty($aRole['expired'])) {
+                    if($this->_bIsApi)
+                        return ['type' => 'time', 'data' => $aRole['expired']];
+
+                    $mixedValue = bx_time_js($aRole['expired'], BX_FORMAT_DATE, true);
+                }
+                else {
+                    if($this->_bIsApi)
+                        return ['type' => 'text', 'data' => ''];
+
+                    $mixedValue = '';
+                }
+            }
         }
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
@@ -231,21 +253,27 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
     protected function _getActionSetRole ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        /**
+         * Note. The feature isn't available in API for now.
+         */
+        if($this->_bIsApi)
+            return [];
+
         if ($this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionSetRoleSubmit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        return '';
+        return $this->_bIsApi ? [] : '';
     }
 
     protected function _getActionQuestionnaire ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if($aRow['mutual'])
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
@@ -253,26 +281,26 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if ($aRow['mutual'])
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if ($this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if (isset($aRow[$this->_aOptions['field_id']]))
             $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
-        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return parent::_getActionAccept($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if ($this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if (isset($aRow[$this->_aOptions['field_id']]))
             $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
-        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return parent::_getActionDelete($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     /**
