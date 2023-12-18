@@ -16,6 +16,8 @@ class BxEventsConnectionFans extends BxBaseModGroupsConnectionFans
         $this->_sModule = 'bx_events';
 
         parent::__construct($aObject);
+
+        $this->_bQuestionnaire = true;
     }
 }
 

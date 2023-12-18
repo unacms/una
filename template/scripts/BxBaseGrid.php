@@ -300,7 +300,6 @@ class BxBaseGrid extends BxDolGrid
      */
     public function getCodeAPI()
     {
-        $this->_replaceMarkers ();
         $sFilter = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['filter_get'])));
         $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
         $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
@@ -322,6 +321,8 @@ class BxBaseGrid extends BxDolGrid
         $aQueryAppend = [];
         if(!empty($this->_aQueryAppend) && is_array($this->_aQueryAppend))
             $aQueryAppend = array_merge($aQueryAppend, $this->_aQueryAppend);
+        if(!empty($this->_aMarkers) && is_array($this->_aMarkers))
+            $aQueryAppend = array_merge($aQueryAppend, $this->_aMarkers);
         if(!empty($this->_aQueryAppendExclude) && is_array($this->_aQueryAppendExclude))
             $aQueryAppend = array_diff_key($aQueryAppend, array_flip($this->_aQueryAppendExclude));
         if(!empty($this->_aQueryAppendExcludeApi) && is_array($this->_aQueryAppendExcludeApi))

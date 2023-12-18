@@ -14,11 +14,15 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
     protected $_sModule;
     protected $_oModule;
 
+    protected $_bQuestionnaire;
+
     public function __construct($aObject)
     {
         parent::__construct($aObject);
 
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
+        $this->_bQuestionnaire = false;
     }
 
     public function getModule()
@@ -61,7 +65,7 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         
-        if(empty($CNF['FIELD_JOIN_CONFIRMATION']))
+        if(!$this->_bQuestionnaire || empty($CNF['FIELD_JOIN_CONFIRMATION']))
             return false;
 
         $aContentInfo = $this->_oModule->_oDb->getContentInfoByProfileId($iContentProfileId);
@@ -74,6 +78,9 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
     public function getQuestionnaireForm($sAction, $iContentProfileId, $aParams = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(!$this->_bQuestionnaire)
+            return false;
 
         if(empty($aParams['request']) || !is_array($aParams['request']))
             $aParams['request'] = [];
