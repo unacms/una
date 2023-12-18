@@ -109,6 +109,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'PerfomActionApi' => 'BxBaseServiceGrid',
 
             'GetLabels' => 'BxBaseLabelsServices',
+            'GetForm' => 'BxBaseSearchExtendedServices',
+            'GetResults' => 'BxBaseSearchExtendedServices'
         );
     }
 

@@ -53,9 +53,22 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return '';
 
         $oForm = $this->prepareForm($aParams);
-        return $oForm->getCode();
+        
+        return bx_is_api() ? bx_api_get_block('form', $oForm->getCodeAPI(), ['id' => 2, 'ext' => ['name' => $this->_aObject['module'] . '_serach', 'request' => ['url' => '/api.php?r=system/get_form/TemplSearchExtendedServices&params[]=' . $this->_aObject['module'], 'immutable' => true]]]) : $oForm->getCode();
     }
 
+    public function getResultsAPI($aData, $iPerPage, $iStart, $aParamsSearch = '')
+    {
+        return bx_api_get_block('browse', [
+            'nocache' => true,
+            'module' => $this->_aObject['module'],
+            'unit' => 'general-content-list',
+            'request_url' => '/api.php?r=system/get_results/TemplSearchExtendedServices&params[]=',
+            'data' =>  $aData,
+            'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'search_params' => $aParamsSearch],
+        ]);
+    }
+    
     /**
      * Get search results from search form or from custom condition
      *
@@ -72,11 +85,16 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         if(!$this->isEnabled())
             return '';
 
+      
         $bJsMode = isset($aParams['js_mode']) ? (bool)$aParams['js_mode'] : $this->_bJsMode;
         $bCondition = !empty($aParams['cond']) && is_array($aParams['cond']);
 
         $iStart = !empty($aParams['start']) ? $aParams['start'] : 0;
         $iPerPage = !empty($aParams['per_page']) ? $aParams['per_page'] : 0;
+        if (bx_is_api() && isset($aParams['params'])){
+            $iPerPage = $aParams['params']['per_page'];
+            $iStart = $aParams['params']['start'];
+        }
         unset($aParams['start'], $aParams['per_page']);
 
         $sUnitTemplate = !empty($aParams['template']) ? $aParams['template'] : '';
@@ -94,7 +112,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             $oForm->initChecker(array(), $aParams['cond']);
         }
 
-        if(!$oForm->isSubmittedAndValid() && !$this->_bFilterMode)
+        if(!$oForm->isSubmittedAndValid() && !$this->_bFilterMode  && (!bx_is_api() || (bx_is_api() && !isset($aParams['search_params']))))
             return '';
 
         $oContentInfo = BxDolContentInfo::getObjectInstance($this->_aObject['object_content_info']);
@@ -103,6 +121,10 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return '';
 
         $aParamsSearch = array();
+        if (bx_is_api() && isset($aParams['search_params'])){
+            $aParamsSearch = $aParams['search_params'];
+        }
+        else{
         foreach($this->_aObject['fields'] as $aField) {
             $mixedValue = $oForm->getCleanValue($aField['name']);
             if(empty($mixedValue) || (is_array($mixedValue) && bx_is_empty_array($mixedValue)))
@@ -135,9 +157,10 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 }
             }
         }
+        }
 
         if((empty($aParamsSearch) || !is_array($aParamsSearch)) && !$this->_bFilterMode)
-            return '';
+            return bx_is_api() ? bx_api_get_msg(_t('Not Found'), ['ext' => ['msg_type' => 'result']]) : '';
 
         if (!$iPerPage) {
             bx_import('BxDolSearch');
@@ -157,17 +180,18 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1, $this->_bFilterMode);
 
     	if(empty($aResults) || !is_array($aResults))
-    	    return '';
+    	    return bx_is_api() ? bx_api_get_msg(_t('Nothing found'), ['ext' => ['msg_type' => 'result']]) : _t('Nothing found');
 
         if(!empty($aParams['cond']) && is_array($aParams['cond']))
             $aParams['cond'] = self::encodeConditions($aParams['cond']);
 
         $aPaginate = array('start' => $iStart, 'per_page' => $iPerPage);
+        
         if(!$bJsMode) {
             $aParams['start'] = '{start}';
             $aParams['per_page'] = '{per_page}';
             list($sPageLink, $aPageParams) = bx_get_base_url_inline($aParams);
-
+            if (!bx_is_api())
             $aPaginate['page_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams, true, ['{start}', '{per_page}']));
         }
         else
@@ -180,9 +204,24 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $aTmplVarsPaginate = $bTmplVarsPaginate ? array('paginate' => $oPaginate->getSimplePaginate()) : array();
 
     	$sResults = '';
-    	foreach($aResults as $iId)
+        $aRes = [];
+    	foreach($aResults as $iId){
     	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate); 
+            if (bx_is_api()){
+                $aRes[] = $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate);
+            }
+        }
 
+        if (bx_is_api()){
+            if (isset($aParams['search_params'])){
+                return [$this->getResultsAPI($aRes, $iPerPage, $iStart, $aParamsSearch)];
+            }
+            else{
+                return $this->getResultsAPI([], $iPerPage, $iStart, $aParamsSearch);
+            }
+        }
+            
+        
         $aTxtDirection = [
             'asc' => _t('_order_asc'),
             'desc' => _t('_order_desc')
