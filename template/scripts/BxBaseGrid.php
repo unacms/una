@@ -739,6 +739,8 @@ class BxBaseGrid extends BxDolGrid
         if(empty($this->_aOptions[$sActionsType]) || !is_array($this->_aOptions[$sActionsType]))
             return [];
 
+        
+        
         foreach ($this->_aOptions[$sActionsType] as $sKey => $aAction){
             $sFunc = '_getAction' . $this->_genMethodName($sType . '_' . $sKey);
             if (method_exists($this, $sFunc)){
