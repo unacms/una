@@ -433,9 +433,9 @@ class BxBaseCmts extends BxDolCmts
                     $aDp['structure'] = $aDp['structure'][$aCmt['cmt_id']]['items'];
                     $sReplies = $this->getCommentsByStructure(array('parent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
                 }
-            } 
+            }
             else if((int)$aCmt['cmt_replies'] > 0 && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
-                $sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
+                $sReplies = $this->getComments(['parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type'], 'order_way' => BX_CMT_ORDER_WAY_ASC], $aDp);
         }
 
         $aTmplVarsMeta = array();
