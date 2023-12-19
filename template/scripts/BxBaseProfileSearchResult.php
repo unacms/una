@@ -46,7 +46,7 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
         $aProfileModulesNames = array_map(function($item) {
             return $item['name'];
         }, $aProfileModules);
-        
+
         $this->aCurrent = [
             'name' => 'sys_search',
             'module_name' => 'system',
@@ -77,6 +77,8 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
             $this->aCurrent['paginate']['forceStart'] = (int)$this->_aParams['start'];
         if(!empty($this->_aParams['per_page']))
             $this->aCurrent['paginate']['perPage'] = (int)$this->_aParams['per_page'];
+
+        $this->sBrowseUrl = '';
 
         switch ($sMode) {
             case 'friends':

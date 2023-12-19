@@ -151,6 +151,8 @@
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
     <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
+    <string name="_bx_events_page_title_manage_profile"><![CDATA[Управление]]></string>
+    <string name="_bx_events_page_title_sys_manage_profile"><![CDATA[Управление событием]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Удалить событие]]></string>
     <string name="_bx_events_page_title_delete_profile"><![CDATA[Удалить событие]]></string>
     <string name="_bx_events_page_title_sys_view_profile_closed"><![CDATA[Просмотр закрытого события]]></string>
@@ -167,7 +169,7 @@
     <string name="_bx_events_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
     <string name="_bx_events_page_title_sys_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_events_page_title_profile_friends"><![CDATA[Друзья]]></string>
-    <string name="_bx_events_page_title_sys_group_fans"><![CDATA[Гости]]></string>
+    <string name="_bx_events_page_title_sys_group_fans"><![CDATA[Гости события]]></string>
     <string name="_bx_events_page_title_group_fans"><![CDATA[Гости]]></string>
     <string name="_bx_events_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_events_page_title_profile_comments"><![CDATA[Комментарии]]></string>
@@ -228,11 +230,12 @@
     <string name="_bx_events_page_block_title_fans_link"><![CDATA[Придут на <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Придут]]></string>
     <string name="_bx_events_page_block_title_system_fans"><![CDATA[Придут]]></string>
-    <string name="_bx_events_page_block_title_fans_invites"><![CDATA[Приглашения]]></string>
-    <string name="_bx_events_page_block_title_system_invites"><![CDATA[Приглашения]]></string>
+    <string name="_bx_events_page_block_title_system_fans_manage"><![CDATA[Manage fans]]></string>
+    <string name="_bx_events_page_block_title_invites"><![CDATA[Приглашения]]></string>
+    <string name="_bx_events_page_block_title_system_invites_manage"><![CDATA[Приглашения]]></string>
     <string name="_bx_events_page_block_title_subscribers_link"><![CDATA[Заинтересованы в <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_subscribers"><![CDATA[Заинтересованы]]></string>
-    <string name="_bx_events_page_block_title_system_subscribers"><![CDATA[Заинтересованы]]></string>
+    <string name="_bx_events_page_block_title_system_subscribers_manage"><![CDATA[Заинтересованы]]></string>
     <string name="_bx_events_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_events_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_actions"><![CDATA[Действия]]></string>
@@ -310,6 +313,8 @@
     <string name="_bx_events_menu_item_title_view_joined_groups"><![CDATA[События]]></string>
     <string name="_bx_events_menu_item_title_system_view_fans"><![CDATA[Гости]]></string>
     <string name="_bx_events_menu_item_title_view_fans"><![CDATA[Гости]]></string>
+    <string name="_bx_events_menu_item_title_system_view_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_events_menu_item_title_view_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_events_menu_item_title_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>

@@ -184,12 +184,12 @@
     <string name="_bx_events_page_title_create_profile"><![CDATA[Create Event]]></string>
     <string name="_bx_events_page_title_sys_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Edit Event]]></string>
-    <string name="_bx_events_page_title_manage"><![CDATA[Manage]]></string>
-    <string name="_bx_events_page_title_sys_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Edit Event Cover]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
     <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
+    <string name="_bx_events_page_title_manage_profile"><![CDATA[Manage]]></string>
+    <string name="_bx_events_page_title_sys_manage_profile"><![CDATA[Manage Event]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Delete Event]]></string>
     <string name="_bx_events_page_title_delete_profile"><![CDATA[Delete Event]]></string>
     <string name="_bx_events_page_title_sys_join_profile"><![CDATA[Join Course]]></string>
@@ -209,7 +209,7 @@
     <string name="_bx_events_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
     <string name="_bx_events_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_events_page_title_profile_friends"><![CDATA[Friends]]></string>
-    <string name="_bx_events_page_title_sys_group_fans"><![CDATA[Guests]]></string>
+    <string name="_bx_events_page_title_sys_group_fans"><![CDATA[Event Guests]]></string>
     <string name="_bx_events_page_title_group_fans"><![CDATA[Guests]]></string>
     <string name="_bx_events_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_events_page_title_profile_comments"><![CDATA[Comments]]></string>
@@ -283,11 +283,12 @@
     <string name="_bx_events_page_block_title_fans_link"><![CDATA[Going to <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Going]]></string>
     <string name="_bx_events_page_block_title_system_fans"><![CDATA[Going]]></string>
-    <string name="_bx_events_page_block_title_fans_invites"><![CDATA[Invites]]></string>
-    <string name="_bx_events_page_block_title_system_invites"><![CDATA[Invites]]></string>
+    <string name="_bx_events_page_block_title_system_fans_manage"><![CDATA[Manage fans]]></string>
+    <string name="_bx_events_page_block_title_invites"><![CDATA[Invites]]></string>
+    <string name="_bx_events_page_block_title_system_invites_manage"><![CDATA[Manage invites]]></string>
     <string name="_bx_events_page_block_title_subscribers_link"><![CDATA[Interested in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_subscribers"><![CDATA[Interested]]></string>
-    <string name="_bx_events_page_block_title_system_subscribers"><![CDATA[Interested]]></string>
+    <string name="_bx_events_page_block_title_system_subscribers_manage"><![CDATA[Manage interested]]></string>
     <string name="_bx_events_page_block_title_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_events_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_events_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>

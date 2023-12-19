@@ -590,14 +590,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 	
     public function serviceFans ($iContentId = 0, $bAsArray = false)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        
-        if (!$iContentId && bx_get('profile_id')){
-            $oProfile = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id')));
-            $iContentId = $oProfile->getContentId();
-        }
-        
+
         if (!$iContentId)
             return false;
 
@@ -610,21 +607,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         if(!$bAsArray) {
             bx_import('BxDolConnection');
-            $mixedResult = $this->serviceBrowseConnectionsQuick ($oGroupProfile->id(), $this->_oConfig->CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
+            $mixedResult = $this->serviceBrowseConnectionsQuick ($oGroupProfile->id(), $CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
             if (!$mixedResult)
                 return MsgBox(_t('_sys_txt_empty'));
         }
         else
-            $mixedResult = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true);
+            $mixedResult = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true);
 
-        if(bx_is_api()) {
-            $CNF = &$this->_oConfig->CNF;
-            return bx_srv('system', 'browse_members', [
-                'profile_id' => $oGroupProfile->id(),
-                'connection' => $CNF['OBJECT_CONNECTIONS'],
-            ], 'TemplServiceProfiles');
-        }
-        
         return $mixedResult;
     }
     
@@ -793,6 +782,22 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $sCode;
     }
 
+    public function serviceBrowseMembers ($iProfileId = 0, $aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return '';
+
+        $oGroupProfile = BxDolProfile::getInstance($iProfileId);
+        if(!($oGroupProfile))
+            return '';
+
+        return bx_srv('system', 'browse_members', [$oGroupProfile->id(), $CNF['OBJECT_CONNECTIONS'], $aParams], 'TemplServiceProfiles');
+    }
+    
     public function serviceEntityPricing($iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
