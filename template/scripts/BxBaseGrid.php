@@ -739,6 +739,8 @@ class BxBaseGrid extends BxDolGrid
         if(empty($this->_aOptions[$sActionsType]) || !is_array($this->_aOptions[$sActionsType]))
             return [];
 
+        
+        
         foreach ($this->_aOptions[$sActionsType] as $sKey => $aAction){
             $sFunc = '_getAction' . $this->_genMethodName($sType . '_' . $sKey);
             if (method_exists($this, $sFunc)){
@@ -756,7 +758,7 @@ class BxBaseGrid extends BxDolGrid
     protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback', 'on_callback' => 'hide_row']);
 
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }

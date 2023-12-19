@@ -51,7 +51,7 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         ]);
 
         if($this->_bIsApi)
-            return [bx_api_get_block('event_sessions',  $aTmplVarsSession)];
+            return [bx_api_get_block('simple_list',  $aTmplVarsSession)];
 
         return $s;
     }

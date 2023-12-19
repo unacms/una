@@ -74,16 +74,25 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
     public function performActionQuestionnaire()
     {
+       
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(($mixedResult = $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
             return echoJson(['msg' => $mixedResult]);
 
         list($iId, $iViewedId) = $this->_prepareIds();
+        if($this->_bIsApi){
+            $iId = bx_get($CNF['FIELD_ID']);
+        }
         if(!$iId)
             return echoJson(['msg' => _t('_sys_txt_error_occured')]);
 
         $sPopupContent = $this->_oModule->_oTemplate->getPopupQuestionnaire($this->_aContentInfo[$CNF['FIELD_ID']], $iId);
+        
+        if($this->_bIsApi){
+             return [bx_api_get_block('simple_list',  $sPopupContent)];
+        }
+        
         if(!$sPopupContent)
             return echoJson([]);
 
