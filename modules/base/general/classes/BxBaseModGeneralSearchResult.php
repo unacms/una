@@ -66,6 +66,19 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return parent::rss();
     }
 
+    function processingAPI () 
+    {
+        $aResult = parent::processingAPI();
+
+        if(isset($this->_aParams['filters']) && is_array($this->_aParams['filters'])) {
+            $oModule = $this->getMain();
+
+            $aResult['params']['filters'] = $oModule->_oTemplate->getBrowsingFilters(['mode' => $this->_sMode]);
+        }
+
+        return $aResult;
+    }
+
     protected function addCustomConditions($CNF, $oProfile, $sMode, $aParams)
     {
         $this->addConditionsForAuthorStatus($CNF);

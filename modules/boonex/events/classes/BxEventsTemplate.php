@@ -89,9 +89,27 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
 
     protected function _getBrowsingFiltersContent($aParams)
     {
+        $sModule = $this->_oConfig->getName();
         $sJsObject = $this->_oConfig->getJsObject('main');
 
         $aForm = [
+            'form_attrs' => [
+                'id' => $sModule . '_filters_' . $aParams['mode'],
+                'action' => ''
+            ],
+            'params' => [
+                'db' => [
+                    'table' => '',
+                    'key' => '',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => ''
+                ],
+                'module' => $sModule,
+                'object' => $sModule . '_filters',
+                'display' => $sModule . '_filters_apply',
+                'view_mode' => 0,
+            ],
             'inputs' => [
                 'by_date' => [
                     'name' => 'by_date',
@@ -151,6 +169,9 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         ];
 
         $oForm = new BxTemplFormView($aForm);
+        if($this->_bIsApi)
+            return $oForm->getCodeAPI();
+
         return $this->addJs(['moment-timezone-with-data-1970-2030.min.js'], true) . $oForm->getCode(true);
     }
 }

@@ -369,13 +369,16 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if(empty($aParams['mode']))
             return '';
 
-        $sContent = $this->_getBrowsingFiltersContent($aParams);
-        if(empty($sContent))
+        $mixedContent = $this->_getBrowsingFiltersContent($aParams);
+        if($this->_bIsApi)
+            return $mixedContent;
+
+        if(empty($mixedContent))
             return '';
 
         $sPopupId = $this->_oConfig->getHtmlIds('popup_bfilters_' . $aParams['mode']);
         $sPopupContent = $this->parseHtmlByName('browsing_filters.html', [
-            'content' => $sContent
+            'content' => $mixedContent
     	]);
 
     	return BxTemplFunctions::getInstance()->transBox($sPopupId, $sPopupContent, true);
