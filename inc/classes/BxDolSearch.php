@@ -1133,11 +1133,16 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setPaginate ()
     {
+        $iStart = 0;
         $iPerPage = 0;
 
         //--- Check in aCurrent (low priority).
         if(isset($this->aCurrent['paginate']['perPage']) && (int)$this->aCurrent['paginate']['perPage'] != 0)
             $iPerPage = (int)$this->aCurrent['paginate']['perPage'];
+        
+        //--- Check in aParams (middle priority).
+        if(isset($this->_aParams['per_page']) && (int)$this->_aParams['per_page'] != 0)
+            $iPerPage = (int)$this->_aParams['per_page'];
 
         //--- Check in GET params (high priority).
         if(isset($_GET['per_page']) && (int)$_GET['per_page'] != 0)
@@ -1156,12 +1161,20 @@ class BxDolSearchResult implements iBxDolReplaceable
 
         $this->aCurrent['paginate']['perPage'] = $iPerPage;
 
-        $this->aCurrent['paginate']['start'] = isset($this->aCurrent['paginate']['forceStart'])
-            ? (int)$this->aCurrent['paginate']['forceStart']
-            : (empty($_GET['start']) ? 0 : (int)$_GET['start']);
+        if(!isset($this->aCurrent['paginate']['forceStart'])) {
+            if(isset($this->_aParams['start']))
+                $iStart = (int)$this->_aParams['start'];
 
-        if ($this->aCurrent['paginate']['start'] < 0)
-            $this->aCurrent['paginate']['start'] = 0;
+            if(($iStartGet = bx_get('start')) !== false)
+                $iStart = (int)$iStartGet;
+        }
+        else
+            $iStart = (int)$this->aCurrent['paginate']['forceStart'];
+
+        if($iStart < 0)
+            $iStart = 0;
+
+        $this->aCurrent['paginate']['start'] = $iStart;
     }
 
     function unsetPaginate()

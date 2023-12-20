@@ -73,7 +73,10 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         if(isset($this->_aParams['filters']) && is_array($this->_aParams['filters'])) {
             $oModule = $this->getMain();
 
-            $aResult['params']['filters'] = $oModule->_oTemplate->getBrowsingFilters(['mode' => $this->_sMode]);
+            if(!empty($this->_aParams['filters']['values']) && is_array($this->_aParams['filters']['values']))
+                $aResult['params']['filters'] = $this->_aParams['filters']['values'];
+
+            $aResult['filters'] = $oModule->_oTemplate->getBrowsingFilters(['mode' => $this->_sMode]);
         }
 
         return $aResult;
@@ -233,7 +236,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function displaySearchBox ($sContent, $sPaginate = '')
     {
-        $aResult = parent::displaySearchBox($sContent, $sPaginate = '');
+        $aResult = parent::displaySearchBox($sContent, $sPaginate);
 
         if(isset($this->_aParams['filters']) && is_array($this->_aParams['filters']))
             $aResult['buttons'] = [

@@ -885,21 +885,26 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceBrowse ($aParams = array())
     {
-        if(is_string($aParams)){
+        if($this->_bIsApi && is_string($aParams)){
             $aParams = json_decode($aParams, true);
-            if (isset($aParams['params'])){
-                //TODO: improve
-                $_GET['start'] = $aParams['params']['start'];
-                $_GET['per_page'] = $aParams['params']['per_page'];
-                if (isset($aParams['params']['type'])){
+            if (isset($aParams['params'])) {
+                if(isset($aParams['params']['type']))
                     $aParams['mode'] = $aParams['params']['type'];
+
+                if(isset($aParams['params']['filters'])) {
+                    foreach($aParams['params']['filters'] as $sKey => $sValue)
+                        $aParams['params'][$sKey] = $sValue;
+
+                    $aParams['params']['filters'] = [
+                        'values' => $aParams['params']['filters']
+                    ];
                 }
             }
         }
-        
+
         if (isset($aParams['params']['condition']))
             unset($aParams['params']['condition']);
-        
+
         return $this->serviceBrowseWithCondition ($aParams);
     }
 
