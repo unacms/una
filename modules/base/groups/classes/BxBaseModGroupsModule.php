@@ -1367,9 +1367,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(empty($CNF['URL_ENTRY_FANS']))
             $sEntryUrl = bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oGroupProfile->getUrl()), '{bx_url_root}');
         else
-            $sEntryUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], [
+            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], [
                 'profile_id' => $oGroupProfile->id()
-            ]);
+            ]), '{bx_url_root}');
 
         return [
             'entry_sample' => $CNF['T']['txt_sample_single'],

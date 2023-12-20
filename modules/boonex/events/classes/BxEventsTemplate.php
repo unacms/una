@@ -28,32 +28,21 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         if(empty($aSessions) || !is_array($aSessions))
             return '';
 
-        $sFormatDateTime = getParam($CNF['PARAM_FORMAT_DATETIME']);
-        $sFormatDate = getParam($CNF['PARAM_FORMAT_DATE']);
-        $sFormatTime = getParam($CNF['PARAM_FORMAT_TIME']);
-
         $aTmplVarsSession = [];
         foreach($aSessions as $aSession) {
-            $sDate = '';
-            if(date('d', $aSession['date_start']) == date('d', $aSession['date_end']))
-                $sDate = date($sFormatDate, $aSession['date_start']) . ' ' . date($sFormatTime, $aSession['date_start']) . ' - ' . date($sFormatTime, $aSession['date_end']);
-            else
-                $sDate = date($sFormatDateTime, $aSession['date_start']) . ' - ' . date($sFormatDateTime, $aSession['date_end']);
-
             $aTmplVarsSession[] = [
                 'title' => bx_process_output($aSession['title']),
-                'date_time' =>  $sDate,
+                'date_start' => $this->_bIsApi ? $aSession['date_start'] : bx_time_js($aSession['date_start'], BX_FORMAT_DATE_TIME, true),
+                'date_end' => $this->_bIsApi ? $aSession['date_end'] : bx_time_js($aSession['date_end'], BX_FORMAT_DATE_TIME, true),
             ];
         }
-
-        $s = $this->parseHtmlByName('entry-sessions.html', [
-            'bx_repeat:sessions' => $aTmplVarsSession
-        ]);
 
         if($this->_bIsApi)
             return [bx_api_get_block('simple_list',  $aTmplVarsSession)];
 
-        return $s;
+        return $this->parseHtmlByName('entry-sessions.html', [
+            'bx_repeat:sessions' => $aTmplVarsSession
+        ]);
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
