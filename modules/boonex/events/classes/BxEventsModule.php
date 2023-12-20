@@ -148,8 +148,9 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
 
         $iNow = time();
+
         $sStart = !empty($aParams['start']) ? date('d.m.Y', $aParams['start']) : date('d.m.Y', $iNow);
-        $sEnd = !empty($aParams['end']) ? date('d.m.Y', $aParams['end']) : date('d.m.Y', $iNow + 3600 * 24 * 365);
+        $sEnd = !empty($aParams['end']) ? date('d.m.Y', $aParams['end']) : date('d.m.Y', $iNow + 3600 * 24 * 30);
 
         $iContentId = 0;
         $iContextId = 0;
@@ -232,7 +233,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             'data' => &$aEntries,
         ));
 
-        return $aEntries;
+        return ['params' => ['start' => strtotime($sStart), 'end' => strtotime($sEnd)], 'data' => $aEntries];
     }
 
     public function serviceIsIcalExportAvaliable($iContentId)
