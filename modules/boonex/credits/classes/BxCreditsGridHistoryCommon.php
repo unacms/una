@@ -45,7 +45,7 @@ class BxCreditsGridHistoryCommon extends BxCreditsGridHistoryAdministration
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-        if(empty($this->_iUserId))
+        if(empty($this->_iUserId) || $this->_iUserId != bx_get_logged_profile_id())
             return [];
 
         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `first_pid`=?", $this->_iUserId);

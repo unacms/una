@@ -35,7 +35,7 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aResult = parent::actionRemove($iContent, $iInitiator);
-        if($aResult['err'] == false) {
+        if($this->_bQuestionnaire && $aResult['err'] == false) {
             if(!$iContent)
                 $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
 
@@ -52,7 +52,7 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aResult = parent::actionReject($iInitiator, $iContent);
-        if($aResult['err'] == false) {
+        if($this->_bQuestionnaire && $aResult['err'] == false) {
             if(!$iContent)
                 $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
 

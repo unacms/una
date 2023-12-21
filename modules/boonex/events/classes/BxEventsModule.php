@@ -438,7 +438,10 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $aFilterParams = ['mode' => $sMode];
 
         return $this->_serviceBrowse ($sMode, [
-            'filters' => ['onclick' => $this->_oConfig->getJsObject('main') . ".changeBrowsingFilters(this, '" . $sFilterSelector . "', " . json_encode($aFilterParams) . ")"]
+            'filters' => [
+                'values' => [],
+                'onclick' => $this->_oConfig->getJsObject('main') . ".changeBrowsingFilters(this, '" . $sFilterSelector . "', " . json_encode($aFilterParams) . ")"
+            ]
         ], BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
