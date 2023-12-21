@@ -23,8 +23,8 @@ class BxPaymentGridHistory extends BxBaseModPaymentGridTransactions
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-        if(empty($this->_aQueryAppend['client_id']))
-            return array();
+        if(empty($this->_aQueryAppend['client_id']) || $this->_aQueryAppend['client_id'] != bx_get_logged_profile_id())
+            return [];
 
         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`client_id`=?", $this->_aQueryAppend['client_id']);
 
