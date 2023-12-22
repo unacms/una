@@ -352,9 +352,10 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         else
             $aItems = $this->_oConfig->descriptorsM2A($this->_oConfig->descriptorA2S(array($aOrder['seller_id'], $aOrder['module_id'], $aOrder['item_id'], $aOrder['item_count'])));
 
+        $aRv = [];
         foreach($aItems as $aItem) {
             $aInfo = $oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $aOrder['client_id']));
-            if(!empty($aInfo) && is_array($aInfo))
+            if(!empty($aInfo) && is_array($aInfo)){
 	            $aResult['bx_repeat:items'][] = array(
 	                'bx_if:link' => array(
 	                    'condition' => !empty($aInfo['url']),
@@ -373,6 +374,20 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 	                'price' => $this->_oConfig->getPrice($aOrder['type'], $aInfo),
 	                'currency_code' => $aSeller['currency_code']
 	            );
+                
+                if (bx_is_api()){
+                    $aRv[] = [
+                        ['title', $aInfo['title']],
+                        ['quantity', $aItem['item_count']],
+                        ['price', $this->_oConfig->getPrice($aOrder['type'], $aInfo)],
+                    ];
+                    
+                }
+                
+            }
+        }
+        if (bx_is_api()){
+            return $aRv;
         }
 
         return $this->parseHtmlByName('order_' . $sType . '.html', $aResult);
@@ -516,6 +531,13 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 			$oGrid->addQueryParam('seller_id', $iSellerId);
 
 		$this->addJsCssOrders();
+        
+        if (bx_is_api()){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+        }
+        
         return $this->displayJsCode(BX_PAYMENT_ORDERS_TYPE_HISTORY) . $oGrid->getCode();
     }
 
