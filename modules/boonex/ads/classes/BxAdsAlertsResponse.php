@@ -90,7 +90,25 @@ class BxAdsAlertsResponse extends BxBaseModTextAlertsResponse
         if(!$this->_oModule->_oConfig->isPromotion())
             return;
 
-        $aEntries = $this->_oModule->_oDb->getEntriesBy(['type' => 'promotion']);
+        $aSegViewer = [];
+        if(!empty($oAlert->aExtras['params']['viewer_id']) && ($oViewer = BxDolProfile::getInstance($oAlert->aExtras['params']['viewer_id'])) !== false && ($sViewerModule = $oViewer->getModule()) == 'bx_persons') {
+            $aViewerInfo = bx_srv($sViewerModule, 'get_info', [$oViewer->getContentId(), false]);
+            if(!empty($aViewerInfo) && is_array($aViewerInfo)) {
+                if(!empty($aViewerInfo['gender']))
+                    $aSegViewer['gender'] = $aViewerInfo['gender'];
+
+                if(!empty($aViewerInfo['birthday']))
+                    $aSegViewer['age'] = bx_birthday2age($aViewerInfo['birthday']);
+
+                if(!empty($aViewerInfo['location'])) {
+                    $aLocation = unserialize($aViewerInfo['location']);
+                    if(!empty($aLocation['country']))
+                        $aSegViewer['country'] = $aLocation['country'];
+                }
+            }
+        }
+
+        $aEntries = $this->_oModule->_oDb->getEntriesBy(['type' => 'promotion', 'seg_viewer' => $aSegViewer]);
         if(empty($aEntries) || !is_array($aEntries))
             return;
 

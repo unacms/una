@@ -133,6 +133,9 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
         if($this->oModule->_oConfig->isPromotion())
             $this->addConditionsForPromotion($CNF, $oProfileAuthor, $sMode, $aParams);
 
+        if(in_array($this->_sMode, ['public', 'popular', 'updated', 'featured']))
+            $this->addConditionsForSegmentation($CNF, $oProfileAuthor, $sMode, $aParams);
+
         $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);        
     }
 
@@ -187,9 +190,53 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
             'budget_total' => ['value' => 0, 'field' => 'budget_total', 'operator' => '<>'],
         ]);
 
-        $this->aCurrent['restriction_sql'] = "";
+        if(!isset($this->aCurrent['restriction_sql']))
+            $this->aCurrent['restriction_sql'] = "";
+
         $this->aCurrent['restriction_sql'] .= " AND `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_TOTAL']}` > ({$fPromotionCpm} * `{$this->aCurrent['table']}`.`impressions`)/1000";
         $this->aCurrent['restriction_sql'] .= " AND (ISNULL(`{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`) OR `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_DAILY']}` > ({$fPromotionCpm} * `{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`)/1000)";
+    }
+
+    protected function addConditionsForSegmentation($CNF, $oProfile, $sMode, $aParams)
+    {
+        $iViewer = bx_get_logged_profile_id();
+        if(!$iViewer)
+            return;
+
+        $oViewer = BxDolProfile::getInstance($iViewer);
+        if(!$oViewer)
+            return;
+
+        $sViewerModule = $oViewer->getModule();
+        if($sViewerModule != 'bx_persons')
+            return;
+
+        $aViewerInfo = bx_srv($sViewerModule, 'get_info', [$oViewer->getContentId(), false]);
+        if(empty($aViewerInfo) || !is_array($aViewerInfo))
+            return;
+
+        $sWhereClause = "1";
+        if(!empty($aViewerInfo['gender']))
+            $sWhereClause .= $this->oModule->_oDb->prepareAsString(" AND IF(`seg_gender` <> 0, `seg_gender` & ?, 1)", $aViewerInfo['gender']);
+
+        if(!empty($aViewerInfo['birthday'])) {
+            $iAge = bx_birthday2age($aViewerInfo['birthday']);
+            $sWhereClause .= $this->oModule->_oDb->prepareAsString(" AND IF(`seg_age_min` <> 0 AND `seg_age_max` <> 0 AND `seg_age_min` <= `seg_age_max`, `seg_age_min` <= ? AND `seg_age_max` >= ?, 1)", $iAge, $iAge);
+        }
+
+        if(!empty($aViewerInfo['location'])) {
+            $aLocation = unserialize($aViewerInfo['location']);
+            if(!empty($aLocation['country']))
+                $sWhereClause .= $this->oModule->_oDb->prepareAsString(" AND IF(`seg_country` <> '', `seg_country` = ?, 1)", $aLocation['country']);
+        }
+
+        if(empty($sWhereClause)) 
+            return;
+
+        if(!isset($this->aCurrent['restriction_sql']))
+            $this->aCurrent['restriction_sql'] = "";
+
+        $this->aCurrent['restriction_sql'] .= " AND IF(`seg` = 1, " . $sWhereClause . ", 1)";
     }
 }
 

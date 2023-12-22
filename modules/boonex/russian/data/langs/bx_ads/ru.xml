@@ -142,6 +142,18 @@
     <string name="_bx_ads_form_entry_input_budget_total_err_decreased"><![CDATA[Бюджет рекламной кампании не может быть уменьшен.]]></string>
     <string name="_bx_ads_form_entry_input_sys_budget_daily"><![CDATA[Максимальный дневной бюджет]]></string>
     <string name="_bx_ads_form_entry_input_budget_daily"><![CDATA[Максимальный дневной бюджет]]></string>
+    <string name="_bx_ads_form_entry_input_sys_header_beg_seg"><![CDATA[Сегментация: начало]]></string>
+    <string name="_bx_ads_form_entry_input_header_beg_seg"><![CDATA[Сегментация]]></string>
+    <string name="_bx_ads_form_entry_input_sys_header_end_seg"><![CDATA[Сегментация: конец]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg"><![CDATA[Включить]]></string>
+    <string name="_bx_ads_form_entry_input_seg"><![CDATA[Включить сегментацию]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg_gender"><![CDATA[Пол]]></string>
+    <string name="_bx_ads_form_entry_input_seg_gender"><![CDATA[Пол]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg_age"><![CDATA[Возраст]]></string>
+    <string name="_bx_ads_form_entry_input_seg_age"><![CDATA[Возраст]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg_country"><![CDATA[Страна]]></string>
+    <string name="_bx_ads_form_entry_input_seg_country"><![CDATA[Страна]]></string>
+    <string name="_bx_ads_form_entry_input_seg_country_all"><![CDATA[Все страны]]></string>
 
     <string name="_bx_ads_form_poll"><![CDATA[Голосования]]></string>
     <string name="_bx_ads_form_poll_display_add"><![CDATA[Добавить голосование]]></string>

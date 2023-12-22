@@ -220,6 +220,28 @@ class BxAdsDb extends BxBaseModTextDb
                 $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_BUDGET_TOTAL'] . "` <> 0 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_BUDGET_TOTAL'] . "` > (:promotion_cpm * `" . $CNF['TABLE_ENTRIES'] . "`.`impressions`)/1000";
                 //--- Check Daily Budget
                 $sWhereClause .= " AND (ISNULL(`tpt`.`impressions`) OR `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_BUDGET_DAILY'] . "` > (:promotion_cpm * `tpt`.`impressions`)/1000)";
+
+                if(!empty($aParams['seg_viewer']) && is_array($aParams['seg_viewer'])) {
+                    $sWhereSubclause = "1";
+                    if(!empty($aParams['seg_viewer']['gender'])) {
+                        $aMethod['params'][3]['seg_gender'] = $aParams['seg_viewer']['gender'];
+                        $sWhereSubclause .= " AND IF(`seg_gender` <> 0, `seg_gender` & :seg_gender, 1)";
+                    }
+
+                    if(!empty($aParams['seg_viewer']['age'])) {
+                        $aMethod['params'][3]['seg_age'] = $aParams['seg_viewer']['age'];
+                        $sWhereSubclause .= " AND IF(`seg_age_min` <> 0 AND `seg_age_max` <> 0 AND `seg_age_min` <= `seg_age_max`, `seg_age_min` <= :seg_age AND `seg_age_max` >= :seg_age, 1)";
+                    }
+
+                    if(!empty($aParams['seg_viewer']['country'])) {
+                        $aMethod['params'][3]['seg_country'] = $aParams['seg_viewer']['country'];
+                        $sWhereSubclause .= " AND IF(`seg_country` <> '', `seg_country` = :seg_country, 1)";
+                    }
+
+                    if(!empty($sWhereSubclause))
+                        $sWhereClause .= " AND IF(`seg` = 1, " . $sWhereSubclause . ", 1)";
+                }
+
                 $sOrderClause = "";
                 break;
 

@@ -127,6 +127,21 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         if(isset($this->aInputs[$CNF['FIELD_POLL']])) {
             $this->aInputs[$CNF['FIELD_POLL']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
         }
+        
+        //--- Segmentation
+        if(isset($this->aInputs[$CNF['FIELD_SEG_AGE']])) {
+            if(!isset($this->aInputs[$CNF['FIELD_SEG_AGE']]['attrs']))
+                $this->aInputs[$CNF['FIELD_SEG_AGE']]['attrs'] = [];
+
+            $this->aInputs[$CNF['FIELD_SEG_AGE']]['attrs'] = array_merge($this->aInputs[$CNF['FIELD_SEG_AGE']]['attrs'], [
+                'min' => 0, 
+                'max' => 100
+            ]);
+            $this->aInputs[$CNF['FIELD_SEG_AGE']]['value'] = '18-99';
+        }
+
+        if(isset($this->aInputs[$CNF['FIELD_SEG_COUNTRY']]))
+            $this->aInputs[$CNF['FIELD_SEG_COUNTRY']]['values'] = array_merge(['' => _t('_bx_ads_form_entry_input_seg_country_all')], $this->aInputs[$CNF['FIELD_SEG_COUNTRY']]['values']);
 
         if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'] && isset($this->aInputs['do_submit']))
             $this->aInputs['do_submit'] = array_merge($this->aInputs['do_submit'], [
@@ -190,6 +205,9 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_COVER']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateCover, $this->_getCoverGhostTmplVars($this->_aContentInfo));
         }
 
+        if(isset($this->aInputs[$CNF['FIELD_SEG_AGE']]) && $bContentInfo)
+            $this->aInputs[$CNF['FIELD_SEG_AGE']]['value'] = implode('-', [$this->_aContentInfo[$CNF['FIELD_SEG_AGE_MIN']], $this->_aContentInfo[$CNF['FIELD_SEG_AGE_MAX']]]);
+
         parent::initChecker ($aValues, $aSpecificValues);
 
         $sKeyBt = $CNF['FIELD_BUDGET_TOTAL'];
@@ -211,6 +229,12 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
         if($bPromotion && isset($this->aInputs[$CNF['FIELD_BUDGET_TOTAL']]) && $this->getCleanValue($CNF['FIELD_BUDGET_TOTAL']) > 0)
             $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_ADS_STATUS_ADMIN_UNPAID;
+
+        if(isset($this->aInputs[$CNF['FIELD_SEG_AGE']]) && ($sSegAge = $this->getCleanValue($CNF['FIELD_SEG_AGE'])) != '') {
+            $aSegAge = explode('-', $sSegAge);
+            if(is_array($aSegAge) && count($aSegAge) == 2)
+                list($aValsToAdd[$CNF['FIELD_SEG_AGE_MIN']], $aValsToAdd[$CNF['FIELD_SEG_AGE_MAX']]) = $aSegAge;
+        }
 
         $iContentId = parent::insert($aValsToAdd, $isIgnore);
         if(!empty($iContentId)) {
@@ -235,7 +259,13 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
         if(!$this->_bDisplayEditBudget)
             $aValsToAdd[$CNF['FIELD_SINGLE']] = $this->_getSingleField();
-        
+
+        if(isset($this->aInputs[$CNF['FIELD_SEG_AGE']]) && ($sSegAge = $this->getCleanValue($CNF['FIELD_SEG_AGE'])) != '') {
+            $aSegAge = explode('-', $sSegAge);
+            if(is_array($aSegAge) && count($aSegAge) == 2)
+                list($aValsToAdd[$CNF['FIELD_SEG_AGE_MIN']], $aValsToAdd[$CNF['FIELD_SEG_AGE_MAX']]) = $aSegAge;
+        }
+
         $aTrackTextFieldsChanges = [];
         $iResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
         if($bPromotion && in_array($CNF['FIELD_BUDGET_TOTAL'], $aTrackTextFieldsChanges['changed_fields'])) {

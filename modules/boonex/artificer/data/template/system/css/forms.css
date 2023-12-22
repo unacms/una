@@ -165,6 +165,21 @@ import url(../../../../../../../template/css/forms.css);
     box-shadow: none;
 }
 
+/*-- Form field: Slider/Doublerange --*/
+.bx-form-input-wrapper-slider,
+.bx-form-input-wrapper-doublerange {
+    position: relative;
+}
+.bx-form-input-wrapper-slider .ui-slider,
+.bx-form-input-wrapper-doublerange .ui-slider {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.bx-form-input-wrapper-slider .ui-slider .ui-slider-handle,
+.bx-form-input-wrapper-doublerange .ui-slider .ui-slider-handle { 
+    z-index: 1;
+}
 
 /*-- Form field: Price --*/
 .bx-form-element .bx-form-value .bx-form-input-wrapper-price {

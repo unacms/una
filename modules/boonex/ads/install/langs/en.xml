@@ -143,6 +143,18 @@
     <string name="_bx_ads_form_entry_input_budget_total_err_decreased"><![CDATA[Campaign budget cannot be decreased.]]></string>
     <string name="_bx_ads_form_entry_input_sys_budget_daily"><![CDATA[Max daily budget]]></string>
     <string name="_bx_ads_form_entry_input_budget_daily"><![CDATA[Max daily budget]]></string>
+    <string name="_bx_ads_form_entry_input_sys_header_beg_seg"><![CDATA[Segmentation: begin]]></string>
+    <string name="_bx_ads_form_entry_input_header_beg_seg"><![CDATA[Segmentation]]></string>
+    <string name="_bx_ads_form_entry_input_sys_header_end_seg"><![CDATA[Segmentation: end]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg"><![CDATA[Enable]]></string>
+    <string name="_bx_ads_form_entry_input_seg"><![CDATA[Enable segmentation]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg_gender"><![CDATA[Gender]]></string>
+    <string name="_bx_ads_form_entry_input_seg_gender"><![CDATA[Gender]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg_age"><![CDATA[Age]]></string>
+    <string name="_bx_ads_form_entry_input_seg_age"><![CDATA[Age]]></string>
+    <string name="_bx_ads_form_entry_input_sys_seg_country"><![CDATA[Country]]></string>
+    <string name="_bx_ads_form_entry_input_seg_country"><![CDATA[Country]]></string>
+    <string name="_bx_ads_form_entry_input_seg_country_all"><![CDATA[All countries]]></string>
 
     <string name="_bx_ads_form_poll"><![CDATA[Polls]]></string>
     <string name="_bx_ads_form_poll_display_add"><![CDATA[Add Poll]]></string>
