@@ -279,14 +279,6 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         return $this->_bIsApi ? [] : '';
     }
 
-    protected function _getActionQuestionnaire ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
-    {
-        if($aRow['mutual'])
-            return $this->_bIsApi ? [] : '';
-
-        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
-    }
-
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if ($aRow['mutual'])
