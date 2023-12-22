@@ -278,6 +278,9 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         $sMethodName = 'getOrder' . bx_gen_method_name($sType);
         $aOrder = $this->_oDb->$sMethodName(array('type' => 'id', 'id' => $iId));
 
+        if($this->_bIsApi)
+            return $this->displayOrderAPI($sType, $aOrder);
+
         $oModule = $this->getModule();
         $aSeller = $oModule->getVendorInfo((int)$aOrder['seller_id']);
         $aClient = $oModule->getProfileInfo((int)$aOrder['client_id']);
@@ -352,45 +355,67 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         else
             $aItems = $this->_oConfig->descriptorsM2A($this->_oConfig->descriptorA2S(array($aOrder['seller_id'], $aOrder['module_id'], $aOrder['item_id'], $aOrder['item_count'])));
 
-        $aRv = [];
         foreach($aItems as $aItem) {
             $aInfo = $oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $aOrder['client_id']));
-            if(!empty($aInfo) && is_array($aInfo)){
-	            $aResult['bx_repeat:items'][] = array(
-	                'bx_if:link' => array(
-	                    'condition' => !empty($aInfo['url']),
-	                    'content' => array(
-	                        'title' => $aInfo['title'],
-	                        'url' => $aInfo['url']
-	                    )
-	                ),
-	                'bx_if:text' => array(
-	                    'condition' => empty($aInfo['url']),
-	                    'content' => array(
-	                        'title' => $aInfo['title'],
-	                    )
-	                ),
-	                'quantity' => $aItem['item_count'],
-	                'price' => $this->_oConfig->getPrice($aOrder['type'], $aInfo),
-	                'currency_code' => $aSeller['currency_code']
-	            );
-                
-                if (bx_is_api()){
-                    $aRv[] = [
-                        ['title', $aInfo['title']],
-                        ['quantity', $aItem['item_count']],
-                        ['price', $this->_oConfig->getPrice($aOrder['type'], $aInfo)],
-                    ];
-                    
-                }
-                
-            }
-        }
-        if (bx_is_api()){
-            return $aRv;
+            if(!empty($aInfo) && is_array($aInfo))
+                $aResult['bx_repeat:items'][] = array(
+                    'bx_if:link' => array(
+                        'condition' => !empty($aInfo['url']),
+                        'content' => array(
+                            'title' => $aInfo['title'],
+                            'url' => $aInfo['url']
+                        )
+                    ),
+                    'bx_if:text' => array(
+                        'condition' => empty($aInfo['url']),
+                        'content' => array(
+                            'title' => $aInfo['title'],
+                        )
+                    ),
+                    'quantity' => $aItem['item_count'],
+                    'price' => $this->_oConfig->getPrice($aOrder['type'], $aInfo),
+                    'currency_code' => $aSeller['currency_code']
+                );
         }
 
+        if($this->_bIsApi)
+            return $aResult;
+
         return $this->parseHtmlByName('order_' . $sType . '.html', $aResult);
+    }
+    
+    public function displayOrderAPI($sType, $aOrder)
+    {
+        $oModule = $this->getModule();
+        $aSeller = $oModule->getVendorInfo((int)$aOrder['seller_id']);
+
+        $aResult = [
+            [_t($this->_sLangsPrefix . 'txt_seller'), $aSeller['name']],
+            [_t($this->_sLangsPrefix . 'txt_order'), $aOrder['order']],           
+        ];
+
+        if(in_array($sType, [BX_PAYMENT_ORDERS_TYPE_PROCESSED, BX_PAYMENT_ORDERS_TYPE_HISTORY]))
+            $aResult[] = [_t($this->_sLangsPrefix . 'txt_license'), $aOrder['license']];
+
+        $aResult[] = [_t($this->_sLangsPrefix . 'txt_date'), $aOrder['date']];
+
+        if(in_array($sType, [BX_PAYMENT_ORDERS_TYPE_PENDING, BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION]))
+            $aItems = $this->_oConfig->descriptorsM2A($aOrder['items']);
+        else
+            $aItems = $this->_oConfig->descriptorsM2A($this->_oConfig->descriptorA2S(array($aOrder['seller_id'], $aOrder['module_id'], $aOrder['item_id'], $aOrder['item_count'])));
+
+        $sProducts = '';
+        foreach($aItems as $aItem) {
+            $aInfo = $oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $aOrder['client_id']));
+            if(empty($aInfo) || !is_array($aInfo))
+                continue;
+
+            $sProducts .= $aInfo['title'] . ' (' . $aItem['item_count'] . ') - ' . $this->_oConfig->getPrice($aOrder['type'], $aInfo) . $aSeller['currency_code'] . ', ';
+        }
+
+        $aResult[] = [_t($this->_sLangsPrefix . 'txt_products'), trim($sProducts, ", ")];
+
+        return $aResult;
     }
 
     public function displayBlockInvoices()
