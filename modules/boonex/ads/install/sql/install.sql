@@ -818,7 +818,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_ads', 'bx_ads', 'changed', '', '', 0, 'datetime', '_bx_ads_form_entry_input_sys_date_changed', '_bx_ads_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'attachments', '', '', 0, 'custom', '_bx_ads_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_ads', 'bx_ads', 'source_type', '', '', 0, 'hidden', '_bx_ads_form_entry_input_sys_source_type', '_bx_ads_form_entry_input_source_type', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_ads', 'bx_ads', 'source_type', '', '', 0, 'hidden', '_bx_ads_form_entry_input_sys_source_type', '_bx_ads_form_entry_input_source_type', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_ads', 'bx_ads', 'source', '', '', 0, 'custom', '_bx_ads_form_entry_input_sys_source', '_bx_ads_form_entry_input_source', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'url', '', '', 0, 'hidden', '_bx_ads_form_entry_input_sys_url', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'budget_total', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_budget_total', '_bx_ads_form_entry_input_budget_total', '', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),

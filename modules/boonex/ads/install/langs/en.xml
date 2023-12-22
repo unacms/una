@@ -639,7 +639,7 @@
     <string name="_bx_ads_txt_msg_offer_accepted"><![CDATA[The offer was accepted.]]></string>
     <string name="_bx_ads_txt_msg_offer_declined"><![CDATA[The offer was declined.]]></string>
     <string name="_bx_ads_txt_msg_offer_canceled"><![CDATA[The offer was canceled.]]></string>
-    <string name="_bx_ads_txt_msg_promotion_unpaid"><![CDATA[Promotion campaign for the ad isn't still paid]]></string>
+    <string name="_bx_ads_txt_msg_promotion_unpaid"><![CDATA[The promotion campaign for the ad still hasn't been paid]]></string>
     <string name="_bx_ads_txt_err_offer_duplicate"><![CDATA[You already made an offer. Please wait for the results.]]></string>
     <string name="_bx_ads_txt_err_offer_wrong_quantity"><![CDATA[Offered quantity is out of stock. Only {0} items are available.]]></string>
     <string name="_bx_ads_txt_err_offer_accepted"><![CDATA[Your offer was already accepted.]]></string>

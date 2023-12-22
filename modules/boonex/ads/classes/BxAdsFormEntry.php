@@ -291,7 +291,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         return parent::delete($iContentId, $aContentInfo);
     }
 
-    protected function genCustomInputSource ($aInput)
+    protected function genCustomInputSource (&$aInput)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
