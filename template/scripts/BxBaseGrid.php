@@ -417,7 +417,7 @@ class BxBaseGrid extends BxDolGrid
         foreach($this->_aOptions['fields'] as $sKey => $aField) {
             $sMethod = '_getCellHeader' . $this->_genMethodName($sKey);
             if(method_exists($this, $sMethod))
-                $aHeader[] = $this->$sMethod($sKey, $a);
+                $aHeader[] = $this->$sMethod($sKey, $aField);
             else
                 $aHeader[] = [
                     'name' => bx_process_output($aField['name']),
@@ -449,6 +449,14 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getCellHeaderCheckbox ($sKey, $aField)
     {
+        if($this->_bIsApi){
+            return [
+                'name' => bx_process_output($aField['name']),
+                'title' => bx_process_output($aField['title']),
+                'width' => $aField['width']
+            ];   
+        }
+        
     	$aAttr = array(
     		'type' => 'checkbox',
     		'id' => $this->_sObject . '_check_all',
