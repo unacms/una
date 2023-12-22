@@ -194,7 +194,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
                 if(!isset($this->aInputs[$CNF['FIELD_SOURCE']]['attrs']))
                     $this->aInputs[$CNF['FIELD_SOURCE']]['attrs'] = [];
 
-                $this->aInputs[$CNF['FIELD_SOURCE']]['attrs']['readonly'] = 'readonly';
+                $this->aInputs[$CNF['FIELD_SOURCE']]['attrs']['disabled'] = 'disabled';
             }
         }
 
