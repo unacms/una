@@ -95,6 +95,8 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=organizations-administration',
 
             // some params
+            'ALLOW_AS_CONTEXT' => true,
+
             'PARAM_AUTOAPPROVAL' => 'bx_organizations_autoapproval',
             'PARAM_ENABLE_ACTIVATION_LETTER' => 'bx_organizations_enable_profile_activation_letter',
             'PARAM_DEFAULT_ACL_LEVEL' => 'bx_organizations_default_acl_level',

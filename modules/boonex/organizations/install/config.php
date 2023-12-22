@@ -19,7 +19,7 @@ $aConfig = array(
     'title' => 'Organizations',
     'note' => 'Basic organization profiles functionality.',
     'version' => '13.0.10.DEV',
-    'vendor' => 'BoonEx',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(

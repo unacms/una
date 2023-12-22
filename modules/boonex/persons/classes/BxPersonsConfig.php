@@ -76,6 +76,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=persons-administration',
 
             // some params
+            'ALLOW_AS_CONTEXT' => defined('BX_PERSONS_AS_CONTEXT'),
+
             'PARAM_AUTOAPPROVAL' => 'bx_persons_autoapproval',
             'PARAM_ENABLE_ACTIVATION_LETTER' => 'bx_persons_enable_profile_activation_letter',
             'PARAM_DEFAULT_ACL_LEVEL' => 'bx_persons_default_acl_level',

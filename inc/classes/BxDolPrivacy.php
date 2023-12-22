@@ -454,7 +454,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 continue;
 
             $oModule = BxDolModule::getInstance($aModule['name']);
-            
+            if (bx_srv($aModule['name'], 'act_as_profile') && (!isset($oModule->_oConfig->CNF['ALLOW_AS_CONTEXT']) || $oModule->_oConfig->CNF['ALLOW_AS_CONTEXT'] == false))
+                continue;
+
             $a = BxDolService::call($aModule['name'], 'get_participating_profiles', array($oProfile->id()));
 
             // for an organization we should treat the organization profile itself as a participant of itself
