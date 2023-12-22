@@ -65,16 +65,22 @@ class BxBaseModPaymentGridTransactions extends BxTemplGrid
     public function performActionViewOrder()
     {
         $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) 
+        if((!$aIds || !is_array($aIds)) && !bx_is_api()) 
             return echoJson(array());
-
+        
         $iId = (int)$aIds[0];
+        
+        if (bx_is_api()){
+            $iId = bx_get('id');
+        }
 
         $sKey = 'order_' . $this->_sOrdersType . '_view';
         $sId = $this->_oModule->_oConfig->getHtmlIds($this->_sOrdersType, $sKey);
         $sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);
         $sContent = $this->_oModule->getObjectOrders()->getOrder($this->_sOrdersType, $iId);
-
+        if (bx_is_api()){
+            return [bx_api_get_block('simple_list',  $sContent)];
+        }
         return echoJson(array('popup' => BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $sContent)));
     }
 
