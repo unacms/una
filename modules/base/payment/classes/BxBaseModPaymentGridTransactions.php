@@ -21,6 +21,8 @@ class BxBaseModPaymentGridTransactions extends BxTemplGrid
 
     protected $_sJsObject;
     protected $_sLangsPrefix;
+
+    protected $_sCurrencyCode;
     protected $_sCurrencySign;
 
     public function __construct ($aOptions, $oTemplate = false)
@@ -36,6 +38,7 @@ class BxBaseModPaymentGridTransactions extends BxTemplGrid
             $this->_iSingleSeller = $this->_oModule->_oConfig->getSiteAdmin();
 
         $this->_sLangsPrefix = $this->_oModule->_oConfig->getPrefix('langs');
+        $this->_sCurrencyCode = $this->_oModule->_oConfig->getDefaultCurrencyCode();
         $this->_sCurrencySign = $this->_oModule->_oConfig->getDefaultCurrencySign();
 
         $this->_sDefaultSortingOrder = 'DESC';
@@ -45,8 +48,10 @@ class BxBaseModPaymentGridTransactions extends BxTemplGrid
             $iSellerId = (int)$iSellerId;
             $this->_aQueryAppend['seller_id'] = $iSellerId;
 
-            if(!$this->_bSingleSeller)
+            if(!$this->_bSingleSeller) {
+                $this->_sCurrencyCode = $this->_oModule->getVendorCurrencyCode($iSellerId);
                 $this->_sCurrencySign = $this->_oModule->getVendorCurrencySign($iSellerId);
+            }
         }
 
         $iClientId = bx_get('client_id');
@@ -140,6 +145,16 @@ class BxBaseModPaymentGridTransactions extends BxTemplGrid
 
     protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
     {
+        if(bx_is_api()) {
+            $sCode = '';
+            if(empty($aRow['currency']))
+                $sCode = !$this->_bSingleSeller ? $this->_oModule->getVendorCurrencyCode((int)$aRow['seller_id']) : $this->_sCurrencyCode;
+            else 
+                $sCode = $aRow['currency'];
+
+            return ['type' => 'text', 'value' => $mixedValue . ' ' . $sCode];
+        }
+        
         $sSign = '';
         if(!empty($aRow['currency']))
             $sSign = $this->_oModule->_oConfig->retrieveCurrencySign($aRow['currency']);
@@ -156,11 +171,17 @@ class BxBaseModPaymentGridTransactions extends BxTemplGrid
     
     protected function _getCellDefaultDate($mixedValue, $sKey, $aField, $aRow)
     {
+        if(bx_is_api())
+            return ['type' => 'time', 'data' => $mixedValue];
+
         return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE, true), $sKey, $aField, $aRow);
     }
 
     protected function _getCellDefaultDateTime($mixedValue, $sKey, $aField, $aRow)
     {
+        if(bx_is_api())
+            return ['type' => 'time', 'data' => $mixedValue];
+
         return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE_TIME, true), $sKey, $aField, $aRow);
     }
 
