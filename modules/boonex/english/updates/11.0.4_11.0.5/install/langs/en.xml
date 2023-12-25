@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_Apply"><![CDATA[Apply]]></string_add>
-	<string_add name="_sys_txt_err_sound_not_transcoded_yet"><![CDATA[Sound file isn't transcoded yet]]></string_add>
-</resources>

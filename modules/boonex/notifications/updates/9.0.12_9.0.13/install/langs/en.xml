@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_ntfs_alert_action_fan_added_personal"><![CDATA[New fans]]></string_add>
-	<string_add name="_bx_ntfs_alert_action_join_request_personal"><![CDATA[New join requests]]></string_add>
-	<string_add name="_bx_ntfs_alert_action_timeline_post_common_personal"><![CDATA[New posts on Timeline]]></string_add>
-</resources>

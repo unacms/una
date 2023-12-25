@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_dolphin_migration_cpt_default_privacy"><![CDATA[This privacy group will be set in case if you have not standard privacy groups in Dolphin and transferring item's privacy doesn't exist in UNA]]></string_add>	
-</resources>

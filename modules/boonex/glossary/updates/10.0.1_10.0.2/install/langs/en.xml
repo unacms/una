@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_glossary_reactions"><![CDATA[Glossary's Reactions]]></string_add>
-
-	<string_upd name="_bx_glossary_cmts"><![CDATA[Glossary's Comments]]></string_upd>
-</resources>

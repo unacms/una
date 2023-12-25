@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_market_form_entry_input_sys_header_beg_notes"><![CDATA[Notes: begin]]></string_add>
-    <string_add name="_bx_market_form_entry_input_header_beg_notes"><![CDATA[Notes]]></string_add>
-    <string_add name="_bx_market_form_entry_input_sys_header_beg_other"><![CDATA[Other: begin]]></string_add>
-    <string_add name="_bx_market_form_entry_input_header_beg_other"><![CDATA[Other]]></string_add>
-    <string_add name="_bx_market_form_entry_input_sys_header_end_notes"><![CDATA[Notes: end]]></string_add>
-    <string_add name="_bx_market_form_entry_input_sys_header_end_other"><![CDATA[Other: end]]></string_add>
-</resources>

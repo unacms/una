@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_fontawesome_option_icons_style"><![CDATA[Icons style]]></string_add>
-
-	<string_del name="_bx_fontawesome_option_light_icons"><![CDATA[Light icons]]></string_del>
-</resources>

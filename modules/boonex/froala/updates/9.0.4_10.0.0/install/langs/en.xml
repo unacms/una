@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_froala_option_icons_template"><![CDATA[Icons template]]></string_add>
-	<string_add name="_bx_froala_txt_skin_dark"><![CDATA[Dark]]></string_add>
-	<string_add name="_bx_froala_txt_skin_gray"><![CDATA[Gray]]></string_add>
-	<string_add name="_bx_froala_txt_skin_royal"><![CDATA[Royal]]></string_add>
-</resources>

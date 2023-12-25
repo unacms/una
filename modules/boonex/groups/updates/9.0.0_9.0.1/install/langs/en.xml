@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string_add>
-
-	<string_del name="_bx_ntfs_alert_action_fan_added"><![CDATA[member joined]]></string_del>
-	<string_del name="_bx_ntfs_alert_action_join_request"><![CDATA[join request]]></string_del>
-	<string_del name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[post to timeline]]></string_del>
-</resources>

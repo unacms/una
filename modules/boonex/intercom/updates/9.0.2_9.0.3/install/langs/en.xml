@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_intercom_option_hide_launcher"><![CDATA[Hide Launcher]]></string_add>
-    <string_add name="_bx_intercom_option_alignment"><![CDATA[Widget Alignment]]></string_add>
-    <string_add name="_bx_intercom_option_horizontal_padding"><![CDATA[Widget Horizontal Padding]]></string_add>
-    <string_add name="_bx_intercom_option_vertical_padding"><![CDATA[Widget Vertical Padding]]></string_add>
-</resources>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_dev_hash_msg_reset_hash_system"><![CDATA[System hash was successfully reset.]]></string_add>
-	<string_add name="_bx_dev_hash_err_reset_hash_system"><![CDATA[Cannot reset system hash.]]></string_add>
-	<string_add name="_bx_dev_hash_msg_reset_hash_modules"><![CDATA[Hash was successfully reset for the following modules:]]></string_add>
-	<string_add name="_bx_dev_hash_txt_reset_hash_module"><![CDATA[Module]]></string_add>
-	<string_add name="_bx_dev_hash_txt_reset_hash_files"><![CDATA[Files Hashed]]></string_add>
-</resources>

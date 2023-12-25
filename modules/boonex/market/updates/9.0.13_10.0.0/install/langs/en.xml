@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_market_txt_sample_score_up_single"><![CDATA[score up vote to product]]></string_add>
-    <string_add name="_bx_market_txt_sample_score_down_single"><![CDATA[score down vote to product]]></string_add>
-	<string_add name="_bx_market_txt_purchased_note"><![CDATA[Contact <a href="{0}">{1}</a> if you have any questions or need support.]]></string_add>
-
-	<string_upd name="_bx_market_menu_item_title_admt_products"><![CDATA[Products]]></string_upd>
-</resources>

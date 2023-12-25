@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_oauth_help_text"><![CDATA[Add clients to allow them to use profile information from this site on client's sites. <br />
-Client's sites must have "UNA Connect" module installed. <br />
-Specify the following "Main UNA Site URL" on the client sites:<br />
-<strong>{0}</strong>]]></string_upd>
-</resources>

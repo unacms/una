@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_orgs_option_enable_subscribe_wo_join"><![CDATA[Allow to follow without join]]></string_add>
-
-	<string_upd name="_bx_orgs_option_auto_activation_for_categories"><![CDATA[Auto activation for categories]]></string_upd>
-</resources>
