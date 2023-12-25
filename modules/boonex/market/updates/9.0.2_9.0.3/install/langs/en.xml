@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_market_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string_add>
-    <string_add name="_bx_market_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string_add>
-</resources>

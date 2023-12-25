@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_cnv_page_block_title_entry_breadcrumb"><![CDATA["Хлебные крошки"]]></string_add>
-
-	<string_upd name="_bx_cnv_menu_item_title_unread_messages"><![CDATA[{addon} непрочитанных сообщений]]></string_upd>
-</resources>

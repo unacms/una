@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_upd name="_bx_market_form_entry_input_price_recurring"><![CDATA[Price]]></string_upd>
-    <string_upd name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Leave empty to make the product free.]]></string_upd>
-	<string_upd name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string_upd>
-    <string_upd name="_bx_market_menu_item_title_subscribe"><![CDATA[Subscribe for {0}{1}/{2}]]></string_upd>
-	<string_upd name="_bx_market_txt_price_recurring"><![CDATA[Subscribe for {0}{1}/{2}]]></string_upd>
-</resources>

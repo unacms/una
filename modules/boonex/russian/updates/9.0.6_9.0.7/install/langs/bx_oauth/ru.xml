@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_oauth_connect"><![CDATA[Связать]]></string_add>
-
-	<string_upd name="_bx_oauth_authorization"><![CDATA[Авторизация]]></string_upd>
-	<string_upd name="_bx_oauth_authorize_app"><![CDATA[Выбери профайл, для использования на "{0}":]]></string_upd>
-</resources>

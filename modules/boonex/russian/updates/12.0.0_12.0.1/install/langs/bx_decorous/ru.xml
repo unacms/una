@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_decorous_stg_cpt_option_button_lg_border_size"><![CDATA[Размер границы (в px)]]></string_upd>
-	<string_upd name="_bx_decorous_stg_cpt_option_button_sm_border_size"><![CDATA[Размер границы (в px)]]></string_upd>
-</resources>

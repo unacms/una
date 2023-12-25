@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_ads_page_block_title_sys_my_entries"><![CDATA[User Ads]]></string_add>
-	<string_add name="_bx_ads_menu_item_title_system_cpa_video_record"><![CDATA[Record Video]]></string_add>
-    <string_add name="_bx_ads_menu_item_title_cpa_video_record"><![CDATA[Record Video]]></string_add>
-
-	<string_upd name="_bx_ads_page_block_title_my_entries"><![CDATA[{display_name} Ads]]></string_upd>
-</resources>

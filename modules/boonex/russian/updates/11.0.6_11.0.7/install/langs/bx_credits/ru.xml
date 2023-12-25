@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_credits_form_bundle_input_sys_name"><![CDATA[Имя]]></string_add>
-    <string_add name="_bx_credits_form_bundle_input_name"><![CDATA[Имя]]></string_add>
-    <string_add name="_bx_credits_form_bundle_input_name_err"><![CDATA[Это поле обязательно для использования в API запросах. Пожалуйста, заполните его.]]></string_add>
-</resources>

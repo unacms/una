@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_analytics_txt_total_count"><![CDATA[Total]]></string_upd>
-	<string_upd name="_bx_analytics_txt_count"><![CDATA[{0}]]></string_upd>
-	<string_upd name="_bx_analytics_type_top_by_views_label"><![CDATA[Views]]></string_upd>
-	<string_upd name="_bx_analytics_type_top_by_likes_label"><![CDATA[Likes]]></string_upd>
-	<string_upd name="_bx_analytics_type_top_by_followers_label"><![CDATA[Followed]]></string_upd>
-	<string_upd name="_bx_analytics_type_top_by_activity_label"><![CDATA[Content]]></string_upd>
-</resources>

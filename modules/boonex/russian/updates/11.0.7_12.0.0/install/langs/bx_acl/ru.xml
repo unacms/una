@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_acl_txt_cart_item_title_lifetime"><![CDATA[{0} (пожизненно)]]></string_add>
-
-	<string_upd name="_bx_acl_msg_empty_owner"><![CDATA['Главный продавец' не задан. Вам необходимо пометить какой-либо профайл как 'Главный продавец' в настройках активного на данный момент платежного модуля.]]></string_upd>
-</resources>

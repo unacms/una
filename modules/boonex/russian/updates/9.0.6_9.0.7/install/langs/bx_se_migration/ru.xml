@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_se_migration_cpt_transfer_data"><![CDATA[Перенос данных]]></string_upd>
-	<string_upd name="_bx_se_migration_start_transfer"><![CDATA[Начать перенос]]></string_upd>
-	<string_upd name="_bx_se_migration_salt"><![CDATA[Social Engine - Секрет]]></string_upd>
-</resources>

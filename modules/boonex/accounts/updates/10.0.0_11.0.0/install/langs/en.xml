@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_accnt_menu_item_title_system_confirm"><![CDATA[Confirm]]></string_add>
-    <string_add name="_bx_accnt_menu_item_title_confirm"><![CDATA[Confirm]]></string_add>
-	<string_add name="_bx_accnt_grid_action_title_adm_confirm"><![CDATA[Confirm]]></string_add>
-</resources>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_polls_txt_sample_score_up_single"><![CDATA[голос за голосование]]></string_add>
-    <string_add name="_bx_polls_txt_sample_score_down_single"><![CDATA[голос против голосования]]></string_add>
-
-    <string_upd name="_bx_polls_menu_item_title_admt_polls"><![CDATA[Голосования]]></string_upd>
-
-    <string_del name="_bx_polls_form_entry_input_subentries_inf"><![CDATA[Оставьте текстовое поле пустым, чтобы удалить ответ.]]></string_del>
-</resources>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_accnt_txt_not_operator"><![CDATA[Не оператор]]></string_add>
-</resources>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_tasks_alert_action_completed"><![CDATA[завершено]]></string_add>
-    <string_add name="_bx_tasks_alert_action_reopened"><![CDATA[открыто заново]]></string_add>
-</resources>

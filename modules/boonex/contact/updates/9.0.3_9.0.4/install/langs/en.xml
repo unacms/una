@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_contact_option_add_reply_to"><![CDATA[Assign 'Reply-To' header to sender's email address]]></string_add>
-
-	<string_del name="_bx_contact_option_send_from_senders_email"><![CDATA[Send messages from sender's email address]]></string_del>
-</resources>

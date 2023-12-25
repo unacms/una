@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_timeline_form_post_display_view"><![CDATA[View Post (for custom fields)]]></string_add>
-</resources>

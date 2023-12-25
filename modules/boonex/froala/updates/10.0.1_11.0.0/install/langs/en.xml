@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_froala_option_toolbar_mini_mobile"><![CDATA[Toolbar buttons for mini editor (mobile)]]></string_add>
-	<string_add name="_bx_froala_option_toolbar_standard_mobile"><![CDATA[Toolbar buttons for standard editor (mobile)]]></string_add>
-	<string_add name="_bx_froala_option_toolbar_full_mobile"><![CDATA[Toolbar buttons for full editor (mobile)]]></string_add>
-</resources>

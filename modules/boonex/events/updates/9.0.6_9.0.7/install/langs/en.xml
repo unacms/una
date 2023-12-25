@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_events_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Recommended Events (Showcase View)]]></string_add>
-    <string_add name="_bx_events_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended Events]]></string_add>
-</resources>

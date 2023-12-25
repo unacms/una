@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_payment_msg_confirm_cancelation"><![CDATA[Вы уверены, что хотите отменить вашу подписку?]]></string_add>
-    <string_add name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Отменить автоматически]]></string_add>
-    <string_add name="_bx_payment_txt_unsubscribe_no"><![CDATA[Не отменять]]></string_add>
-
-    <string_upd name="_bx_payment_err_self_purchase"><![CDATA[Покупка из собственного магазина не возможна.]]></string_upd>
-</resources>

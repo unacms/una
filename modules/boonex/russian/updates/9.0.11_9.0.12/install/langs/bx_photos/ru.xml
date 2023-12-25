@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_photos_menu_item_title_system_create_entry"><![CDATA[Фото]]></string_upd>
-    <string_upd name="_bx_photos_menu_item_title_create_entry"><![CDATA[Фото]]></string_upd>
-	<string_upd name="_bx_photos_menu_item_title_manage_my_photos"><![CDATA[Фото]]></string_upd>
-</resources>

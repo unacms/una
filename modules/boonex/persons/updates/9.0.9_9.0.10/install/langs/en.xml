@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_persons_form_profile_input_sys_date_added"><![CDATA[Added]]></string_add>
-    <string_add name="_bx_persons_form_profile_input_date_added"><![CDATA[Added]]></string_add>
-    <string_add name="_bx_persons_form_profile_input_sys_date_changed"><![CDATA[Updated]]></string_add>
-    <string_add name="_bx_persons_form_profile_input_date_changed"><![CDATA[Updated]]></string_add>
-    <string_add name="_bx_persons_grid_filter_item_title_adm_unconfirmed"><![CDATA[Unconfirmed]]></string_add>
-</resources>

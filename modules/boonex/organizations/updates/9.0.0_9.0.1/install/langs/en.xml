@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_orgs_option_per_page_browse"><![CDATA[Number of items per page]]></string_add>
-	<string_add name="_bx_orgs_option_searchable_fields"><![CDATA[Searchable fields]]></string_add>
-	<string_add name="_bx_orgs_page_title_browse_by_acl"><![CDATA[{0} Organizations]]></string_add>
-</resources>

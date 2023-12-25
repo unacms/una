@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_payment_txt_checkout_for"><![CDATA[A message was sent to the seller ({0}), that you want to pay with cash for the following items. He should contact you shortly.]]></string_add>
-	<string_add name="_bx_payment_txt_payment_description"><![CDATA[Payment on {0} site.]]></string_add>
-</resources>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_lucid_stg_cpt_option_button_bg_color_click"><![CDATA[On-click background color]]></string_add>
-	<string_add name="_bx_lucid_stg_cpt_option_button_border_color_click"><![CDATA[On-click border color]]></string_add>
-	<string_add name="_bx_lucid_stg_cpt_option_button_font_color_click"><![CDATA[On-click font color]]></string_add>
-
-	<string_upd name="_bx_lucid_stg_cpt_option_button_border_size"><![CDATA[Border size (in px)]]></string_upd>
-</resources>

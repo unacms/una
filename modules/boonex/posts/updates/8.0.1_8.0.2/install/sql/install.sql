@@ -1,1 +1,0 @@
-UPDATE `sys_objects_vote` SET `IsUndo`=0 WHERE `Name`='bx_posts' LIMIT 1;

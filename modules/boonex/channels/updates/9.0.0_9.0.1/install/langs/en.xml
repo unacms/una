@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Create Channel Auto]]></string_add>
-
-    <string_upd name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[New content <b class="bx-ntfs-content-entry">{entry_caption}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string_upd>
-
-    <string_del name="_bx_channels_page_block_title_categories"><![CDATA[Channels Categories]]></string_del>
-</resources>

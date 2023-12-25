@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_massmailer_txt_attribute_reset_password_url"><![CDATA[Reset password URL]]></string_add>
-
-	<string_upd name="_bx_massmailer_txt_attribute_account_id"><![CDATA[Account ID]]></string_upd>
-	<string_upd name="_bx_massmailer_txt_attribute_unsubscribe_url"><![CDATA[Unsubscribe URL]]></string_upd>
-</resources>

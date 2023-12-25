@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_sys_module_twitter"><![CDATA[Twitter-соединение]]></string_upd>
-	<string_upd name="_bx_twitter"><![CDATA[Twitter-соединение]]></string_upd>
-	<string_upd name="_bx_twitter_settings"><![CDATA[Twitter-соединение]]></string_upd>
-	<string_upd name="_bx_twitter_auth_title"><![CDATA[Twitter-соединение]]></string_upd>
-	<string_upd name="_bx_twitter_adm_stg_cpt_type"><![CDATA[Twitter-соединение]]></string_upd>
-	<string_upd name="_bx_twitter_et_password_generated"><![CDATA[Twitter-соединение: временный пароль]]></string_upd>
-</resources>

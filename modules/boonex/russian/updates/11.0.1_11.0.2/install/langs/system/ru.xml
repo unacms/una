@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Скрыть из поля "Конфиденциальность" возможность добавления контента в контекст модулей]]></string_add>
-	<string_add name="_sys_menu_item_title_system_sm_membership"><![CDATA[Членство]]></string_add>
-
-	<string_upd name="_sys_form_account_input_name"><![CDATA[Имя пользователя]]></string_upd>
-	<string_upd name="_sys_form_login_input_caption_system_name"><![CDATA[Имя пользователя]]></string_upd>
-</resources>

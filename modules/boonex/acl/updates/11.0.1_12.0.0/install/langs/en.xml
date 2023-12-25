@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_acl_txt_cart_item_title_lifetime"><![CDATA[{0} (lifetime)]]></string_add>
-
-	<string_upd name="_bx_acl_msg_empty_owner"><![CDATA['Main seller' is empty. You need to mark some profile as 'Main seller' in Settings of currently active Payment app.]]></string_upd>
-</resources>

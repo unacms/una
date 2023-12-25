@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_del name="_bx_ntfs_alert_action_fan_added"><![CDATA[присоединение нового члена]]></string_del>
-	<string_del name="_bx_ntfs_alert_action_join_request"><![CDATA[запрос на членство]]></string_del>
-	<string_del name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[сообщение на линейке]]></string_del>
-</resources>

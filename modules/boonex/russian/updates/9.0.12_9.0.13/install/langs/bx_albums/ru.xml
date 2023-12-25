@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_albums_txt_sample_action_changed"><![CDATA[изменил {0}]]></string_add>
-    <string_add name="_bx_albums_alert_action_media_added"><![CDATA[добавить изображения]]></string_add>
-    <string_add name="_bx_albums_alert_action_media_added_follow_member"><![CDATA[Новые изображения]]></string_add>
-    <string_add name="_bx_albums_alert_action_media_added_follow_context"><![CDATA[Новые изображения]]></string_add>
-</resources>

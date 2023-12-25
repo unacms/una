@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	 <string_upd name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Обязательное поле. Пожалуйста, укажите хотя бы одного получателя, которому Вы можете писать.]]></string_upd>
-</resources>

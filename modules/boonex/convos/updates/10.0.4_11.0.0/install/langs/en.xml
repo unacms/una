@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Mandatory field. Please, fill it in with profile(s) you are allowed to contact.]]></string_upd>
-</resources>

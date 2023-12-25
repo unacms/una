@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_orgs_option_per_page_browse"><![CDATA[Число элементов на странице]]></string_add>
-	<string_add name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска]]></string_add>
-	<string_add name="_bx_orgs_page_title_browse_by_acl"><![CDATA[Организации уровня {0}]]></string_add>
-</resources>

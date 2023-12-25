@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_shopify_txt_sample_reaction_single"><![CDATA[реакция '{0}' к товару]]></string_add>
-
-    <string_upd name="_bx_shopify_txt_all_entries_by"><![CDATA[{0} товаров]]></string_upd>
-</resources>

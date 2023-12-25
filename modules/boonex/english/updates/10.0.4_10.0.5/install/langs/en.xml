@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_adm_stg_cpt_option_sys_upgrade_channel"><![CDATA[Update channel]]></string_upd>
-</resources>

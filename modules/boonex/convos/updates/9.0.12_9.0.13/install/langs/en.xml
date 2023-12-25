@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_upd name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}
-<p><a href="{PageUrl}">New message</a> from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
-<hr />
-<p>{Message}</p>
-{email_footer}]]></string_upd>
-</resources>

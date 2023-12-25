@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_accnt_menu_item_title_system_resend_remail"><![CDATA[Resend Reset Password]]></string_add>
-    <string_add name="_bx_accnt_menu_item_title_resend_remail"><![CDATA[Resend Reset Password]]></string_add>
-	<string_add name="_bx_accnt_menu_item_title_system_set_operator_role"><![CDATA[Set Operator Role]]></string_add>
-    <string_add name="_bx_accnt_menu_item_title_set_operator_role"><![CDATA[Set Operator Role]]></string_add>
-	<string_add name="_bx_accnt_grid_action_title_adm_resend_remail"><![CDATA[Resend Reset Password]]></string_add>
-</resources>

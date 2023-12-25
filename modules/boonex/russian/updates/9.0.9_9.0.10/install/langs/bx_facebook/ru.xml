@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_facebook_information_block"><![CDATA[Чтобы получить "App ID" и "App Secret", нужно <a href="https://developers.facebook.com/apps/" target="_blank">создать новое приложение</a>. <br /><br />URL-адрес для перенаправления: <b>{0}</b>]]></string_upd>
-</resources>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_smtp_adm_stg_cpt_type"><![CDATA[SMTP Почтовик]]></string_upd>
-	<string_upd name="_bx_smtp_option_on"><![CDATA[Включить SMTP Почтовик]]></string_upd>
-</resources>

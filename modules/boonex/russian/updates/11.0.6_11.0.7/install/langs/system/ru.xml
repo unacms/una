@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_adm_stg_cpt_option_sys_account_disable_login_form"><![CDATA[Скрыть форму авторизации]]></string_add>
-    <string_add name="_adm_stg_cpt_option_sys_account_disable_join_form"><![CDATA[Скрыть форму регистрации]]></string_add>
-    <string_add name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Разрешить использование знака плюс ("+") в адресе электронной почты]]></string_add>
-	<string_add name="_cmt_rvw_txt_do"><![CDATA[Обозревать]]></string_add>
-</resources>

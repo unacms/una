@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_groups_menu_item_title_system_create_profile"><![CDATA[Group]]></string_upd>
-    <string_upd name="_bx_groups_menu_item_title_create_profile"><![CDATA[Group]]></string_upd>
-	<string_upd name="_bx_groups_menu_item_title_manage_my_groups"><![CDATA[Groups]]></string_upd>
-
-	<string_del name="_bx_groups_menu_item_title_system_friend_requests"><![CDATA[Friend requests number]]></string_del>
-    <string_del name="_bx_groups_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string_del>
-</resources>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_posts_form_entry_input_sys_date_published"><![CDATA[Время публикации]]></string_upd>
-    <string_upd name="_bx_posts_form_entry_input_date_published"><![CDATA[Время публикации]]></string_upd>
-</resources>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_adm_form_txt_field_type_location_radius"><![CDATA[радиус местонахождения]]></string_add>
-	<string_add name="_sys_form_input_location_radius_label"><![CDATA[Радиус (в км)]]></string_add>
-
-	<string_upd name="_sys_form_input_location"><![CDATA[Расположение по радиусу]]></string_upd>
-</resources>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_videos_txt_sample_score_up_single"><![CDATA[голос за видео]]></string_add>
-    <string_add name="_bx_videos_txt_sample_score_down_single"><![CDATA[голос против видео]]></string_add>
-    <string_add name="_bx_videos_txt_processing_awaiting"><![CDATA[Видео будет опубликовано как только сконвертируется.]]></string_add>
-    <string_add name="_bx_videos_txt_processing_failed"><![CDATA[Видео не было опубликовано, тк произошла ошибка при конвертации. Обновите видео, чтобы решить проблему.]]></string_add>
-
-    <string_upd name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Видео]]></string_upd>
-</resources>

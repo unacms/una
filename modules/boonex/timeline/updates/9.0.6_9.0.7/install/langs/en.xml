@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_timeline_page_title_sys_item_brief"><![CDATA[Feed Item Preview]]></string_add>
-    <string_add name="_bx_timeline_page_title_item_brief"><![CDATA[Feed Item Preview]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_item_content"><![CDATA[Content]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_item_info"><![CDATA[Info]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_item_comments"><![CDATA[Comments]]></string_add>
-</resources>

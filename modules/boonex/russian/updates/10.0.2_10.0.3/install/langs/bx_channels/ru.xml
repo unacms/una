@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_channels_option_default_author"><![CDATA[Автор по умолчанию для автоматически создаваемых каналов]]></string_add>
-	<string_add name="_bx_channels_msg_empty_author"><![CDATA['Автор по умолчанию для автоматически создаваемых каналов' пуст. Вам нужно выбрать профиль в этой настройке.]]></string_add>
-</resources>

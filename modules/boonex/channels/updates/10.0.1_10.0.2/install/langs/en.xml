@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_channels_option_default_author"><![CDATA[Default author for automatically created channels]]></string_add>
-	<string_add name="_bx_channels_msg_empty_author"><![CDATA['Default author for automatically created channels' is empty. You need to select some profile in this setting.]]></string_add>
-</resources>

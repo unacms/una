@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_payment_msg_confirm_cancelation"><![CDATA[Are you sure you want to cancel your subscription?]]></string_add>
-	<string_add name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Cancel automatically]]></string_add>
-	<string_add name="_bx_payment_txt_unsubscribe_no"><![CDATA[Do not cancel]]></string_add>
-
-	<string_upd name="_bx_payment_err_self_purchase"><![CDATA[Buying from your own store is not permitted.]]></string_upd>
-</resources>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_spaces_option_enable_multilevel_hierarchy"><![CDATA[Allow multilevel hierarchy (experimental)]]></string_add>
-    <string_add name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Top Level Spaces]]></string_add>
-</resources>

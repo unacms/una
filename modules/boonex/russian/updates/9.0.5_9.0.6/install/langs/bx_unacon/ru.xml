@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_unacon_option_rewrite"><![CDATA[Использовать преобразованные ссылки на главном UNA сайте]]></string_upd>
-</resources>

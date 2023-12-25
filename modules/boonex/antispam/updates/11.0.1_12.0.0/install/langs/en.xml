@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_antispam_submit_false_positive_report"><![CDATA[If you believe that this is a mistake, please submit a false positive report here: {0}]]></string_upd>
-</resources>

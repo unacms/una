@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_massmailer_delete_sent_email_in_days"><![CDATA[Delete sent email campaigns older than (days)]]></string_add>
-
-    <string_del name="_bx_massmailer_initial_from_name"><![CDATA[Letter's header "From"]]></string_del>
-</resources>

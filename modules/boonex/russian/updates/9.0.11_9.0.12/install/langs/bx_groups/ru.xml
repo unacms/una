@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_groups_menu_item_title_system_create_profile"><![CDATA[Группа]]></string_upd>
-    <string_upd name="_bx_groups_menu_item_title_create_profile"><![CDATA[Группа]]></string_upd>
-	<string_upd name="_bx_groups_menu_item_title_manage_my_groups"><![CDATA[Групп]]></string_upd>
-
-	<string_del name="_bx_groups_menu_item_title_system_friend_requests"><![CDATA[Число запросов дружбы]]></string_del>
-    <string_del name="_bx_groups_menu_item_title_friend_requests"><![CDATA[{addon} запросов дружбы]]></string_del>
-</resources>

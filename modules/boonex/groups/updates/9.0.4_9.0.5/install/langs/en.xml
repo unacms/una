@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_groups_page_title_browse_featured"><![CDATA[Featured Groups]]></string_upd>
-	<string_upd name="_bx_groups_page_block_title_categories"><![CDATA[Groups Categories]]></string_upd>
-
-	<string_del name="_bx_groups_privacy_group_closed"><![CDATA[Closed]]></string_del>
-	<string_del name="_bx_groups_privacy_group_secret"><![CDATA[Secret]]></string_del>
-</resources>

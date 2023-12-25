@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_ntfs_alert_module_sys_profiles_subscriptions"><![CDATA[Profiles Subscriptions]]></string_add>
-	<string_add name="_bx_ntfs_alert_action_connection_added"><![CDATA[add connection]]></string_add>
-
-	<string_del name="_bx_ntfs_alert_action_connection_added" />
-	<string_del name="_bx_ntfs_alert_action_fan_added" />
-    <string_del name="_bx_ntfs_alert_action_join_request" />
-</resources>

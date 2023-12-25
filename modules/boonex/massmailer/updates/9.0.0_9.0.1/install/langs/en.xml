@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_massmailer_txt_item"><![CDATA[Item]]></string_add>
-    <string_add name="_bx_massmailer_txt_value"><![CDATA[Value]]></string_add>
-    <string_add name="_bx_massmailer_txt_date"><![CDATA[Date]]></string_add>
-
-    <string_upd name="_bx_massmailer_form_campaign_input_from_name_info_value"><![CDATA[The message will be sent to {0} profiles.]]></string_upd>
-</resources>

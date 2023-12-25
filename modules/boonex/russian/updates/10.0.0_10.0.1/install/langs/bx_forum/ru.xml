@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_forum_txt_sample_reaction_single"><![CDATA[реакция '{0}' к обсуждению]]></string_add>
-
-	<string_del name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} {1}]]></string_del>
-</resources>

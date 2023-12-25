@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_ntfs_txt_err_nothing_changed"><![CDATA[Nothing was changed.]]></string_add>
-    <string_add name="_bx_ntfs_txt_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string_add>
-	<string_add name="_bx_ntfs_grid_column_title_active"><![CDATA[Active]]></string_add>
-	<string_add name="_bx_ntfs_grid_column_title_value"><![CDATA[Default value]]></string_add>
-    <string_add name="_bx_ntfs_grid_action_title_activate"><![CDATA[Activate]]></string_add>
-</resources>

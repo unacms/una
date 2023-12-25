@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_dolphin_migration_cpt_overwrite"><![CDATA[If account with the same NickName or Email already exists, then to overwrite its info.
-	<br/><b>This option is useful if you already have account on current version with the same Nickname as in Dolphin. If you enable this option all existed on UNA accounts will be updated using profiles' info from Dolphin and don't forget that info of your current logged member may be also updated and you can be logged out.</b>]]></string_upd>
-	<string_add name="_bx_dolphin_migration_data_membership_levels"><![CDATA[Paid Memberships levels, Members info]]></string_add>
-	<string_add name="_bx_dolphin_migration_started_migration_membership_levels"><![CDATA[Membership levels migration was started]]></string_add>
-	<string_add name="_bx_dolphin_migration_started_migration_membership_levels_finished"><![CDATA[{0} membership levels and {1} members' info were transferred]]></string_add>
-	<string_add name="_bx_dolphin_migration_started_migration_membership_levels_error"><![CDATA[Error occurred. Record Id is {0}]]></string_add>
-</resources>

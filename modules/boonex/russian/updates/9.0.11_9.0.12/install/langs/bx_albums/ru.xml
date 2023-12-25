@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_albums_menu_item_title_system_create_entry"><![CDATA[Альбом]]></string_upd>
-	<string_upd name="_bx_albums_menu_item_title_create_entry"><![CDATA[Альбом]]></string_upd>
-	<string_upd name="_bx_albums_menu_item_title_manage_my_albums"><![CDATA[Альбомы]]></string_upd>
-</resources>

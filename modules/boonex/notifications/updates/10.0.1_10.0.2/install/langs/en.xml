@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_ntfs_alert_module_sys_cmts"><![CDATA[Comments]]></string_add>
-    <string_add name="_bx_ntfs_alert_module_sys_cmts_reactions"><![CDATA[Comments' Reactions]]></string_add>
-</resources>

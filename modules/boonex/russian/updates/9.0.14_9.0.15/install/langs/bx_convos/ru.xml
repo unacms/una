@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}
-<p><a href="{PageUrl}">Новое сообщение</a> от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
-<hr />
-<p>{Message}</p>
-{email_footer}]]></string_upd>
-</resources>

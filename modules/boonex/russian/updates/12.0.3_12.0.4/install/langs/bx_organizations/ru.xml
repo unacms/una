@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_orgs_option_enable_subscribe_wo_join"><![CDATA[Разрешить подписываться не членам организации]]></string_add>
-    <string_add name="_bx_orgs_option_auto_activation_for_categories"><![CDATA[Автоактивация для категорий]]></string_add>
-</resources>

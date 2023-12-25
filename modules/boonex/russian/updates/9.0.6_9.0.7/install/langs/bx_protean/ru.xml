@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_protean_stg_cpt_category_styles_large_button"><![CDATA[Большие кнопки]]></string_upd>
-	<string_upd name="_bx_protean_stg_cpt_category_styles_small_button"><![CDATA[Маленькие кнопки]]></string_upd>
-</resources>

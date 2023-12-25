@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_posts_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string_upd>
-	<string_upd name="_bx_posts_txt_sample_comment_single"><![CDATA[comment to post]]></string_upd>
-	<string_upd name="_bx_posts_txt_sample_vote_single"><![CDATA[vote to post]]></string_upd>
-</resources>

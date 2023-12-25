@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_ntfs_option_clear_interval"><![CDATA[Срок жизни уведомления, в днях (0 - без ограничений)]]></string_add>
-</resources>
