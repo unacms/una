@@ -684,7 +684,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 ('bx_ads_videos_mp4', 'transcoded', @iHandler),
 
-('bx_timeline', 'get_view', @iHandler);
+('bx_timeline', 'get_view', @iHandler),
 ('bx_timeline', 'get_external_post', @iHandler);
 
 
