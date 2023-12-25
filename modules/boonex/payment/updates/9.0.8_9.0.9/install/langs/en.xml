@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_payment_err_already_registered"><![CDATA[Subscription with the same data was already registered.]]></string_add>
-	<string_add name="_bx_payment_cbee_check_amount_cpt"><![CDATA[Enable amount checking]]></string_add>
-	<string_add name="_bx_payment_cbee_check_amount_dsc"><![CDATA[Enable amount checking for Chargebee Webhooks (recomended). However checking should be disabled when discounts and coupons are used.]]></string_add>
-	<string_add name="_bx_payment_cbee_menu_item_title_manager"><![CDATA[Self-serve Portal]]></string_add>
-</resources>

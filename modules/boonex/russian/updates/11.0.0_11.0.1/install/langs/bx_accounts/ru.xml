@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_accounts_form_display_account_create_popup"><![CDATA[Создать новый аккаунт]]></string_add>
-	<string_add name="_bx_accnt_grid_action_title_adm_more_add"><![CDATA[Добавить новый]]></string_add>
-	<string_add name="_bx_accnt_form_login_input_caption_system_email_confirmed"><![CDATA[Email подтвержден]]></string_add>
-    <string_add name="_bx_accnt_form_account_input_email_confirmed"><![CDATA[Email подтвержден]]></string_add>
-</resources>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_channels_acl_action_create_channel_auto_info"><![CDATA[Автоматически создавать новый канал, когда новый хэштег упоминается кем-либо с этим уровнем]]></string_add>
-	<string_add name="_bx_channels_page_block_title_system_profile_subscribed_me"><![CDATA[Подписчики]]></string_add>
-    <string_add name="_bx_channels_page_block_title_profile_subscribed_me"><![CDATA[Подписчики]]></string_add>
-</resources>

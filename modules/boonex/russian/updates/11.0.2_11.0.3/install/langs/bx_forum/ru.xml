@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_forum_page_block_title_sys_multicats"><![CDATA[Категории обсуждений(Мульти)]]></string_add>
-    <string_add name="_bx_forum_page_block_title_multicats"><![CDATA[Категории обсуждений]]></string_add>
-
-	<string_upd name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string_upd>
-	<string_upd name="_bx_forum_form_entry_input_do_submit"><![CDATA[Выполнить]]></string_upd>
-</resources>

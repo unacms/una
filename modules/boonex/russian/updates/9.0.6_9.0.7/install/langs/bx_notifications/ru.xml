@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_ntfs_menu_title_submenu"><![CDATA[Уведомления - Подменю]]></string_upd>
-	<string_upd name="_bx_ntfs_menu_set_title_submenu"><![CDATA[Уведомления - Подменю]]></string_upd>
-	<string_upd name="_bx_ntfs_option_events_per_page"><![CDATA[Количество событий, отображаемых на странице просмотра]]></string_upd>
-	<string_upd name="_bx_ntfs_option_events_hide"><![CDATA[Показывать события для последователей, когда пользователь совершает действия]]></string_upd>
-</resources>

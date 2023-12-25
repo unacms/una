@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_googlecon_et_password_generated_body"><![CDATA[{email_header}
-<p>Временный пароль - <b>{password}</b></p>
-<p>Его нужно изменить, после первого захода на сайт.</p>
-{email_footer}]]></string_upd>
-</resources>

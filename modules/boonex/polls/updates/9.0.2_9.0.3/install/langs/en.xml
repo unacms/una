@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_polls_form_entry_input_subentries_err"><![CDATA[Poll should have at least 2 non-empty answers.]]></string_add>
-
-	<string_upd name="_bx_polls_txt_sample_comment_single"><![CDATA[comment to poll]]></string_upd>
-	<string_upd name="_bx_polls_txt_sample_vote_single"><![CDATA[vote to poll]]></string_upd>
-
-	<string_del name="_bx_polls_txt_entry_comment_counter"><![CDATA[{0} comments]]></string_del>
-</resources>

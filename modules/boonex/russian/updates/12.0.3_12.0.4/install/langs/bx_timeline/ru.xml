@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_timeline_option_enable_repost_own_actions"><![CDATA[Репост использует собственные действия (просмотры, голосование и тп.)]]></string_add>
-	<string_add name="_bx_timeline_option_limit_attach_links"><![CDATA[Ограничить число присоединенных линок (0 - без ограничений)]]></string_add>
-	<string_add name="_bx_timeline_txt_err_attach_links"><![CDATA[Достигнуто максимально допустимое количество прикрепленных ссылок.]]></string_add>
-</resources>

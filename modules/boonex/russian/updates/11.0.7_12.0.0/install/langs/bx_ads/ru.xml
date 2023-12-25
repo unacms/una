@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_ads_page_block_title_sys_my_entries"><![CDATA[Объявления пользователя]]></string_add>
-	<string_add name="_bx_ads_menu_item_title_system_cpa_video_record"><![CDATA[Записать видео]]></string_add>
-    <string_add name="_bx_ads_menu_item_title_cpa_video_record"><![CDATA[Записать видео]]></string_add>
-
-	<string_upd name="_bx_ads_page_block_title_my_entries"><![CDATA[{display_name} - Объявления]]></string_upd>
-</resources>

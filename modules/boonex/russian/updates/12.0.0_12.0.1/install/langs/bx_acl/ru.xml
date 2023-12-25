@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_acl_option_recurring_prioritize"><![CDATA[Отдавать предпочтение подпискам]]></string_add>
-</resources>

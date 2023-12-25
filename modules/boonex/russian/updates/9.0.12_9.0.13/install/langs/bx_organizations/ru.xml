@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_orgs_form_profile_input_sys_date_added"><![CDATA[Дата создания]]></string_add>
-    <string_add name="_bx_orgs_form_profile_input_date_added"><![CDATA[Дата создания]]></string_add>
-    <string_add name="_bx_orgs_form_profile_input_sys_date_changed"><![CDATA[Дата обновления]]></string_add>
-    <string_add name="_bx_orgs_form_profile_input_date_changed"><![CDATA[Дата обновления]]></string_add>
-	<string_add name="_bx_orgs_grid_filter_item_title_adm_unconfirmed"><![CDATA[Неподтвержденные]]></string_add>
-</resources>

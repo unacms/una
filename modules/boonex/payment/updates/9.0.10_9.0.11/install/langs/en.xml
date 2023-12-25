@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_payment_lmi_cpt_providers"><![CDATA[Providers]]></string_add>
-    <string_add name="_bx_payment_grid_column_title_pdrs_caption"><![CDATA[Caption]]></string_add>
-    <string_add name="_bx_payment_grid_column_title_pdrs_description"><![CDATA[Description]]></string_add>
-    <string_add name="_bx_payment_grid_column_title_pdrs_for_visitor"><![CDATA[For visitors]]></string_add>
-    <string_add name="_bx_payment_grid_column_title_pdrs_for_single"><![CDATA[One Time]]></string_add>
-    <string_add name="_bx_payment_grid_column_title_pdrs_for_recurring"><![CDATA[Recurring]]></string_add>
-</resources>

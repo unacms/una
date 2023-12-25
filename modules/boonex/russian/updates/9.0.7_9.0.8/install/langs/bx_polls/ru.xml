@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_polls_form_entry_input_subentries_err"><![CDATA[Голосование должно иметь как минимум 2 не пустых ответа.]]></string_add>
-</resources>

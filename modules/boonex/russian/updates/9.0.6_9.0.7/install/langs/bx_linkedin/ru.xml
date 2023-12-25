@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_sys_module_linkedin"><![CDATA[LinkedIn-соединение]]></string_upd>
-	<string_upd name="_bx_linkedin"><![CDATA[LinkedIn-соединение]]></string_upd>
-	<string_upd name="_bx_linkedin_settings"><![CDATA[LinkedIn-соединение]]></string_upd>
-	<string_upd name="_bx_linkedin_auth_title"><![CDATA[LinkedIn-соединение]]></string_upd>
-	<string_upd name="_bx_linkedin_adm_stg_cpt_type"><![CDATA[LinkedIn-соединение]]></string_upd>
-	<string_upd name="_bx_linkedin_et_password_generated"><![CDATA[LinkedIn-соединение: временный пароль]]></string_upd>
-</resources>

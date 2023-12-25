@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_posts_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Posts (Showcase View)]]></string_add>
-    <string_add name="_bx_posts_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Posts]]></string_add>
-    <string_add name="_bx_posts_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Popular Posts (Showcase View)]]></string_add>
-    <string_add name="_bx_posts_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Posts]]></string_add>
-    <string_add name="_bx_posts_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Posts (Showcase View)]]></string_add>
-    <string_add name="_bx_posts_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Posts]]></string_add>
-</resources>

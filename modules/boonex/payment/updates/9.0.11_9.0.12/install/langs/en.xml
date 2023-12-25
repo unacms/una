@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_payment_grid_column_title_ods_item"><![CDATA[Product]]></string_add>
-    <string_add name="_bx_payment_txt_license"><![CDATA[License]]></string_add>
-</resources>

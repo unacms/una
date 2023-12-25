@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_files_menu_item_title_system_create_entry"><![CDATA[Файл]]></string_upd>
-    <string_upd name="_bx_files_menu_item_title_create_entry"><![CDATA[Файл]]></string_upd>
-	<string_upd name="_bx_files_menu_item_title_manage_my_files"><![CDATA[Файлов]]></string_upd>
-	<string_upd name="_bx_files_txt_preview_not_available"><![CDATA[Предварительный просмотр недоступен, пожалуйста скачайте этот файл, чтобы его посмотреть]]></string_upd>
-</resources>

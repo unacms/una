@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_ntfs_alert_action_join_invitation_notif_personal"><![CDATA[Новые приглашения присоединиться]]></string_add>
-</resources>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_posts_form_entry_input_sys_date_published"><![CDATA[Publishing time]]></string_upd>
-    <string_upd name="_bx_posts_form_entry_input_date_published"><![CDATA[Publishing time]]></string_upd>
-</resources>

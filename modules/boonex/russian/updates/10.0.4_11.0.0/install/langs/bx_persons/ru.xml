@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_persons_form_profile_input_sys_allow_contact_to"><![CDATA[Писать мне могут]]></string_add>
-    <string_add name="_bx_persons_form_profile_input_allow_contact_to"><![CDATA[Писать мне могут]]></string_add>
-	<string_add name="_bx_persons_page_block_title_sys_active_profiles"><![CDATA[Активные пользователи]]></string_add>
-	<string_add name="_bx_persons_grid_action_title_adm_audit_content"><![CDATA[Аудит действий над профилем]]></string_add>
-    <string_add name="_bx_persons_grid_action_title_adm_audit_profile"><![CDATA[Аудит действий профиля]]></string_add>
-</resources>

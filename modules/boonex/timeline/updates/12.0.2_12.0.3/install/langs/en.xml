@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_timeline_page_content_ph_outline"><![CDATA[Timeline: with outline placeholder]]></string_add>
-
-	<string_del name="_bx_timeline_option_enable_dynamic_cards"><![CDATA[Enable dynamic cards loading]]></string_del>
-</resources>

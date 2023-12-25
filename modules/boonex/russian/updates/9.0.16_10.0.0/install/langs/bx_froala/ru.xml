@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_froala_option_icons_template"><![CDATA[Шаблон иконок]]></string_add>
-    <string_add name="_bx_froala_txt_skin_dark"><![CDATA[Темная]]></string_add>
-    <string_add name="_bx_froala_txt_skin_gray"><![CDATA[Серая]]></string_add>
-    <string_add name="_bx_froala_txt_skin_royal"><![CDATA[Королевская]]></string_add>
-</resources>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_ntfs_menu_title_preview"><![CDATA[Уведомления - Пред просмотр]]></string_add>
-	<string_add name="_bx_ntfs_menu_set_title_preview"><![CDATA[Уведомления - Пред просмотр]]></string_add>
-	<string_add name="_bx_ntfs_menu_item_title_system_more"><![CDATA[Смотреть все уведомления]]></string_add>
-	<string_add name="_bx_ntfs_menu_item_title_more"><![CDATA[Смотреть все уведомления]]></string_add>
-	<string_add name="_bx_ntfs_option_events_per_preview"><![CDATA[Количество элементов в пред просмотре]]></string_add>
-</resources>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_contact_option_send_from_senders_email"><![CDATA[Отсылать сообщения с e-mail адреса отправителя]]></string_add>
-
-    <string_upd name="_bx_contact_option_email"><![CDATA[E-mail для получения сообщений (если пусто, будет использован e-mail сайта)]]></string_upd>
-</resources>

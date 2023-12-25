@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_lucid_stg_cpt_option_button_bg_color_click"><![CDATA[Цвет фона при нажатии]]></string_add>
-	<string_add name="_bx_lucid_stg_cpt_option_button_border_color_click"><![CDATA[Цвет границы при нажатии]]></string_add>
-	<string_add name="_bx_lucid_stg_cpt_option_button_font_color_click"><![CDATA[Цвет шрифта при нажатии]]></string_add>
-
-	<string_upd name="_bx_lucid_stg_cpt_option_button_border_size"><![CDATA[Размер границы (в px)]]></string_upd>
-</resources>

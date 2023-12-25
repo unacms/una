@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Создавать канал автоматически]]></string_add>
-
-	<string_del name="_bx_channels_page_block_title_categories"><![CDATA[Категории каналов]]></string_del>
-</resources>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_payment_grid_column_title_ods_item"><![CDATA[Продукт]]></string_add>
-	<string_add name="_bx_payment_txt_license"><![CDATA[Лицензия]]></string_add>
-</resources>

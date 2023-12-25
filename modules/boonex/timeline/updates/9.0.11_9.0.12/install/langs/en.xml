@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_upd name="_bx_timeline_option_preload_comments"><![CDATA[Number of preloaded comments (up to 7 items)]]></string_upd>
-    <string_upd name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Hide from feeds]]></string_upd>
-</resources>

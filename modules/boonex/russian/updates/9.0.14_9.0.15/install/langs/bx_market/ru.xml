@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_market_form_entry_input_sys_header_beg_notes"><![CDATA[Заметки: начало]]></string_add>
-    <string_add name="_bx_market_form_entry_input_header_beg_notes"><![CDATA[Заметки]]></string_add>
-    <string_add name="_bx_market_form_entry_input_sys_header_beg_other"><![CDATA[Остальные: начало]]></string_add>
-    <string_add name="_bx_market_form_entry_input_header_beg_other"><![CDATA[Остальные]]></string_add>
-	<string_add name="_bx_market_form_entry_input_sys_header_end_notes"><![CDATA[Заметки: конец]]></string_add>
-    <string_add name="_bx_market_form_entry_input_sys_header_end_other"><![CDATA[Остальные: конец]]></string_add>
-</resources>

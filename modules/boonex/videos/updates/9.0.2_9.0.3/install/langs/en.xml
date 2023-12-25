@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_videos_form_entry_input_picture_use_as_thumb"><![CDATA[Poster Image]]></string_upd>
-	<string_upd name="_bx_videos_menu_item_title_system_create_entry"><![CDATA[Video]]></string_upd>
-    <string_upd name="_bx_videos_menu_item_title_create_entry"><![CDATA[Video]]></string_upd>
-	<string_upd name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[Videos]]></string_upd>
-</resources>

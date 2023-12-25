@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_persons_page_title_browse_by_cmts"><![CDATA[Пользователи - Комментарии]]></string_add>
-
-	<string_upd name="_bx_persons_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string_upd>
-	<string_upd name="_bx_persons_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string_upd>
-	<string_upd name="_bx_persons_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string_upd>
-	<string_upd name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[В профайле <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string_upd>
-</resources>

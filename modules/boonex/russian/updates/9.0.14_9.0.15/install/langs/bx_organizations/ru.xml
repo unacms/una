@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_orgs_menu_item_title_system_leave_organization"><![CDATA[Покинуть организацию]]></string_add>
-	<string_add name="_bx_orgs_txt_sample_vote_single"><![CDATA[голос за организацию]]></string_add>
-
-	<string_del name="_bx_orgs_menu_item_title_system_leave_group"><![CDATA[Покинуть организацию]]></string_del>
-</resources>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_acl_form_price_input_sys_name"><![CDATA[Имя]]></string_add>
-	<string_add name="_bx_acl_form_price_input_name"><![CDATA[Имя]]></string_add>
-	<string_add name="_bx_acl_form_price_input_inf_name"><![CDATA[Уникальное значение, которое будет использоваться в серверной части и API запросах]]></string_add>
-    <string_add name="_bx_acl_form_price_input_err_name"><![CDATA[Введите уникальное значение]]></string_add>
-</resources>
