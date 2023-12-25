@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_cnv_menu_item_title_system_message"><![CDATA[Start conversation]]></string_upd>
-    <string_upd name="_bx_cnv_menu_item_title_message"><![CDATA[Start conversation]]></string_upd>
-</resources>

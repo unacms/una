@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_acl_txt_cart_item_description"><![CDATA[Membership level on {0} site.]]></string_add>
-
-	<string_upd name="_bx_acl_grid_action_subscribe"><![CDATA[Subscribe]]></string_upd>
-	<string_upd name="_bx_acl_grid_action_subscribe_title"><![CDATA[Create a subscription with recurring billing]]></string_upd>
-</resources>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_credits_form_bundle_input_sys_name"><![CDATA[Name]]></string_add>
-    <string_add name="_bx_credits_form_bundle_input_name"><![CDATA[Name]]></string_add>
-    <string_add name="_bx_credits_form_bundle_input_name_err"><![CDATA[This field is essential for API calls. Please fill it in.]]></string_add>
-</resources>

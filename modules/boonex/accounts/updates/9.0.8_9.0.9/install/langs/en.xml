@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_accnt_menu_item_title_system_unlock_account"><![CDATA[Unlock]]></string_add>
-    <string_add name="_bx_accnt_menu_item_title_unlock_account"><![CDATA[Unlock]]></string_add>
-	<string_add name="_bx_accnt_grid_filter_item_title_adm_locked"><![CDATA[Locked]]></string_add>
-	<string_add name="_bx_accnt_grid_action_title_adm_unlock_account"><![CDATA[Unlock]]></string_add>
-	<string_add name="_bx_accnt_grid_action_unlock_successed"><![CDATA[Successfully unlocked]]></string_add>
-    <string_add name="_bx_accnt_grid_action_unlock_error"><![CDATA[Account is not blocked]]></string_add>
-</resources>

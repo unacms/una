@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_credits_enable_provider"><![CDATA[Auto activate 'Credits' provider for all newly created profiles]]></string_add>
-</resources>
