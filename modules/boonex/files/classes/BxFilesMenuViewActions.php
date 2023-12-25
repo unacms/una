@@ -38,6 +38,7 @@ class BxFilesMenuViewActions extends BxBaseModTextMenuViewActions
 }
 
 class BxFilesMenuViewActionsInline extends BxFilesMenuViewActions {
+    protected $_oMenuAction;
     protected $_iMenuItemCounter;
     protected $_sJsObjectMenuTools;
     protected $_sBookmarkIcon;
