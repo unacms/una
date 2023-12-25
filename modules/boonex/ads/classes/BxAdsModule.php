@@ -54,11 +54,14 @@ class BxAdsModule extends BxBaseModTextModule
     {
         $CNF = $this->_oConfig->CNF;
         
-        $aResult = parent::decodeDataApi($aData, $bExtended);
+        $aResult = array_merge(parent::decodeDataApi($aData, $bExtended), [
+            $CNF['FIELD_PRICE'] => $aData[$CNF['FIELD_PRICE']],
+            $CNF['FIELD_QUANTITY'] => $aData[$CNF['FIELD_QUANTITY']],
+            $CNF['FIELD_NOTES_PURCHASED'] => $aData[$CNF['FIELD_NOTES_PURCHASED']]
+        ]);
 
-        $aResult[$CNF['FIELD_PRICE']] = $aData[$CNF['FIELD_PRICE']];
-        $aResult[$CNF['FIELD_QUANTITY']] = $aData[$CNF['FIELD_QUANTITY']];
-        $aResult[$CNF['FIELD_NOTES_PURCHASED']] = $aData[$CNF['FIELD_NOTES_PURCHASED']];
+        if($this->_oConfig->isSources() && !empty($aData[$CNF['FIELD_URL']]))
+            $aResult[$CNF['FIELD_URL']] = $aData[$CNF['FIELD_URL']];
 
         return $aResult;
     }

@@ -113,9 +113,9 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
             }
         }
 
-        parent::redirectAfterAdd($aContentInfo, $sUrl);
+        return parent::redirectAfterAdd($aContentInfo, $sUrl);
     }
-    
+
     protected function redirectAfterEdit($aContentInfo, $sUrl = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -136,12 +136,12 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
                 if(isset($aResult['code']) && (int)$aResult['code'] == 0){
                     $sUrl = $oPayments->getCartUrl($iVendorId);
                     if (bx_is_api())
-                        return [bx_api_get_block('redirect', ['uri' => bx_api_get_relative_url($sUrl), 'timeout' => 1000])];
+                        return bx_api_get_block('redirect', ['uri' => bx_api_get_relative_url($sUrl), 'timeout' => 1000]);
                 }
             }
         }
 
-        parent::redirectAfterEdit($aContentInfo, $sUrl);
+        return parent::redirectAfterEdit($aContentInfo, $sUrl);
     }
 }
 
