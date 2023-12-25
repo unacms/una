@@ -1,9 +1,0 @@
-@import url(../../../template/css/grid.css);
-
-/**
- * Overwrite default styles
- */
-.bx-grid-header-controls-independent .bx-btn {
-    margin-top: 0;
-    margin-bottom: 0;
-}
