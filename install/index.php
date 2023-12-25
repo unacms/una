@@ -10,7 +10,7 @@
 define ('BX_DOL_INSTALL',  true);
 define ('BX_SKIP_INSTALL_CHECK', true);
 
-define ('BX_DOL_VER', '14.0.0-DEV1');
+define ('BX_DOL_VER', '14.0.0-A1');
 
 define ('BX_INSTALL_DEFAULT_LANGUAGE', 'en');
 
