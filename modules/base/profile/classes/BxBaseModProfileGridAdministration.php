@@ -222,7 +222,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
     }
 
-    protected function _getFilterControlsAPI($aFilters)
+    protected function _getFilterControlsAPI($aFilters = [])
     {
         $aFilters = [
             $this->_sFilter1Name => []

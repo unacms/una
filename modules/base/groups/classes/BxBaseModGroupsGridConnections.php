@@ -426,7 +426,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         parent::_addJsCss();
 
         if($this->_bRoles)
-            $this->_oModule->_oTemplate->addJs('main.js');
+            $this->_oModule->_oTemplate->addJs(['modules/base/groups/js/|main.js', 'main.js']);
     }
 }
 

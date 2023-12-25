@@ -454,7 +454,7 @@
     <string name="_bx_events_txt_private_group"><![CDATA[Приватная группа]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
     <string name="_bx_events_txt_invite_popup_text"><![CDATA[Вы были приглашены на это собыите.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
-    <string name="_bx_events_txt_invite_popup_title"><![CDATA[Приглашение на собыите]]></string>
+    <string name="_bx_events_txt_invite_popup_title"><![CDATA[Приглашение на событие]]></string>
     <string name="_bx_events_txt_invite_popup_button_accept"><![CDATA[Принять]]></string>
     <string name="_bx_events_txt_invite_popup_button_decline"><![CDATA[Отклонить]]></string>
     <string name="_bx_events_txt_invite_popup_error_invitation_absent"><![CDATA[Извините, произошла ошибка. Вы не можете присоединиться к этому событию. Приглашение устарело или удалено.]]></string>
