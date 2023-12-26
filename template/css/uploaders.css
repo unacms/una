@@ -96,7 +96,7 @@
 }
 .filepond{
     min-height: 76px;
-    margin-bottom: 0px !important;
+    margin-bottom: 0.5rem !important;
 }
 .bx-uploader-html5-drop-area.filepond .dz-message {
     margin:3.5em 0;
