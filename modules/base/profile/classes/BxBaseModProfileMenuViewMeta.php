@@ -119,8 +119,14 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if($this->_bIsApi) {
             $aCounter = $oConnection->getCounterAPI($iContentProfileId, true, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
 
+            $sUrl = $this->_oContentProfile->getUrl();
+            if(!empty($CNF['URI_VIEW_FRIENDS']))
+                $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $iContentProfileId));
+
             return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
                 'title' => $aCounter['countf'],
+                'link' => bx_api_get_relative_url($sUrl),
+                'list' => $oConnection->getConnectedListAPI($iContentProfileId, true, BX_CONNECTIONS_CONTENT_TYPE_CONTENT)
             ]);
         }
 
@@ -144,8 +150,14 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if($this->_bIsApi) {
             $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
 
+            $sUrl = $this->_oContentProfile->getUrl();
+            if(!empty($CNF['URI_VIEW_SUBSCRIPTIONS']))
+                $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_SUBSCRIPTIONS'] . '&profile_id=' . $iContentProfileId));
+
             return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
                 'title' => $aCounter['countf'],
+                'link' => bx_api_get_relative_url($sUrl),
+                'list' => $oConnection->getConnectedListAPI($iContentProfileId, false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS)
             ]);
         }
 

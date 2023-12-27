@@ -79,6 +79,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-event-profile',
+            'URI_VIEW_MEMBERS' => 'event-fans',
             'URI_EDIT_ENTRY' => 'edit-event-profile',
             'URI_ENTRIES_BY_CONTEXT' => 'events-context',
             'URI_JOIN_ENTRY' => 'join-event-profile',

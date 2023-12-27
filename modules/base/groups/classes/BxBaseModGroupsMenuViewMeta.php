@@ -35,8 +35,14 @@ class BxBaseModGroupsMenuViewMeta extends BxBaseModProfileMenuViewMeta
         if($this->_bIsApi) {
             $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
 
+            $sUrl = $this->_oContentProfile->getUrl();
+            if(!empty($CNF['URI_VIEW_MEMBERS']))
+                $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEMBERS'] . '&profile_id=' . $iContentProfileId));
+
             return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
                 'title' => $aCounter['countf'],
+                'link' => bx_api_get_relative_url($sUrl),
+                'list' => $oConnection->getConnectedListAPI($iContentProfileId, false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS)
             ]);
         }
 
