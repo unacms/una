@@ -218,6 +218,22 @@ class BxBaseVote extends BxDolVote
         ];
     }
 
+    public function getPerformedByAPI($aParams = [])
+    {
+        $aValues = $this->_oQuery->getPerformedBy($this->getId());
+
+        $aTmplUsers = [];
+        foreach($aValues as $mValue) {
+            $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
+
+            $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+        }
+
+        return [
+            'performed_by' => $aTmplUsers
+        ];
+    }
+
     /**
      * Internal methods.
      */

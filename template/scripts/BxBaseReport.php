@@ -400,6 +400,25 @@ class BxBaseReport extends BxDolReport
         ));
     }
 
+    public function getPerformedByAPI($aParams = [])
+    {
+        $aValues = $this->_oQuery->getPerformedBy($this->getId());
+
+        $aTmplUsers = [];
+        foreach($aValues as $mValue) {
+            $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
+
+            $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+        }
+
+        return [
+            'performed_by' => $aTmplUsers
+        ];
+    }
+
+    /**
+     * Internal methods.
+     */
     protected function _getDoReport($aParams = array())
     {
     	$bReported = isset($aParams['is_reported']) && $aParams['is_reported'] === true;

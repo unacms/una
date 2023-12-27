@@ -81,18 +81,7 @@ class BxBaseReportServices extends BxDol
         if(!$oReport || !$oReport->isEnabled())
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
-        $aValues = $oReport->getQueryObject()->getPerformedBy($oReport->getId());
-
-        $aTmplUsers = [];
-        foreach($aValues as $mValue) {
-            $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
-
-            $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
-        }
-
-        return [
-            'performed_by' => $aTmplUsers
-        ];
+        return $oReport->getPerformedByAPI($aParams);
     }
 }
 
