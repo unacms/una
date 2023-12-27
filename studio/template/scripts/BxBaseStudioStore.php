@@ -516,7 +516,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                     ),
                 ),
                 'title' => $aModule['title'],
-                'vendor' => $aModule['vendor'],
+                'vendor' => strtolower($aModule['vendor']) == 'boonex' ? 'UNA INC' : $aModule['vendor'],
                 'version' => $aModule['version'],
                 'dir' => $aModule['dir'],
                 'bx_if:hide_install' => array(
@@ -555,7 +555,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                     ),
                 ),
                 'title' => $aUpdate['title'],
-                'vendor' => $aUpdate['vendor'],
+                'vendor' => strtolower($aUpdate['vendor']) == 'boonex' ? 'UNA INC' : $aUpdate['vendor'],
                 'versions' => _t('_adm_str_txt_update_from_to', $aUpdate['version_from'], $aUpdate['version_to']),
                 'dir' => $aUpdate['dir']
             ));
