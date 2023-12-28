@@ -21,7 +21,7 @@ class BxLinkedinConfig extends BxBaseModConnectConfig
     public $sPageStart;
     public $sPageHandle;
 
-    public $sScope = 'r_liteprofile r_emailaddress';
+    public $sScope = 'openid email profile';
 
     function __construct($aModule)
     {

@@ -2152,11 +2152,11 @@
 	<string name="_sys_audit_msg_php_setup_inefficient"><![CDATA[Ваши PHP-настройки могут быть очень неэффективными, <a href="javascript:void(0)" onclick="bx_sys_adm_audit_phpinfo()">проверьте их</a> и попробуйте переключиться на mod_php, apache dso module или FastCGI]]></string>
 	<string name="_sys_audit_msg_serverside_compression"><![CDATA[
 может быть проверено <a href="#manual_audit">вручную</a> или с помощью интсрумента "Page Speed", встроенного в браузер.<br />
-Если он не задействован, тогда попробуйте применить эту оптимизацию, так как она улучшает скорость сайта и сохраняет трафик, обратитесь к <a href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Serversidecontentcompression">этому руководству</a>, чтобы узнать больше.<br />{0}]]></string>
+Если он не задействован, тогда попробуйте применить эту оптимизацию, так как она улучшает скорость сайта и сохраняет трафик.<br />{0}]]></string>
 	<string name="_sys_audit_msg_should_be"><![CDATA[хорошо бы {0} {1}]]></string>
 	<string name="_sys_audit_msg_userside_caching"><![CDATA[
 <a href="{0}">нажмите здесь для проверки в Google Page Speed</a><br />
-Если он не задействован, тогда попробуйте применить эту оптимизацию, так как она улучшает скорость сайта и сохраняет трафик, обратитесь к <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">этому руководству</a>, чтобы узнать больше.<br />{1}]]></string>
+Если он не задействован, тогда попробуйте применить эту оптимизацию, так как она улучшает скорость сайта и сохраняет трафик.<br />{1}]]></string>
 	<string name="_sys_audit_msg_value_checking_failed"><![CDATA[проверка значения не удалась]]></string>
 	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[Ваша версия несовместима с UNA, нужно как минимум {0}]]></string>
 	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[Ваша версия устарела, может потребоваться обновление до последней версии {0}]]></string>
