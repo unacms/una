@@ -2177,11 +2177,11 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
 	<string name="_sys_audit_msg_php_setup_inefficient"><![CDATA[your PHP setup maybe very inefficient, <a href="javascript:void(0)" onclick="bx_sys_adm_audit_phpinfo()">please check it for sure</a> and try to switch to mod_php, apache dso module or FastCGI]]></string>
 	<string name="_sys_audit_msg_serverside_compression"><![CDATA[
 can be checked <a href="#manual_audit">manually</a> or in "Page Speed" tool build-in into browser.<br />
-If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Serversidecontentcompression">this tutorial</a> on how to do this.<br />{0}]]></string>
+If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth.<br />{0}]]></string>
 	<string name="_sys_audit_msg_should_be"><![CDATA[should be {0} {1}]]></string>
 	<string name="_sys_audit_msg_userside_caching"><![CDATA[
 <a href="{0}">click here to check it in Google Page Speed</a><br />
-If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">this tutorial</a> on how to do this.<br />{1}]]></string>
+If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth.<br />{1}]]></string>
 	<string name="_sys_audit_msg_value_checking_failed"><![CDATA[value checking failed]]></string>
 	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[your version is incompatible with UNA, must be at least {0}]]></string>
 	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[your version is outdated, upgrade to the latest {0} maybe required]]></string>
