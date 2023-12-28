@@ -420,9 +420,12 @@ class BxBasePage extends BxDolPage
             $query_string = http_build_query($array);
             parse_str($query_string, $_GET);
         }
+        $sMetaTitle = $this->_getPageMetaTitle();
+        $sName = $this->_getPageTitle();
         $a = [
             'id' => $this->_aObject['id'],
-            'title' => $this->_getPageTitle(),
+            'title' => $sMetaTitle ? $sMetaTitle : $sName,
+            'name' => $sName,
             'uri' => $this->_aObject['uri'],
             'url' =>  ((bx_get('params')[0] ? bx_get('params')[0] : $this->_aObject['uri'] ) . ($query_string != '' ? '?' . $query_string : '')),
             'author' => $this->_aObject['author'],
