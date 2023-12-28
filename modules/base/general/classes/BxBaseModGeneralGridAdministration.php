@@ -132,7 +132,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
                 return '';
         }
 
-    	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    	return parent::_getActionDelete($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

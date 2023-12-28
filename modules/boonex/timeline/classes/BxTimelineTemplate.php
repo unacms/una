@@ -851,6 +851,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $iEventIndex++;
             if($iExtenalsEvery > 0 && $iEventIndex % $iExtenalsEvery == 0) {
+                $aParams['event_index'] = $iEventIndex;
+
                 $mixedExternalPost = false;
                 bx_alert($this->_oConfig->getName(), 'get_external_post', 0, 0, [
                     'params' => $aParams,
