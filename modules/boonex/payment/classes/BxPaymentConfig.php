@@ -234,7 +234,17 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
     {
         return unserialize(base64_decode($s));
     }
-            
+
+    public function urlEncode($s)
+    {
+        return urlencode(base64_encode($s));
+    }
+
+    public function urlDecode($s)
+    {
+        return base64_decode(urldecode($s));
+    }
+
     public function descriptorA2S($a) 
     {
     	return implode($this->getDivider('DIVIDER_DESCRIPTOR'), $a);

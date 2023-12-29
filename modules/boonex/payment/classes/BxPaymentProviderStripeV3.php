@@ -75,8 +75,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             )), false)
         );
 
-        $sSessionId = $this->_createSession(BX_PAYMENT_TYPE_RECURRING, $aSessionParams, $aClient, $aCartInfo);
-        if($sSessionId === false)
+        $mixedSession = $this->_createSession(BX_PAYMENT_TYPE_RECURRING, $aSessionParams, $aClient, $aCartInfo);
+        if($mixedSession === false)
             return echoJson(array('msg' => _t('_bx_payment_err_cannot_perform')));
 
         $sJsObject = $this->getJsObject(array(
@@ -87,7 +87,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         return echoJson(array(
             'code' => 0, 
-            'session_id' => $sSessionId,
+            'session_id' => $mixedSession['id'],
             'eval' => $sJsObject . '.onSubscribe(oData);'
         ));
     }
@@ -203,13 +203,18 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         if(!empty($aProcessed) && is_array($aProcessed) && (int)$aProcessed['processed'] != 0 && $aProcessed['id'] != $iPendingId)
             return $this->_sLangsPrefix . 'err_already_processed';
 
-        header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
+        $aData = [
             'mode' => $mixedResult['mode'],
             'order_id' => $mixedResult['order_id'],
             'customer_id' => $mixedResult['customer_id'], 
             'pending_id' => $aPending['id'],
             'redirect' => $sRedirect
-        )));
+        ];
+
+        if(bx_is_api())
+            return $this->_oModule->serviceFinalizeCheckout($this->_sName, $aVendor['id'], $aData);
+
+        header("Location: " . $this->getReturnDataUrl($aVendor['id'], $aData));
         exit;
     }
 
@@ -354,16 +359,19 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             )), false)
         );
 
-        $sSessionId = $this->_createSession(BX_PAYMENT_TYPE_SINGLE, $aSessionParams, $aClient, $aCartInfo);
-        if($sSessionId === false)
+        $mixedSession = $this->_createSession(BX_PAYMENT_TYPE_SINGLE, $aSessionParams, $aClient, $aCartInfo);
+        if($mixedSession === false)
             return array('msg' => _t('_bx_payment_err_cannot_perform'));
 
         return array(
             'eval' => $this->_oModule->_oConfig->getJsObject($this->_sName) . '.onCartCheckout(oData);', 
-            'session_id' => $sSessionId
+            'session_id' => $mixedSession['id']
         );
     }
 
+    /**
+     * Note. Isn't used for now in default version.
+     */
     public function createSessionAuthorize($sType, $iClientId, $iSellerId, $sItems, $aSessionParams = [])
     {
         $aClient = $this->_oModule->getProfileInfo($iClientId);
@@ -383,7 +391,43 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             ], false)
         ], $aSessionParams);
 
-        return $this->_createSession('authorize', $aSessionParams, $aClient, $aCartInfo);
+        $mixedSession = $this->_createSession('authorize', $aSessionParams, $aClient, $aCartInfo);
+        if($mixedSession === false)
+            return false;
+
+        return $mixedSession['id'];
+    }
+
+    /*
+     * https://stripe.com/docs/checkout/embedded/quickstart?client=react&lang=php
+     */
+    public function createSessionPaymentEmbedded($sType, $iClientId, $iSellerId, $sItems, $aSessionParams = [])
+    {
+        $aClient = $this->_oModule->getProfileInfo($iClientId);
+
+        $oCart = $this->_oModule->getObjectCart();
+        $aCartInfo = $oCart->getInfo($sType, $aClient['id'], $iSellerId, $sItems);
+        if(empty($aCartInfo) || !is_array($aCartInfo))
+            return false;
+
+        $aSessionParams = array_merge([
+            'ui_mode' => 'embedded',
+            'return_url' => bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART_CHECKOUT'), [
+                'provider' => $this->_sName,
+                'seller_id' => $iSellerId,
+                'items' => $sItems,
+                'session_id' => '{CHECKOUT_SESSION_ID}'
+            ], false)
+        ], $aSessionParams);
+
+        if(strpos($aSessionParams['return_url'], 'session_id') === false)
+            $aSessionParams['return_url'] .= '&session_id={CHECKOUT_SESSION_ID}';
+
+        $mixedSession = $this->_createSession(BX_PAYMENT_TYPE_SINGLE, $aSessionParams, $aClient, $aCartInfo);
+        if($mixedSession === false)
+            return false;
+
+        return $mixedSession['client_secret'];
     }
 
     public function createTax($sName, $fPercentage, $bInclusive = false)
@@ -602,11 +646,9 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         $oSession = null;
         $aSession = array_merge([
-            'payment_method_types' => ['card'],
-            'customer_email' => !empty($aClient['email']) ? $aClient['email'] : '',
             'mode' => $sMode,
-            'success_url' => '',
-            'cancel_url' => '',
+            'payment_method_types' => ['card'],
+            'customer_email' => !empty($aClient['email']) ? $aClient['email'] : ''
         ], $aParams);
 
         $bLineItems = !empty($aLineItems);
@@ -647,7 +689,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         if($bVerify && !$this->checkVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $aResult))
             return false;
 
-        return $aResult['id'];
+        return $aResult;
     }
 
     protected function _getSession($sType, $sId)
