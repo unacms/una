@@ -178,6 +178,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
             'GetBlockListMy' => 'BxPaymentSubscriptions',
             'GetBlockHistory' => 'BxPaymentSubscriptions',
 
+            'GetProviderOptions' => '',
             'InitializeCheckoutApi' => '',
             'StripeV3CreateSessionApi' => ''
         ));
@@ -2015,10 +2016,8 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $aSessionParams = [];
         if(!empty($aParams['return_url']))
-            $aSessionParams['return_url'] = $aParams['return_url'] . '/api.php?r=' . $this->getName() . '/initialize_checkout_api&' . http_build_query([
-                'params' => [$aParams['type'], $iSellerId, $sProvider, $sItems, $this->_oConfig->urlEncode($this->_oConfig->getUrl('URL_HISTORY'))]
-            ]);
-
+            $aSessionParams['return_url'] = $aParams['return_url'] . '/api.php?r=' . $this->getName() . '/initialize_checkout_api&params[]=' . implode('&params[]=', [$aParams['type'], $iSellerId, $sProvider, $sItems, $this->_oConfig->urlEncode($this->_oConfig->getUrl('URL_HISTORY'))]);
+        
         $minxedSession = $oProvider->createSessionPaymentEmbedded($aParams['type'], $iClientId, $iSellerId, $sItems, $aSessionParams);
         if($minxedSession === false)
             return [bx_api_get_msg(_t($this->_sLangsPrefix . 'err_cannot_perform'))];
