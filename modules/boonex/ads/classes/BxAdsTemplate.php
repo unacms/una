@@ -192,7 +192,7 @@ class BxAdsTemplate extends BxBaseModTextTemplate
             $fRoi = 100 * ($iValueLocal + $iValueSource - $iValueInvestment)/$iValueInvestment;
 
         if($this->_bIsApi) {
-            return [bx_api_get_block('chart', ['type' => 'pie', 'title' => 'Roi', 'labels' => $aTmplVarsDataLabels, 'data' => $aTmplVarsDataSet, 'text' => 'ROI: ' . $fRoi . '%'])];
+            return [bx_api_get_block('chart', ['type' => 'pie', 'title' => 'ROI', 'labels' => $aTmplVarsDataLabels, 'data' => $aTmplVarsDataSet, 'text' => 'ROI: ' . $fRoi . '%'])];
         }
 
         $this->addJs(['chart.min.js']);
