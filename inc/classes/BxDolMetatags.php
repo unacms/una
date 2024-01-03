@@ -780,7 +780,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      * @param $oSearchResult search results object
      * @param $sCountry country and other location info
      */
-    public function locationsSetSearchCondition($oSearchResult, $sCountry, $sState = false, $sCity = false, $sZip = false)
+    public function locationsSetSearchCondition($oSearchResult, $sCountry = false, $sState = false, $sCity = false, $sZip = false)
     {
         if (empty($this->_aObject['table_locations'])) {
             $oSearchResult->aCurrent['restriction']['meta_location'] = array(
@@ -791,17 +791,19 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             return;
         }
 
-        $a = array('country' => 'sCountry', 'state' => 'sState', 'city' => 'sCity', 'zip' => 'sZip');
-        foreach ($a as $sIndex => $sVar) {
+        $aIndexes = ['country' => 'sCountry', 'state' => 'sState', 'city' => 'sCity', 'zip' => 'sZip'];
+        $aOperators = ['city' => 'like'];
+
+        foreach ($aIndexes as $sIndex => $sVar) {
             if (!$$sVar)
                 continue;
 
-            $oSearchResult->aCurrent['restriction']['meta_location_' . $sIndex] = array(
+            $oSearchResult->aCurrent['restriction']['meta_location_' . $sIndex] = [
                 'value' => $$sVar,
                 'field' => $sIndex,
-                'operator' => '=',
+                'operator' => isset($aOperators[$sIndex]) ? $aOperators[$sIndex] : '=',
                 'table' => $this->_aObject['table_locations'],
-            );
+            ];
         }
 
         $oSearchResult->aCurrent['join']['meta_location'] = array(

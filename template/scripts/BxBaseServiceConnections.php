@@ -102,7 +102,7 @@ class BxBaseServiceConnections extends BxDol
             $sAction = $aFlip[$sAction];
 
         return !empty($aTitles[$sAction]) ? _t($aTitles[$sAction]) : '';
-    }       
+    }
 
     /**
      * get grid with friends connections

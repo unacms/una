@@ -2126,11 +2126,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $aResult;
     }
 
-    /*
-     * TODO: Start from here!!!
-     * 
-     * https://neo.so/api.php?r=system/get_page_by_request/TemplServicePages&params[]=view-event-profile/ert&demo=1
-     */
     public function getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
     {
         $CNF = $this->_oConfig->getCNF();

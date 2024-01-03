@@ -100,6 +100,11 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
                 'view_mode' => 0,
             ],
             'inputs' => [
+                'by_city' => [
+                    'name' => 'by_city',
+                    'type' => 'text',
+                    'caption' => _t('_bx_events_form_filters_input_by_city'),
+                ],
                 'by_date' => [
                     'name' => 'by_date',
                     'type' => 'radio_set',

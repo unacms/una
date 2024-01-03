@@ -964,6 +964,12 @@ class BxDolSearchResult implements iBxDolReplaceable
                     case 'location_country_city':
                         $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(isset($this->_aCustomSearchCondition['state']) ? $this->_aCustomSearchCondition['state'] : bx_get('state')), bx_process_input(isset($this->_aCustomSearchCondition['city']) ? $this->_aCustomSearchCondition['city'] : bx_get('city')));
                         break;
+                    case 'location_state':
+                        $o->locationsSetSearchCondition($this, false, $sKeyword);
+                        break;
+                    case 'location_city':
+                        $o->locationsSetSearchCondition($this, false, false, $sKeyword);
+                        break;
                     case 'mention':
                         $oCmts = !empty($this->sModuleObjectComments) ? BxDolCmts::getObjectInstance($this->sModuleObjectComments, 0, false) : false;
                         $o->mentionsSetSearchCondition($this, $sKeyword, $oCmts ? $oCmts->getSystemId() : 0);
