@@ -42,6 +42,8 @@ BxEventsMain.prototype.applyBrowsingFilter = function(oElement, oRequestParams)
     if(oRequestParams == undefined)
         oRequestParams = {};
 
+    oRequestParams.by_city = oFilters.find("input[name='by_city']").val();
+
     oRequestParams.by_date = oFilters.find("input[name='by_date']:checked").val();
     if(oRequestParams.by_date == 'date_range') {
         oRequestParams.date_start = oFilters.find("input[name='date_start']").val();

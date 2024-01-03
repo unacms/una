@@ -83,6 +83,11 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
         $oJoinedProfile = null;
         $bProcessConditionsForPrivateContent = true;
 
+        if(isset($this->_aParams['by_city'])) {
+            $this->setMetaType('location_city');
+            $this->setCustomSearchCondition(['keyword' => $this->_aParams['by_city']]);
+        }
+
         $iDateStart = $iDateEnd = 0;
         if(isset($this->_aParams['by_date'])) {
             $iTimezoneOffset = 0;
