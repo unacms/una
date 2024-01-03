@@ -19,7 +19,7 @@ $aConfig = array(
     'title' => 'Courses',
     'note' => 'Basic course profiles functionality.',
     'version' => '13.0.7.DEV',
-    'vendor' => 'BoonEx',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(

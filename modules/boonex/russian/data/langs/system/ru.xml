@@ -2923,6 +2923,7 @@
     <string name="_sys_menu_item_title_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_sm_actions"><![CDATA[Действия]]></string>
     <string name="_sys_menu_item_title_sm_befriend"><![CDATA[Добавить в друзья]]></string>
+    <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Добавить в друзья (запрошено)]]></string>
     <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Принять запрос о дружбе]]></string>
     <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Удалить из друзей]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Отменить запрос о дружбе]]></string>

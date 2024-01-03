@@ -2126,6 +2126,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $aResult;
     }
 
+    /*
+     * TODO: Start from here!!!
+     * 
+     * https://neo.so/api.php?r=system/get_page_by_request/TemplServicePages&params[]=view-event-profile/ert&demo=1
+     */
     public function getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
     {
         $CNF = $this->_oConfig->getCNF();
@@ -2144,7 +2149,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $aResult = [];
         if($oConnection->isConnectedNotMutual($iInitiatorProfileId, $iContentProfileId))
             $aResult = [
-                'add' => '',
+                'add' => _t(!empty($CNF['T']['menu_item_title_sm_join_requested']) ? $CNF['T']['menu_item_title_sm_join_requested'] : '_sys_menu_item_title_sm_join_requested'),
                 'remove' => _t(!empty($CNF['T']['menu_item_title_sm_leave_cancel']) ? $CNF['T']['menu_item_title_sm_leave_cancel'] : '_sys_menu_item_title_sm_leave_cancel'),
             ];
         else if($oConnection->isConnectedNotMutual($iContentProfileId, $iInitiatorProfileId))

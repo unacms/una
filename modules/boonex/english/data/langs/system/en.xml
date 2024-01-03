@@ -2958,7 +2958,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sm_comments"><![CDATA[Comments]]></string>
     <string name="_sys_menu_item_title_sm_actions"><![CDATA[Actions]]></string>
     <string name="_sys_menu_item_title_sm_befriend"><![CDATA[Add friend]]></string>
-    <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Accept friend request]]></string>
+    <string name="_sys_menu_item_title_sm_befriend_sent"><![CDATA[Add friend]]></string>
+    <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Add friend (requested)]]></string>
     <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Remove friend]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Cancel friend request]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_reject"><![CDATA[Reject friend request]]></string>

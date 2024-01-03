@@ -184,6 +184,24 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Checks whether connection's Initiator is profile or not.
+     * return boolean.
+     */
+    public function isProfileInitiator()
+    {
+        return (int)$this->_aObject['profile_initiator'] != 0;
+    }
+
+    /**
+     * Checks whether connection's Content is profile or not.
+     * return boolean.
+     */
+    public function isProfileContent()
+    {
+        return (int)$this->_aObject['profile_content'] != 0;
+    }
+
+    /**
      * Check whether connection between Initiator and Content can be established.
      */
     public function checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)

@@ -85,60 +85,23 @@ class BxBaseServiceConnections extends BxDol
             return '';
 
         $oConnection = BxDolConnection::getObjectInstance($sObject);
-        if(!$oConnection)
+        if(!$oConnection || !$oConnection->isProfileContent())
             return '';
 
-        $sMethod = 'getActionTitle';
-        if(method_exists($oConnection, $sMethod))
-            return $oConnection->$sMethod($sAction, $iInitiatorId, $iContentId, $bFlip);
+        $sMethod = 'get_menu_item_title_by_connection';
+        $aContentProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iContentId);
+        if(empty($aContentProfileInfo) || !is_array($aContentProfileInfo) || !BxDolRequest::serviceExists($aContentProfileInfo['type'], $sMethod))
+            return '';
 
-        $aResult = [];
-        switch($sObject) {
-            case 'sys_profiles_friends':
-                if($oConnection->isConnectedNotMutual($iInitiatorId, $iContentId))
-                    $aResult = [
-                        'add' => '',
-                        'remove' => '_sys_menu_item_title_sm_unfriend_cancel',
-                    ];
-                else if($oConnection->isConnectedNotMutual($iContentId, $iInitiatorId))
-                    $aResult = [
-                        'add' => '_sys_menu_item_title_sm_befriend_confirm',
-                        'remove' => '_sys_menu_item_title_sm_unfriend_reject',
-                    ];
-                else if($oConnection->isConnected($iInitiatorId, $iContentId, true))
-                    $aResult = [
-                        'add' => '',
-                        'remove' => '_sys_menu_item_title_sm_unfriend',
-                    ];
-                else
-                    $aResult = [
-                        'add' => '_sys_menu_item_title_sm_befriend',
-                        'remove' => '',
-                    ];
-                break;
-
-            case 'sys_profiles_subscriptions':
-                if($oConnection->isConnected($iInitiatorId, $iContentId))
-                    $aResult = [
-                        'add' => '',
-                        'remove' => '_sys_menu_item_title_sm_unsubscribe',
-                    ];
-                else
-                    $aResult = [
-                        'add' => '_sys_menu_item_title_sm_subscribe',
-                        'remove' => '',
-                    ];
-                break;
-
-            default:
-                $aResult = $oConnection->getActionTitle($sAction, $iInitiatorId, $iContentId);
-        }
+        $aTitles = bx_srv($aContentProfileInfo['type'], $sMethod, [$sObject, '', $iContentId, $iInitiatorId]);
+        if(empty($aTitles) || !is_array($aTitles))
+            return '';
 
         $aFlip = ['add' => 'remove', 'remove' => 'add'];
         if($bFlip)
             $sAction = $aFlip[$sAction];
 
-        return !empty($aResult[$sAction]) ? _t($aResult[$sAction]) : '';
+        return !empty($aTitles[$sAction]) ? _t($aTitles[$sAction]) : '';
     }       
 
     /**
