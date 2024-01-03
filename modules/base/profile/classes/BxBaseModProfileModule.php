@@ -1408,6 +1408,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceGetTimelineProfileImageAllowedView($aEvent);
     }
 
+    public function serviceGetMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
+    {
+        return $this->getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId);
+    }
+
 
     // ====== PERMISSION METHODS
     /**
@@ -1590,11 +1595,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         $o -> aCurrent['paginate'] = array('perPage' => $iPerPage, 'forceStart' => $iStart);
         return $o -> getSearchData();
-    }
-
-    public function serviceGetMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
-    {
-        return $this->getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId);
     }
 
     /**
