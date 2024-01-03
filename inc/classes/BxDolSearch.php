@@ -562,7 +562,11 @@ class BxDolSearchResult implements iBxDolReplaceable
             'start' => $this->aCurrent['paginate']['start'],
             'type' => $this->_sMode,
         ];
-        
+
+        if (isset($this->_aParams['author'])){
+            $aParams['author'] = $this->_aParams['author'];
+        }
+
         if (isset($this->_aParams['category'])){
             $aParams['category'] = $this->_aParams['category'];
         }

@@ -3076,6 +3076,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aResult['content']['images_attach'] = $oModule->getEventImages($aEvent['id']);
                 $aResult['content']['videos_attach'] = $oModule->getEventVideos($aEvent['id']);
                 $aResult['content']['files_attach'] = $oModule->getEventFiles($aEvent['id']);
+                if($this->_bIsApi) {
+                    $aResult['content']['videos_attach'] = array_values($aResult['content']['videos_attach']);
+                    $aResult['content']['files_attach'] = array_values($aResult['content']['files_attach']);
+                }
                 break;
 
             case BX_TIMELINE_PARSE_TYPE_REPOST:
