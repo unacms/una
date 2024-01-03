@@ -160,7 +160,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         
         if(bx_is_api()){
             $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-            return bx_api_get_image($CNF['OBJECT_STORAGE'], $aContentInfo[$CNF['FIELD_COVER']]);
+            $aTmp = bx_api_get_image($CNF['OBJECT_STORAGE'], $aContentInfo[$CNF['FIELD_COVER']]);
+            if (!$aTmp){
+                return ['storage' => $CNF['OBJECT_STORAGE']];
+            }
+            return $aTmp;
         }
 
         if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER']))
