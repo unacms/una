@@ -355,6 +355,8 @@
     <string name="_bx_events_menu_item_title_leave_group"><![CDATA[Не пойду]]></string>
     <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить]]></string>
     <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Отклонить]]></string>
+    <string name="_bx_events_menu_item_title_sm_members"><![CDATA[{0} гостей]]></string>
+    <string name="_bx_events_menu_item_title_sm_subscribers"><![CDATA[{0} заинтересованных]]></string>
 
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Заинтересован]]></string>

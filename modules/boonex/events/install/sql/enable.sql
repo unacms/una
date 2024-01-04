@@ -391,8 +391,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_events_view_meta', 'bx_events', '_bx_events_menu_set_title_view_profile_meta', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
-('bx_events_view_meta', 'bx_events', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
-('bx_events_view_meta', 'bx_events', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_events_view_meta', 'bx_events', 'members', '_sys_menu_item_title_system_sm_members', '_bx_events_menu_item_title_sm_members', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_events_view_meta', 'bx_events', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_bx_events_menu_item_title_sm_subscribers', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_events_view_meta', 'bx_events', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
 ('bx_events_view_meta', 'bx_events', 'votes', '_sys_menu_item_title_system_sm_votes', '_sys_menu_item_title_sm_votes', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
 ('bx_events_view_meta', 'bx_events', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50);
