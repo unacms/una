@@ -627,10 +627,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByName('block_item_content.html', $aTmplVars);
     }
 
-    public function getItemBlockInfo($iId) {
+    public function getItemBlockInfo($iId)
+    {
         $CNF = $this->_oConfig->CNF;
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
         if(empty($aEvent))
             return '';
 
@@ -638,15 +639,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        if(bx_is_api()) {
-            $oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
-            $oMenuManage->setEvent($aEvent);
+        if($this->_bIsApi) {
+            $sFldOpv = 'FIELD_OBJECT_PRIVACY_VIEW';
 
-            return [bx_api_get_block('entity_author', [
-                'author_data' => BxDolProfile::getData($aResult[$CNF['FIELD_OBJECT_OWNER_ID']]),
-                'entry_date' => !empty($aEvent[$CNF['FIELD_ADDED']]) ? $aEvent[$CNF['FIELD_ADDED']] : '',
-                'menu_manage' => $oMenuManage->getCodeApi()
-            ])];
+            $sMenuManage = '';
+            if(($oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'))) !== false) {
+                $oMenuManage->setEvent($aEvent);
+                $sMenuManage = $oMenuManage->getCodeApi();
+            }
+
+            return [
+                bx_api_get_block('entity_author', [
+                    'author_data' => BxDolProfile::getData($aResult[$CNF['FIELD_OBJECT_OWNER_ID']]),
+                    'entry_date' => !empty($aEvent[$CNF['FIELD_ADDED']]) ? $aEvent[$CNF['FIELD_ADDED']] : '',
+                    'entry_context' => !empty($CNF[$sFldOpv]) && (int)$aEvent[$CNF[$sFldOpv]] < 0 ? BxDolProfile::getData(abs((int)$aEvent[$CNF[$sFldOpv]])) : '',
+                    'menu_manage' => $sMenuManage
+                ])
+            ];
         }
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_view'), $this);

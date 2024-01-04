@@ -91,12 +91,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if (!$iProfileId)
             $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
 
-        if(bx_is_api())
-            return [bx_api_get_block('entity_author', [
-                'author_data' => BxDolProfile::getData($iProfileId),
-                'entry_date' => !empty($CNF['FIELD_ADDED']) && !empty($aData[$CNF['FIELD_ADDED']]) ? $aData[$CNF['FIELD_ADDED']] : '',
-                'menu_manage' => $oModule->getEntryAllActions()
-            ])];
+        if($this->_bIsApi) {
+            $sFldAdd = 'FIELD_ADDED';
+            $sFldAvt = 'FIELD_ALLOW_VIEW_TO';
+
+            return [
+                bx_api_get_block('entity_author', [
+                    'author_data' => BxDolProfile::getData($iProfileId),
+                    'entry_date' => !empty($CNF[$sFldAdd]) && !empty($aData[$CNF[$sFldAdd]]) ? $aData[$CNF[$sFldAdd]] : '',
+                    'entry_context' => !empty($CNF[$sFldAvt]) && (int)$aData[$CNF[$sFldAvt]] < 0 ? BxDolProfile::getData(abs((int)$aData[$CNF[$sFldAvt]])) : '',
+                    'menu_manage' => $oModule->getEntryAllActions()
+                ])
+            ];
+        }
 
         $oProfile = BxDolProfile::getInstanceMagic($iProfileId);
         $sName = $oProfile->getDisplayName();
