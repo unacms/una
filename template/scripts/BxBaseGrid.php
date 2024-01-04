@@ -371,17 +371,27 @@ class BxBaseGrid extends BxDolGrid
         return $aDataRv;
     }
     
-    function getFormBlockAPI($oForm, $sAction, $iId = 0){
+    public function getFormBlockAPI($oForm, $sAction, $iId = 0)
+    {
         return [
-            bx_api_get_block(
-                'form', 
-                $oForm->getCodeAPI(), 
-                ['ext' => [
+            bx_api_get_block('form', $oForm->getCodeAPI(), [
+                'ext' => [
                     'name' => $this->_oModule->getName(), 
+                    'title' => $this->getFormBlockTitleAPI($sAction, $iId),
                     'request' => ['url' => $this->getFormCallBackUrlAPI($sAction, $iId), 'immutable' => true]]
                 ]
             )
         ];
+    }
+
+    public function getFormBlockTitleAPI($sAction, $iId)
+    {
+        return '';
+    }
+
+    public function getFormCallBackUrlAPI($sAction, $iId)
+    {
+        return '';
     }
 
     /**
