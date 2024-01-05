@@ -69,7 +69,8 @@ class BxBaseModTextPageAuthor extends BxTemplPage
     
     public function getCode()
     {
-        BxDolTemplate::getInstance()->setPageUrl('page.php?i=' . $this->_aObject['uri'] . '&profile_id=' . $this->_oProfile->id());
+        if(!empty($this->_oProfile))
+            BxDolTemplate::getInstance()->setPageUrl('page.php?i=' . $this->_aObject['uri'] . '&profile_id=' . $this->_oProfile->id());
 
         return parent::getCode();
     }
