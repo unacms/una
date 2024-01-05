@@ -2094,12 +2094,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         $sModule = $this->getName();
         $iId = (int)$aData[$CNF['FIELD_ID']];
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iId, $sModule);
 
         $aResult = [
             'id' => $iId, 
             'module' => $sModule,
+            'module_title' => _t($CNF['T']['txt_sample_single']),
             'added' => $aData[$CNF['FIELD_ADDED']],
             'author' => $aData[$CNF['FIELD_AUTHOR']],
+            'author_data' => $oProfile !== false ? BxDolProfile::getData($oProfile->id()) : '',
             'title' => $aData[$CNF['FIELD_TITLE']],
             $CNF['FIELD_TITLE'] => $aData[$CNF['FIELD_TITLE']],
             'url' => bx_api_get_relative_url($this->serviceGetLink($iId)),
@@ -2113,7 +2116,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(isset($aParams['extended']) && $aParams['extended'] === true)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
 
-        if(getParam('sys_api_conn_in_prof_units') == 'on' && ($oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $sModule)) !== false) {
+        if(getParam('sys_api_conn_in_prof_units') == 'on' && $oProfile !== false) {
             $iProfileId = $oProfile->id();
             $aResult['title'] = $oProfile->getDisplayName();
             if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false && isset($CNF['URI_VIEW_FRIENDS'])) {

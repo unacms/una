@@ -892,6 +892,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $sModule = $this->getName();
         $iId = (int)$aData[$CNF['FIELD_ID']];
 
         $sSummary = '';
@@ -902,6 +903,8 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         $aResult = [
             'id' => $iId,
+            'module' => $sModule,
+            'module_title' => _t($CNF['T']['txt_sample_single']),
             'added' => $aData[$CNF['FIELD_ADDED']],
             'author' => $aData[$CNF['FIELD_AUTHOR']],
             'author_data' => !empty($aData[$CNF['FIELD_AUTHOR']]) ? BxDolProfile::getData($aData[$CNF['FIELD_AUTHOR']]) : '',
