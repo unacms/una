@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_protean_stg_cpt_option_default_mix"><![CDATA[Набор по умолчанию]]></string_add>
-
-	<string_upd name="_bx_protean_stg_cpt_option_button_sm_border_color_hover"><![CDATA[Цвет границы при наведении курсора]]></string_upd>
-	<string_upd name="_bx_protean_stg_cpt_option_font_size_default"><![CDATA[Стандартный размер шрифта]]></string_upd>
-</resources>

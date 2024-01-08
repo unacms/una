@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_adm_tmi_cpt_language"><![CDATA[Language]]></string_add>
-	<string_add name="_cmt_rvw_txt_min_form_placeholder"><![CDATA[{0}, leave your review here.]]></string_add>
-	<string_add name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string_add>
-	<string_add name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Quote]]></string_add>
-</resources>

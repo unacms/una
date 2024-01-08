@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_googlecon_et_password_generated_body"><![CDATA[{email_header}
-<p>Temporary password - <b>{password}</b></p>
-<p>Change it after logging-in.</p>
-{email_footer}]]></string_upd>
-</resources>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_intercom_option_api_key"><![CDATA[Intercom Access Token]]></string_upd>
-	<string_upd name="_bx_intercom_information_block"><![CDATA[
-        This module add Intercom services to your website. <br />
-        To enable this module, you need to get Intercom App ID from <a target="_blank" href="https://www.intercom.io">www.intercom.io</a>.<br />
-        <a target="_blank" href="https://app.intercom.com/developers/_">Click here to get access token</a>]]></string_upd>
-</resources>

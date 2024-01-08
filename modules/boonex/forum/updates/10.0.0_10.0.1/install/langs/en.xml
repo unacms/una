@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_forum_txt_sample_reaction_single"><![CDATA['{0}' reaction to discussion]]></string_add>
-
-	<string_del name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string_del>
-</resources>

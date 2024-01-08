@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_acl_form_price_input_sys_name"><![CDATA[Name]]></string_add>
-	<string_add name="_bx_acl_form_price_input_name"><![CDATA[Name]]></string_add>
-	<string_add name="_bx_acl_form_price_input_inf_name"><![CDATA[Unique value which will be used in back end and API calls]]></string_add>
-    <string_add name="_bx_acl_form_price_input_err_name"><![CDATA[You need to enter a unique value here]]></string_add>
-</resources>

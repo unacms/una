@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_protean_stg_cpt_option_default_mix"><![CDATA[Default mix]]></string_add>
-
-	<string_upd name="_bx_protean_stg_cpt_option_switcher_name"><![CDATA[Name in Template Switcher]]></string_upd>
-</resources>

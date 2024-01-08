@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_ads_option_internal_interested_notification"><![CDATA[Использовать встроенную нотификацию о действии 'Интересно']]></string_add>
-	<string_add name="_bx_ads_menu_item_title_system_review_entry"><![CDATA[Разместить обзор]]></string_add>
-	<string_add name="_bx_ads_txt_sample_interest_single"><![CDATA[проявил интерес к]]></string_add>
-	<string_add name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string_add>
-</resources>

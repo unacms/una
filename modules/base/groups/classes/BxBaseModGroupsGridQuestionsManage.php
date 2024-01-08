@@ -33,7 +33,27 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
             $this->setProfileId($iGroupProfileId);
     }
 
-    function getFormCallBackUrlAPI($sAction, $iId = 0){
+    public function getFormBlockTitleAPI($sAction, $iId = 0)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sResult = '';
+
+        switch($sAction) {
+            case 'add':
+                $sResult = _t($CNF['T']['popup_title_question_add']);
+                break;
+
+            case 'edit':
+                $sResult = _t($CNF['T']['popup_title_question_edit']);
+                break;
+        }
+
+        return $sResult;
+    }
+
+    public function getFormCallBackUrlAPI($sAction, $iId = 0)
+    {
          return '/api.php?r=system/perfom_action_api/TemplServiceGrid/&params[]=&o=' . $this->_sObject . '&profile_id=' . $this->_iGroupProfileId . '&a=' . $sAction . '&id=' . $iId;
     }
     

@@ -177,6 +177,10 @@ class BxPaymentModule extends BxBaseModPaymentModule
             'GetBlockCartHistory' => 'BxPaymentCart',
             'GetBlockListMy' => 'BxPaymentSubscriptions',
             'GetBlockHistory' => 'BxPaymentSubscriptions',
+
+            'GetProviderOptions' => '',
+            'InitializeCheckoutApi' => '',
+            'StripeV3CreateSessionApi' => ''
         ));
     }
 
@@ -1067,17 +1071,49 @@ class BxPaymentModule extends BxBaseModPaymentModule
         return $oProvider->initializeCheckout($iPendingId, $aInfo, $sRedirect);
     }
 
+    public function serviceInitializeCheckoutApi($sType, $iSellerId, $sProvider, $aItems = [], $sRedirect = '', $aCustoms = [])
+    {
+        $mixedResult = $this->serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems, $sRedirect, $aCustoms);
+        if(is_string($mixedResult))
+            return [bx_api_get_msg($mixedResult)];
+        
+        if(is_array($mixedResult)) {
+            if(isset($mixedResult['redirect'])) {
+                header('Location: ' . bx_api_get_relative_url($mixedResult['redirect']));
+                exit;
+            }
+
+            if(isset($mixedResult['message']))
+                return [bx_api_get_msg($mixedResult)];
+        }
+
+        return [];
+    }
+
     public function actionFinalizeCheckout($sProvider, $mixedVendorId = "")
     {
         $aData = &$_REQUEST;
 
+        $aResult = $this->serviceFinalizeCheckout($sProvider, $mixedVendorId, $aData);
+        if(isset($aResult['error']))
+            return $this->_oTemplate->displayPageCodeError($aResult['error']);
+        else if(isset($aResult['redirect'])) {
+            header('Location: ' . $aResult['redirect']);
+            exit;
+        }
+        else
+            $this->_oTemplate->displayPageCodeResponse($aResult['message']);
+    }
+    
+    public function serviceFinalizeCheckout($sProvider, $mixedVendorId = "", $aData = [])
+    {
         $oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
         if($oProvider === false || !$oProvider->isActive())
-            return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
+            return ['error' => $this->_sLangsPrefix . 'err_incorrect_provider'];
 
         $aResult = $oProvider->finalizeCheckout($aData);
         if((int)$aResult['code'] != BX_PAYMENT_RESULT_SUCCESS) 
-            return $this->_oTemplate->displayPageCodeError($aResult['message']);
+            return ['error' => $aResult['message']];
 
         $aPending = $this->_oDb->getOrderPending(['type' => 'id', 'id' => (int)$aResult['pending_id']]);
         $bTypeRecurring = $aPending['type'] == BX_PAYMENT_TYPE_RECURRING;
@@ -1100,7 +1136,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
             );
 
             if(!$this->getObjectSubscriptions()->register($aPending, $aSubscription))
-                return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_already_registered');
+                return ['error' => $this->_sLangsPrefix . 'err_already_registered'];
         }
 
         $this->onPaymentRegisterBefore($aPending);
@@ -1128,17 +1164,13 @@ class BxPaymentModule extends BxBaseModPaymentModule
             'result' => &$aResult,
         ));
 
-        if($oProvider->needRedirect()) {
-            header('Location: ' . $oProvider->getReturnUrl());
-            exit;
-        }
+        if($oProvider->needRedirect()) 
+            return ['redirect' => $oProvider->getReturnUrl()];
 
-        if(!empty($aResult['redirect'])) {
-            header('Location: ' . base64_decode(urldecode($aResult['redirect'])));
-            exit;
-        }
+        if(!empty($aResult['redirect'])) 
+            return ['redirect' => $this->_oConfig->urlDecode($aResult['redirect'])];
 
-        $this->_oTemplate->displayPageCodeResponse($aResult['message']);
+        return ['message' => $aResult['message']];
     }
 
     public function actionFinalizedCheckout($sProvider, $mixedVendorId = "")
@@ -1965,6 +1997,34 @@ class BxPaymentModule extends BxBaseModPaymentModule
         ));
 
     	return true;
+    }
+
+    public function serviceStripeV3CreateSessionApi($mixedParams)
+    {
+        $aParams = is_array($mixedParams) ? $mixedParams : json_decode($mixedParams, true);
+        if(!isset($aParams['type'], $aParams['seller_id'], $aParams['items']))
+            return [bx_api_get_msg(_t($this->_sLangsPrefix . 'err_wrong_data'))];
+            
+        $sProvider = 'stripe_v3';
+        $iClientId = $this->getProfileId();
+        $iSellerId = (int)$aParams['seller_id'];
+        $sItems = $aParams['items'];
+
+        $oProvider = $this->getObjectProvider($sProvider, $iSellerId);
+        if($oProvider === false || !$oProvider->isActive())
+            return [bx_api_get_msg(_t($this->_sLangsPrefix . 'err_incorrect_provider'))];
+
+        $aSessionParams = [];
+        if(!empty($aParams['return_url']))
+            $aSessionParams['return_url'] = $aParams['return_url'] . '/api.php?r=' . $this->getName() . '/initialize_checkout_api&params[]=' . implode('&params[]=', [$aParams['type'], $iSellerId, $sProvider, $sItems, $this->_oConfig->urlEncode($this->_oConfig->getUrl('URL_HISTORY'))]);
+        
+        $minxedSession = $oProvider->createSessionPaymentEmbedded($aParams['type'], $iClientId, $iSellerId, $sItems, $aSessionParams);
+        if($minxedSession === false)
+            return [bx_api_get_msg(_t($this->_sLangsPrefix . 'err_cannot_perform'))];
+
+        return [
+            'clientSecret' => $minxedSession
+        ];
     }
 
     public function serviceConvert($fAmount, $sCurrencyFrom, $sCurrencyTo, $fRate = false)

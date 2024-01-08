@@ -63,37 +63,6 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
 
         return $aResult;
     }
-    
-    public function getActionTitle($sAction, $iInitiatorId, $iContentId, $bFlip = false)
-    {
-        $aResult = [];
-        if($this->isConnectedNotMutual($iInitiatorId, $iContentId))
-            $aResult = [
-                'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_leave_cancel'),
-            ];
-        else if($this->isConnectedNotMutual($iContentId, $iInitiatorId))
-            $aResult = [
-                'add' => _t('_sys_menu_item_title_sm_join_confirm'),
-                'remove' => _t('_sys_menu_item_title_sm_leave_reject'),
-            ];
-        else if($this->isConnected($iInitiatorId, $iContentId, true))
-            $aResult = [
-                'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_leave'),
-            ];
-        else
-            $aResult = [
-                'add' => _t('_sys_menu_item_title_sm_join'),
-                'remove' => '',
-            ];
-
-        $aFlip = ['add' => 'remove', 'remove' => 'add'];
-        if($bFlip)
-            $sAction = $aFlip[$sAction];
-
-        return !empty($aResult[$sAction]) ? _t($aResult[$sAction]) : '';
-    }
 
     public function hasQuestionnaire($iContentProfileId)
     {

@@ -42,18 +42,19 @@ class BxBaseModProfileMenuViewActions extends BxBaseModGeneralMenuView
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
         $this->_aProfileInfo = $this->_oProfile->getInfo();     
 
-        $this->addMarkers($this->_aProfileInfo);
-        $this->addMarkers(array(
+        $aMarkers = [
             'profile_id' => $this->_oProfile->id()
-        ));
+        ];
 
-        $aTitles = $this->_oModule->serviceGetConnectionButtonsTitles($this->_oProfile->id());
-        if($aTitles) {
-            $this->addMarkers(array(
+        $aTitles = $this->_oModule->getMenuItemTitleByConnection('sys_profiles_friends', '', $this->_oProfile->id());
+        if($aTitles) 
+            $aMarkers = array_merge($aMarkers, [
                 'title_add_friend' => $aTitles['add'],
                 'title_remove_friend' => $aTitles['remove'],
-            ));
-        }
+            ]);
+
+        $this->addMarkers($this->_aProfileInfo);
+        $this->addMarkers($aMarkers);
     }
 }
 

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_ntfs_setting_type_follow_context"><![CDATA[Активность, относящаяся к контекстам (группам, событиям и тп), за которыми Вы следите]]></string_upd>
-</resources>

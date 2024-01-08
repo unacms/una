@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_sys_form_display_ps_gc_manage"><![CDATA[Конфиденциальность: Управлять пользовательской группой]]></string_add>
-
-	<string_upd name="_sys_form_ps_group_custom"><![CDATA[Конфиденциальность: Пользовательская группа]]></string_upd>
-
-	<string_del name="_sys_form_display_ps_gc_select"><![CDATA[Конфиденциальность: Выбрать пользовательскую группу]]></string_del>
-</resources>

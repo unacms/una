@@ -17,13 +17,13 @@
     <string name="_bx_payment_option_inv_expiraction_notify"><![CDATA[Number of days before invoice expiration to notify payer]]></string>
 
     <!-- PAGES and BLOCKS -->
-    <string name="_bx_payment_page_title_sys_carts"><![CDATA[Shopping Carts]]></string>
-    <string name="_bx_payment_page_title_carts"><![CDATA[Shopping Carts]]></string>
+    <string name="_bx_payment_page_title_sys_carts"><![CDATA[Shopping Cart]]></string>
+    <string name="_bx_payment_page_title_carts"><![CDATA[Shopping Cart]]></string>
     <string name="_bx_payment_page_title_sys_cart"><![CDATA[Shopping Cart]]></string>
     <string name="_bx_payment_page_title_cart"><![CDATA[Shopping Cart]]></string>
     <string name="_bx_payment_page_title_sys_cart_thank_you"><![CDATA[Thank you!]]></string>
     <string name="_bx_payment_page_title_cart_thank_you"><![CDATA[Thank you!]]></string>
-    <string name="_bx_payment_page_block_title_carts"><![CDATA[Shopping Carts]]></string>
+    <string name="_bx_payment_page_block_title_carts"><![CDATA[Shopping Cart]]></string>
     <string name="_bx_payment_page_block_title_cart"><![CDATA[{0}'s Shopping Cart]]></string>
     <string name="_bx_payment_page_block_title_cart_thank_you"><![CDATA[Thank you!]]></string>
     <string name="_bx_payment_page_block_content_cart_thank_you"><![CDATA[Thank you! Payment was successfully performed. The data will be processed shortly. Please wait.]]></string>
@@ -90,10 +90,10 @@
 
     <string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
-    <string name="_bx_payment_menu_item_title_system_cart"><![CDATA[Cart]]></string>
-    <string name="_bx_payment_menu_item_title_cart"><![CDATA[Cart]]></string>
-    <string name="_bx_payment_menu_item_title_system_cart_history"><![CDATA[Cart History]]></string>
-    <string name="_bx_payment_menu_item_title_cart_history"><![CDATA[Cart History]]></string>
+    <string name="_bx_payment_menu_item_title_system_cart"><![CDATA[Checkout]]></string>
+    <string name="_bx_payment_menu_item_title_cart"><![CDATA[Checkout]]></string>
+    <string name="_bx_payment_menu_item_title_system_cart_history"><![CDATA[Payment History]]></string>
+    <string name="_bx_payment_menu_item_title_cart_history"><![CDATA[Payment History]]></string>
 
     <string name="_bx_payment_menu_title_sbs_submenu"><![CDATA[Subscriptions Submenu]]></string>
     <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Subscriptions Submenu]]></string>

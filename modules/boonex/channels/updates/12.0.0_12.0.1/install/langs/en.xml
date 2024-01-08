@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_channels_acl_action_create_channel_auto_info"><![CDATA[Automatically create new channel when new hashtag is mentioned by anyone with this level]]></string_add>
-	<string_add name="_bx_channels_page_block_title_system_profile_subscribed_me"><![CDATA[Followers]]></string_add>
-	<string_add name="_bx_channels_page_block_title_profile_subscribed_me"><![CDATA[Followers]]></string_add>
-</resources>

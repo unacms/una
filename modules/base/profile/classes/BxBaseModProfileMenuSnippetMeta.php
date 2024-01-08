@@ -160,6 +160,8 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemSubscribers($aItem)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         if(!$this->_isVisibleInContext($aItem))
             return false;
 
@@ -179,8 +181,10 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if($this->_bIsApi)
             return false;
 
+        $sTitle = isset($CNF['T']['menu_item_title_sm_subscribers']) ? $CNF['T']['menu_item_title_sm_subscribers'] : '_sys_menu_item_title_sm_subscribers';
+
         return $this->getUnitMetaItemCustom($oConnection->getCounter($this->_oContentProfile->id(), false, [
-            'caption' => '_sys_menu_item_title_sm_subscribers', 
+            'caption' => $sTitle, 
             'custom_icon' => $sIcon
         ], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS));
     }

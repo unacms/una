@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_protean_stg_cpt_option_general_item_bg_color_disabled"><![CDATA[Цвет фона не активного пункта]]></string_add>
-    <string_add name="_bx_protean_stg_cpt_option_form_input_editor_skin"><![CDATA[Тема редактора]]></string_add>
-    <string_add name="_bx_protean_stg_cpt_option_form_input_editor_skin_select"><![CDATA[Выбрать тему...]]></string_add>
-    <string_add name="_bx_protean_stg_cpt_option_form_input_editor_skin_unavailable"><![CDATA[Темы не доступны]]></string_add>
-</resources>

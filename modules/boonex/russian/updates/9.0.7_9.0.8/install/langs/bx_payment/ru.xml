@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_payment_pp_prc_type_cpt"><![CDATA[Режим обработки]]></string_upd>
-	<string_upd name="_bx_payment_pp_prc_type_dsc"><![CDATA[Режим, в которым будут обработаны данные]]></string_upd>
-</resources>

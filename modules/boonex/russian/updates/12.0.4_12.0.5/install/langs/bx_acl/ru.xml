@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_acl_txt_cart_item_description"><![CDATA[Членство на сайте {0}.]]></string_add>
-
-	<string_upd name="_bx_acl_grid_action_subscribe"><![CDATA[Подписаться]]></string_upd>
-	<string_upd name="_bx_acl_grid_action_subscribe_title"><![CDATA[Создать подписку с регулярным выставлением счетов]]></string_upd>
-</resources>

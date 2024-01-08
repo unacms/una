@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_dev_nav_err_items_title"><![CDATA[Здесь нужно ввести значение]]></string_add>
-
-	<string_del name="_bx_dev_nav_err_menus_set_name"><![CDATA[Нужно выбрать набор]]></string_del>
-	<string_del name="_bx_dev_nav_err_items_title_system"><![CDATA[Здесь нужно ввести значение]]></string_del>
-	<string_del name="_bx_dev_bp_err_page_title_system"><![CDATA[Здесь нужно ввести значение]]></string_del>
-	<string_del name="_bx_dev_bp_err_block_title_system"><![CDATA[Здесь нужно ввести значение]]></string_del>
-</resources>

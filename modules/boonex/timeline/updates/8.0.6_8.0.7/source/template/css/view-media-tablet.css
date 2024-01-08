@@ -1,9 +1,0 @@
-@media (min-width:720px) and (max-width:1024px) {
-	.bx-tl-grid-sizer { 
-		width: 50%;
-	}
-	.bx-layout-column-half .bx-tl-grid-sizer, 
-	.bx-layout-column-thin .bx-tl-grid-sizer {
-		width: 100%;
-	}
-}

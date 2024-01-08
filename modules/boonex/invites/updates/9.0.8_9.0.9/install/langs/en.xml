@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_invites_page_block_title_system_invite_form"><![CDATA[Invite Form]]></string_add>
-    <string_add name="_bx_invites_alert_action_request_notify_personal"><![CDATA[New requests]]></string_add>
-
-    <string_upd name="_bx_invites_err_already_registed"><![CDATA[User with this email already registered. Please use  <a href="{0}">forgot password</a> to restore access to your account.]]></string_upd>
-    <string_upd name="_bx_invites_alert_action_request"><![CDATA[<b class="bx-ntfs-content-profile">{entry_sample}</b> request invitation - <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string_upd>
-</resources>

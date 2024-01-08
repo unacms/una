@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_groups_menu_item_title_system_befriend"><![CDATA[Добавить в друзья]]></string_upd>
-	<string_upd name="_bx_groups_menu_item_title_befriend"><![CDATA[Добавить в друзья]]></string_upd>
-	<string_upd name="_bx_groups_menu_item_title_befriend_sent"><![CDATA[Добавить в друзья (запрошено)]]></string_upd>
-	<string_upd name="_bx_groups_menu_item_title_system_unfriend"><![CDATA[Удалить из друзей]]></string_upd>
-	<string_upd name="_bx_groups_menu_item_title_unfriend"><![CDATA[Удалить из друзей]]></string_upd>
-</resources>

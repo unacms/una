@@ -1231,12 +1231,18 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!in_array($sType, array('add', 'edit', 'view', 'delete')))
             return false;
 
+        $iLoggedId = (int)bx_get_logged_profile_id();
         $mixedContextId = isset($aParams['context_id']) ? $aParams['context_id'] : false;
 
+        $oContextProfile = false;
         $bContext = $mixedContextId !== false;
-        if($bContext && ($oContextProfile = BxDolProfile::getInstance(abs($mixedContextId))) !== false)
-            if($oContextProfile->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
+        if($bContext) {
+            $oContextProfile = BxDolProfile::getInstance(abs($mixedContextId));
+            $bContext = $oContextProfile !== false;
+
+            if($bContext && $oContextProfile->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
                 return false;
+        }
 
         $CNF = &$this->_oConfig->CNF;
 
@@ -1259,7 +1265,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $sKey = 'FIELD_ALLOW_VIEW_TO';
         if(!empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]]) && (!$bContext || $mixedContextId < 0)) {
-            $bContextOwner = $bContext && abs($mixedContextId) == (int)bx_get_logged_profile_id();
+            $bContextOwner = $bContext && abs($mixedContextId) == $iLoggedId;
 
             if(!$bContext || $bContextOwner) {
                 $iGc = 0;
@@ -1300,6 +1306,18 @@ class BxBaseModGeneralModule extends BxDolModule
             else {
                 $oForm->aInputs[$CNF[$sKey]]['value'] = $mixedContextId;
                 $oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
+            }
+        }
+
+        $sKey = 'FIELD_LABELS';
+        if(!empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]]) && empty($oForm->aInputs[$CNF[$sKey]]['value']) && $bContext) {
+            $iContextProfileId = $oContextProfile->id();
+            $sContextModule = $oContextProfile->getModule();
+            
+            if(bx_srv($sContextModule, 'is_fan', [$iContextProfileId, $iLoggedId])) {
+                $aContextInfo = bx_srv($sContextModule, 'get_content_info_by_profile_id', [$iContextProfileId]);
+                if(!empty($aContextInfo['hashtag']))
+                    $oForm->aInputs[$CNF[$sKey]]['value'] = [$aContextInfo['hashtag']];
             }
         }
 

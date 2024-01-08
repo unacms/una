@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_cnv_email_new_reply_subject"><![CDATA[Новый ответ в переписке от {SenderDisplayName}]]></string_upd>
-	<string_upd name="_bx_cnv_email_new_reply_body"><![CDATA[{email_header}
-<p>Новый ответ в <a href="{PageUrl}">{PageTitle}</a> переписке от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
-<hr />
-<p>{Message}</p>
-{email_footer}]]></string_upd>
-</resources>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_adm_tmi_cpt_language"><![CDATA[Язык]]></string_add>
-	<string_add name="_cmt_rvw_txt_min_form_placeholder"><![CDATA[{0}, здесь Вы можете написать обзор.]]></string_add>
-	<string_add name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string_add>
-	<string_add name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Цитировать]]></string_add>
-
-	<string_upd name="_sys_send"><![CDATA[Отправить]]></string_upd>
-</resources>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_timeline_page_title_sys_item_brief"><![CDATA[Предпросмотр элемента хроники]]></string_add>
-    <string_add name="_bx_timeline_page_title_item_brief"><![CDATA[Предпросмотр элемента хроники]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_item_content"><![CDATA[Содержимое]]></string_add>
-    <string_add name="_bx_timeline_page_block_title_item_info"><![CDATA[Информация]]></string_add>
-    <string_add name="_bx_timeline_page_block_title_item_comments"><![CDATA[Комментарии]]></string_add>
-</resources>

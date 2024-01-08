@@ -160,7 +160,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         
         if(bx_is_api()){
             $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-            return bx_api_get_image($CNF['OBJECT_STORAGE'], $aContentInfo[$CNF['FIELD_COVER']]);
+            $aTmp = bx_api_get_image($CNF['OBJECT_STORAGE'], $aContentInfo[$CNF['FIELD_COVER']]);
+            if (!$aTmp){
+                return ['storage' => $CNF['OBJECT_STORAGE']];
+            }
+            return $aTmp;
         }
 
         if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER']))
@@ -1408,37 +1412,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceGetTimelineProfileImageAllowedView($aEvent);
     }
 
-    public function serviceGetConnectionButtonsTitles($iProfileId, $sConnectionsObject = 'sys_profiles_friends')
+    public function serviceGetMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
     {
-        if (!isLogged())
-            return array();
-
-        if (!($oConn = BxDolConnection::getObjectInstance($sConnectionsObject)))
-            return array();
-
-        $CNF = $this->_oConfig->CNF;
-
-        if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $iProfileId)) {
-            return array(
-                'add' => _t($CNF['T']['menu_item_title_befriend_sent']),
-                'remove' => _t($CNF['T']['menu_item_title_unfriend_cancel_request']),
-            );
-        } elseif ($oConn->isConnectedNotMutual($iProfileId, bx_get_logged_profile_id())) {
-            return array(
-                'add' => _t($CNF['T']['menu_item_title_befriend_confirm']),
-                'remove' => _t($CNF['T']['menu_item_title_unfriend_reject_request']),
-            );
-        } elseif ($oConn->isConnected($iProfileId, bx_get_logged_profile_id(), true)) {
-            return array(
-                'add' => '',
-                'remove' => _t($CNF['T']['menu_item_title_unfriend']),
-            );
-        } else {
-            return array(
-                'add' => _t($CNF['T']['menu_item_title_befriend']),
-                'remove' => '',
-            );
-        }
+        return $this->getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId);
     }
 
 
@@ -2071,7 +2047,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $aResult = [];
         if($oConnection->isConnectedNotMutual($iInitiatorProfileId, $iContentProfileId))
             $aResult = [
-                'add' => '',
+                'add' => _t(!empty($CNF['T']['menu_item_title_befriend_sent']) ? $CNF['T']['menu_item_title_befriend_sent'] : '_sys_menu_item_title_sm_befriend_sent'),
                 'remove' => _t(!empty($CNF['T']['menu_item_title_unfriend_cancel']) ? $CNF['T']['menu_item_title_unfriend_cancel'] : '_sys_menu_item_title_sm_unfriend_cancel'),
             ];
         else if($oConnection->isConnectedNotMutual($iContentProfileId, $iInitiatorProfileId))
@@ -2118,12 +2094,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         $sModule = $this->getName();
         $iId = (int)$aData[$CNF['FIELD_ID']];
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iId, $sModule);
 
         $aResult = [
             'id' => $iId, 
             'module' => $sModule,
+            'module_title' => _t($CNF['T']['txt_sample_single']),
             'added' => $aData[$CNF['FIELD_ADDED']],
             'author' => $aData[$CNF['FIELD_AUTHOR']],
+            'author_data' => $oProfile !== false ? BxDolProfile::getData($oProfile->id()) : '',
             'title' => $aData[$CNF['FIELD_TITLE']],
             $CNF['FIELD_TITLE'] => $aData[$CNF['FIELD_TITLE']],
             'url' => bx_api_get_relative_url($this->serviceGetLink($iId)),
@@ -2137,7 +2116,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(isset($aParams['extended']) && $aParams['extended'] === true)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
 
-        if(getParam('sys_api_conn_in_prof_units') == 'on' && ($oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $sModule)) !== false) {
+        if(getParam('sys_api_conn_in_prof_units') == 'on' && $oProfile !== false) {
             $iProfileId = $oProfile->id();
             $aResult['title'] = $oProfile->getDisplayName();
             if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false && isset($CNF['URI_VIEW_FRIENDS'])) {

@@ -627,10 +627,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByName('block_item_content.html', $aTmplVars);
     }
 
-    public function getItemBlockInfo($iId) {
+    public function getItemBlockInfo($iId)
+    {
         $CNF = $this->_oConfig->CNF;
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
         if(empty($aEvent))
             return '';
 
@@ -638,15 +639,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        if(bx_is_api()) {
-            $oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
-            $oMenuManage->setEvent($aEvent);
+        if($this->_bIsApi) {
+            $sFldOpv = 'FIELD_OBJECT_PRIVACY_VIEW';
 
-            return [bx_api_get_block('entity_author', [
-                'author_data' => BxDolProfile::getData($aResult[$CNF['FIELD_OBJECT_OWNER_ID']]),
-                'entry_date' => !empty($aEvent[$CNF['FIELD_ADDED']]) ? $aEvent[$CNF['FIELD_ADDED']] : '',
-                'menu_manage' => $oMenuManage->getCodeApi()
-            ])];
+            $sMenuManage = '';
+            if(($oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'))) !== false) {
+                $oMenuManage->setEvent($aEvent);
+                $sMenuManage = $oMenuManage->getCodeApi();
+            }
+
+            return [
+                bx_api_get_block('entity_author', [
+                    'author_data' => BxDolProfile::getData($aResult[$CNF['FIELD_OBJECT_OWNER_ID']]),
+                    'entry_date' => !empty($aEvent[$CNF['FIELD_ADDED']]) ? $aEvent[$CNF['FIELD_ADDED']] : '',
+                    'entry_context' => !empty($CNF[$sFldOpv]) && (int)$aEvent[$CNF[$sFldOpv]] < 0 ? BxDolProfile::getData(abs((int)$aEvent[$CNF[$sFldOpv]])) : '',
+                    'menu_manage' => $sMenuManage
+                ])
+            ];
         }
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_view'), $this);
@@ -851,6 +860,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $iEventIndex++;
             if($iExtenalsEvery > 0 && $iEventIndex % $iExtenalsEvery == 0) {
+                $aParams['event_index'] = $iEventIndex;
+
                 $mixedExternalPost = false;
                 bx_alert($this->_oConfig->getName(), 'get_external_post', 0, 0, [
                     'params' => $aParams,
@@ -3074,6 +3085,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aResult['content']['images_attach'] = $oModule->getEventImages($aEvent['id']);
                 $aResult['content']['videos_attach'] = $oModule->getEventVideos($aEvent['id']);
                 $aResult['content']['files_attach'] = $oModule->getEventFiles($aEvent['id']);
+                if($this->_bIsApi) {
+                    $aResult['content']['videos_attach'] = array_values($aResult['content']['videos_attach']);
+                    $aResult['content']['files_attach'] = array_values($aResult['content']['files_attach']);
+                }
                 break;
 
             case BX_TIMELINE_PARSE_TYPE_REPOST:

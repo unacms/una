@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_analytics_txt_export_to_csv_title"><![CDATA[Export to CSV file]]></string_add>
-</resources>

@@ -28,7 +28,7 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if($sConnection == $CNF['OBJECT_CONNECTIONS'] && ($oConnection = BxDolConnection::getObjectInstance($sConnection)) !== false && $oConnection->hasQuestionnaire($iContentProfile))
+        if(!empty($CNF['OBJECT_CONNECTIONS']) && $sConnection == $CNF['OBJECT_CONNECTIONS'] && ($oConnection = BxDolConnection::getObjectInstance($sConnection)) !== false && $oConnection->hasQuestionnaire($iContentProfile))
             return $this->_oModule->_oConfig->getJsObject('main') . ".connAction(this, '" . $sConnection . "', '" . $sAction . "', '" . $iContentProfile . "')";
 
         return parent::getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem);
@@ -124,15 +124,17 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         if(!$iMembers && !$this->_bShowZeros)
             return false;
 
+        $sTitle = isset($CNF['T']['menu_item_title_sm_members']) ? $CNF['T']['menu_item_title_sm_members'] : '_sys_menu_item_title_sm_members';
+        
         if($this->_bIsApi)
             return $this->_getMenuItemAPI($aItem, 'text', [
-                'title' => _t('_sys_menu_item_title_sm_members', $iMembers)
+                'title' => _t($sTitle, $iMembers)
             ]);
 
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
 
         return $this->getUnitMetaItemCustom($oConnection->getCounter($this->_oContentProfile->id(), true, [
-            'caption' => '_sys_menu_item_title_sm_members', 
+            'caption' => $sTitle, 
             'custom_icon' => $sIcon
         ], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS));
     }

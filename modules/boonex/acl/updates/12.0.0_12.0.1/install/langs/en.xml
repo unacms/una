@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_acl_option_recurring_prioritize"><![CDATA[Prioritize recurring payments]]></string_add>
-</resources>

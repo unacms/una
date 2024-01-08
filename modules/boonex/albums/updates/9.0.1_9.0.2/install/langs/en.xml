@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_albums_page_block_title_favorites_of_author"><![CDATA[Favorite albums by <a href="{profile_link}">{display_name}</a>]]></string_add>
-    <string_add name="_bx_albums_page_block_title_sys_favorites_of_author"><![CDATA[Favorite albums of author]]></string_add>
-    <string_add name="_bx_albums_page_block_title_favorites_of_author_media"><![CDATA[Favorite media by <a href="{profile_link}">{display_name}</a>]]></string_add>
-    <string_add name="_bx_albums_page_block_title_sys_favorites_of_author_media"><![CDATA[Favorite media of author]]></string_add>
-</resources>

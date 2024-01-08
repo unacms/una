@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_ads_option_internal_interested_notification"><![CDATA[Use internal notification about Interested action]]></string_add>
-	<string_add name="_bx_ads_menu_item_title_system_review_entry"><![CDATA[Review]]></string_add>
-	<string_add name="_bx_ads_txt_sample_interest_single"><![CDATA[interested in ad]]></string_add>
-	<string_add name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string_add>
-</resources>

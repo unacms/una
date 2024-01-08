@@ -3085,8 +3085,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($this->isAllowedDelete($aEvent, true) !== true || !$this->deleteEvent($aEvent))
             return false;
 
-        $this->_oDb->deleteCache(array('event_id' => $iId));
-
         return true;
     }
 

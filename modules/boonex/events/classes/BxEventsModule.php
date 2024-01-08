@@ -29,7 +29,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         ]);
 
         $this->_aBrowsingFiltersKeys = array_merge($this->_aBrowsingFiltersKeys, [
-            'by_date', 'date_start', 'date_end', 'timezone'
+            'by_city', 'by_date', 'date_start', 'date_end', 'timezone'
         ]);
     }
 
@@ -110,8 +110,12 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         if(($iContextId = bx_get('context_id')) !== false)
             $aParams['context_id'] = (int)$iContextId;
     
+        $aResult = $this->serviceCalendarData($aParams);
+        if(isset($aResult['data']))
+            $aResult = $aResult['data'];
+
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($this->serviceCalendarData($aParams));
+        echo json_encode($aResult);
     }
 
     public function serviceCheckIn($iId, $iProfileId = 0)
@@ -149,8 +153,19 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
 
         $iNow = time();
 
-        $sStart = !empty($aParams['start']) ? date('d.m.Y', $aParams['start']) : date('d.m.Y', $iNow);
-        $sEnd = !empty($aParams['end']) ? date('d.m.Y', $aParams['end']) : date('d.m.Y', $iNow + 3600 * 24 * 30);
+        if(empty($aParams['start']))
+            $sStart = date('d.m.Y', $iNow);
+        else if(is_numeric($aParams['start']))
+            $sStart = date('d.m.Y', $aParams['start']);
+        else
+            $sStart = $aParams['start'];
+
+        if(empty($aParams['end']))
+            $sEnd = date('d.m.Y', $iNow + 3600 * 24 * 30);
+        else if(is_numeric($aParams['end']))
+            $sEnd = date('d.m.Y', $aParams['end']);
+        else
+            $sEnd = $aParams['end']; 
 
         $iContentId = 0;
         $iContextId = 0;
@@ -233,7 +248,10 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             'data' => &$aEntries,
         ));
 
-        return ['params' => ['start' => strtotime($sStart), 'end' => strtotime($sEnd)], 'data' => $aEntries];
+        return [
+            'params' => ['start' => strtotime($sStart), 'end' => strtotime($sEnd)],
+            'data' => $aEntries
+        ];
     }
 
     public function serviceIsIcalExportAvaliable($iContentId)

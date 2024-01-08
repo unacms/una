@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_ru',
     'title' => 'Russian',
     'note' => 'Language file',
-    'version' => '13.0.17.DEV',
-    'vendor' => 'Boonex',
+    'version' => '14.0.1.DEV',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '14.0.x'
     ),
 
     /**

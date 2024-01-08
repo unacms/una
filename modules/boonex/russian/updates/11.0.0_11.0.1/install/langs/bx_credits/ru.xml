@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_credits_enable_provider"><![CDATA[Активировать платежную систему 'Credits' для всех новосозданных профилей]]></string_add>
-</resources>

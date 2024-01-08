@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_shopify_page_block_title_sys_my_entries"><![CDATA[Товары пользователя]]></string_add>
-	<string_add name="_bx_shopify_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string_add>
-
-	<string_upd name="_bx_shopify_page_block_title_my_entries"><![CDATA[{display_name} - Товары]]></string_upd>
-</resources>

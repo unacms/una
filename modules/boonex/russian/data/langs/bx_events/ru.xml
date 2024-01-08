@@ -128,6 +128,18 @@
     <string name="_bx_events_form_session_input_sys_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_events_form_session_input_do_cancel"><![CDATA[Отмена]]></string>
 
+    <string name="_bx_events_form_filters_input_by_city"><![CDATA[По городу]]></string>
+    <string name="_bx_events_form_filters_input_by_date"><![CDATA[По дате]]></string>
+    <string name="_bx_events_form_filters_input_by_date_all"><![CDATA[Любая дата]]></string>
+    <string name="_bx_events_form_filters_input_by_date_today"><![CDATA[Сегодня]]></string>
+    <string name="_bx_events_form_filters_input_by_date_tomorrow"><![CDATA[Завтра]]></string>
+    <string name="_bx_events_form_filters_input_by_date_weekend"><![CDATA[В эти выходные]]></string>
+    <string name="_bx_events_form_filters_input_by_date_this_week"><![CDATA[На этой неделе]]></string>
+    <string name="_bx_events_form_filters_input_by_date_next_week"><![CDATA[На следующей неделе]]></string>
+    <string name="_bx_events_form_filters_input_by_date_this_month"><![CDATA[В этом месяце]]></string>
+    <string name="_bx_events_form_filters_input_by_date_date_range"><![CDATA[Диапазон дат]]></string>
+    <string name="_bx_events_form_filters_input_do_apply"><![CDATA[Применить]]></string>
+
     <string name="_bx_events_acl_action_create_profile"><![CDATA[Создать событие]]></string>
     <string name="_bx_events_acl_action_delete_profile"><![CDATA[Удалить событие]]></string>
     <string name="_bx_events_acl_action_view_profile"><![CDATA[Просмотреть событие]]></string>
@@ -343,6 +355,8 @@
     <string name="_bx_events_menu_item_title_leave_group"><![CDATA[Не пойду]]></string>
     <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить]]></string>
     <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Отклонить]]></string>
+    <string name="_bx_events_menu_item_title_sm_members"><![CDATA[{0} гостей]]></string>
+    <string name="_bx_events_menu_item_title_sm_subscribers"><![CDATA[{0} заинтересованных]]></string>
 
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Заинтересован]]></string>

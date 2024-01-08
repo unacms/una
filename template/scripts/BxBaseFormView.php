@@ -390,6 +390,11 @@ class BxBaseFormView extends BxDolForm
                     }
                     $aInput['value'] = $aVars;
                 }
+
+                if (isset($aInput['type']) && 'textarea' == $aInput['type']){
+                    if (isset($aInput['value'], $aInput['html']) && (int)$aInput['html'] == 0)
+                        $aInput['value'] = strip_tags($aInput['value']);
+                }
             }
             else{
                 $keysToRemove[] = $key;

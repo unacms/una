@@ -1,8 +1,0 @@
-<bx_include_base:../modules/base/text/template/form_ghost_template.html />
-<script>
-var aType = '{file_type}'.split('/');
-if(!aType || aType[0] != 'image' || -1 === $.inArray(aType[1], ['gif', 'jpeg', 'png'])) {
-    $('#bx-base-general-intert-to-post-link-{file_id}').remove();
-    $('#bx-uploader-file-{storage_object}-{file_id} .bx-base-general-use-as-thumb').remove();
-}
-</script>

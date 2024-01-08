@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_persons_page_title_browse_by_cmts"><![CDATA[People's Comments]]></string_add>
-
-	<string_upd name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> profile timeline]]></string_upd>
-	<string_upd name="_bx_persons_txt_sample_comment_single"><![CDATA[comment to person]]></string_upd>
-</resources>

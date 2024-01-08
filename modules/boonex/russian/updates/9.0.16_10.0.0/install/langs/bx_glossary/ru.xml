@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_glossary_txt_sample_score_up_single"><![CDATA[голос за термин]]></string_add>
-    <string_add name="_bx_glossary_txt_sample_score_down_single"><![CDATA[голос против термина]]></string_add>
-
-    <string_upd name="_bx_glossary_menu_item_title_admt_posts"><![CDATA[Глоссарий]]></string_upd>
-</resources>

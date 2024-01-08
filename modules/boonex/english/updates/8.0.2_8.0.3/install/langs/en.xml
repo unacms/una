@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_adm_str_txt_pv_version_mask"><![CDATA[{0} ({1} is available)]]></string_add>
-	<string_add name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/get_consumer">Get BoonEx key&secret</a>]]></string_add>
-	<string_add name="_sys_inst_conf_field_oauth_key"><![CDATA[BoonEx key]]></string_add>
-	<string_add name="_sys_inst_conf_field_oauth_secret"><![CDATA[BoonEx secret]]></string_add>
-	<string_add name="_sys_inst_conf_section_link_with_market"><![CDATA[Link with BoonEx market]]></string_add>
-</resources>

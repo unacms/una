@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_payment_err_already_registered"><![CDATA[Подписка с аналогичными данными уже была зарегистрирована.]]></string_add>
-	<string_add name="_bx_payment_cbee_check_amount_cpt"><![CDATA[Активировать проверку суммы]]></string_add>
-	<string_add name="_bx_payment_cbee_check_amount_dsc"><![CDATA[Активировать проверку суммы для Chargebee Webhooks (рекомендуется). Однако проверка должна быть отключена когда используются скидки и купоны.]]></string_add>
-	<string_add name="_bx_payment_cbee_menu_item_title_manager"><![CDATA[Портал самообслуживания]]></string_add>
-</resources>

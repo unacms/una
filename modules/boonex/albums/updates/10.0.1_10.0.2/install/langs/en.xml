@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_albums_txt_sample_reaction_single"><![CDATA['{0}' reaction to album]]></string_add>
-
-	<string_upd name="_bx_albums_txt_all_entries_by"><![CDATA[{0} albums]]></string_upd>
-</resources>

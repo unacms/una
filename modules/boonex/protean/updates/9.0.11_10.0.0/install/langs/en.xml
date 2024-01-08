@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_protean_stg_cpt_option_general_item_bg_color_disabled"><![CDATA[Disabled item background color]]></string_add>
-	<string_add name="_bx_protean_stg_cpt_option_form_input_editor_skin"><![CDATA[Editor skin]]></string_add>
-	<string_add name="_bx_protean_stg_cpt_option_form_input_editor_skin_select"><![CDATA[Select skin...]]></string_add>
-	<string_add name="_bx_protean_stg_cpt_option_form_input_editor_skin_unavailable"><![CDATA[Skins are unavailable]]></string_add>
-</resources>

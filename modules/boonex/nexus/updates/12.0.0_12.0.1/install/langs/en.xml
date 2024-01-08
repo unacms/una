@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_nexus_option_main_menu"><![CDATA[Main menu]]></string_add>
-    <string_add name="_bx_nexus_option_main_menu_value"><![CDATA[{0}: {1}]]></string_add>
-</resources>

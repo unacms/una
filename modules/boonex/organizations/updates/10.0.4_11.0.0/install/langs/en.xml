@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_orgs_form_profile_input_sys_allow_contact_to"><![CDATA[Who can contact me]]></string_add>
-    <string_add name="_bx_orgs_form_profile_input_allow_contact_to"><![CDATA[Who can contact me]]></string_add>
-	<string_add name="_bx_orgs_page_block_title_sys_active_profiles"><![CDATA[Active Organizations]]></string_add>
-	<string_add name="_bx_orgs_grid_action_title_adm_audit_content"><![CDATA[Audit actions with profile]]></string_add>
-    <string_add name="_bx_orgs_grid_action_title_adm_audit_profile"><![CDATA[Audit profile's actions]]></string_add>
-</resources>

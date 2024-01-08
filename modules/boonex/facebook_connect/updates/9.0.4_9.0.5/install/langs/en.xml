@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_facebook_information_block"><![CDATA[To get your "App ID" and "App Secret", you need to <a href="https://developers.facebook.com/apps/" target="_blank">make Facebook app</a>. <br /><br />Redirect URI: <b>{0}</b>]]></string_upd>
-</resources>

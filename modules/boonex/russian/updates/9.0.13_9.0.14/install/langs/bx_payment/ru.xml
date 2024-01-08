@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_payment_lmi_cpt_providers"><![CDATA[Провайдеры]]></string_add>
-	<string_add name="_bx_payment_grid_column_title_pdrs_caption"><![CDATA[Название]]></string_add>
-	<string_add name="_bx_payment_grid_column_title_pdrs_description"><![CDATA[Описание]]></string_add>
-	<string_add name="_bx_payment_grid_column_title_pdrs_for_visitor"><![CDATA[Для посетителей]]></string_add>
-	<string_add name="_bx_payment_grid_column_title_pdrs_for_single"><![CDATA[Разовые]]></string_add>
-	<string_add name="_bx_payment_grid_column_title_pdrs_for_recurring"><![CDATA[Периодические]]></string_add>
-</resources>

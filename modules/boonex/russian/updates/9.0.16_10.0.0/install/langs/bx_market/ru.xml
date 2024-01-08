@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-    <string_add name="_bx_market_txt_sample_score_up_single"><![CDATA[голос за продукт]]></string_add>
-    <string_add name="_bx_market_txt_sample_score_down_single"><![CDATA[голос против продукта]]></string_add>
-    <string_add name="_bx_market_txt_purchased_note"><![CDATA[Свяжитесь с <a href="{0}">{1}</a>, если у вас есть какие-либо вопросы или нужна помощь.]]></string_add>
-
-    <string_upd name="_bx_market_menu_item_title_admt_products"><![CDATA[Продукты]]></string_upd>
-</resources>

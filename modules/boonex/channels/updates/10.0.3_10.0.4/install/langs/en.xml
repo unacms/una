@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_channels_page_title_sys_entries_toplevel"><![CDATA[Top level]]></string_add>
-	<string_add name="_bx_channels_page_title_entries_toplevel"><![CDATA[Top level]]></string_add>
-	<string_add name="_bx_channels_page_block_title_toplevel"><![CDATA[Top level]]></string_add>
-	<string_add name="_bx_channels_menu_item_title_system_entries_toplevel"><![CDATA[Top level]]></string_add>
-	<string_add name="_bx_channels_menu_item_title_entries_toplevel"><![CDATA[Top level]]></string_add>
-</resources>

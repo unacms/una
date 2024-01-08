@@ -339,6 +339,29 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         return parent::getElement($aParams);
     }
 
+    public function getPerformedByAPI($aParams = [])
+    {
+        $aReactions = !empty($aParams['reaction']) ? [$aParams['reaction']] : $this->getReactions();
+
+        $aResult = [];
+        foreach($aReactions as $sReaction) {
+            $aValues = $this->_oQuery->getPerformed(['type' => 'by', 'object_id' => $this->getId(), 'reaction'=> $sReaction]);
+
+            $aTmplUsers = [];
+            foreach($aValues as $mValue) {
+                $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
+
+                $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+            }
+
+            $aResult[$sReaction] = $aTmplUsers;
+        }
+
+        return [
+            'performed_by' => $aResult
+        ];
+    }
+
     /**
      * Internal methods.
      */

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_upd name="_bx_shopify_menu_item_title_system_create_entry"><![CDATA[Goods]]></string_upd>
-    <string_upd name="_bx_shopify_menu_item_title_create_entry"><![CDATA[Goods]]></string_upd>
-	<string_upd name="_bx_shopify_menu_item_title_manage_my_entries"><![CDATA[Goods]]></string_upd>
-</resources>

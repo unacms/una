@@ -17,13 +17,13 @@
     <string name="_bx_payment_option_inv_expiraction_notify"><![CDATA[За сколько дней до истечения срока оплаты оповестить платильщика]]></string>
 
     <!-- PAGES and BLOCKS -->
-    <string name="_bx_payment_page_title_sys_carts"><![CDATA[Корзины]]></string>
-    <string name="_bx_payment_page_title_carts"><![CDATA[Корзины]]></string>
+    <string name="_bx_payment_page_title_sys_carts"><![CDATA[Корзина]]></string>
+    <string name="_bx_payment_page_title_carts"><![CDATA[Корзина]]></string>
     <string name="_bx_payment_page_title_sys_cart"><![CDATA[Корзина]]></string>
     <string name="_bx_payment_page_title_cart"><![CDATA[Корзина]]></string>
     <string name="_bx_payment_page_title_sys_cart_thank_you"><![CDATA[Спасибо!]]></string>
     <string name="_bx_payment_page_title_cart_thank_you"><![CDATA[Спасибо!]]></string>
-    <string name="_bx_payment_page_block_title_carts"><![CDATA[Корзины]]></string>
+    <string name="_bx_payment_page_block_title_carts"><![CDATA[Корзина]]></string>
     <string name="_bx_payment_page_block_title_cart"><![CDATA[Корзина продавца {0}]]></string>
     <string name="_bx_payment_page_block_title_cart_thank_you"><![CDATA[Спасибо!]]></string>
     <string name="_bx_payment_page_block_content_cart_thank_you"><![CDATA[Спасибо! Оплата успешно завершена. Данные будут обработаны в ближайшее время. Пожалуйста, подождите.]]></string>
@@ -91,10 +91,10 @@
 
     <string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
-    <string name="_bx_payment_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
-    <string name="_bx_payment_menu_item_title_cart"><![CDATA[Корзина]]></string>
-    <string name="_bx_payment_menu_item_title_system_cart_history"><![CDATA[История покупок]]></string>
-    <string name="_bx_payment_menu_item_title_cart_history"><![CDATA[История покупок]]></string>
+    <string name="_bx_payment_menu_item_title_system_cart"><![CDATA[Оплата]]></string>
+    <string name="_bx_payment_menu_item_title_cart"><![CDATA[Оплата]]></string>
+    <string name="_bx_payment_menu_item_title_system_cart_history"><![CDATA[История платежей]]></string>
+    <string name="_bx_payment_menu_item_title_cart_history"><![CDATA[История платежей]]></string>
 
     <string name="_bx_payment_menu_title_sbs_submenu"><![CDATA[Подменю подписок]]></string>
     <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Подменю подписок]]></string>

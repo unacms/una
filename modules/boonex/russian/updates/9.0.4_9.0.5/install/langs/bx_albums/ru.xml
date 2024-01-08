@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_albums_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string_add>
-	<string_add name="_bx_albums_page_title_browse_featured"><![CDATA[Продвинутые альбомы]]></string_add>
-	<string_add name="_bx_albums_page_title_browse_featured_media"><![CDATA[Продвинутые изображения]]></string_add>
-	<string_add name="_bx_albums_page_block_title_featured_entries_view_extended"><![CDATA[Продвинутые альбомы]]></string_add>
-	<string_add name="_bx_albums_page_block_title_featured_entries_view_gallery_media"><![CDATA[Продвинутые изображения]]></string_add>
-	<string_add name="_bx_albums_txt_sample_single_with_article"><![CDATA[альбом]]></string_add>
-</resources>

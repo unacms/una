@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_posts_option_per_page_profile"><![CDATA[Number of items per page on profile/group page]]></string_add>
-	<string_add name="_bx_posts_page_title_browse_featured"><![CDATA[Featured]]></string_add>
-	<string_add name="_bx_posts_page_block_title_featured_entries_view_extended"><![CDATA[Featured]]></string_add>
-	<string_add name="_bx_posts_txt_sample_single_with_article"><![CDATA[a post]]></string_add>
-</resources>

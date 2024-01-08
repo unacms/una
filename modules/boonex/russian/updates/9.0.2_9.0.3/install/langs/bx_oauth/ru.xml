@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_oauth_help_text"><![CDATA[„то-бы использовать информацию из профайла на клиентских сайтах, нужно добавить новый клиентский сайт. <br />
-Ќа клиентском сайте должен быть установлен "UNA Connect" модуль.<br />
-Ќужно указать следующий "URL главного UNA сайта" на клиентских сайтах:<br />
-<strong>{0}</strong>]]></string_upd>
-</resources>

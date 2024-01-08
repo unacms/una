@@ -68,6 +68,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-group-profile',
+            'URI_VIEW_MEMBERS' => 'group-fans',
             'URI_EDIT_ENTRY' => 'edit-group-profile',
             'URI_JOIN_ENTRY' => 'join-group-profile',
             'URI_JOINED_ENTRIES' => 'joined-groups',
@@ -232,10 +233,10 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'filter_item_select_one_filter2' => '_bx_groups_grid_filter_item_title_adm_select_one_filter2',
                 'menu_item_manage_my' => '_bx_groups_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_groups_menu_item_title_manage_all',
-                'menu_item_title_become_fan_sent' => '_bx_groups_menu_item_title_become_fan_sent',
-                'menu_item_title_leave_group_cancel_request' => '_bx_groups_menu_item_title_leave_group_cancel_request',
-                'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
-                'menu_item_title_leave_group' => '_bx_groups_menu_item_title_leave_group',
+                'menu_item_title_sm_join' => '_bx_groups_menu_item_title_become_fan',
+                'menu_item_title_sm_join_requested' => '_bx_groups_menu_item_title_become_fan_sent',
+                'menu_item_title_sm_leave' => '_bx_groups_menu_item_title_leave_group',
+                'menu_item_title_sm_leave_cancel' => '_bx_groups_menu_item_title_leave_group_cancel_request',
                 'txt_all_entries_in' => '_bx_groups_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_groups_page_title_browse_by_context',

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_upd name="_bx_cnv_form_entry_input_sys_do_submit"><![CDATA[Отправить]]></string_upd>
-	<string_upd name="_bx_cnv_form_entry_input_do_submit"><![CDATA[Отправить]]></string_upd>
-	<string_upd name="_bx_cnv_menu_set_title_view_entry"><![CDATA[Сообщение - Действия]]></string_upd>
-	<string_upd name="_bx_cnv_menu_title_view_entry"><![CDATA[Сообщение - Действия]]></string_upd>
-	<string_upd name="_bx_cnv_menu_set_title_folders_more"><![CDATA[Папки - Дополнительно]]></string_upd>
-</resources>

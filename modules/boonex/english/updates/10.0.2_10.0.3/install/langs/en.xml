@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_adm_form_txt_field_type_time"><![CDATA[time]]></string_add>
-	<string_add name="_sys_page_block_title_sys_create_post"><![CDATA[Create Post]]></string_add>
-	<string_add name="_sys_page_block_title_create_post"><![CDATA[Add new...]]></string_add>
-</resources>

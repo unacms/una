@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_acl_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string_add>
-	<string_add name="_bx_acl_lmi_cpt_manage"><![CDATA[Manage]]></string_add>
-</resources>

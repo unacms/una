@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_videos_txt_sample_score_up_single"><![CDATA[score up vote to video]]></string_add>
-    <string_add name="_bx_videos_txt_sample_score_down_single"><![CDATA[score down vote to video]]></string_add>
-	<string_add name="_bx_videos_txt_processing_awaiting"><![CDATA[Video will be published as soon as video is converted]]></string_add>
-    <string_add name="_bx_videos_txt_processing_failed"><![CDATA[Video isn't published because video conversion failed, edit video to fix the issue.]]></string_add>
-
-	<string_upd name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Videos]]></string_upd>
-</resources>

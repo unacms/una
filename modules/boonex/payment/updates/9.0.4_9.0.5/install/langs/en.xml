@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_del name="_bx_payment_msg_providers_select"><![CDATA[Payments for products with Trial will be billed only when trial period is expired. You can cancel anytime during the trial period.]]></string_del>
-</resources>

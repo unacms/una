@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-    <string_add name="_bx_invites_menu_dashboard_manage_tools_addon_counter1_caption"><![CDATA[awaiting]]></string_add>
-
-	<string_upd name="_bx_invites_menu_item_title_admt_requests"><![CDATA[Invitations]]></string_upd>
-	<string_upd name="_bx_invites_option_requests_email"><![CDATA[Emails to send invitation requests to (comma separated)]]></string_upd>
-</resources>

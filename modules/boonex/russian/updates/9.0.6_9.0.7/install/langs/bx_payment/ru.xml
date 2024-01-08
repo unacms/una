@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_del name="_bx_payment_msg_providers_select"><![CDATA[Оплата за продукты с пробным периодом будет взыматься только после окончания пробного периода. При необходимости Вы можете отменить подписку в течение пробного периода.]]></string_del>
-</resources>

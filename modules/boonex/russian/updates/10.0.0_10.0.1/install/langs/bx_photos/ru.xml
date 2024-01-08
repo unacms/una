@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_photos_txt_sample_reaction_single"><![CDATA[реакция '{0}' к фото]]></string_add>
-
-    <string_upd name="_bx_photos_txt_all_entries_by"><![CDATA[{0} фото]]></string_upd>
-</resources>

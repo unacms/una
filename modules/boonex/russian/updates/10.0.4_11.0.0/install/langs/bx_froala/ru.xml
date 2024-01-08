@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_froala_option_toolbar_mini_mobile"><![CDATA[Кнопки панели инструментов для мини-редактора для мобильного]]></string_add>
-	<string_add name="_bx_froala_option_toolbar_standard_mobile"><![CDATA[Кнопки панели инструментов для стандартного редактора для мобильного]]></string_add>
-	<string_add name="_bx_froala_option_toolbar_full_mobile"><![CDATA[Кнопки панели инструментов для полного редактора для мобильного]]></string_add>
-</resources>

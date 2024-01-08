@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_bx_invites_option_requests_notifications"><![CDATA[Enable invitation requests in notifications]]></string_add>
-
-	<string_del name="_bx_invites_option_requests_notifictaions"><![CDATA[Enable invitation requests in notifictaions]]></string_del>
-</resources>

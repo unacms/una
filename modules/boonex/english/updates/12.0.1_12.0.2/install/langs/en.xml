@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="en" flag="gb" title="English">
-	<string_add name="_cmt_txt_sample_comment_single_with_article"><![CDATA[a comment]]></string_add>
-	<string_add name="_cmt_txt_added_sample_custom"><![CDATA[Added <a href="{sample_url}">{sample}</a> to <a href="{psample_url}">{psample}</a>]]></string_add>
-</resources>

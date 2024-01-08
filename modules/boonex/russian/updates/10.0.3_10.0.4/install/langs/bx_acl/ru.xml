@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_acl_option_recurring_reserve"><![CDATA[Резерв (в днях) на принятие и обработку сообщения об оплате подписки.]]></string_add>
-	<string_add name="_bx_acl_lmi_cpt_manage"><![CDATA[Управление]]></string_add>
-</resources>
