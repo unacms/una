@@ -1101,7 +1101,13 @@ BLAH;
         else
             $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
 
-        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sTitle);
+        $aWrapperAttrs = [
+            'id' => "bx-form-section-" . $aInput['name'],
+        ];
+        if (isset($aInput['tr_attrs']) && !empty($aInput['tr_attrs'])) $aWrapperAttrs = array_merge($aInput['tr_attrs'], $aWrapperAttrs);
+
+
+        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sTitle, $aWrapperAttrs);
 
         return $sCode;
     }
@@ -2233,7 +2239,7 @@ BLAH;
         }
     }
 
-    function getOpenSection($aAttrs = array(), $sTitle = '')
+    function getOpenSection($aAttrs = array(), $sTitle = '', $aWrapperAttrs = [])
     {
         if (!$this->_isSectionOpened) {
 
@@ -2247,9 +2253,11 @@ BLAH;
 
             $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-def-padding-sec-top bx-def-border-top " . $sClassesAdd);
 
+            $sWrapperAttrs = bx_convert_array2attrs($aWrapperAttrs, "bx-form-section-wrapper bx-def-margin-top");
+
             $this->_isSectionOpened = true;
 
-            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sTitle ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
+            return "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sTitle ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
 
         } else {
 
