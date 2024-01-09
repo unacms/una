@@ -69,8 +69,10 @@ class BxPaymentFormDetails extends BxTemplFormView
                 continue;
 
             if($iProvider != $aInput['provider_id']) {
-                $this->aInputs['provider_' . $aInput['provider_id'] . '_begin'] = array(
+                $sBlockHeaderName = 'provider_' . $aInput['provider_id'] . '_begin';
+                $this->aInputs[$sBlockHeaderName] = array(
                     'type' => 'block_header',
+                    'name' => $sBlockHeaderName,
                     'caption' => _t($aInput['provider_caption']),
                     'info' => _t($aInput['provider_description']),
                     'collapsable' => true,

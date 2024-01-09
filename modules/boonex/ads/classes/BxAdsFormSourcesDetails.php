@@ -58,8 +58,10 @@ class BxAdsFormSourcesDetails extends BxTemplFormView
         $oSource = null;
         foreach($aInputs as $aInput) {
             if($iSource != $aInput['source_id']) {
-                $this->aInputs['source_' . $aInput['source_id'] . '_begin'] = [
+                $sBlockHeaderName = 'source_' . $aInput['source_id'] . '_begin';
+                $this->aInputs[$sBlockHeaderName] = [
                     'type' => 'block_header',
+                    'name' => $sBlockHeaderName,
                     'caption' => _t($aInput['source_caption']),
                     'info' => _t($aInput['source_description']),
                     'collapsable' => true,
