@@ -3920,6 +3920,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function getFormPostObject($aParams)
     {
+        $CNF = &$this->_oConfig->CNF;
+
     	$sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
         $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_add';
 
@@ -3939,6 +3941,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sParamsKey = 'visibility_autoselect';
         if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true)
             $oForm->setVisibilityAutoselect((bool)$aParams[$sParamsKey]);
+
+        $sKey = 'FIELD_LABELS';
+        if(isset($oForm->aInputs[$CNF[$sKey]], $aParams['type']) && empty($oForm->aInputs[$CNF[$sKey]]['value']) && $aParams['type'] == BX_BASE_MOD_NTFS_TYPE_OWNER) {
+            $iContextProfileId = !empty($aParams['context_id']) ? abs($aParams['context_id']) : $this->_iOwnerId;
+            if(($oContextProfile = BxDolProfile::getInstance($iContextProfileId)) !== false) {
+                $sMethod = 'is_fan';
+                $sModule = $oContextProfile->getModule();
+                if(bx_is_srv($sModule, $sMethod) && bx_srv($sModule, $sMethod, [$iContextProfileId, (int)bx_get_logged_profile_id()])) {
+                    $aContextInfo = bx_srv($sModule, 'get_content_info_by_profile_id', [$iContextProfileId]);
+                    if(!empty($aContextInfo['hashtag']))
+                        $oForm->aInputs[$CNF[$sKey]]['value'] = [$aContextInfo['hashtag']];
+                }
+            }
+        }
 
         $oForm->init();
         return $oForm;
