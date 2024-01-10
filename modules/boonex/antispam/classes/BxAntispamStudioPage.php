@@ -9,6 +9,8 @@
  * @{
  */
 
+require_once ('BxAntispamStudioOptions.php');
+
 class BxAntispamStudioPage extends BxTemplStudioModule
 {
     protected $oModule;
@@ -28,7 +30,18 @@ class BxAntispamStudioPage extends BxTemplStudioModule
         );
     }
 
-    function getHelp ()
+    protected function getSettings()
+    {
+        $oOptions = new BxAntispamStudioOptions($this->sModule);
+
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', [
+            'content' => $oOptions->getCode(),
+        ]);
+    }
+
+    protected function getHelp ()
     {
         return _t('_bx_antispam_help_text');
     }

@@ -12,6 +12,8 @@
     <li><b>Akismet</b> - автоматическая блокировка спам-контента с использованием <a target="_blank" href="http://akismet.com">Сервиса Akismet</a></li>
     <li><b>StopForumSpam</b> - автоматическая блокировка спам-контента с использованием <a target="_blank" href="http://www.stopforumspam.com">Сервиса StopForumSpam</a></li>
     <li><b>Profanity filter</b> - фильтр ненормативной лексики, основанный на заранее определенных списках слов с возможностью их расширения</a></li>
+    <li><b>Toxicity filter</b> - фильтр токсичности, основанный на <a target="_blank" href="https://www.perspectiveapi.com/">Perspective API</a> предоставленном Google</li>
+    <li><b>Harmful filter</b> - фильтр вредоносности, основанный на <a target="_blank" href="https://www.lassomoderation.com/">Lasso Moderation API</a></li>
 </ul>
 ]]></string>
     <string name="_bx_antispam_help_dnsbl"><![CDATA[
@@ -192,7 +194,7 @@ URI DNSBL - это DNSBL, которые перечисляют доменные
 </pre>
 {email_footer}]]></string>
 
-	<string name="_bx_antispam_toxicity_posted_report_name"><![CDATA[Сообщение о размещенном токсичном контенте]]></string>
+    <string name="_bx_antispam_toxicity_posted_report_name"><![CDATA[Сообщение о размещенном токсичном контенте]]></string>
     <string name="_bx_antispam_toxicity_posted_report_subject"><![CDATA[Токсичный контент был добавлен]]></string>
     <string name="_bx_antispam_toxicity_posted_report_body"><![CDATA[{email_header}
 <b>Профиль:</b> <a href="{AuthorUrl}">{AuthorNickName}</a><br />
@@ -202,6 +204,28 @@ URI DNSBL - это DNSBL, которые перечисляют доменные
 </bx_if:content_url>
 <bx_if:manage_content_url>
 	<b>Управлять:</b> <a href="{m_url}">{m_url}</a><br /><br />
+</bx_if:manage_content_url>
+{email_footer}]]></string>
+
+    <string name="_bx_antispam_adm_stg_cpt_category_lasso_moderation"><![CDATA[Lasso Moderation]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_enable"><![CDATA[Включить]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_api_key"><![CDATA[Ключ API]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_webhook_secret"><![CDATA[Секрет для вебхука]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_webhook_url"><![CDATA[Вебхук URL]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_action"><![CDATA[Действие]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_action_none"><![CDATA[Нет]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_action_disapprove"><![CDATA[Скрывать]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_report"><![CDATA[Отправлять администратору уведомление о вредоносном контенте]]></string>
+    <string name="_bx_antispam_et_lasso_moderation_report_name"><![CDATA[Сообщение о размещенном вредоносном контенте]]></string>
+    <string name="_bx_antispam_et_lasso_moderation_report_subject"><![CDATA[Размещен вредоносный контент]]></string>
+    <string name="_bx_antispam_et_lasso_moderation_report_body"><![CDATA[{email_header}
+<b>Профиль:</b> <a href="{AuthorUrl}">{AuthorNickName}</a><br />
+<b>Страница:</b> {Page}<br /><br />
+<bx_if:content_url>
+    <b>Ссылка:</b> <a href="{c_url}">{c_url}</a><br /><br />
+</bx_if:content_url>
+<bx_if:manage_content_url>
+    <b>Управлять:</b> <a href="{m_url}">{m_url}</a><br /><br />
 </bx_if:manage_content_url>
 {email_footer}]]></string>
 </resources>

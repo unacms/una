@@ -28,6 +28,11 @@ class BxAntispamConfig extends BxDolModuleConfig
         'toxicity_enable' => 'bx_antispam_toxicity_filter_enable',
         'toxicity_action' => 'bx_antispam_toxicity_filter_action',
         'toxicity_report' => 'bx_antispam_toxicity_filter_report',
+        'lm_enable' => 'bx_antispam_lasso_moderation_enable',
+        'lm_api_key' => 'bx_antispam_lasso_moderation_api_key',
+        'lm_webhook_secret' => 'lasso_moderation_webhook_secret',
+        'lm_action' => 'bx_antispam_lasso_moderation_action',
+        'lm_report' => 'bx_antispam_lasso_moderation_report',
     );
     /**
      * default local options, it is filled in with real system options in class contructor, @see restoreAntispamOptions
@@ -44,6 +49,10 @@ class BxAntispamConfig extends BxDolModuleConfig
         'toxicity_enable' => '',
         'toxicity_action' => '',
         'toxicity_report' => '',
+        'lm_enable' => '',
+        'lm_api_key' => '',
+        'lm_action' => '',
+        'lm_report' => ''
     );
 
     public function __construct($aModule)

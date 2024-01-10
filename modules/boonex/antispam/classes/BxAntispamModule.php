@@ -19,6 +19,18 @@ class BxAntispamModule extends BxDolModule
         $this->_bLastSubmittedFormWasToxic = false;
     }
 
+    public function actionContentChecked()
+    {
+        $iResult = 404;
+
+        if($this->_oConfig->getAntispamOption('lm_enable') == 'on') {
+            $oLassoModeration = bx_instance('BxAntispamLassoModeration', [], $this->getName());
+            $iResult = $oLassoModeration->processEvent();    
+        }
+
+        http_response_code($iResult);
+    }
+
     public function serviceUpdateDisposableDomainsLists ()
     {
         $o = bx_instance('BxAntispamDisposableEmailDomains', array(), 'bx_antispam');
@@ -261,9 +273,55 @@ class BxAntispamModule extends BxDolModule
         return $this->_oDb->setCommentStatus($iCmtId, BX_CMT_STATUS_PENDING);
     }
 
-    public function serviceOnFormSubmitted($sModule, $iEntry) {
+    public function serviceOnFormSubmitted($sModule, $iEntry, $sAction, &$oForm)
+    {
         if ($this->_bLastSubmittedFormWasToxic) {
             $this->serviceOnToxicContentPosted($sModule, $iEntry);
+        }
+
+        if($this->_oConfig->getAntispamOption('lm_enable') == 'on') {
+            $oModule = BxDolModule::getInstance($sModule);
+
+            $CNF = &$oModule->_oConfig->CNF;
+
+            $iAuthorId = bx_get_logged_profile_id();
+            $iAuthorName = BxDolProfile::getInstance()->getDisplayName();
+
+            $iDataAdded = time();
+
+            $sText = '';
+            if(isset($CNF['FIELD_TEXT'], $oForm->aInputs[$CNF['FIELD_TEXT']]))
+                $sText = $oForm->getCleanValue($CNF['FIELD_TEXT']);
+            if(empty($sText) && isset($oForm->aInputs['text']))
+                $sText = $oForm->getCleanValue('text');
+
+            $aMedias = [
+                'images' => ['fields' => ['FIELD_PHOTO', 'FIELD_PICTURE', 'FIELD_COVER'], 'data' => []], 
+                'videos' => ['fields' => ['FIELD_VIDEO'], 'data' => []]
+            ];
+            foreach($aMedias as $sName => $aMedia) 
+                foreach($aMedia['fields'] as $sField) {
+                    if(!isset($CNF[$sField], $oForm->aInputs[$CNF[$sField]]))
+                        continue;
+
+                    $oStorage = BxDolStorage::getObjectInstance($oForm->aInputs[$CNF[$sField]]['storage_object']);
+                    if(!$oStorage)
+                        continue;
+
+                    $aGhosts = $oStorage->getGhosts($iAuthorId, $sAction == 'insert' ? 0 : $iEntry);
+                    foreach($aGhosts as $aGhost)
+                        $aMedias[$sName]['data'][] = $oStorage->getFileUrlById($aGhost['id']);
+                }
+
+            $oLassoModeration = bx_instance('BxAntispamLassoModeration', [], $this->getName());
+            $oLassoModeration->addContent($sModule, $iEntry, [
+                'author_id' => $iAuthorId,
+                'author_name' => $iAuthorName,
+                'date_added' => $iDataAdded,
+                'text' => $sText,
+                'images' => $aMedias['images']['data'], 
+                'videos' => $aMedias['videos']['data']
+            ]);
         }
     }
 
@@ -523,6 +581,32 @@ class BxAntispamModule extends BxDolModule
             'block' => _t('_bx_antispam_option_toxicity_filter_action_block'),
             'disapprove' => _t('_bx_antispam_option_toxicity_filter_action_disapprove'),
         ];
+    }
+
+    /**
+     * @return array with avaliable Lasso Moderation actions
+     */
+    public function serviceGetLassoModerationActions ()
+    {
+        return [
+            'none' => _t('_bx_antispam_option_lasso_moderation_action_none'),
+            'disapprove' => _t('_bx_antispam_option_lasso_moderation_action_disapprove'),
+        ];
+    }
+
+    public function log($mixedContents, $sSection = '', $sTitle = '')
+    {
+        if(is_array($mixedContents))
+            $mixedContents = var_export($mixedContents, true);	
+        else if(is_object($mixedContents))
+            $mixedContents = json_encode($mixedContents);
+
+        if(empty($sSection))
+            $sSection = "Core";
+
+        $sTitle .= "\n";
+
+        bx_log('bx_antispam', ":\n[" . $sSection . "] " . $sTitle . $mixedContents);
     }
 
     protected function getErrorMessageIpBlocked ()
