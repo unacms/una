@@ -216,6 +216,10 @@ URI DNSBL - это DNSBL, которые перечисляют доменные
     <string name="_bx_antispam_option_lasso_moderation_action_none"><![CDATA[Нет]]></string>
     <string name="_bx_antispam_option_lasso_moderation_action_disapprove"><![CDATA[Скрывать]]></string>
     <string name="_bx_antispam_option_lasso_moderation_report"><![CDATA[Отправлять администратору уведомление о вредоносном контенте]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_threshold_toxicity"><![CDATA[Порог токсичности (0 - 100)]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_threshold_threat"><![CDATA[Порог угрозы (0 - 100)]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_threshold_identity_attack"><![CDATA[Порог атаки на личность (0 - 100)]]></string>
+    <string name="_bx_antispam_option_lasso_moderation_threshold_profanity"><![CDATA[Порог ненормативной лексики (0 - 100)]]></string>
     <string name="_bx_antispam_et_lasso_moderation_report_name"><![CDATA[Сообщение о размещенном вредоносном контенте]]></string>
     <string name="_bx_antispam_et_lasso_moderation_report_subject"><![CDATA[Размещен вредоносный контент]]></string>
     <string name="_bx_antispam_et_lasso_moderation_report_body"><![CDATA[{email_header}

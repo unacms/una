@@ -14,9 +14,13 @@ class BxAntispamLassoModeration extends BxDol
     protected $_sModule;
     protected $_oModule;
 
+    protected $_sEndpoint;
+
     protected $_sApiKey;
     protected $_sWebhookSecret;
-    protected $_sEndpoint;
+    protected $_sAction;
+    protected $_bNotify;
+    protected $_aThresholds;
 
     public function __construct()
     {
@@ -25,31 +29,128 @@ class BxAntispamLassoModeration extends BxDol
         $this->_sModule = 'bx_antispam';
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
+        $this->_sEndpoint = 'https://api.lassomoderation.com/api/v1';
+
         $this->_sApiKey = $this->_oModule->_oConfig->getAntispamOption('lm_api_key');
         $this->_sWebhookSecret = $this->_oModule->_oConfig->getAntispamOption('lm_webhook_secret');
-
-        $this->_sEndpoint = 'https://api.lassomoderation.com/api/v1';
+        $this->_sAction = $this->_oModule->_oConfig->getAntispamOption('lm_action');
+        $this->_bNotify = $this->_oModule->_oConfig->getAntispamOption('lm_report') == 'on';
+        $this->_aThresholds = [
+            'toxicity' => (int)$this->_oModule->_oConfig->getAntispamOption('lm_thd_toxicity'),
+            'threat' => (int)$this->_oModule->_oConfig->getAntispamOption('lm_thd_threat'),
+            'identity_attack' => (int)$this->_oModule->_oConfig->getAntispamOption('lm_thd_identity_attack'),
+            'profanity' => (int)$this->_oModule->_oConfig->getAntispamOption('lm_thd_profanity')
+        ];
     }
 
     public function processEvent()
     {
         $sInput = @file_get_contents("php://input");
-        
+        if(!$sInput)
+            return 200;
+
+        $aHeaders = getallheaders();
+        if(empty($aHeaders['X-Lasso-Signature'])) {
+            $this->log($sInput, 'Webhook: Cannot get Signature.');
+            return 404;
+        }
+
         $sInputHmac = hash_hmac('sha256', $sInput, $this->_sWebhookSecret, true);
         $sInputHmac = 'sha256=' . base64_encode($sInputHmac);
-        
-        if($sInputHmac !== '')
+        if($sInputHmac !== $aHeaders['X-Lasso-Signature']) {
+            $this->log($sInput, 'Webhook: Wrong Signature.');
+            $this->log([
+                'secret' => $this->_sWebhookSecret,
+                'sig_get' => $aHeaders['X-Lasso-Signature'],
+                'sig_calc' => $sInputHmac
+            ]);
+
             return 404;
-        
+        }
+
         $aEvent = json_decode($sInput, true);
-        if(empty($aEvent) || !is_array($aEvent)) 
+        if(empty($aEvent) || !is_array($aEvent) || !isset($aEvent['actions'])) {
+            $this->log($sInput, 'Webhook: Wrong input data.');
             return 404;
+        }
 
-        //TODO: Do something here.
+        foreach($aEvent['actions'] as $aAction) {
+            $sMethod = '_processEvent' . bx_gen_method_name($aAction['type']);
+            if(!method_exists($this, $sMethod))
+                continue;
 
-        //$this->_onHarmfulContentFound();
+            $sModule = '';
+            $iContentId = 0;
+            switch($aAction['type']) {
+                case 'user':
+                    break;
+
+                case 'topic':
+                    break;
+
+                case 'content':
+                    $iContentId = $this->_getId($aAction['content']['id']);
+                    $iModuleId = $this->_getId($aAction['content']['topic_id']);
+                    if(!$iContentId || !$iModuleId)
+                        break;
+
+                    $aModule = $this->_oModule->_oDb->getModuleById($iModuleId);
+                    if(empty($aModule) || !is_array($aModule))
+                        break;
+                    
+                    $sModule = $aModule['name'];
+                    
+                    $this->$sMethod($sModule, $iContentId, $aAction['status'], $aAction['content']['analysis']);
+                    break;
+            }
+
+            if($bNotify && $sModule != '' && $iContentId != 0)
+                $this->_onHarmfulContentFound($sModule, $iContentId);
+        }
 
         return 200;
+    }
+    
+    protected function _getId($s)
+    {
+        return (int)substr($s, strrpos($s, '_') + 1);
+    }
+
+    protected function _processEventContent($sModule, $iContentId, $sStatus, $aAnalysis)
+    {
+        $sFldStatus = 'status_admin';
+
+        $aContentInfo = bx_srv($sModule, 'get_info', [$iContentId, false]);
+        if(!isset($aContentInfo[$sFldStatus]))
+            return;
+
+        $sStatus = '';
+        switch($sStatus) {
+            case 'allowed':
+                if($aContentInfo[$sFldStatus] != 'active')
+                    $sStatus = 'active';
+                break;
+
+            case 'hidden':
+                if($aContentInfo[$sFldStatus] != 'hidden' && $this->_sAction == 'disapprove')
+                    $sStatus = 'hidden';
+                break;
+
+            case 'flagged':
+                foreach($this->_aThresholds as $sName => $iThreshold) {
+                    if(100 * $aAnalysis[$sName] < $iThreshold) 
+                        continue;
+
+                    if($aContentInfo[$sFldStatus] != 'hidden' && $this->_sAction == 'disapprove') {
+                        $sStatus = 'hidden';
+                        break;
+                    }
+                }
+                break;
+        }
+
+        if(!empty($sStatus))
+            bx_srv($sModule, 'set_status', [$iContentId, $sStatus, $sFldStatus]);
     }
 
     public function addContent($sModule, $iId, $aData = [])

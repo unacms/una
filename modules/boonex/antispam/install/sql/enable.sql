@@ -100,7 +100,11 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'bx_antispam_lasso_moderation_webhook_secret', '_bx_antispam_option_lasso_moderation_webhook_secret', '', 'digit', '', '', '', 30),
 (@iCategoryId, 'bx_antispam_lasso_moderation_webhook_url', '_bx_antispam_option_lasso_moderation_webhook_url', '{site_url}m/antispam/content_checked', 'value', '', '', '', 40),
 (@iCategoryId, 'bx_antispam_lasso_moderation_action', '_bx_antispam_option_lasso_moderation_action', 'none', 'select', 'a:2:{s:6:"module";s:11:"bx_antispam";s:6:"method";s:28:"get_lasso_moderation_actions";}', '', '', 50),
-(@iCategoryId, 'bx_antispam_lasso_moderation_report', '_bx_antispam_option_lasso_moderation_report', '', 'checkbox', 'on', '', '', 60);
+(@iCategoryId, 'bx_antispam_lasso_moderation_report', '_bx_antispam_option_lasso_moderation_report', '', 'checkbox', 'on', '', '', 60),
+(@iCategoryId, 'bx_antispam_lasso_moderation_threshold_toxicity', '_bx_antispam_option_lasso_moderation_threshold_toxicity', '50', 'digit', '', '', '', 70),
+(@iCategoryId, 'bx_antispam_lasso_moderation_threshold_threat', '_bx_antispam_option_lasso_moderation_threshold_threat', '50', 'digit', '', '', '', 72),
+(@iCategoryId, 'bx_antispam_lasso_moderation_threshold_identity_attack', '_bx_antispam_option_lasso_moderation_threshold_identity_attack', '50', 'digit', '', '', '', 74),
+(@iCategoryId, 'bx_antispam_lasso_moderation_threshold_profanity', '_bx_antispam_option_lasso_moderation_threshold_profanity', '50', 'digit', '', '', '', 76);
 
 -- page: DNSBL list
 

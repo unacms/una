@@ -173,6 +173,29 @@ class BxBaseModGeneralModule extends BxDolModule
         }
     }
 
+    public function serviceSetStatus($iId, $sValue, $sStatus = '')
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$sStatus && !empty($CNF['FIELD_STATUS_ADMIN']))
+            $sStatus = $CNF['FIELD_STATUS_ADMIN'];
+
+        $aStatuses = [];
+        if(!empty($CNF['FIELD_STATUS_ADMIN']))
+            $aStatuses[] = $CNF['FIELD_STATUS_ADMIN'];
+        if(!empty($CNF['FIELD_STATUS']))
+            $aStatuses[] = $CNF['FIELD_STATUS'];
+
+        if(!in_array($sStatus, $aStatuses))
+            return false;
+
+        if((int)$this->_oDb->updateEntriesBy([$sStatus => $sValue], [$CNF['FIELD_ID'] => $iId]) == 0)
+            return false;
+
+        if($sValue == BX_BASE_MOD_GENERAL_STATUS_ACTIVE)
+            $this->onPublished($iId);
+    }
+
     public function actionRss ()
     {
         $aArgs = func_get_args();

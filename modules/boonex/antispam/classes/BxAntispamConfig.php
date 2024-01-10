@@ -30,9 +30,13 @@ class BxAntispamConfig extends BxDolModuleConfig
         'toxicity_report' => 'bx_antispam_toxicity_filter_report',
         'lm_enable' => 'bx_antispam_lasso_moderation_enable',
         'lm_api_key' => 'bx_antispam_lasso_moderation_api_key',
-        'lm_webhook_secret' => 'lasso_moderation_webhook_secret',
+        'lm_webhook_secret' => 'bx_antispam_lasso_moderation_webhook_secret',
         'lm_action' => 'bx_antispam_lasso_moderation_action',
         'lm_report' => 'bx_antispam_lasso_moderation_report',
+        'lm_thd_toxicity' => 'bx_antispam_lasso_moderation_threshold_toxicity',
+        'lm_thd_threat' => 'bx_antispam_lasso_moderation_threshold_threat',
+        'lm_thd_identity_attack' => 'bx_antispam_lasso_moderation_threshold_identity_attack',
+        'lm_thd_profanity' => 'bx_antispam_lasso_moderation_threshold_profanity',
     );
     /**
      * default local options, it is filled in with real system options in class contructor, @see restoreAntispamOptions
@@ -51,8 +55,13 @@ class BxAntispamConfig extends BxDolModuleConfig
         'toxicity_report' => '',
         'lm_enable' => '',
         'lm_api_key' => '',
+        'lm_webhook_secret' => '',
         'lm_action' => '',
-        'lm_report' => ''
+        'lm_report' => '',
+        'lm_thd_toxicity' => '',
+        'lm_thd_threat' => '',
+        'lm_thd_identity_attack' => '',
+        'lm_thd_profanity' => '',
     );
 
     public function __construct($aModule)
