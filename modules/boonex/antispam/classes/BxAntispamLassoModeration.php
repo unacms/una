@@ -104,53 +104,11 @@ class BxAntispamLassoModeration extends BxDol
                     break;
             }
 
-            if($bNotify && $sModule != '' && $iContentId != 0)
+            if($this->_bNotify && $sModule != '' && $iContentId != 0)
                 $this->_onHarmfulContentFound($sModule, $iContentId);
         }
 
         return 200;
-    }
-    
-    protected function _getId($s)
-    {
-        return (int)substr($s, strrpos($s, '_') + 1);
-    }
-
-    protected function _processEventContent($sModule, $iContentId, $sStatus, $aAnalysis)
-    {
-        $sFldStatus = 'status_admin';
-
-        $aContentInfo = bx_srv($sModule, 'get_info', [$iContentId, false]);
-        if(!isset($aContentInfo[$sFldStatus]))
-            return;
-
-        $sStatus = '';
-        switch($sStatus) {
-            case 'allowed':
-                if($aContentInfo[$sFldStatus] != 'active')
-                    $sStatus = 'active';
-                break;
-
-            case 'hidden':
-                if($aContentInfo[$sFldStatus] != 'hidden' && $this->_sAction == 'disapprove')
-                    $sStatus = 'hidden';
-                break;
-
-            case 'flagged':
-                foreach($this->_aThresholds as $sName => $iThreshold) {
-                    if(100 * $aAnalysis[$sName] < $iThreshold) 
-                        continue;
-
-                    if($aContentInfo[$sFldStatus] != 'hidden' && $this->_sAction == 'disapprove') {
-                        $sStatus = 'hidden';
-                        break;
-                    }
-                }
-                break;
-        }
-
-        if(!empty($sStatus))
-            bx_srv($sModule, 'set_status', [$iContentId, $sStatus, $sFldStatus]);
     }
 
     public function addContent($sModule, $iId, $aData = [])
@@ -217,25 +175,63 @@ class BxAntispamLassoModeration extends BxDol
 
         return true;
     }
-    
+
+    protected function _processEventContent($sModule, $iContentId, $sStatus, $aAnalysis)
+    {
+        $sFldStatus = 'status_admin';
+
+        $aContentInfo = bx_srv($sModule, 'get_info', [$iContentId, false]);
+        if(!isset($aContentInfo[$sFldStatus]))
+            return;
+
+        $sContentStatus = '';
+        switch($sStatus) {
+            case 'allowed':
+                if($aContentInfo[$sFldStatus] != 'active')
+                    $sContentStatus = 'active';
+                break;
+
+            case 'hidden':
+                if($aContentInfo[$sFldStatus] != 'hidden' && $this->_sAction == 'disapprove')
+                    $sContentStatus = 'hidden';
+                break;
+
+            case 'flagged':
+                foreach($this->_aThresholds as $sName => $iThreshold) {
+                    if(100 * $aAnalysis[$sName] < $iThreshold) 
+                        continue;
+
+                    if($aContentInfo[$sFldStatus] != 'hidden' && $this->_sAction == 'disapprove') {
+                        $sContentStatus = 'hidden';
+                        break;
+                    }
+                }
+                break;
+        }
+
+        if(!empty($sContentStatus))
+            bx_srv($sModule, 'set_status', [$iContentId, $sContentStatus, $sFldStatus]);
+    }
+
     protected function _onHarmfulContentFound($sModule, $iContentId)
-    {        
-        if(!$sModule || $this->_oConfig->getAntispamOption('lm_report') != 'on') 
-            return;
-
+    {
+        $oPermalinks = BxDolPermalinks::getInstance();
         $oModule = BxDolModule::getInstance($sModule);
+
         $CNF = &$oModule->_oConfig->CNF;
-        $sContentUrl = isset($CNF['URI_VIEW_ENTRY']) ? bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)) : false;
-        $sManageContentUrl = isset($CNF['URL_MANAGE_ADMINISTRATION']) ? bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URL_MANAGE_ADMINISTRATION'])) : false;
 
-        $oProfile = BxDolProfile::getInstance();
-        if(!$oProfile)
-            return;
+        $sContentUrl = isset($CNF['URI_VIEW_ENTRY']) ? bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)) : false;
+        $sManageContentUrl = isset($CNF['URL_MANAGE_ADMINISTRATION']) ? bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URL_MANAGE_ADMINISTRATION'])) : false;
 
-        $aPlus = array(
-            'AuthorUrl' => $oProfile->getUrl(),
-            'AuthorNickName' => $oProfile->getDisplayName(),
-            'Page' => htmlspecialchars_adv($_SERVER['PHP_SELF']),
+        $iAuthorId = 0;
+        if(bx_is_srv($sModule, 'get_author'))
+            $iAuthorId = bx_srv($sModule, 'get_author', [$iContentId]);
+
+        $oAuthor = BxDolProfile::getInstanceMagic($iAuthorId);
+
+        $aPlus = [
+            'AuthorUrl' => $oAuthor->getUrl(),
+            'AuthorNickName' => $oAuthor->getDisplayName(),
             'bx_if:content_url' => [
                 'condition' => boolval($sContentUrl),
                 'content' => ['c_url' => $sContentUrl],
@@ -244,7 +240,7 @@ class BxAntispamLassoModeration extends BxDol
                 'condition' => boolval($sManageContentUrl),
                 'content' => ['m_url' => $sManageContentUrl],
             ],
-        );
+        ];
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_antispam_lasso_moderation_report', $aPlus);
         if(!$aTemplate)
@@ -257,6 +253,11 @@ class BxAntispamLassoModeration extends BxDol
             'entry_id' => $iContentId,
             'entry_url' => $sContentUrl,
         ]);
+    }
+
+    protected function _getId($s)
+    {
+        return (int)substr($s, strrpos($s, '_') + 1);
     }
 }
 

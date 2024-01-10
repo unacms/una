@@ -223,7 +223,6 @@ This antispam method scan submitted content for the URLs and check them if any o
     <string name="_bx_antispam_et_lasso_moderation_report_subject"><![CDATA[Harmful content has been posted]]></string>
     <string name="_bx_antispam_et_lasso_moderation_report_body"><![CDATA[{email_header}
 <b>Profile:</b> <a href="{AuthorUrl}">{AuthorNickName}</a><br />
-<b>Page:</b> {Page}<br /><br />
 <bx_if:content_url>
 	<b>Content:</b> <a href="{c_url}">{c_url}</a><br /><br />
 </bx_if:content_url>
