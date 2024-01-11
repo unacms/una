@@ -18,9 +18,9 @@ class BxEventsConfig extends BxBaseModGroupsConfig
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-event-profile' => 'checkAllowedView',
             'edit-event-profile' => 'checkAllowedEdit',
-            'edit-event-questionnaire' => 'checkAllowedEdit',
-            'edit-event-sessions' => 'checkAllowedEdit',
-            'edit-event-cover' => 'checkAllowedChangeCover',
+            'event-questionnaire' => 'checkAllowedEdit',
+            'event-sessions' => 'checkAllowedEdit',
+            'event-cover' => 'checkAllowedChangeCover',
             'invite-to-event' => 'checkAllowedInvite',
             'delete-event-profile' => 'checkAllowedDelete',
             'approve-event-profile' => 'checkAllowedApprove',
