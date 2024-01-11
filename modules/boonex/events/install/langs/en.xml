@@ -187,8 +187,8 @@
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Edit Event Cover]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
-    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
-    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
+    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Questionnaire]]></string>
     <string name="_bx_events_page_title_manage_profile"><![CDATA[Manage]]></string>
     <string name="_bx_events_page_title_sys_manage_profile"><![CDATA[Manage Event]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Delete Event]]></string>
@@ -265,17 +265,14 @@
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Create Event]]></string>
     <string name="_bx_events_page_block_title_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
-    <string name="_bx_events_page_block_title_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
+    <string name="_bx_events_page_block_title_edit_questionnaire"><![CDATA[Questionnaire]]></string>
     <string name="_bx_events_page_block_title_delete_profile"><![CDATA[Delete Event]]></string>
     <string name="_bx_events_page_block_title_join_profile"><![CDATA[Join Event]]></string>
     <string name="_bx_events_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_events_page_block_title_system_profile_info"><![CDATA[Info]]></string>
-    <string name="_bx_events_page_block_title_system_profile_sessions"><![CDATA[Sessions]]></string>
-    <string name="_bx_events_page_block_title_profile_sessions_link"><![CDATA[Sessions for <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_events_page_block_title_system_profile_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_events_page_block_title_profile_sessions"><![CDATA[Sessions]]></string>
     <string name="_bx_events_page_block_title_profile_pricing"><![CDATA[Pricing]]></string>
-    <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Pricing of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_description"><![CDATA[Description]]></string>
     <string name="_bx_events_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_friends"><![CDATA[Friends]]></string>
@@ -347,12 +344,12 @@
     <string name="_bx_events_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_events_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_events_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
-    <string name="_bx_events_menu_item_title_system_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
-    <string name="_bx_events_menu_item_title_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
-    <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Edit Sessions]]></string>
-    <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Edit Sessions]]></string>
-    <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>
-    <string name="_bx_events_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_events_menu_item_title_edit_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Sessions]]></string>
+    <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Sessions]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_events_menu_item_title_edit_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_events_menu_item_title_system_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_menu_item_title_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_menu_item_title_system_delete_profile"><![CDATA[Delete Event]]></string>

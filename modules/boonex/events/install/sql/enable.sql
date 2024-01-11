@@ -122,14 +122,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_events_profile_sessions', 'edit-event-sessions', '_bx_events_page_title_sys_profile_sessions', '_bx_events_page_title_profile_sessions', 'bx_events', 5, 2147483647, 1, 'page.php?i=edit-event-sessions', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_events_profile_sessions', 1, 'bx_events', '_bx_events_page_block_title_system_profile_sessions', '_bx_events_page_block_title_profile_sessions_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:15:"entity_sessions";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
+('bx_events_profile_sessions', 1, 'bx_events', '', '_bx_events_page_block_title_profile_sessions', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:15:"entity_sessions";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
 
 -- PAGE: manage profile pricing
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_events_profile_pricing', 'edit-event-pricing', '_bx_events_page_title_sys_profile_pricing', '_bx_events_page_title_profile_pricing', 'bx_events', 5, 2147483647, 1, 'page.php?i=edit-event-pricing', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_events_profile_pricing', 1, 'bx_events', '_bx_events_page_block_title_system_profile_pricing', '_bx_events_page_block_title_profile_pricing_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:14:"entity_pricing";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
+('bx_events_profile_pricing', 1, 'bx_events', '', '_bx_events_page_block_title_profile_pricing', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:14:"entity_pricing";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
 
 -- PAGE: event fans
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 

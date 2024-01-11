@@ -161,8 +161,8 @@
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Редактировать событие]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку события]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
-    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
-    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
+    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Анкета]]></string>
+    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Анкета]]></string>
     <string name="_bx_events_page_title_manage_profile"><![CDATA[Управление]]></string>
     <string name="_bx_events_page_title_sys_manage_profile"><![CDATA[Управление событием]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Удалить событие]]></string>
@@ -229,7 +229,7 @@
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Создать событие]]></string>
     <string name="_bx_events_page_block_title_edit_profile"><![CDATA[Редактировать событие]]></string>
     <string name="_bx_events_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
-    <string name="_bx_events_page_block_title_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
+    <string name="_bx_events_page_block_title_edit_questionnaire"><![CDATA[Анкета]]></string>
     <string name="_bx_events_page_block_title_delete_profile"><![CDATA[Удалить событие]]></string>
     <string name="_bx_events_page_block_title_profile_info_link"><![CDATA["<a href="{profile_link}">{display_name}</a>" - инфо]]></string>
     <string name="_bx_events_page_block_title_profile_info"><![CDATA[Инфо]]></string>
@@ -584,18 +584,15 @@
     <string name="_bx_events_page_title_sys_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_events_page_title_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_events_page_block_title_join_profile"><![CDATA[Присоединиться к событию]]></string>
-    <string name="_bx_events_page_block_title_system_profile_sessions"><![CDATA[Сессии]]></string>
-    <string name="_bx_events_page_block_title_profile_sessions_link"><![CDATA[Сессии для <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_events_page_block_title_system_profile_pricing"><![CDATA[Цены]]></string>
+    <string name="_bx_events_page_block_title_profile_sessions"><![CDATA[Сессии]]></string>
     <string name="_bx_events_page_block_title_profile_pricing"><![CDATA[Цены]]></string>
-    <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Цены на <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_entry_reports"><![CDATA[Отчеты]]></string>
-    <string name="_bx_events_menu_item_title_system_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
-    <string name="_bx_events_menu_item_title_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
-    <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Редактировать сессии]]></string>
-    <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Редактировать сессии]]></string>
-    <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Редактировать цены]]></string>
-    <string name="_bx_events_menu_item_title_edit_pricing"><![CDATA[Редактировать цены]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_questionnaire"><![CDATA[Анкета]]></string>
+    <string name="_bx_events_menu_item_title_edit_questionnaire"><![CDATA[Анкета]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Сессии]]></string>
+    <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Сессии]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Цены]]></string>
+    <string name="_bx_events_menu_item_title_edit_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_events_menu_item_title_system_pay_and_join"><![CDATA[Плати и присоединяйся]]></string>
     <string name="_bx_events_menu_item_title_pay_and_join"><![CDATA[Плати и присоединяйся]]></string>
     <string name="_bx_events_grid_column_title_name"><![CDATA[Название]]></string>
