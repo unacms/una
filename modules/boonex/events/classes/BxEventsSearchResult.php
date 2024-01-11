@@ -84,12 +84,18 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
         $bProcessConditionsForPrivateContent = true;
 
         if(isset($this->_aParams['by_location_country'], $this->_aParams['by_location_state'], $this->_aParams['by_location_city'])) {
-            $this->setMetaType('location_country_city');
-            $this->setCustomSearchCondition([
-                'keyword' => $this->_aParams['by_location_country'],
-                'state' => $this->_aParams['by_location_state'],
-                'city' => $this->_aParams['by_location_city']
-            ]);
+            $aConditions = [];
+            if(!empty($this->_aParams['by_location_country']))
+                $aConditions['keyword'] = $this->_aParams['by_location_country'];
+            if(!empty($this->_aParams['by_location_state']))
+                $aConditions['state'] = $this->_aParams['by_location_state'];
+            if(!empty($this->_aParams['by_location_city']))
+                $aConditions['city'] = $this->_aParams['by_location_city'];
+
+            if(!empty($aConditions)) {
+                $this->setMetaType('location_country_city');
+                $this->setCustomSearchCondition($aConditions);
+            }
         }
 
         $iDateStart = $iDateEnd = 0;
