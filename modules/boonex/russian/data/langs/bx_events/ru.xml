@@ -128,7 +128,7 @@
     <string name="_bx_events_form_session_input_sys_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_events_form_session_input_do_cancel"><![CDATA[Отмена]]></string>
 
-    <string name="_bx_events_form_filters_input_by_city"><![CDATA[По городу]]></string>
+    <string name="_bx_events_form_filters_input_by_location"><![CDATA[По местоположению]]></string>
     <string name="_bx_events_form_filters_input_by_date"><![CDATA[По дате]]></string>
     <string name="_bx_events_form_filters_input_by_date_all"><![CDATA[Любая дата]]></string>
     <string name="_bx_events_form_filters_input_by_date_today"><![CDATA[Сегодня]]></string>

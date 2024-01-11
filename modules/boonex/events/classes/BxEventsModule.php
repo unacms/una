@@ -29,7 +29,8 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         ]);
 
         $this->_aBrowsingFiltersKeys = array_merge($this->_aBrowsingFiltersKeys, [
-            'by_city', 'by_date', 'date_start', 'date_end', 'timezone'
+            'by_location_country', 'by_location_state', 'by_location_city',
+            'by_date', 'date_start', 'date_end', 'timezone'
         ]);
     }
 

@@ -42,7 +42,9 @@ BxEventsMain.prototype.applyBrowsingFilter = function(oElement, oRequestParams)
     if(oRequestParams == undefined)
         oRequestParams = {};
 
-    oRequestParams.by_city = oFilters.find("input[name='by_city']").val();
+    oRequestParams.by_location_country = oFilters.find("[name='by_location_country']").val();
+    oRequestParams.by_location_state = oFilters.find("input[name='by_location_state']").val();
+    oRequestParams.by_location_city = oFilters.find("input[name='by_location_city']").val();
 
     oRequestParams.by_date = oFilters.find("input[name='by_date']:checked").val();
     if(oRequestParams.by_date == 'date_range') {

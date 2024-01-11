@@ -245,10 +245,14 @@ import url(../../../../../../../template/css/forms.css);
 .bx-form-element .bx-form-value select {
     display: inline-block;
 }
-.bx-form-element .bx-form-input-location-country,
-.bx-form-element .bx-form-input-location-zip,
-.bx-form-element .bx-form-input-location-state,
-.bx-form-element .bx-form-input-location-city {
+.bx-form-element .bx-form-value .minimized input,
+.bx-form-element .bx-form-value .minimized select {
+    display: block;
+}
+.bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-country,
+.bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-zip,
+.bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-state,
+.bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-city {
     width:49%;
 }
 .bx-form-element .bx-form-input-location-street {
@@ -263,9 +267,9 @@ import url(../../../../../../../template/css/forms.css);
 .bx-form-element .bx-form-input-location-city {
     margin-bottom: 0.25rem;
 }
-.bx-form-element .bx-form-input-location-street,
-.bx-form-element .bx-form-input-location-state,
-.bx-form-element .bx-form-input-location-country {
+.bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-street,
+.bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-state,
+.bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-country {
     margin-left: 0.25rem;
 }
 
@@ -274,11 +278,20 @@ import url(../../../../../../../template/css/forms.css);
     width:98%;
     line-height:normal;
 }
+.bx-form-element .bx-form-input-location-cont.minimized .bx-form-input-location-status-cont {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
 .bx-form-element .bx-form-input-location-status {
     float:left;
 }
 .bx-form-element .bx-form-input-location-copyright {
     float:right;
+}
+.bx-form-element .bx-form-input-location-cont.minimized .bx-form-input-location-copyright {
+    float: none;
+    margin-top: 0.25rem;
 }
 
 .bx-form-element .bx-form-input-location-auto-cont {

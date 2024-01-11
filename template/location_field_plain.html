@@ -1,5 +1,5 @@
 
-<div class="bx-form-input-location-__name__ bx-form-input-location-cont bx-clearfix">
+<div class="bx-form-input-location-__name__ __minimized__ bx-form-input-location-cont bx-clearfix">
     __inputs__
     <div class="bx-form-input-location-status-cont bx-def-font-small bx-def-font-grayed bx-def-margin-thd-top bx-clearfix">
         <div class="bx-form-input-location-status ok"><i class="sys-icon sys-colored col-green1-dark check-circle"></i> <bx_text:_sys_location_status_ok /></div>
@@ -41,10 +41,10 @@
 
         sRet = '&country=' + encodeURIComponent(sCountry);
 
-        if (sZip.length && sMode !== 'no_street_no_zip')
+        if (sZip !== undefined && sZip.length && sMode !== 'no_street_no_zip')
             sRet += '&postalcode=' + encodeURIComponent(sZip);
 
-        if ('zip_only' == sMode)
+        if (sZip !== undefined && 'zip_only' == sMode)
             return sZip.length ? sRet : '';
 
         if (sState.length)
@@ -53,7 +53,7 @@
         if (sCity.length)
             sRet += ('county_as_city' == sMode ? '&county=' : '&city=') + encodeURIComponent(sCity);
         
-        if (sStreet.length && sMode !== 'no_street_no_zip')
+        if (sStreet !== undefined && sStreet.length && sMode !== 'no_street_no_zip')
             sRet += '&street=' + (sNum.length ? encodeURIComponent(sNum) + ' ' : '') + encodeURIComponent(sStreet);
 
         return sRet;

@@ -627,10 +627,10 @@
 
 /* Location field */
 
-.bx-form-input-location-country,
-.bx-form-input-location-zip,
-.bx-form-input-location-state,
-.bx-form-input-location-city {
+.bx-form-input-location-cont:not(.minimized) .bx-form-input-location-country,
+.bx-form-input-location-cont:not(.minimized) .bx-form-input-location-zip,
+.bx-form-input-location-cont:not(.minimized) .bx-form-input-location-state,
+.bx-form-input-location-cont:not(.minimized) .bx-form-input-location-city {
     width:49%;
 }
 
@@ -654,11 +654,20 @@
     width:98%;
     line-height:normal;
 }
+.bx-form-input-location-cont.minimized .bx-form-input-location-status-cont {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
 .bx-form-input-location-status {
     float:left;
 }
 .bx-form-input-location-copyright {
     float:right;
+}
+.bx-form-input-location-cont.minimized .bx-form-input-location-copyright {
+    float: none;
+    margin-top: 0.25rem;
 }
 
 .bx-form-input-location-auto-cont {

@@ -100,10 +100,12 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
                 'view_mode' => 0,
             ],
             'inputs' => [
-                'by_city' => [
-                    'name' => 'by_city',
-                    'type' => 'text',
-                    'caption' => _t('_bx_events_form_filters_input_by_city'),
+                'by_location' => [
+                    'name' => 'by_location',
+                    'type' => 'location',
+                    'caption' => _t('_bx_events_form_filters_input_by_location'),
+                    'manual_input' => true,
+                    'minimized' => true
                 ],
                 'by_date' => [
                     'name' => 'by_date',
@@ -166,7 +168,11 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         if($this->_bIsApi)
             return $oForm->getCodeAPI();
 
-        return $this->addJs(['moment-timezone-with-data-1970-2030.min.js'], true) . $oForm->getCode(true);
+        $sIncludes = '';
+        $sIncludes .= $this->addCss(['filters.css'], true);
+        $sIncludes .= $this->addJs(['moment-timezone-with-data-1970-2030.min.js'], true);
+
+        return $sIncludes . $oForm->getCode(true);
     }
 }
 

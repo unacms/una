@@ -94,6 +94,8 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
             $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain_auto.html', $aVars);
         }
         else {
+            $bMinimized = isset($aInput['minimized']) && $aInput['minimized'];
+
             $aFields = array(
                 'lat' => array('type' => 'hidden'),
                 'lng' => array('type' => 'hidden'),
@@ -104,6 +106,8 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
                 'zip' => array('type' => 'text', 'ph' => _t('_sys_location_ph_zip')),
                 'country' => array('type' => 'select'),
             );
+            if($bMinimized)
+                unset($aFields['street_number'], $aFields['street'], $aFields['zip']);
 
             $sInputs = '';
             foreach ($aFields as $sKey => $a) {
@@ -130,10 +134,12 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
             }
             $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain.html', array(
                 'name' => $aInput['name'],
+                'minimized' => $bMinimized ? 'minimized' : '',
                 'nominatim_server' => $this->getNominatimServer(),
                 'nominatim_email' => $this->getNominatimEmail(),
                 'inputs' => $sInputs,
                 'normalize_names' => getParam('sys_location_normalize_names') ? 1 : 0,
+                
             ));
         }
         return $sRet;

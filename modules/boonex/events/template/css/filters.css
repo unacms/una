@@ -1,0 +1,8 @@
+.bx-base-general-browsing-filters {
+    max-width: 20rem;
+}
+
+/*-- Location field: Google --*/
+.pac-container {
+    z-index: 10001;
+}
