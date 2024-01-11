@@ -46,17 +46,17 @@ class BxEventsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
-    protected function _getMenuItemEditEventQuestionnaire($aItem)
+    protected function _getMenuItemEventQuestionnaire($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
-    protected function _getMenuItemEditEventSessions($aItem)
+    protected function _getMenuItemEventSessions($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
-    protected function _getMenuItemEditEventPricing($aItem)
+    protected function _getMenuItemEventPricing($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }

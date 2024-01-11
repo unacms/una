@@ -161,8 +161,8 @@
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Редактировать событие]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку события]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
-    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Анкета]]></string>
-    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Анкета]]></string>
+    <string name="_bx_events_page_title_sys_questionnaire"><![CDATA[Анкета]]></string>
+    <string name="_bx_events_page_title_questionnaire"><![CDATA[Анкета]]></string>
     <string name="_bx_events_page_title_manage_profile"><![CDATA[Управление]]></string>
     <string name="_bx_events_page_title_sys_manage_profile"><![CDATA[Управление событием]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Удалить событие]]></string>

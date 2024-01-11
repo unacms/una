@@ -187,8 +187,8 @@
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Edit Event Cover]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
-    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Questionnaire]]></string>
-    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_events_page_title_sys_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_events_page_title_questionnaire"><![CDATA[Questionnaire]]></string>
     <string name="_bx_events_page_title_manage_profile"><![CDATA[Manage]]></string>
     <string name="_bx_events_page_title_sys_manage_profile"><![CDATA[Manage Event]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Delete Event]]></string>
