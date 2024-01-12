@@ -101,6 +101,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'events',
+            'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -141,6 +142,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             // some params
             'PARAM_AUTO_APPROVE' => $this->_sName . '_enable_auto_approve',
+            'PARAM_SEARCHABLE_FIELDS' => $this->_sName . '_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => $this->_sName . '_photos',
@@ -161,6 +163,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_UPLOADER_VIDEO_RECORD' => $this->_sName . '_record_video',
             'OBJECT_UPLOADER_FILE_HTML5' => $this->_sName . '_html5_file',
             'OBJECT_UPLOADER_FILE_SIMPLE' => $this->_sName . '_simple_file',
+            'OBJECT_FORM_ENTRY' => $this->_sName . '_post',
+            'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => $this->_sName . '_post_view',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => $this->_sName . '_post_add',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD_PUBLIC' => $this->_sName . '_post_add_public',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD_PROFILE' => $this->_sName . '_post_add_profile',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => $this->_sName . '_post_edit',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_GRID_COMMON' => $this->_sName . '_common',
             'OBJECT_GRID_MUTE' => $this->_sName . '_mute',
@@ -269,14 +277,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'menu_item_meta' => $this->_sName . '_menu_item_meta',
             'menu_post_attachments' => $this->CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'],
 
-            'form_post' => $this->_sName . '_post',
+            'form_post' => $this->CNF['OBJECT_FORM_ENTRY'],
             'form_attach_link' => $this->_sName . '_attach_link',
             'form_repost' => $this->_sName . '_repost',
-            'form_display_post_add' => $this->_sName . '_post_add',
-            'form_display_post_add_public' => $this->_sName . '_post_add_public',
-            'form_display_post_add_profile' => $this->_sName . '_post_add_profile',
-            'form_display_post_edit' => $this->_sName . '_post_edit',
-            'form_display_post_view' => $this->_sName . '_post_view',
+            'form_display_post_add' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'],
+            'form_display_post_view' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW'],
+            'form_display_post_add_public' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD_PUBLIC'],
+            'form_display_post_add_profile' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD_PROFILE'],
+            'form_display_post_edit' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'],
             'form_display_attach_link_add' => $this->_sName . '_attach_link_add',
             'form_display_repost_with' => $this->_sName . '_repost_with',
             'form_display_repost_to' => $this->_sName . '_repost_to',

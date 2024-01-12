@@ -30,6 +30,7 @@
     <string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
     <string name="_bx_timeline_option_live_updates_length"><![CDATA[The length of Live Updates selection]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Show events]]></string>
+    <string name="_bx_timeline_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Enable brief cards]]></string>
     <string name="_bx_timeline_option_title_chars"><![CDATA[Number of characters in auto-generated update's title]]></string>
     <string name="_bx_timeline_option_title_chars_short"><![CDATA[Number of characters in auto-generated update's short title]]></string>
@@ -431,6 +432,8 @@
     <string name="_bx_timeline_txt_show"><![CDATA[Show]]></string>
     <string name="_bx_timeline_txt_new_content"><![CDATA[New content]]></string>
     <string name="_bx_timeline_txt_filters"><![CDATA[Filters]]></string>
+    <string name="_bx_timeline_txt_title"><![CDATA[Title]]></string>
+    <string name="_bx_timeline_txt_description"><![CDATA[Description]]></string>
 
     <string name="_bx_timeline_txt_do_repost"><![CDATA[Repost]]></string>
     <string name="_bx_timeline_txt_do_repost_with"><![CDATA[Repost with Text]]></string>

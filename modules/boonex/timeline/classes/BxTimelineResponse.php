@@ -279,6 +279,16 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         return $this->_oModule->serviceFeedsMenuDelete($sName);
     }
 
+    protected function _processSystemSaveSetting($oAlert)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($CNF['PARAM_SEARCHABLE_FIELDS'] != $oAlert->aExtras['option'])
+            return;
+
+        $this->_oModule->_oDb->alterFulltextIndex();
+    }
+
     protected function _processAccountConfirm($oAlert)
     {
         $this->_clearCache();

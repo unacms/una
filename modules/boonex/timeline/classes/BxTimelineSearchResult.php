@@ -24,7 +24,7 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
             'title' => _t('_bx_timeline_page_title_browse'),
             'table' => 'bx_timeline_events',
             'ownFields' => array('id', 'owner_id', 'type', 'action', 'object_id', 'object_privacy_view', 'content', 'title', 'description', 'views', 'rate', 'votes', 'rrate', 'rvotes', 'score', 'sc_up', 'sc_down', 'comments', 'reports', 'reposts', 'date', 'status', 'status_admin', 'pinned', 'sticked', 'promoted'),
-            'searchFields' => array('title'),
+            'searchFields' => array(),
             'restriction' => array(
                 'internal' => array('value' => 'timeline_common_post', 'field' => 'type', 'operator' => '='),
                 'status' => array('value' => BX_TIMELINE_STATUS_ACTIVE, 'field' => 'status', 'operator' => '='),
@@ -38,6 +38,11 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
 
         $this->sFilterName = 'bx_timeline_filter';
         $this->oModule = $this->getMain();
+
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $sSearchFields = getParam($CNF['PARAM_SEARCHABLE_FIELDS']);
+        $this->aCurrent['searchFields'] = !empty($sSearchFields) ? explode(',', $sSearchFields) : '';
 
         switch ($sMode) {
 

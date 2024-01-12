@@ -1520,6 +1520,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $this->_oTemplate->unit($aEvent, true, $sUnitTemplate);
     }
+    
+    public function serviceGetSearchableFields ($aInputsAdd = [])
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        foreach(['PUBLIC', 'PROFILE'] as $sDisplay) {
+            $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD_' . $sDisplay], $this->_oTemplate);
+            if(!$oForm || empty($oForm->aInputs))
+                continue;
+
+            $aInputsAdd = array_merge($aInputsAdd, $oForm->aInputs);
+        }
+
+        $aResult = parent::serviceGetSearchableFields($aInputsAdd);
+        if(isset($aResult['text']))
+            unset($aResult['text']);
+
+        return array_merge($aResult, [
+            $CNF['FIELD_TITLE'] => _t('_bx_timeline_txt_title'),
+            $CNF['FIELD_TEXT'] => _t('_bx_timeline_txt_description'),
+        ]);
+    }
 
     /**
      * @page service Service Calls

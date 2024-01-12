@@ -1176,7 +1176,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
                 $bForYou = $aParams['type'] == BX_TIMELINE_TYPE_FOR_YOU;
                 $aForYouSources = $bForYou ? $this->_oConfig->getForYouSources() : [];
-//var_dump($bForYou, $aForYouSources); exit;
+
                 $mixedJoinSubclause = [];
                 $mixedWhereSubclause = [];
 

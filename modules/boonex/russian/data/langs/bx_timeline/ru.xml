@@ -9,6 +9,8 @@
     <string name="_bx_timeline_options_category_card"><![CDATA[Карточка]]></string>
     <string name="_bx_timeline_options_category_cache"><![CDATA[Кэш]]></string>
     <string name="_bx_timeline_options_category_post"><![CDATA[Создание сообщения]]></string>
+    <string name="_bx_timeline_options_category_feed_hot"><![CDATA['Горячая' хроника]]></string>
+    <string name="_bx_timeline_options_category_feed_for_you"><![CDATA[Лента 'Для Вас']]></string>
 
     <string name="_bx_timeline_option_enable_auto_approve"><![CDATA[Автоматически активировать сообщение после создания]]></string>
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Разрешить пользователю изменять собственные сообщения]]></string>
@@ -28,6 +30,7 @@
     <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
     <string name="_bx_timeline_option_live_updates_length"><![CDATA[Количество элементов в выборке авто обновления]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
+    <string name="_bx_timeline_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Включить лаконичные карточки]]></string>
     <string name="_bx_timeline_option_title_chars"><![CDATA[Количество символов в автогенерируемом заголовке сообщения]]></string>
     <string name="_bx_timeline_option_title_chars_short"><![CDATA[Количество символов в автогенерируемом укороченном заголовке сообщения]]></string>
@@ -74,7 +77,7 @@
     <string name="_bx_timeline_option_extenals_every_feed_preload"><![CDATA[Показывать внешнее событие как каждое N-е в ленте контекст (профиль) + подписки при включенной 'Бесконечной прокрутке']]></string>
     <string name="_bx_timeline_option_extenals_every_hot_preload"><![CDATA[Показывать внешнее событие как каждое N-е в hot timeline при включенной 'Бесконечной прокрутке']]></string>
     <string name="_bx_timeline_option_extenals_every_feed_and_hot_preload"><![CDATA[Показывать внешнее событие как каждое N-е в ленте 'Для тебя' при включенной 'Бесконечной прокрутке']]></string>
-    <string name="_bx_timeline_option_for_you_sources"><![CDATA[Лента «Для Вас» состоит из]]></string>
+    <string name="_bx_timeline_option_for_you_sources"><![CDATA[Лента 'Для Вас' состоит из]]></string>
     <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[Для фида должен быть включен хотя бы один источник.]]></string>
     <string name="_bx_timeline_option_for_you_sources_feed"><![CDATA[Лента контекст (профиль) + подписки]]></string>
     <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA['Горячая' хроника]]></string>
@@ -413,6 +416,9 @@
     <string name="_bx_timeline_txt_some_text_here"><![CDATA[Поделитесь своими мыслями]]></string>
     <string name="_bx_timeline_txt_show"><![CDATA[Показать]]></string>
     <string name="_bx_timeline_txt_new_content"><![CDATA[Новый контент]]></string>
+    <string name="_bx_timeline_txt_filters"><![CDATA[Фильтры]]></string>
+    <string name="_bx_timeline_txt_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_timeline_txt_description"><![CDATA[Описание]]></string>
 
     <string name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string>
     <string name="_bx_timeline_txt_do_repost_with"><![CDATA[Сделать репост с текстом]]></string>

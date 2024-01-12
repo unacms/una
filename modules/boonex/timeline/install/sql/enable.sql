@@ -305,7 +305,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_enable_content_own_actions', '', @iCategId, '_bx_timeline_option_enable_content_own_actions', 'checkbox', '', '', '', '', 4),
 ('bx_timeline_enable_repost_own_actions', 'on', @iCategId, '_bx_timeline_option_enable_repost_own_actions', 'checkbox', '', '', '', '', 5),
 ('bx_timeline_enable_hide_upon_delete', '', @iCategId, '_bx_timeline_option_enable_hide_upon_delete', 'checkbox', '', '', '', '', 6),
-('bx_timeline_events_hide', CONCAT_WS(',', @iHdrIdComment), @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 7);
+('bx_timeline_events_hide', CONCAT_WS(',', @iHdrIdComment), @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 7),
+('bx_timeline_searchable_fields', 'title,description', @iCategId, '_bx_timeline_option_searchable_fields', 'list', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_searchable_fields";}', 8);
 
 -- Category: Browse
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
@@ -518,6 +519,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'clear_cache', @iHandler),
 ('system', 'enable', @iHandler),
 ('system', 'disable', @iHandler),
+('system', 'save_setting', @iHandler),
 
 ('account', 'confirm', @iHandler),
 ('account', 'unconfirm', @iHandler),
