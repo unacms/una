@@ -322,6 +322,9 @@ EOF;
             if (isset($this->_aConfig[$sKey]['db_conf']))
                 $aDbConf[$this->_aConfig[$sKey]['db_conf']] = $a[$sKey];
 
+        if ('INNODB' == getenv('UNA_DB_ENGINE'))
+            $aDbConf['storage_engine'] = 'INNODB';
+
         $sErrorMessage = '';
         $oDb = BxDolDb::getInstanceWithConf($aDbConf, $sErrorMessage);
         if (!$oDb) {
