@@ -105,13 +105,15 @@ class BxDolRecommendationQuery extends BxDolDb
 
     public function get($iProfileId, $iObjectId, $aParams = [])
     {
+        $iThreshold = isset($aParams['threshold']) ? (int)$aParams['threshold'] : 0;
+
         $aMethod = ['name' => 'getPairs', 'params' => [0 => 'query', 1 => 'id', 2 => 'value']];
 
         $sSelectClause = "`item_id` AS `id`, (`item_value` - `item_reducer`) AS `value`";
 
         $sWhereClause = "";
         if(!empty($aParams['type']))
-            $sWhereClause = " AND `item_type` IN (" . $this->implode_escape(is_array($aParams['type']) ? $aParams['type'] : [$aParams['type']]) . ")";
+            $sWhereClause .= " AND `item_type` IN (" . $this->implode_escape(is_array($aParams['type']) ? $aParams['type'] : [$aParams['type']]) . ")";
 
         $sOrderClause = "ORDER BY `value` DESC";
 
@@ -126,10 +128,11 @@ class BxDolRecommendationQuery extends BxDolDb
             $sOrderClause = "";
         }
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) >= 0" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) >= :threshold" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
         $aMethod['params'][] = [
             'profile_id' => $iProfileId,
-            'object_id' => $iObjectId
+            'object_id' => $iObjectId,
+            'threshold' => $iThreshold
         ];
 
         return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);

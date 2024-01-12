@@ -319,7 +319,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
             case BX_TIMELINE_TYPE_CONNECTED_CONTEXTS:
             case BX_TIMELINE_TYPE_FEED:
-            case BX_TIMELINE_TYPE_FEED_AND_HOT:
+            case BX_TIMELINE_TYPE_FOR_YOU:
                 $this->setModeAccount();
                 break;
         }

@@ -1170,51 +1170,80 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
             //--- Feed: Profile + Profile Connections to Non-Channel contexts
             case BX_TIMELINE_TYPE_FEED:
-            case BX_TIMELINE_TYPE_FEED_AND_HOT:
+            case BX_TIMELINE_TYPE_FOR_YOU:
                 if(empty($aParams['owner_id']))
                     break;
 
+                $bForYou = $aParams['type'] == BX_TIMELINE_TYPE_FOR_YOU;
+                $aForYouSources = $bForYou ? $this->_oConfig->getForYouSources() : [];
+//var_dump($bForYou, $aForYouSources); exit;
                 $mixedJoinSubclause = [];
                 $mixedWhereSubclause = [];
 
-                $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+                if($aParams['type'] == BX_TIMELINE_TYPE_FEED || ($bForYou && in_array(BX_TIMELINE_FYFS_FEED, $aForYouSources))) {
+                    $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
-                //--- Select Own (System and Direct) posts from Profile's Timeline.
-                $sWhereSubclauseOwnProfile = $this->prepareAsString("(`{$sTableAlias}`.`owner_id` = ?)", $aParams['owner_id']);
+                    //--- Select Own (System and Direct) posts from Profile's Timeline.
+                    $sWhereSubclauseOwnProfile = $this->prepareAsString("(`{$sTableAlias}`.`owner_id` = ?)", $aParams['owner_id']);
 
-                //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-                $sWhereSubclauseOwnPublic = $this->prepareAsString("(`{$sTableAlias}`.`owner_id` = '0' AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` = ?, 1))", $aParams['owner_id']);
+                    //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
+                    $sWhereSubclauseOwnPublic = $this->prepareAsString("(`{$sTableAlias}`.`owner_id` = '0' AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
-                $mixedJoinSubclause['p1'] = "";
-                $mixedWhereSubclause['p1'] = "(" . $sWhereSubclauseOwnProfile . " OR " . $sWhereSubclauseOwnPublic . ")";
+                    $mixedJoinSubclause['p1'] = "";
+                    $mixedWhereSubclause['p1'] = "(" . $sWhereSubclauseOwnProfile . " OR " . $sWhereSubclauseOwnPublic . ")";
 
-                //--- Join System and Direct posts received by and made by following members. 'LEFT' join is essential to apply different conditions.
-                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($sTableAlias, 'owner_id', $aParams['owner_id']);
-                $aJoin1 = $aQueryParts['join'];
+                    //--- Join System and Direct posts received by and made by following members. 'LEFT' join is essential to apply different conditions.
+                    $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($sTableAlias, 'owner_id', $aParams['owner_id']);
+                    $aJoin1 = $aQueryParts['join'];
 
-                $mixedJoinSubclause['p2'] = "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
-                $mixedWhereSubclause['p2'] = "`{$sTableAlias}`.`type`<>'bx_channels'";
-                
-                //--- Exclude Own (Direct) posts on timelines of following members.
-                //--- Note. Disabled for now and next check is used instead. 
-                //$mixedWhereSubclause['p2'] = $this->prepareAsString(" AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` <> ?, 1))", $aParams['owner_id']);
+                    $mixedJoinSubclause['p2'] = "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                    $mixedWhereSubclause['p2'] = "`{$sTableAlias}`.`type`<>'bx_channels'";
 
-                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($sTableAlias, 'object_owner_id', $aParams['owner_id']);
-                $aJoin2 = $aQueryParts['join'];
-                $aJoin2['table_alias'] = 'cc';
-                $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
+                    //--- Exclude Own (Direct) posts on timelines of following members.
+                    //--- Note. Disabled for now and next check is used instead. 
+                    //$mixedWhereSubclause['p2'] = $this->prepareAsString(" AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` <> ?, 1))", $aParams['owner_id']);
 
-                $mixedJoinSubclause['p3'] = "INNER JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $sTableAlias . "`.`system` = 0 AND `" . $sTableAlias . "`.`object_privacy_view` > 0 AND " . $aJoin2['condition'];
-                $mixedWhereSubclause['p3'] = "1";
+                    $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($sTableAlias, 'object_owner_id', $aParams['owner_id']);
+                    $aJoin2 = $aQueryParts['join'];
+                    $aJoin2['table_alias'] = 'cc';
+                    $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
 
-                //--- Select Promoted posts.
-                $mixedJoinSubclause['p4'] = "";
-                $mixedWhereSubclause['p4'] = "`{$sTableAlias}`.`promoted` <> '0'";
+                    $mixedJoinSubclause['p3'] = "INNER JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $sTableAlias . "`.`system` = 0 AND `" . $sTableAlias . "`.`object_privacy_view` > 0 AND " . $aJoin2['condition'];
+                    $mixedWhereSubclause['p3'] = "1";
 
-                //--- Select Hot posts.
-                if($aParams['type'] == BX_TIMELINE_TYPE_FEED_AND_HOT) {
+                    //--- Select Promoted posts.
+                    $mixedJoinSubclause['p4'] = "";
+                    $mixedWhereSubclause['p4'] = "`{$sTableAlias}`.`promoted` <> '0'";
+                }
+
+                //--- 'For You' feed only: Add Hot posts
+                if($bForYou && in_array(BX_TIMELINE_FYFS_HOT, $aForYouSources)) {
                     $mixedJoinSubclause['p5'] = "INNER JOIN `{$this->_sTableHotTrack}` ON `{$sTableAlias}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
                     $mixedWhereSubclause['p5'] = "1";
+                }
+
+                //--- 'For You' feed only: Add posts from recommended friends
+                if($bForYou && in_array(BX_TIMELINE_FYFS_RECOM_FRIENDS, $aForYouSources) && ($oRecommendation = BxDolRecommendation::getObjectInstance('sys_friends')) !== false) {
+                    $aList = $oRecommendation->getList($aParams['owner_id'], [
+                        'threshold' => $this->_oConfig->getForYouThresholdRecomFrds()
+                    ]);
+
+                    if(!empty($aList) && is_array($aList)) {
+                        $mixedJoinSubclause['p6'] = "";
+                        $mixedWhereSubclause['p6'] = "`{$sTableAlias}`.`owner_id` IN (" . $this->implode_escape(array_keys($aList)) . ")";
+                    }
+                }
+
+                //--- 'For You' feed only: Add posts from recommended subscriptions
+                if($bForYou && in_array(BX_TIMELINE_FYFS_RECOM_SUBSCRIPTIONS, $aForYouSources) && ($oRecommendation = BxDolRecommendation::getObjectInstance('sys_subscriptions')) !== false) {
+                    $aList = $oRecommendation->getList($aParams['owner_id'], [
+                        'threshold' => $this->_oConfig->getForYouThresholdRecomSbns()
+                    ]);
+
+                    if(!empty($aList) && is_array($aList)) {
+                        $mixedJoinSubclause['p7'] = "";
+                        $mixedWhereSubclause['p7'] = "`{$sTableAlias}`.`owner_id` IN (" . $this->implode_escape(array_keys($aList)) . ")";
+                    }
                 }
                 break;
 

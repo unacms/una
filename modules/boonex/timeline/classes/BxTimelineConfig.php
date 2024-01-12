@@ -59,6 +59,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_aHotSourcesList;
     protected $_aHotList;
 
+    protected $_aForYouSources;
+    protected $_aForYouSourcesList;
+    protected $_iForYouThdRecomFrds;
+    protected $_iForYouThdRecomSbns;
+
     protected $_bEditorToolbar;
     protected $_bEditorAutoAttach;
     protected $_bEnableMediaPriority;
@@ -201,9 +206,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'option_vap_on' => '_bx_timeline_option_videos_autoplay_on',
                 'option_al_gallery' => '_bx_timeline_option_attachments_layout_gallery',
                 'option_al_showcase' => '_bx_timeline_option_attachments_layout_showcase',
-                'option_hs_content' => '_bx_timeline_option_hot_sources_content',
-                'option_hs_comment' => '_bx_timeline_option_hot_sources_comment',
-                'option_hs_vote' => '_bx_timeline_option_hot_sources_vote',
+                'option_hfs_content' => '_bx_timeline_option_hot_sources_content',
+                'option_hfs_comment' => '_bx_timeline_option_hot_sources_comment',
+                'option_hfs_vote' => '_bx_timeline_option_hot_sources_vote',
+                'option_fyfs_feed' => '_bx_timeline_option_for_you_sources_feed',
+                'option_fyfs_hot' => '_bx_timeline_option_for_you_sources_hot',
+                'option_fyfs_recom_friends' => '_bx_timeline_option_for_you_sources_recom_friends',
+                'option_fyfs_recom_subscriptions' => '_bx_timeline_option_for_you_sources_recom_subscriptions',
             ),
         );
 
@@ -394,6 +403,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             BX_TIMELINE_HFS_COMMENT,
             BX_TIMELINE_HFS_VOTE
         ];
+
+        $this->_aForYouSourcesList = [
+            BX_TIMELINE_FYFS_FEED,
+            BX_TIMELINE_FYFS_HOT,
+            BX_TIMELINE_FYFS_RECOM_FRIENDS,
+            BX_TIMELINE_FYFS_RECOM_SUBSCRIPTIONS
+        ];
     }
 
     public function init(&$oDb)
@@ -431,7 +447,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             BX_BASE_MOD_NTFS_TYPE_OWNER => $iPerPageContext,
             BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS => $iPerPageFeed,
             BX_TIMELINE_TYPE_FEED => $iPerPageFeed,
-            BX_TIMELINE_TYPE_FEED_AND_HOT => $iPerPageFeed,
+            BX_TIMELINE_TYPE_FOR_YOU => $iPerPageFeed,
             BX_TIMELINE_TYPE_CHANNELS => $iPerPageFeed,
     	];
 
@@ -467,7 +483,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iHotThresholdVote = (int)getParam($sOptionPrefix . 'hot_threshold_vote');
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
         $this->_aHotSources = explode(',', getParam($sOptionPrefix . 'hot_sources'));
-        $this->_aHotList = $this->_bHot ? $this->_oDb->getHot() : array();
+        $this->_aHotList = $this->_bHot ? $this->_oDb->getHot() : [];
+
+        $this->_aForYouSources = explode(',', getParam($sOptionPrefix . 'for_you_sources'));
+        $this->_iForYouThdRecomFrds = (int)getParam($sOptionPrefix . 'for_you_threshold_recom_friends');
+        $this->_iForYouThdRecomSbns = (int)getParam($sOptionPrefix . 'for_you_threshold_recom_subscriptions');
 
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
         $this->_bEditorAutoAttach = getParam($sOptionPrefix . 'editor_auto_attach_insertion') == 'on';
@@ -618,6 +638,26 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isHotEvent($iEventId)
     {
         return in_array($iEventId, $this->_aHotList);
+    }
+
+    public function getForYouSourcesList()
+    {
+        return $this->_aForYouSourcesList;
+    }
+
+    public function getForYouSources()
+    {
+        return $this->_aForYouSources;
+    }
+
+    public function getForYouThresholdRecomFrds()
+    {
+        return $this->_iForYouThdRecomFrds >= 0 ? $this->_iForYouThdRecomFrds : 0;
+    }
+
+    public function getForYouThresholdRecomSbns()
+    {
+        return $this->_iForYouThdRecomSbns >= 0 ? $this->_iForYouThdRecomSbns : 0;
     }
 
     public function isEditorToolbar()

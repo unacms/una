@@ -329,13 +329,6 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_events_per_preload', '5', @iCategId, '_bx_timeline_option_events_per_preload', 'digit', '', '', '', '', 21),
 ('bx_timeline_auto_preloads', '10', @iCategId, '_bx_timeline_option_auto_preloads', 'digit', '', '', '', '', 22),
 
-('bx_timeline_enable_hot', 'on', @iCategId, '_bx_timeline_option_enable_hot', 'checkbox', '', '', '', '', 30),
-('bx_timeline_hot_sources', 'content,comment,vote', @iCategId, '_bx_timeline_option_hot_sources', 'list', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:25:"get_hot_sources_checklist";}', 31),
-('bx_timeline_hot_threshold_age', '0', @iCategId, '_bx_timeline_option_hot_threshold_age', 'digit', '', '', '', '', 32),
-('bx_timeline_hot_threshold_comment', '1', @iCategId, '_bx_timeline_option_hot_threshold_comment', 'digit', '', '', '', '', 33),
-('bx_timeline_hot_threshold_vote', '2', @iCategId, '_bx_timeline_option_hot_threshold_vote', 'digit', '', '', '', '', 34),
-('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 35), 
-
 ('bx_timeline_extenals_every_public', '0', @iCategId, '_bx_timeline_option_extenals_every_public', 'digit', '', '', '', '', 40),
 ('bx_timeline_extenals_every_owner', '0', @iCategId, '_bx_timeline_option_extenals_every_owner', 'digit', '', '', '', '', 41),
 ('bx_timeline_extenals_every_feed', '0', @iCategId, '_bx_timeline_option_extenals_every_feed', 'digit', '', '', '', '', 42),
@@ -384,6 +377,27 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_editor_auto_attach_insertion', '', @iCategId, '_bx_timeline_option_editor_auto_attach_insertion', 'checkbox', '', '', '', '', 2),
 ('bx_timeline_enable_media_priority', '', @iCategId, '_bx_timeline_option_enable_media_priority', 'checkbox', '', '', '', '', 3),
 ('bx_timeline_limit_attach_links', '0', @iCategId, '_bx_timeline_option_limit_attach_links', 'digit', '', '', '', '', 10);
+
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_timeline_feed_hot', '_bx_timeline_options_category_feed_hot', 6);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_timeline_enable_hot', 'on', @iCategId, '_bx_timeline_option_enable_hot', 'checkbox', '', '', '', '', 1),
+('bx_timeline_hot_sources', 'content,comment,vote', @iCategId, '_bx_timeline_option_hot_sources', 'list', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:25:"get_hot_sources_checklist";}', 10),
+('bx_timeline_hot_threshold_age', '0', @iCategId, '_bx_timeline_option_hot_threshold_age', 'digit', '', '', '', '', 11),
+('bx_timeline_hot_threshold_comment', '1', @iCategId, '_bx_timeline_option_hot_threshold_comment', 'digit', '', '', '', '', 12),
+('bx_timeline_hot_threshold_vote', '2', @iCategId, '_bx_timeline_option_hot_threshold_vote', 'digit', '', '', '', '', 13),
+('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 20);
+
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_timeline_feed_for_you', '_bx_timeline_options_category_feed_for_you', 7);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_timeline_for_you_sources', 'feed,hot,recom_friends,recom_subscriptions', @iCategId, '_bx_timeline_option_for_you_sources', 'list', 'Avail', '', '_bx_timeline_option_for_you_sources_err', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:29:"get_for_you_sources_checklist";}', 1),
+('bx_timeline_for_you_threshold_recom_friends', '1', @iCategId, '_bx_timeline_option_for_you_threshold_recom_friends', 'digit', '', '', '', '', 10),
+('bx_timeline_for_you_threshold_recom_subscriptions', '1', @iCategId, '_bx_timeline_option_for_you_threshold_recom_subscriptions', 'digit', '', '', '', '', 11);
 
 
 -- PRIVACY 

@@ -33,7 +33,7 @@ define('BX_TIMELINE_TYPE_CONNECTED_CONTEXTS', 'connected_contexts'); //--- Follo
 define('BX_TIMELINE_TYPE_CHANNELS', 'channels'); //--- Followed channels only.
 define('BX_TIMELINE_TYPE_FEED', 'feed'); //--- Owner and followed contexts excluding channels.
 define('BX_TIMELINE_TYPE_HOT', 'hot'); //--- Aggrigated hot content.
-define('BX_TIMELINE_TYPE_FEED_AND_HOT', 'feed_and_hot'); 
+define('BX_TIMELINE_TYPE_FOR_YOU', 'feed_and_hot'); //--- Aggrigated from different timelines.
 define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
 
 define('BX_TIMELINE_VIEW_ITEM', 'item');
@@ -75,6 +75,12 @@ define('BX_TIMELINE_AML_DEFAULT', BX_TIMELINE_ML_GALLERY);
 define('BX_TIMELINE_HFS_CONTENT', 'content');
 define('BX_TIMELINE_HFS_COMMENT', 'comment');
 define('BX_TIMELINE_HFS_VOTE', 'vote');
+
+//--- For You Feed sources
+define('BX_TIMELINE_FYFS_FEED', 'feed');
+define('BX_TIMELINE_FYFS_HOT', 'hot');
+define('BX_TIMELINE_FYFS_RECOM_FRIENDS', 'recom_friends');
+define('BX_TIMELINE_FYFS_RECOM_SUBSCRIPTIONS', 'recom_subscriptions');
 
 class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolContentInfoService
 {
@@ -999,7 +1005,37 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aResults = [];
         foreach($aSources as $sSource) 
-            $aResults[$sSource] = _t($CNF['T']['option_hs_' . $sSource]);
+            $aResults[$sSource] = _t($CNF['T']['option_hfs_' . $sSource]);
+
+        return $aResults;
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_for_you_sources_checklist get_for_you_sources_checklist
+     * 
+     * @code bx_srv('bx_timeline', 'get_for_you_sources_checklist', [...]); @endcode
+     * 
+     * Get a list of available sources for 'For You' feed. Is used in module settings in Studio.
+     *
+     * @return an array with available sources represented as key => value pairs.
+     * 
+     * @see BxTimelineModule::serviceGetForYouSourcesChecklist
+     */
+    /** 
+     * @ref bx_timeline-get_for_you_sources_checklist "get_for_you_sources_checklist"
+     */
+    function serviceGetForYouSourcesChecklist()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aSources = $this->_oConfig->getForYouSourcesList();
+
+        $aResults = [];
+        foreach($aSources as $sSource) 
+            $aResults[$sSource] = _t($CNF['T']['option_fyfs_' . $sSource]);
 
         return $aResults;
     }

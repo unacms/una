@@ -9,6 +9,8 @@
     <string name="_bx_timeline_options_category_card"><![CDATA[Card]]></string>
     <string name="_bx_timeline_options_category_cache"><![CDATA[Cache]]></string>
     <string name="_bx_timeline_options_category_post"><![CDATA[Post]]></string>
+    <string name="_bx_timeline_options_category_feed_hot"><![CDATA['Hot' feed]]></string>
+    <string name="_bx_timeline_options_category_feed_for_you"><![CDATA['For You' feed]]></string>
 
     <string name="_bx_timeline_option_enable_auto_approve"><![CDATA[Auto approve an update after creation]]></string>
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Allow user to edit his items]]></string>
@@ -74,6 +76,14 @@
     <string name="_bx_timeline_option_extenals_every_feed_preload"><![CDATA[Show external event as every N-th in context (profile) + subscriptions timeline with Infinite Scroll enabled]]></string>
     <string name="_bx_timeline_option_extenals_every_hot_preload"><![CDATA[Show external event as every N-th in hot timeline with Infinite Scroll enabled]]></string>
     <string name="_bx_timeline_option_extenals_every_feed_and_hot_preload"><![CDATA[Show external event as every N-th in 'For You' timeline with Infinite Scroll enabled]]></string>
+    <string name="_bx_timeline_option_for_you_sources"><![CDATA['For You' feed consists of]]></string>
+    <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[At least one source should be enabled for the feed.]]></string>
+    <string name="_bx_timeline_option_for_you_sources_feed"><![CDATA[Feed]]></string>
+    <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA[Hot feed]]></string>
+    <string name="_bx_timeline_option_for_you_sources_recom_friends"><![CDATA[Suggested friends feeds]]></string>
+    <string name="_bx_timeline_option_for_you_sources_recom_subscriptions"><![CDATA[Who to follow feeds]]></string>
+    <string name="_bx_timeline_option_for_you_threshold_recom_friends"><![CDATA[Minimum number of recommendation points received by the user as suggested friend]]></string>
+    <string name="_bx_timeline_option_for_you_threshold_recom_subscriptions"><![CDATA[Minimum number of recommendation points received by the user as who to follow]]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
     <string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
