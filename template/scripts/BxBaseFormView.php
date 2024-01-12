@@ -2283,7 +2283,7 @@ BLAH;
         }
     }
 
-    function getOpenSectionViewMode($aAttrs = array(), $sTitle = '')
+    function getOpenSectionViewMode($aAttrs = array(), $sTitle = '', $aWrapperAttrs = [])
     {
         if (!$this->_isSectionOpened) {
 
@@ -2297,9 +2297,11 @@ BLAH;
 
             $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-view-section bx-def-padding-sec-top bx-def-border-top " . $sClassesAdd);
 
+            $sWrapperAttrs = bx_convert_array2attrs($aWrapperAttrs, "bx-form-section-wrapper bx-def-margin-top");
+
             $this->_isSectionOpened = true;
 
-            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top\">\n";
+            return "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top\">\n";
 
         } else {
 
