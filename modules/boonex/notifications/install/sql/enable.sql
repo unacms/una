@@ -97,7 +97,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_notifications_delivery_timeout', '120', @iCategId, '_bx_ntfs_option_delivery_timeout', 'digit', '', '', '', '', 20),
 ('bx_notifications_clear_interval', '90', @iCategId, '_bx_ntfs_option_clear_interval', 'digit', '', '', '', '', 30),
 ('bx_notifications_enable_comment_post_ext', '', @iCategId, '_bx_ntfs_option_enable_comment_post_ext', 'checkbox', '', '', '', '', 40),
-('bx_notifications_email_subject_chars', '30', @iCategId, '_bx_ntfs_option_email_subject_chars', 'digit', '', '', '', '', 50);
+('bx_notifications_owner_name_chars', '21', @iCategId, '_bx_ntfs_option_owner_name_chars', 'digit', '', '', '', '', 50),
+('bx_notifications_content_chars', '32', @iCategId, '_bx_ntfs_option_content_chars', 'digit', '', '', '', '', 51),
+('bx_notifications_email_subject_chars', '30', @iCategId, '_bx_ntfs_option_email_subject_chars', 'digit', '', '', '', '', 52),
+('bx_notifications_push_message_chars', '190', @iCategId, '_bx_ntfs_option_push_message_chars', 'digit', '', '', '', '', 53);
 
 
 -- PRIVACY 

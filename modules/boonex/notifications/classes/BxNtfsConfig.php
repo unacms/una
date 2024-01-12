@@ -73,10 +73,10 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             'option' => 'bx_notifications_'
         );
 
-        $this->_iOwnerNameMaxLen = 21;
-        $this->_iContentMaxLen = 32;
-        $this->_iPushMaxLen = 190;
+        $this->_iOwnerNameMaxLen = 0;
+        $this->_iContentMaxLen = 0;
         $this->_iEmailSubjectMaxLen = 0;
+        $this->_iPushMaxLen = 0;
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '');
         $this->_sHandlersMethod = 'get_notifications_data';
@@ -143,7 +143,10 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
         $this->_bClickedIndicator = getParam($sOptionPrefix . 'enable_clicked_indicator') == 'on';
 
+        $this->_iOwnerNameMaxLen = (int)getParam($sOptionPrefix . 'owner_name_chars');
+        $this->_iContentMaxLen = (int)getParam($sOptionPrefix . 'content_chars');
         $this->_iEmailSubjectMaxLen = (int)getParam($sOptionPrefix . 'email_subject_chars');
+        $this->_iPushMaxLen = (int)getParam($sOptionPrefix . 'push_message_chars');
     }
 
     public function getOwnerNameMaxLen()
