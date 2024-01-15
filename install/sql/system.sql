@@ -1536,6 +1536,7 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 CREATE TABLE `sys_modules` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `type` varchar(16) NOT NULL default 'module',
+  `subtypes` int(11) unsigned NOT NULL default '0',
   `name` varchar(32) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
   `vendor` varchar(64) NOT NULL default '',

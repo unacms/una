@@ -12,7 +12,7 @@
 /**
  * Photos module
  */
-class BxPhotosModule extends BxBaseModTextModule
+class BxPhotosModule extends BxBaseModFilesModule
 {
     function __construct(&$aModule)
     {

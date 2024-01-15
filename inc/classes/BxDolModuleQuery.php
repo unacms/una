@@ -105,9 +105,10 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
     }
     function getModulesBy($aParams = array(), $bFromCache = true)
     {
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
         $sPostfix = $sWhereClause = $sOrderByClause = "";
-        $aBindings = array();
+        $sSelectClause = "`id`, `type`, `name`, `title`, `vendor`, `version`, `help_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled`";
+        $aBindings = [];
 
         switch($aParams['type']) {
             case 'type':
@@ -123,6 +124,34 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 $aBindings['type'] = BX_DOL_MODULE_TYPE_MODULE;
 
                 $sWhereClause .= " AND `type`=:type";
+                break;
+
+            case 'modules_subtypes':
+                if(!is_array($aParams['value']))
+                    $aParams['value'] = [$aParams['value']];
+
+                $sPostfix .= '_modules_subtypes_' . implode('_', $aParams['value']);
+                $aBindings['type'] = BX_DOL_MODULE_TYPE_MODULE;
+
+                $iSubtypes = 0;
+                foreach($aParams['value'] as $iSubtype) 
+                    $iSubtypes |= pow(2, $iSubtype);
+
+                $aBindings['subtypes'] = $iSubtypes;
+
+                $sWhereClause .= " AND `type`=:type AND `subtypes` & :subtypes";
+                break;
+
+            case 'is_module_subtype':
+                $sPostfix .= '_is_module_' . $aParams['subtype'] . '_' . $aParams['name'];
+                $aMethod['name'] = 'getOne';
+                $aBindings = [
+                    'type' => BX_DOL_MODULE_TYPE_MODULE,
+                    'subtypes' => pow(2, (int)$aParams['subtype']),
+                    'name' => $aParams['name']
+                ];
+                $sSelectClause = "`id`";
+                $sWhereClause .= " AND `type`=:type AND `subtypes` & :subtypes AND `name`=:name";
                 break;
 
             case 'languages':
@@ -176,29 +205,30 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
         $sOrderByClause = " ORDER BY " . (isset($aParams['order_by']) ? $aParams['order_by'] : '`title`');
 
-        $aMethod['params'][0] = "SELECT
-                `id`,
-                `type`,
-                `name`,
-                `title`,
-                `vendor`,
-                `version`,
-                `help_url`,
-                `path`,
-                `uri`,
-                `class_prefix`,
-                `db_prefix`,
-                `lang_category`,
-                `date`,
-                `enabled`
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
             FROM `sys_modules`
             WHERE 1 " . $sWhereClause . $sOrderByClause;
         $aMethod['params'][] = $aBindings;
 
         if(!$bFromCache || empty($sPostfix))
-        	return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+            return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         return call_user_func_array(array($this, 'fromMemory'), array_merge(array('sys_modules' . $sPostfix, $aMethod['name']), $aMethod['params']));
+    }
+    
+    function isModuleContent($sName)
+    {
+        return (int)$this->getModulesBy(['type' => 'is_module_subtype', 'subtype' => BX_DOL_MODULE_SUBTYPE_TEXT, 'name' => $sName]) != 0;
+    }
+    
+    function isModuleContext($sName)
+    {
+        return (int)$this->getModulesBy(['type' => 'is_module_subtype', 'subtype' => BX_DOL_MODULE_SUBTYPE_CONTEXT, 'name' => $sName]) != 0;
+    }
+    
+    function isModuleProfile($sName)
+    {
+        return (int)$this->getModulesBy(['type' => 'is_module_subtype', 'subtype' => BX_DOL_MODULE_SUBTYPE_PROFILE, 'name' => $sName]) != 0;
     }
 
     function getModulesUri()

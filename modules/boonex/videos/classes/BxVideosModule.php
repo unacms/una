@@ -12,7 +12,7 @@
 /**
  * Videos module
  */
-class BxVideosModule extends BxBaseModTextModule
+class BxVideosModule extends BxBaseModFilesModule
 {
     function __construct(&$aModule)
     {

@@ -218,6 +218,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if($aResult['result']) {
             $iModuleId = $this->oDb->insertModule($this->_aConfig);
 
+            if(($iModuleSubtypes = $this->getSubtypes($this->_aConfig['name'])) != 0)
+                $this->oDb->updateModule(['subtypes' => $iModuleSubtypes], ['id' => $iModuleId]);
+
             $sTitleKey = BxDolModule::getTitleKey($this->_aConfig['home_uri']);
 
             $oLanguages = BxDolStudioLanguagesUtils::getInstance();
@@ -240,18 +243,18 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             	$this->_perform('install_success', $aParams);
         }
     	else {
-        	if(!empty($this->_aConfig['install_failed']))
+            if(!empty($this->_aConfig['install_failed']))
             	$this->_perform('install_failed', $aParams);
         }
 
         bx_alert('system', 'install', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
 
-	    if($aResult['result'] && $bAutoEnable) {
-			$aResultEnable = $this->enable($aParams);
+        if($aResult['result'] && $bAutoEnable) {
+            $aResultEnable = $this->enable($aParams);
 
-			$aResult['result'] = $aResult['result'] & $aResultEnable['result'];
-			$aResult['message'] = $aResult['message'] . $aResultEnable['message'];
-		}
+            $aResult['result'] = $aResult['result'] & $aResultEnable['result'];
+            $aResult['message'] = $aResult['message'] . $aResultEnable['message'];
+        }
 
         return $aResult;
     }

@@ -54,6 +54,14 @@ if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
     define('BX_DOL_MODULE_TYPE_TEMPLATE', 'template');
 }
 
+define('BX_DOL_MODULE_SUBTYPE_PROFILE', 1);
+define('BX_DOL_MODULE_SUBTYPE_CONTEXT', 2);
+define('BX_DOL_MODULE_SUBTYPE_TEXT', 3);
+define('BX_DOL_MODULE_SUBTYPE_FILE', 4);
+define('BX_DOL_MODULE_SUBTYPE_PAYMENT', 5);
+define('BX_DOL_MODULE_SUBTYPE_NOTIFICATION', 6);
+define('BX_DOL_MODULE_SUBTYPE_CONNECT', 7);
+
 //--- Payment settings ---//
 define('BX_PAYMENT_TYPE_SINGLE', 'single');
 define('BX_PAYMENT_TYPE_RECURRING', 'recurring');

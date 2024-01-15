@@ -105,6 +105,57 @@ class BxDolInstallerUtils extends BxDolIO
         }
     }
 
+    public function getSubtypes($sModule)
+    {
+        $iResult = 0;
+        $oModule = BxDolModule::getInstance($sModule);
+        if(!$oModule)
+            return $iResult;
+
+        $sMethod = 'getSubtypes';
+        if(method_exists($oModule, $sMethod))
+            return $oModule->$sMethod();
+
+        if($oModule instanceof iBxDolProfileService) {
+            if(bx_srv('system', 'is_module_profile', [$oModule]))
+                $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_PROFILE);
+
+            if(bx_srv('system', 'is_module_context', [$oModule]))
+                $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_CONTEXT);
+
+            return $iResult;
+        }
+
+        if(bx_srv('system', 'is_module_content', [$oModule])) {
+            $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_TEXT);
+
+            if($oModule instanceof BxBaseModFilesModule)
+                $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_FILE);
+
+            return $iResult;
+        }
+
+        if($oModule instanceof BxBaseModPaymentModule) {
+            $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_PAYMENT);
+
+            return $iResult;
+        }
+
+        if($oModule instanceof BxBaseModNotificationsModule) {
+            $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_NOTIFICATION);
+
+            return $iResult;
+        }
+
+        if($oModule instanceof BxBaseModConnectModule) {
+            $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_CONNECT);
+
+            return $iResult;
+        }
+
+        return $iResult;
+    }
+
     /**
      * Generate hash for module files.
      * @param $sPath module's root folder

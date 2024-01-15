@@ -12,7 +12,7 @@
 /**
  * Files module
  */
-class BxFilesModule extends BxBaseModTextModule
+class BxFilesModule extends BxBaseModFilesModule
 {
     function __construct(&$aModule)
     {
@@ -614,20 +614,6 @@ class BxFilesModule extends BxBaseModTextModule
         if ($oProfile && $oProfile->getModule() == 'bx_persons') return;
 
         return parent::serviceBrowseContext($iProfileId, $aParams);
-    }
-
-    public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0, $bFilterMode = false)
-    {
-        if((empty($aParams) || !is_array($aParams)) && !$bFilterMode)
-            return array();
-
-        $aParams['type'] = [
-            'type' => 'text',
-            'value' => 'file',
-            'operator' => '=',
-        ];
-
-        return $this->_oDb->getEntriesBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
     }
 }
 
