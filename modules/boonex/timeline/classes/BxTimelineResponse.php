@@ -64,7 +64,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(!empty($oAlert->aExtras['timeline_group']))
                     $sSource = $oAlert->aExtras['timeline_group']['by'];
                 else
-                    $sSource = $oAlert->sUnit . '_' . $iObjectAuthorId . '_' . $oAlert->iObject;
+                    $sSource = $oAlert->sUnit . '_' . abs($iObjectAuthorId) . '_' . $oAlert->iObject;
 
                 $iDate = time();
                 $aEvent = [

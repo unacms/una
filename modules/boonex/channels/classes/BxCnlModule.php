@@ -51,7 +51,7 @@ class BxCnlModule extends BxBaseModGroupsModule
          * Usually it happens when tags were processed with cron.
          */
         if(empty($iAuthorId))
-            $iAuthorId = BxDolService::call($sModuleName, 'get_author', array($iContentId));
+            $iAuthorId = abs(BxDolService::call($sModuleName, 'get_author', array($iContentId)));
 
         $aCheck = checkActionModule($iAuthorId, 'create channel auto', $this->getName(), false);
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);
@@ -86,7 +86,7 @@ class BxCnlModule extends BxBaseModGroupsModule
             'object_author_id' => $iAuthorId, 
             'privacy_view' => -$iCnlProfileId,
             'subobject_id' => $iId,
-			'content_module' => $sModuleName,
+            'content_module' => $sModuleName,
             'content_id' => $iContentId,
             'content_author_id' => $iAuthorId,
             'timeline_group' => array(
@@ -94,11 +94,12 @@ class BxCnlModule extends BxBaseModGroupsModule
                 'field' => 'owner_id'
             )
         ));
+
         $aParams = array(
             'object_author_id' => $iAuthorId, 
             'privacy_view' => -$iCnlProfileId, 
             'subobject_id' => $iId,
-			'content_module' => $sModuleName,
+            'content_module' => $sModuleName,
             'content_id' => $iContentId,
             'content_author_id' => $iAuthorId
         );

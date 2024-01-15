@@ -833,7 +833,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         if(!empty($CNF['OBJECT_METATAGS']))
             $aParams['timeline_group'] = array(
-                'by' => $this->getName() . '_' . (int)$aContentInfo[$CNF['FIELD_AUTHOR']] . '_' . (int)$aContentInfo[$CNF['FIELD_ID']],
+                'by' => $this->getName() . '_' . abs((int)$aContentInfo[$CNF['FIELD_AUTHOR']]) . '_' . (int)$aContentInfo[$CNF['FIELD_ID']],
                 'field' => 'owner_id'
             );
 
