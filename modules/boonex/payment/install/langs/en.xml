@@ -294,7 +294,7 @@
     <string name="_bx_payment_et_txt_body_cancelation_request"><![CDATA[{email_header}
 <p>Hello,</p>
 <p>A user with {profile_name} profile name requested cancellation for a subscription.</p>
-<p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
+<p>Subscription info:<br />ID: {subscription_id}<br />Customer: {subscription_customer}<br />Date: {subscription_date}</p>
 {email_footer}]]></string>
 
     <string name="_bx_payment_et_txt_name_expiration_notification_seller"><![CDATA[Subscription expiration notification (for seller).]]></string>
@@ -302,7 +302,7 @@
     <string name="_bx_payment_et_txt_body_expiration_notification_seller"><![CDATA[{email_header}
 <p>Hello,</p>
 <p>A subscription purchased by '{profile_name}' expired.</p>
-<p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
+<p>Subscription info:<br />ID: {subscription_id}<br />Customer: {subscription_customer}<br />Date: {subscription_date}</p>
 <p><b>Note</b>. An associated data will be removed shortly.</p>
 {email_footer}]]></string>
 
@@ -311,7 +311,7 @@
     <string name="_bx_payment_et_txt_body_expiration_notification_client"><![CDATA[{email_header}
 <p>Hello,</p>
 <p>Your subscription purchased from '{profile_name}' expired.</p>
-<p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
+<p>Subscription info:<br />ID: {subscription_id}<br />Customer: {subscription_customer}<br />Date: {subscription_date}</p>
 <p><b>Note</b>. An associated data will be removed shortly.</p>
 {email_footer}]]></string>
 
@@ -346,7 +346,7 @@
     <string name="_bx_payment_et_txt_body_wrong_balance"><![CDATA[{email_header}
 <p>Hello,</p>
 <p>You have insufficient funds to write off for paying a subscription.</p>
-<p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Payment provider: {sibscription_provider}<br />Date: {sibscription_date}</p>
+<p>Subscription info:<br />ID: {subscription_id}<br />Customer: {subscription_customer}<br />Payment provider: {subscription_provider}<br />Date: {subscription_date}</p>
 {email_footer}]]></string>
 
     <!-- MESSAGES, WARNINGS and ERRORS -->

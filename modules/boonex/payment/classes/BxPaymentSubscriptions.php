@@ -303,9 +303,9 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         $oClient = BxDolProfile::getInstance((int)$aSubscription['client_id']);
 
         $aEtParams = array(
-            'sibscription_id' => $aSubscription['subscription_id'],
-            'sibscription_customer' => $aSubscription['customer_id'],
-            'sibscription_date' => bx_time_js($aSubscription['date_add'], BX_FORMAT_DATE, true)
+            'subscription_id' => $aSubscription['subscription_id'],
+            'subscription_customer' => $aSubscription['customer_id'],
+            'subscription_date' => bx_time_js($aSubscription['date_add'], BX_FORMAT_DATE, true)
         );
 
         /**
