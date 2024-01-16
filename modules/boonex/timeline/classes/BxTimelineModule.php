@@ -5181,6 +5181,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $bResult;
     }
 
+    public function deleteLinksUnused($iProfileId)
+    {
+        $aLinks = $this->_oDb->getUnusedLinks($iProfileId);
+        if(empty($aLinks) || !is_array($aLinks))
+            return;
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'));
+        foreach($aLinks as $aLink)
+            if(!empty($aLink['media_id']))
+                $oStorage->deleteFile($aLink['media_id']);
+
+        $this->_oDb->deleteUnusedLinks($iProfileId);
+    }
+
     public function deleteCacheItem($iEventId)
     {
         //--- Delete own item cache.
@@ -5496,8 +5510,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'OGImage' => array('name_attr' => 'property', 'name' => 'og:image'),
         ));
 
-        $sTitle = !empty($aSiteInfo['title']) ? $aSiteInfo['title'] : _t('_Empty');
-        $sDescription = !empty($aSiteInfo['description']) ? $aSiteInfo['description'] : _t('_Empty');
+        $sTitle = !empty($aSiteInfo['title']) ? $aSiteInfo['title'] : $sHost;
+        $sDescription = !empty($aSiteInfo['description']) ? $aSiteInfo['description'] : '';
 
         $sMediaUrl = '';
         if(!empty($aSiteInfo['thumbnailUrl']))

@@ -1462,7 +1462,7 @@ class BxDolStorageHelperUrl extends BxDolStorageHelperPath
                 file_put_contents($aParams['path'], $s);
             } 
             else {
-                $hRead = fopen($aParams['url'], "rb");
+                $hRead = @fopen($aParams['url'], "rb");
                 $hWrite = fopen($aParams['path'], "wb");
                 if (false !== $hRead && false !== $hWrite) {
                     while (!feof($hRead)) {

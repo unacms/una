@@ -83,9 +83,6 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs['attachments']['content'] = $oMenu->getCode() . $this->_oModule->_oTemplate->parseHtmlByName('uploader_progress.html', []);;
         }
 
-        if(isset($this->aInputs[$CNF['FIELD_LINK']]))
-            $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
-
         foreach(['FIELD_VIDEO', 'FIELD_FILE'] as $sSetting){
             if(!isset($CNF[$sSetting]) || !isset($this->aInputs[$CNF[$sSetting]])) 
                 continue;
@@ -107,6 +104,13 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs[$CNF['FIELD_ANONYMOUS']]['checked'] = $aValues[$CNF['FIELD_OBJECT_ID']] < 0;
 
         parent::initChecker ($aValues, $aSpecificValues);
+
+        if(isset($this->aInputs[$CNF['FIELD_LINK']])) {
+            if(!$bValueId && !$this->isSubmitted())
+                $this->_oModule->deleteLinksUnused($iUserId);
+
+            $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
+        }
     }
 
     public function insert($aValsToAdd = array(), $isIgnore = false)

@@ -59,7 +59,7 @@ div.bx-tl-ali-thumbnail img {
 }
 div.bx-tl-ali-embed {
     max-height: 250px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 div.bx-tl-ali-actions .bx-btn {
     display: inline-block;

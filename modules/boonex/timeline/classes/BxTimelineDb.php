@@ -303,18 +303,18 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function deleteUnusedLinks($iUserId, $iLinkId = 0)
     {
-    	$aBindings = array(
-    		'profile_id' => $iUserId
-    	);
+    	$aBindings = [
+            'profile_id' => $iUserId
+    	];
 
         $sWhereAddon = '';
         if(!empty($iLinkId)) {
-        	$aBindings['id'] = $iLinkId;
+            $aBindings['id'] = $iLinkId;
 
-            $sWhereAddon = " AND `id`=:id";
+            $sWhereAddon = " AND `tl`.`id`=:id";
         }
 
-        return $this->query("DELETE FROM `" . $this->_sPrefix . "links` WHERE `profile_id`=:profile_id" . $sWhereAddon, $aBindings);
+        return $this->query("DELETE FROM `tl`, `tle` USING `" . $this->_sPrefix . "links` AS `tl` LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tl`.`profile_id`=:profile_id AND ISNULL(`tle`.`event_id`)" . $sWhereAddon, $aBindings);
     }
 
     public function saveLink($iEventId, $iLinkId)

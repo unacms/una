@@ -36,12 +36,7 @@ function BxTimelinePost(oOptions) {
             oPost = $($this.sIdPostForm);
 
     	oPost.each(function() {
-            var sId = $(this).attr('id');
-            $this.initFormPost(sId);
-
-            $this.initTrackerInsertSpace(sId);
-            if($this._bAutoAttach) 
-                $this.initTrackerInsertImage(sId);
+            $this.initFormPost($(this).attr('id'));
     	});
     });
 }
@@ -64,6 +59,10 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
             window[$this._sObjName].afterFormPostSubmit(oForm, oData);
         }
     });
+    
+    $this.initTrackerInsertSpace(sFormId);
+    if($this._bAutoAttach) 
+        $this.initTrackerInsertImage(sFormId);
 };
 
 BxTimelinePost.prototype.onFormPostSubmit = function(oForm)
