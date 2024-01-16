@@ -340,9 +340,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
         
-    	$aBindings = array(
-    		'profile_id' => $iUserId
-    	);
+    	$aBindings = [
+            'profile_id' => $iUserId
+    	];
 
         $sWhereAddon = '';
         if(!empty($iLinkId)) {
@@ -351,7 +351,7 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
             $sWhereAddon = " AND `id`=:id";
         }
 
-        return $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `profile_id`=:profile_id" . $sWhereAddon, $aBindings);
+        return $this->query("DELETE FROM `tl`, `tlc` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tlc` ON `tl`.`id`=`tlc`.`link_id` WHERE `tl`.`profile_id`=:profile_id AND ISNULL(`tlc`.`content_id`)" . $sWhereAddon, $aBindings);
     }
 
     public function saveLink($iContentId, $iLinkId)
@@ -373,8 +373,8 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     public function deleteLink($iId)
     {
         $CNF = &$this->_oConfig->CNF;
-        
-        return (int)$this->query("DELETE FROM `tl`, `tle` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tl`.`id` = :id", array(
+
+        return (int)$this->query("DELETE FROM `tl`, `tlc` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tlc` ON `tl`.`id`=`tlc`.`link_id` WHERE `tl`.`id` = :id", array(
             'id' => $iId
         )) > 0;
     }
@@ -382,8 +382,8 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     public function deleteLinks($iContentId)
     {
         $CNF = &$this->_oConfig->CNF;
-        
-        return (int)$this->query("DELETE FROM `tl`, `tle` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tle`.`content_id` = :content_id", array(
+
+        return (int)$this->query("DELETE FROM `tl`, `tlc` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tlc` ON `tl`.`id`=`tlc`.`link_id` WHERE `tlc`.`content_id` = :content_id", array(
             'content_id' => $iContentId
         )) > 0;
     }
@@ -431,8 +431,8 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
                     'content_id' => $aParams['content_id']
                 );
 
-                $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id`";
-                $sWhereClause = " AND `tle`.`content_id`=:content_id";
+                $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tlc` ON `tl`.`id`=`tlc`.`link_id`";
+                $sWhereClause = " AND `tlc`.`content_id`=:content_id";
                 break;
 
             case 'unused':
@@ -449,8 +449,8 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
                 else
                     $aMethod['params'][1] = $aBindings;
 
-                $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id`";
-                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND ISNULL(`tle`.`content_id`)";
+                $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tlc` ON `tl`.`id`=`tlc`.`link_id`";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND ISNULL(`tlc`.`content_id`)";
                 $sOrderClause = "`tl`.`added` DESC";
                 break;
         }

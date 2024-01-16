@@ -76,9 +76,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
             $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateVideo, $this->_getVideoGhostTmplVars($aContentInfo));
         }
-
-        if(isset($CNF['FIELD_LINK']) && isset($this->aInputs[$CNF['FIELD_LINK']]))
-            $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
         
         if (isset($CNF['FIELD_SOUND']) && isset($this->aInputs[$CNF['FIELD_SOUND']])) {
             if ($bValues)
@@ -100,6 +97,13 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         }
         
         parent::initChecker ($aValues, $aSpecificValues);
+
+        if(isset($CNF['FIELD_LINK']) && isset($this->aInputs[$CNF['FIELD_LINK']])) {
+            if(!$iValueId && !$this->isSubmitted())
+                $this->_oModule->deleteAttachLinksUnused($iUserId);
+
+            $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
+        }
     }
 
     function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)

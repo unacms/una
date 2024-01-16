@@ -689,6 +689,38 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $this->_addLink($oForm);
     }
     
+    public function deleteAttachLinks($iId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aLinks = $this->_oDb->getLinks($iId);
+        if(empty($aLinks) || !is_array($aLinks))
+            return;
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS']);
+        foreach($aLinks as $aLink)
+            if(!empty($aLink['media_id']))
+                $oStorage->deleteFile($aLink['media_id']);
+
+        $this->_oDb->deleteLinks($iId);
+    }
+
+    public function deleteAttachLinksUnused($iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aLinks = $this->_oDb->getUnusedLinks($iProfileId);
+        if(empty($aLinks) || !is_array($aLinks))
+            return;
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS']);
+        foreach($aLinks as $aLink)
+            if(!empty($aLink['media_id']))
+                $oStorage->deleteFile($aLink['media_id']);
+
+        $this->_oDb->deleteUnusedLinks($iProfileId);
+    }
+
     public function getFormAttachLink($iContentId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -726,8 +758,8 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             'OGImage' => array('name_attr' => 'property', 'name' => 'og:image'),
         ));
 
-        $sTitle = !empty($aSiteInfo['title']) ? $aSiteInfo['title'] : _t('_Empty');
-        $sDescription = !empty($aSiteInfo['description']) ? $aSiteInfo['description'] : _t('_Empty');
+        $sTitle = !empty($aSiteInfo['title']) ? $aSiteInfo['title'] : $sHost;
+        $sDescription = !empty($aSiteInfo['description']) ? $aSiteInfo['description'] : '';
 
         $sMediaUrl = '';
         if(!empty($aSiteInfo['thumbnailUrl']))
