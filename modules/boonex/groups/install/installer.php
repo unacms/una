@@ -9,28 +9,11 @@
  * @{
  */
 
-class BxGroupsInstaller extends BxBaseModProfileInstaller
+class BxGroupsInstaller extends BxBaseModGroupsInstaller
 {
-    function __construct($aConfig)
+    public function __construct($aConfig)
     {
         parent::__construct($aConfig);
-    }
-
-    function enable($aParams)
-    {
-        $aResult = parent::enable($aParams);
-
-        if($aResult['result'])
-            BxDolPayments::getInstance()->updateDependentModules($this->_aConfig['name'], true);
-
-        return $aResult;
-    }
-
-    function disable($aParams)
-    {
-        BxDolPayments::getInstance()->updateDependentModules($this->_aConfig['name'], false);
-
-        return parent::disable($aParams);
     }
 }
 

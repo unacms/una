@@ -9,9 +9,9 @@
  * @{
  */
 
-class BxSpacesInstaller extends BxBaseModProfileInstaller
+class BxSpacesInstaller extends BxBaseModGroupsInstaller
 {
-    function __construct($aConfig)
+    public function __construct($aConfig)
     {
         parent::__construct($aConfig);
     }
