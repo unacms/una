@@ -487,7 +487,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_events_menu_manage_tools', 'bx_events', '_bx_events_menu_set_title_manage_tools', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_events_menu_manage_tools', 'bx_events', 'clear-reports', '_bx_cevents_menu_item_title_system_clear_reports', '_bx_events_menu_item_title_clear_reports', 'javascript:void(0)', 'javascript:{js_object}.onClickClearReports({content_id});', '_self', 'eraser', '', 2147483647, 1, 0, 1),
+('bx_events_menu_manage_tools', 'bx_events', 'clear-reports', '_bx_events_menu_item_title_system_clear_reports', '_bx_events_menu_item_title_clear_reports', 'javascript:void(0)', 'javascript:{js_object}.onClickClearReports({content_id});', '_self', 'eraser', '', 2147483647, 1, 0, 1),
 ('bx_events_menu_manage_tools', 'bx_events', 'delete', '_bx_events_menu_item_title_system_delete', '_bx_events_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 2),
 ('bx_events_menu_manage_tools', 'bx_events', 'delete-with-content', '_bx_events_menu_item_title_system_delete_with_content', '_bx_events_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 0, 0, 3);
 
