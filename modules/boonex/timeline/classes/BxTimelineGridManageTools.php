@@ -44,6 +44,10 @@ class BxTimelineGridManageTools extends BxBaseModGeneralGridAdministration
         if($sType == 'single' && $this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->isAllowedDelete($aRow) !== true)
             return '';
 
+        
+        if (bx_is_api()){
+            return array_merge($a, ['type' => 'callback', 'on_callback' => 'hide_row', 'params' => '&id=' . $aRow[$this->_aOptions['field_id']] ]);
+        }
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
