@@ -335,7 +335,7 @@ class BxBaseReport extends BxDolReport
         $aParams['track'] = $aParams['is_reported'] ? $this->_getTrack($iObjectId, $iAuthorId) : [];
 
         //--- Do Report
-        $bDoReport = $this->_isShowDoReport($aParams, $isAllowedReport, $bCount);
+        $bDoReport = $this->_isShowDoReport($aParams, $isAllowedReport, $isAllowedReportView, $bCount);
         $aDoReport = $bDoReport ? $this->_getDoReport($aParams, $isAllowedReport) : [];
 
         //--- Counter
@@ -601,14 +601,18 @@ class BxBaseReport extends BxDolReport
         return false;
     }
 
-    protected function _isShowDoReport($aParams, $isAllowedVote, $bCount)
+    protected function _isShowDoReport($aParams, $isAllowedReport, $isAllowedReportView, $bCount)
     {
-        return !isset($aParams['show_do_report']) || (bool)$aParams['show_do_report'] === true;
+        $bShowDoReport = !isset($aParams['show_do_report']) || (bool)$aParams['show_do_report'] === true;
+
+        return $bShowDoReport && ($isAllowedReport || ($isAllowedReportView && $bCount));
     }
 
-    protected function _isShowCounter($aParams, $isAllowedVote, $isAllowedVoteView, $bCount)
+    protected function _isShowCounter($aParams, $isAllowedReport, $isAllowedReportView, $bCount)
     {
-        return isset($aParams['show_counter']) && (bool)$aParams['show_counter'] === true && $isAllowedVoteView && ($isAllowedVote || $bCount);
+        $bShowCounter = isset($aParams['show_counter']) && (bool)$aParams['show_counter'] === true;
+
+        return $bShowCounter && $isAllowedReportView && ($isAllowedReport || $bCount);
     }
 }
 
