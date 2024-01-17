@@ -1072,7 +1072,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iPremium, @iIdActionVote),
 
 -- vote view
+(@iUnauthenticated, @iIdActionVoteView),
+(@iAccount, @iIdActionVoteView),
 (@iStandard, @iIdActionVoteView),
+(@iUnconfirmed, @iIdActionVoteView),
+(@iPending, @iIdActionVoteView),
 (@iModerator, @iIdActionVoteView),
 (@iAdministrator, @iIdActionVoteView),
 (@iPremium, @iIdActionVoteView),

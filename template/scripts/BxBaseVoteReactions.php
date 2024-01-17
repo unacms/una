@@ -378,7 +378,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         if(!$bResult)
             return $bResult;
 
-        return $isAllowedVote || $bCount;
+        return $isAllowedVote;
     }
 
     protected function _getDoVote($aParams = array(), $isAllowedVote = true)
