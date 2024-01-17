@@ -389,7 +389,7 @@ class BxDolScore extends BxDolObject
         if(empty($aScore))
             $aScore = $this->_getVote();
 
-        return isset($aScore['count']) && (int)$aScore['count'] != 0;
+        return (isset($aScore['count_up']) && (int)$aScore['count_up'] != 0) || (isset($aScore['count_down']) && (int)$aScore['count_down'] != 0);
     }
 
     protected function _getTrack($iObjectId, $iAuthorId)
