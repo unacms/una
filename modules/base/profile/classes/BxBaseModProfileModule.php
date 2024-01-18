@@ -1760,7 +1760,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedFriendAdd (&$aDataEntry, $isPerformAction = false)
     {
-        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', true, false);
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, false);
     }
 
     /**
