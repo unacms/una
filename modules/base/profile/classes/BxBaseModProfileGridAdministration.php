@@ -164,6 +164,17 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
+    
+    protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if (bx_is_api()){
+
+            return array_merge($a, ['name' => 'delete', 'type' => 'callback', 'action' => 'delete','on_callback' => 'hide_row', 'confirm' => 1,  'params' => '&id=' . $aRow[$this->_aOptions['field_id']] ]);
+        }
+        else{
+            return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        }
+    }
 
     protected function _getActionDeleteWithContent($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
@@ -243,12 +254,19 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     protected function _getCellFullname($mixedValue, $sKey, $aField, $aRow)
     {
     	$oProfile = $this->_getProfileObject($aRow['id']);
+        
+        if (bx_is_api()){
+            return ['type' => 'profile', 'data' => BxDolProfile::getData($oProfile->id())];
+        }
 
         return parent::_getCellDefault($oProfile->getUnit(), $sKey, $aField, $aRow);
     }
 
     protected function _getCellLastOnline($mixedValue, $sKey, $aField, $aRow)
     {
+        if (bx_is_api()){
+            return ['type' => 'time', 'data' => $mixedValue];
+        }
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
 
