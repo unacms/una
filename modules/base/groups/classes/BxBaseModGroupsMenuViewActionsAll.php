@@ -27,6 +27,11 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
             ];
     }
 
+    protected function _isContentPublic($iContentId, $aPublicGroups = [])
+    {
+        return parent::_isContentPublic($iContentId, [BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS, 'c']);
+    }
+
     protected function _getMenuItemProfileFanAdd($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

@@ -100,7 +100,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return $this->_oModule->isMenuItemVisible($this->_sObject, $a, $this->_aContentInfo);
     }
 
-    protected function _isContentPublic($iContentId)
+    protected function _isContentPublic($iContentId, $aPublicGroups = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -111,7 +111,10 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             return true;
 
-        return in_array($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS));
+        if(empty($aPublicGroups))
+            $aPublicGroups = [BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS];
+
+        return in_array($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], $aPublicGroups);
     }
 
     protected function _initMenuSocialSharing()
