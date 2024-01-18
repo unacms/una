@@ -149,13 +149,16 @@
 
             $(this).find("a").on("click", function () {
                 var oIcon = $(this).find("i");
+                var oLink = oIcon.parents("a:first");
                 var oFld = $(this).parents(".bx-form-input-wrapper-password:first").find("input");
                 if (oIcon.hasClass("eye")) {
                     oIcon.removeClass("eye").addClass("eye-slash");
+                    oLink.attr('title', _t('_sys_form_input_password_hide'));
                     oFld.attr("type", "text");
                 }
                 else {
                     oIcon.addClass("eye").removeClass("eye-slash");
+                    oLink.attr('title', _t('_sys_form_input_password_show'));
                     oFld.attr("type", "password");
                 }
             });

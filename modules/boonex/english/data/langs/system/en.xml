@@ -2562,6 +2562,8 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_form_input_sys_labels"><![CDATA[Labels]]></string>
         <string name="_sys_form_input_labels"><![CDATA[Labels]]></string>
         <string name="_sys_form_input_labels_placeholder"><![CDATA[Add Label]]></string>
+        <string name="_sys_form_input_password_show"><![CDATA[Show password]]></string>
+        <string name="_sys_form_input_password_hide"><![CDATA[Hide password]]></string>
         <string name="_sys_form_labels"><![CDATA[Labels]]></string>
         <string name="_sys_form_labels_display_select"><![CDATA[Select labels display]]></string>
         <string name="_sys_form_labels_input_caption_system_name"><![CDATA[Name]]></string>

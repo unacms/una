@@ -6254,7 +6254,9 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_translation', '_error occured', 1, 2),
 ('system', 'js_translation', '_sys_loading', 1, 3),
 ('system', 'js_translation', '_copyright', 1, 4),
-('system', 'js_translation', '_sys_redirect_confirmation', 1, 5);
+('system', 'js_translation', '_sys_redirect_confirmation', 1, 5),
+('system', 'js_translation', '_sys_form_input_password_show', 1, 6),
+('system', 'js_translation', '_sys_form_input_password_hide', 1, 7);
             
 -- --------------------------------------------------------
 
