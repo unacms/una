@@ -122,7 +122,7 @@ class BxDolSearch extends BxDol
                     if($bSingle)
                         $sCode = $oEx->decodeDataAPI($oEx->getSearchData());
                     else
-                        $sCode[$sKey] = $oEx->getSearchQuery();
+                        $sCode[$sKey] = $oEx->getSearchQuery($sKey);
                 }
                 else
                     $sCode[$sKey] = $oEx->getSearchData();
@@ -136,7 +136,8 @@ class BxDolSearch extends BxDol
 
             $aQueries = [];
             foreach($sCode as $aQuery)
-                $aQueries[] = $aQuery['query'];
+                if(!empty($aQuery['query']))
+                    $aQueries[] = $aQuery['query'];
 
             $aItems = BxDolDb::getInstance()->getAll('(' . implode(') UNION (', $aQueries) . ') ORDER BY `added` DESC ' . current($sCode)['limit']);
 
@@ -760,7 +761,7 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param type $aParams array with params
      * @return type array with query and limit
      */
-    function getSearchQuery($aParams = [])
+    function getSearchQuery($sObject, $aParams = [])
     {
         if(!is_array($aParams))
             $aParams = [];
@@ -777,6 +778,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         bx_alert('simple_search', 'get_query', 0, false, [
             'object' => &$this->aCurrent, 
             'mode' => $this->_sMode, 
+            'search_object' => $sObject,
             'search_query' => &$aQuery
         ]);
 
