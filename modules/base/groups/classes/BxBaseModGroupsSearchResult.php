@@ -21,16 +21,22 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         parent::__construct($sMode, $aParams);
     }
 
-    function displayResultBlock()
+    public function displaySearchBox ($sContent, $sPaginate = '')
     {
-        $this->oModule->_oTemplate->addJs(['modules/base/groups/js/|main.js', 'main.js']);
+        $aResult = parent::displaySearchBox($sContent, $sPaginate);
+        
+        if(!empty($aResult['content'])) {
+            $this->oModule->_oTemplate->addJs(['modules/base/groups/js/|main.js', 'main.js']);
 
-        return $this->oModule->_oTemplate->getJsCode('main', [
-            'sModule' => $this->oModule->getName()
-        ], [
-            'wrap' => true,
-            'mask' => "if(window['{object}'] == undefined) window['{object}'] = new {class}({params});"
-        ]) . parent::displayResultBlock();
+            $aResult['content'] = $this->oModule->_oTemplate->getJsCode('main', [
+                'sModule' => $this->oModule->getName()
+            ], [
+                'wrap' => true,
+                'mask' => "if(window['{object}'] == undefined) window['{object}'] = new {class}({params});"
+            ]) . $aResult['content'];
+        }
+        
+        return $aResult;
     }
 
     protected function addConditionsForPrivateContent($CNF, $oProfile, $aCustomGroup = array()) 
