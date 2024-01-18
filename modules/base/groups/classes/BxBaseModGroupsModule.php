@@ -1517,7 +1517,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]) || !isLogged())
             return _t('_sys_txt_access_denied');
 
-        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], true, false);
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], false, false);
     }
 
     /**
