@@ -83,8 +83,8 @@
     <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA[Hot feed]]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_friends"><![CDATA[Suggested friends feeds]]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_subscriptions"><![CDATA[Who to follow feeds]]></string>
-    <string name="_bx_timeline_option_for_you_threshold_recom_friends"><![CDATA[Minimum number of recommendation points received by the user as suggested friend]]></string>
-    <string name="_bx_timeline_option_for_you_threshold_recom_subscriptions"><![CDATA[Minimum number of recommendation points received by the user as who to follow]]></string>
+    <string name="_bx_timeline_option_for_you_threshold_recom_friends"><![CDATA[Weight for posts from "Friend Suggestions"]]></string>
+    <string name="_bx_timeline_option_for_you_threshold_recom_subscriptions"><![CDATA[Weight for posts from "Who to Follow"]]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
     <string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>

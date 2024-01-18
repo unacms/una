@@ -83,8 +83,8 @@
     <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA['Горячая' хроника]]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_friends"><![CDATA[Ленты пользователей из списка 'Предложения друзей']]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_subscriptions"><![CDATA[Ленты пользователей из списка 'На кого подписываться']]></string>
-    <string name="_bx_timeline_option_for_you_threshold_recom_friends"><![CDATA[Минимальное количество рекомендательных баллов, полученных пользователем в качестве рекомендованного друга]]></string>
-    <string name="_bx_timeline_option_for_you_threshold_recom_subscriptions"><![CDATA[Минимальное количество рекомендательных баллов, полученных пользователем в качестве того, на кого можно подписаться]]></string>
+    <string name="_bx_timeline_option_for_you_threshold_recom_friends"><![CDATA[Вес постов из раздела 'Предложения друзей']]></string>
+    <string name="_bx_timeline_option_for_you_threshold_recom_subscriptions"><![CDATA[Вес постов из раздела 'За кем следовать']]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
     <string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>
