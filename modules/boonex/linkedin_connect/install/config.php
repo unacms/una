@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_linkedin',
     'title' => 'LinkedIn connect',
     'note' => 'Join the site using LinkedIn account.',
-    'version' => '13.0.2.DEV',
-    'vendor' => 'Boonex',
+    'version' => '14.0.0.DEV',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '14.0.x'
     ),
 
     /**
