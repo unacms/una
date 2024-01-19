@@ -2533,6 +2533,8 @@
         <string name="_sys_form_input_sys_labels"><![CDATA[Метки]]></string>
         <string name="_sys_form_input_labels"><![CDATA[Метки]]></string>
 	<string name="_sys_form_input_labels_placeholder"><![CDATA[Добавить метку]]></string>
+        <string name="_sys_form_input_password_show"><![CDATA[Показать пароль]]></string>
+        <string name="_sys_form_input_password_hide"><![CDATA[Скрыть пароль]]></string>
         <string name="_sys_form_labels"><![CDATA[Метки]]></string>
         <string name="_sys_form_labels_display_select"><![CDATA[Выбор метки]]></string>
         <string name="_sys_form_labels_input_caption_system_name"><![CDATA[Имя]]></string>
@@ -2923,7 +2925,7 @@
     <string name="_sys_menu_item_title_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_sm_actions"><![CDATA[Действия]]></string>
     <string name="_sys_menu_item_title_sm_befriend"><![CDATA[Добавить в друзья]]></string>
-    <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Добавить в друзья (запрошено)]]></string>
+    <string name="_sys_menu_item_title_sm_befriend_sent"><![CDATA[Добавить в друзья (запрошено)]]></string>
     <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Принять запрос о дружбе]]></string>
     <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Удалить из друзей]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Отменить запрос о дружбе]]></string>
