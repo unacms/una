@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_photos',
     'title' => 'Photos',
     'note' => 'Basic photo posting module.',
-    'version' => '14.0.0.DEV',
+    'version' => '14.0.1.DEV',
     'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
