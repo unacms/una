@@ -41,7 +41,7 @@ class BxAlbumsMenuViewActionsMedia extends BxAlbumsMenuViewActions
         }
     }
 
-    protected function _isContentPublic($iMediaId)
+    protected function _isContentPublic($iMediaId, $aPublicGroups = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -60,7 +60,10 @@ class BxAlbumsMenuViewActionsMedia extends BxAlbumsMenuViewActions
         if(!isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             return true;
 
-        return in_array($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS));
+        if(empty($aPublicGroups))
+            $aPublicGroups = [BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS];
+
+        return in_array($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], $aPublicGroups);
     }
 
     protected function _getMenuItemAddImagesToAlbum($aItem)
