@@ -52,6 +52,9 @@ div.cmt-cont .cmt-body.bx-overflow .cmt-body-overflow {
 div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
     margin-top: 0.5rem;
 }
+div.cmt-cont .cmt-post-reply .bx-form-element-wrapper:first-child {
+    margin-top: 0;
+}
 
 /*--- Menu action ---*/
 .bx-menu-object-sys_cmts_item_manage .bx-report .sys-action-element-holder{

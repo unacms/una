@@ -42,6 +42,9 @@ import url(../../../../../timeline/template/css/view.css);
 .bx-tl-view-sizer {
     width: 100%;
 }
+.bx-tl-view-sizer div.bx-tl-item-ind {
+    padding: 0px;
+}
 
 /*--- Filters Style ---*/
 div.bx-tl-view-filters {
@@ -363,4 +366,14 @@ div.bx-tl-bview-image.bx-tl-bvi-single {
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
+}
+
+/*--- Comments Styles ---*/
+.bx-tl-view-item-comments .bx-tl-item-comments {
+    border-width: 0;
+    padding: 0;
+}
+
+.bx-tl-view-item-comments .cmt-reply.cmt-reply-min {
+    margin-bottom: 0;
 }

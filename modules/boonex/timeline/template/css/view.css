@@ -901,6 +901,8 @@ div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-content {
 }
 
 /*--- Item Style: View page ---*/
+
+
 div.bx-tl-view-item-comments .bx-tl-item-comments {
     margin-top: 0;
 }
@@ -953,6 +955,10 @@ div.bx-tl-empty div.bx-msg-box-container {
 /*--- Comments Styles ---*/
 div.bx-tl-item-comments-holder .cmt.bx-def-box {
     border-width: 0px;
+}
+
+.bx-tl-view-item-comments .cmt-reply.cmt-reply-min {
+    margin-bottom: 0;
 }
 
 
