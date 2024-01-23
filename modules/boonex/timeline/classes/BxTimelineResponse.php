@@ -13,9 +13,9 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->_sModule = 'bx_timeline';
 
-        $this->_oModule = BxDolModule::getInstance('bx_timeline');
+        parent::__construct();
     }
 
     /**
@@ -25,7 +25,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
-        bx_alert($this->_oModule->getName(), 'before_register_alert', 0, 0, array(
+        bx_alert($this->_sModule, 'before_register_alert', 0, 0, array(
             'unit' => $oAlert->sUnit,
             'action' => $oAlert->sAction,
             'alert' => &$oAlert,
@@ -87,6 +87,10 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(method_exists($this, $sMethod))
                     $this->$sMethod($oAlert, $aEvent);
 
+                $sMethod = 'get_timeline_insert_data';
+                if(bx_is_srv($oAlert->sUnit, $sMethod)) 
+                    $aEvent = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aEvent]);
+
                 $iId = $this->_oModule->_oDb->insertEvent($aEvent);
                 if(!empty($iId))
                     $this->_oModule->onPost($iId);
@@ -126,6 +130,10 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                         'owner_id' => abs($iObjectPrivacyView),
                         'object_privacy_view' => $iObjectPrivacyView 
                     ]);
+
+                $sMethod = 'get_timeline_update_data';
+                if(bx_is_srv($oAlert->sUnit, $sMethod)) 
+                    list($aParamsSet, $aParamsSetBySource) = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aEvent, [$aParamsSet, $aParamsSetBySource]]);
 
                 $this->_oModule->_oDb->updateEvent($aParamsSet, ['id' => $aEvent[$CNF['FIELD_ID']]]);
 
@@ -172,6 +180,10 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
 
+                $sMethod = 'get_timeline_delete_data';
+                if(bx_is_srv($oAlert->sUnit, $sMethod)) 
+                    $aEvent = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aEvent]);
+
                 $this->_oModule->deleteEvent($aEvent);
                 break;
         }
@@ -183,21 +195,6 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             'object_id' => $oAlert->aExtras['comment_uniq_id'],
             'object_owner_id' => $oAlert->aExtras['comment_author_id'],
         ));
-    }
-
-    protected function _getEventUpdate(&$oAlert, &$aHandler)
-    {
-        $aHandlers = $this->_oModule->_oDb->getHandlers([
-            'type' => 'by_group_key_type', 
-            'group' => $aHandler['group']
-        ]);
-
-        return $this->_oModule->_oDb->getEvents([
-            'browse' => 'descriptor', 
-            'type' => $oAlert->sUnit, 
-            'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'],
-            'object_id' => $oAlert->iObject
-        ]);
     }
 
     protected function _getEventUpdateCommentEdited(&$oAlert, &$aHandler)
@@ -359,7 +356,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->onFailed($iContentId);
 
                 if($bNotify)
-                    bx_alert($this->_oModule->getName(), 'publish_failed', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
+                    bx_alert($this->_sModule, 'publish_failed', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
                         'object_author_id' => $iAuthorProfileId,
                         'privacy_view' => BX_DOL_PG_ALL
                     ));
@@ -383,7 +380,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         $this->_oModule->onPublished($iContentId);
 
         if($bNotify)
-            bx_alert($this->_oModule->getName(), 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
+            bx_alert($this->_sModule, 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
                 'object_author_id' => $iAuthorProfileId,
                 'privacy_view' => BX_DOL_PG_ALL
             ));

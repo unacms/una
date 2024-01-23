@@ -13,9 +13,9 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->_sModule = 'bx_notifications';
 
-        $this->_oModule = BxDolModule::getInstance('bx_notifications');
+        parent::__construct();
     }
 
     /**
@@ -50,8 +50,10 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     $sMethod = 'getInsertData';
 
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
-                if(BxDolRequest::serviceExists($oAlert->sUnit, 'get_notifications_insert_data')) 
-                    $aDataItems = bx_srv($oAlert->sUnit, 'get_notifications_insert_data', [$oAlert, $aHandler, $aDataItems]);
+
+                $sMethod = 'get_notifications_insert_data';
+                if(bx_is_srv($oAlert->sUnit, $sMethod)) 
+                    $aDataItems = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aDataItems]);
 
                 foreach($aDataItems as $aDataItem) {
                     $iId = $this->_oModule->_oDb->insertEvent($aDataItem);
@@ -63,7 +65,19 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
-                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iObjectPrivacyView), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                $aEvent = $this->_getEventUpdate($oAlert, $aHandler);
+                if(empty($aEvent) || !is_array($aEvent))
+                    break;
+
+                $aDataItem = [
+                    'object_privacy_view' => $iObjectPrivacyView
+                ];
+
+                $sMethod = 'get_notifications_update_data';
+                if(bx_is_srv($oAlert->sUnit, $sMethod)) 
+                    $aDataItem = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aEvent, $aDataItem]);
+
+                $this->_oModule->_oDb->updateEvent($aDataItem, ['type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject]);
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
@@ -79,8 +93,10 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     $sMethod = 'getDeleteData';
 
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
-                if(BxDolRequest::serviceExists($oAlert->sUnit, 'get_notifications_delete_data')) 
-                    $aDataItems = bx_srv($oAlert->sUnit, 'get_notifications_delete_data', [$oAlert, $aHandler, $aDataItems]);
+
+                $sMethod = 'get_notifications_delete_data';
+                if(bx_is_srv($oAlert->sUnit, $sMethod)) 
+                    $aDataItems = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aDataItems]);
 
                 foreach($aDataItems as $aDataItem)
                     $this->_oModule->_oDb->deleteEvent($aDataItem);

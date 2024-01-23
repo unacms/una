@@ -11,11 +11,14 @@
 
 class BxBaseModNotificationsResponse extends BxDolAlertsResponse
 {
+    protected $_sModule;
     protected $_oModule;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
+
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
 
     /**
@@ -79,6 +82,21 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
             return is_array($aExtras['subobjects_ids']) ? $aExtras['subobjects_ids'] : array($aExtras['subobjects_ids']);
 
         return 0;
+    }
+
+    protected function _getEventUpdate(&$oAlert, &$aHandler)
+    {
+        $aHandlers = $this->_oModule->_oDb->getHandlers([
+            'type' => 'by_group_key_type', 
+            'group' => $aHandler['group']
+        ]);
+
+        return $this->_oModule->_oDb->getEvents([
+            'browse' => 'descriptor', 
+            'type' => $oAlert->sUnit, 
+            'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'],
+            'object_id' => $oAlert->iObject
+        ]);
     }
 }
 

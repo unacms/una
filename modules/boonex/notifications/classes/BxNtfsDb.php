@@ -163,6 +163,20 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
 
         switch($aParams['browse']) {
+            case 'descriptor':
+                $sMethod = 'getRow';
+                $sWhereClause = "";
+
+                if(isset($aParams['type']))
+                    $sWhereClause .= $this->prepareAsString("AND `" . $this->_sTable . "`.`type`=? ", $aParams['type']);
+                if(isset($aParams['action']))
+                    $sWhereClause .= $this->prepareAsString("AND `" . $this->_sTable . "`.`action`=? ", $aParams['action']);
+                if(isset($aParams['object_id']))
+                    $sWhereClause .= $this->prepareAsString("AND `" . $this->_sTable . "`.`object_id`=? ", $aParams['object_id']);
+
+                $sLimitClause = "LIMIT 1";
+                break;
+
             case 'list':
                 if(!empty($aParams['count_only'])) {
                     $sMethod = 'getOne';
