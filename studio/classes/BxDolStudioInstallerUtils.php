@@ -9,7 +9,7 @@
 
 bx_import('BxDolLanguages');
 
-define('BX_DOL_MARKET_URL_ROOT', 'https://una.io/');
+define('BX_DOL_MARKET_URL_ROOT', 'https://unacms.com/');
 define('BX_DOL_MARKET_URL_INTEGRATION', BX_DOL_MARKET_URL_ROOT . 'm/market_api/');
 
 define('BX_DOL_STUDIO_IU_RC_SUCCESS', 0);

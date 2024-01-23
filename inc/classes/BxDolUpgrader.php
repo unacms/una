@@ -9,7 +9,7 @@
 
 class BxDolUpgrader extends BxDol
 {
-    protected $_sUrlVersionCheck = 'https://v.una.io/';
+    protected $_sUrlVersionCheck = 'https://v.unacms.com/';
     protected $_sError = false;
 
     /**
