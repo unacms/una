@@ -91,6 +91,13 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(bx_is_srv($oAlert->sUnit, $sMethod)) 
                     $aEvent = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aEvent]);
 
+                bx_alert($this->_sModule, 'before_insert_data', 0, 0, [
+                    'unit' => $oAlert->sUnit,
+                    'action' => $oAlert->sAction,
+                    'alert' => $oAlert,
+                    'data' => &$aEvent
+                ]);
+
                 $iId = $this->_oModule->_oDb->insertEvent($aEvent);
                 if(!empty($iId))
                     $this->_oModule->onPost($iId);
@@ -134,6 +141,14 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $sMethod = 'get_timeline_update_data';
                 if(bx_is_srv($oAlert->sUnit, $sMethod)) 
                     list($aParamsSet, $aParamsSetBySource) = bx_srv($oAlert->sUnit, $sMethod, [$oAlert, $aHandler, $aEvent, [$aParamsSet, $aParamsSetBySource]]);
+
+                bx_alert($this->_sModule, 'before_update_data', 0, 0, [
+                    'unit' => $oAlert->sUnit,
+                    'action' => $oAlert->sAction,
+                    'alert' => $oAlert,
+                    'data' => &$aParamsSet,
+                    'data_by_source' => &$aParamsSetBySource
+                ]);
 
                 $this->_oModule->_oDb->updateEvent($aParamsSet, ['id' => $aEvent[$CNF['FIELD_ID']]]);
 
