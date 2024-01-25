@@ -57,6 +57,11 @@ div.cmt-cont .cmt-post-reply .bx-form-element-wrapper:first-child {
 }
 
 /*--- Menu action ---*/
+.bx-menu-object-sys_cmts_item_manage .menu-custom-item-ver a {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
 .bx-menu-object-sys_cmts_item_manage .bx-report .sys-action-element-holder{
     padding: 0px !important;
 }

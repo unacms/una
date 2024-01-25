@@ -1226,11 +1226,13 @@
         @apply to-gray-900;
     }
     .bx-artificer .bx-tl-item-activity .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a,
-    .bx-artificer .bx-menu-object-bx_timeline_menu_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a {
+    .bx-artificer .bx-menu-object-bx_timeline_menu_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a,
+    .bx-artificer .bx-menu-object-sys_cmts_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a{
         @apply relative flex;
         @apply bx-stl-mil-gaps-sm;
     }
-    .bx-artificer .bx-popup .bx-menu-object-bx_timeline_menu_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a {
+    .bx-artificer .bx-popup .bx-menu-object-bx_timeline_menu_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a, 
+    .bx-artificer .bx-popup .bx-menu-object-sys_cmts_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a {
         @apply px-4;
     }
 
