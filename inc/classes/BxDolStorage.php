@@ -478,6 +478,16 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             }
         }
 
+        bx_alert('system', 'store_file', $iContentId, $iProfileId, array(
+            'storage_object' => $this->_aObject['object'],
+            'object' => $this,
+            'file_name' => $oHelper->getName(),
+            'mime_type' => $sMimeType,
+            'ext' => $sExt,
+            'size' => $oHelper->getSize(),
+            'file_path' => $sTmpFile,
+        ));
+
         // store file to storage engine
 
         $sLocalId = $this->genRandName();
