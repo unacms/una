@@ -127,6 +127,16 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 break;
 
             case 'modules_subtypes':
+                if(isset($aParams['id_as_key']) && $aParams['id_as_key'] === true) {
+                    $aMethod['name'] = 'getAllWithKey';
+                    $aMethod['params'][1] = 'id';
+                }
+
+                if(isset($aParams['name_as_key']) && $aParams['name_as_key'] === true) {
+                    $aMethod['name'] = 'getAllWithKey';
+                    $aMethod['params'][1] = 'name';
+                }
+
                 if(!is_array($aParams['value']))
                     $aParams['value'] = [$aParams['value']];
 
@@ -259,6 +269,13 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
         $sSql = "UPDATE `sys_modules` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause;
         return $this->query($sSql);
+    }
+    
+    public function checkModulesSubtypes()
+    {
+        return (int)$this->getOne("SELECT COUNT(`id`) FROM `sys_modules` WHERE `type` = :type AND `subtypes` <> 0", [
+            'type' => BX_DOL_MODULE_TYPE_MODULE
+        ]) > 0;
     }
 }
 

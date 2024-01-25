@@ -452,7 +452,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceIsModuleContent($mixedModule)
     {
         /*
-         * TODO: Update after UNA 14.0.0-A2 was released.
+         * TODO: Update after UNA 14.0.0-A3 was released.
          *  Check for 'subtypes' should be removed. Use only DB call, because it's more accurate.
          */
         if(is_string($mixedModule)) {
@@ -480,7 +480,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceIsModuleContext($mixedModule)
     {
         /*
-         * TODO: Update after UNA 14.0.0-A2 was released.
+         * TODO: Update after UNA 14.0.0-A3 was released.
          *  Check for 'subtypes' should be removed. Use only DB call, because it's more accurate.
          */
         if(is_string($mixedModule)) {
@@ -503,7 +503,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceIsModuleProfile($mixedModule)
     {
         /*
-         * TODO: Update after UNA 14.0.0-A2 was released.
+         * TODO: Update after UNA 14.0.0-A3 was released.
          *  Check for 'subtypes' should be removed. Use only DB call, because it's more accurate.
          */
         if(is_string($mixedModule)) {
@@ -526,13 +526,18 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceGetModulesByType($sType, $aParams = [])
     {
         $aResults = [];
-        
-        $bIdAsKey = isset($aParams['id_as_key']) && $aParams['id_as_key'] === true;
-        $bNameAsKey = !$bIdAsKey && isset($aParams['name_as_key']) && $aParams['name_as_key'] === true;
 
-        //TODO: Remove old variant (from ELSE) after UNA 14.0.0-A2 was released.
+        //TODO: Remove old variant (from ELSE) after UNA 14.0.0-A3 was released.
         $oModuleQuery = BxDolModuleQuery::getInstance();
         if($oModuleQuery->isFieldExists('sys_modules', 'subtypes')) {
+            if(!$oModuleQuery->checkModulesSubtypes()) {
+                $oInstallerUtils = new BxDolInstallerUtils();
+                $aModules = $oModuleQuery->getModulesBy(['type' => 'modules']);
+                foreach($aModules as $aModule)
+                    if(($iModuleSubtypes = $oInstallerUtils->getSubtypes($aModule['name'])) != 0)
+                        $oModuleQuery->updateModule(['subtypes' => $iModuleSubtypes], ['id' => $aModule['id']]);
+            }
+
             $iSubtypes = 0;
             switch($sType) {
                 case 'content';
@@ -548,17 +553,16 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
                     break;
             }
 
-            $aModules = $oModuleQuery->getModulesBy(['type' => 'modules_subtypes', 'value' => $iSubtypes, 'active' => 1]);
-            foreach($aModules as $aModule) {
-                if($bIdAsKey)
-                    $aResults[$aModule['id']] = $aModule;
-                else if($bNameAsKey)
-                    $aResults[$aModule['name']] = $aModule;
-                else
-                    $aResults[] = $aModule;
-            }
+            $aResults = $oModuleQuery->getModulesBy(array_merge([
+                'type' => 'modules_subtypes', 
+                'value' => $iSubtypes, 
+                'active' => 1
+            ], array_intersect_key($aParams, array_flip(['id_as_key', 'name_as_key']))));
         }
         else {
+            $bIdAsKey = isset($aParams['id_as_key']) && $aParams['id_as_key'] === true;
+            $bNameAsKey = !$bIdAsKey && isset($aParams['name_as_key']) && $aParams['name_as_key'] === true;
+
             $aModules = $oModuleQuery->getModulesBy(['type' => 'modules', 'active' => 1]);
             foreach($aModules as $aModule) {
                 $oModule = BxDolModule::getInstance($aModule['name']);
