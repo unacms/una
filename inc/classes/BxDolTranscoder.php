@@ -490,6 +490,14 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
                 }
             }
 
+            bx_alert('system', 'transcode', $mixedHandler, false, array(
+                'transcoder_object' => $this->_aObject['object'],
+                'object' => $this,
+                'db' => $this->_oDb,
+                'file_path' => $sTmpFile,
+                'ret' => &$bRet,
+            ));
+
             $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
                     
             if ($this->_sQueueStorage) {
