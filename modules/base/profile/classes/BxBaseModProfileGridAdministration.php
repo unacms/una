@@ -167,13 +167,11 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     
     protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if (bx_is_api()){
-
+        if (bx_is_api()) {
             return array_merge($a, ['name' => 'delete', 'type' => 'callback', 'action' => 'delete','on_callback' => 'hide_row', 'confirm' => 1,  'params' => '&id=' . $aRow[$this->_aOptions['field_id']] ]);
         }
-        else{
-            return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
-        }
+
+        return parent::_getActionSettings($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionDeleteWithContent($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
