@@ -28,7 +28,7 @@ class BxOpencvModule extends BxDolModule
         return $a;
     }
 
-    public function serviceProcessImage($iProfileId, $sFilePath, $sExt = 'jpg')
+    public function serviceProcessImage($sFilePath, $sExt = 'jpg')
     {
         $src = imread($sFilePath);
         $blr = null;

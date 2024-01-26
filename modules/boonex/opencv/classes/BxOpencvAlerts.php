@@ -23,8 +23,16 @@ class BxOpencvAlerts extends BxDolAlertsResponse
             $sStorages = getParam('bx_opencv_option_storages');
             $aStorages = explode(',', $sStorages);
             if (in_array($o->aExtras['storage_object'], $aStorages)) {
-                $oModule = BxDolModule::getInstance('bx_opencv');
-                $oModule->serviceProcessImage($o->iSender, $o->aExtras['file_path'], isset($o->aExtras['ext']) ? $o->aExtras['ext'] : 'jpg');
+
+                $oProfile = BxDolProfile::getInstance($o->iSender);
+                if ($oProfile) {
+                    $aInfo = bx_srv($oProfile->getModule(), 'get_content_info_by_profile_id', [$o->iSender]);
+                    echoDbgLog($aInfo);
+                    if (isset($aInfo['obfuscate_faces']) && $aInfo['obfuscate_faces']) {
+                        $oModule = BxDolModule::getInstance('bx_opencv');
+                        $oModule->serviceProcessImage($o->aExtras['file_path'], isset($o->aExtras['ext']) ? $o->aExtras['ext'] : 'jpg');
+                    }
+                }
             }
         }
     }    
