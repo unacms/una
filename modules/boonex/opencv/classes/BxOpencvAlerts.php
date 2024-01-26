@@ -27,7 +27,6 @@ class BxOpencvAlerts extends BxDolAlertsResponse
                 $oProfile = BxDolProfile::getInstance($o->iSender);
                 if ($oProfile) {
                     $aInfo = bx_srv($oProfile->getModule(), 'get_content_info_by_profile_id', [$o->iSender]);
-                    echoDbgLog($aInfo);
                     if (isset($aInfo['obfuscate_faces']) && $aInfo['obfuscate_faces']) {
                         $oModule = BxDolModule::getInstance('bx_opencv');
                         $oModule->serviceProcessImage($o->aExtras['file_path'], isset($o->aExtras['ext']) ? $o->aExtras['ext'] : 'jpg');
