@@ -20,8 +20,12 @@ class BxOpencvAlerts extends BxDolAlertsResponse
     public function response($o)
     {
         if ('system' == $o->sUnit && 'store_file' == $o->sAction && in_array($o->aExtras['store_method'], ['Form', 'Xhr', ])) {
-            $oModule = BxDolModule::getInstance('bx_opencv');
-            $oModule->serviceProcessImage($o->aExtras['storage_object'], $o->iSender, $o->aExtras['file_path'], isset($o->aExtras['ext']) ? $o->aExtras['ext'] : 'jpg');
+            $sStorages = getParam('bx_opencv_option_storages');
+            $aStorages = explode(',', $sStorages);
+            if (in_array($o->aExtras['storage_object'], $aStorages)) {
+                $oModule = BxDolModule::getInstance('bx_opencv');
+                $oModule->serviceProcessImage($o->iSender, $o->aExtras['file_path'], isset($o->aExtras['ext']) ? $o->aExtras['ext'] : 'jpg');
+            }
         }
     }    
 }

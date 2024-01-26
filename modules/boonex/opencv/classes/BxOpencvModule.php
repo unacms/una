@@ -21,13 +21,14 @@ class BxOpencvModule extends BxDolModule
 
     public function serviceGetStorages()
     {
-        return [
-            'aaa' => 'aaa',
-            'bbb' => 'bbb',
-        ];
+        $aStorageObjects = BxDolStorageQuery::getStorageObjects();
+        $a = [];
+        foreach ($aStorageObjects as $r)
+            $a[$r['object']] = $r['object'];
+        return $a;
     }
 
-    public function serviceProcessImage($sStorageObject, $iProfileId, $sFilePath, $sExt = 'jpg')
+    public function serviceProcessImage($iProfileId, $sFilePath, $sExt = 'jpg')
     {
         $src = imread($sFilePath);
         $blr = null;
