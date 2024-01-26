@@ -37,7 +37,7 @@ class BxOpencvModule extends BxDolModule
 
         if ($r = $netDet->detect($src)) {
             $dst = $src->clone();
-            medianBlur($src, $dst, 0 == (int)($src->cols / 70)%2 ? 1 + (int)($src->cols / 70) : (int)($src->cols / 70));
+            medianBlur($src, $dst, $this->_blurFactor($src->cols));
         }
 
         $fConfidence = (float)getParam('bx_opencv_option_confidence');
@@ -85,6 +85,23 @@ class BxOpencvModule extends BxDolModule
                 }
             }
         }
+    }
+
+    private function _blurFactor($inputValue) {
+        // Ensure the input is within a reasonable range
+        $inputValue = max(1, $inputValue);
+
+        // Scale the logarithmic value to cover the desired output range
+        $scaledValue = log($inputValue/1000) / log(5000);
+
+        // Map the scaled value to the desired output range
+        $outputRange = 50 - 19;
+        $scaledOutput = round($scaledValue * $outputRange);
+
+        // Adjust the output to be odd
+        $outputValue = 19 + ($scaledOutput % 2 === 0 ? 1 : 0) + $scaledOutput;
+
+        return 1 + 2*$outputValue;
     }
 }
 
