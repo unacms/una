@@ -105,11 +105,6 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         }
     }
 
-    public function isActive()
-    {
-        return $this->_oModule->isEntryActive($this->_aContentInfo);
-    }
-
     public function getCode ()
     {
         $mixedResult = parent::getCode();
@@ -123,6 +118,14 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             $oMenuSubmenu->setObjectActionsMenu(false);
 
         return $mixedResult;
+    }
+
+    protected function _isAvailablePage($a)
+    {
+        if(!$this->_aContentInfo || !$this->_oModule->isEntryActive($this->_aContentInfo))
+            return false;
+        
+        return parent::_isAvailablePage($a);
     }
 
     protected function _setSubmenu($aParams)

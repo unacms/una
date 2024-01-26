@@ -36,11 +36,6 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         ]);
     }
 
-    public function isActive()
-    {
-        return true;
-    }
-
     public function getContentInfo()
     {
         return $this->_aContentInfo;
@@ -50,26 +45,14 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        // check if content exists
-        if (!$this->_aContentInfo || !$this->isActive()) { // if entry is not found - display standard "404 page not found" page
+        if (!$this->_isAvailablePage($this->_aObject)) {
             $this->_oTemplate->displayPageNotFound();
             exit;
-        }
-
-        if(!empty($CNF['FIELD_CF'])) {
-            $oCf = BxDolContentFilter::getInstance();
-            if($oCf->isEnabled() && !$oCf->isAllowed($this->_aContentInfo[$CNF['FIELD_CF']])) {
-                $this->_oTemplate->displayPageNotFound();
-                exit;
-            }
         }
 
         $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);        
         if ($oCover)
             $oCover->setCoverClass($this->_sCoverClass);
-
-        // permissions check 
-        $this->_processPermissionsCheck ();
 
         // count views
         if(!empty($CNF['OBJECT_VIEWS'])) {
@@ -117,13 +100,39 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         return parent::getCode ();
     }
 
-    protected function _processPermissionsCheck ()
+    protected function _isAvailablePage ($a)
     {
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($this->_aContentInfo))) {
-            $this->_oTemplate->displayAccessDenied($sMsg);
-            exit;
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_aContentInfo)
+            return false;
+
+        if(!empty($CNF['FIELD_CF'])) {
+            $oCf = BxDolContentFilter::getInstance();
+            if($oCf->isEnabled() && !$oCf->isAllowed($this->_aContentInfo[$CNF['FIELD_CF']]))
+                return false;
         }
+
+        return parent::_isAvailablePage($a);
+    }
+
+    protected function _isVisiblePage ($a)
+    {
+        if(($mixedCheckResult = $this->_oModule->checkAllowedView($this->_aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED) 
+            return $mixedCheckResult;
+
+        if(!parent::_isVisiblePage($a))
+            return false;
+        
         $this->_oModule->checkAllowedView($this->_aContentInfo, true);
+        
+        return true;
+    }
+
+    protected function _getPageAccessDeniedMsg ($mixedMsg = false)
+    {
+        $this->_oTemplate->displayAccessDenied($mixedMsg);
+        exit;
     }
 
     protected function _getPageMetaDesc()

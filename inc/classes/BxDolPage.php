@@ -811,7 +811,19 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
     /**
+     * Check if page is available.
+     * @param type $a - page object.
+     * @return boolean true if available, false or a string with error message otherwise.
+     */
+    protected function _isAvailablePage ($a)
+    {
+        return true;
+    }
+
+    /**
      * Check if page is visible.
+     * @param array $a - page object.
+     * @return boolean true if visible, false or a string with error message otherwise.
      */
     protected function _isVisiblePage ($a)
     {

@@ -65,31 +65,6 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         }
     }
 
-    protected function _processPermissionsCheck ()
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-        
-        $mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo);
-        if (!$oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $mixedAllowView)) {
-            $this->_oTemplate->displayAccessDenied([
-                'title' => $this->_oProfile->getDisplayName(),
-                'content' => $sMsg
-            ]);
-            exit;
-        }
-        elseif ($oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && $CNF['OBJECT_PAGE_VIEW_ENTRY'] == $this->_sObject && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
-            // replace current page with different set of blocks
-            $aObject = BxDolPageQuery::getPageObject($CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED']);
-            $this->_sObject = $aObject['object'];
-            $this->_aObject = $aObject;
-            $this->_oQuery = new BxDolPageQuery($this->_aObject);
-        }
-
-        $this->_oModule->checkAllowedView($this->_aContentInfo, true);
-    }
-    
     protected function _getInvitationCode($aParams = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -128,14 +103,47 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         return $sCode;
     }
 
-    public function isActive()
-    {
-        return $this->_oModule->isEntryActive($this->_aContentInfo);
-    }
-
     public function getCode ()
     {
         return $this->_getInvitationCode() . parent::getCode();
+    }
+
+    protected function _isAvailablePage($a)
+    {
+        if(!$this->_aContentInfo || !$this->_oModule->isEntryActive($this->_aContentInfo))
+            return false;
+        
+        return parent::_isAvailablePage($a);
+    }
+
+    protected function _isVisiblePage ($a)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(($mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED) {
+            $bPartiallyVisible = false;
+            if(!empty($CNF['OBJECT_PRIVACY_VIEW']) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+                $bPartiallyVisible = $oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
+
+            /*
+             * If partially visible, replace current page with different set of blocks.
+             */
+            if($bPartiallyVisible && $this->_sObject == $CNF['OBJECT_PAGE_VIEW_ENTRY']) {
+                $aObject = BxDolPageQuery::getPageObject($CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED']);
+                $this->_sObject = $aObject['object'];
+                $this->_aObject = $aObject;
+                $this->_oQuery = new BxDolPageQuery($this->_aObject);
+            }
+            else
+                return $mixedAllowView;
+        }
+
+        if(!BxDolPage::_isVisiblePage($a))
+            return false;
+
+        $this->_oModule->checkAllowedView($this->_aContentInfo, true);
+
+        return true;
     }
 }
 

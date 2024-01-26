@@ -45,7 +45,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
         }
 
-        if (!$this->_aContentInfo || !$this->_oProfile || !$this->isActive()) {
+        if (!$this->_isAvailablePage($this->_aObject) || !$this->_oProfile) {
             $this->setPageCover(false);
             return;
         }
@@ -127,33 +127,33 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         return parent::getCode();
     }
 
-    protected function _processPermissionsCheck ()
+    protected function _isVisiblePage ($a)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         bx_import('BxDolPrivacy');
 
-        $mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo);
-        if ($CNF['OBJECT_PAGE_VIEW_ENTRY'] == $this->_sObject) {
-            if ((BX_DOL_PG_HIDDEN == $this->_aContentInfo['allow_view_to'] || BX_DOL_PG_MEONLY == $this->_aContentInfo['allow_view_to']) && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
-                $this->_oTemplate->displayAccessDenied($mixedAllowView);
-                exit;
-            }
-            elseif (CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
-                // replace current page with different set of blocks
+        if(($mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED) {
+            /*
+             * If visible by privacy, replace current page with different set of blocks.
+             */
+            if(!in_array($this->_aContentInfo['allow_view_to'], [BX_DOL_PG_HIDDEN, BX_DOL_PG_MEONLY]) && $this->_sObject == $CNF['OBJECT_PAGE_VIEW_ENTRY']) {
                 $aObject = BxDolPageQuery::getPageObject($CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED']);
                 $this->_sObject = $aObject['object'];
                 $this->_aObject = $aObject;
                 $this->_oQuery = new BxDolPageQuery($this->_aObject);
             }
-        } 
-        elseif (CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
-            $this->_oTemplate->displayAccessDenied($mixedAllowView);
-            exit;
+            else 
+                return $mixedAllowView;
         }
 
+        if(!BxDolPage::_isVisiblePage($a))
+            return false;
+        
         $this->_oModule->checkAllowedView($this->_aContentInfo, true);
-    }    
+        
+        return true;
+    }
 }
 
 /** @} */

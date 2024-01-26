@@ -192,8 +192,11 @@ class BxBasePage extends BxDolPage
             exit;
         }
 
-        if (!$this->_isVisiblePage($this->_aObject))
-            return $this->_getPageAccessDeniedMsg ();
+        if (($mixedAvailable = $this->_isAvailablePage($this->_aObject)) !== true) 
+            return $this->_getPageNotFoundMsg($mixedAvailable);
+
+        if (($mixedVisible = $this->_isVisiblePage($this->_aObject)) !== true)
+            return $this->_getPageAccessDeniedMsg($mixedVisible);
 
         $this->_addJsCss();
 
@@ -531,10 +534,12 @@ class BxBasePage extends BxDolPage
             'blocks' => $aBlocks,
             'data' => &$a,
         ];
-        
-        if (!$this->_isVisiblePage($this->_aObject))
+
+        if(!$this->_isAvailablePage($this->_aObject))
+            $a['page_status'] = 404;
+        else if(!$this->_isVisiblePage($this->_aObject))
             $a['page_status'] = 403;
-        
+
         bx_alert('system', 'get_page_api', 0, 0, $aExtras);
 
         return $a;
@@ -1085,12 +1090,22 @@ class BxBasePage extends BxDolPage
     }
 
     /**
-     * Get access denied message HTML.
+     * Get page not found message.
      * @return string
      */
-    protected function _getPageAccessDeniedMsg ()
+    protected function _getPageNotFoundMsg ($mixedMsg = false)
     {
-        return MsgBox(_t('_Access denied'));
+        $this->_oTemplate->displayPageNotFound();
+        exit;
+    }
+
+    /**
+     * Get access denied message.
+     * @return string
+     */
+    protected function _getPageAccessDeniedMsg ($mixedMsg = false)
+    {
+        return MsgBox($mixedMsg !== false ? $mixedMsg : _t('_Access denied'));
     }
 
     /**

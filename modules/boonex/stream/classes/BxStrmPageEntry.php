@@ -20,19 +20,20 @@ class BxStrmPageEntry extends BxBaseModTextPageEntry
         parent::__construct($aObject, $oTemplate);
     }
 
+    protected function _isAvailablePage($a)
+    {
+        if(!$this->_aContentInfo || (!$this->_oModule->isEntryActive($this->_aContentInfo) && !getParam('bx_stream_always_accessible')))
+            return false;
+        
+        return BxBaseModGeneralPageEntry::_isAvailablePage($a);
+    }
+
     protected function _setSubmenu($aParams)
     {
     	parent::_setSubmenu(array_merge($aParams, array(
     		'title' => '',
     		'icon' => ''
     	)));
-    }
-
-    public function isActive()
-    {
-        if (getParam('bx_stream_always_accessible'))
-            return true;
-        return parent::isActive();
     }
 }
 

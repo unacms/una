@@ -36,21 +36,26 @@ class BxPhotosPageEntryBrief extends BxTemplPage
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
     }
 
-    public function isActive()
+    protected function _isAvailablePage($a)
     {
-        return $this->_oModule->isEntryActive($this->_aContentInfo);
+        if(!$this->_aContentInfo || !$this->_oModule->isEntryActive($this->_aContentInfo))
+            return false;
+
+        if(!empty($CNF['FIELD_CF'])) {
+            $oCf = BxDolContentFilter::getInstance();
+            if($oCf->isEnabled() && !$oCf->isAllowed($this->_aContentInfo[$CNF['FIELD_CF']]))
+                return false;
+        }
+
+        return parent::_isAvailablePage($a);
     }
-
-    public function getCode ()
+    
+    protected function _isVisiblePage ($a)
     {
-        if(!$this->_aContentInfo || !$this->isActive())
-            return MsgBox(_t('_Empty'));
+        if(($mixedCheckResult = $this->_oModule->checkAllowedView($this->_aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED) 
+            return $mixedCheckResult;
 
-        $sCheckAllowed = $this->_oModule->checkAllowedView($this->_aContentInfo);
-        if($sCheckAllowed !== CHECK_ACTION_RESULT_ALLOWED) 
-            return MsgBox($sCheckAllowed);
-
-        return parent::getCode();
+        return parent::_isVisiblePage($a);
     }
 }
 

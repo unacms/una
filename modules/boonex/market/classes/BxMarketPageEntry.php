@@ -20,9 +20,19 @@ class BxMarketPageEntry extends BxBaseModTextPageEntry
         parent::__construct($aObject, $oTemplate);
     }
 
-    public function isActive()
+    public function getCode ()
     {
-        if(parent::isActive())
+        $sResult = parent::getCode();
+        $sResult .= $this->_oModule->_oTemplate->getJsCode('entry');
+
+        $this->_oModule->_oTemplate->addJs(array('fancybox/jquery.fancybox.pack.js', 'entry.js'));
+        $this->_oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'fancybox/|jquery.fancybox.css', 'entry.css'));
+        return $sResult;
+    }
+
+    protected function _isAvailablePage($a)
+    {
+        if(parent::_isAvailablePage($a))
             return true;
 
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -32,16 +42,6 @@ class BxMarketPageEntry extends BxBaseModTextPageEntry
             return true;
 
         return false;
-    }
-
-    public function getCode ()
-    {
-        $sResult = parent::getCode();
-        $sResult .= $this->_oModule->_oTemplate->getJsCode('entry');
-
-        $this->_oModule->_oTemplate->addJs(array('fancybox/jquery.fancybox.pack.js', 'entry.js'));
-        $this->_oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'fancybox/|jquery.fancybox.css', 'entry.css'));
-        return $sResult;
     }
 }
 
