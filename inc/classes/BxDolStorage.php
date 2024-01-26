@@ -486,6 +486,8 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             'ext' => $sExt,
             'size' => $oHelper->getSize(),
             'file_path' => $sTmpFile,
+            'store_method' => $sMethod,
+            'store_method_params' => $aMethodParams,
         ));
 
         // store file to storage engine
