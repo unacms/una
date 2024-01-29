@@ -318,6 +318,15 @@ class BxMarketDb extends BxBaseModTextDb
 
                 $sWhereClause = " AND `tl`.`id`=:id";
                 break;
+            
+            case 'license':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'license' => $aParams['license']
+                );
+
+                $sWhereClause = " AND `tl`.`license`=:license";
+                break;
 
             case 'new':
                 $aMethod['params'][1] = array(
@@ -325,6 +334,18 @@ class BxMarketDb extends BxBaseModTextDb
                 );
 
                 $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`new`='1'";
+                break;
+
+            case 'order':
+                $aMethod['params'][1] = array(
+                    'order' => $aParams['order']
+                );
+
+                $sWhereClause = " AND `tl`.`order`=:order";
+                if(isset($aParams['used']) && $aParams['used'] == true)
+                    $sWhereClause .= " AND `tl`.`domain` <> ''";
+                if(isset($aParams['unused']) && $aParams['unused'] == true)
+                    $sWhereClause .= " AND `tl`.`domain` = ''";
                 break;
 
             case 'unused':

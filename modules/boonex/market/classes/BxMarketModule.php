@@ -435,6 +435,52 @@ class BxMarketModule extends BxBaseModTextModule
      * @page service Service Calls
      * @section bx_market Market
      * @subsection bx_market-licenses Licenses
+     * @subsubsection bx_market-register_license register_license
+     * 
+     * @code bx_srv('bx_market', 'register_license', [...]); @endcode
+     * 
+     * Register license(s) by provided details.
+     * 
+     * @param $iProfileId 
+     * @return boolean value determining where the license was registered or not.
+     * 
+     * @see BxMarketModule::serviceRegisterLicense
+     */
+    /** 
+     * @ref bx_market-register_license "register_license"
+     */
+    public function serviceRegisterLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType = BX_PAYMENT_TYPE_SINGLE, $sDuration = '', $iTrial = 0)
+    {
+    	return $this->_oDb->registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration, $iTrial);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_market Market
+     * @subsection bx_market-licenses Licenses
+     * @subsubsection bx_market-unregister_license unregister_license
+     * 
+     * @code bx_srv('bx_market', 'unregister_license', [...]); @endcode
+     * 
+     * Unregister license(s) by provided details.
+     * 
+     * @param $iProfileId 
+     * @return boolean value determining where the license was unregistered or not.
+     * 
+     * @see BxMarketModule::serviceRegisterLicense
+     */
+    /** 
+     * @ref bx_market-unregister_license "unregister_license"
+     */
+    public function serviceUnregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType = BX_PAYMENT_TYPE_SINGLE)
+    {
+    	return $this->_oDb->unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_market Market
+     * @subsection bx_market-licenses Licenses
      * @subsubsection bx_market-update_license update_license
      * 
      * @code bx_srv('bx_market', 'update_license', [...]); @endcode
