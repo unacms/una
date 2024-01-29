@@ -540,6 +540,15 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return bx_srv($this->_sActive, 'process_order_by_pending', $aSrvParams, 'Orders');
     }
 
+    public function refundOrder($sOrder)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'refund_order', 'Orders'))
+            return false;
+
+        $aSrvParams = array($sOrder);
+        return bx_srv($this->_sActive, 'refund_order', $aSrvParams, 'Orders');
+    }
+
     public function generateLicense()
     {
         if(!BxDolRequest::serviceExists($this->_sActive, 'generate_license'))

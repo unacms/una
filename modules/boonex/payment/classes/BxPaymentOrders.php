@@ -174,6 +174,15 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         return $this->_oModule->registerPayment($iPendingId);
     }
 
+    public function serviceRefundOrder($sOrder)
+    {
+        $aPending = $this->_oModule->_oDb->getOrderPending(['type' => 'order', 'order' => $sOrder]);
+        if(empty($aPending) || !is_array($aPending))
+            return false;
+
+        return $this->_oModule->refundPayment($aPending);
+    }
+
     public function addOrder($aData, $bForce = false)
     {
         $iSellerId = isset($aData['seller_id']) ? (int)$aData['seller_id'] : $this->_oModule->getProfileId();
