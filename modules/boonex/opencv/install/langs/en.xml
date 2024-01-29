@@ -12,6 +12,7 @@
 	<string name="_bx_opencv_information"><![CDATA[Information]]></string>
     <string name="_bx_opencv_information_block"><![CDATA[
                 <p>This module obfuscate people faces in users' photos.<p>
-                <p>PHP need to have OpenCV library installed.</p>
+                <p>PHP need to have <a target="_blank" href="https://github.com/php-opencv/php-opencv/wiki/Installation.-php-opencv">OpenCV library</a> <a target="_blank" href="https://github.com/php-opencv/php-opencv/wiki/Installation.-opencv">installed</a>.</p>
         ]]></string>
+	<string name="_bx_opencv_form_profile_input_obfuscate_faces"><![CDATA[Obfuscate faces]]></string>
 </resources>
