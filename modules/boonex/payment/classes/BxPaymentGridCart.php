@@ -233,10 +233,12 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
         $this->_aOptions['source'] = array();
         foreach($aCart['items'] as $aCartItem) {
-            $aCartItem['descriptor'] = $this->_oModule->_oConfig->descriptorA2S(array($aCartItem['author_id'], $aCartItem['module_id'], $aCartItem['id'], $aCartItem['quantity']));
-            $aCartItem['description'] = strip_tags($aCartItem['description']);
-
-            $this->_aOptions['source'][] = $aCartItem;
+            $this->_aOptions['source'][] = array_merge($aCartItem, [
+                'descriptor' => $this->_oModule->_oConfig->descriptorA2S(array($aCartItem['author_id'], $aCartItem['module_id'], $aCartItem['id'], $aCartItem['quantity'])),
+                'description' => strip_tags($aCartItem['description']),
+                'currency_code' => $aCart['vendor_currency_code'],
+                'currency_sign' => $aCart['vendor_currency_sign']
+            ]);
         }
 
         return parent::_getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);

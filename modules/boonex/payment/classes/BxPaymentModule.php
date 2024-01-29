@@ -1402,7 +1402,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 'item_id' => (int)$aItem['item_id'],
                 'item_count' => (int)$aItem['item_count'],
                 'amount' => (int)$aItem['item_count'] * $this->_oConfig->getPrice($sType, $aItemInfo),
-                'currency' => $this->getVendorCurrencyCode($iSellerId),
+                'currency' => !empty($aPending['currency']) ? $aPending['currency'] : $this->getVendorCurrencyCode($iSellerId),
             	'license' => $sLicense,
             ]);
 
