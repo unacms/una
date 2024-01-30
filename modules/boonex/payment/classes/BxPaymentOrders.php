@@ -155,7 +155,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
             'error_msg' => 'Manually processed',        		
             'module_id' => $iModuleId,
             'items' => $aItems
-        ));
+        ), true);
 
         if(is_array($mixedResult))
             return false;
