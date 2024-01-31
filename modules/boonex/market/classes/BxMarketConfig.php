@@ -146,6 +146,8 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_market_entry_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_market_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_market_entry_delete',
+            'OBJECT_FORM_LICENSE' => 'bx_market_license',
+            'OBJECT_FORM_LICENSE_DISPLAY_EDIT' => 'bx_market_license_edit',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_market_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_market_view_more', 
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_market_view_actions', // all actions menu on view entry page

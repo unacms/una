@@ -462,16 +462,17 @@ class BxMarketDb extends BxBaseModTextDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
-	public function updateLicense($aSet, $aWhere)
+    public function updateLicense($aSet, $aWhere)
     {
-        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1");
-        return (int)$this->query($sQuery) > 0;
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->query("UPDATE `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1"));
     }
 
-	public function deleteLicense($aWhere)
+    public function deleteLicense($aWhere)
     {
     	if(empty($aWhere))
-    		return false;
+            return false;
 
         $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ');
         return (int)$this->query($sQuery) > 0;
@@ -591,6 +592,21 @@ class BxMarketDb extends BxBaseModTextDb
 
     	$sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
         return $this->query($sQuery, $aWhereBindings) !== false;
+    }
+
+    public function unregisterLicenseById($iId, $sReason = 'refund')
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        //--- Move to deleted licenses table with provided reason.
+        $this->query("INSERT IGNORE INTO `" . $CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, :reason AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $CNF['TABLE_LICENSES'] . "` WHERE `id` = :id", [
+            'id' => $iId,
+            'reason' => $sReason
+        ]);
+
+        return $this->query("DELETE FROM `" . $CNF['TABLE_LICENSES'] . "` WHERE `id` = :id", [
+            'id' => $iId,
+    	]) !== false;
     }
 
     function processExpiredLicense($aLicense)

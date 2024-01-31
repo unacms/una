@@ -14,7 +14,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_marke
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_market';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_market';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_market';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_market_entry_add', 'bx_market_entry_edit', 'bx_market_entry_view', 'bx_market_entry_view_full', 'bx_market_entry_delete');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_market_entry_add', 'bx_market_entry_edit', 'bx_market_entry_view', 'bx_market_entry_view_full', 'bx_market_entry_delete', 'bx_market_license_edit');
 
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_market';

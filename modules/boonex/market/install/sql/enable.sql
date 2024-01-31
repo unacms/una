@@ -643,7 +643,9 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_market_common', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_market_common', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 
-('bx_market_licenses_administration', 'single', 'reset', '_bx_market_grid_action_title_lcs_reset', 'eraser', 1, 1, 1),
+('bx_market_licenses_administration', 'single', 'edit', '_bx_market_grid_action_title_lcs_edit', 'pencil-alt', 1, 0, 1),
+('bx_market_licenses_administration', 'single', 'reset', '_bx_market_grid_action_title_lcs_reset', 'eraser', 1, 1, 2),
+('bx_market_licenses_administration', 'single', 'delete', '_bx_market_grid_action_title_lcs_delete', 'remove', 1, 1, 3),
 ('bx_market_licenses', 'single', 'reset', '_bx_market_grid_action_title_lcs_reset', 'eraser', 1, 1, 1);
 
 

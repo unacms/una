@@ -11,46 +11,111 @@
 
 class BxMarketGridLicensesAdministration extends BxTemplGrid
 {
-    protected $MODULE;
+    protected $_sModule;
     protected $_oModule;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
-    	$this->MODULE = 'bx_market';
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+    	$this->_sModule = 'bx_market';
+    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
     	if(!$oTemplate)
-			$oTemplate = $this->_oModule->_oTemplate;
+            $oTemplate = $this->_oModule->_oTemplate;
 
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_sDefaultSortingOrder = 'DESC';
         $this->_aQueryReset = array($this->_aOptions['order_get_field'], $this->_aOptions['order_get_dir'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
-
-        $iProfileId = bx_get_logged_profile_id();
-        if($iProfileId !== false)
-            $this->_aQueryAppend['profile_id'] = (int)$iProfileId;
     }
 
-	public function performActionReset()
+    public function performActionEdit()
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sAction = 'edit';
+
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            $iId = (int)bx_get('id');
+            if(!$iId)
+                return echoJson([]);
+
+            $aIds = [$iId];
+        }
+
+        $iId = array_shift($aIds);
+
+        $aLicense = $this->_oModule->_oDb->getLicense(['type' => 'id', 'id' => $iId]);
+        if(!is_array($aLicense) || empty($aLicense))
+            return echoJson([]);
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_LICENSE'], $CNF['OBJECT_FORM_LICENSE_DISPLAY_EDIT']);
+        $oForm->setId($oForm->getId() . '_' . $sAction);
+        $oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', ['o' => $this->_sObject, 'a' => $sAction, 'id' => $iId]));
+
+        $oForm->initChecker($aLicense);
+        if($oForm->isSubmittedAndValid()) {
+            if($oForm->update($aLicense['id']) !== false)
+                $aRes = ['grid' => $this->getCode(false), 'blink' => $aLicense['id']];
+            else
+                $aRes = ['msg' => _t('_bx_market_grid_action_err_cannot_perform')];
+
+            return echoJson($aRes);
+        }
+
+        $sContent = BxTemplFunctions::getInstance()->popupBox('bx-market-license-edit-popup', _t('_bx_market_popup_title_lcs_edit'), $this->_oModule->_oTemplate->parseHtmlByName('popup_license.html', array(
+            'form_id' => $oForm->aFormAttrs['id'],
+            'form' => $oForm->getCode(true),
+            'object' => $this->_sObject,
+            'action' => $sAction
+        )));
+
+        return echoJson(['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]]);
+    }
+
+    public function performActionReset()
     {
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) 
-        	return echoJson(array());
+            return echoJson([]);
 
-		$iAffected = 0;
-		$aAffected = array();
-		foreach($aIds as $iId)
-			if($this->_oModule->_oDb->updateLicense(array('domain' => ''), array('id' => $iId, 'profile_id' => $this->_aQueryAppend['profile_id']))) {
-				bx_alert($this->_oModule->getName(), 'license_reset', 0, false, $this->_oModule->_oDb->getLicense(array(
-					'type' => 'id',
-					'id' => $iId
-				)));
+        $aWhere = [];
+        if(!empty($this->_aQueryAppend['profile_id']))
+            $aWhere['profile_id'] = $this->_aQueryAppend['profile_id'];
+        
+        $iAffected = 0;
+        $aAffected = [];
+        foreach($aIds as $iId) {
+            $aWhere['id'] = $iId;
 
-				$aAffected[] = $iId;
-            	$iAffected++;
-			}
+            $mixedResult = $this->_oModule->_oDb->updateLicense(['domain' => ''], $aWhere);
+            if($mixedResult === false)
+                continue;
 
-        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aAffected) : array('msg' => _t('_bx_market_grid_action_err_cannot_perform')));
+            if((int)$mixedResult > 0)
+                bx_alert($this->_oModule->getName(), 'license_reset', 0, false, $this->_oModule->_oDb->getLicense([
+                    'type' => 'id',
+                    'id' => $iId
+                ]));
+
+            $aAffected[] = $iId;
+            $iAffected++;
+        }
+
+        return echoJson($iAffected ? ['grid' => $this->getCode(false), 'blink' => $aAffected] : ['msg' => _t('_bx_market_grid_action_err_cannot_perform')]);
+    }
+
+    public function performActionDelete()
+    {
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) 
+            return echoJson([]);
+
+        $iId = array_shift($aIds);
+
+        if(!$this->_oModule->_oDb->unregisterLicenseById($iId, 'manual'))
+            return echoJson(['msg' => _t('_bx_market_grid_action_err_cannot_perform')]);
+
+        return echoJson(['grid' => $this->getCode(false)]);
     }
 
     protected function _getCellProfileId($mixedValue, $sKey, $aField, $aRow)
@@ -95,7 +160,7 @@ class BxMarketGridLicensesAdministration extends BxTemplGrid
         return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE, true), $sKey, $aField, $aRow);
     }
 
-	protected function _getCellExpired($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellExpired($mixedValue, $sKey, $aField, $aRow)
     {
     	$mixedValue = (int)$mixedValue != 0 ? bx_time_js($mixedValue, BX_FORMAT_DATE, true): _t('_bx_market_grid_txt_lcs_never');
     		
