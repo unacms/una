@@ -49,7 +49,11 @@ class BxTimelinePageViewItem extends BxTemplPage
             }
         }
 
-        BxDolTemplate::getInstance()->setPageUrl('page.php?i=' . $this->_aObject['uri'] . '&id=' . $this->_iItemId);
+        $sPageUrl = 'page.php?i=' . $this->_aObject['uri'] . '&id=' . $this->_iItemId;
+        if(!empty($aItemData['event']['content']['url']))
+            $sPageUrl = $aItemData['event']['content']['url'];
+
+        BxDolTemplate::getInstance()->setPageUrl($sPageUrl);
 
         return parent::getCode();
     }
