@@ -26,7 +26,7 @@ class BxOrgsModule extends BxBaseModGroupsModule
         $this->_aSearchableNamesExcept[] = $CNF['FIELD_JOIN_CONFIRMATION'];
     }
 
-	/**
+    /**
      * Check if this module entry can be used as profile
      */
     public function serviceActAsProfile ()
@@ -84,6 +84,11 @@ class BxOrgsModule extends BxBaseModGroupsModule
             unset($a['fullname']);
         }
         return $a;
+    }
+
+    public function serviceBrowseAlphabetical ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('alphabetical', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
     public function serviceGetTimelineData()

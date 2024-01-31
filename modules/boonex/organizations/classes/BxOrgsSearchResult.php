@@ -181,13 +181,20 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                 
             case 'recommended':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
-                $this->aCurrent['title'] = _t('_bx_groups_page_title_browse_recommended');
+                $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_recommended');
                 $this->aCurrent['restriction']['featured']['value'] = '0';
-                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'recommended';
                 $this->_setConditionsForRecommended();
                 break; 
-                
+
+            case 'alphabetical':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_alphabetical');
+                $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'alphabetical';
+                break;
+
             case 'active':
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_active');
@@ -195,7 +202,7 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                 $this->sBrowseUrl = 'page.php?i=organizations-active';
                 break;
 
-			case 'online':
+            case 'online':
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_online');
                 $this->aCurrent['restriction']['online']['value'] = time() - 60 * (int)getParam('sys_account_online_time');
@@ -232,19 +239,27 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
     function getAlterOrder()
     {
         switch ($this->aCurrent['sorting']) {
+            case 'alphabetical':
+                return array('order' => ' ORDER BY `bx_organizations_data`.`org_name` ASC ');
+
             case 'featured':
                 return array('order' => ' ORDER BY `bx_organizations_data`.`featured` DESC ');
+
             case 'recommended':
                 return array('order' => ' ORDER BY RAND() ');
+
             case 'none':
                 return array();
-			case 'active':
-	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
-			case 'online':
-	            return array('order' => ' ORDER BY `sys_sessions`.`date` DESC ');
-	        case 'last':
-	        default:                        
-	            return array('order' => ' ORDER BY `bx_organizations_data`.`added` DESC ');
+
+            case 'active':
+                return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
+
+            case 'online':
+                return array('order' => ' ORDER BY `sys_sessions`.`date` DESC ');
+
+            case 'last':
+            default:                        
+                return array('order' => ' ORDER BY `bx_organizations_data`.`added` DESC ');
         }
     }
 

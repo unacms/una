@@ -135,6 +135,7 @@
     <string name="_bx_orgs_page_title_sys_view_profile_closed"><![CDATA[View Profile with Limited Visibility]]></string>
     <string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
     <string name="_bx_orgs_page_title_browse"><![CDATA[Organizations]]></string>
+    <string name="_bx_orgs_page_title_browse_alphabetical"><![CDATA[Organizations Alphabetical Index]]></string>
     <string name="_bx_orgs_page_title_browse_by_author"><![CDATA[Organizations of {display_name}]]></string>
     <string name="_bx_orgs_page_title_browse_featured"><![CDATA[Featured Organizations]]></string>
     <string name="_bx_orgs_page_title_browse_active"><![CDATA[Active Organizations]]></string>

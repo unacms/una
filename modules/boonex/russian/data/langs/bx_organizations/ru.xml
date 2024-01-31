@@ -132,6 +132,7 @@
     <string name="_bx_orgs_page_title_sys_view_profile_closed"><![CDATA[Просмотр профиля с ограничением доступа]]></string>
     <string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
     <string name="_bx_orgs_page_title_browse"><![CDATA[Организации]]></string>
+    <string name="_bx_orgs_page_title_browse_alphabetical"><![CDATA[Алфавитный указатель организаций]]></string>
     <string name="_bx_orgs_page_title_browse_by_author"><![CDATA[Организации {display_name}]]></string>
     <string name="_bx_orgs_page_title_browse_featured"><![CDATA[Продвинутые организации]]></string>
     <string name="_bx_orgs_page_title_browse_active"><![CDATA[Активные организации]]></string>
