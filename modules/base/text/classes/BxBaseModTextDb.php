@@ -338,6 +338,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
 
     public function deleteUnusedLinks($iUserId, $iLinkId = 0)
     {
+        if(!$this->_oConfig->isAttachLinks())
+            return false;
+
         $CNF = &$this->_oConfig->CNF;
         
     	$aBindings = [
@@ -356,8 +359,11 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
 
     public function saveLink($iContentId, $iLinkId)
     {
+        if(!$this->_oConfig->isAttachLinks())
+            return false;
+
         $CNF = &$this->_oConfig->CNF;
-        
+
         $aBindings = array(
             'content_id' => $iContentId,
             'link_id' => $iLinkId
@@ -372,6 +378,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
 
     public function deleteLink($iId)
     {
+        if(!$this->_oConfig->isAttachLinks())
+            return false;
+
         $CNF = &$this->_oConfig->CNF;
 
         return (int)$this->query("DELETE FROM `tl`, `tlc` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tlc` ON `tl`.`id`=`tlc`.`link_id` WHERE `tl`.`id` = :id", array(
@@ -381,6 +390,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
 
     public function deleteLinks($iContentId)
     {
+        if(!$this->_oConfig->isAttachLinks())
+            return false;
+
         $CNF = &$this->_oConfig->CNF;
 
         return (int)$this->query("DELETE FROM `tl`, `tlc` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tlc` ON `tl`.`id`=`tlc`.`link_id` WHERE `tlc`.`content_id` = :content_id", array(
@@ -405,6 +417,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
 
     public function getLinksBy($aParams = array())
     {
+        if(!$this->_oConfig->isAttachLinks())
+            return [];
+
         $CNF = &$this->_oConfig->CNF;
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 

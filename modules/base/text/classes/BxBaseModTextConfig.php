@@ -109,6 +109,11 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
         $this->_bAttachmentsInTimeline = false;
     }
 
+    public function isAttachLinks()
+    {
+        return !empty($this->CNF['TABLE_LINKS']);
+    }
+
     public function isAttachmentsInTimeline()
     {
         return $this->_bAttachmentsInTimeline;

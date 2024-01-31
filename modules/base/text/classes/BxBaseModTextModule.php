@@ -691,6 +691,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     
     public function deleteAttachLinks($iId)
     {
+        if(!$this->_oConfig->isAttachLinks())
+            return;
+
         $CNF = &$this->_oConfig->CNF;
 
         $aLinks = $this->_oDb->getLinks($iId);
@@ -707,6 +710,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
     public function deleteAttachLinksUnused($iProfileId)
     {
+        if(!$this->_oConfig->isAttachLinks())
+            return;
+
         $CNF = &$this->_oConfig->CNF;
 
         $aLinks = $this->_oDb->getUnusedLinks($iProfileId);
