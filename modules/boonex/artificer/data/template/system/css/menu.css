@@ -84,6 +84,9 @@ li.bx-mi-hidden {
 }
 
 /*--- Page Main menu ---*/
+.bx-menu-main .bx-menu-item.bx-menu-item-more-auto {
+    display: none;
+}
 .bx-menu-main .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item,
 .bx-menu-main .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item a {
     border-radius: 0;
