@@ -92,6 +92,7 @@
 	<string name="_Please enter n1-n2 characters"><![CDATA[Please enter {0}-{1} characters]]></string>
         <string name="_Please enter characters"><![CDATA[Please enter some number of characters]]></string>
 	<string name="_Please select value"><![CDATA[Please select a value from the list]]></string>
+        <string name="_polls_from"><![CDATA[Polls from: {0}]]></string>
 	<string name="_Preview"><![CDATA[Preview]]></string>
         <string name="_report_comment"><![CDATA[reported as '{0}']]></string>
         <string name="_report_comment_with_note"><![CDATA[reported as '{0}' with a note: {1}]]></string>

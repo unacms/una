@@ -90,6 +90,7 @@
 	<string name="_Please enter n1-n2 characters"><![CDATA[Пожалуйста, введите {0}-{1} символов]]></string>
         <string name="_Please enter characters"><![CDATA[Пожалуйста, введите некоторое количество символов]]></string>
 	<string name="_Please select value"><![CDATA[Пожалуйста, выберите значение из списка]]></string>
+        <string name="_polls_from"><![CDATA[Опросы от: {0}]]></string>
 	<string name="_Preview"><![CDATA[Предпросмотр]]></string>
   <string name="_report_comment"><![CDATA[подал жалобу на '{0}']]></string>
   <string name="_report_comment_with_note"><![CDATA[подал жалобу на '{0}' с пометкой: {1}]]></string>

@@ -368,7 +368,9 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $sHeader = '';
         if(!empty($sContent)) {
-            $sHeader = strmaxtextlen($aContentInfo[$CNF['FIELD_TITLE']], 32, '...');
+            $sHeader = $iPolls == 1 ? array_shift($aPolls)[$CNF['FIELD_POLL_TEXT']] : _t('_polls_from', $aContentInfo[$CNF['FIELD_TITLE']]);
+            $sHeader = strmaxtextlen($sHeader, 32, '...');
+
             $sContent = $this->getJsCode('poll') . $sContent;
         }
 
