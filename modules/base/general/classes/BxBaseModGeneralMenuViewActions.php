@@ -434,16 +434,23 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!empty($CNF['FIELD_STATUS_ADMIN']) && isset($aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != $sStatus)
             return '';
 
-        $aSrvParams = [bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, [
-            'do' => !empty($aParams['do']) ? $aParams['do'] : 'repost',
+        $sRepostDo = !empty($aParams['do']) ? $aParams['do'] : 'repost';
+        $aRepostParams = [
+            'do' => $sRepostDo,
             'show_do_repost_as_button' => $this->_bShowAsButton,
             'show_do_repost_text' => $this->_bShowTitle
-        ]];
+        ];
+        if(!empty($aItem['title']))
+            $aRepostParams['text_do_' . $sRepostDo] = $aItem['title'];
+        if(!empty($aItem['icon']))
+            $aRepostParams['icon_do_' . $sRepostDo] = $aItem['icon'];
 
-        if($this->_bIsApi && BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block_api'))
+        $aSrvParams = [bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, $aRepostParams];
+
+        if($this->_bIsApi && bx_is_srv('bx_timeline', 'get_repost_element_block_api'))
             return bx_srv('bx_timeline', 'get_repost_element_block_api', $aSrvParams);
 
-        if(!BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
+        if(!bx_is_srv('bx_timeline', 'get_repost_element_block'))
             return '';
 
         $sResult = bx_srv('bx_timeline', 'get_repost_element_block', $aSrvParams);
