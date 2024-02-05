@@ -66,9 +66,14 @@ abstract class BxDolPaginate extends BxDol
 
     protected $_oTemplate;
 
+    protected $_aParams; ///< an array with initially provided params
+
     protected $_iStart; ///< start display items from this number
-    protected $_iNum; ///< available results, you need to query per_page + 1 results, so paginate can determine last page
     protected $_iPerPage; ///< results per page
+    protected $_iNum; ///< available results, you need to query per_page + 1 results, so paginate can determine last page
+
+    protected $_iTotal; ///< total number of results. (Optional)
+    protected $_bTotal; ///< show displayed items info with total value
 
     protected $_sPageUrl; ///< page url of next/prev page, special markers will be replaced here automatically
     protected $_sOnChangePage; ///< on click of next/prev page, special markers will be replaced here automatically
@@ -96,9 +101,14 @@ abstract class BxDolPaginate extends BxDol
            trigger_error ('Paginate "count" is deprecated - use "num" instead: ' . get_class($this), E_USER_ERROR);
 
         //--- Main settings ---//
+        $this->_aParams = $aParams;
+
         $this->_iStart = isset($aParams['start']) && (int)$aParams['start'] > 0 ? (int)$aParams['start'] : 0;
-        $this->_iNum = isset($aParams['num']) ? (int)$aParams['num'] : 0;
         $this->_iPerPage = isset($aParams['per_page']) && (int)$aParams['per_page'] > 0 ? (int)$aParams['per_page'] : BX_DOL_PAGINATE_PER_PAGE_DEFAULT;
+        $this->_iNum = isset($aParams['num']) ? (int)$aParams['num'] : 0;
+
+        $this->_iTotal = isset($aParams['total']) ? (int)$aParams['total'] : 0;
+        $this->_bTotal = $this->_iTotal > 0;
 
         $this->_bInfo = isset($aParams['info']) ? (bool)$aParams['info'] : true;
         $this->_sButtonsClass = isset($aParams['buttons_class']) ? $aParams['buttons_class'] : '';
@@ -278,37 +288,43 @@ abstract class BxDolPaginate extends BxDol
 
         $sClassAdd = ($this->_sButtonsClass ? ' ' . $this->_sButtonsClass : '');
 
-        $aVariables = array(
-            'bx_if:info' => array (
-                'condition' => (bool)$this->_bInfo,
-                'content' => array(
+        $aVariables = [
+            'bx_if:info' => [
+                'condition' => $this->_bInfo && !$this->_bTotal,
+                'content' => [
                     'text' => _t('_sys_paginate_info', $this->_iStart + 1, $this->_iStart + ($this->isNextAvail () ? $this->_iPerPage : $this->_iNum)),
-                ),
-            ),
-            'bx_if:view_all' => array(
+                ],
+            ],
+            'bx_if:total' => [
+                'condition' => $this->_bTotal,
+                'content' => [
+                    'text' => _t('_sys_paginate_total', $this->_iStart + 1, $this->_iStart + ($this->isNextAvail() ? $this->_iPerPage : $this->_iNum), $this->_iTotal),
+                ],
+            ],
+            'bx_if:view_all' => [
                 'condition' => (bool)$this->_sViewAllUrl,
-                'content' => array(
+                'content' => [
                     'lnk_url' => $this->_sViewAllUrl,
                     'lnk_title' => $this->_sViewAllCaption,
                     'lnk_content' => $this->_sViewAllCaption,
-                ),
-            ),
-            'btn_prev' => $this->_getButton('prev', array(
+                ],
+            ],
+            'btn_prev' => $this->_getButton('prev', [
                 'class' => $sClassAdd . $sPrevClassAdd,
                 'href' => $sPrevLnkUrl,
                 'onclick' => $sPrevLnkClick,
-            )),
-            'btn_next' => $this->_getButton('next', array(
+            ]),
+            'btn_next' => $this->_getButton('next', [
                 'class' => $sClassAdd . $sNextClassAdd,
                 'href' => $sNextLnkUrl,
                 'onclick' => $sNextLnkClick,
-            )),
+            ]),
             'paginate_class' => $this->_sPaginateClass,
-			'bx_repeat:attrs' => array(
-                array('key' => 'bx-data-start', 'value' => $this->_iStart),
-                array('key' => 'bx-data-perpage', 'value' => $this->_iPerPage)
-            )
-        );
+            'bx_repeat:attrs' => [
+                ['key' => 'bx-data-start', 'value' => $this->_iStart],
+                ['key' => 'bx-data-perpage', 'value' => $this->_iPerPage]
+            ]
+        ];
 
         $this->addCssJs();
         return $this->_oTemplate->parseHtmlByName('paginate.html', $aVariables);
@@ -324,10 +340,12 @@ abstract class BxDolPaginate extends BxDol
      */
     public function getSimplePaginate($sViewAllUrl = '', $iStart = -1, $iNum = -1, $iPerPage = -1)
     {
-        if ($sViewAllUrl)
+        if($sViewAllUrl)
             $this->_sViewAllUrl = $sViewAllUrl;
 
-        $this->_bInfo = false;
+        if(!isset($this->_aParams['info']))
+            $this->_bInfo = false;
+
         $this->_sButtonsClass .= ($this->_sButtonsClass ? ' ' : '') . 'bx-btn-small bx-btn-symbol-small';
         $this->_sPaginateClass = 'bx-paginate-simple';
 

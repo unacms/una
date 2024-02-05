@@ -107,22 +107,22 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function displaySearchBox ($sContent, $sPaginate = '')
     {
-		$sContent = BxDolTemplate::getInstance()->parseHtmlByName('paginate_block.html', array(
-			'bx_if:paginate_top' => array(
-				'condition' => (isset($this->aCurrent['paginate']['on_top']) && $this->aCurrent['paginate']['on_top'] == true) && $sPaginate != '',
-				'content' => array(
-					'paginate' => $sPaginate
-				),
-			),
-			'bx_if:paginate_bottom' => array(
-				'condition' => (!isset($this->aCurrent['paginate']['on_bottom']) || $this->aCurrent['paginate']['on_bottom'] != false) && $sPaginate != '',
-				'content' => array(
-					'paginate' => $sPaginate
-				),
-			),
-			'content' => $sContent
-		));
-		
+        $sContent = BxDolTemplate::getInstance()->parseHtmlByName('paginate_block.html', array(
+            'bx_if:paginate_top' => array(
+                'condition' => (isset($this->aCurrent['paginate']['on_top']) && $this->aCurrent['paginate']['on_top'] == true) && $sPaginate != '',
+                'content' => array(
+                    'paginate' => $sPaginate
+                ),
+            ),
+            'bx_if:paginate_bottom' => array(
+                'condition' => (!isset($this->aCurrent['paginate']['on_bottom']) || $this->aCurrent['paginate']['on_bottom'] != false) && $sPaginate != '',
+                'content' => array(
+                    'paginate' => $sPaginate
+                ),
+            ),
+            'content' => $sContent
+        ));
+	
         $sMenu = $this->getDesignBoxMenu();
 
         if ($this->id) {
@@ -239,19 +239,24 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
     {
-        $oMain = $this->getMain();
+        $sOnClick = $this->getCurrentOnclick([], false);
 
-        $sPageUrl = $this->getCurrentUrl(array(), false);
-        $sOnClick = $this->getCurrentOnclick(array(), false);
-
-        $oPaginate = new BxTemplPaginate(array(
-            'page_url' => $sPageUrl,
+        $aPaginate = [
+            'page_url' => $this->getCurrentUrl([], false),
             'on_change_page' => $sOnClick,
             'num' => $this->aCurrent['paginate']['num'],
             'per_page' => $this->aCurrent['paginate']['perPage'],
             'start' => $this->aCurrent['paginate']['start'],
-        ));
+        ];
 
+        if(!empty($this->aCurrent['paginate']['total'])) {
+            if(is_numeric($this->aCurrent['paginate']['total']))
+                $aPaginate['total'] = (int)$this->aCurrent['paginate']['total'];
+            else
+                $aPaginate['total'] = $this->getTotal();
+        }
+
+        $oPaginate = new BxTemplPaginate($aPaginate);
         return $sOnClick ? $oPaginate->getSimplePaginate() : $oPaginate->getPaginate();
     }
 
