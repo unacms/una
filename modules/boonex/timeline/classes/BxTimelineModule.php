@@ -299,18 +299,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     function actionMarkAsRead()
     {
-        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
-        if(empty($aEvent) || !is_array($aEvent))
-            return echoJson(['code' => 1]);
-
         $aParams = $this->_prepareParamsGet();
-        if(!$this->_oDb->markAsRead($aParams['viewer_id'], $iId))
-            return echoJson(['code' => 2]);
 
-        echoJson([
+        $mixedId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(!is_array($mixedId))
+            $mixedId = [$mixedId];
+
+        $iProcessed = 0;
+        foreach($mixedId as $iId) {
+            $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
+            if(empty($aEvent) || !is_array($aEvent))
+                continue;
+
+            if(!$this->_oDb->markAsRead($aParams['viewer_id'], $iId))
+                continue;
+
+            $iProcessed++;
+        }
+
+        return echoJson($iProcessed != count($mixedId) ? ['code' => 1] : [
             'code' => 0, 
-            'id' => $iId
+            'id' => $mixedId
         ]);
     }
 

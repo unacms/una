@@ -25,6 +25,7 @@ function BxTimelineView(oOptions) {
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
     this._bEventsToLoad = oOptions.bEventsToLoad == undefined ? false : oOptions.bEventsToLoad;
     this._bAutoMarkAsViewed = oOptions.bAutoMarkAsViewed == undefined ? false : oOptions.bAutoMarkAsViewed;
+    this._aMarkAsViewed = oOptions.aMarkAsViewed == undefined ? [] : oOptions.aMarkAsViewed;
     this._aMarkedAsViewed = oOptions.aMarkedAsViewed == undefined ? [] : oOptions.aMarkedAsViewed;
     this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
     this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
@@ -126,6 +127,10 @@ BxTimelineView.prototype.init = function(bForceInit)
                     window.requestAnimationFrame(function() {
                         $this.markPostAsViewed($this.oView);
                     });
+            });
+
+            window.addEventListener('beforeunload', (event) => {
+                $this.sendMarkPostAsViewed();
             });
         }
     }
@@ -809,7 +814,11 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay)
     );
 };
 
-BxTimelineView.prototype.markPostAsViewed = function(oView)
+/**
+ * Sends request to a server everytime an Item was viewed.
+ * Note. Isn't used for now.
+ */
+BxTimelineView.prototype.markPostAsViewedSingle = function(oView)
 {
     var $this = this;
 
@@ -847,6 +856,54 @@ BxTimelineView.prototype.markPostAsViewed = function(oView)
                 'json'
             );
         }
+    });
+};
+
+/**
+ * Collects all viewed items in an array and sends only one request to a server on 'beforeunload'.
+ */
+BxTimelineView.prototype.markPostAsViewed = function(oView)
+{
+    var $this = this;
+
+    var oItems = oView.find('.' + this.sClassItem);
+    var sPrefix = this._getHtmlId('item', this._oRequestParams, {whole: false}).replace('#', '');
+
+    oItems.each(function() {
+        var oItem = $(this);
+        var iId = parseInt(oItem.attr('id').replace(sPrefix, ''));
+        if($this._aMarkAsViewed.includes(iId) || $this._aMarkedAsViewed.includes(iId))
+            return;
+
+        var iItemTop = oItem.offset().top;
+        var iItemBottom = iItemTop + oItem.height();
+        var iWindowTop = $(window).scrollTop();
+        var iWindowHeight = $(window).height();
+        if(iItemBottom < iWindowTop + iWindowHeight)
+            $this._aMarkAsViewed.push(iId);        
+    });
+};
+
+BxTimelineView.prototype.sendMarkPostAsViewed = function()
+{
+    var $this = this;
+    var oData = $this._getDefaultData();
+    oData['id'] = this._aMarkAsViewed;
+
+    $.post({
+        url: this._sActionsUrl + 'mark_as_read/',
+        data: oData,
+        dataType: 'json',
+        success: function(oData) {
+            if(!oData || !oData.id) 
+                return;
+
+            if(Array.isArray(oData.id)) 
+                $this._aMarkedAsViewed = [...$this._aMarkedAsViewed, ...oData.id];
+            else
+                $this._aMarkedAsViewed.push(oData.id);
+        },
+        async: false
     });
 };
 
