@@ -43,13 +43,13 @@ if (!BxDolRequest::serviceExists($sModule, $sMethod, $sClass)) {
 // check if service is safe
 
 if (!getParam('sys_api_access_unsafe_services')) {
-    $b = BxDolRequest::serviceExists($sModule, 'is_safe_service', 'system' == $sModule ? 'TemplServices' : $sClass);
-    $bSafe = $b ? BxDolService::call($sModule, 'is_safe_service', array($sMethod), 'system' == $sModule ? 'TemplServices' : $sClass) : false;
+    $b = BxDolRequest::serviceExists($sModule, 'is_safe_service', 'system' == $sModule ? 'TemplServices' : 'Module');
+    $bSafe = $b ? BxDolService::call($sModule, 'is_safe_service', array($sMethod), 'system' == $sModule ? 'TemplServices' : 'Module') : false;
 
     $bPublic = false;
     if (!$bSafe) {
-        $b = BxDolRequest::serviceExists($sModule, 'is_public_service', 'system' == $sModule ? 'TemplServices' : $sClass);
-        $bPublic = $b ? BxDolService::call($sModule, 'is_public_service', array($sMethod), 'system' == $sModule ? 'TemplServices' : $sClass) : false;
+        $b = BxDolRequest::serviceExists($sModule, 'is_public_service', 'system' == $sModule ? 'TemplServices' : 'Module');
+        $bPublic = $b ? BxDolService::call($sModule, 'is_public_service', array($sMethod), 'system' == $sModule ? 'TemplServices' : 'Module') : false;
     } 
     if (!$bPublic && !$bSafe) {
         header('HTTP/1.0 403 Forbidden');
