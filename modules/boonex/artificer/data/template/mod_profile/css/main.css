@@ -139,15 +139,13 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-menu-item-nl ~ li .bx-base-profile-unit-meta-item {
     display: block;
     width: 100%;
-}
-.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-menu-item-nl ~ li .bx-base-profile-unit-meta-item .bx-btn {
-    display: block;
-}
-.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-menu-item-nl ~ li .bx-base-profile-unit-meta-item {
     padding: 0;
 }
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-menu-item-nl ~ li .bx-base-profile-unit-meta-item .bx-btn {
-    text-align: center;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-base-pofile-unit .bx-def-icon-size {
     width: 1.5rem;
