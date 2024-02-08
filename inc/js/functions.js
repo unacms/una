@@ -160,7 +160,7 @@ function loadDynamicBlockAutoSort (e, sort, sAdditionalUrlParams) {
  * @return true on success, or false on error - particularly, if block isn't found
  */
 function loadDynamicBlockAuto(e, sUrl) {
-	var oContainer = $(e).parents('.bx-page-block-container:first');
+    var oContainer = $(e).parents('.bx-page-block-container:first:not(.no-dynamic)');
     var sId = oContainer.attr('id');
 
     if ('undefined' == typeof(sUrl))
