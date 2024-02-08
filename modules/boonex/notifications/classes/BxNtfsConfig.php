@@ -13,6 +13,7 @@ bx_import('BxDolPrivacy');
 
 class BxNtfsConfig extends BxBaseModNotificationsConfig
 {
+    protected $_iSummaryMaxLen;
     protected $_iOwnerNameMaxLen;
     protected $_iContentMaxLen;
     protected $_iPushMaxLen;
@@ -73,6 +74,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             'option' => 'bx_notifications_'
         );
 
+        $this->_iSummaryMaxLen = 0;
         $this->_iOwnerNameMaxLen = 0;
         $this->_iContentMaxLen = 0;
         $this->_iEmailSubjectMaxLen = 0;
@@ -143,10 +145,16 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
         $this->_bClickedIndicator = getParam($sOptionPrefix . 'enable_clicked_indicator') == 'on';
 
+        $this->_iSummaryMaxLen = (int)getParam($sOptionPrefix . 'summary_chars');
         $this->_iOwnerNameMaxLen = (int)getParam($sOptionPrefix . 'owner_name_chars');
         $this->_iContentMaxLen = (int)getParam($sOptionPrefix . 'content_chars');
         $this->_iEmailSubjectMaxLen = (int)getParam($sOptionPrefix . 'email_subject_chars');
         $this->_iPushMaxLen = (int)getParam($sOptionPrefix . 'push_message_chars');
+    }
+
+    public function getSummaryMaxLen()
+    {
+        return $this->_iSummaryMaxLen;
     }
 
     public function getOwnerNameMaxLen()

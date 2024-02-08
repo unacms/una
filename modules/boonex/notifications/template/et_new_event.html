@@ -1,14 +1,18 @@
 <div style="display: inline-block;">
-	<a href="__content_url__">
-		<div style="margin: 5px; white-space: nowrap;">
-			<div style="display: inline-block; vertical-align: middle; width: 48px; height: 48px; background-clip: padding-box; border-radius: 80px; line-height: 48px;text-align: center; overflow: hidden;">
+    <a href="__content_url__">
+        <div style="margin: 5px; white-space: nowrap;">
+            <div style="display: inline-block; vertical-align: middle; width: 48px; height: 48px; background-clip: padding-box; border-radius: 80px; line-height: 48px;text-align: center; overflow: hidden;">
                 <img style="width: 48px; height: 48px; line-height: 48px; border-radius: 80px;" src="__icon_url__" />
-			</div><div style="display: inline-block; vertical-align: middle; min-height: 48px; margin-left: 10px;">
-			    <div style="padding: 5px 0px; white-space: normal; text-overflow: ellipsis; overflow: hidden;">
+            </div>
+            <div style="display: inline-block; vertical-align: middle; min-height: 48px; margin-left: 10px;">
+                <div style="padding: 5px 0px; white-space: normal; text-overflow: ellipsis; overflow: hidden;">
                     <p style="margin: 0px;">__content__</p>
                     <p style="margin: 5px 0px 0px 0px;">__date__</p>
+                    <bx_if:show_summary>
+                        <p style="margin: 5px 0px 0px 0px;">__summary__</p>
+                    </bx_if:show_summary>
                 </div>
-			</div>
-		</div>
-	</a>
+            </div>
+        </div>
+    </a>
 </div>

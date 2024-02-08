@@ -295,7 +295,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     public function getNotificationEmail($iRecipient, &$aEvent)
     {
-        $sEvent = $this->getPost($aEvent, array('perform_privacy_check_for' => $iRecipient, 'show_real_profile' => false));
+        $sEvent = $this->getPost($aEvent, ['perform_privacy_check_for' => $iRecipient, 'show_real_profile' => false]);
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
@@ -308,16 +308,29 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $sSubject = trim(strip_tags($sSubject));
 
         $aContent = &$aEvent['content'];
-        return array(
+
+        $sSummary = '';
+        if(!empty($aContent['subentry_summary']))
+            $sSummary = $aContent['subentry_summary'];
+        if(empty($sSummary) && !empty($aContent['entry_summary']))
+            $sSummary = $aContent['entry_summary'];
+
+        return [
             'subject' => $sSubject,
-            'content' => $this->parseHtmlByName('et_new_event.html', array(
+            'content' => $this->parseHtmlByName('et_new_event.html', [
                 'icon_url' => !empty($aContent['owner_icon']) ? $aContent['owner_icon'] : $this->getIconUrl('std-icon.svg'),
                 'content_url' => $this->_getContentLink($aEvent),
                 'content' => $sContent,
                 'date' => bx_process_output($aEvent['date'], BX_DATA_DATE_TS),
-            )),
-            'settings' => !empty($aContent['settings']['email']) ? $aContent['settings']['email'] : array()
-        );
+                'bx_if:show_summary' => [
+                    'condition' => !empty($sSummary),
+                    'content' => [
+                        'summary' => $sSummary
+                    ]
+                ]
+            ]),
+            'settings' => !empty($aContent['settings']['email']) ? $aContent['settings']['email'] : []
+        ];
     }
 
     public function getNotificationPush($iRecipient, &$aEvent)
@@ -375,6 +388,14 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $aSet['allow_view_event_to'] = $aContent['entry_privacy'];
             $aEvent['allow_view_event_to'] = $aContent['entry_privacy'];
             unset($aContent['entry_privacy']);
+        }
+
+        foreach(['entry_summary', 'subentry_summary'] as $sKey) {
+            if(empty($aContent[$sKey]))
+                continue;
+
+            $sSummary = nl2br(strip_tags($aContent[$sKey]));
+            $aContent[$sKey] = strmaxtextlen($sSummary, $this->_oConfig->getSummaryMaxLen());
         }
 
         if(!empty($aEvent['content'])) {

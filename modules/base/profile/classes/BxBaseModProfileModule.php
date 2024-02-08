@@ -1295,33 +1295,38 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $iContentId = (int)$aEvent['object_id'];
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
         if(!$oGroupProfile)
-            return array();
+            return [];
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return array();
+            return [];
             
         $aSubcontentInfo = BxDolService::call('bx_timeline', 'get_info', array((int)$aEvent['subobject_id'], false));
         if(empty($aSubcontentInfo) || !is_array($aSubcontentInfo))
-            return array();
+            return [];
+
+        $sEntrySummary = isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
 
         $sSubentryUrl = bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', BxDolService::call('bx_timeline', 'get_link', array((int)$aEvent['subobject_id']))), '{bx_url_root}');
         $sSubentrySample = $aSubcontentInfo['title'];
         if(empty($sSubentrySample))
             $sSubentrySample = strmaxtextlen($aSubcontentInfo['description'], 20, '...');
+        $sSubentrySummary = $aSubcontentInfo['description'];
 
-        return array(
+        return [
             'entry_sample' => $CNF['T']['txt_sample_single'],
             'entry_url' => bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oGroupProfile->getUrl()), '{bx_url_root}'),
             'entry_caption' => $oGroupProfile->getDisplayName(),
+            'entry_summary' => $sEntrySummary,
             'entry_author' => $oGroupProfile->id(),
             'subentry_sample' => $sSubentrySample,
             'subentry_url' => $sSubentryUrl,
+            'subentry_summary' => $sSubentrySummary,
             'lang_key' => $CNF['T']['txt_ntfs_timeline_post_common'],
-        );
+        ];
     }
 
-	/**
+    /**
      * Data for Timeline module
      */
     public function serviceGetTimelineData()

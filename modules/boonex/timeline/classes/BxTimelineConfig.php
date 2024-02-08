@@ -887,6 +887,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 ));
         }
 
+        if(!$sMethodLength)
+            return $s;
+
         if(!method_exists($this, $sMethodLength))
             $sMethodLength = 'getCharsDisplayMaxTitle';
 
