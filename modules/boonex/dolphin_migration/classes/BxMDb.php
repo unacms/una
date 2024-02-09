@@ -55,7 +55,121 @@ class BxMDb
       
        @set_exception_handler(array($this, 'pdoExceptionHandler'));
     }
-	
+
+    /**
+     * database query exception handler for exceptions appeared out of the try/catch block
+     */
+    public function pdoExceptionHandler($oException)
+    {
+        if(!($oException instanceof PDOException)) {
+            throw $oException;
+            return;
+        }
+
+        if(!isset($oException->errorInfo[self::$_sErrorKey]))
+            $oException->errorInfo[self::$_sErrorKey] = array(
+                'code' => BX_DB_ERR_QUERY_ERROR,
+                'message' => !empty($oException->errorInfo[2]) ? $oException->errorInfo[2] : $oException->getMessage(),
+                'trace' => $oException->getTrace()
+            );
+
+        $this->error($oException->errorInfo[self::$_sErrorKey]);
+    }
+
+    public function error($aError)
+    {
+        $sErrorType = self::$_aErrors[$aError['code']];
+
+        $bVerbose = isset($aError['verbose']) ? (bool)$aError['verbose'] : $this->_bErrorChecking;
+        if(!$bVerbose) {
+            $this->log($sErrorType . ': ' . $aError['message']);
+            if (!defined('BX_DOL_INSTALL')) // this is needed to display error during installation
+                return;
+        }
+
+        if((defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) || defined('BX_DOL_INSTALL')) {
+            $sOutput = '<div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">';
+            $sOutput .= '<div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>';
+            $sOutput .= '<div style="text-align:center;">' . $sErrorType . '</div>';
+            if((defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE) || defined('BX_DOL_INSTALL'))
+                $sOutput .= $this->errorOutput($aError);
+            $sOutput .= '</div>';
+        }
+
+        if(defined('BX_DB_DO_EMAIL_ERROR_REPORT') && BX_DB_DO_EMAIL_ERROR_REPORT) {
+            $sSiteTitle = $this->getParam('site_title');
+
+            $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
+            $sMailBody .= $this->errorOutput($aError);
+            $sMailBody .= "<hr />Auto-report system";
+
+            sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
+        }
+
+        bx_log('sys_db', "$sErrorType\n" .
+            (empty($aError['message']) ? '' : "  Error: {$aError['message']}\n") .
+            (empty($aError['query']) ? '' : "  Query: {$aError['query']}\n") .
+            (!function_exists('getLoggedId') || !getLoggedId() ? '' : "  Account ID: " . getLoggedId() . "\n")
+        );
+
+        bx_show_service_unavailable_error_and_exit($sOutput);
+    }
+
+    protected function errorOutput($aError)
+    {
+        $aErrorLocation = array();
+
+        if(!empty($aError['query']) && !empty($aError['trace']))
+            foreach($aError['trace'] as $aCall )
+                if(isset($aCall['args']) && is_array($aCall['args']))
+                    foreach($aCall['args'] as $argNum => $argVal)
+                        if((is_string($argVal) && strcmp($argVal, $aError['query']) == 0) || ($argVal instanceof PDOStatement && strcmp($argVal->queryString, $aError['query']) == 0)) {
+                            $aErrorLocation['file'] = isset($aCall['file']) ? $aCall['file'] : (isset($aCall['class']) ? 'class: ' . $aCall['class'] : 'undefined');
+                            $aErrorLocation['line'] = isset($aCall['line']) ? $aCall['line'] : 'undefined';
+                            $aErrorLocation['function'] = $aCall['function'];
+                            $aErrorLocation['arg'] = $argNum;
+                        }
+
+        $sOutput = '';
+
+        if(!empty($aError['query']))
+            $sOutput .= '<p><b>Query:</b><br />' . bx_process_output($aError['query']) . '</p>';
+
+        if(!empty($aError['message']))
+            $sOutput .= '<p><b>Mysql error:</b><br />' . $aError['message'] . '</p>';
+
+        if(!empty($aErrorLocation))
+            $sOutput .= '<p><b>Location:</b><br />The error was found in <b>' . $aErrorLocation['function'] . '</b> function in the file <b>' . $aErrorLocation['file'] . '</b> at line <b>' . $aErrorLocation['line'] . '</b>.</p>';
+
+        $sOutput .= '<p><b>collation_connection:</b><br />' . $this->getOne("SELECT @@collation_connection") . '</p>';
+
+        if(!empty($aError['trace'])) {
+            $sBackTrace = print_r($aError['trace'], true);
+            if (defined ('BX_DATABASE_USER') && !is_array(BX_DATABASE_USER))
+                $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
+            if (defined ('BX_DATABASE_PASS') && !is_array(BX_DATABASE_PASS))
+                $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
+
+            $sOutput .= '<div><b>Debug backtrace:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sBackTrace) . '</pre></div>';
+        }
+
+        if(!empty(self::$_aParams)) {
+            $sSettings = var_export(self::$_aParams, true);
+
+            $sOutput .= '<div><b>Settings:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sSettings) . '</pre></div>';
+        }
+
+        $sOutput .= '<p><b>Called script:</b><br />' . $_SERVER['PHP_SELF'] . '</p>';
+
+        if(!empty($_REQUEST)) {
+            $sRequest = var_export($_REQUEST, true);
+
+            $sOutput .= '<p><b>Request parameters:</b><br /><pre>' . htmlspecialchars_adv($sRequest) . '</pre></p>';
+        }
+
+        return $sOutput;
+    }
+
 	/**
 	 * get mysql version
 	 */
