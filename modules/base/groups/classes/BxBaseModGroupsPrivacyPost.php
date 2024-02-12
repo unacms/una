@@ -72,7 +72,7 @@ class BxBaseModGroupsPrivacyPost extends BxBaseModProfilePrivacyPost
             $iOwnerId = bx_get_logged_profile_id();
 
         $aParams['dynamic_groups'] = array(
-            array ('key' => '', 'value' => '----'),
+            array ('key' => '', 'value' => '----', 'attrs' => array('disabled' => 'disabled')),
             array ('key' => BX_BASE_MOD_GROUPS_PG_PARTICIPANTS, 'value' => _t(!empty($CNF['T']['txt_group_participants']) ? $CNF['T']['txt_group_participants'] : '_sys_ps_group_title_participants')),
             array ('key' => BX_BASE_MOD_GROUPS_PG_FOLLOWERS, 'value' => _t(!empty($CNF['T']['txt_group_followers']) ? $CNF['T']['txt_group_followers'] : '_sys_ps_group_title_followers'))
         );
