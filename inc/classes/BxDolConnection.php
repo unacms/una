@@ -272,9 +272,9 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     {
         if (!$iContent)
             $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
-        
+
         if ($iContent != bx_get_logged_profile_id() && BX_CONNECTIONS_TYPE_MUTUAL == $this->_aObject['type']) {
-            $a = $this->actionReject($iContent);
+            $a = $this->actionReject($iContent, $iInitiator);
             if (false == $a['err'])
                 return $a;
         }
