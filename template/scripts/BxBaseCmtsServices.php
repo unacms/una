@@ -654,7 +654,8 @@ class BxBaseCmtsServices extends BxDol
             'view' => $aDp['type'],
             'module' => $oCmts->getSystemName(), 
             'object_id' => $oCmts->getId(),
-            'data' => $aCmtsRv
+            'max_level' => $oCmts->getSystemInfo()['number_of_levels'],
+            'data' => $aCmtsRv,
         ];
         if (isset($aParams['mode']) &&  $aParams['mode'] == 'feed')
             return $aData;
