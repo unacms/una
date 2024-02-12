@@ -1973,7 +1973,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aEvent['menu_manage'] = $oMenuManage->getCodeAPI();
         }
 
-        $aEvent['owners'] = $this->_getTmplVarsTimelineOwner($aEvent);
+        if ($aParams['type'] != 'owner')
+            $aEvent['owners'] = $this->_getTmplVarsTimelineOwner($aEvent);
         
         $aCmts = [];
         $oCmts = $oModule->getCmtsObject($aEvent['comments']['system'], $aEvent['comments']['object_id']);
