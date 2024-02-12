@@ -24,23 +24,8 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if ($iContentId)
-            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-
-        $iProfileId = bx_get_logged_profile_id();
-
-        $this->_bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId;
-        $this->_bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
-        $this->_bLoggedContextModerator = false;
-        if($this->_aContentInfo && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
-            $iContextProfileId = abs((int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
-            if(($oContextProfile = BxDolProfile::getInstance($iContextProfileId)) !== false) {
-                $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
-                if(!empty($aAdmins) && in_array($iProfileId, $aAdmins))
-                    $this->_bLoggedContextModerator = true;
-            }
-        }
+        if(($iContentId = bx_get('id')) !== false)
+            $this->setContentId(bx_process_input($iContentId, BX_DATA_INT));
 
         $sTitle = $sUrl = $sIcon = "";
         if ($this->_aContentInfo && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedView($this->_aContentInfo)) {
@@ -102,6 +87,26 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             if($aInformers)
                 foreach($aInformers as $aInformer)
                     $oInformer->add($aInformer['name'], $this->_replaceMarkers($aInformer['msg']), $aInformer['type']);
+        }
+    }
+
+    public function setContentId($iId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $iProfileId = bx_get_logged_profile_id();
+
+        $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+
+        $this->_bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId;
+        $this->_bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
+        $this->_bLoggedContextModerator = false;
+        if($this->_aContentInfo && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+            $iContextProfileId = abs((int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
+            if(($oContextProfile = BxDolProfile::getInstance($iContextProfileId)) !== false) {
+                $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
+                if(!empty($aAdmins) && in_array($iProfileId, $aAdmins))
+                    $this->_bLoggedContextModerator = true;
+            }
         }
     }
 

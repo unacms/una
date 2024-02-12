@@ -167,8 +167,10 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
 
         $iCfwValue = $iCfDefault;
         $aViewerInfo = BxDolProfileQuery::getInstance()->getInfoById($iViewerId);
-        if(!empty($aViewerInfo) && is_array($aViewerInfo))
+        if(is_array($aViewerInfo) && isset($aViewerInfo['cfw_value']))
             $iCfwValue = $aViewerInfo['cfw_value'];
+        else
+            $iCfwValue = $this->getDefaultValueUnauthenticated();
 
         return (1 << ($iValue - 1)) & $iCfwValue;
     }

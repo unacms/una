@@ -58,7 +58,11 @@ class BxAlbumsPageMedia extends BxTemplPage
 
     public function isAlbumActive()
     {
-        return $this->_oModule->isEntryActive($this->_aAlbumInfo);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oPageEntry = BxDolPage::getObjectInstance($this->MODULE . '_view_entry');
+        $oPageEntry->setContentId($this->_aAlbumInfo[$CNF['FIELD_ID']]);
+        return $oPageEntry->isPage();
     }
 
     public function getCode ()

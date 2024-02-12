@@ -772,9 +772,24 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return true;
     }
 
+    public function isAvailablePage ()
+    {
+        return $this->_isAvailablePage($this->_aObject);
+    }
+
     public function isVisiblePage ()
     {
         return $this->_isVisiblePage($this->_aObject);
+    }
+
+    /**
+     * Check if page can be seen by viewer.
+     * @param array $a - page object.
+     * @return type boolean (true or false).
+     */
+    public function isPage()
+    {
+        return $this->_isAvailablePage($this->_aObject) === true && $this->_isVisiblePage($this->_aObject) === true;
     }
 
     public function isVisiblePageSubmenu ()
