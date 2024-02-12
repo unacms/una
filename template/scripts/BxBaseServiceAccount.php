@@ -264,6 +264,10 @@ class BxBaseServiceAccount extends BxDol
                 ])];
                 }
             }
+            else if(is_string($mixedResult))
+                return [
+                    bx_api_get_msg($mixedResult)
+                ];
             else
                 return [];
         }
