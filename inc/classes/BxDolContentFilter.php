@@ -64,10 +64,34 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
 
         return $aValues;
     }
+    
+    public function getUnauthenticated()
+    {
+        $sValues = getParam('sys_cf_unauthenticated');
+        if(!$sValues)
+            return [];
+
+        $aValues = explode(',', $sValues);
+        if(!$aValues)
+            return [];
+
+        return $aValues;
+    }
 
     public function getDefaultValue()
     {
         return $this->_iDefaultValue;
+    }
+    
+    public function getDefaultValueUnauthenticated()
+    {
+        $aFilters = $this->getUnauthenticated();
+
+        $iCfwValue = 0;
+        foreach($aFilters as $iFilter)
+            $iCfwValue |= (1 << ($iFilter - 1));
+
+        return $iCfwValue;
     }
 
     public function getValues()
@@ -181,11 +205,13 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
             $iViewerId = $this->_iViewerId;
 
         $aViewerInfo = BxDolProfileQuery::getInstance()->getInfoById($iViewerId);
-        if(empty($aViewerInfo) || !is_array($aViewerInfo))
-            return [];
+        if(is_array($aViewerInfo) && isset($aViewerInfo['cfw_value']))
+            $iViewerCfwValue = $aViewerInfo['cfw_value'];
+        else
+            $iViewerCfwValue = $this->getDefaultValueUnauthenticated();
 
         return [
-            'where' => " AND 1 << (`" . $sContentTable . "`.`" . $sContentField . "` - 1) & " . $aViewerInfo['cfw_value']
+            'where' => " AND 1 << (`" . $sContentTable . "`.`" . $sContentField . "` - 1) & " . $iViewerCfwValue
         ];
     }
 
@@ -224,11 +250,13 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
             $iViewerId = $this->_iViewerId;
 
         $aViewerInfo = BxDolProfileQuery::getInstance()->getInfoById($iViewerId);
-        if(empty($aViewerInfo) || !is_array($aViewerInfo))
-            return;
-
+        if(is_array($aViewerInfo) && isset($aViewerInfo['cfw_value']))
+            $iViewerCfwValue = $aViewerInfo['cfw_value'];
+        else
+            $iViewerCfwValue = $this->getDefaultValueUnauthenticated();
+    
         return [
-            'value' => $aViewerInfo['cfw_value'],
+            'value' => $iViewerCfwValue,
             'field' => $sContentField,
             'operator' => 'in_set',
             'table' => $sContentTable

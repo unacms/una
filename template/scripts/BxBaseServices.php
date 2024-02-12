@@ -1309,6 +1309,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return BxDolFormQuery::getDataItems('sys_content_filter');
     }
 
+    public function serviceGetOptionsCfUnauthenticated()
+    {
+        return BxDolFormQuery::getDataItems('sys_content_filter');
+    }
+
     public function serviceGetOptionsTaiwindDefault()
     {
         $sPath = BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'tailwind/css';

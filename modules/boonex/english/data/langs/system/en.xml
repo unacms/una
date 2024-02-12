@@ -1600,6 +1600,7 @@
     <string name="_adm_stg_cpt_option_sys_cf_enable"><![CDATA[Enable content filters]]></string>
     <string name="_adm_stg_cpt_option_sys_cf_enable_comments"><![CDATA[Enable content filters for comments]]></string>
     <string name="_adm_stg_cpt_option_sys_cf_prohibited"><![CDATA[Prohibited content]]></string>
+    <string name="_adm_stg_cpt_option_sys_cf_unauthenticated"><![CDATA[Content visible to unauthenticated users]]></string>
     <string name="_adm_stg_cpt_option_sys_confirmation_before_redirect"><![CDATA[Ask user confirmation before redirecting user to the external site]]></string>
     <string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Attachable email templates list]]></string>
     <string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
