@@ -27,6 +27,10 @@ import url(../../../../../../../template/css/forms.css);
     position: relative;
 }
 
+.bx-form-option-info {
+    display: inline-flex;
+    flex-direction: column;
+}
 
 /*-- Section Toggler ---*/
 .bx-form-section-wrapper {

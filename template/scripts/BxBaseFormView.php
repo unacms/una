@@ -2050,6 +2050,10 @@ BLAH;
 
         $sOptions = '';
 
+        $aAdditionalFieldInfo = [];
+        if (in_array($aInput['type'], ['radio_set', 'checkbox_set']) && !empty($aInput['values_list_name']))
+            $aAdditionalFieldInfo = BxDolFormQuery::getDataItems($aInput['values_list_name'], false, BX_DATA_VALUES_ALL);
+
         if (isset($aInput['values']) && is_array($aInput['values'])) {
             if (count($aInput['values']) > $iDividerThreshold && $sDivider == $this->_sDivider)
                 $sDivider = $this->_sDividerAlt;
@@ -2074,7 +2078,11 @@ BLAH;
                 if (isset($aInput['label_as_html']))
                     $aNewInput['label_as_html'] = $aInput['label_as_html'];
 
-                $sNewInput  = $this->genInput($aNewInput);
+                $sNewInput = $this->genInput($aNewInput);
+
+                // add additional info for the field
+                if (isset($aAdditionalFieldInfo[$sValue]) && !empty($aAdditionalFieldInfo[$sValue]['LKey2']))
+                    $sNewInput = $this->genFiledItemInfoWrapper($sNewInput, _t($aAdditionalFieldInfo[$sValue]['LKey2']));
 
                 // attach new input to complex
                 $sOptions .= ($sNewInput . $sDivider);
@@ -2227,6 +2235,15 @@ BLAH;
             'privacy_object' => $sPrivacyObject,
             'icon' => $this->_getPrivacyIcon($mixedPrivacyGroup)
         ));
+    }
+
+    function genFiledItemInfoWrapper($sInput, $sInfoValue)
+    {
+        $sInfo = $this->genInfoIcon($sInfoValue) ;
+        return $this->oTemplate->parseHtmlByName('form_field_option_info.html', [
+            'input' => $sInput,
+            'info' => $sInfo
+        ]);
     }
 
     function genInfoIcon($sInfo)

@@ -75,6 +75,11 @@
     font-style:italic;
 }
 
+.bx-form-option-info {
+    display: inline-flex;
+    flex-direction: column;
+}
+
 .bx-form-info {
 
 }
