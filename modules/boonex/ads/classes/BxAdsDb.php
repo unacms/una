@@ -237,11 +237,21 @@ class BxAdsDb extends BxBaseModTextDb
                         $aMethod['params'][3]['seg_country'] = $aParams['seg_viewer']['country'];
                         $sWhereSubclause .= " AND IF(`seg_country` <> '', `seg_country` = :seg_country, 1)";
                     }
+                    
+                    if(!empty($aParams['seg_viewer']['tags'])) {
+                        $sTags = "0";
+                        foreach($aParams['seg_viewer']['tags'] as $sTag) {
+                            $aMethod['params'][3]['seg_tag_' . $sTag] = '%' . $sTag . '%';
+                            $sTags .= " OR LOWER(`" . $CNF['FIELD_TAGS'] . "`) LIKE :seg_tag_" . $sTag;
+                        }
+
+                        $sWhereSubclause .= " AND IF(`seg_tags` <> 0, " . $sTags . ", 1)";
+                    }
 
                     if(!empty($sWhereSubclause))
                         $sWhereClause .= " AND IF(`seg` = 1, " . $sWhereSubclause . ", 1)";
                 }
-
+//echo $sWhereClause; exit;
                 $sOrderClause = "";
                 break;
 

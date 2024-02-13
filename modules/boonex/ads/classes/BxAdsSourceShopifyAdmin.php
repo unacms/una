@@ -60,7 +60,7 @@ class BxAdsSourceShopifyAdmin extends BxAdsSource
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sProduct = $this->_call('products/' . $sId . '.json', [
-            'fields' => 'id,title,handle,body_html,variants',
+            'fields' => 'id,title,handle,body_html,tags,variants',
         ], 'get');
         
         if(empty($sProduct))
@@ -79,7 +79,7 @@ class BxAdsSourceShopifyAdmin extends BxAdsSource
 
         $sSample = $aParams['sample'];
         $aRequest = [
-            'fields' => 'id,title,handle,body_html,variants',
+            'fields' => 'id,title,handle,body_html,tags,variants',
             'status' => isset($aParams['status']) ? $aParams['status'] : 'active'
         ];
 
@@ -141,6 +141,7 @@ class BxAdsSourceShopifyAdmin extends BxAdsSource
             $CNF['FIELD_TITLE'] => $aProduct['title'],
             $CNF['FIELD_URL'] => $this->_sStorefront . 'products/' . $aProduct['handle'],
             $CNF['FIELD_TEXT'] => $aProduct['body_html'],
+            $CNF['FIELD_TAGS'] => $aProduct['tags'],
         ];
 
         if(!empty($aProduct['variants']) && is_array($aProduct['variants'])) {

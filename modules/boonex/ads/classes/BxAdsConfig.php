@@ -79,6 +79,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_CATEGORY' => 'category',
             'FIELD_CATEGORY_VIEW' => 'category_view',
             'FIELD_CATEGORY_SELECT' => 'category_select',
+            'FIELD_TAGS' => 'tags',
             'FIELD_PRICE' => 'price',
             'FIELD_PRICE_SINGLE' => 'price',
             'FIELD_AUCTION' => 'auction',

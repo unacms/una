@@ -105,6 +105,9 @@ class BxAdsAlertsResponse extends BxBaseModTextAlertsResponse
                     if(!empty($aLocation['country']))
                         $aSegViewer['country'] = $aLocation['country'];
                 }
+
+                if(!empty($aViewerInfo['tags']))
+                    $aSegViewer['tags'] = explode(',', $aViewerInfo['tags']);
             }
         }
 

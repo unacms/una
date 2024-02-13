@@ -1782,6 +1782,7 @@ class BxAdsModule extends BxBaseModTextModule
             $CNF['FIELD_TITLE'] => 'text',
             $CNF['FIELD_URL'] => 'hidden',
             $CNF['FIELD_TEXT'] => 'text_html',
+            $CNF['FIELD_TAGS'] => 'text',
             $CNF['FIELD_PRICE'] => 'text', 
             $CNF['FIELD_QUANTITY'] => 'text'
         ];
