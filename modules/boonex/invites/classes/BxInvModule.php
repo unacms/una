@@ -570,6 +570,11 @@ class BxInvModule extends BxDolModule
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_' . $sType));
         if(!$oGrid)
             return '';
+        
+        if (bx_is_api())
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
 
         $this->_oTemplate->addCss(array('main.css'));
         $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
