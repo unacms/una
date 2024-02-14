@@ -85,7 +85,7 @@ class BxBaseGrid extends BxDolGrid
         $iAffected = 0;
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds))
-            return $this->_bIsApi ? $aResult : echoJson($aResult);
+            return $this->_getActionResult($aResult);
 
         foreach ($aIds as $mixedId)
             $iAffected += $this->_delete($mixedId) ? 1 : 0;
@@ -95,7 +95,7 @@ class BxBaseGrid extends BxDolGrid
         else
             $aResult = ['msg' => _t("_sys_grid_delete_failed")];
 
-        return $this->_bIsApi ? $aResult : echoJson($aResult);
+        return $this->_getActionResult($aResult);
     }
 
     public function performActionEnable($mixedChecked = null)
@@ -822,6 +822,11 @@ class BxBaseGrid extends BxDolGrid
     protected function _getActionDivider ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         return '<div class="bx-grid-actions-divider bx-def-margin-sec-left"> | </div>';
+    }
+
+    protected function _getActionResult($aResult)
+    {
+        return $this->_bIsApi ? $aResult : echoJson($aResult);
     }
 
     protected function _getFilterControls ()

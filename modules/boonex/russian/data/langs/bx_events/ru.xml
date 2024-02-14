@@ -242,7 +242,7 @@
     <string name="_bx_events_page_block_title_fans_link"><![CDATA[Придут на <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Придут]]></string>
     <string name="_bx_events_page_block_title_system_fans"><![CDATA[Придут]]></string>
-    <string name="_bx_events_page_block_title_system_fans_manage"><![CDATA[Manage fans]]></string>
+    <string name="_bx_events_page_block_title_system_fans_manage"><![CDATA[Управление гостями]]></string>
     <string name="_bx_events_page_block_title_invites"><![CDATA[Приглашения]]></string>
     <string name="_bx_events_page_block_title_system_invites_manage"><![CDATA[Приглашения]]></string>
     <string name="_bx_events_page_block_title_subscribers_link"><![CDATA[Заинтересованы в <a href="{profile_link}">{display_name}</a>]]></string>

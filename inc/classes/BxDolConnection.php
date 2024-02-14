@@ -161,8 +161,16 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
 
         $o = new $sClass($aObject);
+        $o->init();
 
         return ($GLOBALS['bxDolClasses']['BxTemplConnection!'.$sObject] = $o);
+    }
+
+    /**
+     * Init something here if it's needed.
+     */
+    public function init()
+    {
     }
 
     /**

@@ -181,21 +181,27 @@ class BxDolGridConnections extends BxTemplGrid
 
     protected function _prepareIds ()
     {
-        $iViewedId = false;
-        $iId = 0;
         $aIds = bx_get('ids');
-        if ($aIds && is_array($aIds))
+        if($aIds && is_array($aIds))
             $mixedId = array_pop($aIds);
 
-        if (false === strpos($mixedId, ':')) {
-            $iId = (int)$mixedId;
-        }
-        else {
+        return $this->__prepareIds($mixedId);
+    }
+
+    protected function __prepareIds ($mixedId)
+    {
+        $iId = 0;
+        $iViewedId = false;
+
+        if(strpos($mixedId, ':') !== false) {
             list ($iId, $iViewedId) = explode (':', $mixedId);
             $iId = (int)$iId;
             $iViewedId = (int)$iViewedId;
         }
-        return array($iId, $iViewedId);
+        else
+            $iId = (int)$mixedId;
+
+        return [$iId, $iViewedId];
     }
 }
 
