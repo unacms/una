@@ -171,7 +171,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if($this->_oDb->deleteLink($iLinkId))
             $aResult = array('code' => 0);
         else
-            $aResult = array('code' => 1, 'message' => _t('_bx_posts_form_post_input_link_err_delete'));
+            $aResult = array('code' => 1, 'message' => _t(!empty($CNF['txt_link_form_err_delete']) ? $CNF['txt_link_form_err_delete'] : $this->getName() . '_form_post_input_link_err_delete'));
 
         echoJson($aResult);
     }

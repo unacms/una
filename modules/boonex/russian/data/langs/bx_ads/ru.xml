@@ -123,6 +123,8 @@
     <string name="_bx_ads_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
     <string name="_bx_ads_form_entry_input_files"><![CDATA[]]></string>
     <string name="_bx_ads_form_entry_input_sys_polls"><![CDATA[Голосования]]></string>
+    <string name="_bx_ads_form_entry_input_sys_link"><![CDATA[Ссылки]]></string>
+    <string name="_bx_ads_form_entry_input_link_err_delete"><![CDATA[Невозможно удалить ссылку. Пожалуйста, оповестите нас о проблеме.]]></string>
     <string name="_bx_ads_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_ads_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_ads_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
@@ -167,6 +169,16 @@
     <string name="_bx_ads_form_poll_input_sys_do_submit"><![CDATA[Добавить]]></string>
     <string name="_bx_ads_form_poll_input_do_submit"><![CDATA[Добавить]]></string>
     <string name="_bx_ads_form_poll_input_do_cancel"><![CDATA[Закрыть]]></string>
+
+    <string name="_bx_ads_form_attach_link"><![CDATA[Прикрепить ссылку]]></string>
+    <string name="_bx_ads_form_attach_link_display_add"><![CDATA[Прикрепить ссылку]]></string>
+    <string name="_bx_ads_form_attach_link_input_sys_content_id"><![CDATA[Content Id]]></string>
+    <string name="_bx_ads_form_attach_link_input_sys_url"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_ads_form_attach_link_input_url_err"><![CDATA[Необходима правильная ссылка. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_ads_form_attach_link_input_url"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_ads_form_attach_link_input_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_ads_form_attach_link_input_sys_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_ads_form_attach_link_input_do_cancel"><![CDATA[Закрыть]]></string>
 
     <string name="_bx_ads_form_offer"><![CDATA[Предложение]]></string>
     <string name="_bx_ads_form_offer_display_add"><![CDATA[Добавить предложение]]></string>
@@ -339,6 +351,9 @@
     <string name="_bx_ads_menu_item_title_cpa_file_html5"><![CDATA[Добавить файл]]></string>
     <string name="_bx_ads_menu_item_title_system_cpa_poll"><![CDATA[Добавить голосование]]></string>
     <string name="_bx_ads_menu_item_title_cpa_poll"><![CDATA[Добавить голосование]]></string>
+    <string name="_bx_ads_menu_item_title_system_cpa_link"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_ads_menu_item_title_cpa_link"><![CDATA[Добавить ссылку]]></string>
+
     <string name="_bx_ads_menu_set_title_view_entry"><![CDATA[Объявление - Действия]]></string>
     <string name="_bx_ads_menu_title_view_entry"><![CDATA[Объявление - Действия]]></string>
     <string name="_bx_ads_menu_title_submenu"><![CDATA[Объявления - Подменю]]></string>

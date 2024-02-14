@@ -95,6 +95,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_FILE' => 'files',
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_LINK' => 'link',
             'FIELD_ATTACHMENTS' => 'attachments',
             'FIELD_BUDGET_TOTAL' => 'budget_total',
             'FIELD_BUDGET_DAILY' => 'budget_daily',
@@ -165,6 +166,8 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_USE_SOURCES' => 'bx_ads_enable_sources',
             'PARAM_USE_PROMOTION' => 'bx_ads_enable_promotion',
             'PARAM_PROMOTION_CPM' => 'bx_ads_promotion_cpm',
+
+            'PARAM_LINKS_ENABLED' => true,
 
             // objects
             'OBJECT_STORAGE' => 'bx_ads_covers',
@@ -321,6 +324,7 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'txt_poll_answer_vote_do_by' => '_bx_ads_txt_poll_answer_vote_do_by',
                 'txt_poll_answer_vote_counter' => '_bx_ads_txt_poll_answer_vote_counter',
                 'txt_poll_answer_vote_percent' => '_bx_ads_txt_poll_answer_vote_percent',
+                'txt_link_form_err_delete' => '_bx_ads_form_entry_input_link_err_delete',
                 'txt_display_add' => '_bx_ads_txt_display_title_add',
                 'txt_display_edit' => '_bx_ads_txt_display_title_edit',
                 'txt_display_view' => '_bx_ads_txt_display_title_view',
@@ -333,7 +337,7 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'chart_label_roi_investment' => '_bx_ads_chart_label_roi_investment',
             ),
         ));
-        
+
         $this->_aJsClasses = array_merge($this->_aJsClasses, [
             'main' => 'BxAdsMain',
             'manage_tools' => 'BxAdsManageTools',

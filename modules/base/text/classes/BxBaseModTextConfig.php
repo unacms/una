@@ -72,6 +72,11 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             ),
         );
 
+        $sPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aPrefixes = [
+            'style' => $sPrefix,
+        ];
+
         $this->_aJsClasses = array(
             'poll' => $this->_sClassPrefix . 'Polls',
             'links' => $this->_sClassPrefix . 'Links',
@@ -84,7 +89,6 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'categories' => 'o' . $this->_sClassPrefix . 'Categories'
         );
 
-        $sPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array(
             'add_poll_popup' =>  $sPrefix . '-add-poll-popup',
             'add_poll_form_field' => $sPrefix . '-add-poll-form-field',
@@ -111,7 +115,7 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
 
     public function isAttachLinks()
     {
-        return !empty($this->CNF['TABLE_LINKS']);
+        return !empty($this->CNF['TABLE_LINKS']) && $this->CNF['PARAM_LINKS_ENABLED'] == true;
     }
 
     public function isAttachmentsInTimeline()

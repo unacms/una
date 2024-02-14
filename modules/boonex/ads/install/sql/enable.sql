@@ -276,7 +276,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_entry_attachments', 'bx_ads', 'record_video', '_bx_ads_menu_item_title_system_cpa_video_record', '_bx_ads_menu_item_title_cpa_video_record', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_record_video}.showUploaderForm();', '_self', 'fas circle', '', '', 2147483647, '', 1, 0, 1, 5),
 ('bx_ads_entry_attachments', 'bx_ads', 'file_simple', '_bx_ads_menu_item_title_system_cpa_file_simple', '_bx_ads_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 6),
 ('bx_ads_entry_attachments', 'bx_ads', 'file_html5', '_bx_ads_menu_item_title_system_cpa_file_html5', '_bx_ads_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 7),
-('bx_ads_entry_attachments', 'bx_ads', 'poll', '_bx_ads_menu_item_title_system_cpa_poll', '_bx_ads_menu_item_title_cpa_poll', 'javascript:void(0)', 'javascript:{js_object}.showPollForm(this);', '_self', 'tasks', '', '', 2147483647, '', 1, 0, 1, 7);
+('bx_ads_entry_attachments', 'bx_ads', 'poll', '_bx_ads_menu_item_title_system_cpa_poll', '_bx_ads_menu_item_title_cpa_poll', 'javascript:void(0)', 'javascript:{js_object}.showPollForm(this);', '_self', 'tasks', '', '', 2147483647, '', 1, 0, 1, 7),
+('bx_ads_entry_attachments', 'bx_ads', 'link', '_bx_ads_menu_item_title_system_cpa_link', '_bx_ads_menu_item_title_cpa_link', 'javascript:void(0)', 'javascript:{js_object_link}.showAttachLink(this);', '_self', 'link', '', '', 2147483647, '', 1, 0, 1, 8);
 
 -- MENU: actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
