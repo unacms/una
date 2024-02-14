@@ -28,8 +28,11 @@ class BxDolGridConnections extends BxTemplGrid
             $this->setProfile($iProfileId);
     }
 
-    public function init()
+    public function init($bForceInit = false)
     {
+        if($this->_bInit && !$bForceInit)
+            return $this->_bInit;
+
         if(!$this->_oProfile)
             return false;
 
@@ -54,7 +57,7 @@ class BxDolGridConnections extends BxTemplGrid
     {
         $this->_oProfile = BxDolProfile::getInstance((int)$iProfileId);
 
-        $this->_bInit = $this->init();
+        $this->_bInit = $this->init(true);
     }
 
     public function getCode ($isDisplayHeader = true)

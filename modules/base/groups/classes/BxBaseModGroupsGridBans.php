@@ -23,8 +23,6 @@ class BxBaseModGroupsGridBans extends BxDolGridConnections
     {
         $this->_oModule = BxDolModule::getInstance($this->_sContentModule);
 
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         $this->_sObjectConnections = 'sys_profiles_bans';
 
         parent::__construct ($aOptions, $oTemplate);

@@ -568,18 +568,18 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_groups_fans', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 1, 'BxGroupsGridConnections', 'modules/boonex/groups/classes/BxGroupsGridConnections.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_groups_fans', 'name', '_sys_name', '50%', '', 10),
+('bx_groups_fans', 'name', '_sys_name', '40%', '', 10),
 ('bx_groups_fans', 'role', '_bx_groups_txt_role', '10%', '', 15),
 ('bx_groups_fans', 'role_added', '_bx_groups_txt_role_added', '10%', '', 16),
 ('bx_groups_fans', 'role_expired', '_bx_groups_txt_role_expired', '10%', '', 17),
-('bx_groups_fans', 'actions', '', '20%', '', 20);
+('bx_groups_fans', 'actions', '', '30%', '', 20);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_groups_fans', 'single', 'accept', '_sys_accept', '', 0, 0, 10),
 ('bx_groups_fans', 'single', 'set_role', '_bx_groups_txt_set_role', '', 0, 0, 20),
 ('bx_groups_fans', 'single', 'set_role_submit', '', '', 0, 0, 21),
 ('bx_groups_fans', 'single', 'delete', '_bx_groups_txt_delete', 'remove', 1, 1, 40),
-('bx_groups_fans', 'single', 'delete_and_ban', '_bx_groups_txt_delete_and_ban', 'user-xmark', 1, 1, 41);
+('bx_groups_fans', 'single', 'delete_and_ban', '_bx_groups_txt_delete_and_ban', 'user-slash', 1, 1, 41);
 
 -- GRID: bans
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `responsive`, `override_class_name`, `override_class_file`) VALUES
