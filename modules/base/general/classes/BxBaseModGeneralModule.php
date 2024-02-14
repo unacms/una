@@ -3082,8 +3082,15 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$aContentInfo)
             return;
 
-        $aParams = $this->_alertParams($aContentInfo);
-        bx_alert($this->getName(), 'added', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+        /*
+         * Process metas.
+         * Note. It's essential to process metas a the very end, 
+         * because all data related to an entry should be already
+         * processed and are ready to be passed to alert. 
+         */
+        $this->processMetasAdd($iContentId);
+
+        $this->alertAfterAdd($aContentInfo);
     }
 
     public function onFailed($iContentId)

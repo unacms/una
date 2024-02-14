@@ -101,18 +101,10 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
         $this->_oModule->onPublished($iContentId);
 
         if($bNotify)
-            bx_alert($this->_oModule->getName(), 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
+            bx_alert($this->MODULE, 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, [
                 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
                 'privacy_view' => BX_DOL_PG_ALL
-            ));
-
-        /*
-         * Process metas.
-         * Note. It's essential to process metas a the very end, 
-         * because all data related to an entry should be already
-         * processed and are ready to be passed to alert. 
-         */
-        $this->_oModule->processMetasAdd($iContentId);
+            ]);
     }
 }
 
