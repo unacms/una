@@ -1106,13 +1106,13 @@ BLAH;
         else
             $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
 
-        $aWrapperAttrs = [
-            'id' => "bx-form-section-" . $aInput['name'],
-        ];
-        if (isset($aInput['tr_attrs']) && !empty($aInput['tr_attrs'])) $aWrapperAttrs = array_merge($aInput['tr_attrs'], $aWrapperAttrs);
+        if (isset($aInput['name'])) {
+            if (!isset($aInput['tr_attrs']) || !is_array($aInput['tr_attrs']))
+                $aInput['tr_attrs'] = [];
+            $aInput['tr_attrs']['id'] = "bx-form-section-" . $aInput['name'];
+        }
 
-
-        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sTitle, $aWrapperAttrs);
+        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sTitle, !empty($aInput['tr_attrs']) ? $aInput['tr_attrs'] : []);
 
         return $sCode;
     }
