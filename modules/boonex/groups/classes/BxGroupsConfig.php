@@ -149,6 +149,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_COMMON' => 'bx_groups_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_GRID_INVITES' => 'bx_groups_invites',
+            'OBJECT_GRID_BANS' => 'bx_groups_bans',
             'OBJECT_GRID_PRICES_MANAGE' => 'bx_groups_prices_manage',
             'OBJECT_GRID_PRICES_VIEW' => 'bx_groups_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',

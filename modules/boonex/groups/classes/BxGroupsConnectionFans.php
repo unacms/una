@@ -16,6 +16,8 @@ class BxGroupsConnectionFans extends BxBaseModGroupsConnectionFans
         $this->_sModule = 'bx_groups';
 
         parent::__construct($aObject);
+
+        $this->_bBan = true;
     }
 }
 

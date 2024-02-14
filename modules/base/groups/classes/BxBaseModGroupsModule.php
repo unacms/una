@@ -578,16 +578,33 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$oGrid)
             return false;
 
-        if($this->_bIsApi){
+        if($this->_bIsApi)
             return [
                 bx_api_get_block('grid', $oGrid->getCodeAPI())
             ];
 
-        }
+        return $oGrid->getCode();
+    }
+
+    public function serviceBansTable ()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['OBJECT_GRID_BANS']))
+            return false;
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_BANS']);
+        if(!$oGrid)
+            return false;
+
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
 
         return $oGrid->getCode();
     }
-	
+
     public function serviceFans ($iContentId = 0, $bAsArray = false)
     {
         $CNF = &$this->_oConfig->CNF;

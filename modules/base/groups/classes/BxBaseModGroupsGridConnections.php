@@ -165,6 +165,42 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
         echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
     }
+    
+    public function performActionDeleteAndBan()
+    {
+        $this->_replaceMarkers ();
+
+        $aResult = [];
+        $iAffected = 0;
+
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds))
+            return $this->_getActionResult($aResult);
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_bans');
+
+        foreach($aIds as $mixedId) {
+            if(!$this->_delete($mixedId))
+                continue;
+
+            if($oConnection !== false) {
+                list($iProfileId, $iContextId) = $this->__prepareIds($mixedId);
+
+                $oConnection->addConnection($iContextId, $iProfileId, [
+                    'module' => $this->_sContentModule
+                ]);
+            }
+
+            $iAffected += 1;
+        }
+
+        if($iAffected)
+            $aResult = !$this->_bIsApi ? ['grid' => $this->getCode(false)] : [];
+        else
+            $aResult = ['msg' => _t("_sys_grid_delete_failed")];
+
+        return $this->_getActionResult($aResult);
+    }
 
     protected function _getCellRole($mixedValue, $sKey, $aField, $aRow)
     {
@@ -302,6 +338,11 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
             $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
         return parent::_getActionDelete($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _getActionDeleteAndBan ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
+    {
+        return $this->_getActionDelete($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     /**

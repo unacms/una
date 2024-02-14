@@ -16,6 +16,9 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
 
     protected $_bQuestionnaire;
 
+    protected $_bBan;
+    protected $_oBanConnection;
+
     public function __construct($aObject)
     {
         parent::__construct($aObject);
@@ -23,13 +26,30 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         $this->_bQuestionnaire = false;
+
+        $this->_bBan = false;
+        $this->_oBanConnection = null;
+    }
+
+    public function init()
+    {
+        if($this->_bBan)
+            $this->_oBanConnection = BxDolConnection::getObjectInstance('sys_profiles_bans');
     }
 
     public function getModule()
     {
         return $this->_sModule;
     }
-    
+
+    public function checkAllowedAddConnection($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
+    {
+        if($this->_bBan && $this->_oBanConnection->isConnected($iContent, $iInitiator))
+            return _t('_sys_txt_access_denied');
+
+        return $this->checkAllowedConnect ($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap, $isCheckExists);
+    }
+
     public function actionRemove($iContent = 0, $iInitiator = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -46,7 +66,7 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
 
         return $aResult;
     }
-    
+
     public function actionReject ($iInitiator = 0, $iContent = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
