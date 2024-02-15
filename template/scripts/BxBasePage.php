@@ -456,6 +456,7 @@ class BxBasePage extends BxDolPage
                 ]),
                 'actions_menu' => '',
                 'meta_menu' => '',
+                'badges' => BxDolProfile::getInstance($this->_aProfileInfo['id'])->getBadges(),
                 'cover' => $oModule->serviceGetCover($this->_aProfileInfo['content_id']),
                 'allow_edit' =>  $oModule->checkAllowedChangeCover($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED
             ];
