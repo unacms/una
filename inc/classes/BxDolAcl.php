@@ -678,9 +678,15 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         if (!empty($aMembershipCurrent))
             $aDataForAudit = array('new_membership_level' => _t($aLevel['name']), 'old_membership_level' => _t($aMembershipCurrent['name']));
         BxDolProfile::getInstance($iProfileId)->doAudit('_sys_audit_action_set_membership', $aDataForAudit);
-        
+
+        $oEmailTemplates = BxDolEmailTemplates::getInstance();
+        // Check if there is a special email template for this membership level
+        $sTemplateName = 't_Mem' . ($bProlong ? 'Prolonged' : 'Changed') . '_' . $aLevel['id'];
+        if ($oEmailTemplates->getTemplate($sTemplateName) === FALSE)
+            $sTemplateName = 't_Mem' . ($bProlong ? 'Prolonged' : 'Changed');
+
         // Send notification
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Mem' . ($bProlong ? 'Prolonged' : 'Changed'), array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
+        $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
         if ($aTemplate)
             sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
 
