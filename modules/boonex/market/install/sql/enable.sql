@@ -611,14 +611,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_market_common', 'actions', '', '20%', 0, '', '', 6),
 
 ('bx_market_licenses_administration', 'profile_id', '_bx_market_grid_column_title_lcs_profile_id', '10%', 0, '28', '', 1),
-('bx_market_licenses_administration', 'product', '_bx_market_grid_column_title_lcs_product', '20%', 0, '28', '', 2),
+('bx_market_licenses_administration', 'product', '_bx_market_grid_column_title_lcs_product', '15%', 0, '28', '', 2),
 ('bx_market_licenses_administration', 'transaction', '_bx_market_grid_column_title_lcs_transaction', '10%', 0, '32', '', 3),
 ('bx_market_licenses_administration', 'license', '_bx_market_grid_column_title_lcs_license', '10%', 0, '8', '', 4),
 ('bx_market_licenses_administration', 'type', '_bx_market_grid_column_title_lcs_type', '5%', 1, '12', '', 5),
-('bx_market_licenses_administration', 'domain', '_bx_market_grid_column_title_lcs_domain', '15%', 0, '18', '', 6),
+('bx_market_licenses_administration', 'domain', '_bx_market_grid_column_title_lcs_domain', '10%', 0, '18', '', 6),
 ('bx_market_licenses_administration', 'added', '_bx_market_grid_column_title_lcs_added', '10%', 1, '25', '', 7),
 ('bx_market_licenses_administration', 'expired', '_bx_market_grid_column_title_lcs_expired', '10%', 1, '25', '', 8),
-('bx_market_licenses_administration', 'actions', '', '10%', 0, '', '', 9),
+('bx_market_licenses_administration', 'actions', '', '20%', 0, '', '', 9),
 
 ('bx_market_licenses', 'product', '_bx_market_grid_column_title_lcs_product', '20%', 0, '28', '', 1),
 ('bx_market_licenses', 'transaction', '_bx_market_grid_column_title_lcs_transaction', '10%', 0, '32', '', 2),
