@@ -37,12 +37,20 @@ class BxBaseModGroupsGridBans extends BxDolGridConnections
 
         $this->_bManageMembers = $this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) === CHECK_ACTION_RESULT_ALLOWED || $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) === CHECK_ACTION_RESULT_ALLOWED;
 
-        $aSQLParts = $this->_oConnection->getConnectedContentAsSQLParts('p', 'id', $this->_iGroupProfileId, $this->_bOwner ? false : true);
+        $aSQLParts = $this->_oConnection->getConnectedContentAsSQLParts('p', 'id', $this->_iGroupProfileId);
         $this->addMarkers(array(
             'profile_id' => $this->_iGroupProfileId,
             'join_connections' => $aSQLParts['join'],
             'content_module' => $this->_sContentModule,
         ));
+    }
+
+    public function getCode ($isDisplayHeader = true)
+    {
+        if(!$this->_bManageMembers)
+            return '';
+
+        return parent::getCode($isDisplayHeader);        
     }
 
     protected function _getCellAdded ($mixedValue, $sKey, $aField, $aRow)

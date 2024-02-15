@@ -11,20 +11,36 @@
 
 class BxBaseModGroupsGridinvites extends BxTemplGrid
 {
-    protected $_sContentModule;
-    protected $_iGroupProfileId;
     protected $_oModule;
-    protected $_aContentInfo = array();
+    protected $_sContentModule;
+
+    protected $_iGroupProfileId;    
+
+    protected $_bManageMembers;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         $this->_oModule = BxDolModule::getInstance($this->_sContentModule);
 
         parent::__construct ($aOptions, $oTemplate);
-        
-        $this->_aQueryAppend['profile_id'] = (int)bx_get('profile_id');
+
+        $this->_iGroupProfileId = 0;
+        if(($iProfileId = bx_get('profile_id')) !== false)
+            $this->_iGroupProfileId = (int)$iProfileId;
+
+        $this->_bManageMembers = $this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) === CHECK_ACTION_RESULT_ALLOWED || $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) === CHECK_ACTION_RESULT_ALLOWED;
+
+        $this->_aQueryAppend['profile_id'] = $this->_iGroupProfileId;
     }
-    
+
+    public function getCode ($isDisplayHeader = true)
+    {
+        if(!$this->_bManageMembers)
+            return '';
+
+        return parent::getCode($isDisplayHeader);        
+    }
+
     protected function _getCellName ($mixedValue, $sKey, $aField, $aRow)
     {
         $oProfile = BxDolProfile::getInstance($aRow['invited_profile_id']);
