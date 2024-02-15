@@ -67,8 +67,11 @@ class BxBaseAccountForms extends BxDolProfileForms
                     'form_code' => &$sCode
             ));
             
-            if($bIsApi)
+            if($bIsApi){
+                if (!$oForm)
+                    return false;
                 return $oForm->getCodeAPI();
+            }
 
             return $sCode;
         }

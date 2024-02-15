@@ -84,7 +84,7 @@ class BxBaseServiceAccount extends BxDol
                 ];
             }
             else
-                return bx_api_get_msg($mixedResult);
+                return [bx_api_get_msg($mixedResult)];
         }
 
         $oPemalink = BxDolPermalinks::getInstance();

@@ -53,8 +53,10 @@ class BxInvResponse extends BxDolAlertsResponse
                 $oAlert->aExtras['form_code'] = $oAlert->aExtras['form_object']->getCode();
             }
         }
-        else
+        else{
             $oAlert->aExtras['form_code'] = $sCode;
+            $oAlert->aExtras['form_object'] = false;
+        }
     }
 
     protected function _processAccountAdded($oAlert)
