@@ -46,7 +46,7 @@ BxDolMenuMoreAuto.prototype.init = function() {
 
     var iParent = oMenu.parent().width();
     var iItemMore = $this._getWidth(oItemMore);
-        
+
     oMenu.css('overflow', 'visible');
 
     if(iMenu >= iParent || this._bStaticMode)
@@ -81,11 +81,11 @@ BxDolMenuMoreAuto.prototype.update = function(bForceCalculate)
 
     var iMenu = 0;
     oMenu.children(this._sClassItem + ':visible').each(function() {
-        iMenu += $this._getWidth($(this), bForceCalculate);
+        iMenu += $this._getWidth($(this), $(this).not($this._sClassItemMore).length ? bForceCalculate : false);
     });
 
     var iParent = oMenu.parent().width();
-    var iItemMore = oItemMore.outerWidth(true);
+    var iItemMore = $this._getWidth(oItemMore, false);
 
     if(iMenu > iParent)
         this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
