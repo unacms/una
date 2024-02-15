@@ -22,13 +22,13 @@ function bx_classes_mark_as_completed (iClassId)
 function bx_classes_show_module_add_form(iContextProfileId)
 {
     var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/add_module/' + iContextProfileId + '/html';
-    $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false});
+    $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false, removeOnClose: true});
 }
 
 function bx_classes_show_module_edit_form(iContextProfileId, iModuleId)
 {
     var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/edit_module/' + iContextProfileId + '/' + iModuleId;
-    $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false});
+    $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false, removeOnClose: true});
 }
 
 function bx_classes_delete_module(iContextProfileId, iModuleId)

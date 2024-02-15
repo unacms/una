@@ -7,22 +7,21 @@
             beforeSubmit: function (formData, $form, options) {
                 bx_loading($("#bx-classes-add-module-form form"), true);
             },
-            success: function (data) {
-                if ('{' == data[0]) {
-                    var oResponce = JSON.parse(data);
-                    if ('ReloadLessonsAndClosePopup' == oResponce.action) {
+            success: function (oData) {
+                if (typeof oData === "object") {
+                    if ('ReloadLessonsAndClosePopup' == oData.action) {
                         $('.bx-popup-applied:visible').dolPopupHide();
                         loadDynamicBlockAuto('.bx-course-controls');
                     } 
-                    else if ('ShowMsg' == oResponce.action) {
-                        bx_alert(oResponce.msg);
+                    else if ('ShowMsg' == oData.action) {
+                        bx_alert(oData.msg);
                     }
                     else {
                         bx_alert('<bx_text_js:_sys_txt_error_occured />');
                     }
                 }
                 else {
-                    $("#bx-classes-add-module-form").parent().html(data).bxProcessHtml();
+                    $("#bx-classes-add-module-form").parent().html(oData).bxProcessHtml();
                 }
             }
         });
