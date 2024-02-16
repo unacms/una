@@ -38,9 +38,13 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 
     public function getBlockRequestText($aRequest)
     {
+        $sText = bx_process_output(nl2br($aRequest['text']), BX_DATA_TEXT_MULTILINE);
+        if($this->_bIsApi)
+            return [['text' => $sText]];
+
         return $this->parseHtmlByName('request_text.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'text' => bx_process_output(nl2br($aRequest['text']), BX_DATA_TEXT_MULTILINE),
+            'text' => $sText
         ));
     }
     
@@ -73,7 +77,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 
             list($sPageLink, $aPageParams) = bx_get_base_url_inline();
             $sRedirectValue = bx_append_url_params($sPageLink, $aPageParams);
-            if(bx_is_api()){
+            if($this->_bIsApi){
                 $sRedirectValue = $aPageParams['params'][0];
             }
 
@@ -83,7 +87,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             $oSession->setValue($sRedirectCode, $sRedirectValue);
         }
         
-        if(bx_is_api()){
+        if($this->_bIsApi){
             return [bx_api_get_block('invite', ['remain' => $mInvitesRemain, 'request_url' => 'bx_invites/get_link/'])];
         }
 
@@ -116,11 +120,11 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
     public function getBlockFormRequest()
     {
         if(!$this->_oConfig->isRequestInvite())
-            return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_not_available'))] : MsgBox(_t('_bx_invites_err_not_available'));
+            return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_not_available'))] : MsgBox(_t('_bx_invites_err_not_available'));
 
         $mixedAllowed = $this->getModule()->isAllowedRequest(0);
         if($mixedAllowed !== true)
-            return bx_is_api() ? [bx_api_get_msg($mixedAllowed)] : MsgBox($mixedAllowed);
+            return $this->_bIsApi ? [bx_api_get_msg($mixedAllowed)] : MsgBox($mixedAllowed);
 
         $CNF = &$this->_oConfig->CNF;
 
@@ -138,7 +142,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             $sForm = $oForm->getCode();
             if(!$oForm->isSubmitted()) {
                 $this->getCssJs();
-                return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : $this->parseHtmlByName('block_request_form.html', array(
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : $this->parseHtmlByName('block_request_form.html', array(
                     'style_prefix' => $this->_oConfig->getPrefix('style'),
                     'js_object' => $sJsObject,
                     'js_code' => $this->getJsCode('main'),
@@ -148,22 +152,22 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             }
 
             if(!$oForm->isValid())
-                return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : array('content' => $sForm, 'content_id' => $sFormId, 'eval' => $sEval);
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : array('content' => $sForm, 'content_id' => $sFormId, 'eval' => $sEval);
         }
         
         $sEmail = $oForm->getCleanValue('email');
         $oAccountQuery = BxDolAccountQuery::getInstance();
         $iAccount = $oAccountQuery->getIdByEmail($sEmail);
         if ($iAccount > 0)
-            return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_already_registed', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))))] : array('content' => MsgBox(_t('_bx_invites_err_already_registed', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')))), 'content_id' => $sFormId, 'eval' => $sEval);
+            return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_already_registed', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))))] : array('content' => MsgBox(_t('_bx_invites_err_already_registed', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')))), 'content_id' => $sFormId, 'eval' => $sEval);
         $iCountByEmail = $this->_oDb->getRequests(array('type' => 'count_by_email', 'value' => $sEmail));
         if ($iCountByEmail > 0)
-            return  bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_already_send'))] : array('content' => MsgBox(_t('_bx_invites_err_already_send')), 'content_id' => $sFormId, 'eval' => $sEval);
+            return  $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_already_send'))] : array('content' => MsgBox(_t('_bx_invites_err_already_send')), 'content_id' => $sFormId, 'eval' => $sEval);
        
         $sIp = getVisitorIP();
         $iId = (int)$oForm->insert(array('nip' => ip2long($sIp),'date' => time()));
         if(!$iId)
-            return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_cannot_perform'))] : array('content' => MsgBox(_t('_bx_invites_err_cannot_perform')), 'content_id' => $sFormId, 'eval' => $sEval);
+            return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_cannot_perform'))] : array('content' => MsgBox(_t('_bx_invites_err_cannot_perform')), 'content_id' => $sFormId, 'eval' => $sEval);
         $this->getModule()->onRequest($iId);
         $sRequestsEmail = $this->_oConfig->getRequestsEmail();
         if(!empty($sRequestsEmail)) {
@@ -182,7 +186,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             }
         }
 
-        return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_msg_request_sent'))] : array('content' => MsgBox(_t('_bx_invites_msg_request_sent')), 'content_id' => $sFormId, 'eval' => $sEval);
+        return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_msg_request_sent'))] : array('content' => MsgBox(_t('_bx_invites_msg_request_sent')), 'content_id' => $sFormId, 'eval' => $sEval);
     }
 
     public function getLinkPopup($sLink)

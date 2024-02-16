@@ -79,90 +79,100 @@ class BxInvGridRequests extends BxTemplGrid
     public function performActionAdd()
     {
         $sAction = 'add';
+
         $oForm = $this->_oModule->getFormObjectInvite();
-        if (!$oForm)
-            return '';
+        if(!$oForm)
+            return $this->_getActionResult([]);
 
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r'));
         $oForm->initChecker();
 
+        $aResult = [];
         if($oForm->isSubmittedAndValid()) {
-            $sResult = $this->_oModule->processFormObjectInvite($oForm);
-            $aRes = array('msg' => $sResult);
-            echoJson($aRes);
+            $aResult = ['msg' => $this->_oModule->processFormObjectInvite($oForm)];
         }
         else {
-            $sContent = BxTemplFunctions::getInstance()->popupBox('_bx_invites_form_invite', _t('_bx_invites_form_invite'), $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
-                'form_id' => $oForm->id,
-                'form' => $oForm->getCode(true),
-                'object' => $this->_sObject,
-                'action' => $sAction
-            )));
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => true))));
+            if($this->_bIsApi)
+                $aResult = $this->getFormBlockAPI($oForm, $sAction);
+            else
+                $aResult = ['popup' => [
+                    'html' => BxTemplFunctions::getInstance()->popupBox('_bx_invites_form_invite', _t('_bx_invites_form_invite'), $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', [
+                        'form_id' => $oForm->id,
+                        'form' => $oForm->getCode(true),
+                        'object' => $this->_sObject,
+                        'action' => $sAction
+                    ])), 
+                    'options' => ['closeOnOuterClick' => true]
+                ]];
         }
+
+        return $this->_getActionResult($aResult);
     }
     
     public function performActionInfo()
     {
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        $iId = $this->_getId();
+        if(!$iId)
+            return $this->_getActionResult([]);
 
-        $aRequest = $this->_oModule->_oDb->getRequests(array('type' => 'by_id', 'value' => (int)array_shift($aIds)));
-        if(empty($aRequest) || !is_array($aRequest)){
-            echoJson(array());
-            exit;
-        }
+        $aRequest = $this->_oModule->_oDb->getRequests(['type' => 'by_id', 'value' => $iId]);
+        if(empty($aRequest) || !is_array($aRequest))
+            return $this->_getActionResult([]);
 
-        $sContent = BxTemplFunctions::getInstance()->transBox('bx-invites-info-popup', $this->_oModule->_oTemplate->getBlockRequestText($aRequest));
+        $sContent =  $this->_oModule->_oTemplate->getBlockRequestText($aRequest);
 
-        echoJson(array('popup' => array('html' => $sContent)));
+        $aResult = [];
+        if($this->_bIsApi)
+            $aResult = [bx_api_get_block('simple_list',  $sContent)];
+        else
+            $aResult = ['popup' => [
+                'html' => BxTemplFunctions::getInstance()->transBox('bx-invites-info-popup', $sContent)
+            ]];
+
+        return $this->_getActionResult($aResult);
     }
-    
+
     public function performActionInviteInfo()
     {
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        $iId = $this->_getId();
+        if(!$iId)
+            return $this->_getActionResult([]);
 
-        $aRequest = $this->_oModule->_oDb->getInvites(array('type' => 'all', 'value' => (int)array_shift($aIds)));
-        if(empty($aRequest) || !is_array($aRequest)){
-            echoJson(array());
-            exit;
-        }
+        $aRequest = $this->_oModule->_oDb->getInvites(['type' => 'all', 'value' => $iId]);
+        if(empty($aRequest) || !is_array($aRequest))
+            return $this->_getActionResult([]);
 
-        $sContent = BxTemplFunctions::getInstance()->transBox('bx-invites-info-popup', $this->_oModule->_oTemplate->getBlockInviteInfo($aRequest));
+        $sContent = $this->_oModule->_oTemplate->getBlockInviteInfo($aRequest);
 
-        echoJson(array('popup' => array('html' => $sContent)));
+        $aResult = [];
+        if($this->_bIsApi)
+            $aResult = [bx_api_get_block('simple_list',  $sContent)];
+        else
+            $aResult = ['popup' => [
+                'html' => BxTemplFunctions::getInstance()->transBox('bx-invites-info-popup', $sContent)
+            ]];
+
+        return $this->_getActionResult($aResult);
     }
     
-    public function performActionInvite($aParams = array())
+    public function performActionInvite($aParams = [])
     {
         $iProfileId = $this->_oModule->getProfileId();
 
-        $mixedAllowed = $this->_oModule->isAllowedInvite($iProfileId);
-        if($mixedAllowed !== true) {
-            echoJson(array('msg' => $mixedAllowed));
-            exit;
-        }
+        if(($mixedAllowed = $this->_oModule->isAllowedInvite($iProfileId)) !== true)
+            return echoJson(['msg' => $mixedAllowed]);
 
-        $iAffected = 0;
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        $aIds = $this->_getIds();
+        if(!$aIds)
+            return echoJson([]);
 
         $sText = _t('_bx_invites_msg_invitation');
 
-        $aIdsAffected = array ();
+        $iAffected = 0;
+        $aIdsAffected = [];
         foreach($aIds as $iId) {
-            $aRequest = $this->_oModule->_oDb->getRequests(array('type' => 'by_id', 'value' => $iId));
+            $aRequest = $this->_oModule->_oDb->getRequests(['type' => 'by_id', 'value' => $iId]);
             if(empty($aRequest) || !is_array($aRequest))
                 continue;
             
@@ -170,35 +180,38 @@ class BxInvGridRequests extends BxTemplGrid
             if(empty($mixedResult) || !is_array($mixedResult))
                 continue;
 
-            $this->_oModule->_oDb->attachInviteToRequest($iId, (int)array_shift($mixedResult));
+            $this->_oModule->_oDb->attachInviteToRequest($iId, (int)array_shift(array_keys($mixedResult)));
 
             $aIdsAffected[] = $iId;
             $iAffected++;
         }
+        
+        $sResult = $iAffected ? _t('_bx_invites_msg_invitation_sent', $iAffected) : _t('_bx_invites_err_invite');
 
-        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected, 'msg' => _t('_bx_invites_msg_invitation_sent', $iAffected)) : array('msg' => _t('_bx_invites_err_invite')));
+        $aResult = [];
+        if($this->_bIsApi)
+            $aResult = [bx_api_get_block('simple_list',  [['text' => $sResult]])];
+        else 
+            $aResult = $iAffected ? ['grid' => $this->getCode(false), 'blink' => $aIdsAffected, 'msg' => $sResult] : ['msg' => $sResult];
+
+        return $this->_getActionResult($aResult);
     }
-    
-    public function performActionDelete($aParams = array())
+
+    public function performActionDelete($aParams = [])
     {
         $iProfileId = $this->_oModule->getProfileId();
 
-        $mixedAllowed = $this->_oModule->isAllowedDeleteRequest($iProfileId);
-        if($mixedAllowed !== true) {
-            echoJson(array('msg' => $mixedAllowed));
-            exit;
-        }
+        if(($mixedAllowed = $this->_oModule->isAllowedDeleteRequest($iProfileId)) !== true)
+            return echoJson(['msg' => $mixedAllowed]);
 
-        $iAffected = 0;
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        $aIds = $this->_getIds();
+        if(!$aIds)
+            return echoJson([]);
 
         $oForm = BxDolForm::getObjectInstance($this->_oModule->_oConfig->getObject('form_request'), $this->_oModule->_oConfig->getObject('form_display_request_send'));
 
-        $aIdsAffected = array ();
+        $iAffected = 0;
+        $aIdsAffected = [];
         foreach($aIds as $iId) {
             if(!$oForm->delete($iId))
                 continue;
@@ -209,15 +222,21 @@ class BxInvGridRequests extends BxTemplGrid
             $iAffected++;
         }
 
-        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_bx_invites_err_delete_request')));
+        $aResult = [];
+        if($iAffected) 
+            $aResult = !$this->_bIsApi ? ['grid' => $this->getCode(false), 'blink' => $aIdsAffected] : [];
+        else
+            $aResult = ['msg' => _t('_bx_invites_err_delete_request')];
+
+        return $this->_getActionResult($aResult);
     }
-    
+
     protected function _getFilterControls ()
     {
         parent::_getFilterControls();
         return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
     }
-    
+
     protected function _getSearchInput()
     {
         $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
@@ -268,6 +287,9 @@ class BxInvGridRequests extends BxTemplGrid
 
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
+        if($this->_bIsApi)
+            return ['type' => 'time', 'data' => $mixedValue];
+
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
     
@@ -311,7 +333,38 @@ class BxInvGridRequests extends BxTemplGrid
     {
         return '';
     }
-    
+
+    protected function _getId()
+    {
+        $iId = 0;
+
+        if(($aIds = bx_get('ids')) !== false) {
+            if(!$aIds || !is_array($aIds))
+                return 0;
+
+            $iId = (int)array_shift($aIds);
+        }
+        else if(($iId = bx_get('id')) !== false)
+            $iId = (int)$iId;
+        
+        return $iId;
+    }
+
+    protected function _getIds()
+    {
+        $aIds = [];
+
+        if(($aIds = bx_get('ids')) !== false) {
+            if(!$aIds || !is_array($aIds))
+                return [];
+
+            $aIds = bx_process_input($aIds, BX_DATA_INT);
+        }
+        else if(($iId = bx_get('id')) !== false)
+            $aIds = [(int)$iId];
+
+        return $aIds;
+    }
 }
 
 /** @} */

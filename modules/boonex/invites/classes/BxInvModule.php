@@ -454,7 +454,7 @@ class BxInvModule extends BxDolModule
 
                 $this->onInvite($iProfileId);
 
-                $aResults[] = $sEmail;
+                $aResults[$iInviteId] = $sEmail;
                 if($mixedLimit !== false)
                     $mixedLimit -= 1;
             }
