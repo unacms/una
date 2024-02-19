@@ -289,6 +289,7 @@
                 <not><equals arg1="${module}" arg2="una_mods" /></not>
                 <not><equals arg1="${module}" arg2="hosting_api" /></not>
                 <not><equals arg1="${module}" arg2="market_api" /></not>
+                <not><equals arg1="${module}" arg2="opencv" /></not>
             </and>            
             <then>
                 <php expression="eval('include(&quot;${project.basedir}/modules/${vendor}/${module}/install/config.php&quot;); return $aConfig[&quot;name&quot;];')" returnProperty="module_name" />
