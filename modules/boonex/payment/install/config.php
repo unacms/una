@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_payment',
     'title' => 'Payment',
     'note' => 'Payment module.',
-    'version' => '14.0.2.DEV',
+    'version' => '14.0.3.DEV',
     'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
