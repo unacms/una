@@ -835,7 +835,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
 
-        $aParams = $this->_alertParams($aContentInfo);
+        $aParams = $this->_alertParamsEdit($aContentInfo);
         bx_alert($this->getName(), 'edited', $iId, false, $aParams);
     }
 
@@ -870,12 +870,31 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $CNF = &$this->_oConfig->CNF;
 
         if(!empty($CNF['OBJECT_METATAGS']))
-            $aParams['timeline_group'] = array(
-                'by' => $this->getName() . '_' . abs((int)$aContentInfo[$CNF['FIELD_AUTHOR']]) . '_' . (int)$aContentInfo[$CNF['FIELD_ID']],
-                'field' => 'owner_id'
-            );
+            $aParams['timeline_group'] = $this->_getAlertParamTimelineGroup($aContentInfo);
 
         return $aParams;
+    }
+
+    protected function _alertParamsEdit($aContentInfo)
+    {
+        $aParams = $this->_alertParams($aContentInfo);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($CNF['OBJECT_METATAGS']))
+            $aParams['timeline_group'] = $this->_getAlertParamTimelineGroup($aContentInfo);
+
+        return $aParams;
+    }
+
+    protected function _getAlertParamTimelineGroup($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return [
+            'by' => $this->getName() . '_' . abs((int)$aContentInfo[$CNF['FIELD_AUTHOR']]) . '_' . (int)$aContentInfo[$CNF['FIELD_ID']],
+            'field' => 'owner_id'
+        ];
     }
 
     public function getPollForm()

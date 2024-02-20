@@ -111,7 +111,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $aEvent = $this->$sMethod($oAlert, $aHandler);
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
-
+//var_dump($oAlert->aExtras); exit;
                 $aContent = [];
                 if(!empty($aEvent['content']) && is_string($aEvent['content']))
                     $aContent = unserialize($aEvent['content']);
@@ -121,11 +121,10 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $aParamsSet = ['content' => serialize($aContent)];
                 $aParamsSetBySource = [];
 
-                foreach(['status', 'status_admin'] as $sStatusKey)
-                    if(!empty($aContent[$sStatusKey])) {
-                        $aParamsSet[$sStatusKey] = $aContent[$sStatusKey];
-                        $aParamsSetBySource[$sStatusKey] = $aContent[$sStatusKey];
-                    }
+                if($iObjectAuthorId != $aEvent['object_owner_id']) {
+                    $aParamsSet['object_owner_id'] = $iObjectAuthorId;
+                    $aParamsSetBySource['object_owner_id'] = $iObjectAuthorId;
+                }
 
                 if($iObjectPrivacyView > 0)
                     $aParamsSet = array_merge($aParamsSet, [
@@ -137,6 +136,25 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                         'owner_id' => abs($iObjectPrivacyView),
                         'object_privacy_view' => $iObjectPrivacyView 
                     ]);
+
+                $bSource = false;
+                $sSource = $aEvent[$CNF['FIELD_SOURCE']];
+                if(($bSource = !empty($sSource)) !== false) {
+                    $sSourceNew = '';
+                    if(!empty($oAlert->aExtras['timeline_group']))
+                        $sSourceNew = $oAlert->aExtras['timeline_group']['by'];
+
+                    if($sSourceNew && strcmp($sSourceNew, $sSource) != 0) {
+                        $aParamsSet['source'] = $sSourceNew;
+                        $aParamsSetBySource['source'] = $sSourceNew;
+                    }
+                }
+
+                foreach(['status', 'status_admin'] as $sStatusKey)
+                    if(!empty($aContent[$sStatusKey])) {
+                        $aParamsSet[$sStatusKey] = $aContent[$sStatusKey];
+                        $aParamsSetBySource[$sStatusKey] = $aContent[$sStatusKey];
+                    }
 
                 $sMethod = 'get_timeline_update_data';
                 if(bx_is_srv($oAlert->sUnit, $sMethod)) 
@@ -156,8 +174,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->deleteCacheItem($aEvent[$CNF['FIELD_ID']]);              
 
                 //--- Update related events.
-                if(!empty($aEvent[$CNF['FIELD_SOURCE']]) && !empty($aParamsSetBySource)) {
-                    $aEventsBySource = $this->_oModule->_oDb->getEvents(['browse' => 'source', 'value' => $aEvent[$CNF['FIELD_SOURCE']]]);
+                if($bSource && !empty($aParamsSetBySource)) {
+                    $aEventsBySource = $this->_oModule->_oDb->getEvents(['browse' => 'source', 'value' => $sSource]);
                     foreach($aEventsBySource as $aEventBySource) {
                         if($aEventBySource[$CNF['FIELD_ID']] == $aEvent[$CNF['FIELD_ID']])
                             continue;
