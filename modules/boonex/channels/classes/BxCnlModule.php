@@ -31,9 +31,9 @@ class BxCnlModule extends BxBaseModGroupsModule
      * @param string $sHashtag - hashtag to be processed.
      * @param string $sModuleName - module name.
      * @param integer $iContentId - ID of the content which has the hashtag.
-     * @param integer $iAuthorId - action's author id.
+     * @param integer $iSenderId - action's sender (author) id.
      */
-    function processHashtag($sHashtag, $sModuleName, $iContentId, $iAuthorId = 0)
+    function processHashtag($sHashtag, $sModuleName, $iContentId, $iSenderId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -47,11 +47,20 @@ class BxCnlModule extends BxBaseModGroupsModule
             return;
 
         /*
+         * Ticket #4640
+         * 
+         * Before: 
          * Use content's author profile when Author ID wasn't provided. 
          * Usually it happens when tags were processed with cron.
+         * 
+         * After:
+         * Use content's author profile every time when it's possible. Otherwise use sender from alert.
          */
-        if(empty($iAuthorId))
-            $iAuthorId = abs(BxDolService::call($sModuleName, 'get_author', array($iContentId)));
+        $iAuthorId = 0;
+        if(($sModuleMethod = 'get_author') && bx_is_srv($sModuleName, $sModuleMethod))
+            $iAuthorId = abs(bx_srv($sModuleName, $sModuleMethod, [$iContentId]));
+        if(empty($iAuthorId) && !empty($iSenderId))
+            $iAuthorId = $iSenderId;
 
         $aCheck = checkActionModule($iAuthorId, 'create channel auto', $this->getName(), false);
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);

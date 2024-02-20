@@ -111,7 +111,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $aEvent = $this->$sMethod($oAlert, $aHandler);
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
-//var_dump($oAlert->aExtras); exit;
+
                 $aContent = [];
                 if(!empty($aEvent['content']) && is_string($aEvent['content']))
                     $aContent = unserialize($aEvent['content']);
