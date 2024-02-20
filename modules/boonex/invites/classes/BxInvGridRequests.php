@@ -49,33 +49,12 @@ class BxInvGridRequests extends BxTemplGrid
         }
         $this->_sParamsDivider = '#-#';
     }
-    
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+
+    public function getFormCallBackUrlAPI($sAction, $iId = 0)
     {
-        $CNF = $this->_oModule->_oConfig->CNF;
-        $sTableRequests = $CNF['TABLE_REQUESTS'];
-        
-        if(strpos($sFilter, $this->_sParamsDivider) !== false)
-            list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
-       
-        $sFilterSql = "";
-        if(isset($this->_sFilter1Value) && $this->_sFilter1Value != ''){
-            if ($this->_sFilter1Value == BX_INV_FILTER_STATUS_INVITED){
-                $sFilterSql = " AND " . $sTableRequests . ".`status` IN (" . BX_INV_FILTER_STATUS_INVITED . ', ' . BX_INV_FILTER_STATUS_SEEN . ', ' . BX_INV_FILTER_STATUS_JOINED . ')';
-            }
-            else{
-                $sFilterSql = " AND " . $sTableRequests . ".`status` = " . $this->_sFilter1Value;
-            }
-        }
-        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString($sFilterSql);
-        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+         return '/api.php?r=system/perfom_action_api/TemplServiceGrid/&params[]=&o=' . $this->_sObject . '&a=' . $sAction;
     }
-    
-    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
-    {
-        return " ORDER BY `status` ASC, `date` DESC";
-    }
-    
+
     public function performActionAdd()
     {
         $sAction = 'add';
@@ -90,7 +69,11 @@ class BxInvGridRequests extends BxTemplGrid
 
         $aResult = [];
         if($oForm->isSubmittedAndValid()) {
-            $aResult = ['msg' => $this->_oModule->processFormObjectInvite($oForm)];
+            $sResult = $this->_oModule->processFormObjectInvite($oForm);
+            if($this->_bIsApi)
+                $aResult = [bx_api_get_msg($sResult)];
+            else
+                $aResult = ['msg' => $sResult];
         }
         else {
             if($this->_bIsApi)
@@ -296,29 +279,47 @@ class BxInvGridRequests extends BxTemplGrid
     protected function _getCellStatus($mixedValue, $sKey, $aField, $aRow)
     {
         $sStatus = _t('_bx_invites_request_status_new');
-        switch ($mixedValue) {
-            case 1:
-            case 2:
-                $sLinkHtml = $this->_oTemplate->parseLink('javascript:void(0)', $this->_oModule->_oDb->getInvites(array('type' => 'count_by_request', 'value' => $aRow['id'])), array(
-                    'title' => _t('_bx_invites_grid_action_title_adm_invite_info'),
+
+        if(in_array($mixedValue, [1, 2, 3])) {
+            switch ($mixedValue) {
+                case 1:
+                case 2:
+                    $iInvites = $this->_oModule->_oDb->getInvites(['type' => 'count_by_request', 'value' => $aRow['id']]);
+                    $sStatus = _t($mixedValue == 1 ? '_bx_invites_request_status_invited' : '_bx_invites_request_status_seen') . ' (' . $iInvites . ')';
+                    break;
+
+                case 3:
+                    $sStatus = _t('_bx_invites_request_status_joined');
+                    break;
+            }
+
+            if(!$this->_bIsApi)
+                $sStatus = $this->_oTemplate->parseLink('javascript:void(0)', $sStatus, [
+                    'title' => bx_html_attribute(_t('_bx_invites_grid_action_title_adm_invite_info')),
                     'bx_grid_action_single' => 'invite_info',
                     'bx_grid_action_data' => $aRow['id']
-                ));
-                $sStatus = ($mixedValue == 1 ? _t('_bx_invites_request_status_invited') : _t('_bx_invites_request_status_seen')) . ' (' . $sLinkHtml . ')';
-                break;
-            case 3:
-                $sStatus = _t('_bx_invites_request_status_joined') . ' (' . bx_time_js($this->_oModule->_oDb->getInvites(array('type' => 'date_joined_by_request', 'value' => $aRow['id']))) . ')';
-                break;
+                ]);
         }
+
         return parent::_getCellDefault($sStatus, $sKey, $aField, $aRow);
     }
-    
+
     protected function _getCellJoinedAccount($mixedValue, $sKey, $aField, $aRow)
     {
         $sAccountInfo = "";
-        if(isset($aRow["status"]) && $aRow["status"] == 3){
-            $sAccountInfo = $this->_oModule->_oTemplate->getProfilesByAccount($this->_oModule->_oDb->getInvites(array('type' => 'account_by_request', 'value' => $aRow['id'])));
+        if(isset($aRow["status"]) && $aRow["status"] == 3) {
+            $iAccountId = $this->_oModule->_oDb->getInvites(['type' => 'account_by_request', 'value' => $aRow['id']]);
+            if($this->_bIsApi) {
+                $iProfileId = 0;
+                if(($mixedProfileId = BxDolProfileQuery::getInstance()->getCurrentProfileByAccount($iAccountId, true)) !== false)
+                    $iProfileId = (int)$mixedProfileId;
+
+                return ['type' => 'profile', 'data' => BxDolProfile::getData($iProfileId)];
+            }
+
+            $sAccountInfo = $this->_oModule->_oTemplate->getProfilesByAccount($iAccountId);
         }
+
         return parent::_getCellDefault($sAccountInfo, $sKey, $aField, $aRow);
     }
     
@@ -332,6 +333,32 @@ class BxInvGridRequests extends BxTemplGrid
     protected function _getActionInviteInfo ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         return '';
+    }
+
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+        $sTableRequests = $CNF['TABLE_REQUESTS'];
+
+        if(strpos($sFilter, $this->_sParamsDivider) !== false)
+            list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+
+        $sFilterSql = "";
+        if(isset($this->_sFilter1Value) && $this->_sFilter1Value != ''){
+            if ($this->_sFilter1Value == BX_INV_FILTER_STATUS_INVITED){
+                $sFilterSql = " AND " . $sTableRequests . ".`status` IN (" . BX_INV_FILTER_STATUS_INVITED . ', ' . BX_INV_FILTER_STATUS_SEEN . ', ' . BX_INV_FILTER_STATUS_JOINED . ')';
+            }
+            else{
+                $sFilterSql = " AND " . $sTableRequests . ".`status` = " . $this->_sFilter1Value;
+            }
+        }
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString($sFilterSql);
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+
+    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
+    {
+        return " ORDER BY `status` ASC, `date` DESC";
     }
 
     protected function _getId()
