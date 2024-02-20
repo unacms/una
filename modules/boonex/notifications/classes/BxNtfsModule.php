@@ -224,12 +224,14 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     	}
 
     	$iOwnerId = $this->getUserId();
-        if(!$iOwnerId)
-            return ['content' => MsgBox(_t('_bx_ntfs_txt_msg_no_results'))];
+        if(!$iOwnerId) {
+            $sResult = _t('_bx_ntfs_txt_msg_no_results');
+            return $this->_bIsApi ? [bx_api_get_msg($sResult)] : ['content' => MsgBox($sResult)];
+        }
 
         $aParams = $this->_prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $aModules);
 
-        if(bx_is_api()) {
+        if($this->_bIsApi) {
             $aParams['start_from_item'] = true;
 
             $aContent = defined('BX_API_PAGE') ? [] : $this->_oTemplate->getPosts($aParams);
