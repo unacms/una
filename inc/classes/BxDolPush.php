@@ -132,17 +132,29 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         if($bAddToQueue && BxDolQueuePush::getInstance()->add($iProfileId, $aMessage))
             return true;        
     
-		$aFields = array(
-			'app_id' => $this->_sAppId,
-			'filters' => array(
-		        array('field' => 'tag', 'key' => 'user_hash', 'relation' => '=', 'value' => encryptUserId($iProfileId))
-            ),
-			'contents' => !empty($aMessage['contents']) && is_array($aMessage['contents']) ? $aMessage['contents'] : array(),
-			'headings' => !empty($aMessage['headings']) && is_array($aMessage['headings']) ? $aMessage['headings'] : array(),
+        if(($sRootUrl = getParam('sys_api_url_root_push')) !== '') {
+            if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
+                $sRootUrl .= '/';
+
+            if(!empty($aMessage['url']))
+                $aMessage['url'] = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $aMessage['url']);
+
+            if(empty($aMessage['contents']) && is_array($aMessage['contents']))
+                foreach($aMessage['contents'] as $sKey => $sValue)
+                    $aMessage['contents'][$sKey] = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sValue);
+        }
+
+        $aFields = [
+            'app_id' => $this->_sAppId,
+            'filters' => [
+                ['field' => 'tag', 'key' => 'user_hash', 'relation' => '=', 'value' => encryptUserId($iProfileId)]
+            ],
+            'contents' => !empty($aMessage['contents']) && is_array($aMessage['contents']) ? $aMessage['contents'] : [],
+            'headings' => !empty($aMessage['headings']) && is_array($aMessage['headings']) ? $aMessage['headings'] : [],
             'web_url' => !empty($aMessage['url']) ? $aMessage['url'] : '',
             'data' => array('url' => !empty($aMessage['url']) ? $aMessage['url'] : ''),
             'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : '',
-		);
+        ];
 
         if ('on' == getParam('bx_nexus_option_push_notifications_count')) {
             $iBadgeCount = $this->getNotificationsCount($iProfileId);
@@ -150,29 +162,28 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             $aFields['ios_badgeCount'] = $iBadgeCount;
         }
 
-		$oChannel = curl_init();
-		curl_setopt($oChannel, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-		curl_setopt($oChannel, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json; charset=utf-8',
-			'Authorization: Basic ' . $this->_sRestApi
-		));
-		curl_setopt($oChannel, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($oChannel, CURLOPT_HEADER, false);
-		curl_setopt($oChannel, CURLOPT_POST, true);
-		curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
-		curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
+        $oChannel = curl_init();
+        curl_setopt($oChannel, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($oChannel, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json; charset=utf-8',
+                'Authorization: Basic ' . $this->_sRestApi
+        ]);
+        curl_setopt($oChannel, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($oChannel, CURLOPT_HEADER, false);
+        curl_setopt($oChannel, CURLOPT_POST, true);
+        curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
+        curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
 
-		$sResult = curl_exec($oChannel);
-		curl_close($oChannel);
-        
+        $sResult = curl_exec($oChannel);
+        curl_close($oChannel);
+
         $oResult = @json_decode($sResult, true);
-        if(isset($oResult['errors'])){
+        if(isset($oResult['errors']))
             foreach($oResult['errors'] as $sError) {  
                 bx_log('sys_push', $sError . " Message:" . json_encode($aMessage));
             }
-        }
 
-		return $sResult;
+        return $sResult;
     }
 }
 

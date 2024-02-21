@@ -441,10 +441,18 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     // parse template
     if ($aPlus || $iRecipientID || $oAccount) {
         if(!is_array($aPlus))
-            $aPlus = array();
+            $aPlus = [];
+
         $oEmailTemplates = BxDolEmailTemplates::getInstance();
         $sMailSubject = $oEmailTemplates->parseContent($sMailSubject, $aPlus, !$iRecipientID && $oAccount ? $oAccount->id() : 0, $iRecipientID);
         $sMailBody = $oEmailTemplates->parseContent($sMailBody, $aPlus, !$iRecipientID && $oAccount ? $oAccount->id() : 0, $iRecipientID);
+    }
+
+    if(($sRootUrl = getParam('sys_api_url_root_email')) !== '') {
+        if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
+            $sRootUrl .= '/';
+
+        $sMailBody = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sMailBody);
     }
 
     // email message headers

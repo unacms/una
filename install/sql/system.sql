@@ -741,7 +741,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_api_access_unsafe_services', '_adm_stg_cpt_option_sys_api_access_unsafe_services', '', 'checkbox', '', '', '', 30),
 (@iCategoryId, 'sys_api_cookie_path', '_adm_stg_cpt_option_sys_api_cookie_path', '/', 'digit', '', '', '', 40),
 (@iCategoryId, 'sys_api_cookie_secure', '_adm_stg_cpt_option_sys_api_cookie_secure', '', 'checkbox', '', '', '', 42),
-(@iCategoryId, 'sys_api_cookie_samesite', '_adm_stg_cpt_option_sys_api_cookie_samesite', 'Lax', 'select', 'None,Lax,Strict', '', '', 44);
+(@iCategoryId, 'sys_api_cookie_samesite', '_adm_stg_cpt_option_sys_api_cookie_samesite', 'Lax', 'select', 'None,Lax,Strict', '', '', 44),
+(@iCategoryId, 'sys_api_url_root_email', '_adm_stg_cpt_option_sys_api_url_root_email', '', 'digit', '', '', '', 50),
+(@iCategoryId, 'sys_api_url_root_push', '_adm_stg_cpt_option_sys_api_url_root_push', '', 'digit', '', '', '', 51);
 
 
 --
