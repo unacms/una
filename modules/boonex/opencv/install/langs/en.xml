@@ -8,6 +8,7 @@
     <string name="_bx_opencv_adm_stg_cpt_category_general"><![CDATA[General]]></string>
     <string name="_bx_opencv_option_confidence"><![CDATA[Detection confidence threshold]]></string>
     <string name="_bx_opencv_option_storages"><![CDATA[Enable for storages]]></string>
+    <string name="_bx_opencv_option_obfuscation_method"><![CDATA[Obfuscation method]]></string>
 
 	<string name="_bx_opencv_information"><![CDATA[Information]]></string>
     <string name="_bx_opencv_information_block"><![CDATA[
