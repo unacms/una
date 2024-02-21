@@ -130,6 +130,8 @@
 
 /*-- Entry: Author block --*/
 .sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
     -webkit-align-items: center;
     align-items: center;
 }
