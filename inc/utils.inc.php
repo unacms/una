@@ -2313,6 +2313,9 @@ function bx_birthday2age($sBirthday)
 
 function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'auto', $sDomain = '', $bSecure = 'auto', $bHttpOnly = false)
 {
+    if (bx_is_api() && bx_get('ses_sync'))
+        return ;
+       
     $aUrl = 'auto' === $sPath || 'auto' === $bSecure ? parse_url(BX_DOL_URL_ROOT) : [];
 
     if (defined('BX_MULTISITE_URL_COOKIE')) {
@@ -2345,7 +2348,9 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
         ];
         if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
             $aOptions['samesite'] = bx_is_api() ? getParam('sys_api_cookie_samesite') : getParam('sys_samesite_cookies');
-
+        if (bx_is_api()){
+            $GLOBALS['session_key'][$sName] =  [$sName, $sValue, $aOptions];
+        }
         return setcookie($sName, $sValue, $aOptions);
     }
 }
@@ -2375,6 +2380,25 @@ function bx_is_api()
     return defined('BX_API') || bx_get('api') ? true : false;
 }
 
+function bx_api_get_sql($q)
+{
+    $sql = false;
+    $t = false;
+    if ($q == 'accounts_count'){
+        $sql = 'SELECT Count(*) FROM sys_accounts';
+        $t = 'One';
+    }
+    
+    if ($sql){
+        $oDb = BxDolDb::getInstance();
+        if ($t == 'One')
+            echo json_encode($oDb->getOne($sql));
+        else
+            echo json_encode($oDb->getAll($sql));
+        exit;
+    }
+}
+
 function bx_api_check_access()
 {
     if (!getParam('sys_api_enable')) {
@@ -2399,13 +2423,8 @@ function bx_api_check_access()
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
             exit;
         }
-        elseif(bx_get('r') == 'q'){
-            $oDb = BxDolDb::getInstance();
-            if (bx_get('t') == 'One')
-                echo json_encode($oDb->getOne(bx_get('q')));
-            else
-                echo json_encode($oDb->getAll(bx_get('q')));
-            exit;
+        if(bx_get('r') == 'q'){
+            bx_api_get_sql(bx_get('q'));
         }
     }
     elseif (getParam('sys_api_access_by_origin') && $sOriginHeader) {
@@ -2420,6 +2439,10 @@ function bx_api_check_access()
 
             header('Access-Control-Allow-Origin: ' . $sOriginHeader);
             header('Access-Control-Allow-Credentials: true');
+            
+            if(bx_get('r') == 'q'){
+                bx_api_get_sql(bx_get('q'));
+            }
 
             if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
                 header('Access-Control-Allow-Methods: POST, GET');
