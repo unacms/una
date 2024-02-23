@@ -13,36 +13,17 @@
 class BxDolSessionQuery extends BxDolDb
 {
     protected $sTable;
-    protected $sTableCookies;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->sTable = 'sys_sessions';
-        $this->sTableCookies = 'sys_cookies';
     }
     function getTableName()
     {
         return $this->sTable;
     }
-    
-    function addCookie($sCookies){
-        $sKey = strtolower(genRndPwd(32, false));
-        
-        if (rand(1, 20) == 10){
-            $sSql = $this->prepare("DELETE FROM `" . $this->sTableCookies . "` WHERE `added` < ? ", time() - 36000);
-            $this->query($sSql);
-        }
-        
-        $this->query("INSERT INTO `" . $this->sTableCookies . "` (`key`, `cookies`, `added`) VALUES (:key, :cookies, :added)", ['key' => $sKey, 'cookies' => $sCookies, 'added' => time()]);
-        return $sKey;
-    }
-    
-    function getCookie($sKey){
-        return $this->getOne("SELECT `cookies` FROM `" . $this->sTableCookies . "` WHERE `key` = :key", ['key' => $sKey]);
-    }
-    
     function exists($sId)
     {
         $sSql = $this->prepare("SELECT `id`, `user_id`, `data` FROM `" . $this->sTable . "` WHERE `id`=? LIMIT 1", $sId);

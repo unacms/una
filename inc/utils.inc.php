@@ -2313,8 +2313,6 @@ function bx_birthday2age($sBirthday)
 
 function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'auto', $sDomain = '', $bSecure = 'auto', $bHttpOnly = false)
 {
-    if (bx_is_api() && bx_get('ses_sync'))
-        return ;
        
     $aUrl = 'auto' === $sPath || 'auto' === $bSecure ? parse_url(BX_DOL_URL_ROOT) : [];
 
@@ -2348,9 +2346,6 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
         ];
         if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
             $aOptions['samesite'] = bx_is_api() ? getParam('sys_api_cookie_samesite') : getParam('sys_samesite_cookies');
-        if (bx_is_api()){
-            $GLOBALS['session_key'][$sName] =  [$sName, $sValue, $aOptions];
-        }
         return setcookie($sName, $sValue, $aOptions);
     }
 }
