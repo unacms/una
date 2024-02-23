@@ -2507,25 +2507,25 @@ class BxAdsModule extends BxBaseModTextModule
                 'sign' => BxDolPayments::getInstance()->getCurrencySign((int)$aContentInfo[$CNF['FIELD_AUTHOR']])
             ]);
 
-        $sInclude = $this->_oTemplate->addCss(array('timeline.css'), $bDynamic);
-
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
-        
-        if(bx_is_api()){
-            $aResult['price'] = $sPrice;
-            $aResult['category_title'] = $sCategory;
-            $aResult['register_click'] = $this->_oConfig->isPromotion() ? 'bx_ads/register_click&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false;
-            $aResult['register_impression'] = $this->_oConfig->isPromotion() ? 'bx_ads/register_impression&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false;
-        }
-        else{
-            $aResult['text'] = $this->_oTemplate->parseHtmlByName('timeline_post_text.html', array(
+        if(empty($aResult['raw']))
+            $aResult['raw'] = '';
+
+        if($this->_bIsApi)
+            $aResult = array_merge($aResult, [
+                'price' => $sPrice,
+                'category_title' => $sCategory,
+                'register_click' => $this->_oConfig->isPromotion() ? 'bx_ads/register_click&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false,
+                'register_impression' => $this->_oConfig->isPromotion() ? 'bx_ads/register_impression&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false,
+            ]);
+        else
+            $aResult['text'] = $this->_oTemplate->parseHtmlByName('timeline_post_text.html', [
                 'category_link' => $sCategoryLink,
                 'category_title' => $sCategory,
                 'category_title_attr' => bx_html_attribute($sCategory),
                 'price' => $sPrice,
                 'text' => $aResult['text']
-            )) . ($bDynamic ? $sInclude : '');
-        }
+            ]);
 
         if($this->_oConfig->isSources() && !empty($aContentInfo[$CNF['FIELD_URL']]))
             $aResult['url'] = $aContentInfo[$CNF['FIELD_URL']];
@@ -2534,14 +2534,16 @@ class BxAdsModule extends BxBaseModTextModule
             $sJsObject = $this->_oConfig->getJsObject('main');
             $sHtmlId = $this->_oConfig->getHtmlIds('unit') . $aContentInfo[$CNF['FIELD_ID']] . '-' . time() . '-' . mt_rand(0, 100);
 
-            $aResult = array_merge($aResult, [
-                'onclick' => 'return ' . $sJsObject . '.registerClick(this, ' . $aContentInfo[$CNF['FIELD_ID']] . ')',
-                'raw' => $this->_oTemplate->parseHtmlByName('timeline_post_promotion.html', [
-                    'html_id' => $sHtmlId,
-                    'js_code' => $this->_oTemplate->_wrapInTagJsCode($sJsObject . '.registerTrakerForTimeline(' . $aContentInfo[$CNF['FIELD_ID']] . ', \'' . $sHtmlId . '\');')
-                ])
+            $aResult['onclick'] = 'return ' . $sJsObject . '.registerClick(this, ' . $aContentInfo[$CNF['FIELD_ID']] . ')';
+            $aResult['raw'] .= $this->_oTemplate->parseHtmlByName('timeline_post_promotion.html', [
+                'html_id' => $sHtmlId,
+                'js_code' => $this->_oTemplate->_wrapInTagJsCode($sJsObject . '.registerTrakerForTimeline(' . $aContentInfo[$CNF['FIELD_ID']] . ', \'' . $sHtmlId . '\');')
             ]);
         }
+
+        $sInclude = $this->_oTemplate->addCss(['timeline.css'], $bDynamic);
+        if($bDynamic)
+            $aResult['raw'] .= $sInclude;
 
         return $aResult;
     }
