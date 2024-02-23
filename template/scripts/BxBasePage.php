@@ -992,10 +992,15 @@ class BxBasePage extends BxDolPage
             return false;
 
         $sStyleAdd = '';
-        if ('center' == $sAlign || 'left' == $sAlign || 'right' == $sAlign)
-            $sStyleAdd = 'style="text-align:' . $sAlign . '"';
+        $sClassAdd = 'bx-page-image-container';
+        $aAlign = ['left' => 'start', 'center' => 'center', 'right' => 'end'];
+        if(array_key_exists($sAlign, $aAlign)) {
+            $sClassAdd .= ' flex justify-' . $aAlign[$sAlign];
 
-        return '<div class="bx-page-image-container" ' . $sStyleAdd . '><img src="' . $sUrl . '" /></div>';
+            $sStyleAdd = 'style="text-align:' . $sAlign . '"';
+        }
+
+        return '<div class="' . $sClassAdd . '" ' . $sStyleAdd . '><img src="' . $sUrl . '" /></div>';
     }
 
     /**
