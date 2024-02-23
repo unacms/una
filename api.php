@@ -3,6 +3,23 @@
 define('BX_API', true);
 
 require_once('./inc/header.inc.php');
+
+if (bx_get('ses_sync') ){
+    $aData = (new BxDolSessionQuery())->getCookie(bx_get('ses_sync'));
+    if ($aData){
+        $aCookies = json_decode($aData, true);
+        foreach ($aCookies as $i => $aCookie){
+            //unset($_COOKIE[$aCookie[0]]); 
+            //setcookie($aCookie[0], '', -1, '/'); 
+         //   $aCookie[2]['domain']='';
+            setcookie($aCookie[0], $aCookie[1], $aCookie[2]);
+        }
+    }
+
+    echo json_encode([$aData]);
+    exit();
+}
+
 require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
@@ -86,10 +103,17 @@ if (is_array($mixedRet) && isset($mixedRet['error'])) {
     exit;
 }
 
-echo json_encode([
+$aRv = [
     'status' => 200,
     'module' => $sModule,
     'method' => $sMethod,
     'params' => $aParams,
     'data' => $mixedRet,
-]);
+];
+
+if (isset($GLOBALS['session_key'])){
+    $sKey = (new BxDolSessionQuery())->addCookie(json_encode($GLOBALS['session_key']));
+    $aRv['session_key'] = $sKey;
+}
+
+echo json_encode($aRv);

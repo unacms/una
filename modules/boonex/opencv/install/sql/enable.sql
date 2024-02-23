@@ -12,7 +12,8 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_opencv_option_confidence', '0.9', @iCategId, '_bx_opencv_option_confidence', 'digit', '', '', '', 10),
-('bx_opencv_option_storages', '', @iCategId, '_bx_opencv_option_storages', 'list', 'a:2:{s:6:"module";s:9:"bx_opencv";s:6:"method";s:12:"get_storages";}', '', '', 20);
+('bx_opencv_option_storages', '', @iCategId, '_bx_opencv_option_storages', 'list', 'a:2:{s:6:"module";s:9:"bx_opencv";s:6:"method";s:12:"get_storages";}', '', '', 20),
+('bx_opencv_option_obfuscation_method', 'emoji', @iCategId, '_bx_opencv_option_obfuscation_method', 'select', 'emoji,blur', '', '', 30);
 
 -- Alerts
 

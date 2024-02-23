@@ -163,7 +163,8 @@ function bx_logout($bNotify = true)
         unset($_COOKIE['memberPassword']);
     }
 
-    BxDolSession::getInstance()->destroy();
+    // BxDolSession::getInstance()->destroy();
+    BxDolSession::getInstance()->setUserId(0);
 }
 
 /**
