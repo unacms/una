@@ -3067,6 +3067,7 @@
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Участники]]></string>
     <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Подписки]]></string>
+    <string name="_sys_menu_item_title_system_sm_ignore"><![CDATA[Игнорировать рекомендацию]]></string>
     <string name="_sys_menu_item_title_system_sm_ignore_befriend"><![CDATA[Игнорировать рекомендацию: Дружба]]></string>
     <string name="_sys_menu_item_title_system_sm_ignore_subscribe"><![CDATA[Игнорировать рекомендацию: Подписка]]></string>
     <string name="_sys_menu_item_title_system_vm_membership"><![CDATA[Членство]]></string>
