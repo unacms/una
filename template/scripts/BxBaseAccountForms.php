@@ -25,7 +25,13 @@ class BxBaseAccountForms extends BxDolProfileForms
 
     public function getObjectFormAdd ()
     {
-        return BxDolForm::getObjectInstance('sys_account', 'sys_account_create');
+        $oForm = BxDolForm::getObjectInstance('sys_account', 'sys_account_create');
+
+        bx_alert('account', 'add_form_get', 0, 0, [
+            'form_object' => &$oForm
+        ]);
+
+        return $oForm;
     }
 
     public function getObjectFormEdit ()
