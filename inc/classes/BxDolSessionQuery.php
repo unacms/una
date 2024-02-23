@@ -13,6 +13,7 @@
 class BxDolSessionQuery extends BxDolDb
 {
     protected $sTable;
+    protected $sTableCookies;
 
     public function __construct()
     {
