@@ -133,7 +133,14 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         if($this->checkAllowedCheckIn($aDataEntry) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-        return $this->_oDb->checkIn($iProfileId, $iId);
+        if(!$this->_oDb->checkIn($iProfileId, $iId))
+            return false;
+
+        bx_alert($this->getName(), 'check_in', $iId, $iProfileId, [
+            'event_profile_id' => $aDataEntry['profile_id'],
+        ]);
+
+        return true;
     }
 
     public function serviceCalendarData($aParams = [])
@@ -268,16 +275,11 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
     public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = $this->_oConfig->CNF;
-        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
 
         $aResult = parent::decodeDataAPI($aData, $aParams);
         $aResult = array_merge($aResult, [
             'date_start' => $aData[$CNF['FIELD_DATE_START']],
             'date_end' => $aData[$CNF['FIELD_DATE_END']],
-            'description' => $aData[$CNF['FIELD_TEXT']],
-            'location_data' => $oMetatags->locationGet($aData[$CNF['FIELD_ID']]),
-            'threshold' => $aData['threshold'],
-            'location' => $oMetatags->locationsString($aData[$CNF['FIELD_ID']], false)
         ]);
         return $aResult;
     }
