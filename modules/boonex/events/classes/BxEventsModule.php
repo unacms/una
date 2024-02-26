@@ -275,11 +275,16 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
     public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = $this->_oConfig->CNF;
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
 
         $aResult = parent::decodeDataAPI($aData, $aParams);
         $aResult = array_merge($aResult, [
             'date_start' => $aData[$CNF['FIELD_DATE_START']],
             'date_end' => $aData[$CNF['FIELD_DATE_END']],
+            'description' => $aData[$CNF['FIELD_TEXT']],
+            'location_data' => $oMetatags->locationGet($aData[$CNF['FIELD_ID']]),
+            'threshold' => $aData['threshold'],
+            'location' => $oMetatags->locationsString($aData[$CNF['FIELD_ID']], false)
         ]);
         return $aResult;
     }
