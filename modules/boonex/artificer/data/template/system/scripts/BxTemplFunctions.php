@@ -20,7 +20,7 @@ class BxTemplFunctions extends BxBaseFunctions
         $this->_sModule = 'bx_artificer';
     }
 
-    function getMainLogo($aParams = array())
+    public function getMainLogo($aParams = array())
     {
         $oDesigns = BxDolDesigns::getInstance();
 
@@ -143,7 +143,26 @@ class BxTemplFunctions extends BxBaseFunctions
         }
 
         return $mixedResult;
-    }    
+    }
+
+    public function getColorSchemeSwitcher()
+    {
+        $oModule = BxDolModule::getInstance($this->_sModule);
+
+        if($oModule->_oConfig->getColorScheme() != 'auto')
+            return '';
+        
+        $aMenu = [
+            ['id' => $this->_sModule . '-css-sun', 'name' => $this->_sModule . '-css-sun', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(1)', 'target' => '_self', 'icon' => 'sun', 'title' => _t('_bx_artificer_txt_color_scheme_light')],
+            ['id' => $this->_sModule . '-css-moon', 'name' => $this->_sModule . '-css-moon', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(2)', 'target' => '_self', 'icon' => 'moon', 'title' => _t('_bx_artificer_txt_color_scheme_dark')],
+            ['id' => $this->_sModule . '-css-desktop', 'name' => $this->_sModule . '-css-desktop', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(0)', 'target' => '_self', 'icon' => 'desktop', 'title' => _t('_bx_artificer_txt_color_scheme_system')],
+        ];
+        $oMenu = new BxTemplMenu(['template' => 'menu_vertical.html', 'menu_id'=> $this->_sModule . '-css-menu', 'menu_items' => $aMenu]);
+
+        return $oModule->_oTemplate->parseHtmlByName('color_scheme_switcher.html', [
+            'popup' => $this->transBox('bx-sb-theme-switcher-menu', $oMenu->getCode(), true)
+        ]);
+    }
 
     protected function getInjFooterPopupMenus() 
     {
@@ -199,29 +218,11 @@ class BxTemplFunctions extends BxBaseFunctions
         if(!$oProfile)
             return '';
 
-        $aTmplVarsColorSchemeSwitcher = [];
-        $bTmplVarsColorSchemeSwitcher = BxDolModule::getInstance($this->_sModule)->_oConfig->getColorScheme() == 'auto';
-        if($bTmplVarsColorSchemeSwitcher) {
-            $aMenu = [
-                ['id' => $this->_sModule . '-css-sun', 'name' => $this->_sModule . '-css-sun', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(1)', 'target' => '_self', 'icon' => 'sun', 'title' => _t('_bx_artificer_txt_color_scheme_light')],
-                ['id' => $this->_sModule . '-css-moon', 'name' => $this->_sModule . '-css-moon', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(2)', 'target' => '_self', 'icon' => 'moon', 'title' => _t('_bx_artificer_txt_color_scheme_dark')],
-                ['id' => $this->_sModule . '-css-desktop', 'name' => $this->_sModule . '-css-desktop', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(0)', 'target' => '_self', 'icon' => 'desktop', 'title' => _t('_bx_artificer_txt_color_scheme_system')],
-            ];
-            $oMenu = new BxTemplMenu(['template' => 'menu_vertical.html', 'menu_id'=> $this->_sModule . '-css-menu', 'menu_items' => $aMenu]);
-
-            $aTmplVarsColorSchemeSwitcher = [
-                'popup' => BxTemplFunctions::getInstance()->transBox('bx-sb-theme-switcher-menu', $oMenu->getCode(), true)
-            ];
-        }
-
         $sMenuAccountPopup = 'sys_account_popup';
         $oMenuAccountPopup = BxTemplMenu::getObjectInstance($sMenuAccountPopup);
 
         return $this->_oTemplate->parsePageByName('sidebar_account.html', [
-            'bx_if:color_scheme_switcher' => [
-                'condition' => $bTmplVarsColorSchemeSwitcher,
-                'content' => $aTmplVarsColorSchemeSwitcher
-            ],
+            'color_scheme_switcher' => $this->getColorSchemeSwitcher(),
             'ap_menu_object' => $sMenuAccountPopup,
             'bx_repeat:ap_menu_items' => $oMenuAccountPopup->getMenuItems(),
         ]);
