@@ -80,7 +80,7 @@ class BxBaseServiceAccount extends BxDol
                 }
                 return [
                     bx_api_get_block('redirect', ['uri' => $sRedirectUrl]),
-                    bx_api_get_block('login', ['session' => BxDolSession::getInstance()->getId()], ['id' => 2]),
+                    //bx_api_get_block('login', ['session' => BxDolSession::getInstance()->getId()], ['id' => 2]),
                 ];
             }
             else
