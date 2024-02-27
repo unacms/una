@@ -368,7 +368,7 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
     }
     protected function checkLangExists( $sLang )
     {
-        if(!preg_match('/^[A-Za-z0-9_]+$/', $sLang))
+        if(!preg_match('/^[A-Za-z0-9_-]+$/', $sLang))
             return false;
 
         $iLangId = $this->oDb->getLanguageId($sLang, false);
