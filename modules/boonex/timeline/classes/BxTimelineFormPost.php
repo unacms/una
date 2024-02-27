@@ -27,6 +27,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     {
         $this->MODULE = 'bx_timeline';
 
+        $this->_bAllowChangeUserForAdmins = false;
+
         parent::__construct($aInfo, $oTemplate);
 
         $this->_sGhostTemplate = 'uploader_nfw.html';
