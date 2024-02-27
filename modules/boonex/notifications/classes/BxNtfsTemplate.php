@@ -91,17 +91,21 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $sEvent = $this->getPost($aEvent, $aParams);
             if(empty($sEvent))
                 continue;
-            if (bx_is_api()){
-                $sEvent['author_data'] = BxDolProfile::getData($sEvent['owner_id']);
+
+            if($this->_bIsApi){
+                if(!isset($sEvent['author_data']))
+                    $sEvent['author_data'] = BxDolProfile::getData($sEvent['owner_id']);
+
                 $aTmplVarsEvents[] = $sEvent;
             }
             else
                 $aTmplVarsEvents[] = ['event' => $sEvent];
+
             if(count($aTmplVarsEvents) >= ($aParams['per_page'] + 1))
             	break;
         }
 
-        if (bx_is_api())
+        if($this->_bIsApi)
             return $aTmplVarsEvents;
 
         $oPaginate = new BxTemplPaginate(array(
