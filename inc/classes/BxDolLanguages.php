@@ -459,6 +459,24 @@ function bx_lang_name()
     return BxDolLanguages::getInstance()->getCurrentLanguage();
 }
 
+function bx_lang_code()
+{
+    $sResult = bx_lang_name();
+    if(strpos($sResult, '-') !== false)
+        list($sResult) = explode('-', $sResult);
+
+    return $sResult;
+}
+
+function bx_lang_country()
+{
+    $sResult = bx_lang_name();
+    if(strpos($sResult, '-') !== false)
+        list($sCode, $sResult) = explode('-', $sResult);
+
+    return $sResult;
+}
+
 function bx_lang_direction($sLanguage = '')
 {
     return BxDolLanguages::getInstance()->getLangDirection($sLanguage);

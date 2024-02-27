@@ -1835,14 +1835,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 $sRet = $this->_oTemplateFunctions->getInjectionFooter();
                 break;
             case 'lang':
-                $sRet = bx_lang_name();
+                $sRet = bx_lang_code();
                 break;
             case 'lang_direction':
                 $sRet = bx_lang_direction();
                 break;
             case 'lang_country':
                 if (!($sRet = BxDolLanguages::getInstance()->getLangCountryCode()))
-                    $sRet = bx_lang_name();
+                    $sRet = bx_lang_country();
                 break;                
             case 'main_logo':
                 $sRet = BxTemplFunctions::getInstance()->getMainLogo();
