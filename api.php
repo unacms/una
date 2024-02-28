@@ -84,6 +84,7 @@ if (is_array($mixedRet) && isset($mixedRet['error'])) {
     $a = [
         'status' => isset($mixedRet['code']) ? $mixedRet['code'] : 500,
         'error' => isset($mixedRet['desc']) ? $mixedRet['desc'] : $mixedRet['error'],
+        'data' => isset($mixedRet['data']) ? $mixedRet['data'] : '',
     ];
     if (isset($mixedRet['code']))
         $a['code'] = $mixedRet['code'];
