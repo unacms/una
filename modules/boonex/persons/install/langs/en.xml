@@ -68,6 +68,8 @@
     <string name="_bx_persons_form_profile_input_profile_status"><![CDATA[Status]]></string>
     <string name="_bx_persons_form_profile_input_sys_profile_ip"><![CDATA[IP]]></string>
     <string name="_bx_persons_form_profile_input_profile_ip"><![CDATA[IP]]></string>
+    <string name="_bx_persons_form_profile_input_sys_profile_logged"><![CDATA[Last Seen]]></string>
+    <string name="_bx_persons_form_profile_input_profile_logged"><![CDATA[Last Seen]]></string>
     <string name="_bx_persons_form_profile_input_sys_skills"><![CDATA[Skills]]></string>
     <string name="_bx_persons_form_profile_input_skills"><![CDATA[Skills]]></string>
     <string name="_bx_persons_form_profile_input_sys_date_added"><![CDATA[Added]]></string>

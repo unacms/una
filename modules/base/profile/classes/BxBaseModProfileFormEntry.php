@@ -210,6 +210,11 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         ));
     }
 
+    protected function genCustomViewRowValueProfileLogged($aInput)
+    {
+        return !empty($aInput['value']) ? bx_time_js($aInput['value']) : '';
+    }
+
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
         $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId, $this->_isAdmin($iContentId));
