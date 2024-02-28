@@ -759,6 +759,14 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_api_extended_units', '_adm_stg_cpt_option_sys_api_extended_units', '', 'checkbox', '', '', '', 30),
 (@iCategoryId, 'sys_api_conn_in_prof_units', '_adm_stg_cpt_option_sys_api_conn_in_prof_units', '', 'checkbox', '', '', '', 31);
 
+--
+-- CATEGORY (HIDDEN): API (config)
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'api_config', '_adm_stg_cpt_category_api_config', 1, 3);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_api_config', '_adm_stg_cpt_option_sys_api_config', '', 'text', '', '', '', 1);
 
 --
 -- CATEGORY (HIDDEN): PWA Manifest

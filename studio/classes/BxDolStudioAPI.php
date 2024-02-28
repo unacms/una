@@ -8,6 +8,7 @@
  */
 
 define('BX_DOL_STUDIO_API_TYPE_SETTINGS', 'settings');
+define('BX_DOL_STUDIO_API_TYPE_CONFIG', 'api_config');
 define('BX_DOL_STUDIO_API_TYPE_KEYS', 'keys');
 define('BX_DOL_STUDIO_API_TYPE_ORIGINS', 'origins');
 

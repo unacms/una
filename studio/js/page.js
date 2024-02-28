@@ -8,6 +8,7 @@
 function BxDolStudioPage(oOptions) {
     this.sActionsUrl = oOptions.sActionUrl;
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioPage' : oOptions.sObjName;
+    this.sCodeMirror = oOptions.sCodeMirror == undefined ? '' : oOptions.sCodeMirror;
     this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this.oPopupOptions = {
@@ -17,6 +18,12 @@ function BxDolStudioPage(oOptions) {
         },
         closeOnOuterClick: false
     };
+    
+    var $this = this;
+    $(document).ready (function () {
+    	if($this.sCodeMirror != '')
+            $this.initCodeMirror($this.sCodeMirror);
+    });
 }
 
 BxDolStudioPage.prototype.processJson = function (oData) {
@@ -72,6 +79,18 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
 
     if($(sId).html().length > 0)
         $(sId).dolPopup(oPopupOptions);
+};
+
+BxDolStudioPage.prototype.initCodeMirror = function(sSelector) {
+    var oSelector = $(sSelector);
+    for(var i = 0; i < oSelector.length; i++) {
+        var e = CodeMirror.fromTextArea(oSelector.get(i), {
+            lineNumbers: true,
+            mode: "htmlmixed",
+            htmlMode: true,
+            matchBrackets: true
+        });
+    }
 };
 
 /** @} */

@@ -24,6 +24,7 @@ class BxBaseStudioAPI extends BxDolStudioAPI
 
         $this->aMenuItems = array(
             BX_DOL_STUDIO_API_TYPE_SETTINGS => array('icon' => 'cogs'),
+            BX_DOL_STUDIO_API_TYPE_CONFIG => array('icon' => 'cogs'),
             BX_DOL_STUDIO_API_TYPE_ORIGINS => array('icon' => 'globe'),
             BX_DOL_STUDIO_API_TYPE_KEYS => array('icon' => 'key'),
         );
@@ -71,6 +72,20 @@ class BxBaseStudioAPI extends BxDolStudioAPI
         $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         
         return $oOptions->getCode();
+    }
+    
+    protected function getApiConfig()
+    {
+        $oOptions = new BxTemplStudioOptionsApi(BX_DOL_STUDIO_STG_TYPE_DEFAULT, [
+            'api_config'
+        ]);
+
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss(), [BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css']);
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs(), ['codemirror/codemirror.min.js']);
+
+        return $oOptions->getCode() . $this->getPageJsCode([
+            'sCodeMirror' => "textarea[name='sys_api_config']"
+        ]);
     }
 
     protected function getKeys()
