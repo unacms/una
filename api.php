@@ -10,6 +10,11 @@ header('Content-Type: application/json');
 
 bx_api_check_access();
 
+if (bx_get('cnf') ){   
+   echo getParam('sys_api_config');
+   exit();
+}
+
 // prepare params
 
 $aRequest = isset($_GET['r']) ? explode('/', $_GET['r']) : [];

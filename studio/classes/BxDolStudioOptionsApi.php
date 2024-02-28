@@ -21,10 +21,13 @@ class BxDolStudioOptionsApi extends BxTemplStudioOptions
         $sResult = parent::saveChanges($oForm);
 
         if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
-            $oSockets->sendEvent('sys_api', 0, 'config_updated', getParam('sys_api_config'));
+            $oSockets->sendEvent('sys_api', 0, 'config_changed', true);
 
-        //TODO: Add necessary actions here.
-
+        $sAppUrl = getParam('sys_api_url_root_email');
+        if ($sAppUrl != ''){
+           bx_file_get_contents($sAppUrl . '_upd_conf');
+        }
+        
         return $sResult;
     }
 }
