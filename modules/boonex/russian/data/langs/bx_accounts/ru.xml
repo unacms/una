@@ -40,8 +40,8 @@
     <string name="_bx_accnt_menu_item_title_make_operator"><![CDATA[Дать доступ Оператора]]></string>
     <string name="_bx_accnt_menu_item_title_system_unmake_operator"><![CDATA[Отменить доступ Оператора]]></string>
     <string name="_bx_accnt_menu_item_title_unmake_operator"><![CDATA[Отменить доступ Оператора]]></string>
-    <string name="_bx_accnt_menu_item_title_system_set_operator_role"><![CDATA[Сменить роль опуратора]]></string>
-    <string name="_bx_accnt_menu_item_title_set_operator_role"><![CDATA[Сменить роль опуратора]]></string>
+    <string name="_bx_accnt_menu_item_title_system_set_operator_role"><![CDATA[Сменить роль оператора]]></string>
+    <string name="_bx_accnt_menu_item_title_set_operator_role"><![CDATA[Сменить роль оператора]]></string>
     <string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Аккаунты]]></string>
     <string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Аккаунты]]></string>
     <string name="_bx_accnt_menu_item_title_manage"><![CDATA[Управление]]></string>

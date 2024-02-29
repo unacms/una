@@ -176,12 +176,12 @@
     <string name="_bx_credits_grid_column_title_htr_cleared"><![CDATA[Clearing]]></string>
     <string name="_bx_credits_grid_action_title_htr_grant"><![CDATA[Grant]]></string>
     <string name="_bx_credits_grid_action_title_htr_send"><![CDATA[Send]]></string>
-    <string name="_bx_credits_grid_action_title_htr_withdraw_confirm"><![CDATA[Confirm withdraw]]></string>
-    <string name="_bx_credits_grid_action_title_htr_withdraw_request"><![CDATA[Request withdraw]]></string>
+    <string name="_bx_credits_grid_action_title_htr_withdraw_confirm"><![CDATA[Confirm withdrawal]]></string>
+    <string name="_bx_credits_grid_action_title_htr_withdraw_request"><![CDATA[Request withdrawal]]></string>
     <string name="_bx_credits_grid_popup_title_htr_grant"><![CDATA[Grant]]></string>
     <string name="_bx_credits_grid_popup_title_htr_send"><![CDATA[Send]]></string>
-    <string name="_bx_credits_grid_popup_title_htr_withdraw_confirm"><![CDATA[Confirm withdraw]]></string>
-    <string name="_bx_credits_grid_popup_title_htr_withdraw_request"><![CDATA[Request withdraw]]></string>
+    <string name="_bx_credits_grid_popup_title_htr_withdraw_confirm"><![CDATA[Confirm withdrawal]]></string>
+    <string name="_bx_credits_grid_popup_title_htr_withdraw_request"><![CDATA[Request withdrawal]]></string>
 
     <string name="_bx_credits_grid_column_title_ord_profile_id"><![CDATA[Profile]]></string>
     <string name="_bx_credits_grid_column_title_ord_bundle"><![CDATA[Bundle]]></string>
