@@ -1190,7 +1190,8 @@
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Link name displayed in site menus. Use at least 3 characters.]]></string>
 	<string name="_adm_nav_dsc_items_title_system"><![CDATA[Item name, displayed in Studio only.]]></string>
 	<string name="_adm_nav_dsc_items_visible_for_levels"><![CDATA[Select user levels that can see this menu item]]></string>
-	<string name="_adm_nav_dsc_menus_set_name"><![CDATA[Assign a Set of menu Items]]></string>
+	<string name="_adm_nav_dsc_menus_persistent"><![CDATA[Number of persistent menu items. Applicable for menus with 'Auto More' mechanism only.]]></string>
+        <string name="_adm_nav_dsc_menus_set_name"><![CDATA[Assign a Set of menu Items]]></string>
 	<string name="_adm_nav_dsc_menus_set_title"><![CDATA[Descriptive name displayed in Studio only. Use at least 3 characters.]]></string>
 	<string name="_adm_nav_dsc_menus_style"><![CDATA[Select presentation style - the way this menu will be displayed on site]]></string>
 	<string name="_adm_nav_dsc_menus_title"><![CDATA[Descriptive name displayed in Studio only. Use at least 3 characters.]]></string>
@@ -1264,6 +1265,7 @@
 	<string name="_adm_nav_txt_menus_gl_set_title"><![CDATA[Set]]></string>
 	<string name="_adm_nav_txt_menus_gl_template_title"><![CDATA[Style]]></string>
 	<string name="_adm_nav_txt_menus_gl_title"><![CDATA[System Name]]></string>
+        <string name="_adm_nav_txt_menus_persistent"><![CDATA[Persistent items]]></string>
 	<string name="_adm_nav_txt_menus_set_name"><![CDATA[Set]]></string>
 	<string name="_adm_nav_txt_menus_set_name_new"><![CDATA[Create New]]></string>
 	<string name="_adm_nav_txt_menus_set_name_select"><![CDATA[Select Set...]]></string>

@@ -1172,6 +1172,7 @@
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Название ссылки для отображения в меню сайта. Используйте как минимум 3 символа.]]></string>
 	<string name="_adm_nav_dsc_items_title_system"><![CDATA[Имя элемента, отображаемое только в Студии.]]></string>
 	<string name="_adm_nav_dsc_items_visible_for_levels"><![CDATA[Выбрать членства, разрешённые для просмотра элемента данного меню]]></string>
+        <string name="_adm_nav_dsc_menus_persistent"><![CDATA[Количество постоянных пунктов меню. Применимо только для авто-перестраиваемых меню.]]></string>
 	<string name="_adm_nav_dsc_menus_set_name"><![CDATA[Назначить набор для элемента меню]]></string>
 	<string name="_adm_nav_dsc_menus_set_title"><![CDATA[Описательное имя для использования только в Студии. Используйте как минимум 3 символа.]]></string>
 	<string name="_adm_nav_dsc_menus_style"><![CDATA[Выбрать стиль презентации - способа, каким будет отображаться данное меню на сайте]]></string>
@@ -1246,6 +1247,7 @@
 	<string name="_adm_nav_txt_menus_gl_set_title"><![CDATA[Набор]]></string>
 	<string name="_adm_nav_txt_menus_gl_template_title"><![CDATA[Стиль]]></string>
 	<string name="_adm_nav_txt_menus_gl_title"><![CDATA[Системное имя]]></string>
+        <string name="_adm_nav_txt_menus_persistent"><![CDATA[Постоянные пункты меню]]></string>
 	<string name="_adm_nav_txt_menus_set_name"><![CDATA[Набор]]></string>
 	<string name="_adm_nav_txt_menus_set_name_new"><![CDATA[Создать новый]]></string>
 	<string name="_adm_nav_txt_menus_set_name_select"><![CDATA[Выбрать набор...]]></string>

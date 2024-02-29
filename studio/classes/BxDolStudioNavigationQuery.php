@@ -24,6 +24,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
             `tm`.`set_name` AS `set_name`,
             `tm`.`module` AS `module`,
             `tm`.`template_id` AS `template_id`,
+            `tm`.`persistent` AS `persistent`,
             `tm`.`deletable` AS `deletable`,
             `tm`.`active` AS `active`,
             `tm`.`override_class_name` AS `override_class_name`,

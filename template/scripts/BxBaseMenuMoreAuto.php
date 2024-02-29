@@ -36,7 +36,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         $this->_sTmplNameItemMorePopup = 'menu_item_more_popup.html';
 
         $this->_bMoreAuto = null;
-        $this->_iMoreAutoItemsStatic = 1;
+        $this->_iMoreAutoItemsStatic = (int)$aObject['persistent'];
         $this->_bMoreAutoItemsStaticOnly = false;
 
         $this->_sJsClassMoreAuto = 'BxDolMenuMoreAuto';

@@ -4571,6 +4571,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `set_name` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
   `template_id` int(11) NOT NULL,
+  `persistent` tinyint(4) NOT NULL DEFAULT '0',
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
   `active` tinyint(4) NOT NULL DEFAULT '0',
   `override_class_name` varchar(255) NOT NULL,

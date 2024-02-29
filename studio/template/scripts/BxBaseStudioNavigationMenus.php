@@ -333,6 +333,17 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
                         'error' => _t('_adm_nav_err_menus_style'),
                     ),
                 ),
+                'persistent' => array(
+                    'type' => 'text',
+                    'name' => 'persistent',
+                    'caption' => _t('_adm_nav_txt_menus_persistent'),
+                    'info' => _t('_adm_nav_dsc_menus_persistent'),
+                    'value' => isset($aMenu['persistent']) ? $aMenu['persistent'] : 0,
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
                 'controls' => array(
                     'name' => 'controls',
                     'type' => 'input_set',
