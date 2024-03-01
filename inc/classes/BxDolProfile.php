@@ -156,6 +156,37 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         return $aRv;
     }
     
+    public static function getDataForPage($mixedProfileId = false, $aParams = [])
+    {
+        if(!($mixedProfileId instanceof BxDolProfile))
+            $oProfile = BxDolProfile::getInstanceMagic($mixedProfileId);
+        else
+            $oProfile = $mixedProfileId;
+
+        $iId = $oProfile->id();
+        $oAccount = $oProfile->getAccountObject();
+
+        $aRv = [
+            'id' => $iId,
+            'email' => $oAccount->getEmail(),
+            'display_name' => $oProfile->getDisplayName(),
+            'url' => bx_api_get_relative_url($oProfile->getUrl()),
+            'avatar' => $oProfile->getAvatar(),
+            'settings' => $oProfile->getSettings(),
+            //'level' => BxDolAcl::getInstance()->getMemberMembershipInfo($iId),
+            'moderator' => (bool)BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_ADMINISTRATOR, MEMBERSHIP_ID_MODERATOR], $iId),
+            'operator' => isAdmin(),
+            //'info' => $oProfile->getInfo(),
+            'confirmed' => $oAccount->isConfirmed(),
+            'notifications' => 0,
+            'cart' => 0,
+            'active' => $oProfile->isActive(),
+            'status' => $oProfile->getStatus(),
+        ];
+
+        return $aRv;
+    }
+
     /**
      * Get profile id
      */

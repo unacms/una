@@ -495,26 +495,10 @@ class BxBasePage extends BxDolPage
                 if(($oMenuAddContent = BxDolMenu::getObjectInstance('sys_add_content')) !== false)
                 $a['menu_add'] = $oMenuAddContent->getCodeAPI();
             */
+
             $o = BxDolProfile::getInstance();
-            $oAccount = $o->getAccountObject();
-            $a['user'] = [
-                'id' => $o->id(),
-                'email' => $o->getAccountObject()->getEmail(),
-                'display_name' => $o->getDisplayName(),
-                'url' => bx_api_get_relative_url($o->getUrl()),
-                'avatar' => $o->getAvatar(),
-                'settings' => $o->getSettings(),
-                //'level' => BxDolAcl::getInstance()->getMemberMembershipInfo($o->id()),
-                'moderator' => (bool)BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_ADMINISTRATOR, MEMBERSHIP_ID_MODERATOR], $o->id()),
-                'operator' => isAdmin(),
-                //'info' => $o->getInfo(),
-                'confirmed' => $oAccount->isConfirmed(),
-                'notifications' => 0,
-                'cart' => 0,
-                'active' => $o->isActive(),
-                'status' => $o->getStatus(),
-            ];
-            
+            $a['user'] = BxDolProfile::getDataForPage($o);
+
             $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
             $sRet = $oInformer ? $oInformer->display() : '';
             if ($sRet){
