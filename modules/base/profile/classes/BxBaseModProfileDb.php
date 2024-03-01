@@ -21,7 +21,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function getContentInfoById ($iContentId)
     {
-        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`logged` AS `profile_logged`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `c`.`id` = ?", $this->_oConfig->getName(), $iContentId);
+        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`active` AS `profile_last_active`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `c`.`id` = ?", $this->_oConfig->getName(), $iContentId);
         $aInfo = $this->getRow($sQuery);
         bx_alert('profile', 'content_info_by_id', $iContentId, 0, array('module' => $this->_oConfig->getName(), 'info' => &$aInfo));
         return $aInfo;
@@ -29,7 +29,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function getContentInfoByProfileId ($iProfileId)
     {
-        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`logged` AS `profile_logged`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `p`.`id` = ?", $this->_oConfig->getName(), $iProfileId);
+        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`active` AS `profile_last_active`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `p`.`id` = ?", $this->_oConfig->getName(), $iProfileId);
         $aInfo = $this->getRow($sQuery);
         bx_alert('profile', 'content_info_by_profile_id', $iProfileId, 0, array('module' => $this->_oConfig->getName(), 'info' => &$aInfo));
         return $aInfo;

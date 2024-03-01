@@ -210,9 +210,14 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         ));
     }
 
-    protected function genCustomViewRowValueProfileLogged($aInput)
+    protected function genCustomViewRowValueProfileLastActive($aInput)
     {
-        return !empty($aInput['value']) ? bx_time_js($aInput['value']) : '';
+        $iLastActiveSession = 0;
+        if(!empty($this->_iContentId) && ($oProfile = BxDolProfile::getInstanceByContentAndType($this->_iContentId, $this->MODULE)) !== false)
+            $iLastActiveSession = (new BxDolSessionQuery())->getLastActivityAccount($oProfile->getAccountId());
+
+        $iLastActive = max($iLastActiveSession, (int)$aInput['value']);
+        return !empty($iLastActive) ? bx_time_js($iLastActive) : '';
     }
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')

@@ -76,8 +76,8 @@
     <string name="_bx_orgs_form_profile_input_profile_status"><![CDATA[Статус]]></string>
     <string name="_bx_orgs_form_profile_input_sys_profile_ip"><![CDATA[IP]]></string>
     <string name="_bx_orgs_form_profile_input_profile_ip"><![CDATA[IP]]></string>
-    <string name="_bx_orgs_form_profile_input_sys_profile_logged"><![CDATA[Последний визит]]></string>
-    <string name="_bx_orgs_form_profile_input_profile_logged"><![CDATA[Последний визит]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_profile_last_active"><![CDATA[Последний раз видели]]></string>
+    <string name="_bx_orgs_form_profile_input_profile_last_active"><![CDATA[Последний раз видели]]></string>
     <string name="_bx_orgs_form_profile_input_sys_date_added"><![CDATA[Дата создания]]></string>
     <string name="_bx_orgs_form_profile_input_date_added"><![CDATA[Дата создания]]></string>
     <string name="_bx_orgs_form_profile_input_sys_date_changed"><![CDATA[Дата обновления]]></string>
