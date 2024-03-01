@@ -38,6 +38,7 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
         
         if($this->_bIsApi && $CNF['OBJECT_CONNECTIONS'])
             return $this->_getMenuItemConnectionApi($CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
+
         return $this->_getMenuItemByNameActions($aItem);
     }
 
@@ -52,7 +53,8 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
         
         if($this->_bIsApi && $CNF['OBJECT_CONNECTIONS'])
             return $this->_getMenuItemConnectionApi($CNF['OBJECT_CONNECTIONS'], 'remove', $aItem);
-        return $this->_getMenuItemByNameActionsMore($aItem);
+
+        return $this->_getMenuItemByNameActions($aItem);
     }
 }
 

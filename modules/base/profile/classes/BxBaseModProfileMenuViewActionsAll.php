@@ -94,7 +94,7 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
         if($this->_bIsApi)
             return $this->_getMenuItemConnectionApi('sys_profiles_friends', 'remove', $aItem);
 
-        return $this->_getMenuItemByNameActionsMore($aItem);
+        return $this->_getMenuItemByNameActions($aItem);
     }
 
     protected function _getMenuItemProfileRelationAdd($aItem)
@@ -104,7 +104,7 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
 
     protected function _getMenuItemProfileRelationRemove($aItem)
     {
-        return $this->_getMenuItemByNameActionsMore($aItem);
+        return $this->_getMenuItemByNameActions($aItem);
     }
 
     protected function _getMenuItemProfileSubscribeAdd($aItem)
@@ -120,7 +120,7 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
         if($this->_bIsApi)
             return $this->_getMenuItemConnectionApi('sys_profiles_subscriptions', 'remove', $aItem);
 
-        return $this->_getMenuItemByNameActionsMore($aItem);
+        return $this->_getMenuItemByNameActions($aItem);
     }
 
     protected function _getMenuItemProfileSetAclLevel($aItem)

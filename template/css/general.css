@@ -136,7 +136,7 @@
     content: "";
     position: absolute;
     top: 0;
-    width: 1.5rem;
+    width: 1.0rem;
     height: 100%;
     z-index: 1;
 }
@@ -168,6 +168,9 @@
     overflow-x: auto;
 }
 
+.bx-menu-main-bar-cnt {
+    height: 2.5rem;
+}
 .bx-menu-main-bar-gap.bx-menu-main-bar-hidden,
 .bx-menu-main-bar-wrapper.bx-menu-main-bar-hidden,
 .bx-menu-main-bar.bx-menu-main-bar-hidden {

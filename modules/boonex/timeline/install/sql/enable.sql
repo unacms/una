@@ -193,8 +193,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-more', '_bx_timeline_menu_item_title_system_item_more', '_bx_timeline_menu_item_title_item_more', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_manage'', this, {''id'':''bx_timeline_menu_item_manage_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'ellipsis-v', '', 'bx_timeline_menu_item_manage', 1, 2147483647, 0, 0, 1, 60);
 
 -- MENU: all actions menu for view entry 
-INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_timeline_menu_item_actions_all', '_bx_timeline_menu_title_item_actions_all', 'bx_timeline_menu_item_actions_all', 'bx_timeline', 15, 0, 0, 'BxTimelineMenuItemActionsAll', 'modules/boonex/timeline/classes/BxTimelineMenuItemActionsAll.php');
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `persistent`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_timeline_menu_item_actions_all', '_bx_timeline_menu_title_item_actions_all', 'bx_timeline_menu_item_actions_all', 'bx_timeline', 15, 1, 0, 0, 'BxTimelineMenuItemActionsAll', 'modules/boonex/timeline/classes/BxTimelineMenuItemActionsAll.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', '_bx_timeline_menu_set_title_item_actions_all', 0);

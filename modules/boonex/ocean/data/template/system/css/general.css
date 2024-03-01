@@ -25,6 +25,11 @@
     line-height: 4rem;
 }
 
+/* --------------- submenu */
+.bx-menu-main-bar-cnt {
+    height: 3.5rem;
+}
+
 /* --------------- content */
 #bx-content-wrapper {
     background-image: url(../images/bg-page.png);

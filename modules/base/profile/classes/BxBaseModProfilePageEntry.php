@@ -66,6 +66,20 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
                 'icon' => $CNF['ICON'],
             ));
 
+        // select view profile manage menu
+        if(($oMenuManage = BxDolMenu::getObjectInstance('sys_site_manage')) !== false) {
+            if(!empty($CNF['FIELD_ID']) && !empty($this->_aContentInfo) && is_array($this->_aContentInfo))
+                $oMenuManage->setContentId($this->_aContentInfo[$CNF['FIELD_ID']]);
+
+            $aObjectManage = [];
+            if(!empty($CNF['OBJECT_MENU_MANAGE_VIEW_ENTRY']))
+                $aObjectManage = [$CNF['OBJECT_MENU_MANAGE_VIEW_ENTRY']];
+            else if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']))
+                $aObjectManage = [$CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE'], true];
+
+            call_user_func_array([$oMenuManage, 'setObjectManage'], $aObjectManage);
+        }
+
         // add replaceable markers
         $this->addMarkers($this->_aContentInfo);
         $this->addMarkers($this->_aProfileInfo); // every content field can be used as marker

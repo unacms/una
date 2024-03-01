@@ -64,9 +64,20 @@
                             <div class="bx-menu-main-bar-gap bx-def-centered bx-def-padding-leftright bx-def-page-width bx-def-box-sizing __site_submenu_hidden__">
                                 <div id="bx-menu-main-bar-wrapper" class="bx-menu-main-bar-wrapper bx-def-color-bg-sec">
                                     <div id="bx-menu-main-bar" class="bx-menu-main-bar __site_submenu_class__">
-                                        <bx_injection:injection_top_menu_before />
-                                        <bx_menu:sys_site_submenu />
-                                        <bx_injection:injection_top_menu_after />
+                                        <div class="bx-menu-main-bar-cnt px-4">
+                                            <bx_injection:injection_top_menu_before />
+                                            <div class="flex items-center h-full text-center">
+                                                <div class="relative flex-1 h-full">
+                                                    <div class="absolute w-full h-full">
+                                                        <bx_menu:sys_site_submenu />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-none">
+                                                    <bx_menu:sys_site_manage />
+                                                </div>
+                                            </div>
+                                            <bx_injection:injection_top_menu_after />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

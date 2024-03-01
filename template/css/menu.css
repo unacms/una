@@ -35,8 +35,6 @@ ul.bx-menu-custom-hor {
     color:#000;
 }
 
-.bx-menu-hor li img,
-.bx-menu-hor li .sys-icon,
 .bx-menu-custom-hor li img, 
 .bx-menu-custom-hor li .sys-icon {
     display:inline-block;

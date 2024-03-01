@@ -165,6 +165,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_channels_view_actions', 'bx_channels', 'profile-subscribe-add', '_bx_channels_menu_item_title_system_subscribe', '_bx_channels_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, 1, 0, 1, 20),
+('bx_channels_view_actions', 'bx_channels', 'profile-subscribe-remove', '_bx_channels_menu_item_title_system_unsubscribe', '_bx_channels_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, 1, 0, 1, 21),
 ('bx_channels_view_actions', 'bx_channels', 'profile-actions-more', '_bx_channels_menu_item_title_system_more_actions', '_bx_channels_menu_item_title_more_actions', 'javascript:void(0)', 'bx_menu_popup(''bx_channels_view_actions_more'', this, {}, {profile_id:{profile_id}});', '', 'cog', 'bx_channels_view_actions_more', 1, 2147483647, 1, 0, 1, 9999);
 
 -- MENU: view actions more
@@ -176,14 +177,14 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_channels_view_actions_more', 'bx_channels', '_bx_channels_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_channels_view_actions_more', 'bx_channels', 'profile-subscribe-remove', '_bx_channels_menu_item_title_system_unsubscribe', '_bx_channels_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
+('bx_channels_view_actions_more', 'bx_channels', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', 192, 1, 0, 20),
 ('bx_channels_view_actions_more', 'bx_channels', 'edit-channel-profile', '_bx_channels_menu_item_title_system_edit_profile', '_bx_channels_menu_item_title_edit_profile', 'page.php?i=edit-channel-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 0, 0, 40),
 ('bx_channels_view_actions_more', 'bx_channels', 'delete-channel-profile', '_bx_channels_menu_item_title_system_delete_profile', '_bx_channels_menu_item_title_delete_profile', 'page.php?i=delete-channel-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
 -- MENU: all actions menu for view entry 
 
-INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_view_actions_all', '_sys_menu_title_view_actions', 'bx_channels_view_actions_all', 'bx_channels', 15, 0, 1, 'BxCnlMenuViewActionsAll', 'modules/boonex/channels/classes/BxCnlMenuViewActionsAll.php');
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `persistent`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_channels_view_actions_all', '_sys_menu_title_view_actions', 'bx_channels_view_actions_all', 'bx_channels', 15, 1, 0, 1, 'BxCnlMenuViewActionsAll', 'modules/boonex/channels/classes/BxCnlMenuViewActionsAll.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_channels_view_actions_all', 'bx_channels', '_sys_menu_set_title_view_actions', 0);
@@ -198,10 +199,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_channels_view_actions_all', 'bx_channels', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 240),
 ('bx_channels_view_actions_all', 'bx_channels', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 250),
 ('bx_channels_view_actions_all', 'bx_channels', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 260),
-('bx_channels_view_actions_all', 'bx_channels', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', 0, 2147483647, 1, 0, 280),
 ('bx_channels_view_actions_all', 'bx_channels', 'social-sharing', '_sys_menu_item_title_system_social_sharing', '_sys_menu_item_title_social_sharing', 'javascript:void(0)', 'oBxDolPage.share(this, \'{url_encoded}\')', '', 'share', '', '', 0, 2147483647, 1, 0, 300),
-('bx_channels_view_actions_all', 'bx_channels', 'edit-channel-profile', '_bx_channels_menu_item_title_system_edit_profile', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 410),
-('bx_channels_view_actions_all', 'bx_channels', 'delete-channel-profile', '_bx_channels_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 420),
 ('bx_channels_view_actions_all', 'bx_channels', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
 -- MENU: actions menu for my entries

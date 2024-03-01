@@ -133,6 +133,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_SUBMENU' => 'bx_spaces_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_spaces_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'spaces-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_MANAGE_VIEW_ENTRY' => '',
             'OBJECT_MENU_VIEW_ENTRY_META' => 'bx_spaces_view_meta', // meta menu on view entry page
             'OBJECT_MENU_SNIPPET_META' => 'bx_spaces_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_spaces_menu_manage_tools', //manage menu in content administration tools

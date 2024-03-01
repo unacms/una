@@ -1880,8 +1880,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                     break;
                 }
 
-                $oMenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-                if($oMenu !== false && !$oMenu->isVisible()) {
+                $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+                $oMenuManage = BxDolMenu::getObjectInstance('sys_site_manage');
+                if($oMenuSubmenu !== false && !$oMenuSubmenu->isVisible() && $oMenuManage !== false && !$oMenuManage->isVisible()) {
                     $sRet = $sClass;
                     break;
                 }
