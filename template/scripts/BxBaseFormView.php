@@ -1348,6 +1348,9 @@ BLAH;
                 $this->addCssJsUi ();
                 break;
             case 'dateselect':
+                if(strpos($aInput['value'], ' ') !== false)
+                    list($aInput['value']) = explode(' ', $aInput['value']);
+
                 $this->_addJs(array(
                     'combodate/combodate.js',
                 ), "'undefined' === typeof($.combodate)");
