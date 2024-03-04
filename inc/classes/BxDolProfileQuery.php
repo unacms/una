@@ -208,6 +208,17 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     }
 
     /**
+     * Update profile's account id
+     * @param $iProfileId profile id
+     * @param $iAccountId new Account ID
+     * @return true on success or false otherwise
+     */
+    public function changeAccountId ($iProfileId, $iAccountId)
+    {
+        return $this->_updateField ($iProfileId, 'account_id', $iAccountId);
+    }
+
+    /**
      * Update profile's status
      * @param $iProfileId profile id
      * @param $sStatus profile status

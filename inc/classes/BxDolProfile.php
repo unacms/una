@@ -589,6 +589,20 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         return $this->changeStatus(BX_PROFILE_STATUS_PENDING, 'disapprove', $iAction, $iProfileId, $bSendEmailNotification);
     }
 
+    /**
+     * Move profile to another account
+     */
+    public function move($iAccountId, $iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = $this->_iProfileID;
+
+        if($this->getAccountId($iProfileId) == $iAccountId)
+            return true;
+
+        return $this->_oQuery->changeAccountId($iProfileId, $iAccountId) !== false;
+    }
+
     public function doAudit($sAction, $aData = array())
     {
         bx_audit(
