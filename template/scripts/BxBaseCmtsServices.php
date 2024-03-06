@@ -30,13 +30,18 @@ class BxBaseCmtsServices extends BxDol
         return $oCmts->serviceGetAuthor((int)$aCmt['cmt_id']);
     }
     
-    public function serviceGetAuthorBlock()
+    public function serviceGetBlockAuthor($sSystem = '', $iObjectId = 0, $iCommentId = 0)
     {
-        if(bx_is_api()){
-            $iCommentId = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
-            $sSystem =  bx_process_input(bx_get('sys'));
-            $iObjectId = bx_process_input(bx_get('id'), BX_DATA_INT);
-            
+        if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
+            $sSystem = bx_process_input($sSystem);
+
+        if(empty($iObjectId) && ($iObjectId = bx_get('id')) !== false)
+            $iObjectId = bx_process_input($iObjectId, BX_DATA_INT);
+
+        if(empty($iCommentId) && ($iCommentId = bx_get('cmt_id')) !== false)
+            $iCommentId = bx_process_input($iCommentId, BX_DATA_INT);
+
+        if(bx_is_api()) {
             $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
             $aCmt = $oCmts->getCommentRow($iCommentId);
 
@@ -48,6 +53,8 @@ class BxBaseCmtsServices extends BxDol
                 'url' => bx_api_get_relative_url($oCmts->getBaseUrl())
             ])];
         }
+        
+        return '';
     }
 
     public function serviceGetInfo($iCmtUniqId, $bSearchableFieldsOnly = true)
@@ -65,16 +72,6 @@ class BxBaseCmtsServices extends BxDol
 
     public function serviceGetBlockView($sSystem = '', $iObjectId = 0, $iCommentId = 0)
     {
-        if (bx_is_api()){
-            $aParams['comment_id'] = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
-            $aParams['module'] =  bx_process_input(bx_get('sys'));
-            $aParams['object_id'] = bx_process_input(bx_get('id'), BX_DATA_INT);
-
-            $aRv = $this->serviceGetDataApi($aParams);
-            $aRv['browse']['data']['total_count'] = 0;
-            return [$aRv];
-        }
-        
         if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
             $sSystem = bx_process_input($sSystem);
 
@@ -83,6 +80,19 @@ class BxBaseCmtsServices extends BxDol
 
         if(empty($iCommentId) && ($iCommentId = bx_get('cmt_id')) !== false)
             $iCommentId = bx_process_input($iCommentId, BX_DATA_INT);
+
+        if(bx_is_api()) {
+            $aRv = $this->serviceGetDataApi([
+                'module' => $sSystem,
+                'object_id' => $iObjectId,
+                'comment_id' => $iCommentId
+            ]);
+
+            if(isset($aRv['browse']) && is_array($aRv['browse']))
+                $aRv['browse']['data']['total_count'] = 0;
+
+            return [$aRv];
+        }
 
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
         if(!$oCmts)
@@ -633,14 +643,17 @@ class BxBaseCmtsServices extends BxDol
         $aCmtsRv = [];
         foreach ($aCmts as $aCmt) {
             $oCmt = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
-            $sKey = array_keys($oCmt)[0];
-            if ($oCmt[$sKey]['data']['cmt_parent_id'] > 0){
+            if($oCmt === false)
+                continue;
+
+            if(($sKey = array_shift(array_keys($oCmt))) && $oCmt[$sKey]['data']['cmt_parent_id'] > 0){
                 $aParent = $oCmts->getCommentSimple((int)$oCmt[$sKey]['data']['cmt_parent_id']);
                 $oCmt[$sKey]['data']['cmt_parent'] = [
                     'data' => $aParent,
                     'author_data' => BxDolProfile::getData($aParent['cmt_author_id'])
                 ];
             }
+
             $aCmtsRv[] = $oCmt;
         }
         
