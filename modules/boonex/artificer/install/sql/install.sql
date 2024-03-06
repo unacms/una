@@ -34,14 +34,14 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 2),
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo_dark'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 3),
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo_dark_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 4),
-(@iSystemCategoryId, CONCAT(@sName, '_site_logo_inline'), '', '0', 'text', '', '', '', @iSystemCategoryOrder + 5),
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_inline'), '', '', 'text', '', '', '', @iSystemCategoryOrder + 5),
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo_alt'), '', '', 'text', '', '', '', @iSystemCategoryOrder + 6),
 
 (@iSystemCategoryId, CONCAT(@sName, '_site_mark'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 10),
 (@iSystemCategoryId, CONCAT(@sName, '_site_mark_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 11),
 (@iSystemCategoryId, CONCAT(@sName, '_site_mark_dark'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 12),
 (@iSystemCategoryId, CONCAT(@sName, '_site_mark_dark_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 13),
-(@iSystemCategoryId, CONCAT(@sName, '_site_mark_inline'), '', '0', 'text', '', '', '', @iSystemCategoryOrder + 14);
+(@iSystemCategoryId, CONCAT(@sName, '_site_mark_inline'), '', '', 'text', '', '', '', @iSystemCategoryOrder + 14);
 
 
 -- STUDIO PAGE & WIDGET
