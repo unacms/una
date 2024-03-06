@@ -1251,26 +1251,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
             // use system Apple/Android icons if exists
             if(empty($this->aPage['image'])) {
-                $sImgUrl = '';
-                $iImgSquare = 0;
                 $oImgStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-                foreach(['icon_apple', 'icon_android', 'icon_android_splash'] as $sIcon) {
-                    $iIcon = (int)getParam('sys_site_' . $sIcon);
-                    if(!$iIcon)
-                        continue;
-
-                    $sUrl = $oImgStorage->getFileUrlById($iIcon);
-                    if(!$sUrl)
-                        continue;
-
-                    if(($aSize = BxDolImageResize::getImageSize($sUrl)) !== false && ($iSquare = (int)$aSize['w'] * (int)$aSize['h']) > $iImgSquare) {
-                        $sImgUrl = $sUrl;
-                        $iImgSquare = $iSquare;
+                foreach(['icon_android_splash', 'icon_android', 'icon_apple'] as $sIcon)
+                    if(($iIcon = (int)getParam('sys_site_' . $sIcon)) != 0 && ($sUrl = $oImgStorage->getFileUrlById($iIcon))) {
+                        $this->aPage['image'] = $sUrl;
+                        break;
                     }
-                }
-
-                if(!empty($sImgUrl))
-                    $this->aPage['image'] = $sImgUrl;
             }
         }
 
