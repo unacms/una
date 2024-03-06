@@ -697,7 +697,11 @@
         <string name="_adm_dsg_txt_upload_icon_android_splash"><![CDATA[Android devices splash]]></string>
         <string name="_adm_dsg_txt_upload_icon_android_splash_inf"><![CDATA[for Android splash screen]]></string>
 	<string name="_adm_dsg_txt_upload_logo"><![CDATA[Logo Image]]></string>
+        <string name="_adm_dsg_txt_upload_logo_dark"><![CDATA[Logo Image (for Dark mode)]]></string>
+        <string name="_adm_dsg_txt_upload_logo_inline"><![CDATA[Logo Image (inline, low priority)]]></string>
         <string name="_adm_dsg_txt_upload_mark"><![CDATA[Mark Image]]></string>
+        <string name="_adm_dsg_txt_upload_mark_dark"><![CDATA[Mark Image (for Dark mode)]]></string>
+        <string name="_adm_dsg_txt_upload_mark_inline"><![CDATA[Mark Image (inline, low priority)]]></string>
 	<string name="_adm_dsg_txt_inj_head"><![CDATA[&lt;HEAD&gt; injection]]></string>
 	<string name="_adm_dsg_txt_inj_head_inf"><![CDATA[Code to insert before closing HEAD tag]]></string>
 	<string name="_adm_dsg_txt_inj_body"><![CDATA[&lt;BODY&gt; injection]]></string>

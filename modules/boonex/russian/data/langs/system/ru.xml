@@ -694,7 +694,11 @@
         <string name="_adm_dsg_txt_upload_icon_android_splash"><![CDATA[Заставка для устройств Android]]></string>
         <string name="_adm_dsg_txt_upload_icon_android_splash_inf"><![CDATA[Для экрана-заставки Android]]></string>
 	<string name="_adm_dsg_txt_upload_logo"><![CDATA[Изображение логотипа]]></string>
-        <string name="_adm_dsg_txt_upload_mark"><![CDATA[Изображение метки]]></string>
+        <string name="_adm_dsg_txt_upload_logo_dark"><![CDATA[Изображение логотипа (для темного режима)]]></string>
+        <string name="_adm_dsg_txt_upload_logo_inline"><![CDATA[Изображение логотипа (встроенный, низкий приоритет)]]></string>
+        <string name="_adm_dsg_txt_upload_mark">_adm_dsg_txt_upload_logo<![CDATA[Изображение метки]]></string>
+        <string name="_adm_dsg_txt_upload_mark_dark"><![CDATA[Изображение метки (для темного режима)]]></string>
+        <string name="_adm_dsg_txt_upload_mark_inline"><![CDATA[Изображение метки (встроенный, низкий приоритет)]]></string>
 	<string name="_adm_dsg_txt_inj_head"><![CDATA[&lt;HEAD&gt; инъекция]]></string>
 	<string name="_adm_dsg_txt_inj_head_inf"><![CDATA[Код для вставки перед закрывающим HEAD тагом]]></string>
 	<string name="_adm_dsg_txt_inj_body"><![CDATA[&lt;BODY&gt; инъекция]]></string>

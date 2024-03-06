@@ -184,24 +184,36 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             ]
         );
 
-        $aLogos = $this->aLogos;
-        if(empty($this->sParamMark))
-            unset($aLogos['mark']);
-
         $aInputs = [];
-        foreach($aLogos as $sLogo => $aLogo)
-            $aInputs[$sLogo] = [
-                'type' => 'files',
-                'name' => $sLogo,
-                'storage_object' => $aLogo['storage'],
-                'storage_private' => 0,
-                'images_transcoder' => $aLogo['transcoder'],
-                'uploaders' => ['sys_html5'],
-                'multiple' => false,
-                'content_id' => $this->getOptionId($this->{$aLogo['param']}),
-                'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate($sLogo),
-                'caption' => _t('_adm_dsg_txt_upload_' . $sLogo),
-            ];
+        foreach($this->aLogos as $sLogo => $aLogo) {
+            if(empty($this->{$aLogo['param']}))
+                continue;
+
+            if(isset($aLogo['storage'], $aLogo['transcoder']))
+                $aInputs[$sLogo] = [
+                    'type' => 'files',
+                    'name' => $sLogo,
+                    'storage_object' => $aLogo['storage'],
+                    'storage_private' => 0,
+                    'images_transcoder' => $aLogo['transcoder'],
+                    'uploaders' => ['sys_html5'],
+                    'multiple' => false,
+                    'content_id' => $this->getOptionId($this->{$aLogo['param']}),
+                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate($sLogo),
+                    'caption' => _t('_adm_dsg_txt_upload_' . $sLogo),
+                ];
+            else
+                $aInputs[$sLogo] = [
+                    'type' => 'textarea',
+                    'name' => $sLogo,
+                    'caption' => _t('_adm_dsg_txt_upload_' . $sLogo),
+                    'value' => getParam($this->{$aLogo['param']}),
+                    'code' => 1,
+                    'db' => [
+                        'pass' => 'Xss',
+                    ],
+                ];
+        }
 
         $aForm['inputs'] = bx_array_insert_after($aInputs, $aForm['inputs'], 'page');
 

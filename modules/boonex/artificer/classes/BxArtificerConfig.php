@@ -13,6 +13,23 @@ bx_import('BxBaseModTemplateConfig');
 
 class BxArtificerConfig extends BxBaseModTemplateConfig
 {
+    protected $_iLogoDark;
+    protected $_iLogoDarkWidth;
+    protected $_iLogoDarkHeight;
+    protected $_fLogoDarkAspectRatio;
+    protected $_fLogoDarkAspectRatioDefault;
+    protected $_sLogoInline;
+    
+    protected $_iMarkDark;
+    protected $_iMarkDarkWidth;
+    protected $_iMarkDarkHeight;
+    protected $_fMarkDarkAspectRatio;
+    protected $_fMarkDarkAspectRatioDefault;
+    protected $_sMarkInline;
+
+    protected $_sKeyLogoDarkAspectRatio;
+    protected $_sKeyMarkDarkAspectRatio;
+
     protected $_aReplacements;
 
     protected $_sThumbSizeDefault;
@@ -32,7 +49,14 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
         ));
 
         $this->_iLogoHeight = 40;
+        $this->_iLogoDarkWidth = 0;
+        $this->_iLogoDarkHeight = $this->_iLogoHeight;
+        $this->_fLogoDarkAspectRatioDefault = BxDolDesigns::$fLogoAspectRatioDefault;
+
         $this->_iMarkHeight = 40;
+        $this->_iMarkDarkWidth = 0;
+        $this->_iMarkDarkHeight = $this->_iMarkHeight;
+        $this->_fMarkDarkAspectRatioDefault = BxDolDesigns::$fMarkAspectRatioDefault;
 
         $this->_aPrefixes = [
             'option' => 'bx_artificer_'
@@ -53,6 +77,23 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
             'unit_with_cover.html' => 'h-24 w-24' //--- 'ava' size
         ];
     }
+    
+    public function init(&$oDb)
+    {
+        parent::init($oDb);
+        $sPrefix = $this->getPrefix('option');
+
+        $this->_sKeyLogoDarkAspectRatio = $sPrefix . 'site_logo_dark_aspect_ratio';
+        $this->_sKeyMarkDarkAspectRatio = $sPrefix . 'site_mark_dark_aspect_ratio';
+
+        $this->_iLogoDark = (int)$this->_oDb->getParam($sPrefix . 'site_logo_dark');
+        $this->_fLogoDarkAspectRatio = (float)$this->_oDb->getParam($this->_sKeyLogoDarkAspectRatio);
+        $this->_sLogoInline = $this->_oDb->getParam($sPrefix . 'site_logo_inline');
+
+        $this->_iMarkDark = (int)$this->_oDb->getParam($sPrefix . 'site_mark_dark');
+        $this->_fMarkDarkAspectRatio = (float)$this->_oDb->getParam($this->_sKeyMarkDarkAspectRatio);
+        $this->_sMarkInline = $this->_oDb->getParam($sPrefix . 'site_mark_inline');
+    }
 
     public function getColorScheme()
     {
@@ -64,9 +105,13 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
     	$sPrefix = $this->getPrefix('option');
 
     	return [
-            $sPrefix . 'site_logo',
-            $sPrefix . 'site_mark',
-            $sPrefix . 'site_logo_alt'
+            'logo' => $sPrefix . 'site_logo',
+            'logo_dark' => $sPrefix . 'site_logo_dark',
+            'logo_inline' => $sPrefix . 'site_logo_inline',
+            'mark' => $sPrefix . 'site_mark',
+            'mark_dark' => $sPrefix . 'site_mark_dark',
+            'mark_inline' => $sPrefix . 'site_mark_inline',
+            'logo_alt' => $sPrefix . 'site_logo_alt'
     	];
     }
 

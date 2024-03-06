@@ -31,6 +31,9 @@ module.exports = {
     'border-blue-500', 'border-opacity-70', 
     'focus:border-blue-500', 'focus:border-opacity-70',
 
+    'lg:block', 'lg:hidden', 
+    'dark:block', 'dark:hidden', 'dark:lg:block', 'dark:lg:hidden',
+
     'aspect-w-1', 'aspect-w-3', 'aspect-w-4', 'aspect-w-9', 'aspect-w-16',
     'aspect-h-1', 'aspect-h-3', 'aspect-h-4', 'aspect-h-9', 'aspect-h-16',
     'aspect-none',

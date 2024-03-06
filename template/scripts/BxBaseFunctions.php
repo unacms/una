@@ -553,15 +553,19 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
         $sLogo = '<span>' . $sAlt . '</span>';
 
-        $sFileUrl = $this->getMainLogoUrl();
-        if (!empty($sFileUrl)) {
-            $iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
-            $sWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
+        if(($mixedFileUrl = $this->getMainLogoUrl()) && !empty($mixedFileUrl)) {
+            if(!is_array($mixedFileUrl))
+                $mixedFileUrl = ['light' => $mixedFileUrl];
 
-            $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
-            $sHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+            foreach($mixedFileUrl as $sName => $sFileUrl) {
+                $iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
+                $sWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
 
-            $sLogo = '<img style="' . $sWidth . ' ' . $sHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
+                $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
+                $sHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+
+                $sLogo = '<img style="' . $sWidth . ' ' . $sHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
+            }
         }
 
         $aAttrs = array(

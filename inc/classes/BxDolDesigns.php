@@ -64,34 +64,36 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
 
     	//--- Init site's logo params.
     	if($this->oDesign instanceof BxDolModule && method_exists($this->oDesign->_oConfig, 'getLogoParams')) {
-            list(
-                $this->aParams['logo'], 
-                $this->aParams['mark'], 
-                $this->aParams['logo_alt']
-            ) = $this->oDesign->_oConfig->getLogoParams();
+            $this->aParams = $this->oDesign->_oConfig->getLogoParams();
 
-            list(
-                $this->aValues['logo_width'], 
-                $this->aValues['logo_height'],
-                $this->aValues['logo_aspect_ratio'],
+            $this->aValues = $this->oDesign->_oConfig->getLogoValues('logo', $this->getSiteLogoUrl(), $this->getSiteLogoInfo());
+            if(isset($this->aParams['logo_dark']))
+                $this->aValues += $this->oDesign->_oConfig->getLogoValues('logo_dark', $this->getSiteLogoDarkUrl(), $this->getSiteLogoDarkInfo());
 
-                $this->aValues['mark_width'],
-                $this->aValues['mark_height'],
-                $this->aValues['mark_aspect_ratio']
-            ) = $this->oDesign->_oConfig->getLogoValues($this->getSiteLogoUrl(), $this->getSiteLogoInfo(), $this->getSiteMarkUrl(), $this->getSiteMarkInfo());
+            $this->aValues += $this->oDesign->_oConfig->getLogoValues('mark', $this->getSiteMarkUrl(), $this->getSiteMarkInfo());
+            if(isset($this->aParams['mark_dark']))
+                $this->aValues += $this->oDesign->_oConfig->getLogoValues('mark_dark', $this->getSiteMarkDarkUrl(), $this->getSiteMarkDarkInfo());
         }
+    }
+
+    public static function getAspectRatioDefault($sType)
+    {
+        return in_array($sType, ['logo', 'logo_dark']) ? self::$fLogoAspectRatioDefault : self::$fMarkAspectRatioDefault;
     }
 
     public function getSiteLogo()
     {
     	return $this->getSiteLogoParam('logo');
     }
+    
+    public function getSiteLogoDark()
+    {
+    	return $this->getSiteLogoParam('logo_dark');
+    }
 
     public function getSiteLogoUrl($iFileId = 0, $bOriginal = true)
     {
-        if(!$iFileId)
-            $iFileId = (int)$this->getSiteLogo();
-        if(!$iFileId) 
+        if(!$iFileId && !($iFileId = (int)$this->getSiteLogo()))
             return false;
 
         if($bOriginal)
@@ -111,40 +113,71 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
 
         return !empty($sFileUrl) ? $sFileUrl : false;
     }
+    
+    public function getSiteLogoDarkUrl($iFileId = 0, $bOriginal = true)
+    {
+        if(!$iFileId && !($iFileId = (int)$this->getSiteLogoDark()))
+            return false;
+
+        return $this->getSiteLogoUrl($iFileId, $bOriginal);
+    }
 
     public function getSiteMark()
     {
     	return $this->getSiteLogoParam('mark');
     }
 
+    public function getSiteMarkDark()
+    {
+    	return $this->getSiteLogoParam('mark_dark');
+    }
+
     public function getSiteMarkUrl($iFileId = 0, $bOriginal = true)
     {
-        if(!$iFileId)
-            $iFileId = (int)$this->getSiteMark();
-        if(!$iFileId) 
+        if(!$iFileId && !($iFileId = (int)$this->getSiteMark()))
             return false;
-        
+
+        return $this->getSiteLogoUrl($iFileId, $bOriginal);
+    }
+
+    public function getSiteMarkDarkUrl($iFileId = 0, $bOriginal = true)
+    {
+        if(!$iFileId && !($iFileId = (int)$this->getSiteMarkDark()))
+            return false;
+
         return $this->getSiteLogoUrl($iFileId, $bOriginal);
     }
 
     public function getSiteLogoInfo($iFileId = 0)
     {
-        if(!$iFileId)
-            $iFileId = (int)$this->getSiteLogo();
-        if(!$iFileId) 
+        if(!$iFileId && !($iFileId = (int)$this->getSiteLogo())) 
             return false;
 
         return BxDolStorage::getObjectInstance($this->sLogoStorage)->getFile($iFileId);
     }
 
-    public function getSiteMarkInfo($iFileId = 0)
+    public function getSiteLogoDarkInfo($iFileId = 0)
     {
-        if(!$iFileId)
-            $iFileId = (int)$this->getSiteMark();
-        if(!$iFileId) 
+        if(!$iFileId && !($iFileId = (int)$this->getSiteLogoDark()))
             return false;
 
-        return BxDolStorage::getObjectInstance($this->sLogoStorage)->getFile($iFileId);
+        return $this->getSiteLogoInfo($iFileId);
+    }
+
+    public function getSiteMarkInfo($iFileId = 0)
+    {
+        if(!$iFileId && !($iFileId = (int)$this->getSiteMark()))
+            return false;
+
+        return $this->getSiteLogoInfo($iFileId);
+    }
+
+    public function getSiteMarkDarkInfo($iFileId = 0)
+    {
+        if(!$iFileId && !($iFileId = (int)$this->getSiteMarkDark()))
+            return false;
+
+        return $this->getSiteLogoInfo($iFileId);
     }
 
     public function getSiteLogoAlt()
@@ -157,9 +190,19 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
     	return ($iResult = $this->getSiteLogoValue('logo_width')) !== false ? $iResult : 0;
     }
 
+    public function getSiteLogoDarkWidth()
+    {
+        return ($iResult = $this->getSiteLogoValue('logo_dark_width')) !== false ? $iResult : 0;
+    }
+
     public function getSiteLogoHeight()
     {
         return ($iResult = $this->getSiteLogoValue('logo_height')) !== false ? $iResult : 0;
+    }
+    
+    public function getSiteLogoDarkHeight()
+    {
+        return ($iResult = $this->getSiteLogoValue('logo_dark_height')) !== false ? $iResult : 0;
     }
 
     public function getSiteMarkWidth()
@@ -167,12 +210,22 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
     	return ($iResult = $this->getSiteLogoValue('mark_width')) !== false ? $iResult : 0;
     }
 
+    public function getSiteMarkDarkWidth()
+    {
+        return ($iResult = $this->getSiteLogoValue('mark_dark_width')) !== false ? $iResult : 0;
+    }
+
     public function getSiteMarkHeight()
     {
         return ($iResult = $this->getSiteLogoValue('mark_height')) !== false ? $iResult : 0;
     }
 
-    protected function getSiteLogoParam($sName, $bGetSystem = false)
+    public function getSiteMarkDarkHeight()
+    {
+        return ($iResult = $this->getSiteLogoValue('mark_dark_height')) !== false ? $iResult : 0;
+    }
+
+    public function getSiteLogoParam($sName, $bGetSystem = false)
     {
     	if(!empty($this->aParams[$sName]) && !$bGetSystem) {
             $sResult = getParam($this->aParams[$sName]);

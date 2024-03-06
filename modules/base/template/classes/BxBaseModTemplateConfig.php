@@ -29,10 +29,11 @@ class BxBaseModTemplateConfig extends BxBaseModGeneralConfig
     protected $_fMarkAspectRatio;
     protected $_fMarkAspectRatioDefault;
 
+    protected $_iDefaultHeight;
     protected $_sKeyLogoAspectRatio;
     protected $_sKeyMarkAspectRatio;
 
-    function __construct($aModule)
+    public function __construct($aModule)
     {
         parent::__construct($aModule);
 
@@ -50,6 +51,7 @@ class BxBaseModTemplateConfig extends BxBaseModGeneralConfig
         $this->_oDb = &$oDb;
         $sPrefix = $this->getPrefix('option');
 
+        $this->_iDefaultHeight = $this->_calculateValuesHeight();
         $this->_sKeyLogoAspectRatio = $sPrefix . 'site_logo_aspect_ratio';
         $this->_sKeyMarkAspectRatio = $sPrefix . 'site_mark_aspect_ratio';
 
@@ -67,42 +69,31 @@ class BxBaseModTemplateConfig extends BxBaseModGeneralConfig
     	$sPrefix = $this->getPrefix('option');
 
     	return [
-            $sPrefix . 'site_logo',
-            $sPrefix . 'site_mark',
-            $sPrefix . 'site_logo_alt'
+            'logo' => $sPrefix . 'site_logo',
+            'mark' => $sPrefix . 'site_mark',
+            'logo_alt' => $sPrefix . 'site_logo_alt'
     	];
     }
 
-    public function getLogoValues($sUrlLogo, $aInfoLogo, $sUrlMark = '', $aInfoMark = [])
+    public function getLogoValues($sType, $sUrl, $aInfo)
     {
-        $iDefaultHeight = $this->_calculateValuesHeight();
+        $sTypeUc = bx_gen_method_name($sType);
 
-        if(empty($this->_iLogoHeight))
-            $this->_iLogoHeight = $iDefaultHeight;
+        $sHeight = '_i' . $sTypeUc . 'Height';
+        if(empty($this->$sHeight))
+            $this->$sHeight = $this->_iDefaultHeight;
 
-        if(!$this->_fLogoAspectRatio)
-            $this->_fLogoAspectRatio = $this->_calculateValuesAspectRatio('logo', $sUrlLogo, $aInfoLogo);
+        $sAspectRatio = '_f' . $sTypeUc . 'AspectRatio';
+        if(!$this->$sAspectRatio)
+            $this->$sAspectRatio = $this->_calculateValuesAspectRatio($sType, $sUrl, $aInfo);
 
-        $this->_iLogoWidth = (int)ceil($this->_iLogoHeight * $this->_fLogoAspectRatio);
-
-        if(!empty($sUrlMark) && !empty($aInfoMark)) {
-            if(empty($this->_iMarkHeight))
-                $this->_iMarkHeight = $iDefaultHeight;
-
-            if(!$this->_fMarkAspectRatio)
-                $this->_fMarkAspectRatio = $this->_calculateValuesAspectRatio('mark', $sUrlMark, $aInfoMark);
-
-            $this->_iMarkWidth = (int)ceil($this->_iMarkHeight * $this->_fMarkAspectRatio);
-        }
+        $sWidth = '_i' . $sTypeUc . 'Width';
+        $this->$sWidth = (int)ceil($this->$sHeight * $this->$sAspectRatio);
 
         return [
-            $this->_iLogoWidth,
-            $this->_iLogoHeight,
-            $this->_fLogoAspectRatio,
-
-            $this->_iMarkWidth,
-            $this->_iMarkHeight,
-            $this->_fMarkAspectRatio
+            $sType . '_width' => $this->$sWidth,
+            $sType . '_height' => $this->$sHeight,
+            $sType . '_aspect_ratio' => $this->$sAspectRatio,
         ];
     }
 
@@ -125,7 +116,22 @@ class BxBaseModTemplateConfig extends BxBaseModGeneralConfig
     {
     	return $this->_iLogoHeight;
     }
-    
+
+    public function getMarkWidth()
+    {
+    	return $this->_iMarkWidth;
+    }
+
+    public function getMarkHeight()
+    {
+    	return $this->_iMarkHeight;
+    }
+
+    public function getDefaultHeight()
+    {
+        return $this->_iDefaultHeight;
+    }
+
     protected function _calculateValuesHeight()
     {
         $sPrefix = $this->getPrefix('option');
@@ -161,10 +167,10 @@ class BxBaseModTemplateConfig extends BxBaseModGeneralConfig
 
         return $iHeaderHeight - $iPTop - $iPBottom;
     }
-    
+
     protected function _calculateValuesAspectRatio($sType, $sUrl, $aInfo)
     {
-        $sTypeUc = ucfirst($sType);
+        $sTypeUc = bx_gen_method_name($sType);
 
         if(!$sUrl)
             return $this->{'_f' . $sTypeUc . 'AspectRatioDefault'};

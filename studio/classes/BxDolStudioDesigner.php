@@ -26,7 +26,11 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
     protected $sParamPrefix;
 
     protected $sParamLogo;
+    protected $sParamLogoDark;
+    protected $sParamLogoInline;
     protected $sParamMark;
+    protected $sParamMarkDark;
+    protected $sParamMarkInline;
     protected $sParamLogoAlt;
 
     protected $aLogos;
@@ -47,7 +51,11 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         $this->sParamPrefix = 'dsg';
 
         $this->sParamLogo = 'sys_site_logo';
+        $this->sParamLogoDark = '';
+        $this->sParamLogoInline = '';
         $this->sParamMark = '';
+        $this->sParamMarkDark = '';
+        $this->sParamMarkInline = '';
         $this->sParamLogoAlt = 'sys_site_logo_alt';
 
         $this->aLogos = [
@@ -56,10 +64,26 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
                 'storage' => 'sys_images_custom',
                 'transcoder' => 'sys_custom_images'
             ],
+            'logo_dark' => [
+                'param' => 'sParamLogoDark',
+                'storage' => 'sys_images_custom',
+                'transcoder' => 'sys_custom_images'
+            ],
+            'logo_inline' => [
+                'param' => 'sParamLogoInline',
+            ],
             'mark' => [
                 'param' => 'sParamMark',
                 'storage' => 'sys_images_custom',
                 'transcoder' => 'sys_custom_images'
+            ],
+            'mark_dark' => [
+                'param' => 'sParamMarkDark',
+                'storage' => 'sys_images_custom',
+                'transcoder' => 'sys_custom_images'
+            ],
+            'mark_inline' => [
+                'param' => 'sParamMarkInline',
             ],
         ];
 
@@ -163,7 +187,19 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
                 break;
 
             case 3:
-                list($this->sParamLogo, $this->sParamMark, $this->sParamLogoAlt) = $aParams;
+                list($this->sParamLogo, $this->sParamMark, $this->sParamLogoAlt) = array_values($aParams);
+                break;
+
+            case 7:
+                list(
+                    $this->sParamLogo, 
+                    $this->sParamLogoDark, 
+                    $this->sParamLogoInline, 
+                    $this->sParamMark, 
+                    $this->sParamMarkDark, 
+                    $this->sParamMarkInline, 
+                    $this->sParamLogoAlt
+                ) = array_values($aParams);
                 break;
         }
     }
@@ -182,38 +218,45 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
     {
         $iProfileId = bx_get_logged_profile_id();
 
-        $aLogos = $this->aLogos;
-        if(empty($this->sParamMark))
-            unset($aLogos['mark']);
-
-        foreach($aLogos as $sLogo => $aLogo) {
-            $bValue = bx_get($sLogo) !== false;
-            $bFile = isset($_FILES[$sLogo]) && !empty($_FILES[$sLogo]['tmp_name']);
-
-            if(!$bValue && !$bFile)
+        foreach($this->aLogos as $sLogo => $aLogo) {
+            if(empty($this->{$aLogo['param']}))
                 continue;
 
-            $oStorage = BxDolStorage::getObjectInstance($aLogo['storage']);
+            $mixedValue = $mixedValuePrior = false;
+            if(isset($aLogo['storage'])) {
+                $bValue = bx_get($sLogo) !== false;
+                $bFile = isset($_FILES[$sLogo]) && !empty($_FILES[$sLogo]['tmp_name']);
 
-            $iId = 0;
-            if($bValue)
-                $iId = (int)bx_get($sLogo);
-            else if($bFile) {
-                $iId = $oStorage->storeFileFromForm($_FILES[$sLogo], true, $iProfileId);
-                if($iId === false)
+                if(!$bValue && !$bFile)
                     continue;
+
+                $oStorage = BxDolStorage::getObjectInstance($aLogo['storage']);
+
+                $iId = 0;
+                if($bValue)
+                    $iId = (int)bx_get($sLogo);
+                else if($bFile) {
+                    $iId = $oStorage->storeFileFromForm($_FILES[$sLogo], true, $iProfileId);
+                    if($iId === false)
+                        continue;
+                }
+
+                $mixedValue = $iId;
+                $mixedValuePrior = (int)getParam($this->{$aLogo['param']});
+                if($mixedValue != 0 && $mixedValue != $mixedValuePrior)
+                    $this->deleteLogo($sLogo);
+            }
+            else {
+                $mixedValue = $oForm->getCleanValue($sLogo);
+                $mixedValuePrior = getParam($this->{$aLogo['param']});
             }
 
-            $iValuePrior = (int)getParam($this->{$aLogo['param']});
-            if($iId != 0 && $iId != $iValuePrior)
-                $this->deleteLogo($sLogo);
-
-            setParam($this->{$aLogo['param']}, $iId);
+            setParam($this->{$aLogo['param']}, $mixedValue);
 
             bx_alert('system', 'change_' . $sLogo, 0, 0, [
                 'option' => $aLogo['param'], 
-                'value' => $iId,
-                'value_prior' => $iValuePrior
+                'value' => $mixedValue,
+                'value_prior' => $mixedValuePrior
             ]);
         }
 

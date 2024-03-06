@@ -28,6 +28,16 @@ class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
 
         setParam($sPrefix . 'site_logo_aspect_ratio', '');
     }
+    
+    protected function _processSystemChangeLogoDark($oAlert)
+    {
+        $sPrefix = $this->_oModule->_oConfig->getPrefix('option');
+
+        if(!in_array($oAlert->aExtras['option'], ['sys_site_logo_dark', $sPrefix . 'site_logo_dark']))
+            return;
+
+        setParam($sPrefix . 'site_logo_dark_aspect_ratio', '');
+    }
 
     protected function _processSystemChangeMark($oAlert)
     {
@@ -37,6 +47,16 @@ class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
             return;
 
         setParam($sPrefix . 'site_mark_aspect_ratio', '');
+    }
+
+    protected function _processSystemChangeMarkDark($oAlert)
+    {
+        $sPrefix = $this->_oModule->_oConfig->getPrefix('option');
+
+        if(!in_array($oAlert->aExtras['option'], ['sys_site_mark_dark', $sPrefix . 'site_mark_dark']))
+            return;
+
+        setParam($sPrefix . 'site_mark_dark_aspect_ratio', '');
     }
 
     protected function _processSystemGetObject($oAlert)

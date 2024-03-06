@@ -20,80 +20,119 @@ class BxTemplFunctions extends BxBaseFunctions
         $this->_sModule = 'bx_artificer';
     }
 
-    public function getMainLogo($aParams = array())
+    public function getMainLogoDarkUrl()
     {
+        return BxDolDesigns::getInstance()->getSiteLogoDarkUrl();
+    }
+
+    public function getMainLogoInline()
+    {
+        return BxDolDesigns::getInstance()->getSiteLogoParam('logo_inline');
+    }
+
+    public function getMainMarkDarkUrl()
+    {
+        return BxDolDesigns::getInstance()->getSiteMarkDarkUrl();
+    }
+
+    public function getMainMarkInline()
+    {
+        return BxDolDesigns::getInstance()->getSiteLogoParam('mark_inline');
+    }
+
+    public function getMainLogo($aParams = [])
+    {
+        $oModule = BxDolModule::getInstance($this->_sModule);
         $oDesigns = BxDolDesigns::getInstance();
 
         $sTitle = getParam('site_title');
-        $bTitle = !empty($sTitle);
 
         $sAlt = $oDesigns->getSiteLogoAlt();
-        if(empty($sAlt) && $bTitle)
+        if(empty($sAlt) && !empty($sTitle))
             $sAlt = $sTitle;
         $sAltAttr = bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE);
 
-        $bTmplVarsShowTitle = $bTitle;
-        $aTmplVarsShowImage = [];
-        $aTmplVarsShowImageMini = [];
+        $aImages = [
+            'logo' => ['uc' => 'Logo', 'gi' => 'logo-generic.svg'], 
+            'logo_dark' => ['uc' => 'LogoDark', 'gi' => 'logo-dark-generic.svg'], 
+            'mark' => ['uc' => 'Mark', 'gi' => 'mark-generic.svg'], 
+            'mark_dark' => ['uc' => 'MarkDark', 'gi' => 'mark-dark-generic.svg'], 
+        ];
 
-        //--- Logo image
-        $bDefault = false;
-        if(($sFileUrl = $this->getMainLogoUrl()) !== false || ($bDefault = (!$bTitle && ($sFileUrl = $this->_oTemplate->getImageUrl('logo-generic.svg')) != ''))) {
-            $bTmplVarsShowTitle = false;
-            $aTmplVarsShowImage = [
-                'class' => '',
-                'style' => '',
-                'src' => $sFileUrl,
-                'alt' => $sAltAttr
-            ];
+        $aTmplVarsImages = [];
+        $bLogo = $bLogoDark = $bMark = $bMarkDark = false;
+        foreach($aImages as $sType => &$aParams)
+            if(($aParams['g'] = false) || ($sFileUrl = $this->{'getMain' . $aParams['uc'] . 'Url'}()) !== false || ($aParams['g'] = (($sType == 'logo' || $aImages['logo']['g']) && ($sFileUrl = $this->_oTemplate->getImageUrl($aParams['gi'])) != ''))) {
+                $iLogoHeight = (int)$oDesigns->{'getSite' . $aParams['uc'] . 'Height'}();
+                $sLogoHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
 
-            $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
-            $sLogoHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+                if(!empty($aParams['g'])) {
+                    list($iDlWidth, $iDlHeight) = bx_get_svg_image_size($sFileUrl);
+                    $fDlAspectRation = $iDlHeight ? $iDlWidth / $iDlHeight : BxDolDesigns::getAspectRatioDefault($sType);
 
-            //--- Default Logo
-            if($bDefault) {
-                list($iDlWidth, $iDlHeight) = bx_get_svg_image_size($sFileUrl);
-                $fDlAspectRation = $iDlHeight ? $iDlWidth / $iDlHeight : BxDolDesigns::$fLogoAspectRatioDefault;
+                    $iLogoWidth = $iLogoHeight * $fDlAspectRation;
+                }
+                else
+                    $iLogoWidth = $oDesigns->{'getSite' . $aParams['uc'] . 'Width'}();
 
-                $iLogoWidth = $iLogoHeight * $fDlAspectRation;
+                $sLogoWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
+
+                $aTmplVarsImages[$sType] = [
+                    'class' => '',
+                    'style' => $sLogoWidth . ' ' . $sLogoHeight,
+                    'src' => $sFileUrl,
+                    'alt' => $sAltAttr
+                ];
+
+                ${'b' . $aParams['uc']} = true;
             }
-            else
-                $iLogoWidth = $oDesigns->getSiteLogoWidth();
 
-            $sLogoWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
-
-            $aTmplVarsShowImage['style'] = $sLogoWidth . ' ' . $sLogoHeight;
+        $sLogoInline = $sLogoInlineClass = '';
+        if($aImages['logo']['g'] && ($sLogoInline = $this->getMainLogoInline()) != '') {
+            $bLogo = true;
+            $bLogoDark = false;
+            unset($aTmplVarsImages['logo'], $aTmplVarsImages['logo_dark']);
         }
 
-        //--- Mark image
-        $bDefault = false;
-        if(($sFileUrl = $this->getMainMarkUrl()) !== false || ($bDefault = (!$bTitle && ($sFileUrl = $this->_oTemplate->getImageUrl('mark-generic.svg')) != ''))) {
-            $aTmplVarsShowImage['class'] = 'hidden lg:block';
-
-            $aTmplVarsShowImageMini = [
-                'class' => 'block lg:hidden',
-                'style' => '',
-                'src' => $sFileUrl,
-                'alt' => $sAltAttr
-            ];
-
-            $iMarkHeight = (int)$oDesigns->getSiteMarkHeight();
-            $sMarkHeight = $iMarkHeight > 0 ? 'height:' . round($iMarkHeight/16, 3) . 'rem;' : '';
-
-            //--- Default Mark
-            if($bDefault) {
-                list($iDmWidth, $iDmHeight) = bx_get_svg_image_size($sFileUrl);
-                $fDmAspectRation = $iDmHeight ? $iDmWidth / $iDmHeight : BxDolDesigns::$fMarkAspectRatioDefault;
-                    
-                $iMarkWidth = $iMarkHeight * $fDmAspectRation;
-            }
-            else
-                $iMarkWidth = $oDesigns->getSiteMarkWidth();
-
-            $sMarkWidth = $iMarkWidth > 0 ? 'width:' . round($iMarkWidth/16, 3) . 'rem;' : '';
-
-            $aTmplVarsShowImageMini['style'] = $sMarkWidth . ' ' . $sMarkHeight;
+        $sMarkInline = $sMarkInlineClass = '';
+        if($aImages['mark']['g'] && ($sMarkInline = $this->getMainMarkInline()) != '') {
+            $bMark = true;
+            $bMarkDark = false;
+            unset($aTmplVarsImages['mark'], $aTmplVarsImages['mark_dark']);
         }
+
+        if($bLogo) {
+            if($bLogoDark && !$bMark)
+                $aTmplVarsImages['logo']['class'] = 'block dark:hidden';
+            if(!$bLogoDark && $bMark) {
+                $sLogoInlineClass = 'hidden lg:block';
+                if(isset($aTmplVarsImages['logo']))
+                    $aTmplVarsImages['logo']['class'] = $sLogoInlineClass;
+            }
+            if($bLogoDark && $bMark)
+                $aTmplVarsImages['logo']['class'] = 'hidden dark:hidden lg:block'; 
+        }
+
+        if($bLogoDark) {
+            $aTmplVarsImages['logo_dark']['class'] = 'hidden dark:block';
+
+            if($bMark || $bMarkDark)
+                $aTmplVarsImages['logo_dark']['class'] = 'hidden dark:lg:block';
+        }
+
+        if($bMark) {
+            $sMarkInlineClass = 'block lg:hidden';
+            if(isset($aTmplVarsImages['mark']))
+                $aTmplVarsImages['mark']['class'] = $sMarkInlineClass;
+
+            if($bMarkDark)
+                $aTmplVarsImages['mark']['class'] = 'block dark:hidden lg:hidden';
+        }
+
+        if($bMarkDark) {
+            $aTmplVarsImages['mark_dark']['class'] = 'hidden dark:block dark:lg:hidden';
+        }
+
 
         $aAttrs = [
             'href' => BX_DOL_URL_ROOT, 
@@ -102,23 +141,46 @@ class BxTemplFunctions extends BxBaseFunctions
         if(!empty($aParams['attrs']) && is_array($aParams['attrs']))
             $aAttrs = array_merge($aAttrs, $aParams['attrs']);
 
-        return $this->_oTemplate->parseHtmlByName('logo_main.html', [
+        $aTmplVars = [
             'attrs' => bx_convert_array2attrs($aAttrs),
             'bx_if:show_title' => [
-                'condition' => $bTmplVarsShowTitle,
+                'condition' => !$bLogo && !$sLogoInline,
                 'content' => [
                     'logo' => $sTitle,
                 ]
             ],
-            'bx_if:show_image' => [
-                'condition' => !empty($aTmplVarsShowImage),
-                'content' => $aTmplVarsShowImage
+            'bx_if:show_logo_inline' => [
+                'condition' => !empty($sLogoInline),
+                'content' => [
+                    'class' => $sLogoInlineClass,
+                    'height' => $oModule->_oConfig->getLogoHeight() . 'px',
+                    'content' => $sLogoInline
+                ]
             ],
-            'bx_if:show_image_mini' => [
-                'condition' => !empty($aTmplVarsShowImageMini),
-                'content' => $aTmplVarsShowImageMini
+            'bx_if:show_mark_inline' => [
+                'condition' => !empty($sMarkInline),
+                'content' => [
+                    'class' => $sMarkInlineClass,
+                    'height' => $oModule->_oConfig->getMarkHeight() . 'px',
+                    'content' => $sMarkInline
+                ]
             ]
-        ]);
+        ];
+
+        foreach($aImages as $sType => $aParams) {
+            if(($sTypeIf = 'bx_if:show_' . $sType) && isset($aTmplVarsImages[$sType]))
+                $aTmplVars[$sTypeIf] = [
+                    'condition' => true,
+                    'content' => $aTmplVarsImages[$sType]
+                ];
+            else 
+                $aTmplVars[$sTypeIf] = [
+                    'condition' => false,
+                    'content' => []
+                ];
+        }
+
+        return $this->_oTemplate->parseHtmlByName('logo_main.html', $aTmplVars);
     }
 
     public function TemplPageAddComponent($sKey)

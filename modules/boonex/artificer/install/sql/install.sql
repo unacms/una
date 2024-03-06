@@ -31,10 +31,17 @@ SET @iSystemCategoryId = (SELECT IFNULL(`id`, @iCategoryId) FROM `sys_options_ca
 SET @iSystemCategoryOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_options` WHERE `category_id`=@iSystemCategoryId LIMIT 1);
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 1),
-(@iSystemCategoryId, CONCAT(@sName, '_site_mark'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 2),
-(@iSystemCategoryId, CONCAT(@sName, '_site_logo_alt'), '', '', 'text', '', '', '', @iSystemCategoryOrder + 3),
-(@iSystemCategoryId, CONCAT(@sName, '_site_logo_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 4),
-(@iSystemCategoryId, CONCAT(@sName, '_site_mark_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 5);
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 2),
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_dark'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 3),
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_dark_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 4),
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_inline'), '', '0', 'text', '', '', '', @iSystemCategoryOrder + 5),
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_alt'), '', '', 'text', '', '', '', @iSystemCategoryOrder + 6),
+
+(@iSystemCategoryId, CONCAT(@sName, '_site_mark'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 10),
+(@iSystemCategoryId, CONCAT(@sName, '_site_mark_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 11),
+(@iSystemCategoryId, CONCAT(@sName, '_site_mark_dark'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 12),
+(@iSystemCategoryId, CONCAT(@sName, '_site_mark_dark_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 13),
+(@iSystemCategoryId, CONCAT(@sName, '_site_mark_inline'), '', '0', 'text', '', '', '', @iSystemCategoryOrder + 14);
 
 
 -- STUDIO PAGE & WIDGET
