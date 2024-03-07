@@ -761,6 +761,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
             return '';
 
+        if($this->_bIsApi)
+            return 'OK';
+
         self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = $this->_getPost($aEvent['content_type'], $aEvent, $aBrowseParams);
         self::$_aMemoryCacheItemsData[$sMemoryCacheItemsKey] = $aEvent;
 
@@ -1546,7 +1549,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getDataCached($aEvent, $aBrowseParams = array())
     {
-        if(!$this->_oConfig->isCacheItem() || bx_is_api()) 
+        if(!$this->_oConfig->isCacheItem())
             return $this->getData($aEvent, $aBrowseParams);
 
         /**
