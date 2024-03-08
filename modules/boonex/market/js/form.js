@@ -105,8 +105,6 @@ BxMarketForm.prototype.changeFileType = function(oSelect) {
 
     jQuery(oSelect).parents('.bx-uploader-ghost:first').find('.bx-uploader-ghost-type-rel:visible').bx_anim('hide', 'fade', 'fast', function() {
         jQuery(this).parent().find('.bx-uploader-ghost-type-' + sValue).bx_anim('show', 'fade', 'fast');
-
-        jQuery(oSelect).parents('.bx-form-input-files-result:first').bx_show_more_check_overflow();
     });
 };
 
