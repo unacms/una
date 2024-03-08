@@ -893,7 +893,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         if(!method_exists($this, $sMethodLength))
             $sMethodLength = 'getCharsDisplayMaxTitle';
 
-        return strmaxtextlen($s, $this->$sMethodLength(), '...');
+        return strmaxtextlen(preg_replace("/<\/p>/", " </p>", $s), $this->$sMethodLength(), '...');
     }
 
     public function getTitleShort($s, $mixedProfile = false)
