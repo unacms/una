@@ -10,6 +10,8 @@
 
 class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
 {
+    protected $_sFilter;
+
     protected $sUrlViewValues;
 
     function __construct($aOptions, $oTemplate = false)
@@ -18,6 +20,9 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_pre_lists_edit');
         $this->_aOptions['actions_single']['delete']['attr']['title'] = _t('_adm_form_btn_pre_lists_delete');
+
+        if(($sFilter = $this->_getFilterValue()))
+            $this->_sFilter = $sFilter;
 
         $this->sUrlViewValues = BX_DOL_URL_STUDIO . 'builder_forms.php?page=pre_values&module=%s&list=%s';
     }
@@ -32,7 +37,11 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-pre-list-create',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params('grid.php', [
+                    'o' => $this->_sObject, 
+                    'a' => $sAction, 
+                    $this->_aOptions['filter_get'] => $this->_sFilter
+                ]),
                 'method' => BX_DOL_STUDIO_METHOD_DEFAULT
             ),
             'params' => array (
@@ -143,7 +152,11 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-list-edit',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params('grid.php', [
+                    'o' => $this->_sObject, 
+                    'a' => $sAction, 
+                    $this->_aOptions['filter_get'] => $this->_sFilter
+                ]),
                 'method' => BX_DOL_STUDIO_METHOD_DEFAULT
             ),
             'params' => array (

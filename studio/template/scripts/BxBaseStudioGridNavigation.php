@@ -10,9 +10,14 @@
 
 class BxBaseStudioGridNavigation extends BxTemplStudioGrid
 {
+    protected $_sFilter;
+
     function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
+
+        if(($sFilter = $this->_getFilterValue()))
+            $this->_sFilter = $sFilter;
     }
 
     public function getModulesSelectAll($sGetItemsMethod, $bShowCustom = true, $bShowSystem = true)

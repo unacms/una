@@ -139,8 +139,8 @@ class BxBaseGrid extends BxDolGrid
         $sIdContainer = 'bx-grid-cont-' . $this->_sObject;
         $sIdTable = 'bx-grid-table-' . $this->_sObject;
 
-        $sFilter = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['filter_get'])));
-        $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
+        $sFilter = $this->_getFilterValue();
+        $sOrderField = $this->_getOrderValue();
         $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
 
         $iStart = 0;

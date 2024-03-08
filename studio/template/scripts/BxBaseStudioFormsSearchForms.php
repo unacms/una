@@ -10,6 +10,8 @@
 
 class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
 {
+    protected $_sFilter;
+
     protected $sUrlViewFields;
     protected $sUrlViewSortableFields;
 
@@ -19,8 +21,10 @@ class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_search_forms_edit');
 
+        if(($sFilter = $this->_getFilterValue()))
+            $this->_sFilter = $sFilter;
+
         $this->sUrlViewFields = BX_DOL_URL_STUDIO . 'builder_forms.php?page=search_fields&module=%s&form=%s';
-        
         $this->sUrlViewSortableFields = BX_DOL_URL_STUDIO . 'builder_forms.php?page=search_sortable_fields&module=%s&form=%s';
     }
 
@@ -53,7 +57,11 @@ class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-search-form-edit',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params('grid.php', [
+                    'o' => $this->_sObject, 
+                    'a' => $sAction, 
+                    $this->_aOptions['filter_get'] => $this->_sFilter
+                ]),
                 'method' => BX_DOL_STUDIO_METHOD_DEFAULT
             ),
             'params' => array (

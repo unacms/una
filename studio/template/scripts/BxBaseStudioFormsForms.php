@@ -10,6 +10,8 @@
 
 class BxBaseStudioFormsForms extends BxDolStudioFormsForms
 {
+    protected $_sFilter;
+
     protected $sUrlViewDisplays;
 
     function __construct($aOptions, $oTemplate = false)
@@ -17,6 +19,9 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_forms_edit');
+
+        if(($sFilter = $this->_getFilterValue()))
+            $this->_sFilter = $sFilter;
 
         $this->sUrlViewDisplays = BX_DOL_URL_STUDIO . 'builder_forms.php?page=displays&module=%s&object=%s';
     }
@@ -50,7 +55,11 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-form-edit',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params('grid.php', [
+                    'o' => $this->_sObject, 
+                    'a' => $sAction, 
+                    $this->_aOptions['filter_get'] => $this->_sFilter
+                ]),
                 'method' => BX_DOL_STUDIO_METHOD_DEFAULT
             ),
             'params' => array (

@@ -591,6 +591,16 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             return true;
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
+
+    protected function _getFilterValue()
+    {
+        return bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['filter_get'])));
+    }
+
+    protected function _getOrderValue()
+    {
+        return bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
+    }
 }
 
 /** @} */
