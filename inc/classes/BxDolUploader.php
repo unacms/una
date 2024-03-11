@@ -225,6 +225,13 @@ abstract class BxDolUploader extends BxDolFactory
         if (!$isMultiple)
             $this->deleteGhostsForProfile($iProfileId, $iContentId);
 
+        
+        if (bx_is_api() && $_FILES['file']) {
+            $iId = $oStorage->storeFileFromForm($_FILES['file'], $bPrivate, $iProfileId, $iContentId);
+            $aResponse = array ('success' => 1, 'id' => $iId);
+            return $aResponse;
+        } 
+        
         foreach ($aMultipleFiles as $aFile) {
 
             $iId = $oStorage->storeFileFromForm($aFile, $bPrivate, $iProfileId, $iContentId);
