@@ -284,6 +284,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_groups_view_actions_more', 'bx_groups', '_bx_groups_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_groups_view_actions_more', 'bx_groups', 'group-manage', '_bx_groups_menu_item_title_system_view_manage', '_bx_groups_menu_item_title_view_manage', 'page.php?i=group-manage&profile_id={profile_id}', '', '', 'users', '', 2147483647, '', 1, 0, 10),
 ('bx_groups_view_actions_more', 'bx_groups', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', 192, '', 1, 0, 20),
 ('bx_groups_view_actions_more', 'bx_groups', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_groups&content_id={content_id}', '', '', 'history', '', 192, '', 1, 0, 30),
 ('bx_groups_view_actions_more', 'bx_groups', 'edit-group-profile', '_bx_groups_menu_item_title_system_edit_profile', '_bx_groups_menu_item_title_edit_profile', 'page.php?i=edit-group-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
@@ -373,7 +374,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_groups_view_submenu', 'bx_groups', 'group-profile-info', '_bx_groups_menu_item_title_system_view_profile_info', '_bx_groups_menu_item_title_view_profile_info', 'page.php?i=group-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', '', 0, 2147483647, 1, 0, 2),
 ('bx_groups_view_submenu', 'bx_groups', 'group-profile-comments', '_bx_groups_menu_item_title_system_view_profile_comments', '_bx_groups_menu_item_title_view_profile_comments', 'page.php?i=group-profile-comments&id={content_id}', '', '', '', '', '', 0, 2147483647, 0, 0, 3),
 ('bx_groups_view_submenu', 'bx_groups', 'group-fans', '_bx_groups_menu_item_title_system_view_fans', '_bx_groups_menu_item_title_view_fans', 'page.php?i=group-fans&profile_id={profile_id}', '', '', 'users col-blue3', '', '', 0, 2147483647, 1, 0, 4),
-('bx_groups_view_submenu', 'bx_groups', 'group-manage', '_bx_groups_menu_item_title_system_view_manage', '_bx_groups_menu_item_title_view_manage', 'page.php?i=group-manage&profile_id={profile_id}', '', '', 'users col-blue3', '', '', 0, 2147483647, 1, 0, 5),
 ('bx_groups_view_submenu', 'bx_groups', 'more-auto', '_bx_groups_menu_item_title_system_view_profile_more_auto', '_bx_groups_menu_item_title_view_profile_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
 -- MENU: custom menu for snippet meta info

@@ -337,6 +337,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_events_view_actions_more', 'bx_events', '_bx_events_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_events_view_actions_more', 'bx_events', 'event-manage', '_bx_events_menu_item_title_system_view_manage', '_bx_events_menu_item_title_view_manage', 'page.php?i=event-manage&profile_id={profile_id}', '', '', 'users', '', 2147483647, '', 1, 0, 10),
 ('bx_events_view_actions_more', 'bx_events', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', 192, '', 1, 0, 20),
 ('bx_events_view_actions_more', 'bx_events', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_events&content_id={content_id}', '', '', 'history', '', 192, '', 1, 0, 30),
 ('bx_events_view_actions_more', 'bx_events', 'edit-event-profile', '_bx_events_menu_item_title_system_edit_profile', '_bx_events_menu_item_title_edit_profile', 'page.php?i=edit-event-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
@@ -433,7 +434,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_events_view_submenu', 'bx_events', 'event-profile-info', '_bx_events_menu_item_title_system_view_profile_info', '_bx_events_menu_item_title_view_profile_info', 'page.php?i=event-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', '', 0, 2147483647, 1, 0, 2),
 ('bx_events_view_submenu', 'bx_events', 'event-profile-comments', '_bx_events_menu_item_title_system_view_profile_comments', '_bx_events_menu_item_title_view_profile_comments', 'page.php?i=event-profile-comments&id={content_id}', '', '', '', '', '', 0, 2147483647, 0, 0, 3),
 ('bx_events_view_submenu', 'bx_events', 'event-fans', '_bx_events_menu_item_title_system_view_fans', '_bx_events_menu_item_title_view_fans', 'page.php?i=event-fans&profile_id={profile_id}', '', '', 'calendar col-blue3', '', '', 0, 2147483647, 1, 0, 4),
-('bx_events_view_submenu', 'bx_events', 'event-manage', '_bx_events_menu_item_title_system_view_manage', '_bx_events_menu_item_title_view_manage', 'page.php?i=event-manage&profile_id={profile_id}', '', '', 'calendar col-blue3', '', '', 0, 2147483647, 1, 0, 5),
 ('bx_events_view_submenu', 'bx_events', 'more-auto', '_bx_events_menu_item_title_system_view_profile_more_auto', '_bx_events_menu_item_title_view_profile_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
 -- MENU: custom menu for snippet meta info
