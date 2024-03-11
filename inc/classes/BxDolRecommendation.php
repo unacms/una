@@ -161,7 +161,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
     public function processCriteria($iProfileId, $iLimit = 100)
     {
-        $aWeights = array_map(fn($fValue): float => $fValue * $iLimit, $this->_aObject['weights']);
+        $aWeights = array_map(function($fValue) use ($iLimit) { return $fValue * $iLimit; } , $this->_aObject['weights']);
 
         $aCriterionItems = [];
         foreach($this->_aCriteria as $sCriterion => $aCriterion) {
@@ -279,7 +279,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         if(($sStartsGet = bx_get('starts')) !== false)
             $aStarts = array_combine(array_keys($this->_aCriteria), json_decode($sStartsGet, true));
 
-        $aWeights = array_map(fn($fValue): float => $fValue * $iPerPage, $this->_aObject['weights']);
+        $aWeights = array_map(function($fValue) use ($iPerPage) { return $fValue * $iPerPage; }, $this->_aObject['weights']);
 
         $aCriterionItems = [];
         foreach($this->_aCriteria as $sCriterion => $aCriterion) {
