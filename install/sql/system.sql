@@ -553,8 +553,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_live_search_limit', '_adm_stg_cpt_option_sys_live_search_limit', '5', 'digit', '', '', '', 22),
 (@iCategoryId, 'sys_profiles_search_limit', '_adm_stg_cpt_option_sys_profiles_search_limit', '20', 'digit', '', '', '', 23),
 
-(@iCategoryId, 'sys_metatags_hashtags_max', '_adm_stg_cpt_option_sys_metatags_hashtags_max', '9', 'digit', '', '', '', 30),
-(@iCategoryId, 'sys_metatags_mentions_max', '_adm_stg_cpt_option_sys_metatags_mentions_max', '9', 'digit', '', '', '', 31),
+(@iCategoryId, 'sys_metatags_hashtags_only', '_adm_stg_cpt_option_sys_metatags_hashtags_only', '', 'checkbox', '', '', '', 30),
+(@iCategoryId, 'sys_metatags_hashtags_max', '_adm_stg_cpt_option_sys_metatags_hashtags_max', '9', 'digit', '', '', '', 31),
+(@iCategoryId, 'sys_metatags_mentions_max', '_adm_stg_cpt_option_sys_metatags_mentions_max', '9', 'digit', '', '', '', 32),
 (@iCategoryId, 'sys_attach_links_max', '_adm_stg_cpt_option_sys_attach_links_max', '0', 'digit', '', '', '', 35),
 
 (@iCategoryId, 'sys_profile_bot', '_adm_stg_cpt_option_sys_profile_bot', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_options_profile_bot";s:5:"class";s:13:"TemplServices";}', '', '', 40),

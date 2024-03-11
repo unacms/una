@@ -145,7 +145,8 @@
 class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
 {
     protected static $_aLocationKeys = ['lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number'];
-    
+    protected static $_sKeywordPattern = '/[\pCc\pZ\p{Ps}\p{Pe}\p{Pi}\p{Pf}]\#(\pL[\pL\pN_]+)/u';
+            
     protected $_sObject;
     protected $_aObject;
     protected $_oQuery;
@@ -195,6 +196,51 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $o = new $sClass($aObject);
 
         return ($GLOBALS['bxDolClasses']['BxDolMetatags!'.$sObject] = $o);
+    }
+
+    /**
+     * Get metatags by term
+     * @param string $sMeta - 'keywords' is only supported meta for now
+     * @param type $sMetaItem
+     * @param type $sTerm
+     * @return type
+     */
+    static public function getMetatagsDataByTerm($sMeta, $sMetaItem, $sTerm)
+    {
+        $bHashtagsOnly = getParam('sys_metatags_hashtags_only') == 'on';
+        $aLabels = []; 
+        if($bHashtagsOnly)
+            $aLabels = array_map(function($sValue) {return strtolower($sValue);}, BxDolLabel::getInstance()->getLabels(['type' => 'values']));
+
+        $aValues = [];
+        $aObjects = BxDolMetatagsQuery::getMetatagsObjects();
+        foreach($aObjects as $aObject) {
+            $oObject = BxDolMetatags::getObjectInstance($aObject['object']);
+            if(!$oObject || !$oObject->{$sMeta . 'IsEnabled'}())
+                continue;
+
+            $sMethod = $sMeta . 'GetByTerm';
+            if(!method_exists($oObject->_oQuery, $sMethod))
+                continue;
+
+            $aData = $oObject->_oQuery->$sMethod($sTerm);
+            foreach($aData as $aMeta) {
+                if($bHashtagsOnly && in_array(strtolower($aMeta[$sMetaItem]), $aLabels))
+                    continue;
+
+                $aMatch = [];
+                if(!preg_match(self::$_sKeywordPattern, ' #' . $aMeta[$sMetaItem], $aMatch) || !isset($aMatch[1]) || strcasecmp($aMeta[$sMetaItem], $aMatch[1]) != 0) 
+                    continue;
+
+                $aValues[$aMeta[$sMetaItem]] = [
+                    'id' => $aMeta['object_id'], 
+                    'meta' => $aMeta[$sMetaItem], 
+                    'url' => $oObject->keywordsGetHashTagUrl($aMeta[$sMetaItem], $aMeta['object_id'])
+                ];
+            }
+        }
+
+        return $aValues;
     }
 
     /**
@@ -322,7 +368,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         // process spaces
         $s = str_ireplace('&nbsp;', ' ', $s);
         
-        return $this->_metaAdd($iId, ' ' . $s, '/[\pCc\pZ\p{Ps}\p{Pe}\p{Pi}\p{Pf}]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', 'keywordsGet', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
+        return $this->_metaAdd($iId, ' ' . $s, self::$_sKeywordPattern, 'keywordsDelete', 'keywordsAdd', 'keywordsGet', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
     }
 
     /**
@@ -685,20 +731,6 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         }
         
         return $aRet;
-    }
-    
-    static public function getMetatagsDataByTerm($sMeta, $sMetaItem, $sTerm)
-    {
-        $aValues = [];
-        $aObjects = BxDolMetatagsQuery::getMetatagsObjects();
-        foreach ($aObjects as $aObject) {
-            $oObject = BxDolMetatags::getObjectInstance($aObject['object']);
-            $aData = call_user_func_array(array($oObject->_oQuery, $sMeta . 'GetByTerm'), [$sTerm]);
-            foreach ($aData as $aMeta) {
-                $aValues[$aMeta[$sMetaItem]] = ['id' => $aMeta['object_id'], 'meta' => $aMeta[$sMetaItem], 'url' => $oObject->keywordsGetHashTagUrl($aMeta[$sMetaItem], $aMeta['object_id'])];
-            }
-        }
-        return $aValues;
     }
     
     /**

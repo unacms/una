@@ -1727,6 +1727,7 @@
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_mini"><![CDATA[Quill buttons for mini editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_standard"><![CDATA[Quill buttons for standard editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons for full editor]]></string>
+    <string name="_adm_stg_cpt_option_sys_metatags_hashtags_only"><![CDATA[Filter out labels from hashtag suggestion list]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_hashtags_max"><![CDATA[Max number of hashtags per post]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_mentions_max"><![CDATA[Max number of mentions per post]]></string>
     <string name="_adm_stg_cpt_option_sys_attach_links_max"><![CDATA[Max number of attached links per post (0 - no limit)]]></string>
