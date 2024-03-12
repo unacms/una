@@ -77,7 +77,7 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(isset($CNF['FIELD_PUBLISHED'])){
+        if(isset($CNF['FIELD_PUBLISHED'])) {
             if(empty($aValsToAdd[$CNF['FIELD_PUBLISHED']]) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']])) {
                 $iPublished = $this->getCleanValue($CNF['FIELD_PUBLISHED']);
                 if(empty($iPublished))
@@ -87,7 +87,17 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
             }
         }
 
-        return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+
+        $mixedResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        if($mixedResult && ($iAuthorId = (int)$this->getCleanValue($CNF['FIELD_AUTHOR'])) && (int)$aContentInfo[$CNF['FIELD_AUTHOR']] != $iAuthorId) {
+            $oProfileAuthor = BxDolProfile::getInstance($iAuthorId);
+            $oProfileContent = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
+            if($oProfileAuthor !== false && $oProfileContent !== false)
+                $oProfileContent->move($oProfileAuthor->getAccountId());
+        }
+
+        return $mixedResult;
     }
 
     protected function genCustomInputInitialMembers ($aInput)
