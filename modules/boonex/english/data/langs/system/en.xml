@@ -3797,7 +3797,7 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_txt_splash_create"><![CDATA[Create]]></string>
         <string name="_sys_txt_splash_create_text"><![CDATA[Build your social profile, post status updates, write notes, create polls and upload media albums.]]></string>
 	<string name="_sys_txt_switch_profile_context"><![CDATA[Switch]]></string>
-	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Your email preferences has been successfully updated.]]></string>
+	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Your email preferences have been updated.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>
         <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>

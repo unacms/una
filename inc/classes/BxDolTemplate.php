@@ -33,6 +33,9 @@ define('BX_PAGE_DEFAULT', 0); ///< default, regular page
 define('BX_PAGE_CLEAR', 2); ///< clear page, without any headers and footers
 define('BX_PAGE_EMBED', 22); ///< page used for embeds
 define('BX_PAGE_POPUP', 44); ///< popup page, without any headers and footers
+define('BX_PAGE_CONTENT_PRELOAD', 50); ///< page content preload for dynamic (htmx) loading
+define('BX_PAGE_CONTENT_WITH_COVER', 54); ///< page content with cover and submenu for dynamic (htmx) loading
+define('BX_PAGE_CONTENT_WITH_SUBMENU', 56); ///< page content with submenu for dynamic (htmx) loading
 define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display some msg, like 'please wait', without headers footers
 
 /**
@@ -722,6 +725,39 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function setPageNameIndex($i)
     {
+        $this->aPage['name_index'] = $i;
+    }
+    
+    /**
+     * Set page name index by target.
+     * @param string $s target. 
+     */
+    function setPageNameIndexByTarget($s)
+    {
+        $i = BX_PAGE_DEFAULT;
+
+        switch($s) {
+            case 'bx-content-preload':
+                $i = BX_PAGE_CONTENT_PRELOAD;
+                break;
+
+            case 'bx-content-with-toolbar-wrapper':
+                //$i = 52;
+                break;
+
+            case 'bx-content-with-cover-wrapper':
+                $i = BX_PAGE_CONTENT_WITH_COVER;
+                break;
+
+            case 'bx-content-with-submenu-wrapper':
+                $i = BX_PAGE_CONTENT_WITH_SUBMENU;
+                break;
+
+            case 'bx-content-wrapper':
+                //$i = 58;
+                break;
+        }
+
         $this->aPage['name_index'] = $i;
     }
 

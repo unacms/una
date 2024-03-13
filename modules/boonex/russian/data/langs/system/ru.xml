@@ -3719,7 +3719,7 @@
         <string name="_sys_txt_splash_create"><![CDATA[Создавай]]></string>
         <string name="_sys_txt_splash_create_text"><![CDATA[Создай свой профайл, изменяй статус, пиши заметки, создавай голосования и загружай медиа альбомы.]]></string>
         <string name="_sys_txt_switch_profile_context"><![CDATA[Переключиться]]></string>
-	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши email-установки были удачно обновлены.]]></string>
+	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши настройки электронной почты обновлены.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, пожалуйста, зайдите в свой аккаунт и обновите email-установки или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить email-установки для <b>{0}</b>]]></string>
         <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Ссылка отписки неправильная.]]></string>

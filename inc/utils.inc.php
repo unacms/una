@@ -2227,6 +2227,32 @@ function bx_is_dynamic_request ()
     return bx_get('dynamic') || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']);
 }
 
+function bx_is_htmx_request ()
+{
+    return !empty($_SERVER['HTTP_HX_REQUEST']);
+}
+
+function bx_get_htmx_target ()
+{
+    if(!bx_is_htmx_request())
+        return false;
+
+    return isset($_SERVER['HTTP_HX_TARGET']) ? $_SERVER['HTTP_HX_TARGET'] : false;
+}
+
+function bx_get_htmx_attrs ($a)
+{
+    if(!$a)
+        return '';
+
+    $aHxAttrs = [];
+    array_walk($a, function($mixedValue, $sIndex) use (&$aHxAttrs) {
+        $aHxAttrs['hx-' . $sIndex] = $mixedValue;
+    });
+
+    return bx_convert_array2attrs($aHxAttrs);
+}
+
 function bx_idn_to_utf8($sUrl, $bReturnDomain = false)
 {
     return bx_idn_to('idn_to_utf8', $sUrl, $bReturnDomain);

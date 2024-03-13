@@ -124,7 +124,7 @@ class BxBasePage extends BxDolPage
      * Very similar to BxBasePage::getCode
      * but adds css and js files which are needed for the corect page display
      */ 
-    public function getCodeDynamic ()
+    public function getCodeDynamic ($bIncludesOnly = false)
     {
         // TODO: remake to use use collect* template methods
 
@@ -155,7 +155,7 @@ class BxBasePage extends BxDolPage
         foreach ($aJsNew as $a)
             $sJs .= $oTemplate->addJs($a['url'], true);
 
-        return $sJs . $sCss . $sContent;
+        return $sJs . $sCss . (!$bIncludesOnly ? $sContent : '');
     }
     
     /**

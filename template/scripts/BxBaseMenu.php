@@ -234,6 +234,20 @@ class BxBaseMenu extends BxDolMenu
         $a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
 
         $a['attrs'] = $this->_getMenuAttrs($a);
+        $a['attrs_wrp'] = '';
+
+        if($this->_bHx /*&& strpos($a['name'], '-manage') === false*/) {
+            $this->_aHx['get'] = $a['link'];
+            $a['attrs'] .= bx_get_htmx_attrs($this->_aHx);
+
+            if(!bx_is_htmx_request() && !$this->_isSelected($a))
+                $a['attrs_wrp'] .= bx_get_htmx_attrs([
+                    'get' => $a['link'],
+                    'trigger' => 'load',
+                    'target' => '#bx-content-preload',
+                    'swap' => 'beforeend',
+                ]);
+        }
 
         $a['bx_if:image'] = array (
             'condition' => (bool)$sIconUrl,
