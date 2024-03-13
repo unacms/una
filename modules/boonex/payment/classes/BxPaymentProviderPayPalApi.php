@@ -955,14 +955,15 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
 
             switch($sCycleType) {
                 case 'TRIAL':
-                    if($iCyclesCompleted < $iCyclesTotal) {
-                        $bTrial = true;
-                        break 2;
-                    }
+                    $bTrial = $iCyclesCompleted <= $iCyclesTotal;
                     break;
-                
+
                 case 'REGULAR':
+                    if($iCyclesCompleted == 0)
+                        break;
+
                     $bPaid = true;
+                    $bTrial = false;
                     break 2;
             }
         }
