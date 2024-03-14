@@ -165,24 +165,36 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         return $aBlock['content'];
     }
 
-    protected function getUnit ($aData, $aParams = array())
+    protected function getUnit ($aData, $aParams = [])
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $aResult = parent::getUnit($aData, $aParams);
-        
-        $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
-        if($oMenuMeta) {
+
+        $sTemplate = 'unit';
+        if(isset($aParams['template_name']))
+            $sTemplate = $this->_getUnitName($aData, $aParams['template_name']);
+
+        if(in_array($sTemplate, ['unit', 'unit_full']) && $aResult['bx_if:thumb']['condition']) {
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+            if($oImagesTranscoder && ($sPhotoCover = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']])))
+                $aResult['bx_if:thumb']['content'] = array_merge($aResult['bx_if:thumb']['content'], [
+                    'thumb_url' => $sPhotoCover,
+                    'gallery_url' => $sPhotoCover
+                ]);
+        }
+
+        if(($oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this)) !== false) {
             $oMenuMeta->setContent($aData);
 
-            $aResult = array_merge($aResult, array(
-                'bx_if:meta' => array(
+            $aResult = array_merge($aResult, [
+                'bx_if:meta' => [
                     'condition' => true,
-                    'content' => array(
+                    'content' => [
                         'meta' => $oMenuMeta->getCode()
-                    )
-                ),
-            ));
+                    ]
+                ],
+            ]);
         }
 
         return $aResult;
