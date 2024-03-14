@@ -10,6 +10,11 @@
     width:100px;
     margin:0px auto;
 }
-.bx-pwropa-item-container .flickity-viewport{
+.bx-pwropa-item-container .flickity-viewport {
     width: 100%;
 }
+
+.bx-pwropa-item-container .flickity-viewport .bx-base-pofile-unit-showcase {
+    width: 100%;
+}
+

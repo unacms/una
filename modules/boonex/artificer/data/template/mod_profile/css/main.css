@@ -19,6 +19,11 @@
 
     overflow: hidden;
 }
+
+.bx-base-unit-showcase-wrapper .bx-base-pofile-unit-with-cover {
+    display:inline-block;
+    overflow:hidden;
+}
 .bx-base-unit-showcase-wrapper.bx-sc-enabled .bx-base-pofile-unit-with-cover {
     height: 100%;
 }
