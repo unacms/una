@@ -80,7 +80,7 @@ class BxBaseMenuManage extends BxTemplMenu
             return $this->_oObjectManage->getCode();
 
         $oMenu = new BxTemplMenu(['template' => 'menu_horizontal.html', 'menu_id' => $this->_sObjectManage . '_wrapper', 'menu_items' => [
-            ['id' => $this->_sObjectManage . '_more', 'name' => $this->_sObjectManage . '_more', 'link' => 'javascript:void(0)', 'onclick' => 'bx_menu_popup(\'' . $this->_sObjectManage . '\', this, {pointer: {el: $(this).parents(\'li:first\'), align:\'right\'}, cssClass: \'bx-popup-menu\'}, {id: ' . $this->_iContentId . '});', 'title' => '', 'icon' => $this->_oTemplate->getImageAuto('ellipsis-v', false)]
+            ['id' => $this->_sObjectManage . '_more', 'name' => $this->_sObjectManage . '_more', 'link' => 'javascript:void(0)', 'onclick' => 'bx_menu_popup(\'' . $this->_sObjectManage . '\', this, {pointer: {el: $(this).parents(\'li:first\'), align:\'right\'}, cssClass: \'bx-popup-menu\'}, {id: ' . $this->_iContentId . '});', 'title' => '', 'icon' => $this->_oTemplate->getImageAuto('cog', false)]
         ]]);
 
         return $oMenu->getCode();
