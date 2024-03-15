@@ -22,16 +22,21 @@ class BxTemplMenu extends BxBaseMenu
                 $sClass = 'bx-menu-tab-active';
 
                 $this->_bHx = true;
+                $this->_bHxHead = true;
                 $this->_aHx = [
                     'get' => '',
                     'trigger' => 'click',
                     'target' => '#bx-content-wrapper',
                     'swap' => 'outerHTML settle:200ms',
-                    'replace-url' => 'true',
+                    'push-url' => 'true',
                     'on:htmx-after-on-load' => 'jQuery(this).parent().addClass(\'' . $sClass . '\').siblings().removeClass(\'' . $sClass . '\');'
                 ];
 
-                $this->_oTemplate->addInjection('injection_body', 'text', 'hx-on::after-request="jQuery(this).bxProcessHtml()"');
+                $sInjection = 'hx-on::after-request="jQuery(this).bxProcessHtml()"';
+                if($this->_bHxHead)
+                    $sInjection .= ' hx-ext="head-support"';
+
+                $this->_oTemplate->addInjection('injection_body', 'text', $sInjection);
             }
         }
 
