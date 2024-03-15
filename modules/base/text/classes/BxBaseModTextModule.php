@@ -207,11 +207,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
     public function serviceManageTools($sType = 'common')
     {
-        $sResult = parent::serviceManageTools($sType);
-        if(!empty($sResult))
-            $this->_oTemplate->addJsSystem(['modules/base/text/js/|manage_tools.js']);
+        $this->_oTemplate->addJs(['modules/base/text/js/|manage_tools.js']);
 
-        return $sResult;
+        return parent::serviceManageTools($sType);
     }
 
     /**

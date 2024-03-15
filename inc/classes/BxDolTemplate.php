@@ -36,6 +36,7 @@ define('BX_PAGE_POPUP', 44); ///< popup page, without any headers and footers
 define('BX_PAGE_CONTENT_PRELOAD', 50); ///< page content preload for dynamic (htmx) loading
 define('BX_PAGE_CONTENT_WITH_COVER', 54); ///< page content with cover and submenu for dynamic (htmx) loading
 define('BX_PAGE_CONTENT_WITH_SUBMENU', 56); ///< page content with submenu for dynamic (htmx) loading
+define('BX_PAGE_CONTENT', 58); ///< page content only for dynamic (htmx) loading
 define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display some msg, like 'please wait', without headers footers
 
 /**
@@ -754,7 +755,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
 
             case 'bx-content-wrapper':
-                //$i = 58;
+                $i = BX_PAGE_CONTENT;
                 break;
         }
 

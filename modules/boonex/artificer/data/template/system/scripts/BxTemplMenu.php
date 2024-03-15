@@ -19,13 +19,16 @@ class BxTemplMenu extends BxBaseMenu
         if(isset($aObject['object'])) {
             //--- For page submenus ---//
             if(strpos($aObject['object'], '_submenu') !== false && !($this instanceof BxBaseModProfileMenuView)) {
+                $sClass = 'bx-menu-tab-active';
+
                 $this->_bHx = true;
                 $this->_aHx = [
                     'get' => '',
                     'trigger' => 'click',
-                    'target' => '#bx-content-with-submenu-wrapper',
-                    'swap' => 'outerHTML',
-                    'replace-url' => 'true'
+                    'target' => '#bx-content-wrapper',
+                    'swap' => 'outerHTML settle:200ms',
+                    'replace-url' => 'true',
+                    'on:htmx-after-on-load' => 'jQuery(this).parent().addClass(\'' . $sClass . '\').siblings().removeClass(\'' . $sClass . '\');'
                 ];
 
                 $this->_oTemplate->addInjection('injection_body', 'text', 'hx-on::after-request="jQuery(this).bxProcessHtml()"');
