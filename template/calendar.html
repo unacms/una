@@ -23,10 +23,16 @@
         }
     };
     var oOptions = __options__;
-    
+
     var oBxFullCalendar = null;
-    document.addEventListener('DOMContentLoaded', function() {
-        oBxFullCalendar = new FullCalendar.Calendar(document.getElementById('__id__'), $.extend({}, oDefaults, oOptions));
+    var fBxFullCalendarInit = function() {
+        oBxFullCalendar = new FullCalendar.Calendar(oElement, $.extend({}, oDefaults, oOptions));
         oBxFullCalendar.render();
-    });
+    };
+
+    var oElement = document.getElementById('__id__');
+    if(oElement)
+        fBxFullCalendarInit();
+    else
+        document.addEventListener('DOMContentLoaded', fBxFullCalendarInit);
 </script>

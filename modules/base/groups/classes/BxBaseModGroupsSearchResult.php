@@ -24,8 +24,8 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
     public function displaySearchBox ($sContent, $sPaginate = '')
     {
         $aResult = parent::displaySearchBox($sContent, $sPaginate);
-        
-        if(!empty($aResult['content'])) {
+
+        if(!empty($aResult['content']) && $this->oModule->_oConfig->getJsClass('main') != '') {
             $this->oModule->_oTemplate->addJs(['modules/base/groups/js/|main.js', 'main.js']);
 
             $aResult['content'] = $this->oModule->_oTemplate->getJsCode('main', [

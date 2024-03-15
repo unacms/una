@@ -81,11 +81,15 @@ class BxDolInformer extends BxDolFactory implements iBxDolSingleton
      */
     public function add ($sId, $sMsg, $iType = BX_INFORMER_INFO)
     {
-        $this->_aMessages[$sId] = array (
+        if(!$this->_bEnabled)
+            return;
+
+        $this->_addJsCss();
+        $this->_aMessages[$sId] = [
             'id' => $sId,
             'msg' => $sMsg,
             'type' => $iType,
-        );
+        ];
     }
 
     /**

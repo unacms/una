@@ -576,8 +576,8 @@
     <string name="_bx_events_form_price_input_sys_do_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_events_form_price_input_do_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_events_acl_action_use_paid_join"><![CDATA[Использовать платное подключение]]></string>
-    <string name="_bx_events_page_title_sys_join_profile"><![CDATA[Присоединиться к курсу]]></string>
-    <string name="_bx_events_page_title_join_profile"><![CDATA[Присоединиться к курсу]]></string>
+    <string name="_bx_events_page_title_sys_join_profile"><![CDATA[Присоединиться к событию]]></string>
+    <string name="_bx_events_page_title_join_profile"><![CDATA[Присоединиться к событию]]></string>
     <string name="_bx_events_page_title_browse_upcoming"><![CDATA[Предстоящие События]]></string>
     <string name="_bx_events_page_title_sys_profile_sessions"><![CDATA[Сессии]]></string>
     <string name="_bx_events_page_title_profile_sessions"><![CDATA[Сессии]]></string>

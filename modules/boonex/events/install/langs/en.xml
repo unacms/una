@@ -193,8 +193,8 @@
     <string name="_bx_events_page_title_sys_manage_profile"><![CDATA[Manage Event]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Delete Event]]></string>
     <string name="_bx_events_page_title_delete_profile"><![CDATA[Delete Event]]></string>
-    <string name="_bx_events_page_title_sys_join_profile"><![CDATA[Join Course]]></string>
-    <string name="_bx_events_page_title_join_profile"><![CDATA[Join Course]]></string>
+    <string name="_bx_events_page_title_sys_join_profile"><![CDATA[Join Event]]></string>
+    <string name="_bx_events_page_title_join_profile"><![CDATA[Join Event]]></string>
     <string name="_bx_events_page_title_sys_view_profile_closed"><![CDATA[View Closed Event]]></string>
     <string name="_bx_events_page_title_sys_view_profile"><![CDATA[View Event]]></string>
     <string name="_bx_events_page_title_view_profile"><![CDATA[{display_name}]]></string>

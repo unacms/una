@@ -128,11 +128,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function serviceManageTools($sType = 'common')
     {
-        $sResult = parent::serviceManageTools($sType);
-        if(!empty($sResult))
-            $this->_oTemplate->addJsSystem(['modules/base/groups/js/|manage_tools.js']);
+        $this->_oTemplate->addJs(['modules/base/groups/js/|manage_tools.js']);
 
-        return $sResult;
+        return parent::serviceManageTools($sType);
     }
     
     public function decodeDataAPI($aData, $aParams = [])

@@ -236,7 +236,7 @@ class BxBaseMenu extends BxDolMenu
         $a['attrs'] = $this->_getMenuAttrs($a);
         $a['attrs_wrp'] = '';
 
-        if($this->_bHx /*&& strpos($a['name'], '-manage') === false*/) {
+        if($this->_bHx && !empty($a['link']) && strpos($a['link'], 'javascript:') === false) {
             $this->_aHx['get'] = $a['link'];
             $a['attrs'] .= bx_get_htmx_attrs($this->_aHx);
 

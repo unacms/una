@@ -697,7 +697,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $oTemplate->setPageType($this->getType());
         $oTemplate->setPageInjections($this->getInjections());
         if($oTemplate->getPageNameIndex() == BX_PAGE_CONTENT_PRELOAD)
-            $oTemplate->setPageContent('page_main_code', $this->getCodeDynamic(true));
+            $oTemplate->setPageContent('page_main_code', $this->getIncludes());
         else
             $oTemplate->setPageContent('page_main_code', $this->getCode());
         $oTemplate->getPageCode();
