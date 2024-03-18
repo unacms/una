@@ -27,7 +27,7 @@ class BxTemplMenu extends BxBaseMenu
                     'get' => '',
                     'trigger' => 'click',
                     'target' => '#bx-content-wrapper',
-                    'swap' => 'outerHTML swap:400ms settle:200ms',
+                    'swap' => 'outerHTML swap:400ms settle:400ms',
                     'push-url' => 'true',
                     'on::before-on-load' => 'oBxArtificerUtils.submenuClickBl(this)',
                     'on::after-on-load' => 'oBxArtificerUtils.submenuClickAl(this)'
