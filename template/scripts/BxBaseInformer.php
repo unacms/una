@@ -25,12 +25,12 @@ class BxBaseInformer extends BxDolInformer
 
     public function __construct ($oTemplate)
     {
-        parent::__construct ();
-
         if ($oTemplate)
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+        parent::__construct ();
     }
 
     /**
