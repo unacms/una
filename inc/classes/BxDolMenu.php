@@ -85,6 +85,7 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     protected $_bHx;
     protected $_bHxHead;
+    protected $_mHxPreload;
     protected $_aHx;
 
     protected $_bDynamicMode;

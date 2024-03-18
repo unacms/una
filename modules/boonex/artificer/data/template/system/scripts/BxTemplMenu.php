@@ -23,6 +23,7 @@ class BxTemplMenu extends BxBaseMenu
 
                 $this->_bHx = true;
                 $this->_bHxHead = true;
+                $this->_mHxPreload = true;
                 $this->_aHx = [
                     'get' => '',
                     'trigger' => 'click',
@@ -33,9 +34,15 @@ class BxTemplMenu extends BxBaseMenu
                     'on::after-on-load' => 'oBxArtificerUtils.submenuClickAl(this)'
                 ];
 
-                $sInjection = 'hx-on::after-request="jQuery(this).bxProcessHtml()"';
+                $sExtensions = '';
                 if($this->_bHxHead)
-                    $sInjection .= ' hx-ext="head-support"';
+                    $sExtensions .= ' head-support';
+                if($this->_mHxPreload)
+                    $sExtensions .= ' preload';
+
+                $sInjection = 'hx-on::after-request="jQuery(this).bxProcessHtml()"';
+                if(($sExtensions = trim($sExtensions)) != '')
+                    $sInjection .= ' hx-ext="' . $sExtensions . '"';
 
                 $this->_oTemplate->addInjection('injection_body', 'text', $sInjection);
             }

@@ -6258,6 +6258,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_system', 'prism/prism.js', 1, 12),
 ('system', 'js_system', 'htmx/htmx.min.js', 1, 13),
 ('system', 'js_system', 'htmx/head-support.js', 1, 14),
+('system', 'js_system', 'htmx/preload.js', 1, 15),
 ('system', 'js_system', 'functions.js', 1, 20),
 ('system', 'js_system', 'jquery.webForms.js', 1, 21),
 ('system', 'js_system', 'jquery.dolPopup.js', 1, 22),

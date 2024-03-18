@@ -2240,17 +2240,20 @@ function bx_get_htmx_target ()
     return isset($_SERVER['HTTP_HX_TARGET']) ? $_SERVER['HTTP_HX_TARGET'] : false;
 }
 
-function bx_get_htmx_attrs ($a)
+function bx_get_htmx_attrs ($aAttrs, $mPreload = false)
 {
-    if(!$a)
+    if(!$aAttrs)
         return '';
 
+    if($mPreload === true)
+        $mPreload = 'mousedown';
+
     $aHxAttrs = [];
-    array_walk($a, function($mixedValue, $sIndex) use (&$aHxAttrs) {
+    array_walk($aAttrs, function($mixedValue, $sIndex) use (&$aHxAttrs) {
         $aHxAttrs['hx-' . $sIndex] = $mixedValue;
     });
 
-    return bx_convert_array2attrs($aHxAttrs);
+    return bx_convert_array2attrs($aHxAttrs) . ($mPreload ? ' preload="' . $mPreload . '"' : '');
 }
 
 function bx_idn_to_utf8($sUrl, $bReturnDomain = false)

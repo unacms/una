@@ -238,7 +238,7 @@ class BxBaseMenu extends BxDolMenu
 
         if($this->_bHx && !empty($a['link']) && strpos($a['link'], 'javascript:') === false) {
             $this->_aHx['get'] = $a['link'];
-            $a['attrs'] .= bx_get_htmx_attrs($this->_aHx);
+            $a['attrs'] .= bx_get_htmx_attrs($this->_aHx, $this->_mHxPreload);
 
             if(!bx_is_htmx_request() && !$this->_isSelected($a))
                 $a['attrs_wrp'] .= bx_get_htmx_attrs([
