@@ -107,3 +107,18 @@ BxArtificerUtils.prototype.getNotificationsMenu = function(sMenu, e, sPosition, 
 
     bx_menu_popup(sMenu, e, oOptions);
 };
+
+BxArtificerUtils.prototype.submenuClickBl = function(oElement) {
+    var oItems = $(oElement).parents('ul:first').find('li');
+    var iPosNew = oItems.index($(oElement).parent());
+    var iPosOld = oItems.index($(oElement).parent().siblings('.bx-menu-tab-active'));
+
+    var sClassAdd = iPosOld > iPosNew ? 'ltr' : 'rtl';
+    $('#bx-content-wrapper').addClass(sClassAdd);
+};
+
+BxArtificerUtils.prototype.submenuClickAl = function(oElement) {
+    var sClass = 'bx-menu-tab-active';
+
+    $(oElement).parent().addClass(sClass).siblings().removeClass(sClass);
+};

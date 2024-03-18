@@ -71,12 +71,45 @@ import url(../../../../../../../template/css/general.css);
 
 
 /*--- Page Content ---*/
-#bx-content-wrapper {
+/*
+#bx-content-wrapper.fade {
     opacity: 1;
     transition: opacity 200ms ease-out;
 }
-#bx-content-wrapper.htmx-added {
+#bx-content-wrapper.fade.htmx-swapping {
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+}
+#bx-content-wrapper.fade.htmx-added {
     opacity: 0;
+}
+*/
+
+#bx-content-wrapper.ltr.htmx-swapping {
+  animation: slide-to-right 400ms cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+#bx-content-wrapper.ltr.htmx-added {
+    animation: slide-from-left 200ms cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+#bx-content-wrapper.rtl.htmx-swapping {
+  animation: slide-to-left 400ms cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+#bx-content-wrapper.rtl.htmx-added {
+    animation: slide-from-right 200ms cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+@keyframes slide-from-right {
+    from { transform: translateX(100%); }
+}
+@keyframes slide-to-right {
+    to { transform: translateX(100%); }
+}
+@keyframes slide-from-left {
+    from { transform: translateX(-100%); }
+}
+@keyframes slide-to-left {
+    to { transform: translateX(-100%); }
 }
 
 
