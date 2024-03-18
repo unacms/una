@@ -6,6 +6,15 @@ function BxArtificerUtils(oOptions)
     this._aHtmlIds = undefined == oOptions.aHtmlIds ? {} : oOptions.aHtmlIds;  
     this._sColorScheme = undefined == oOptions.sColorScheme ? 'auto' : oOptions.sColorScheme;
 
+    if(htmx != undefined)
+        htmx.on('htmx:afterSwap', function(evt) {
+            var oTarget = $(evt.target);
+            if(oTarget.attr('id') == 'bx-content-preload')
+                return;
+
+            oTarget.bxProcessHtml();
+        });
+
     this.init();
 }
 

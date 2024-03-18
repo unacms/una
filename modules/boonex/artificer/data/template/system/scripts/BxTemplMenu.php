@@ -40,9 +40,9 @@ class BxTemplMenu extends BxBaseMenu
                 if($this->_mHxPreload)
                     $sExtensions .= ' preload';
 
-                $sInjection = 'hx-on::after-request="jQuery(this).bxProcessHtml()"';
+                $sInjection = '';
                 if(($sExtensions = trim($sExtensions)) != '')
-                    $sInjection .= ' hx-ext="' . $sExtensions . '"';
+                    $sInjection = 'hx-ext="' . $sExtensions . '"';
 
                 $this->_oTemplate->addInjection('injection_body', 'text', $sInjection);
             }
