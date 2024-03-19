@@ -117,6 +117,18 @@ BxArtificerUtils.prototype.getNotificationsMenu = function(sMenu, e, sPosition, 
     bx_menu_popup(sMenu, e, oOptions);
 };
 
+BxArtificerUtils.prototype.mmenuClickAl = function(oElement) {
+    var sClass = 'bx-menu-tab-active';
+    var oItem = $(oElement).parent().addClass(sClass);
+
+    oItem.siblings().removeClass(sClass);
+    oItem.siblings('.bx-menu-item-more-auto').find('li').removeClass(sClass);
+
+    oItem.parents('li:first').siblings().removeClass(sClass);
+    if(oItem.parents('.bx-popup-applied.bx-popup-menu'))
+        $('.bx-popup-applied:visible').dolPopupHide();
+};
+
 BxArtificerUtils.prototype.submenuClickBl = function(oElement) {
     var oItems = $(oElement).parents('ul:first').find('li');
     var iPosNew = oItems.index($(oElement).parent());

@@ -54,6 +54,16 @@ import url(../../../../../../../template/css/general.css);
 }
 
 
+/*--- Page Content with Cover ---*/
+#bx-content-with-cover-wrapper {
+    opacity: 1;
+    transition: opacity 400ms ease-out;
+}
+#bx-content-with-cover-wrapper.htmx-added {
+    opacity: 0;
+}
+
+
 /*--- Page Submenu ---*/
 .bx-menu-main-bar-cnt {
     height: 3.25rem;

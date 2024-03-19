@@ -19,8 +19,6 @@ class BxTemplMenu extends BxBaseMenu
         if(isset($aObject['object'])) {
             //--- For page submenus ---//
             if(strpos($aObject['object'], '_submenu') !== false) {
-                $sClass = 'bx-menu-tab-active';
-
                 $this->_bHx = true;
                 $this->_bHxHead = true;
                 $this->_mHxPreload = true;

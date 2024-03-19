@@ -35,6 +35,20 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $this->_bSiteMenu = $this->_sObject == 'sys_site';
         $this->_bSiteMenuInPanel = $this->_sObject == 'sys_site_in_panel';
         $this->_bApplicationMenu = $this->_sObject == 'sys_application';
+        
+        if($this->_bSiteMenu) {
+            $this->_bHx = true;
+            $this->_bHxHead = true;
+            $this->_mHxPreload = true;
+            $this->_aHx = [
+                'get' => '',
+                'trigger' => 'click',
+                'target' => '#bx-content-with-cover-wrapper',
+                'swap' => 'outerHTML settle:400ms',
+                'push-url' => 'true',
+                'on::after-on-load' => 'oBxArtificerUtils.mmenuClickAl(this)'
+            ];
+        }
     }
 
     public function getCode ()
