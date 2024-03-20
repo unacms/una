@@ -921,6 +921,9 @@ class BxBaseModGeneralModule extends BxDolModule
                         'values' => $aParams['params']['filters']
                     ];
                 }
+
+                if(isset($aParams['params']['validate']) && !is_array($aParams['params']['validate']))
+                    $aParams['params']['validate'] = explode(',', $aParams['params']['validate']);
             }
         }
 

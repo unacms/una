@@ -357,6 +357,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $_aParams = [];
     protected $_sCategoryObject = '';
     protected $_aCustomSearchCondition = array();
+    protected $_bValidate = false;
 
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
     
@@ -523,9 +524,11 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function processing ()
     {
-        if (bx_is_api()) {
+        if($this->_bIsApi)
             return $this->processingAPI();
-        }
+
+        if($this->_bValidate)
+            return $this->getSearchData();
 
         $sCode = $this->displayResultBlock();
         if ($this->aCurrent['paginate']['num'] > 0) {
@@ -746,6 +749,14 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->aPseud = $this->_getPseud();
         $this->setConditionParams();
         $aData = $this->aCurrent['paginate']['num'] > 0 ? $this->getSearchDataByParams() : [];
+        
+        if($this->_bValidate) {
+            $aIds = array_map(function($aItem) {
+                return $aItem['id'];
+            }, $aData);
+
+            $aData = $aIds == $this->_aParams['validate'] ? 'OK' : '';
+        }
 
         bx_alert('simple_search', 'get_data', 0, false, [
             'object' => &$this->aCurrent, 
@@ -1156,6 +1167,13 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setPaginate ()
     {
+        if($this->_bValidate) {
+            $this->aCurrent['paginate']['start'] = 0;
+            $this->aCurrent['paginate']['perPage'] = count($this->_aParams['validate']);
+
+            return;
+        }
+
         $iStart = 0;
         $iPerPage = 0;
 
