@@ -40,6 +40,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         'create_block_popup_id' => 'adm-bp-create-block-popup',
         'edit_block_popup_id' => 'adm-bp-edit-block-popup',
     	'edit_block_editor_id' => 'adm-bp-edit-block-editor',
+        'edit_block_builder_id' => 'adm-bp-edit-block-builder',
         'block_id' => 'adm-bpb-',
         'block_list_id' => 'adm-bpl-',
         'block_lists_id' => 'adm-bp-block-lists',
@@ -84,6 +85,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         return array_merge(parent::getPageCss(), array(
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'grapesjs/|grapes.min.css',
             'page_layouts.css', 
             'builder_page.css'
         ));
@@ -93,6 +95,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
         return array_merge(parent::getPageJs(), array(
             'codemirror/codemirror.min.js',
+            'grapesjs/grapes.min.js',
+            'grapesjs/grapesjs-blocks-basic.js',
+            'grapesjs/grapesjs-style-bg.js',
+            'grapesjs/grapesjs-preset-webpage.min.js',
             'jquery-ui/jquery-ui.min.js',
             'jquery.ui.touch-punch.min.js',
             'jquery.easing.js',
@@ -1508,6 +1514,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             case BX_DOL_STUDIO_BP_BLOCK_HTML:
             	$sResult = 'code';
             	break;
+            
+            case BX_DOL_STUDIO_BP_BLOCK_LAYOUT:
+            	$sResult = 'object-group';
+            	break;
 
             case BX_DOL_STUDIO_BP_BLOCK_RSS:
             	$sResult = 'rss';
@@ -1609,6 +1619,33 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     	]),
                         'caption' => _t('_adm_bp_txt_block_content_attachments_html')
                     ]
+                ];
+                break;
+            
+            case BX_DOL_STUDIO_BP_BLOCK_LAYOUT:
+                $oTemplate = BxDolStudioTemplate::getInstance();
+
+                $sContent = $oTemplate->parseHtmlByName('bp_block_skeleton_layout.html', [
+                    'html_id' => $this->aHtmlIds['edit_block_builder_id'],
+                    'content_html' => $aBlock['content'],
+                    'content_data' => json_encode([
+                        'pages' => [
+                            ['component' => $aBlock['content']]
+                        ]
+                    ])
+                ]);
+
+                $aFields = [
+                    'content' => [
+                        'type' => 'custom',
+                        'name' => 'content',
+                        'caption' => _t('_adm_bp_txt_block_content_raw'),
+                        'content' => $sContent,
+                        'required' => '0',
+                        'db' => [
+                            'pass' => 'XssHtml',
+                        ],
+                    ],
                 ];
                 break;
 

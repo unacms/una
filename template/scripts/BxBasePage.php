@@ -937,6 +937,22 @@ class BxBasePage extends BxDolPage
         $s = bx_process_macros($s);
         return $s;
     }
+    
+    /**
+     * Get content for 'layout' block type.
+     * @return string
+     */
+    protected function _getBlockLayout ($aBlock)
+    {
+        if (bx_is_api()){
+            return [bx_api_get_block('layout', ['title' => _t($aBlock['title']), 'content' => $aBlock['content']])];
+        }
+        
+        $s = '<div class="bx-page-layout-container bx-def-vanilla-html max-w-none">' . $aBlock['content'] . '</div>';
+        $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
+        $s = bx_process_macros($s);
+        return $s;
+    }
 
     /**
      * Get content for 'wiki' block type.

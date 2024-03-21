@@ -5773,7 +5773,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `async` int(11) NOT NULL DEFAULT '0',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
-  `type` enum('raw','html','lang','image','rss','menu','custom','service','wiki') NOT NULL DEFAULT 'raw',
+  `type` enum('raw','html','layout','lang','image','rss','menu','custom','service','wiki') NOT NULL DEFAULT 'raw',
   `content` text NOT NULL,
   `content_empty` varchar(255) NOT NULL DEFAULT '',
   `text` mediumtext NOT NULL,
@@ -5794,6 +5794,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('', 0, 'skeletons', '_sys_block_type_raw', 11, 2147483647, 'raw', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_html', 11, 2147483647, 'html', '', 0, 1, 1, 0),
+('', 0, 'skeletons', '_sys_block_type_layout', 11, 2147483647, 'layout', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_rss', 11, 2147483647, 'rss', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_image', 11, 2147483647, 'image', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_lang', 11, 2147483647, 'lang', '', 0, 1, 1, 0),

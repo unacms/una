@@ -2217,6 +2217,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_block_type_html"><![CDATA[html]]></string>
 	<string name="_sys_block_type_image"><![CDATA[image]]></string>
 	<string name="_sys_block_type_lang"><![CDATA[lang]]></string>
+        <string name="_sys_block_type_layout"><![CDATA[layout]]></string>
 	<string name="_sys_block_type_menu"><![CDATA[menu]]></string>
 	<string name="_sys_block_type_raw"><![CDATA[raw]]></string>
 	<string name="_sys_block_type_rss"><![CDATA[rss]]></string>
