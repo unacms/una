@@ -5314,12 +5314,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams = $this->_prepareParams($aBrowseParams);
         $this->_iOwnerId = $aParams['owner_id'];
 
-        return bx_is_api() ? [bx_api_get_block('browse', [
+        if(!empty($aParams['validate']) && is_array($aParams['validate'])) {
+            $aEvents = $this->_oDb->getEvents(array_merge($aParams, [
+                'start' => 0,
+                'per_page' => count($aParams['validate']),
+                'from_cache' => $this->_oConfig->isCacheTable()
+            ]));
+
+            $aIds = array_map(function($aEvent) {
+                return $aEvent['id'];
+            }, $aEvents);
+
+            $aResult = $aIds == $aParams['validate'] ? 'valid' : 'invalid';
+        }
+        else 
+            $aResult = $this->_oTemplate->getViewBlock($aParams);
+
+        return $this->_bIsApi ? [bx_api_get_block('browse', [
             'unit' => 'feed',  
             'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',
             'params' => $aParams,
-            'data' => $this->_oTemplate->getViewBlock($aParams)]),
-        ] : ['content' => $this->_oTemplate->getViewBlock($aParams)];
+            'data' => $aResult
+        ])] : ['content' => $aResult];
     }
 
     protected function _getBlockPost($iProfileId, $aParams = array())
@@ -5756,6 +5772,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['viewer_id']) || (int)$aParams['viewer_id'] != $iViewerId)
             $aParams['viewer_id'] = $iViewerId;
 
+        if(!empty($aParams['validate']) && is_string($aParams['validate']))
+            $aParams['validate'] = explode(',', $aParams['validate']);
+
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
             'status' => BX_TIMELINE_STATUS_ACTIVE,
@@ -5768,7 +5787,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     protected function _prepareParamsGet($mParams = false)
     {
-        $aKeys = ['name', 'view', 'type', 'owner_id', 'start', 'per_page', 'per_page_default', 'timeline', 'filter', 'modules', 'media', 'context', 'blink', 'viewer_id'];
+        $aKeys = ['name', 'view', 'type', 'owner_id', 'start', 'per_page', 'per_page_default', 'timeline', 'filter', 'modules', 'media', 'context', 'blink', 'viewer_id', 'validate'];
 
         $aParams = [];
         if(!empty($mParams) && is_array($mParams))
@@ -5801,6 +5820,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aParams['viewer_id'] = bx_process_input($aParams['viewer_id'], BX_DATA_INT);
         if(!$aParams['viewer_id'] || $aParams['viewer_id'] != $iViewerId)
             $aParams['viewer_id'] = $iViewerId;
+
+        if(!empty($aParams['validate']) && is_string($aParams['validate']))
+            $aParams['validate'] = explode(',', $aParams['validate']);
 
         $aParams = array_merge($aParams, [
             'browse' => 'list',
