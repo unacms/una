@@ -200,7 +200,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 				PDO::ATTR_PERSISTENT => $this->_bPdoPersistent
 	        ));
 
-            $this->pdoExec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
+            $this->pdoExec("SET NAMES 'utf8mb4' COLLATE '" . (defined('BX_DATABASE_COLLATE') ? BX_DATABASE_COLLATE : 'utf8mb4_unicode_ci') . "'");
             $this->pdoExec("SET sql_mode = ''");
             if (0 == strcasecmp($this->_sStorageEngine, 'INNODB'))
                 $this->pdoExec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
