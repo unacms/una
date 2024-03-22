@@ -138,8 +138,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $CNF = $this->_oConfig->CNF;
         
         $aResult = parent::decodeDataAPI($aData, $aParams);
-        
-        if ($aParams['template'] == 'unit_wo_info')
+
+        if(isset($aParams['template']) && $aParams['template'] == 'unit_wo_info')
             return $aResult;
 
         if(getParam('sys_api_conn_in_prof_units') == 'on' && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])) !== false) {

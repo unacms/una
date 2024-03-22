@@ -19,6 +19,8 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
         $this->_sMode = $sMode;
         $this->_aParams = $aParams;
 
+        $this->_bValidate = !empty($this->_aParams['validate']) && is_array($this->_aParams['validate']);
+
         parent::__construct();
 
         $this->_bIsApi = bx_is_api();
@@ -237,6 +239,9 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
 
     function decodeDataAPI($a)
     {
+        if(!is_array($a))
+            return $a;
+
         $aResult = [];
 
         foreach ($a as $index => $aItem) 

@@ -180,6 +180,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'confirmed' => $oAccount->isConfirmed(),
             'notifications' => 0,
             'cart' => 0,
+            'profiles_count' => $oAccount->getProfilesNumber(true),
+            'profiles_limit' => (int)getParam('sys_account_limit_profiles_number'),
             'active' => $oProfile->isActive(),
             'status' => $oProfile->getStatus(),
         ];

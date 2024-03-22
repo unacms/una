@@ -258,6 +258,9 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function decodeDataAPI($a)
     {
+        if(!is_array($a))
+            return $a;
+
         $bExtendedUnits = getParam('sys_api_extended_units') == 'on';
 
         foreach($a as $i => $r)

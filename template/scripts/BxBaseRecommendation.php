@@ -76,13 +76,17 @@ class BxBaseRecommendation extends BxDolRecommendation
         $iStart = !empty($aParams['start']) ? (int)$aParams['start'] : 0;
         $iPerPage = !empty($aParams['per_page']) ? (int)$aParams['per_page'] : $this->_iPerPageDefault;
 
-        $aItems = [];
-        if (!defined('BX_API_PAGE'))
-            $aItems = $this->_oDb->get($iProfileId, $this->_aObject['id'], $aParams);
+        if(empty($aParams['validate']) || !is_array($aParams['validate'])) {
+            $aItems = [];
+            if(!defined('BX_API_PAGE'))
+                $aItems = $this->_oDb->get($iProfileId, $this->_aObject['id'], $aParams);
 
-        $aData = [];
-        foreach($aItems as $iId => $iCount)
-            $aData[] = $this->getCodeItem($iId, $iCount);
+            $aData = [];
+            foreach($aItems as $iId => $iCount)
+                $aData[] = $this->getCodeItem($iId, $iCount);
+        }
+        else
+            $aData = $this->validate($iProfileId, $aParams);
 
         return [
             'request_url' => '',
@@ -92,6 +96,16 @@ class BxBaseRecommendation extends BxDolRecommendation
                 'per_page' => $iPerPage,
             ],
         ];
+    }
+
+    public function validate($iProfileId = 0, $aParams = [])
+    {
+        $aItems = $this->_oDb->get($iProfileId, $this->_aObject['id'], array_merge($aParams, [
+            'start' => 0,
+            'per_page' => count($aParams['validate'])
+        ]));
+
+        return array_keys($aItems) == $aParams['validate'] ? 'valid' : 'invalid';
     }
 }
 

@@ -2533,6 +2533,9 @@ function bx_api_get_browse_params($sParams, $bParamsOnly = false)
         return [];
 
     $aParams = json_decode($sParams, true);
+    if(isset($aParams['params']['validate']) && !is_array($aParams['params']['validate']))
+        $aParams['params']['validate'] = explode(',', $aParams['params']['validate']);
+
     if(!$bParamsOnly)
         return $aParams;
 
