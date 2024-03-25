@@ -82,8 +82,12 @@ class BxBaseRecommendation extends BxDolRecommendation
                 $aItems = $this->_oDb->get($iProfileId, $this->_aObject['id'], $aParams);
 
             $aData = [];
-            foreach($aItems as $iId => $iCount)
-                $aData[] = $this->getCodeItem($iId, $iCount);
+            foreach($aItems as $iId => $iCount) {
+                $aItem = $this->getCodeItem($iId, $iCount);
+                $aItem['id'] = $iId;
+
+                $aData[] = $aItem;
+            }
         }
         else
             $aData = $this->validate($iProfileId, $aParams);

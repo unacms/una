@@ -245,8 +245,12 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
         $aResult = [];
 
         foreach ($a as $index => $aItem) 
-            if(($oProfile = BxDolProfile::getInstance($aItem['id'])) !== false)
-                $aResult[] = $oProfile->getUnitAPI();
+            if(($oProfile = BxDolProfile::getInstance($aItem['id'])) !== false) {
+                $aUnitApi = $oProfile->getUnitAPI();
+                $aUnitApi['id'] = $aItem['id'];
+
+                $aResult[] = $aUnitApi;
+            }
 
         return $aResult;
     }
