@@ -29,7 +29,6 @@ html.bx-media-tablet {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 
-    max-width:500px !important;
     overflow:hidden !important;
 }
 .bx-media-tablet .bx-def-constraint-pre:not(.bx-def-vanilla-html) pre {
