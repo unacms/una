@@ -21,10 +21,22 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 
     public function getObjectFormAdd($sDisplay = false)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         if(($sCategoryDisplay = $this->_oModule->getCategoryDisplay('add')) !== false)
             $sDisplay = $sCategoryDisplay;
 
-        return parent::getObjectFormAdd($sDisplay);
+        $oForm = parent::getObjectFormAdd($sDisplay);
+
+        if($this->_mixedContextId !== false && (!$sDisplay || $sDisplay == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']) && $oForm !== false) {
+            $oForm->aInputs = array_merge(['context_id' => [
+                'type' => 'hidden',
+                'name' => 'context_id',
+                'value' => $this->_mixedContextId
+            ]], $oForm->aInputs);
+        }
+
+        return $oForm;
     }
 
     public function viewDataEntry ($iContentId)

@@ -17,6 +17,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     protected $_oModule;
 
     protected $_bIsApi;
+    protected $_bDynamicMode;
 
     /**
      * 'Ajax Mode' determines the format of response. If it's TRUE the response 
@@ -32,7 +33,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
      */
     protected $_bAbsoluteActionUrl;
 
-    protected $_bDynamicMode;
+    protected $_mixedContextId;    
 
     public function __construct($oModule)
     {
@@ -52,6 +53,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $mixedAbsoluteActionUrl = bx_get('absolute_action_url');
         if($mixedAbsoluteActionUrl !== false)
             $this->setAbsoluteActionUrl($mixedAbsoluteActionUrl);
+
+        $this->_mixedContextId = false;
     }
 
     public function setAjaxMode($bAjaxMode)
@@ -64,6 +67,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     public function setAbsoluteActionUrl($bAbsoluteActionUrl)
     {
         $this->_bAbsoluteActionUrl = (bool)$bAbsoluteActionUrl;
+    }
+
+    public function setContextId($mixedContextId)
+    {
+        $this->_mixedContextId = is_numeric($mixedContextId) ? (int)$mixedContextId : (bool)$mixedContextId;
     }
 
     public function setDynamicMode($bDynamicMode)

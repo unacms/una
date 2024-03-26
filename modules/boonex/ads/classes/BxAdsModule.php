@@ -116,7 +116,8 @@ class BxAdsModule extends BxBaseModTextModule
             'eval' => $this->_oConfig->getJsObject('form') . '.onSelectCategory(oData)',
             'content' => $this->serviceGetCreatePostForm([
                 'absolute_action_url' => true,
-                'dynamic_mode' => true
+                'dynamic_mode' => true,
+                'context_id' => ($iContextId = bx_get('context_id')) !== false ? (int)$iContextId : false
             ])
         ]);
     }

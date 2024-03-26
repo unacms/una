@@ -21,13 +21,18 @@ function BxAdsForm(oOptions) {
 }
 
 BxAdsForm.prototype.selectCategory = function(oButton) {
-    var oCategory = $(oButton).parents('form:first').find("[name='category_select']");
+    var oForm = $(oButton).parents('form:first');
+    var oCategory = oForm.find("[name='category_select']");
     if(!oCategory || oCategory.length == 0)
         return;
 
     var $this = this;
     var oParams = this._getDefaultData();
     oParams['category'] = oCategory.val();
+    
+    var oContextId = oForm.find("[name='context_id']");
+    if(oContextId && oContextId.length != 0)
+        oParams['context_id'] = oContextId.val();
 
     this.loadingInBlock(oButton, true);
 

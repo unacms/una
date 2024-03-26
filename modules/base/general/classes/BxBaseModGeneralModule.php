@@ -1283,6 +1283,9 @@ class BxBaseModGeneralModule extends BxDolModule
         if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true)
             $oFormsHelper->setAbsoluteActionUrl((bool)$aParams[$sParamsKey]);
 
+        if($bContext)
+            $oFormsHelper->setContextId($mixedContextId);
+
         $sDisplay = !empty($aParams['display']) ? $aParams['display'] : false;
 
         $sFunc = 'getObjectForm' . ucfirst($sType);
