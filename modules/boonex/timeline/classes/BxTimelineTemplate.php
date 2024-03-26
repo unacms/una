@@ -1989,6 +1989,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $aEvent['cmts'] = $aCmts;
             $aEvent['cmts']['count'] = $aEvent['comments']['count'];
+            
+            if (getParam('sys_api_comments_modal') == 'on'){
+                $aEvent['cmts_list'] = bx_srv('system', 'get_data_api', [['module' => $aEvent['comments']['system'], 'object_id' =>  $aEvent['comments']['object_id']]], 'TemplCmtsServices');
+            }
         }
 
         return $aEvent;

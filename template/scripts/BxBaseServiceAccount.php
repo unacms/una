@@ -691,6 +691,9 @@ class BxBaseServiceAccount extends BxDol
         }
 
         checkActionModule($iViewerProfileId, 'switch to any profile', 'system', true);
+        if (bx_is_api()){
+            return BxDolProfile::getDataForPage($iSwitchToProfileId);
+        }
         return true;
     }
 
