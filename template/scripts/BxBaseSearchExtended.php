@@ -85,13 +85,12 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         if(!$this->isEnabled())
             return '';
 
-      
         $bJsMode = isset($aParams['js_mode']) ? (bool)$aParams['js_mode'] : $this->_bJsMode;
         $bCondition = !empty($aParams['cond']) && is_array($aParams['cond']);
 
         $iStart = !empty($aParams['start']) ? $aParams['start'] : 0;
         $iPerPage = !empty($aParams['per_page']) ? $aParams['per_page'] : 0;
-        if (bx_is_api() && isset($aParams['params'])){
+        if($this->_bIsApi && isset($aParams['params'])){
             $iPerPage = $aParams['params']['per_page'];
             $iStart = $aParams['params']['start'];
         }
@@ -112,7 +111,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             $oForm->initChecker(array(), $aParams['cond']);
         }
 
-        if(!$oForm->isSubmittedAndValid() && !$this->_bFilterMode  && (!bx_is_api() || (bx_is_api() && !isset($aParams['search_params']))))
+        if(!$oForm->isSubmittedAndValid() && !$this->_bFilterMode  && (!$this->_bIsApi || !isset($aParams['search_params'])))
             return '';
 
         $oContentInfo = BxDolContentInfo::getObjectInstance($this->_aObject['object_content_info']);
@@ -120,47 +119,46 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         if(!$oContentInfo)
             return '';
 
-        $aParamsSearch = array();
-        if (bx_is_api() && isset($aParams['search_params'])){
-            $aParamsSearch = $aParams['search_params'];
-        }
-        else{
-        foreach($this->_aObject['fields'] as $aField) {
-            $mixedValue = $oForm->getCleanValue($aField['name']);
-            if(empty($mixedValue) || (is_array($mixedValue) && bx_is_empty_array($mixedValue)))
-                continue;
+        $aParamsSearch = [];
+        if(!$this->_bIsApi || !isset($aParams['search_params'])) {
+            foreach($this->_aObject['fields'] as $aField) {
+                $mixedValue = $oForm->getCleanValue($aField['name']);
+                if(empty($mixedValue) || (is_array($mixedValue) && bx_is_empty_array($mixedValue)))
+                    continue;
 
-            $aParamsSearch[$aField['name']] = array(
-                'type' => $aField['search_type'],
-                'value' => $mixedValue,
-                'operator' => $aField['search_operator']
-            );
+                $aParamsSearch[$aField['name']] = array(
+                    'type' => $aField['search_type'],
+                    'value' => $mixedValue,
+                    'operator' => $aField['search_operator']
+                );
 
-            if(!$bCondition) {
-                if(!isset($aParams['cond']))
-                    $aParams['cond'] = array();
+                if(!$bCondition) {
+                    if(!isset($aParams['cond']))
+                        $aParams['cond'] = array();
 
-                switch($oForm->aInputs[$aField['name']]['type']) {
-                    case 'location':
-                    case 'location_radius':
-                        $aParams['cond'][$aField['name']] = $mixedValue['string'];
+                    switch($oForm->aInputs[$aField['name']]['type']) {
+                        case 'location':
+                        case 'location_radius':
+                            $aParams['cond'][$aField['name']] = $mixedValue['string'];
 
-                        $aLocationComponents = BxDolMetatags::locationsParseComponents($mixedValue['array'], $aField['name']);
-                        if($oForm->aInputs[$aField['name']]['type'] == 'location_radius' && count($mixedValue['array']) > count($aLocationComponents))
-                            $aLocationComponents[$aField['name'] . '_rad'] = array_pop($mixedValue['array']);
+                            $aLocationComponents = BxDolMetatags::locationsParseComponents($mixedValue['array'], $aField['name']);
+                            if($oForm->aInputs[$aField['name']]['type'] == 'location_radius' && count($mixedValue['array']) > count($aLocationComponents))
+                                $aLocationComponents[$aField['name'] . '_rad'] = array_pop($mixedValue['array']);
 
-                        $aParams['cond'] = array_merge($aParams['cond'], $aLocationComponents);
-                        break;
+                            $aParams['cond'] = array_merge($aParams['cond'], $aLocationComponents);
+                            break;
 
-                    default:
-                        $aParams['cond'][$aField['name']] = $mixedValue;
+                        default:
+                            $aParams['cond'][$aField['name']] = $mixedValue;
+                    }
                 }
             }
         }
-        }
+        else 
+            $aParamsSearch = $aParams['search_params'];
 
         if((empty($aParamsSearch) || !is_array($aParamsSearch)) && !$this->_bFilterMode)
-            return bx_is_api() ? bx_api_get_msg(_t('Not Found'), ['ext' => ['msg_type' => 'result']]) : '';
+            return $this->_bIsApi ? bx_api_get_msg(_t('Not Found'), ['ext' => ['msg_type' => 'result']]) : '';
 
         if (!$iPerPage) {
             bx_import('BxDolSearch');
@@ -180,19 +178,26 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1, $this->_bFilterMode);
 
     	if(empty($aResults) || !is_array($aResults))
-    	    return bx_is_api() ? bx_api_get_msg(_t('Nothing found'), ['ext' => ['msg_type' => 'result']]) : _t('Nothing found');
+    	    return $this->_bIsApi ? bx_api_get_msg(_t('Nothing found'), ['ext' => ['msg_type' => 'result']]) : _t('Nothing found');
 
         if(!empty($aParams['cond']) && is_array($aParams['cond']))
             $aParams['cond'] = self::encodeConditions($aParams['cond']);
 
-        $aPaginate = array('start' => $iStart, 'per_page' => $iPerPage);
-        
+        $aPaginate = ['start' => $iStart, 'per_page' => $iPerPage];
+        if(!empty($aParams['total'])) {
+            if(is_numeric($aParams['total']))
+                $aPaginate['total'] = (int)$aParams['total'];
+            else
+                $aPaginate['total'] = count($oContentInfo->getSearchResultExtended($aParamsSearch, 0, 0, $this->_bFilterMode));
+        }
+
         if(!$bJsMode) {
             $aParams['start'] = '{start}';
             $aParams['per_page'] = '{per_page}';
+
             list($sPageLink, $aPageParams) = bx_get_base_url_inline($aParams);
-            if (!bx_is_api())
-            $aPaginate['page_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams, true, ['{start}', '{per_page}']));
+            if(!$this->_bIsApi)
+                $aPaginate['page_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams, true, ['{start}', '{per_page}']));
         }
         else
             $aPaginate['on_change_page'] = "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . bx_js_string(json_encode($aParams)) . ");";            
@@ -203,34 +208,32 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $bTmplVarsPaginate = $iStart || $oPaginate->getNum() > $iPerPage;
         $aTmplVarsPaginate = $bTmplVarsPaginate ? array('paginate' => $oPaginate->getSimplePaginate()) : array();
 
-    	$sResults = '';
-        $aRes = [];
-    	foreach($aResults as $iId){
-    	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate); 
-            if (bx_is_api()){
-                $aRes[] = $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate);
-            }
+    	$mixedResults = $this->_bIsApi ? [] : '';
+    	foreach($aResults as $iId) {
+            $mixedResult = $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate);
+
+            if($this->_bIsApi)
+                $mixedResults[] = $mixedResult;
+            else
+                $mixedResults .= $mixedResult;
         }
 
-        if (bx_is_api()){
-            if (isset($aParams['search_params'])){
+        if($this->_bIsApi) {
+            if(isset($aParams['search_params']))
                 return [$this->getResultsAPI($aRes, $iPerPage, $iStart, $aParamsSearch)];
-            }
-            else{
+            else
                 return $this->getResultsAPI([], $iPerPage, $iStart, $aParamsSearch);
-            }
         }
-            
-        
+
         $aTxtDirection = [
             'asc' => _t('_order_asc'),
             'desc' => _t('_order_desc')
         ];
 
         $sSort = '';
-        if ($sResults != ''){
-
+        if($mixedResults != '') {
             $aData = $this->_aObject['sortable_fields'];
+
             $aValues = [];
             foreach($aData as $aField) {
                 if ($aField['active'] == 0)
@@ -275,12 +278,11 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 );
                 $sSort = $oForm->genRow($aInputSort);
             }
-            
         }
 
         return $this->_oTemplate->parseHtmlByName('search_extended_results.html', array(
             'sort' => $sSort,
-            'code' => $sResults,
+            'code' => $mixedResults,
             'bx_if:show_paginate' => array(
                 'condition' => $bTmplVarsPaginate,
                 'content' => $aTmplVarsPaginate

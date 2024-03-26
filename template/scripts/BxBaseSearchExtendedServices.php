@@ -96,6 +96,9 @@ class BxBaseSearchExtendedServices extends BxDol
 
         if(!isset($aParams['per_page']) && bx_get('per_page') !== false)
             $aParams['per_page'] = (int)bx_get('per_page');
+
+        if(!isset($aParams['total']) && ($mixedTotal = bx_get('total')) !== false)
+            $aParams['total'] = is_numeric($mixedTotal) ? (int)$mixedTotal : $mixedTotal == 'true';
     }
 }
 

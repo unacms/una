@@ -54,6 +54,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'location' => array('locate')
     );
 
+    protected $_bIsApi;
+
     protected $_oDb;
 
     protected $_sObject;
@@ -68,6 +70,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
     protected function __construct($aObject)
     {
         parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_oDb = new BxDolSearchExtendedQuery($this->_aObject);
 
