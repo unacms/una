@@ -2192,7 +2192,7 @@
 	<string name="_sys_block_type_html"><![CDATA[html]]></string>
 	<string name="_sys_block_type_image"><![CDATA[изображение]]></string>
 	<string name="_sys_block_type_lang"><![CDATA[язык]]></string>
-        <string name="_sys_block_type_layout"><![CDATA[дизайн]]></string>
+        <string name="_sys_block_type_creative"><![CDATA[креативный]]></string>
 	<string name="_sys_block_type_menu"><![CDATA[меню]]></string>
 	<string name="_sys_block_type_raw"><![CDATA[без обработки]]></string>
 	<string name="_sys_block_type_rss"><![CDATA[rss]]></string>

@@ -939,16 +939,16 @@ class BxBasePage extends BxDolPage
     }
     
     /**
-     * Get content for 'layout' block type.
+     * Get content for 'creative' block type.
      * @return string
      */
-    protected function _getBlockLayout ($aBlock)
+    protected function _getBlockCreative ($aBlock)
     {
         if (bx_is_api()){
-            return [bx_api_get_block('layout', ['title' => _t($aBlock['title']), 'content' => $aBlock['content']])];
+            return [bx_api_get_block('creative', ['title' => _t($aBlock['title']), 'content' => $aBlock['content']])];
         }
-        
-        $s = '<div class="bx-page-layout-container bx-def-vanilla-html max-w-none">' . $aBlock['content'] . '</div>';
+
+        $s = '<div class="bx-page-creative-container bx-def-vanilla-html max-w-none">' . $aBlock['content'] . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;

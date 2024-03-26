@@ -14,7 +14,7 @@ define('BX_DOL_STUDIO_BP_TYPE_DEFAULT', BX_DOL_STUDIO_MODULE_SYSTEM);
 
 define('BX_DOL_STUDIO_BP_BLOCK_RAW', 'raw');
 define('BX_DOL_STUDIO_BP_BLOCK_HTML', 'html');
-define('BX_DOL_STUDIO_BP_BLOCK_LAYOUT', 'layout');
+define('BX_DOL_STUDIO_BP_BLOCK_CREATIVE', 'creative');
 define('BX_DOL_STUDIO_BP_BLOCK_RSS', 'rss');
 define('BX_DOL_STUDIO_BP_BLOCK_IMAGE', 'image');
 define('BX_DOL_STUDIO_BP_BLOCK_LANG', 'lang');

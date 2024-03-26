@@ -1515,7 +1515,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             	$sResult = 'code';
             	break;
             
-            case BX_DOL_STUDIO_BP_BLOCK_LAYOUT:
+            case BX_DOL_STUDIO_BP_BLOCK_CREATIVE:
             	$sResult = 'object-group';
             	break;
 
@@ -1622,10 +1622,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 ];
                 break;
             
-            case BX_DOL_STUDIO_BP_BLOCK_LAYOUT:
+            case BX_DOL_STUDIO_BP_BLOCK_CREATIVE:
                 $oTemplate = BxDolStudioTemplate::getInstance();
 
-                $sContent = $oTemplate->parseHtmlByName('bp_block_skeleton_layout.html', [
+                $sContent = $oTemplate->parseHtmlByName('bp_block_skeleton_creative.html', [
                     'html_id' => $this->aHtmlIds['edit_block_builder_id'],
                     'content_html' => $aBlock['content'],
                     'content_data' => json_encode([
