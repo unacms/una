@@ -44,6 +44,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
+    protected $_oQuery;
     protected $_sLangCateg = 'Wiki';
     protected $_sACLprefix = 'wiki ';
     protected $_bProcessMarkdown = true;
