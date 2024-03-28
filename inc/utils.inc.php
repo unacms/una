@@ -1796,9 +1796,17 @@ function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = arr
  * @param $sClass class to search for service method, by default it is main module class
  * @return boolean check result
  */
-function bx_is_srv($mixedModule, $sMethod, $sClass = "Module")
+function bx_is_srv($mixedModule, $sMethod, $sClass = "Module", $bIgnoreInactive = false)
 {
-    return BxDolRequest::serviceExists($mixedModule, $sMethod, $sClass);
+    return BxDolRequest::serviceExists($mixedModule, $sMethod, $sClass, $bIgnoreInactive);
+}
+
+/**
+ * Check whether serice method exists or not in 'Ignore Inactive' mode.
+ */
+function bx_is_srv_ii($mixedModule, $sMethod, $sClass = "Module")
+{
+    return BxDolRequest::serviceExists($mixedModule, $sMethod, $sClass, true);
 }
 
 /**

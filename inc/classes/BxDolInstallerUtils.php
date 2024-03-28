@@ -116,17 +116,18 @@ class BxDolInstallerUtils extends BxDolIO
         if(method_exists($oModule, $sMethod))
             return $oModule->$sMethod();
 
-        if($oModule instanceof iBxDolProfileService) {
-            if(bx_srv('system', 'is_module_profile', [$oModule]))
-                $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_PROFILE);
+        $sSrvMethod = 'act_as_profile';
+        if($oModule instanceof iBxDolProfileService && bx_is_srv_ii($sModule, $sSrvMethod)) {
+            $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_CONTEXT);
 
-            if(bx_srv('system', 'is_module_context', [$oModule]))
-                $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_CONTEXT);
+            if(bx_srv_ii($sModule, $sSrvMethod))
+                $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_PROFILE);
 
             return $iResult;
         }
 
-        if(bx_srv('system', 'is_module_content', [$oModule])) {
+        $sSrvMethod = 'is_allowed_post_in_context';
+        if($oModule instanceof iBxDolContentInfoService && !($oModule instanceof iBxDolProfileService) && bx_is_srv_ii($sModule, $sSrvMethod) && bx_srv_ii($sModule, $sSrvMethod)) {
             $iResult |= pow(2, BX_DOL_MODULE_SUBTYPE_TEXT);
 
             if($oModule instanceof BxBaseModFilesModule)

@@ -61,9 +61,9 @@ class BxDolRequest extends BxDol
 
         return $mixedRet;
     }
-    public static function serviceExists($mixedModule, $sMethod, $sClass = "Module")
+    public static function serviceExists($mixedModule, $sMethod, $sClass = "Module", $bIgnoreInactive = false)
     {
-        return BxDolRequest::_methodExists($mixedModule, 'service', $sMethod, $sClass);
+        return BxDolRequest::_methodExists($mixedModule, 'service', $sMethod, $sClass, $bIgnoreInactive);
     }
     public static function actionExists($mixedModule, $sMethod, $sClass = "Module")
     {
@@ -151,12 +151,15 @@ class BxDolRequest extends BxDol
         $GLOBALS['bxDolClasses'][$sClass] = new $sClass($aModule);
         return $GLOBALS['bxDolClasses'][$sClass];
     }
-    protected static function _methodExists($mixedModule, $sMethodType, $sMethodName, $sClass = "Module")
+    protected static function _methodExists($mixedModule, $sMethodType, $sMethodName, $sClass = "Module", $bIgnoreInactive = false)
     {
         $aModule = $mixedModule;
         if(is_string($mixedModule)) {
-            $oModuleQuery = BxDolModuleQuery::getInstance(); 
-            $aModule = $oModuleQuery->isEnabledByName($mixedModule) ? $oModuleQuery->getModuleByName($mixedModule) : array();
+            $oModuleQuery = BxDolModuleQuery::getInstance();
+
+            $aModule = [];
+            if($bIgnoreInactive || $oModuleQuery->isEnabledByName($mixedModule))
+                $aModule = $oModuleQuery->getModuleByName($mixedModule);
         }
 
         if (!$aModule)
