@@ -349,28 +349,25 @@ class BxBaseGrid extends BxDolGrid
 
     public function decodeDataAPI($aData)
     {
+        $sKeyId = $this->_aOptions['field_id'];
+        $sMethodDefault = '_getCellDefault';
+
         $aDataRv = [];
         foreach($aData as $iKey => $aRow) {
-            $aDataRv[$iKey] = [];
-            foreach($this->_aOptions['fields'] as $sKey => $aField){
-                $aDataRv[$iKey]['id'] = $aData[$iKey]['id'];
-                $sMethod = '_getCellDefault';
-                $sCustomMethod = '_getCell' . $this->_genMethodName($sKey);
-               
-                if (method_exists($this, $sCustomMethod)){
-                    $sMethod = $sCustomMethod;
-                    $s = $this->$sMethod($aData[$iKey][$sKey], $sKey, $aField, $aRow);
-                    $aDataRv[$iKey][$sKey] = $s;
-                }
-                else{
-                    $aDataRv[$iKey][$sKey] = ['type' => 'text', 'value'=> $aData[$iKey][$sKey]];    
-                }
-               
+            $aDataRv[$iKey] = [$sKeyId => $aData[$iKey][$sKeyId]];
+
+            foreach($this->_aOptions['fields'] as $sKey => $aField) {
+                $sMethod = '_getCell' . $this->_genMethodName($sKey);
+                if(!method_exists($this, $sMethod))
+                    $sMethod = $sMethodDefault;
+
+                $aDataRv[$iKey][$sKey] = $this->$sMethod(isset($aData[$iKey][$sKey]) ? $aData[$iKey][$sKey] : _t('_undefined'), $sKey, $aField, $aRow);
             }
         }
+
         return $aDataRv;
     }
-    
+
     public function getFormBlockAPI($oForm, $sAction, $iId = 0)
     {
         return [

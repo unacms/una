@@ -124,9 +124,11 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     protected function _getFilterControlsAPI($aFilters = [])
     {
         $aFilters = [
-            $this->_sFilter1Name => [],
-            $this->_sFilter2Name => []
+            $this->_sFilter1Name => []
         ];
+
+        if(!empty($this->_sFilter2Name))
+            $aFilters[$this->_sFilter2Name] = [];
 
         return parent::_getFilterControlsAPI($aFilters);
     }
