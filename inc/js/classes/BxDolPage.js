@@ -16,6 +16,11 @@ function BxDolPage(oOptions) {
     this._isStickyColumns = oOptions.isStickyColumns == undefined ? false : oOptions.isStickyColumns;
     this._iLastSc = 0;
 
+    this._oCreativeEditor = null;
+    this._oCreativeStorage =  null;
+    this._sCreativeStorageData = 'bx-cs-data';
+    this._sCreativeStorageHtml = 'bx-cs-html';
+
     var $this = this;
     $(document).ready(function() {
         $this.init();
@@ -29,6 +34,7 @@ BxDolPage.prototype.init = function() {
             additionalMarginTop: 70
         });
     }
+
     // process embeds
     $(".bx-embed-link").each(function() {
         $(this).html($(this).attr('source'));
@@ -36,7 +42,6 @@ BxDolPage.prototype.init = function() {
     });
     
     bx_process_links();
-    
 };
 
 BxDolPage.prototype.embededCallback = function(item)
@@ -80,6 +85,139 @@ BxDolPage.prototype.showHelp = function(oLink, iBlockId)
         }
     });
 };
+
+//TODO: Continue from here.
+BxDolPage.prototype.creativeEdit = function(oLink, iBlockId)
+{
+    if(this._oCreativeEditor)
+        return;
+
+    var $this = this;
+
+    $(oLink).toggleClass('hidden').siblings('.bx-cc-save').toggleClass('hidden');
+
+    //--- Holdres
+    if(!$('#' + this._sCreativeStorageData).length)
+        $('body').prepend('<textarea id="' + this._sCreativeStorageData + '" class="hidden"></textarea>');
+    else
+        $('#' + this._sCreativeStorageData).val('');
+
+    if(!$('#' + this._sCreativeStorageHtml).length)
+        $('body').prepend('<textarea id="' + this._sCreativeStorageHtml + '" class="hidden"></textarea>');
+    else
+        $('#' + this._sCreativeStorageHtml).val('');
+
+    /*
+    //--- Panels
+    $('body').prepend('<div class="bx-cp-top"><div class="bx-cp bx-cp-devices"></div><div class="bx-cp bx-cp-options"></div><div class="bx-cp bx-cp-views"></div><div class="bx-cp bx-cp-views-container"><div class="bx-c-blocks"></div><div class="bx-c-styles"></div></div></div>');
+    */
+
+    //Load data to local storage
+    var oContent = $(oLink).parents('.bx-creative-controls:first').siblings('.bx-creative-content');
+    if(oContent.length) {
+        $('#' + this._sCreativeStorageData).val(JSON.stringify({pages: [{component: oContent.html()}]}));
+        $('#' + this._sCreativeStorageHtml).val(oContent.html());
+    }
+
+    const oStorage = (editor) => {
+        const oStorageData = document.getElementById($this._sCreativeStorageData);
+        const oStorageHtml = document.getElementById($this._sCreativeStorageHtml);
+
+        editor.Storage.add('inline', {
+            load() {
+                return JSON.parse(oStorageData.value || '{}');
+            },
+            store(data) {
+              const component = editor.Pages.getSelected().getMainComponent();
+
+              oStorageData.value = JSON.stringify(data);
+              oStorageHtml.value = `<style>${editor.getCss({ component })}</style>${editor.getHtml({ component })}`;
+            }
+        });
+    };  
+
+
+    var sContainer = 'bx-cc-' + iBlockId;
+    this._oCreativeEditor = grapesjs.init({
+        // Indicate where to init the editor. You can also pass an HTMLElement
+        container: '#' + sContainer,
+
+        plugins: [oStorage, 'gjs-blocks-basic', 'grapesjs-style-bg', 'grapesjs-preset-webpage'],
+        pluginsOpts: {
+            'gjs-blocks-basic': { flexGrid: true },
+            'grapesjs-preset-webpage': {}
+        },
+
+        height: $('#' + sContainer).height(),
+/*
+        blockManager: {
+            appendTo: '.bx-c-blocks',
+        },
+        styleManager: {
+            appendTo: '.bx-c-styles',
+        },
+*/
+        storageManager: { 
+            type: 'inline',
+            autosave: true,
+            autoload: true
+        }
+    });
+
+/*
+    const pm = this._oCreativeEditor.Panels;
+    pm.addPanel({id: 'panel-top', el: '.bx-cp-top'});
+    pm.addPanel({id: 'panel-devices', el: '.bx-cp-devices', buttons: pm.getPanel('devices-c').buttons.models});
+    pm.addPanel({id: 'panel-options', el: '.bx-cp-options', buttons: pm.getPanel('options').buttons.models});
+    pm.addPanel({id: 'panel-views', el: '.bx-cp-views', buttons: pm.getPanel('views').buttons.models});
+    pm.addPanel({id: 'panel-views', el: '.bx-cp-views-container'});
+*/
+};
+
+BxDolPage.prototype.creativeSave = function(oLink, iBlockId)
+{
+    if(!this._oCreativeEditor)
+        return;
+
+    this._loadingInButton($(oLink), true);
+
+    var $this = this;
+    var sContent = $('#' + this._sCreativeStorageHtml).val();
+
+    var oParams = $.extend({}, this._getDefaultParams(), {
+        a: 'creative_save',
+        b: iBlockId,
+        c: sContent
+    });
+
+    $.post (
+        this._sActionsUri,
+        oParams,
+        function() {
+            $this._loadingInButton($(oLink), false);
+
+            $(oLink).toggleClass('hidden').siblings('.bx-cc-edit').toggleClass('hidden');
+            $('.bx-cp-top').remove();
+
+            $this._oCreativeEditor.destroy();
+            $this._oCreativeEditor = null;
+
+            var oContent = $(oLink).parents('.bx-creative-controls:first').siblings('.bx-creative-content');
+            if(oContent.length)
+                oContent.attr('style', '').html(sContent);
+        },
+        'json'
+    );
+};
+
+BxDolPage.prototype._loadingInButton = function(e, bShow)
+{
+    if($(e).length)
+        bx_loading_btn($(e), bShow);
+    else
+        bx_loading($('body'), bShow);
+};
+
 BxDolPage.prototype._getDefaultParams = function() 
 {
     var oDate = new Date();

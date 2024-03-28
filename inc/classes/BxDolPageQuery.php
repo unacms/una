@@ -137,6 +137,14 @@ class BxDolPageQuery extends BxDolDb
         return $this->getOne($sQuery);
     }
 
+    public function setPageBlockContent($iId, $sContent)
+    {
+        return $this->query("UPDATE `sys_pages_blocks` SET `content`=:content WHERE `id`=:id", [
+            'id' => $iId,
+            'content' => $sContent
+        ]) !== false;
+    }
+
     public function getPageBlockContentPlaceholder($iId)
     {
         $sQuery = $this->prepare("SELECT `id`, `module`, `template` FROM `sys_pages_content_placeholders` WHERE `id` = ?", $iId);

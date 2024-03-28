@@ -120,6 +120,29 @@ class BxBasePage extends BxDolPage
         ));
     }
 
+    public function performActionCreativeSave()
+    {
+        if(!$this->isAllowedCreativeManage())
+            return echoJson(['code' => 1]);
+
+        $iId = 0;
+        $sContent = '';
+        if(($iId = bx_get('b')) === false || ($sContent = bx_get('c')) === false)
+            return echoJson(['code' => 2]);
+
+        $iId = bx_process_input($iId, BX_DATA_INT);
+        $sContent = bx_process_input($sContent, BX_DATA_HTML);
+        if(!$this->_oQuery->setPageBlockContent($iId, $sContent))
+            return echoJson(['code' => 3]);
+
+        return echoJson(['code' => 0]);
+    }
+
+    public function isAllowedCreativeManage()
+    {
+        return isAdmin();
+    }
+
     /**
      * Very similar to BxBasePage::getCode
      * but adds css and js files which are needed for the corect page display
@@ -944,14 +967,38 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockCreative ($aBlock)
     {
-        if (bx_is_api()){
+        if(bx_is_api())
             return [bx_api_get_block('creative', ['title' => _t($aBlock['title']), 'content' => $aBlock['content']])];
-        }
 
-        $s = '<div class="bx-page-creative-container bx-def-vanilla-html max-w-none">' . $aBlock['content'] . '</div>';
-        $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
+        $s = $this->_replaceMarkers($aBlock['content'], ['block_id' => $aBlock['id']]);
         $s = bx_process_macros($s);
-        return $s;
+
+        $bCanManage = $this->isAllowedCreativeManage();
+
+        if($bCanManage) {
+            $this->_oTemplate->addCss([
+                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'grapesjs/|grapes.min.css',
+            ]);
+
+            $this->_oTemplate->addJs([
+                'grapesjs/grapes.min.js',
+                'grapesjs/grapesjs-blocks-basic.js',
+                'grapesjs/grapesjs-style-bg.js',
+                'grapesjs/grapesjs-preset-webpage.min.js',
+            ]);
+        }
+        
+        return $this->_oTemplate->parseHtmlByName('block_creative.html', [
+            'block_id' => $aBlock['id'],
+            'content' => $s,
+            'bx_if:show_controls' => [
+                'condition' => $bCanManage,
+                'content' => [
+                    'onclick_edit' => $this->_sJsObjectName . '.creativeEdit(this, ' . $aBlock['id'] . ')',
+                    'onclick_save' => $this->_sJsObjectName . '.creativeSave(this, ' . $aBlock['id'] . ')'
+                ]
+            ]
+        ]);
     }
 
     /**
