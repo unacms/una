@@ -47,28 +47,28 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
         if(!$aContentInfo)
-            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_entry_is_not_defined')) : '';
+            return $bErrorMsg ? ($this->_bIsApi ? [bx_api_get_msg('_sys_txt_error_entry_is_not_defined')] : MsgBox('_sys_txt_error_entry_is_not_defined')) : '';
 
         // check access
         if(($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return $bErrorMsg ? MsgBox($sMsg) : '';
+            return $bErrorMsg ? ($this->_bIsApi ? [bx_api_get_msg($sMsg)] : MsgBox($sMsg)) : '';
 
         // check and display form
         $oForm = $this->getObjectFormInvite($sDisplay);
         if(!$oForm)
-            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_occured')) : '';
+            return $bErrorMsg ? ($this->_bIsApi ? [bx_api_get_msg('_sys_txt_error_occured')] : MsgBox(_t('_sys_txt_error_occured'))) : '';
 
         $oForm->initChecker($aContentInfo);
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+            return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_invite', 'immutable' => true]]])] : $oForm->getCode();
 
         $this->onDataInviteBefore($aContentInfo[$CNF['FIELD_ID']], $aContentInfo);
 
         if (!$oForm->update($aContentInfo[$CNF['FIELD_ID']])) {
             if (!$oForm->isValid())
-                return $oForm->getCode();
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_invite', 'immutable' => true]]])] : $oForm->getCode();
             else
-                return MsgBox(_t('_sys_txt_error_entry_update'));
+                return $this->_bIsApi ?  [bx_api_get_msg('_sys_txt_error_entry_update')] : MsgBox(_t('_sys_txt_error_entry_update'));
         }
 
         list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);

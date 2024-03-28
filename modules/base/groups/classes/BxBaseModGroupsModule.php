@@ -60,6 +60,15 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         echo(json_encode($a));
     }
     
+    public function serviceGetInitialMembers ()
+    {
+        $sTerm = bx_get('term');
+
+        $a = BxDolService::call('system', 'profiles_search', [$sTerm, ['module' => $this->_oConfig->getName()]], 'TemplServiceProfiles');
+
+        return $a;
+    }
+    
     /**
      * Process Process Invitation
      */
@@ -211,6 +220,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         return array_merge(parent::serviceGetSafeServices(), [
             'GetQuestionnaire' => '',
+            'GetInitialMembers' => '',
         ]);
     }
 
