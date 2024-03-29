@@ -3243,7 +3243,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $aLocationsList = array_reverse($this->_aLocations, true);
         $aLocationsGrouped = ['mod' => [], 'sys' => []];
         foreach($aLocationsList as $sLocation => $aLocation) {
-            if($sLocation == 'system')
+            if(in_array($sLocation, ['system', 'studio']))
                 $aLocationsGrouped['sys'][$sLocation] = $aLocation;
             else
                 $aLocationsGrouped['mod'][$sLocation] = $aLocation;
