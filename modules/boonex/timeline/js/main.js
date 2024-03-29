@@ -562,3 +562,26 @@ BxTimelineMain.prototype._getPost = function(oView, iId, aParams) {
         'json'
     );
 };
+
+/**
+ * Allows to attache callback functions on Get Post event
+ * @param oView
+ * @param iId
+ * @param aParams
+ */
+BxTimelineMain.prototype.onGetPost = function(oView, iId, aParams) {
+    const mixedCallback = this.aGetPostCallbacks;
+
+    if (!mixedCallback)
+        return;
+
+    if (typeof mixedCallback === 'function')
+        mixedCallback(oView, iId, aParams);
+
+    if (Array.isArray(mixedCallback)){
+        for (let i in mixedCallback) {
+            if (typeof mixedCallback[i] === 'function')
+                mixedCallback[i](oView, iId, aParams);
+        }
+    }
+}
