@@ -370,6 +370,10 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         foreach ($a as $r) {
             $oProfile = BxDolProfile::getInstance($r['profile_id']);
 
+            if (bx_is_api()){
+                $aRet[] = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);
+            }
+            else{
             $aRet[] = array (
             	'label' => $this->serviceProfileName($r['content_id']), 
                 'value' => $r['profile_id'], 
@@ -377,6 +381,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             	'thumb' => $oProfile->getThumb(),
                 'unit' => $oProfile->getUnit(0, ['template' => ['name' => 'unit_wo_info', 'size' => 'icon']])
             );
+        }
         }
 
         return $aRet;

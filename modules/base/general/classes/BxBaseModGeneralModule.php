@@ -324,6 +324,15 @@ class BxBaseModGeneralModule extends BxDolModule
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));
     }
+    
+    public function serviceGetProfiles ($sParams)
+    {
+        $aOptions = json_decode($sParams, true);
+        if (!$sParams || !isset($aOptions['term']))
+            return [];
+
+        return BxDolService::call('system', 'profiles_search', array($aOptions['term']), 'TemplServiceProfiles');
+    }
 
     public function actionGetBrowsingFilters()
     {
@@ -432,6 +441,8 @@ class BxBaseModGeneralModule extends BxDolModule
             'EntityActions' => '',
             'EntitySocialSharing' => '',
             'MyEntriesActions' => '',
+            
+            'GetProfiles' => '',
         );
     }
 

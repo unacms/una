@@ -369,6 +369,12 @@ class BxBaseFormView extends BxDolForm
                     $aInput['values_src'] = '';
                 }
                 
+                if (isset($aInput['type']) && 'custom' == $aInput['type']){
+                    $sCustomMethod = 'genCustomInput' . $this->_genMethodName($aInput['name']);
+                    if (method_exists($this, $sCustomMethod))
+                         $aInput = $this->$sCustomMethod($aInput);
+                }
+                
                 if (isset($aInput['type']) && 'block_header' == $aInput['type']){
                     $aInput['name'] = $key;
                 }
@@ -1699,6 +1705,11 @@ BLAH;
             $aTmplVarsInputText['input'] = $this->genInputStandard($aInputText);
         }
 
+       if (bx_is_api()){
+           $aInput['type'] = 'initial_members';
+           return $aInput;
+       }
+        
         $this->addCssJsUi();
 
         $sJsCode = '';
