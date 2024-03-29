@@ -16,6 +16,7 @@ class BxBaseStudioGridNavigation extends BxTemplStudioGrid
     {
         parent::__construct($aOptions, $oTemplate);
 
+        $this->_sFilter = '';
         if(($sFilter = $this->_getFilterValue()))
             $this->_sFilter = $sFilter;
     }

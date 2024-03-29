@@ -21,6 +21,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_pre_lists_edit');
         $this->_aOptions['actions_single']['delete']['attr']['title'] = _t('_adm_form_btn_pre_lists_delete');
 
+        $this->_sFilter = '';
         if(($sFilter = $this->_getFilterValue()))
             $this->_sFilter = $sFilter;
 
