@@ -60,11 +60,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         echo(json_encode($a));
     }
     
-    public function serviceGetInitialMembers ()
+    public function serviceGetInitialMembers ($sParams)
     {
-        $sTerm = bx_get('term');
-
-        $a = BxDolService::call('system', 'profiles_search', [$sTerm, ['module' => $this->_oConfig->getName()]], 'TemplServiceProfiles');
+        $aOptions = json_decode($sParams, true);
+        if (!$sParams || !isset($aOptions['term']))
+            return [];
+        
+        $a = BxDolService::call('system', 'profiles_search', [$aOptions['term'], ['module' => $this->_oConfig->getName()]], 'TemplServiceProfiles');
 
         return $a;
     }

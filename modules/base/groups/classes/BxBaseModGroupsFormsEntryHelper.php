@@ -55,18 +55,19 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
         // check and display form
         $oForm = $this->getObjectFormInvite($sDisplay);
+
         if(!$oForm)
             return $bErrorMsg ? ($this->_bIsApi ? [bx_api_get_msg('_sys_txt_error_occured')] : MsgBox(_t('_sys_txt_error_occured'))) : '';
 
         $oForm->initChecker($aContentInfo);
         if (!$oForm->isSubmittedAndValid())
-            return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_invite', 'immutable' => true]]])] : $oForm->getCode();
+            return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_invite&params[]=' . $iContentId . '&params[]=' . $sDisplay, 'immutable' => true]]])] : $oForm->getCode();
 
         $this->onDataInviteBefore($aContentInfo[$CNF['FIELD_ID']], $aContentInfo);
 
         if (!$oForm->update($aContentInfo[$CNF['FIELD_ID']])) {
             if (!$oForm->isValid())
-                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_invite', 'immutable' => true]]])] : $oForm->getCode();
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_invit&params[]=' . $iContentId . '&params[]=' . $sDisplay, 'immutable' => true]]])] : $oForm->getCode();
             else
                 return $this->_bIsApi ?  [bx_api_get_msg('_sys_txt_error_entry_update')] : MsgBox(_t('_sys_txt_error_entry_update'));
         }
@@ -81,6 +82,9 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         $this->_oModule->$sCheckFunction($aContentInfo, true);
 
         // Redirect
+         if (bx_is_api())
+            return [$this->redirectAfterEdit($aContentInfo)];
+        else
         $this->redirectAfterEdit($aContentInfo);
     }
 

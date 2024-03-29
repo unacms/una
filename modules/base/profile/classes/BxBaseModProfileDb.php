@@ -75,7 +75,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
         
         $sWhere = '';
         foreach ($this->_oConfig->CNF['FIELDS_QUICK_SEARCH'] as $sField) {
-        	$aBindings[$sField] = $sTerm . '%';
+        	$aBindings[$sField] = '%' . $sTerm . '%';
 
             $sWhere .= " OR `c`.`$sField` LIKE :" . $sField;
         }
