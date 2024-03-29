@@ -20,6 +20,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_forms_edit');
 
+        $this->_sFilter = '';
         if(($sFilter = $this->_getFilterValue()))
             $this->_sFilter = $sFilter;
 

@@ -91,8 +91,7 @@ div.bx-std-block-panel-bottom .bx-std-pt-cnt {
 /**
  * Builder based blocks
  */
-
-.bx-page-block-container {
+.bx-layout-wrapper {
     padding-top: 1.875rem;
     padding-bottom: 0;
 }

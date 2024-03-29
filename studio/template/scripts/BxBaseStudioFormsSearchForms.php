@@ -21,6 +21,7 @@ class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_search_forms_edit');
 
+        $this->_sFilter = '';
         if(($sFilter = $this->_getFilterValue()))
             $this->_sFilter = $sFilter;
 

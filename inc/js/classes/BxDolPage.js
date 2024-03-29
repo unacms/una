@@ -138,6 +138,7 @@ BxDolPage.prototype.creativeEdit = function(oLink, iBlockId)
 
 
     var sContainer = 'bx-cc-' + iBlockId;
+    var iContainerHeight = $('#' + sContainer).height();
     this._oCreativeEditor = grapesjs.init({
         // Indicate where to init the editor. You can also pass an HTMLElement
         container: '#' + sContainer,
@@ -148,7 +149,7 @@ BxDolPage.prototype.creativeEdit = function(oLink, iBlockId)
             'grapesjs-preset-webpage': {}
         },
 
-        height: $('#' + sContainer).height(),
+        height: iContainerHeight > 800 ? iContainerHeight : 800,
 /*
         blockManager: {
             appendTo: '.bx-c-blocks',
