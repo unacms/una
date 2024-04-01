@@ -97,6 +97,9 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
             $('.' + $this.sClassView + ':visible').each(function() {
                 var oView = $(this);
                 $this._getPost(oView, iId, jQuery.extend({}, $this._oRequestParams, {view: $this._getView(oView), afps_loading: 1}));
+
+                // Attach callback on get post */
+                $this.onGetPost(oView, iId, jQuery.extend({}, $this._oRequestParams, {view: $this._getView(oView), afps_loading: 1}));
             });
         }
 

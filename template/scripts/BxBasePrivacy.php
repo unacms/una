@@ -138,6 +138,7 @@ class BxBasePrivacy extends BxDolPrivacy
         }
 
         $iGroupId = $oForm->getGroupId();
+        $oForm->setId( $oForm->getId() . '_' . $iGroupId );
         $sContent = BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['group_custom_select_popup'] . $iGroupId, $this->_oTemplate->parseHtmlByName('privacy_group_custom_select_popup.html', array(
             'js_object' => $sJsObject,
             'group' => $iGroupId,
@@ -195,6 +196,7 @@ class BxBasePrivacy extends BxDolPrivacy
         }
 
         $iGroupId = $oForm->getGroupId();
+        $oForm->setId($oForm->getId() . '_' . $iGroupId);
         $sContent = BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['group_custom_select_popup'] . $iGroupId, $this->_oTemplate->parseHtmlByName('privacy_group_custom_select_popup.html', array(
             'js_object' => $sJsObject,
             'group' => $iGroupId,
