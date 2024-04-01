@@ -2857,6 +2857,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_layout_1_column"><![CDATA[1 column]]></string>
         <string name="_sys_layout_1_column_thin"><![CDATA[1 column (thin)]]></string>
         <string name="_sys_layout_1_column_half"><![CDATA[1 column (half)]]></string>
+        <string name="_sys_layout_1_column_wiki"><![CDATA[1 column (wiki)]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 columns]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 columns]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[With left bar]]></string>

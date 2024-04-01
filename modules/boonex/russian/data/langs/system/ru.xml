@@ -2826,6 +2826,7 @@
 	<string name="_sys_layout_1_column"><![CDATA[1 столбец]]></string>
         <string name="_sys_layout_1_column_thin"><![CDATA[1 столбец (узкий)]]></string>
         <string name="_sys_layout_1_column_half"><![CDATA[1 столбец (половина)]]></string>
+        <string name="_sys_layout_1_column_wiki"><![CDATA[1 столбец (вики)]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 столбца]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 столбца]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[С левой линейкой]]></string>
