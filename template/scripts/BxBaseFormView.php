@@ -1100,9 +1100,9 @@ BLAH;
             $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
 
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sTitle = '<div class="bx-form-section-title">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
+            $sTitle = '<div class="bx-form-section-title">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span class="bx-def-font-grayed">' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
         else
-            $sTitle = '<div class="bx-form-section-title"><div class="flex justify-between align-center w-full"><a class="flex-1" href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a><u class="bx-form-section-toggler"><i class="sys-icon chevron-right"></i></u></div>' . (!empty($aInput['info']) ? '<div class="bx-form-section-info bx-def-font-grayed">' . bx_process_output($aInput['info']) . '</div>' : '') . '</div>';
+            $sTitle = '<div class="bx-form-section-title flex justify-between align-center flex-nowrap w-full"><div class="flex-1"><a class="block w-full" href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<span class="bx-def-font-grayed block w-full">' . bx_process_output($aInput['info']) . '</span>' : '') . '</div><u class="bx-form-section-toggler"><i class="sys-icon chevron-right"></i></u></div>';
 
         if (isset($aInput['name'])) {
             if (!isset($aInput['tr_attrs']) || !is_array($aInput['tr_attrs']))

@@ -62,9 +62,7 @@ import url(../../../../../../../template/css/forms.css);
     cursor: pointer;
 }
 
-.bx-form-section-header .bx-form-section-title .bx-form-section-info {
-    width: 100%;
-
+.bx-form-section-header .bx-form-section-title span {
     white-space: nowrap;
     text-transform: none;
     font-size: 0.75rem;

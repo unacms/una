@@ -8,7 +8,7 @@
     padding-bottom: 4.5rem;
 }
 #adm-settings-form .bx-form-advanced-wrapper {
-    height: calc(100vh - 12rem);
+    height: calc(100vh - 14rem);
     overflow-y: auto;
 }
 #adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper {
