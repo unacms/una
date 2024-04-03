@@ -465,8 +465,10 @@ class BxBasePage extends BxDolPage
         if (isset(bx_get('params')[2]) && bx_get('params')[2] != ''){
             $array = json_decode(bx_get('params')[2], true);
             $query_string = http_build_query($array);
-            parse_str($query_string, $_GET);
+            parse_str($query_string, $a);
+            $_GET = array_merge($_GET, $a);
         }
+
         $sMetaTitle = $this->_getPageMetaTitle();
         $sName = $this->_getPageTitle();
         $a = [
