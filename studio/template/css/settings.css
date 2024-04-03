@@ -1,0 +1,26 @@
+.bx-std-block .bx-std-block-content {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#adm-settings-form {
+    position: relative;
+    padding-bottom: 4.5rem;
+}
+#adm-settings-form .bx-form-advanced-wrapper {
+    height: calc(100vh - 12rem);
+    overflow-y: auto;
+}
+#adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper {
+    padding: 0 1.5rem;
+}
+#adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper:last-child {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    
+    margin: 0;
+    padding-top: 1.5rem;
+
+    border-top: 1px solid rgb(228, 228, 231, 1);
+}

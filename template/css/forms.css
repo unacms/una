@@ -4,8 +4,8 @@
 }
 
 .bx-form-advanced-wrapper .bx-form-section-divider:first-child {
-    border-top:none; 
-    padding-top:0; 
+    border:none; 
+    padding:0; 
 }
 
 .bx-form-advanced-wrapper .bx-form-section-divider:first-child .bx-form-section-content {
@@ -25,12 +25,7 @@
 }
 
 .bx-form-section {
-    padding:0px;
-}
-
-.bx-form-section {
     margin:0;
-    border: none;
 }
 
 .bx-form-section-header .bx-form-section-title {
@@ -45,13 +40,17 @@
     text-transform: uppercase;
 }
 
+.bx-form-section-header .bx-form-section-title a,
+.bx-form-section-header .bx-form-section-title .sys-icon {
+    color: inherit;
+}
+
 .bx-form-section-header .bx-form-section-title u {
     cursor: pointer;
 }
 
-.bx-form-section-header .bx-form-section-title span {
+.bx-form-section-header .bx-form-section-title .bx-form-section-info {
     width: 100%;
-    padding-left: 1.25rem;
 
     white-space: nowrap;
     text-transform: none;

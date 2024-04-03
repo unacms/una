@@ -1085,51 +1085,38 @@ BLAH;
         $aAttrs = empty($aInput['attrs']) ? '' : $aInput['attrs'];
 
         // if there is no caption - show divider only
-
-        if (empty($aInput['caption'])) {
-            $sCode = $this->{$this->_sSectionClose}();
-            $sCode .= $this->{$this->_sSectionOpen}($aAttrs);
-            return $sCode;
-        }
+        if (empty($aInput['caption']))
+            return $this->{$this->_sSectionOpen}($aAttrs);
 
         // if section is collapsed by default, add necessary code
-
         $sClassAddCollapsable = 'bx-form-collapsable';
         if (isset($aInput['collapsed']) and $aInput['collapsed'])
             $sClassAddCollapsable .= ' bx-form-collapsed bx-form-section-hidden';
 
         // display section with caption
-
-        $sCode = $this->{$this->_sSectionClose}();
-
         if (empty($aAttrs))
             $aAttrs = array('class' => 'bx-form-collapsable ' . $sClassAddCollapsable);
         else
             $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
 
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
+            $sTitle = '<div class="bx-form-section-title">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
         else
-            $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
+            $sTitle = '<div class="bx-form-section-title"><div class="flex justify-between align-center w-full"><a class="flex-1" href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a><u class="bx-form-section-toggler"><i class="sys-icon chevron-right"></i></u></div>' . (!empty($aInput['info']) ? '<div class="bx-form-section-info bx-def-font-grayed">' . bx_process_output($aInput['info']) . '</div>' : '') . '</div>';
 
         if (isset($aInput['name'])) {
             if (!isset($aInput['tr_attrs']) || !is_array($aInput['tr_attrs']))
                 $aInput['tr_attrs'] = [];
+
             $aInput['tr_attrs']['id'] = "bx-form-section-" . $aInput['name'];
         }
 
-        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sTitle, !empty($aInput['tr_attrs']) ? $aInput['tr_attrs'] : []);
-
-        return $sCode;
+        return $this->{$this->_sSectionOpen}($aAttrs, $sTitle, !empty($aInput['tr_attrs']) ? $aInput['tr_attrs'] : []);
     }
 
     function genBlockEnd()
     {
-        $aNextTbodyAdd = false; // need to have some default
-        $sCode = '';
-        $sCode .= $this->{$this->_sSectionClose}();
-        $sCode .= $this->{$this->_sSectionOpen}($aNextTbodyAdd);
-        return $sCode;
+        return $this->{$this->_sSectionClose}();
     }
 
     /**
@@ -2275,43 +2262,30 @@ BLAH;
         }
     }
 
-    function getOpenSection($aAttrs = array(), $sTitle = '', $aWrapperAttrs = [])
+    function getOpenSection($aAttrs = [], $sTitle = '', $aWrapperAttrs = [])
     {
-        if (!$this->_isSectionOpened) {
+        $sClose = '';
+        if($this->_isSectionOpened)
+            $sClose = $this->{$this->_sSectionClose}();
 
-            if (!$aAttrs || !is_array($aAttrs))
-                $aAttrs = array();
+        $sWrapperAttrs = bx_convert_array2attrs($aWrapperAttrs, "bx-form-section-wrapper my-4");
+            
+        if(!$aAttrs || !is_array($aAttrs))
+            $aAttrs = [];
 
-            if ($sTitle)
-                $sClassesAdd = "bx-form-section-header";
-            else
-                $sClassesAdd = "bx-form-section-divider";
+        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider") . " px-4 py-2 border rounded-lg");
 
-            $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-def-padding-sec-top bx-def-border-top " . $sClassesAdd);
-
-            $sWrapperAttrs = bx_convert_array2attrs($aWrapperAttrs, "bx-form-section-wrapper bx-def-margin-top");
-
-            $this->_isSectionOpened = true;
-
-            return "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sTitle ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
-
-        } else {
-
-            return '';
-        }
+        $this->_isSectionOpened = true;
+        return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content py-4" . ($sTitle ? ' px-4' : '') . "\">\n";
     }
 
     function getCloseSection()
     {
-        if ($this->_isSectionOpened) {
-
-            $this->_isSectionOpened = false;
-            return "</div> </div> </div> \n<!-- form header content ends -->\n";
-
-        } else {
-
+        if(!$this->_isSectionOpened)
             return '';
-        }
+
+        $this->_isSectionOpened = false;
+        return "</div> </div> </div> \n<!-- form header content ends -->\n";
     }
 
     function getOpenSectionViewMode($aAttrs = array(), $sTitle = '', $aWrapperAttrs = [])

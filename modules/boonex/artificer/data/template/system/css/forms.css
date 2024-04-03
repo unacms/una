@@ -7,8 +7,8 @@ import url(../../../../../../../template/css/forms.css);
 }
 
 .bx-form-advanced-wrapper .bx-form-section-divider:first-child {
-    border-top:none; 
-    padding-top:0; 
+    border: none; 
+    padding: 0; 
 }
 
 .bx-form-advanced-wrapper .bx-form-section-divider:first-child .bx-form-section-content {
@@ -39,8 +39,6 @@ import url(../../../../../../../template/css/forms.css);
 
 .bx-form-section {
     margin: 0;
-    padding: 0;
-    border: none;
 }
 
 .bx-form-section-header .bx-form-section-title {
@@ -55,13 +53,17 @@ import url(../../../../../../../template/css/forms.css);
     text-transform: uppercase;
 }
 
+.bx-form-section-header .bx-form-section-title a,
+.bx-form-section-header .bx-form-section-title .sys-icon {
+    color: inherit !important;
+}
+
 .bx-form-section-header .bx-form-section-title u {
     cursor: pointer;
 }
 
-.bx-form-section-header .bx-form-section-title span {
+.bx-form-section-header .bx-form-section-title .bx-form-section-info {
     width: 100%;
-    padding-left: 1.25rem;
 
     white-space: nowrap;
     text-transform: none;
