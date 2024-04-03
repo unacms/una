@@ -401,6 +401,12 @@ class BxBaseFormView extends BxDolForm
                     if (isset($aInput['value'], $aInput['html']) && (int)$aInput['html'] == 0)
                         $aInput['value'] = strip_tags($aInput['value']);
                 }
+
+                if (isset($aInput['type'], $aInput['values_src']) && in_array($aInput['type'], ['select', 'select_multiple', 'checkbox_set', 'radio_set']) && strncmp(BX_DATA_LISTS_KEY_PREFIX, $aInput['values_src'], 2) === 0) {
+                    $aInput['values'] = array_map(function($sKey) use($aInput) {
+                        return ['key' => $sKey, 'value' => $aInput['values'][$sKey]];
+                    }, array_keys($aInput['values']));
+                }
             }
             else{
                 $keysToRemove[] = $key;
