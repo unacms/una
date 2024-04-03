@@ -1,26 +1,31 @@
 .bx-std-block .bx-std-block-content {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
 }
 
-#adm-settings-form {
+#adm-settings-form-categorized {
     position: relative;
-    padding-bottom: 4.5rem;
+    padding-bottom: 5.5rem;
 }
-#adm-settings-form .bx-form-advanced-wrapper {
-    height: calc(100vh - 14rem);
+#adm-settings-form-categorized .bx-form-advanced-wrapper {
+    height: calc(100vh - 9.5rem);
     overflow-y: auto;
 }
-#adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper {
+#adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper,
+#adm-settings-form-categorized .bx-form-advanced-wrapper .bx-form-section-wrapper {
     padding: 0 1.5rem;
 }
-#adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper:last-child {
+#adm-settings-form-categorized .bx-form-advanced-wrapper .bx-form-section-wrapper:last-child {
     position: absolute;
     bottom: 0;
     width: 100%;
     
     margin: 0;
-    padding-top: 1.5rem;
+    padding: 1.5rem;
 
     border-top: 1px solid rgb(228, 228, 231, 1);
+}
+
+#adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper:first-child,
+#adm-settings-form-categorized .bx-form-advanced-wrapper .bx-form-section-wrapper:first-child {
+    padding-top: 1rem;
 }

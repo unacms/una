@@ -1105,10 +1105,38 @@ BLAH;
         else
             $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
 
-        if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sTitle = '<div class="bx-form-section-title">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span class="bx-def-font-grayed">' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
-        else
-            $sTitle = '<div class="bx-form-section-title flex justify-between align-center flex-nowrap w-full"><div class="flex-1"><a class="block w-full" href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<span class="bx-def-font-grayed block w-full">' . bx_process_output($aInput['info']) . '</span>' : '') . '</div><u class="bx-form-section-toggler"><i class="sys-icon chevron-right"></i></u></div>';
+        $bViewMode = !empty($this->aParams['view_mode']);
+
+        $sCaption = bx_process_output($aInput['caption'], BX_DATA_HTML);
+        $sInfo = bx_process_output($aInput['info']);
+        $bInfo = !empty($sInfo);
+
+        $sTitle = $this->oTemplate->parseHtmlByName('form_field_section_title.html', [
+            'bx_if:show_view' => [
+                'condition' => $bViewMode,
+                'content' => [
+                    'caption' => $sCaption,
+                    'bx_if:show_view_info' => [
+                        'condition' => $bInfo,
+                        'content' => [
+                            'info' => $sInfo
+                        ]
+                    ]
+                ]
+            ],
+            'bx_if:show_default' => [
+                'condition' => !$bViewMode,
+                'content' => [
+                    'caption' => $sCaption,
+                    'bx_if:show_default_info' => [
+                        'condition' => $bInfo,
+                        'content' => [
+                            'info' => $sInfo
+                        ]
+                    ]
+                ]
+            ]
+        ]);
 
         if (isset($aInput['name'])) {
             if (!isset($aInput['tr_attrs']) || !is_array($aInput['tr_attrs']))
@@ -2279,7 +2307,7 @@ BLAH;
         if(!$aAttrs || !is_array($aAttrs))
             $aAttrs = [];
 
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider") . " px-4 py-2 border rounded-lg");
+        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider") . " p-4 border rounded-lg");
 
         $this->_isSectionOpened = true;
         return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content py-4" . ($sTitle ? ' px-4' : '') . "\">\n";

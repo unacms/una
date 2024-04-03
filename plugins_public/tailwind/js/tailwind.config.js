@@ -18,8 +18,12 @@ module.exports = {
     './modules/boonex/**/data/template/**/*.html',
 
     './studio/template/*.html',
+    './studio/template/scripts/*.php',
+    './studio/template/scripts_templ/*.php',
 
     './template/*.html',
+    './template/scripts/*.php',
+    './template/scripts_templ/*.php'
   ],
   safelist: [
     'w-8', 'w-10', 'w-16', 'w-24', 'w-48', 'w-4/6', 

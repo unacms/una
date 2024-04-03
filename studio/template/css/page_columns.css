@@ -1,3 +1,7 @@
+.bx-std-bg {
+    background-color: rgba(228, 228, 231, 1);
+}
+
 /*--- 2 columns ---*/
 .bx-std-pc-stretch {
     position: relative;
@@ -18,6 +22,8 @@ div.bx-std-page-columns-cnt {
     display: flex;
     -webkit-align-items: stretch;
     align-items: stretch;
+
+    height: calc(100vh - 4rem);
 }
 div.bx-std-page-column.bx-std-page-menu {
     position: relative;
@@ -25,9 +31,12 @@ div.bx-std-page-column.bx-std-page-menu {
     flex: 0 0 230px;
 
     width: 230px;
+    height: 100%;
 
     background-color: #ffffff;
     box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2);
+    
+    overflow-y: auto;
 }
 div.bx-std-page-column.bx-std-page-menu div.bx-std-page-column-cnt {
     position: -webkit-sticky;
@@ -40,7 +49,10 @@ div.bx-std-page-column.bx-std-page-content {
     -webkit-flex-grow: 2;
     flex-grow: 2;
 
+    height: 100%;
+
     overflow-x: hidden;
+    overflow-y: auto;
 }
 div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     width: 100%;
