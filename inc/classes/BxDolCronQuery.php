@@ -43,7 +43,7 @@ class BxDolCronQuery extends BxDolDb implements iBxDolSingleton
 
     public function getJobs()
     {
-    	return $this->fromCache('sys_cron_jobs', 'getAll', "SELECT * FROM `sys_cron_jobs`");
+    	return $this->fromCache('sys_cron_jobs', 'getAll', "SELECT * FROM `sys_cron_jobs` ORDER BY `timing` DESC");
     }
 
     public function updateJob($iId, $aFields = array())
