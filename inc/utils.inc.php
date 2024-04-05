@@ -2522,7 +2522,7 @@ function bx_api_get_image($sStorage, $iId)
     if(!empty($aFile['dimensions'])){
         $aTmp = explode('x', $aFile['dimensions']);
         $iWidth = (int) $aTmp[0];
-        $$iHeight = (int) $aTmp[1];
+        $iHeight = (int) $aTmp[1];
     }
     if (!empty($sUrl)){
         return [

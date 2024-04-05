@@ -1745,6 +1745,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_images` (
   `mime_type` varchar(128) NOT NULL,
   `ext` varchar(32) NOT NULL,
   `size` bigint(20) NOT NULL,
+  `dimensions` varchar(24) NOT NULL,
   `added` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
   `private` int(11) NOT NULL,

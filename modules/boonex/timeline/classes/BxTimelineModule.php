@@ -5064,12 +5064,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aPhotos) || !is_array($aPhotos))
             return [];
 
+        $sStorage = $this->_oConfig->getObject('storage_photos');
         $oTranscoderSm = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
         $oTranscoderMd = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_medium'));
         $oTranscoderLg = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
 
         $aResult = [];
         foreach($aPhotos as $iPhotoId) {
+            if($this->_bIsApi) {
+                $aResult[] = bx_api_get_image($sStorage, $iPhotoId);
+                continue;
+            }
+
             $sPhotoSrcMd = $oTranscoderMd->getFileUrl($iPhotoId);
             if(empty($sPhotoSrcMd))
                 continue;
