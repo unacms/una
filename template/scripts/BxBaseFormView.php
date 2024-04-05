@@ -1108,7 +1108,7 @@ BLAH;
         $bViewMode = !empty($this->aParams['view_mode']);
 
         $sCaption = bx_process_output($aInput['caption'], BX_DATA_HTML);
-        $sInfo = bx_process_output($aInput['info']);
+        $sInfo = !empty($aInput['info']) ? bx_process_output($aInput['info']) : '';
         $bInfo = !empty($sInfo);
 
         $sTitle = $this->oTemplate->parseHtmlByName('form_field_section_title.html', [
