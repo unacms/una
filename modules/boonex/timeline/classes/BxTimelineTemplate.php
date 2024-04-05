@@ -1930,6 +1930,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function _getPostApi(&$aEvent, $aParams = [], $aEventAdd = [])
     {
         $oModule = $this->getModule();
+        $bViewItem = isset($aParams['view']) && $aParams['view'] == BX_TIMELINE_VIEW_ITEM;
 
         $aEvent['author_data'] = BxDolProfile::getData($aEvent['object_owner_id']);
         $aEvent['author_actions'] = [];
@@ -1950,6 +1951,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $aEvent['url'] = bx_ltrim_str($aEvent['content']['url'], BX_DOL_URL_ROOT);
+
+        if(!empty($aEvent['content']) && !empty($aEvent['content']['text'])) {
+            $sMethodPrepare = '_prepareTextForOutput';
+            if($this->_oConfig->isBriefCards() && !$bViewItem)
+                $sMethodPrepare .= 'BriefCard';
+
+            $aEvent['content']['text'] = $this->$sMethodPrepare($aEvent['content']['text'], $aEvent['id']);
+        }
 
         if(empty($aEventAdd['menu_actions'])) {
             $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
@@ -3255,7 +3264,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $s = strip_tags($s, $this->_oConfig->getBriefCardsTags(true));
         
-        return $this->_prepareTextForOutput($s, $iEventId = 0);
+        return $this->_prepareTextForOutput($s, $iEventId);
     }
 
     protected function _prepareTextForOutput($s, $iEventId = 0)
