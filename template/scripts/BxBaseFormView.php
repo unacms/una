@@ -913,8 +913,18 @@ BLAH;
         if(!$this->_bViewMode)
             return $this->genRowStandard($aInput);
 
-        $aInput['caption_src'] = '_sys_form_input_age';
-        $aInput['caption'] = _t($aInput['caption_src']);
+        $sTxtAge = '_sys_form_input_age';
+        $aInput = array_merge($aInput, [
+            'caption_src' => $sTxtAge,
+            'caption' => _t($sTxtAge),
+        ]);
+
+        if(bx_is_api())
+            $aInput = array_merge($aInput, [
+                'type' => 'text',
+                'value' => bx_birthday2age($aInput['value'])
+            ]);
+
         return $this->genViewRowWrapped($aInput);
     }
 
