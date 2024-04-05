@@ -32,7 +32,6 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     protected $_aModulesContexts;
 
     protected $_iDeliveryTimeout;
-    protected $_iProcessedEvent;
 
     protected $_bEventsGrouped;
 
@@ -52,6 +51,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             // some params
             'PARAM_QUEUE_ADD_THRESHOLD' => 0,
             'PARAM_COMMENT_POST_EXT' => 'bx_notifications_enable_comment_post_ext',
+            'PARAM_PROCESSED_EVENT' => 'bx_notifications_processed_event',
 
             // objects
             'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
@@ -139,7 +139,6 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     	}
 
         $this->_iDeliveryTimeout = (int)getParam($sOptionPrefix . 'delivery_timeout');
-        $this->_iProcessedEvent = (int)getParam($sOptionPrefix . 'processed_event');
 
         $this->_bEventsGrouped = getParam($sOptionPrefix . 'enable_group_events') == 'on';
 
@@ -209,17 +208,15 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     {
         return $this->_bClickedIndicator;
     }
-            
+
     public function getProcessedEvent()
     {
-        return $this->_iProcessedEvent;
+        return (int)getParam($this->CNF['PARAM_PROCESSED_EVENT'], false);
     }
-    
+
     public function setProcessedEvent($iEvent)
     {
-        $this->_iProcessedEvent = $iEvent;
-
-        setParam($this->getPrefix('option') . 'processed_event', $iEvent);
+        setParam($this->CNF['PARAM_PROCESSED_EVENT'], $iEvent);
     }
 
     /**
