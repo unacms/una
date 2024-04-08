@@ -72,6 +72,14 @@ switch ($sAction) {
 
         bx_import('BxDolLanguages');
 
+        bx_alert('system', 'upload_file_before', 0, false, [
+            'uploader_object' => $sUploaderObject,
+            'storage_object' => $sStorageObject,
+            'uniq_id' => $sUniqId,
+            'is_multiple' => $isMultiple,
+            'is_private' => $isPrivate,
+        ]);
+
         $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId, $isPrivate);
         break;
 
