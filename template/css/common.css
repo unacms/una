@@ -811,10 +811,12 @@ svg .gray .outer .p2 {
     text-decoration:none;
 }
 .bx-btn img {
-    width:1.2em;
-    height:1.2em;
-    vertical-align:middle;
-    background-size:1.2em 1.2em;
+    width:1.2rem;
+    height:1.2rem;
+    max-width: none;
+
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position:center center;
 }
 .bx-btn .bx-def-valign-center{
