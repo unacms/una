@@ -32,6 +32,10 @@ class BxTimelineGridAdministration extends BxTimelineGridManageTools
     protected function _getCellOwnerId($mixedValue, $sKey, $aField, $aRow)
     {
         $iProfile = $this->_oModule->_oConfig->isSystem($aRow['type'], $aRow['action']) ? $aRow['owner_id'] : $aRow['object_id'];
+
+        if($this->_bIsApi)
+            return ['type' => 'profile', 'data' => BxDolProfile::getData($iProfile)];
+
     	$oProfile = $this->_getProfileObject($iProfile);
     	$sProfile = $oProfile->getDisplayName();
 
