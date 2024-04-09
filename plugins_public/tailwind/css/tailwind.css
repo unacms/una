@@ -867,8 +867,8 @@
 
 
     /* Common elements: Popups */
-    .bx-artificer .bx-popup-wrapper {
-        @apply overflow-visible;
+    .bx-artificer > .bx-popup-wrapper {
+        @apply max-h-full overflow-x-hidden overflow-y-auto;
     }
 
     .bx-artificer .bx-popup-applied {
