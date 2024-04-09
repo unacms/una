@@ -24,6 +24,11 @@ class BxTimelineGridAdministration extends BxTimelineGridManageTools
         $this->_aStatusValues = array('active', 'hidden', 'pending');
     }
 
+    protected function _getCellStatus($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(_t('_bx_timeline_txt_status_' . $mixedValue), $sKey, $aField, $aRow);
+    }
+
     protected function _getCellOwnerId($mixedValue, $sKey, $aField, $aRow)
     {
         $iProfile = $this->_oModule->_oConfig->isSystem($aRow['type'], $aRow['action']) ? $aRow['owner_id'] : $aRow['object_id'];

@@ -348,7 +348,8 @@
     <string name="_bx_timeline_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_timeline_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_timeline_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
-    <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Видимые]]></string>
+    <string name="_bx_timeline_grid_column_title_adm_status"><![CDATA[Статус]]></string>
     <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Событие]]></string>
     <string name="_bx_timeline_grid_column_title_adm_added"><![CDATA[Добавлено]]></string>
     <string name="_bx_timeline_grid_column_title_adm_author"><![CDATA[Автор]]></string>
@@ -385,6 +386,10 @@
     <string name="_bx_timeline_txt_or_jump_to"><![CDATA[... или перейти к:]]></string>
     <string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Перейти к {0} году]]></string>
     <string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Перейти к недавним сообщениям]]></string>
+    <string name="_bx_timeline_txt_status_active"><![CDATA[Активно]]></string>
+    <string name="_bx_timeline_txt_status_awaiting"><![CDATA[В ожидании]]></string>
+    <string name="_bx_timeline_txt_status_failed"><![CDATA[Неисправно]]></string>
+    <string name="_bx_timeline_txt_status_hidden"><![CDATA[Скрыто]]></string>
     <string name="_bx_timeline_txt_status_deleted"><![CDATA[Удалено]]></string>
     <string name="_bx_timeline_txt_hot"><![CDATA['Горячее' событие]]></string>
     <string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>
