@@ -160,22 +160,27 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
     protected function redirectAfterEdit($aContentInfo, $sUrl = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
         $sUrl = '';
-        if (bx_get('initial_members') && isset($CNF['URL_ENTRY_FANS'])){
-            $sUrl = $CNF['URL_ENTRY_FANS'] . '&profile_id=' . $aContentInfo['profile_id'];
+        if(bx_get('initial_members')) {
+            if(isset($CNF['URL_ENTRY_MANAGE']))
+                $sUrl = $CNF['URL_ENTRY_MANAGE'];
+            else if(isset($CNF['URL_ENTRY_FANS']))
+                $sUrl = $CNF['URL_ENTRY_FANS'];
+
+            $sUrl = bx_append_url_params($sUrl, ['profile_id' => $aContentInfo['profile_id']]);
         }
-        else{
+        else
             $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
-        }
-        
-        if (bx_is_api())
+
+        if(bx_is_api())
             return bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000]);
-        
+
         bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, array(
             'content' => $aContentInfo,
             'override_result' => &$sUrl,
         ));
-        
+
         $this->_redirectAndExit($sUrl);
     }
     
