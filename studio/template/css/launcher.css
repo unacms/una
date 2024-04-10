@@ -10,6 +10,10 @@ body.bx-std-bg.bx-std-page-launcher {
     background-color: transparent;
 }
 
+.bx-std-page-launcher div.bx-std-page-column.bx-std-page-menu {
+    border-width: 0;
+}
+
 /**
  * Page Menu (Left Side)
  */

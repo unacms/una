@@ -85,13 +85,23 @@ div.bx-dev-page-columns-cnt {
     width: 100%;
 }
 
+div.bx-dev-page-columns-cnt {
+    height: calc(100vh - 4rem);
+}
+
 div.bx-dev-page-column.bx-dev-page-menu {
     position: relative;
     -webkit-flex: 0 0 230px;
     flex: 0 0 230px;
     width: 230px;
     background-color: #ffffff;
+    
+    overflow-y: auto;
 }
+div.bx-dev-page-column.bx-dev-page-menu::-webkit-scrollbar {
+  display: none;
+}
+
 div.bx-dev-page-column.bx-dev-page-menu div.bx-dev-page-column-cnt {
     position: -webkit-sticky;
     position: sticky;
@@ -102,5 +112,11 @@ div.bx-dev-page-column.bx-dev-page-content {
     position: relative;
     -webkit-flex: 2 1 auto;
     flex: 2 1 auto;
+
+    height: 100%;
+
     background: #e5e5e5;
+
+    overflow-x: hidden;
+    overflow-y: auto;
 }
