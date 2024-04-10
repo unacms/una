@@ -21,13 +21,16 @@ class BxBaseStudioRolesActions extends BxDolStudioRolesActions
 
     public function performActionEnable($mixedChecked = null)
     {
+        if($this->iRole == BX_DOL_STUDIO_ROLE_MASTER)
+            return echoJson([]);
+
         $aIds = bx_get('ids');
         $bEnable = (int)bx_get('checked');
 
         if(!$aIds || !is_array($aIds))
-            return echoJson(array());
+            return echoJson([]);
 
-        $aResultIds = array();
+        $aResultIds = [];
         foreach($aIds as $mixedId) {
             if(strpos($mixedId, $this->sParamsDivider) !== false)
                 list($this->iRole, $iId) = explode($this->sParamsDivider, urldecode($mixedId));
@@ -37,9 +40,9 @@ class BxBaseStudioRolesActions extends BxDolStudioRolesActions
         }
 
         $sAction = $bEnable ? 'enable' : 'disable';
-        return echoJson(array(
+        return echoJson([
             $sAction => $aResultIds,
-        ));
+        ]);
     }
 
     function getJsObject()
@@ -69,7 +72,7 @@ class BxBaseStudioRolesActions extends BxDolStudioRolesActions
 
     protected function _getCellSwitcher($mixedValue, $sKey, $aField, $aRow)
     {
-        if($this->iRole == 0)
+        if(in_array($this->iRole, [0, BX_DOL_STUDIO_ROLE_MASTER]))
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
         $aRow[$this->_aOptions['field_id']] = urlencode($this->iRole . $this->sParamsDivider . $aRow[$this->_aOptions['field_id']]);
