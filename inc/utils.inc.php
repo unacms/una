@@ -274,12 +274,33 @@ function bx_process_macros ($s)
     if (!bx_is_macros_in_content($s))
         return $s;
 
-    return preg_replace_callback(
+    $aCode = [];
+    $c1 = 1;
+
+    $s = preg_replace_callback(
+        "/<pre>(.*?)<\/pre>/s", 
+        function ($aMatches) use (&$c1, &$aCode) {
+            $aCode[$c1] = $aMatches[1];
+            return '<pre>___' . $c1++ . '___</pre>'; 
+        }, 
+        $s);
+
+    $s = preg_replace_callback(
         "/{{\~(.*?)\~}}/", 
         function ($aMatches) {
             return BxDolService::callMacro($aMatches[1]); 
         }, 
         $s);
+
+    $s = preg_replace_callback(
+        "/<pre>___(.*?)___<\/pre>/s", 
+        function ($aMatches) use (&$aCode) {
+            $sCode = isset($aCode[$aMatches[1]]) ? $aCode[$aMatches[1]] : 'n/a';
+            return '<pre>' . $sCode . '</pre>'; 
+        }, 
+        $s);
+
+    return $s;
 }
 
 /*
