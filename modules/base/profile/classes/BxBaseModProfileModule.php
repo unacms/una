@@ -1770,7 +1770,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedFriendAdd (&$aDataEntry, $isPerformAction = false)
     {
-        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, false);
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, ['sys_profiles_friends', 'checkAllowedAddConnection'], false, false);
     }
 
     /**
@@ -2163,7 +2163,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
 
     // ====== PROTECTED METHODS
-    protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
+    protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $mixedConnection, $isMutual, $isInvertResult, $isSwap = false)
     {
         if (!$this->_iProfileId)
             return _t('_sys_txt_access_denied');
@@ -2174,7 +2174,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if (!$oProfile || $oProfile->id() == $this->_iProfileId)
             return _t('_sys_txt_access_denied');
 
-        return BxDolConnection::getObjectInstance($sObjConnection)->checkAllowedConnect ($this->_iProfileId, $oProfile->id(), $isPerformAction, $isMutual, $isInvertResult, $isSwap);
+        $sConnObject = '';
+        $sConnMethod = 'checkAllowedConnect';
+        if(is_array($mixedConnection))
+            list($sConnObject, $sConnMethod) = $mixedConnection;
+        else
+            $sConnObject = $mixedConnection;
+
+        return BxDolConnection::getObjectInstance($sConnObject)->$sConnMethod($this->_iProfileId, $oProfile->id(), $isPerformAction, $isMutual, $isInvertResult, $isSwap);
     }
 
     protected function _buildRssParams($sMode, $aArgs)
