@@ -5378,8 +5378,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $mixedResult = $oProfileOwner->checkAllowedProfileView();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED) {
-            $this->_oTemplate->displayAccessDenied($mixedResult);
-            exit;
+            if(!$this->_bIsApi) {
+                $this->_oTemplate->displayAccessDenied($mixedResult);
+                exit;
+            }
+            else
+                return [bx_api_get_msg($mixedResult)];
         }
 
         $sUserName = $this->getObjectUser($aParams['owner_id'])->getDisplayName();
@@ -5403,7 +5407,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if (!$sContent)
             $sContent = $this->_oTemplate->getViewBlock($aParams);
         
-        if(bx_is_api())
+        if($this->_bIsApi)
             return [bx_api_get_block('browse', [
                 'unit' => 'feed',  
                 'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',
