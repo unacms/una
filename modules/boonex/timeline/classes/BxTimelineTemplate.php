@@ -3262,6 +3262,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _prepareTextForOutputBriefCard($s, $iEventId = 0)
     {
+        $s = str_replace(['</p>', '<br>', '<br />'], [' </p>', ' <br>', ' <br />'], $s);
         $s = strip_tags($s, $this->_oConfig->getBriefCardsTags(true));
         
         return $this->_prepareTextForOutput($s, $iEventId);

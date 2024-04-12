@@ -1973,6 +1973,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             case 'socket_engine':
                 $sRet = BxDolSockets::getInstance()->getJsCode();
                 break;
+
+            case 'info':
+                $sRet = 'L:' . bx_get_logged_profile_id();
+                if(($oPage = BxDolPage::getObjectInstanceByURI()) !== false && method_exists($oPage, 'getContentInfo')) {
+                    $aContentInfo = $oPage->getContentInfo();
+                    if(isset($aContentInfo['id']))
+                        $sRet .= '-C:' . (int)$aContentInfo['id'];
+                    if(isset($aContentInfo['profile_id']))
+                        $sRet .= '-P:' . (int)$aContentInfo['profile_id'];
+                }
+                break;
+
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
         }
