@@ -275,29 +275,29 @@ function bx_process_macros ($s)
         return $s;
 
     $aCode = [];
-    $c1 = 1;
+    $c = 1;
 
     $s = preg_replace_callback(
-        "/<pre>(.*?)<\/pre>/s", 
-        function ($aMatches) use (&$c1, &$aCode) {
-            $aCode[$c1] = $aMatches[1];
-            return '<pre>___' . $c1++ . '___</pre>'; 
-        }, 
+        "/(<code>)(.*?)(<\/code>)/s",
+        function ($aMatches) use (&$c, &$aCode) {
+            $aCode[$c] = $aMatches[2];
+            return $aMatches[1] . '___' . $c++ . '___' . $aMatches[3];
+        },
         $s);
 
     $s = preg_replace_callback(
-        "/{{\~(.*?)\~}}/", 
+        "/{{\~(.*?)\~}}/",
         function ($aMatches) {
-            return BxDolService::callMacro($aMatches[1]); 
-        }, 
+            return BxDolService::callMacro($aMatches[1]);
+        },
         $s);
 
     $s = preg_replace_callback(
-        "/<pre>___(.*?)___<\/pre>/s", 
+        "/(<code>)___(.*?)___(<\/code>)/s",
         function ($aMatches) use (&$aCode) {
-            $sCode = isset($aCode[$aMatches[1]]) ? $aCode[$aMatches[1]] : 'n/a';
-            return '<pre>' . $sCode . '</pre>'; 
-        }, 
+            $sCode = isset($aCode[$aMatches[2]]) ? $aCode[$aMatches[2]] : 'n/a';
+            return $aMatches[1] . $sCode . $aMatches[3];
+        },
         $s);
 
     return $s;
