@@ -396,7 +396,7 @@ VALUES (@iTypeId, 'bx_timeline_feed_for_you', '_bx_timeline_options_category_fee
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
-('bx_timeline_for_you_sources', 'feed,hot,recom_friends,recom_subscriptions', @iCategId, '_bx_timeline_option_for_you_sources', 'list', 'Avail', '', '_bx_timeline_option_for_you_sources_err', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:29:"get_for_you_sources_checklist";}', 1),
+('bx_timeline_for_you_sources', 'feed,channels,hot,recom_friends,recom_subscriptions', @iCategId, '_bx_timeline_option_for_you_sources', 'list', 'Avail', '', '_bx_timeline_option_for_you_sources_err', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:29:"get_for_you_sources_checklist";}', 1),
 ('bx_timeline_for_you_threshold_recom_friends', '1', @iCategId, '_bx_timeline_option_for_you_threshold_recom_friends', 'digit', '', '', '', '', 10),
 ('bx_timeline_for_you_threshold_recom_subscriptions', '1', @iCategId, '_bx_timeline_option_for_you_threshold_recom_subscriptions', 'digit', '', '', '', '', 11);
 

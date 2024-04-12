@@ -80,6 +80,7 @@
     <string name="_bx_timeline_option_for_you_sources"><![CDATA['For You' feed consists of]]></string>
     <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[At least one source should be enabled for the feed.]]></string>
     <string name="_bx_timeline_option_for_you_sources_feed"><![CDATA[Feed]]></string>
+    <string name="_bx_timeline_option_for_you_sources_channels"><![CDATA[Channels]]></string>
     <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA[Hot feed]]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_friends"><![CDATA[Suggested friends feeds]]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_subscriptions"><![CDATA[Who to follow feeds]]></string>

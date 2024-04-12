@@ -78,6 +78,7 @@ define('BX_TIMELINE_HFS_VOTE', 'vote');
 
 //--- For You Feed sources
 define('BX_TIMELINE_FYFS_FEED', 'feed');
+define('BX_TIMELINE_FYFS_CHANNELS', 'channels');
 define('BX_TIMELINE_FYFS_HOT', 'hot');
 define('BX_TIMELINE_FYFS_RECOM_FRIENDS', 'recom_friends');
 define('BX_TIMELINE_FYFS_RECOM_SUBSCRIPTIONS', 'recom_subscriptions');
@@ -3912,7 +3913,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         if($oForm->isSubmittedAndValid()) {
-            $aContent = [];
+            $aContent = unserialize($aEvent['content']);
 
             //--- Process Text ---//
             $sText = $oForm->getCleanValue('text');

@@ -80,6 +80,7 @@
     <string name="_bx_timeline_option_for_you_sources"><![CDATA[Лента 'Для Вас' состоит из]]></string>
     <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[Для фида должен быть включен хотя бы один источник.]]></string>
     <string name="_bx_timeline_option_for_you_sources_feed"><![CDATA[Лента контекст (профиль) + подписки]]></string>
+    <string name="_bx_timeline_option_for_you_sources_channels"><![CDATA[Каналы]]></string>
     <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA['Горячая' хроника]]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_friends"><![CDATA[Ленты пользователей из списка 'Предложения друзей']]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_subscriptions"><![CDATA[Ленты пользователей из списка 'На кого подписываться']]></string>
