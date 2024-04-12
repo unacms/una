@@ -469,6 +469,9 @@ class BxBasePage extends BxDolPage
             $_GET = array_merge($_GET, $a);
         }
 
+        $bIsAvailable = $this->_isAvailablePage($this->_aObject);
+        $bIsVisible = $this->_isVisiblePage($this->_aObject);
+
         $sMetaTitle = $this->_getPageMetaTitle();
         $sName = $this->_getPageTitle();
         $a = [
@@ -590,9 +593,9 @@ class BxBasePage extends BxDolPage
             'data' => &$a,
         ];
 
-        if(!$this->_isAvailablePage($this->_aObject))
+        if(!$bIsAvailable)
             $a['page_status'] = 404;
-        else if(!$this->_isVisiblePage($this->_aObject))
+        else if(!$bIsVisible)
             $a['page_status'] = 403;
 
         bx_alert('system', 'get_page_api', 0, 0, $aExtras);

@@ -246,14 +246,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 		return '';	
     }
 	
-	public function servicePrivateProfileMsg()
+    public function servicePrivateProfileMsg()
     {
+        $sMessage = '';
+
         $mixedContent = $this->_getContent();
-        if ($mixedContent) {
+        if($mixedContent) {
             list($iContentId, $aContentInfo) = $mixedContent;
-            return $this->checkAllowedView($aContentInfo);
+            $sMessage = $this->checkAllowedView($aContentInfo);
         }
-        return MsgBox(_t('_sys_access_denied_to_private_content'));
+        else
+            $sMessage = MsgBox(_t('_sys_access_denied_to_private_content'));
+
+        return !$this->_bIsApi ? $sMessage : [bx_api_get_msg($sMessage, ['ext' => ['msg_type' => 'result']])];
     }
     
     public function serviceGetContentInfoById($iContentId)

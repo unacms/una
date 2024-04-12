@@ -5383,7 +5383,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 exit;
             }
             else
-                return [bx_api_get_msg($mixedResult)];
+                return [bx_api_get_msg($mixedResult, ['ext' => ['msg_type' => 'result']])];
         }
 
         $sUserName = $this->getObjectUser($aParams['owner_id'])->getDisplayName();

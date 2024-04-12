@@ -151,7 +151,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             /*
              * If visible by privacy, replace current page with different set of blocks.
              */
-            if(!in_array($this->_aContentInfo['allow_view_to'], [BX_DOL_PG_HIDDEN, BX_DOL_PG_MEONLY]) && $this->_sObject == $CNF['OBJECT_PAGE_VIEW_ENTRY']) {
+            if(!in_array($this->_aContentInfo['allow_view_to'], [BX_DOL_PG_HIDDEN, BX_DOL_PG_MEONLY])) {
                 $aObject = BxDolPageQuery::getPageObject($CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED']);
                 $this->_sObject = $aObject['object'];
                 $this->_aObject = $aObject;
