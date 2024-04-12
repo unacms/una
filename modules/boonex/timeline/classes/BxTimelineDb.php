@@ -637,6 +637,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'params' => &$aParams,
         ]);
 
+        $bValidate = !empty($aParams['validate']) && is_array($aParams['validate']);
+
         $sTable = isset($aParams['from_cache']) && $aParams['from_cache'] === true ? $this->_sTableSlice : $this->_sTable;
         $sTableAlias = $this->getTableAlias();
 
@@ -708,9 +710,17 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if($bCount)
             return array_sum($aSqlParts);
 
-        $sSql = bx_replace_markers('(' . implode(') UNION (', $aSqlParts) . ') {order} {limit}', [
-            'order' => str_replace("`{$sTableAlias}`.", '', $sOrderClause),
-            'limit' => str_replace("`{$sTableAlias}`.", '', $sLimitClause),
+        /*
+         * TODO: Should be updated when GROUP BY `source` will be used in sub selects.
+         */
+        $sSqlMaskUnion = '(' . implode(') UNION (', $aSqlParts) . ')';
+        if($bValidate)
+            $sSqlMaskUnion = 'SELECT * FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
+        $sSqlMaskUnion .= ' {order} {limit}';
+
+        $sSql = bx_replace_markers($sSqlMaskUnion, [
+            'order' => str_replace("`{$sTableAlias}`.", $bValidate ? '`tu`.' : '', $sOrderClause),
+            'limit' => str_replace("`{$sTableAlias}`.", $bValidate ? '`tu`.' : '', $sLimitClause),
         ]);
 
         //echoDbg($sSql); exit;
