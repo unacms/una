@@ -557,8 +557,12 @@ class BxBasePage extends BxDolPage
                     call_user_func_array([$oMenuManage, 'setObjectManage'], $aObjectManage);
 
                     $aMenuManage = $oMenuManage->getCodeAPI();
-                    if(!empty($aMenuManage) && is_array($aMenuManage))
-                        $a['menu']['items'] = array_merge($a['menu']['items'], $aMenuManage['items']);
+                    if(!empty($aMenuManage) && is_array($aMenuManage)) {
+                        if(!empty($a['menu']) && is_array($a['menu']))
+                            $a['menu']['items'] = array_merge($a['menu']['items'], $aMenuManage['items']);
+                        else
+                            $a['menu'] = $aMenuManage;
+                    }
                 }
             }
         }
