@@ -5322,9 +5322,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->_iOwnerId = $aParams['owner_id'];
 
         if(!empty($aParams['validate']) && is_array($aParams['validate'])) {
+            $iSlice = count($aParams['validate']);
+
             $aEvents = $this->_oDb->getEvents(array_merge($aParams, [
                 'start' => 0,
-                'per_page' => count($aParams['validate']),
+                'per_page' => 2 * $iSlice,
                 'from_cache' => $this->_oConfig->isCacheTable()
             ]));
 
@@ -5332,7 +5334,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 return $aEvent['id'];
             }, $aEvents);
 
-            $aResult = $aIds == $aParams['validate'] ? 'valid' : 'invalid';
+            $aResult = array_slice($aIds, 0, $iSlice) == $aParams['validate'] ? 'valid' : 'invalid';
         }
         else 
             $aResult = $this->_oTemplate->getViewBlock($aParams);

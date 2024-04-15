@@ -832,7 +832,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         if(!in_array($aEvents[$iIndex]['owner_id'], $aOwnerIds))
                             $aOwnerIds[] = $aEvents[$iIndex]['owner_id'];
 
-                    $iGroupIndex = (int)array_pop($aGroup['indexes']);
+                    $iGroupIndex = (int)array_shift($aGroup['indexes']);
                     if(is_null($iGroupIndex))
                         break;
 

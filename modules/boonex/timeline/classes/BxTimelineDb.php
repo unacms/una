@@ -715,7 +715,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
          */
         $sSqlMaskUnion = '(' . implode(') UNION (', $aSqlParts) . ')';
         if($bValidate)
-            $sSqlMaskUnion = 'SELECT * FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
+            $sSqlMaskUnion = 'SELECT MAX(`tu`.`id`) AS `id` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
         $sSqlMaskUnion .= ' {order} {limit}';
 
         $sSql = bx_replace_markers($sSqlMaskUnion, [
