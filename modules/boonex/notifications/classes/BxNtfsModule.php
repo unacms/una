@@ -106,6 +106,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             'GetUnreadNotificationsNum' => '',
             'GetUnreadNotificationsNumEx' => '',
             'MarkAsRead' => '',
+            'EnableSetting' => '',
             'ChangeSetting' => '',
         ];
     }
@@ -689,6 +690,26 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return $this->_oDb->markAsRead($iOwnerId, $aEvent['id']) !== false;
     }
 
+    public function serviceEnableSetting($mixedParams)
+    {
+        if(!is_array($mixedParams))
+            $mixedParams = json_decode($mixedParams, true);
+
+        if(!isset($mixedParams['id'], $mixedParams['value']))
+            return false;
+
+        $iId = (int)$mixedParams['id'];
+        $iValue = (int)$mixedParams['value'];
+        $bAdministration = isset($mixedParams['admin']) && $mixedParams['admin'];
+
+        if(!$this->_oConfig->isSettingsGrouped())
+            $mixedResult = $this->_oDb->updateSetting(['active' => $iValue], ['id' => $iId]);
+        else 
+            $mixedResult = $this->enableSettingsLike($iId, $iValue, $bAdministration);
+
+        return $mixedResult !== false;
+    }
+            
     public function serviceChangeSetting($mixedParams)
     {
         if(!is_array($mixedParams))

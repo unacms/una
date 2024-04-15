@@ -69,7 +69,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $oGrid->setUserId($iUserId);
 
         return !$this->_bIsApi ? $oGrid->getCode() : [
-            bx_api_get_block('notifications_settings', $oGrid->getCodeApi(true), ['ext' => ['request_url' => '/api.php?r=' . $this->_oConfig->getName() . '/change_setting/&params[]=']])
+            bx_api_get_block('notifications_settings', $oGrid->getCodeApi(true), ['ext' => ['request_url' => '/api.php?r=' . $this->_oConfig->getName() . '/enable_setting/&params[]=']])
         ];
     }
 
