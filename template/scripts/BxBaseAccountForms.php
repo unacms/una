@@ -246,16 +246,16 @@ class BxBaseAccountForms extends BxDolProfileForms
         $oAccount = BxDolAccount::getInstance($iAccountId);
         $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
         if (!$aAccountInfo)
-            return MsgBox(_t('_sys_txt_error_account_is_not_defined'));
+            return $sLKey = '_sys_txt_error_account_is_not_defined' && $bIsApi ? _t($sLKey) : MsgBox(_t($sLKey));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = BxDolAccount::isAllowedEdit ($this->_iProfileId, $aAccountInfo)))
-            return MsgBox($sMsg);
+            return $bIsApi ? $sMsg : MsgBox($sMsg);
 
         // check and display form
         $oForm = BxDolForm::getObjectInstance('sys_account', $sDisplayName);
         if (!$oForm)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return $sLKey = '_sys_txt_error_occured' && $bIsApi ? _t($sLKey) : MsgBox(_t($sLKey));
 
         if (!$oForm->isSubmitted())
             unset($aAccountInfo['password']);
@@ -272,7 +272,7 @@ class BxBaseAccountForms extends BxDolProfileForms
             if (!$oForm->isValid())
                 return $bIsApi ? $oForm->getCodeAPI() : $oForm->getCode();
             else
-                return MsgBox(_t('_sys_txt_error_account_update'));
+                return $sLKey = '_sys_txt_error_account_update' && $bIsApi ? _t($sLKey) : MsgBox(_t($sLKey));
         }
 
         // check if email was changed
@@ -284,7 +284,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         // check if password was changed
         if ($oForm->getCleanValue('password')) {
             // relogin with new password
-			bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('action' => 'change_password'));
+            bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('action' => 'change_password'));
             bx_logout();
             bx_login($aAccountInfo['id']);
         }
@@ -305,10 +305,9 @@ class BxBaseAccountForms extends BxDolProfileForms
         // display result message            
         $sMsg = MsgBox(_t('_' . $sDisplayName . '_successfully_submitted'));
         
-        if ($bIsApi){
+        if ($bIsApi)
             return ['form' => $oForm->getCodeAPI(), 'msg' => _t('_' . $sDisplayName . '_successfully_submitted')];
-        }
-        
+
         return $sMsg . $oForm->getCode();
     }     
 }
