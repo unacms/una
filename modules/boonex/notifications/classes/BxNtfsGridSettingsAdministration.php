@@ -98,7 +98,7 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         if(!$this->_bGrouped)
             $mixedResult = $this->_oModule->_oDb->updateSetting(array('value' => $iValue), array('id' => $iId));
         else 
-            $mixedResult = $this->_oModule->_changeSettingsValueLike($iId, 'value', $iValue, $this->_bAdministration);
+            $mixedResult = $this->_oModule->changeSettingsValueLike($iId, 'value', $iValue, $this->_bAdministration);
 
         $aResult = array();
         if($mixedResult === false)
@@ -203,6 +203,28 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
+    protected function _getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        if(!$this->_bIsApi)
+            return parent::_getData($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+        
+        $sSource = $this->_aOptions['source'];
+
+        $aData = [];
+        $aDeliveryTypes = $this->_oModule->_oConfig->getDeliveryTypes();
+        foreach($aDeliveryTypes as $sDeliveryType) {
+            $this->_sDeliveryType = $sDeliveryType;
+            $this->_aOptions['source'] = $sSource;
+
+            $aData[] = [
+                'delivery' => $sDeliveryType,
+                'items' => parent::_getData($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+            ];
+        }
+
+        return $aData;
+    }
+
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `ts`.`delivery`=?", $this->_sDeliveryType);
@@ -250,6 +272,39 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
                 $iDisabled += 1;
 
         return $iEnabled == 0 || $iDisabled == 0;
+    }
+    
+    public function decodeDataAPI($aData)
+    {
+        $sKeyId = $this->_aOptions['field_id'];
+        $sMethodDefault = '_getCellDefault';
+
+        $aDataR = [];
+        foreach($aData as $aDataItem) {
+            $aDataS = [];
+            foreach($aDataItem['items'] as $iKey => $aRow) {
+                if(!is_string($aRow)) {
+                    $aDataS[$iKey] = [$sKeyId => $aRow[$sKeyId]];
+
+                    foreach($this->_aOptions['fields'] as $sKey => $aField) {
+                        $sMethod = '_getCell' . $this->_genMethodName($sKey);
+                        if(!method_exists($this, $sMethod))
+                            $sMethod = $sMethodDefault;
+
+                        $aDataS[$iKey][$sKey] = $this->$sMethod(isset($aRow[$sKey]) ? $aRow[$sKey] : _t('_undefined'), $sKey, $aField, $aRow);
+                    }
+                }
+                else
+                    $aDataS[$iKey] = $aRow;
+            }
+
+            $aDataR[] = [
+                'delivery' => $aDataItem['delivery'],
+                'items' => $aDataS
+            ];
+        }
+
+        return $aDataR;
     }
 }
 

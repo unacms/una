@@ -27,6 +27,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
      */
     protected $_bSettingsGrouped;
     protected $_aSettingsTypes;
+    protected $_aDeliveryTypes;
 
     protected $_aModulesProfiles;
     protected $_aModulesContexts;
@@ -92,6 +93,12 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             BX_NTFS_STYPE_FOLLOW_CONTEXT,
             //BX_NTFS_STYPE_OTHER           //TODO: May be it can be removed, because there is no events(alerts) for this type.
         );
+
+        $this->_aDeliveryTypes = [
+            BX_NTFS_DTYPE_SITE,
+            BX_NTFS_DTYPE_EMAIL,
+            BX_NTFS_DTYPE_PUSH
+        ];
 
         $this->_aModulesProfiles = false;
         $this->_aModulesContexts = false;
@@ -192,6 +199,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     public function getSettingsTypes()
     {
         return $this->_aSettingsTypes;
+    }
+    
+    public function getDeliveryTypes()
+    {
+        return $this->_aDeliveryTypes;
     }
 
     public function getDeliveryTimeout()
