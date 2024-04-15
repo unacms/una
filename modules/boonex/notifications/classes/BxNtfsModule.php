@@ -720,12 +720,11 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $iId = (int)$mixedParams['id'];
         $iValue = (int)$mixedParams['value'];
-        $bAdministration = isset($mixedParams['admin']) && $mixedParams['admin'];
 
         if(!$this->_oConfig->isSettingsGrouped())
             $mixedResult = $this->_oDb->updateSetting(['value' => $iValue], ['id' => $iId]);
         else 
-            $mixedResult = $this->changeSettingsValueLike($iId, 'value', $iValue, $bAdministration);
+            $mixedResult = $this->changeSettingsValueLike($iId, 'value', $iValue, true);
 
         return $mixedResult !== false;
     }
