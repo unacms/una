@@ -1,10 +1,6 @@
 /**
  * Overwrite
  */
-body.bx-std-bg.bx-std-page-launcher {
-    background: #001529;
-}
-
 .bx-std-page-launcher div.bx-std-page-column.bx-std-page-menu,
 .bx-std-page-launcher div.bx-std-page-column.bx-std-page-content {
     background-color: transparent;

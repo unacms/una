@@ -377,7 +377,14 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_viewport_meta_tag', '_adm_stg_cpt_option_sys_viewport_meta_tag', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0', 'digit', '', '', '', '', 250),
 
-(@iCategoryId, 'sys_form_lpc_enable', '_adm_stg_cpt_option_sys_form_lpc_enable', 'on', 'checkbox', '', '', '', '', 260);
+(@iCategoryId, 'sys_form_lpc_enable', '_adm_stg_cpt_option_sys_form_lpc_enable', 'on', 'checkbox', '', '', '', '', 260),
+
+(@iCategoryId, 'sys_std_show_header_left', '_adm_stg_cpt_option_sys_std_show_header_left', '', 'checkbox', '', '', '', '', 270),
+(@iCategoryId, 'sys_std_show_header_center', '_adm_stg_cpt_option_sys_std_show_header_center', 'on', 'checkbox', '', '', '', '', 271),
+(@iCategoryId, 'sys_std_show_header_right', '_adm_stg_cpt_option_sys_std_show_header_right', 'on', 'checkbox', '', '', '', '', 272),
+(@iCategoryId, 'sys_std_show_header_right_search', '_adm_stg_cpt_option_sys_std_show_header_right_search', 'on', 'checkbox', '', '', '', '', 275),
+(@iCategoryId, 'sys_std_show_header_right_site', '_adm_stg_cpt_option_sys_std_show_header_right_site', '', 'checkbox', '', '', '', '', 276),
+(@iCategoryId, 'sys_std_show_launcher_left', '_adm_stg_cpt_option_sys_std_show_launcher_left', '', 'checkbox', '', '', '', '', 280);
 
 --
 -- CATEGORY (HIDDEN): System
@@ -4870,9 +4877,10 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- studio: account menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
 ('sys_studio_account_popup', 'system', 'account', '_sys_menu_item_title_system_sa_account', '_sys_menu_item_title_sa_account', '{member_url}', '', '', 'ami-account.svg', '', 2147483647, 1, 0, 0, 1),
-('sys_studio_account_popup', 'system', 'edit', '_sys_menu_item_title_system_sa_edit', '_sys_menu_item_title_sa_edit', 'javascript:void(0)', '{js_object}.clickEdit(this);', '', 'ami-edit.svg', '', 2147483647, 1, 0, 0, 2),
-('sys_studio_account_popup', 'system', 'language', '_sys_menu_item_title_system_sa_language', '_sys_menu_item_title_sa_language', 'javascript:void(0)', 'bx_menu_popup(''sys_switch_language_popup'', window);', '', 'ami-language.svg', '', 2147483647, 1, 0, 0, 3),
-('sys_studio_account_popup', 'system', 'logout', '_sys_menu_item_title_system_sa_logout', '_sys_menu_item_title_sa_logout', '{url_root}logout.php', '{js_object}.clickLogout(this);', '', 'ami-logout.svg', '', 2147483647, 1, 0, 0, 4);
+('sys_studio_account_popup', 'system', 'site', '_sys_menu_item_title_system_sa_site', '_sys_menu_item_title_sa_site', '{url_root}', '', '', 'ami-site.svg', '', 2147483647, 1, 0, 0, 2),
+('sys_studio_account_popup', 'system', 'edit', '_sys_menu_item_title_system_sa_edit', '_sys_menu_item_title_sa_edit', 'javascript:void(0)', '{js_object}.clickEdit(this);', '', 'ami-edit.svg', '', 2147483647, 1, 0, 0, 3),
+('sys_studio_account_popup', 'system', 'language', '_sys_menu_item_title_system_sa_language', '_sys_menu_item_title_sa_language', 'javascript:void(0)', 'bx_menu_popup(''sys_switch_language_popup'', window);', '', 'ami-language.svg', '', 2147483647, 1, 0, 0, 4),
+('sys_studio_account_popup', 'system', 'logout', '_sys_menu_item_title_system_sa_logout', '_sys_menu_item_title_sa_logout', '{url_root}logout.php', '{js_object}.clickLogout(this);', '', 'ami-logout.svg', '', 2147483647, 1, 0, 0, 5);
 -- --------------------------------------------------------
 
 

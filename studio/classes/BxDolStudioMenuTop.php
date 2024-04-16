@@ -22,6 +22,7 @@ class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
     public static $iHistoryLength = 5;
     public static $iToolbarLength = 10;
 
+    protected $sPageName;
     protected $aItems;
     protected $aVisible;
     protected $aSelected;
@@ -33,10 +34,12 @@ class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
 
         parent::__construct();
 
+        $this->sPageName = '';
+
         $this->aVisible = array(
-            BX_DOL_STUDIO_MT_LEFT => true,
-            BX_DOL_STUDIO_MT_CENTER => true,
-            BX_DOL_STUDIO_MT_RIGHT => true
+            BX_DOL_STUDIO_MT_LEFT => getParam('sys_std_show_header_left') == 'on',
+            BX_DOL_STUDIO_MT_CENTER => getParam('sys_std_show_header_center') == 'on',
+            BX_DOL_STUDIO_MT_RIGHT => getParam('sys_std_show_header_right') == 'on',
         );
 
         $this->aSelected = array(
@@ -54,7 +57,7 @@ class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
         $this->aItems[BX_DOL_STUDIO_MT_LEFT] = BxTemplStudioFunctions::getInstance()->getLogo();
 
         $this->aItems[BX_DOL_STUDIO_MT_CENTER] = array(
-            'template' => 'menu_floating_blocks.html',
+            'template' => 'menu_top_center.html',
             'menu_items' => array(
                 'launcher' => array(
                     'name' => 'launcher',
@@ -177,6 +180,11 @@ class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
 
         unset($aHistory[$mixedPage]);
         $oSession->setValue(self::$sHistorySessionKey, $aHistory);
+    }
+
+    public function setPageName($sName)
+    {
+        $this->sPageName = $sName;
     }
 
     public function setContent($sPosition, $mixedContent)

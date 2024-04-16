@@ -1779,6 +1779,21 @@
     <string name="_adm_stg_cpt_option_sys_sockets_secret"><![CDATA[App secret]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_disabled"><![CDATA[Disabled]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_soketi"><![CDATA[Soketi]]></string>
+    
+    <string name="_adm_stg_cpt_option_sys_std_show_header_left"><![CDATA[Studio: Show header left area]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_center"><![CDATA[Studio: Show header center area]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right"><![CDATA[Studio: Show header right area]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Studio: Show search in header]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Studio: Show 'site' link in header]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Studio: Show left area with menu in Launcher]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+
+    
+    
+    
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
@@ -1870,6 +1885,7 @@
 	<string name="_adm_strg_err_height"><![CDATA[Height is essential. Please, fill in this field.]]></string>
         <string name="_adm_tmi_cpt_account"><![CDATA[Account]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
+        <string name="_adm_tmi_cpt_search"><![CDATA[Search...]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Launcher]]></string>
         <string name="_adm_txt_active_api"><![CDATA[Available in App]]></string>
@@ -3250,6 +3266,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_set_title_studio_account_popup"><![CDATA[Account Popup (Studio)]]></string>
     <string name="_sys_menu_item_title_system_sa_account"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_sa_account"><![CDATA[{member_display_name}]]></string>
+    <string name="_sys_menu_item_title_system_sa_site"><![CDATA[Go To Site]]></string>
+    <string name="_sys_menu_item_title_sa_site"><![CDATA[Go To Site]]></string>
     <string name="_sys_menu_item_title_system_sa_edit"><![CDATA[Manage Apps]]></string>
     <string name="_sys_menu_item_title_sa_edit"><![CDATA[Manage Apps]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Language]]></string>

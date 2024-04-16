@@ -43,4 +43,17 @@ BxDolStudioMenuTop.prototype.clickFeatured = function(oItem) {
 BxDolStudioMenuTop.prototype.clickLogout = function(oItem) {
     $(oItem).parent().toggleClass('bx-menu-tab-active');
 };
+
+BxDolStudioMenuTop.prototype.searchWidget = function(oEvent) {
+    setTimeout(function () {
+        var sSearch = $(oEvent.target).val().toLowerCase(); 
+        if(!!sSearch.length) {
+            $('.bx-std-widgets > .bx-std-widget:not([data-name^="' + sSearch + '"])').hide();
+            $('.bx-std-widgets > .bx-std-widget[data-name^="' + sSearch + '"]:hidden').show();
+        }
+        else
+            $('.bx-std-widgets > .bx-std-widget:hidden').show();
+    }, 100);
+};
+
 /** @} */

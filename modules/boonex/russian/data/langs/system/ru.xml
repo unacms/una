@@ -1753,6 +1753,13 @@
     <string name="_adm_stg_cpt_option_sys_sockets_secret"><![CDATA[App secret]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_disabled"><![CDATA[Выключена]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_soketi"><![CDATA[Soketi]]></string>
+
+    <string name="_adm_stg_cpt_option_sys_std_show_header_left"><![CDATA[Студия: Показать левую область заголовка]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_center"><![CDATA[Студия: Показать центральную область заголовка]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right"><![CDATA[Студия: Показать правую область заголовка]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Студия: Показать поиск в заголовке]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Студия: Показывать ссылку 'сайт' в заголовке]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Студия: Показать левую область с меню в лаунчере]]></string>
     
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
     <string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
@@ -1844,6 +1851,7 @@
 	<string name="_adm_strg_err_height"><![CDATA[Нужно указать высоту. Пожалуйста, заполните это поле.]]></string>
         <string name="_adm_tmi_cpt_account"><![CDATA[Учетная запись]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
+        <string name="_adm_tmi_cpt_search"><![CDATA[Искать...]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Загрузчик]]></string>
         <string name="_adm_txt_active_api"><![CDATA[Доступно в приложении]]></string>
@@ -3204,6 +3212,8 @@
     <string name="_sys_menu_set_title_studio_account_popup"><![CDATA[Аккаунт - Всплывающее меню (Студия)]]></string>
     <string name="_sys_menu_item_title_system_sa_account"><![CDATA[Аккаунт]]></string>
     <string name="_sys_menu_item_title_sa_account"><![CDATA[{member_display_name}]]></string>
+    <string name="_sys_menu_item_title_system_sa_site"><![CDATA[Перейти на сайт]]></string>
+    <string name="_sys_menu_item_title_sa_site"><![CDATA[Перейти на сайт]]></string>
     <string name="_sys_menu_item_title_system_sa_edit"><![CDATA[Управление приложениями]]></string>
     <string name="_sys_menu_item_title_sa_edit"><![CDATA[Управление приложениями]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Язык]]></string>

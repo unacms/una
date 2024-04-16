@@ -135,6 +135,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         
         return $oTemplate->parseHtmlByName('widget.html', array(
             'id' => $mixedWidget['id'],
+            'name' => strtolower($sCaption),
             'url' => !empty($mixedWidget['url']) ? bx_replace_markers($mixedWidget['url'], $aMarkers) : 'javascript:void(0)',
             'bx_if:show_click_icon' => array(
                 'condition' => !empty($mixedWidget['click']),
