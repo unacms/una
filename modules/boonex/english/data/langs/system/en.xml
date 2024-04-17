@@ -632,6 +632,7 @@
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[UNA {0} is available!]]></string>
 	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA on]]></string>
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
+        <string name="_adm_dbd_txt_available"><![CDATA[Available:]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_updated"><![CDATA[Updated:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>

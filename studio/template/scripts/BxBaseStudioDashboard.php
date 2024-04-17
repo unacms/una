@@ -68,25 +68,12 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     {
         list($sVersionAvailable, $bUpgradeAvailable) = $this->getVersionUpgradeAvailable();
         if(!$sVersionAvailable && !$bUpgradeAvailable)
-            return '';
+            return [];
 
-        if($sVersionAvailable !== false)
-            $sVersionAvailable = _t('_adm_dbd_txt_version_n_available', $sVersionAvailable);
-
-            return BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions_upgrade.html', array(
-                'bx_if:show_version_available' => array(
-                'condition' => !empty($sVersionAvailable),
-                'content' => array(
-                    'version_available' => $sVersionAvailable
-                )
-            ),
-            'bx_if:show_upgrade_available' => array(
-                'condition' => $bUpgradeAvailable,
-                'content' => array(
-                    'js_object' => $this->getPageJsObject()
-                )
-            )
-        ));
+        return [
+            'version' => $sVersionAvailable, 
+            'upgrade' => (int)$bUpgradeAvailable
+        ];
     }
 
     public function serviceGetWidgetNotices() {
@@ -111,21 +98,21 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     	return $iResult;
     }
 
-	public function serviceGetBlockVersion()
+    public function serviceGetBlockVersion()
     {
     	$sJsObject = $this->getPageJsObject();
         $aSysInfo = BxDolModuleQuery::getInstance()->getModuleByName('system');
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions.html', array(
-        	'js_object' => $sJsObject,
+            'js_object' => $sJsObject,
             'domain' => getParam('site_title'),
             'version' => bx_get_ver(),
             'installed' => bx_time_js($aSysInfo['date']),
-			'bx_if:show_update_info' => array(
-        		'condition' => $aSysInfo['updated'] > 0,
-        		'content' => array(
-		        	'updated' => bx_time_js($aSysInfo['updated']),
-       			)
-       		),
+            'bx_if:show_update_info' => array(
+                'condition' => $aSysInfo['updated'] > 0,
+                'content' => array(
+                    'updated' => bx_time_js($aSysInfo['updated']),
+                )
+            ),
         ));
 
     	return array('content' => $sContent);

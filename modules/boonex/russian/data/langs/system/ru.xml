@@ -630,7 +630,9 @@
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Новая версия UNA {0}!]]></string>
 	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA на]]></string>
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
+        <string name="_adm_dbd_txt_available"><![CDATA[Доступна:]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Установлено:]]></string>
+        <string name="_adm_dbd_txt_updated"><![CDATA[Обновлено:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Версия:]]></string>
 	<string name="_adm_dbd_msg_upgrade_started"><![CDATA[Сайт будет обновлён через минуту. <br />После этого нужно <a href="{0}store.php?page=updates">проверить обновления для модулей</a>.]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[База данных]]></string>

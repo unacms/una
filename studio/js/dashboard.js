@@ -29,16 +29,19 @@ BxDolStudioDashboard.prototype.checkForUpgrade = function() {
 	$.get(
 		this.sActionsUrl,
 		{
-			dbd_action: 'check_for_upgrade',
-			_t: oDate.getTime()
+                    dbd_action: 'check_for_upgrade',
+                    _t: oDate.getTime()
 		},
 		function(oData) {
-			bx_loading(sDivId, false);
+                    bx_loading(sDivId, false);
 
-			if(!oData.data)
-			    return;
+                    if(!oData.data)
+                        return;
 
-			$('#' + sDivId + ' .bx-dbd-version-available').html(oData.data).show();
+                    $('#' + sDivId + ' .bx-dbd-version-available b').html(oData.data.version).parents('.bx-dbd-version-available:hidden').show();
+                    
+                    if(oData.data.upgrade != undefined && parseInt(oData.data.upgrade) == 1)
+                        $('#' + sDivId + ' .bx-dbd-block-actions').show()
 		},
 		'json'
 	);
