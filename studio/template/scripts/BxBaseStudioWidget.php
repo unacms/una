@@ -57,13 +57,6 @@ class BxBaseStudioWidget extends BxDolStudioWidget
 
         //--- Menu Right ---//
         $aItemsRight = [];
-        if($this->_bShowHeaderRightSite)
-            $aItemsRight['site'] = [
-                'name' => 'site',
-                'icon' => 'tmi-site.svg',
-                'link' => '{url_root}',
-                'title' => '_adm_tmi_cpt_site'
-            ];
 
         if($bHelp)
             $aItemsRight['help'] = array(
@@ -80,6 +73,14 @@ class BxBaseStudioWidget extends BxDolStudioWidget
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
                 'title' => '_adm_txt_show_actions'
             );
+
+        if($this->_bShowHeaderRightSite)
+            $aItemsRight['site'] = [
+                'name' => 'site',
+                'icon' => 'tmi-site.svg',
+                'link' => '{url_root}',
+                'title' => '_adm_tmi_cpt_site'
+            ];
 
         $aItemsRight['account'] = array(
             'name' => 'account',

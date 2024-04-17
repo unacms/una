@@ -369,24 +369,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfilesSearch ($sTerm, $iLimit)
     {
-		$aRet = array();
+        $aRet = array();
 
         $a = $this->_oDb->searchByTerm($sTerm, $iLimit);
         foreach ($a as $r) {
             $oProfile = BxDolProfile::getInstance($r['profile_id']);
 
-            if (bx_is_api()){
-                $aRet[] = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);
+            if (bx_is_api()) {
+                $aData = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);
+                $aRet[] = $aData['author_data'];
             }
             else{
-            $aRet[] = array (
-            	'label' => $this->serviceProfileName($r['content_id']), 
-                'value' => $r['profile_id'], 
-                'url' => $oProfile->getUrl(),
-            	'thumb' => $oProfile->getThumb(),
-                'unit' => $oProfile->getUnit(0, ['template' => ['name' => 'unit_wo_info', 'size' => 'icon']])
-            );
-        }
+                $aRet[] = array (
+                    'label' => $this->serviceProfileName($r['content_id']), 
+                    'value' => $r['profile_id'], 
+                    'url' => $oProfile->getUrl(),
+                    'thumb' => $oProfile->getThumb(),
+                    'unit' => $oProfile->getUnit(0, ['template' => ['name' => 'unit_wo_info', 'size' => 'icon']])
+                );
+            }
         }
 
         return $aRet;

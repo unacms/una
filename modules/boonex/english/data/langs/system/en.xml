@@ -1884,7 +1884,7 @@
 	<string name="_adm_strg_err_width"><![CDATA[Width is essential. Please, fill in this field.]]></string>
 	<string name="_adm_strg_txt_height"><![CDATA[Height]]></string>
 	<string name="_adm_strg_err_height"><![CDATA[Height is essential. Please, fill in this field.]]></string>
-        <string name="_adm_tmi_cpt_account"><![CDATA[Account]]></string>
+        <string name="_adm_tmi_cpt_account"><![CDATA[Menu]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
         <string name="_adm_tmi_cpt_search"><![CDATA[Search...]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>

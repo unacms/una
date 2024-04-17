@@ -73,18 +73,18 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         $aItemsRight = array(
             'template' => 'menu_top_toolbar.html',
             'menu_items' => array(
-                'site' => array(
-                    'name' => 'site',
-                    'icon' => 'tmi-site.svg',
-                    'link' => '{url_root}',
-                    'title' => '_adm_tmi_cpt_site'
-                ),
                 'tour' => array(
                     'name' => 'tour',
                     'icon' => 'tmi-help.svg',
                     'link' => 'javascript:void(0);',
                     'onclick' => 'glTour.start()',
                     'title' => '_adm_tmi_cpt_tour'
+                ),
+                'site' => array(
+                    'name' => 'site',
+                    'icon' => 'tmi-site.svg',
+                    'link' => '{url_root}',
+                    'title' => '_adm_tmi_cpt_site'
                 ),
                 'account' => array(
                     'name' => 'account',

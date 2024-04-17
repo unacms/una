@@ -1851,7 +1851,7 @@
 	<string name="_adm_strg_err_width"><![CDATA[Нужно указать ширину. Пожалуйста, заполните это поле.]]></string>
 	<string name="_adm_strg_txt_height"><![CDATA[Высота]]></string>
 	<string name="_adm_strg_err_height"><![CDATA[Нужно указать высоту. Пожалуйста, заполните это поле.]]></string>
-        <string name="_adm_tmi_cpt_account"><![CDATA[Учетная запись]]></string>
+        <string name="_adm_tmi_cpt_account"><![CDATA[Меню]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
         <string name="_adm_tmi_cpt_search"><![CDATA[Искать...]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>

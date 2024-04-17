@@ -1217,6 +1217,10 @@
         @apply text-gray-300 dark:text-gray-700;
     }
 
+    /* Studio */
+    .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
+        @apply ring ring-blue-600 ring-offset-2 ring-offset-black;
+    }
 
     /* Modules: Timeline */
     .bx-artificer .group\/item:hover .bx-tl-item-text .bx-tl-content.bx-tl-overflow .bx-tl-content-overflow {
