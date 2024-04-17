@@ -190,6 +190,7 @@ div.bx-std-menu-top .bx-menu-toolbar li {
     min-width: 3.0rem;
     
     border-radius: 1.5rem;
+    background-color: rgba(55, 65, 81, 1);
 
     line-height: 3.0rem;
     overflow: hidden;
@@ -202,9 +203,6 @@ div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search {
     align-items: center;
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
-
-    background-color: rgba(55, 65, 81, 1);
-    border-radius: 1.5rem;
 }
 div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search .bx-form-input-text {
     height: 3rem;
@@ -227,6 +225,9 @@ div.bx-std-menu-top .bx-menu-toolbar li a {
 
     width: 100%;
     height: 100%;
+    
+    border-radius: 1.5rem;
+    backgroud-color: rgba(55, 65, 81, 1);
 }
 
 div.bx-std-menu-top .bx-menu-toolbar li svg g {
