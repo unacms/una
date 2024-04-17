@@ -49,11 +49,19 @@ div.bx-std-content {
 
     width: 100%;
 }
-div.bx-std-content-wrp,
+div.bx-std-content-wrp {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 5rem);
+}
 div.bx-std-page-columns,
 div.bx-std-page-columns-cnt {
     position: relative;
     width: 100%;
+    height: 100%;
+}
+div.bx-std-page-columns-cnt {
+    background-color: rgba(255, 255, 255, 1.0);
 }
 
 /**

@@ -1,6 +1,14 @@
 /**
  * Overwrite
  */
+
+/**-- For Single Column mode --**/
+.bx-std-page-launcher .bx-std-content-wrp {
+    overflow-y: auto;
+}
+
+/**-- For Dual Columns mode --**/
+.bx-std-page-launcher div.bx-std-page-columns-cnt,
 .bx-std-page-launcher div.bx-std-page-column.bx-std-page-menu,
 .bx-std-page-launcher div.bx-std-page-column.bx-std-page-content {
     background-color: transparent;

@@ -22,8 +22,9 @@ div.bx-std-page-columns-cnt {
     display: flex;
     -webkit-align-items: stretch;
     align-items: stretch;
-
-    height: calc(100vh - 4rem);
+/*
+    height: calc(100vh - 5rem);
+    */
 }
 
 div.bx-std-page-column.bx-std-page-menu {

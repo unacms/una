@@ -7,7 +7,7 @@
     padding-bottom: 5.5rem;
 }
 #adm-settings-form-categorized .bx-form-advanced-wrapper {
-    height: calc(100vh - 9.5rem);
+    height: calc(100vh - 10.5rem);
     overflow-y: auto;
 }
 #adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper,
