@@ -1106,14 +1106,14 @@ BLAH;
 
         // if section is collapsed by default, add necessary code
         $sClassAddCollapsable = 'bx-form-collapsable';
-        if (isset($aInput['collapsed']) and $aInput['collapsed'])
+        if(isset($aInput['collapsed']) && $aInput['collapsed'])
             $sClassAddCollapsable .= ' bx-form-collapsed bx-form-section-hidden';
 
         // display section with caption
-        if (empty($aAttrs))
-            $aAttrs = array('class' => 'bx-form-collapsable ' . $sClassAddCollapsable);
+        if(empty($aAttrs))
+            $aAttrs = ['class' => $sClassAddCollapsable];
         else
-            $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
+            $aAttrs['class'] .= ' ' . $sClassAddCollapsable;
 
         $bViewMode = !empty($this->aParams['view_mode']);
 
@@ -2317,10 +2317,10 @@ BLAH;
         if(!$aAttrs || !is_array($aAttrs))
             $aAttrs = [];
 
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider") . " p-4 border rounded-lg");
+        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider") . " border rounded-2xl overflow-hidden");
 
         $this->_isSectionOpened = true;
-        return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content py-4" . ($sTitle ? ' px-4' : '') . "\">\n";
+        return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content py-4" . ($sTitle ? ' px-6' : '') . "\">\n";
     }
 
     function getCloseSection()

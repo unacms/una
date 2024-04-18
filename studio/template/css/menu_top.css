@@ -11,8 +11,6 @@ div.bx-std-menu-top-wrp {
 
     width: 100%;
     height: 5rem;
-
-    background: rgba(3, 7, 18, 0.8);
 }
 div.bx-std-menu-top-wrp .bx-std-menu-top.bx-std-menu-top-center:first-child {
     padding-left: 0.75rem;
@@ -190,7 +188,7 @@ div.bx-std-menu-top .bx-menu-toolbar li {
     min-width: 3.0rem;
     
     border-radius: 1.5rem;
-    background-color: rgba(55, 65, 81, 1);
+    background-color: rgba(17, 24, 39, 1);
 
     line-height: 3.0rem;
     overflow: hidden;
@@ -233,7 +231,9 @@ div.bx-std-menu-top .bx-menu-toolbar li a {
 div.bx-std-menu-top .bx-menu-toolbar li svg g {
     opacity: 0.7;
 }
-
+div.bx-std-menu-top .bx-menu-toolbar li:hover {
+    background-color: rgba(31, 41, 55, 1);
+}
 div.bx-std-menu-top .bx-menu-toolbar li:hover svg g {
     opacity: 0.85;
 }

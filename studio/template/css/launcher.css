@@ -2,8 +2,17 @@
  * Overwrite
  */
 
+div.bx-std-menu-top-wrp {
+    position: fixed;
+    top: 0;
+
+    z-index: 1000;
+}
+
 /**-- For Single Column mode --**/
-.bx-std-page-launcher .bx-std-content-wrp {
+.bx-std-page-launcher .bx-std-content-wrp.bx-std-one-col {
+    padding-top: 5rem;
+
     overflow-y: auto;
 }
 

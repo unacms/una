@@ -1,5 +1,5 @@
 .bx-std-bg {
-    background: rgba(3, 7, 18, 1);
+    background: rgba(0, 0, 0, 1);
 }
 
 /*--- 2 columns ---*/
@@ -46,6 +46,7 @@ div.bx-std-page-column.bx-std-page-menu div.bx-std-page-column-cnt {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+    padding-top: 5rem;
 }
     
 div.bx-std-page-column.bx-std-page-content {
@@ -63,4 +64,5 @@ div.bx-std-page-column.bx-std-page-content::-webkit-scrollbar {
 }
 div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     width: 100%;
+    padding-top: 5rem;
 }
