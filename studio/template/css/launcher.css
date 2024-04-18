@@ -10,11 +10,6 @@ div.bx-std-menu-top-wrp {
 }
 
 /**-- For Single Column mode --**/
-.bx-std-page-launcher .bx-std-content-wrp.bx-std-one-col {
-    padding-top: 5rem;
-
-    overflow-y: auto;
-}
 
 /**-- For Dual Columns mode --**/
 .bx-std-page-launcher div.bx-std-page-columns-cnt,
@@ -230,10 +225,10 @@ div.bx-std-widget-action i.sys-icon {
 .bx-std-widget-loading {
     display: none;
     position: absolute;
-    top: 6.75rem;
+    top: 7.5rem;
     left: 1.5rem;
     width: 6.0rem;
-    height: 0.75rem;
+    height: 2.0rem;
 
     background-image: url(../images/loading.gif);
     background-repeat: no-repeat;

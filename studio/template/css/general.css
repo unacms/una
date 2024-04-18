@@ -54,6 +54,11 @@ div.bx-std-content-wrp {
     width: 100%;
     height: 100vh;
 }
+div.bx-std-content-wrp.bx-std-one-col {
+    padding-top: 5rem;
+
+    overflow-y: auto;
+}
 div.bx-std-page-columns,
 div.bx-std-page-columns-cnt {
     position: relative;
