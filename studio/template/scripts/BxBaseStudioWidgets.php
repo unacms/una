@@ -73,18 +73,18 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         $aItemsRight = array(
             'template' => 'menu_top_toolbar.html',
             'menu_items' => array(
-                'site' => array(
-                    'name' => 'site',
-                    'icon' => 'tmi-site.svg',
-                    'link' => '{url_root}',
-                    'title' => '_adm_tmi_cpt_site'
-                ),
                 'tour' => array(
                     'name' => 'tour',
                     'icon' => 'tmi-help.svg',
                     'link' => 'javascript:void(0);',
                     'onclick' => 'glTour.start()',
                     'title' => '_adm_tmi_cpt_tour'
+                ),
+                'site' => array(
+                    'name' => 'site',
+                    'icon' => 'tmi-site.svg',
+                    'link' => '{url_root}',
+                    'title' => '_adm_tmi_cpt_site'
                 ),
                 'account' => array(
                     'name' => 'account',
@@ -96,10 +96,14 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
             )
         );
 
+        if(!$this->_bShowHeaderRightSite)
+            unset($aItemsRight['menu_items']['site']);
+
         if($this->_sType != BX_DOL_STUDIO_WTYPE_DEFAULT || getParam('site_tour_studio') != 'on')
             unset($aItemsRight['menu_items']['tour']);
 
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
+        $oTopMenu->setPageName($this->aPage['name']);
         $oTopMenu->setContent(BX_DOL_STUDIO_MT_RIGHT, $aItemsRight);
 
         return '';

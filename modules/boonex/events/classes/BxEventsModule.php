@@ -248,6 +248,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         }
         
         bx_alert($this->getName(), 'calendar_data', 0, false, array(
+            'params' => $aParams,
             'event' => $iContentId,
             'context_id' => $iContextId,
             'start' => $sStart,

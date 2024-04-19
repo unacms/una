@@ -93,6 +93,11 @@ class BxDolStudioLauncher extends BxTemplStudioWidgets implements iBxDolSingleto
 
         return $aResult;
     }
+
+    public function isLeftColumn()
+    {
+        return getParam('sys_std_show_launcher_left') == 'on';
+    }
 }
 
 /** @} */

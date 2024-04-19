@@ -49,40 +49,35 @@ class BxForumGrid extends BxTemplGrid
         parent::__construct ($aOptions, $oTemplate);
         
         $this->_sFilter1Name = 'filter1';
-        $this->_aFilter1Values = array(
+        $this->_aFilter1Values = [
             '' => _t('_bx_forum_grid_filter_resolved_all'),
             BX_FORUM_FILTER_STATUS_RESOLVED => _t('_bx_forum_grid_filter_resolved_resolved'),
             BX_FORUM_FILTER_STATUS_UNRESOLVED => _t('_bx_forum_grid_filter_resolved_unresolved'),
-        );
-        
-        $sFilter1 = bx_get($this->_sFilter1Name);
-        if(!empty($sFilter1)) {
+        ];
+
+        if(($sFilter1 = bx_get($this->_sFilter1Name))) {
             $this->_sFilter1Value = bx_process_input($sFilter1);
             $this->_aQueryAppend['filter1'] = $this->_sFilter1Value;
         }
-        
-        $this->_sFilter2Name = 'filter2';
-        $aBadges = BxDolBadges::getInstance()->getData(['type' => 'by_module', 'module' => $this->_oModule->_aModule['name']]);
-        
-        $this->_aFilter2Values = [];
-        
-        if (count($aBadges) > 0){
-            $this->_aFilter2Values[''] = _t('_bx_forum_grid_filter_badges_all');
-        }
-        
-        foreach($aBadges as $aBadge) {
-            $this->_aFilter2Values[$aBadge['id']] = $aBadge['text'];
-        }
-        
 
-        $sFilter2 = bx_get($this->_sFilter1Name);
-        if(!empty($sFilter2)) {
+        $this->_sFilter2Name = 'filter2';
+        $this->_aFilter2Values = [];
+
+        $aBadges = BxDolBadges::getInstance()->getData(['type' => 'by_module', 'module' => $this->_oModule->_aModule['name']]);
+        if(is_array($aBadges) && count($aBadges) > 0) {
+            $this->_aFilter2Values[''] = _t('_bx_forum_grid_filter_badges_all');
+
+            foreach($aBadges as $aBadge)
+                $this->_aFilter2Values[$aBadge['id']] = $aBadge['text'];
+        }
+
+        if(($sFilter2 = bx_get($this->_sFilter2Name))) {
             $this->_sFilter2Value = bx_process_input($sFilter2);
             $this->_aQueryAppend['filter2'] = $this->_sFilter2Value;
         }
         
         $this->_sFilter3Name = 'filter3';
-        $this->_aFilter3Values = array(
+        $this->_aFilter3Values = [
             BX_FORUM_FILTER_ORDER_RECENT => _t('_bx_forum_grid_filter_order_updated'),
             BX_FORUM_FILTER_ORDER_NEW => _t('_bx_forum_grid_filter_order_new'),
             BX_FORUM_FILTER_ORDER_TOP => _t('_bx_forum_grid_filter_order_top'),
@@ -90,14 +85,13 @@ class BxForumGrid extends BxTemplGrid
             BX_FORUM_FILTER_ORDER_FEATURED => _t('_bx_forum_grid_filter_order_featured'),
             BX_FORUM_FILTER_ORDER_FAVORITE => _t('_bx_forum_grid_filter_order_favorite'),
             BX_FORUM_FILTER_ORDER_PARTAKEN => _t('_bx_forum_grid_filter_order_partaken'),
-        );
+        ];
         
-        $sFilter3 = bx_get($this->_sFilter3Name);
-        if(!empty($sFilter3)) {
+        if(($sFilter3 = bx_get($this->_sFilter3Name))) {
             $this->_sFilter1Value = bx_process_input($sFilter3);
             $this->_aQueryAppend['filter3'] = $this->_sFilter1Value;
         }
-        
+
         $this->_sParamsDivider = '#-#';
 
         $this->_sDefaultSortingOrder = 'DESC';
@@ -252,11 +246,11 @@ class BxForumGrid extends BxTemplGrid
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $this->_sFilter3Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
+        $bAuthor = false;
         $iAuthorId = bx_get_logged_profile_id();
-    	if(!empty($this->_aBrowseParams['author'])) {
-            $oProfileAuthor = BxDolProfile::getInstance((int)$this->_aBrowseParams['author']);
-            if($oProfileAuthor)
-                $iAuthorId = $oProfileAuthor->id();
+    	if(!empty($this->_aBrowseParams['author']) && ($oProfileAuthor = BxDolProfile::getInstance((int)$this->_aBrowseParams['author'])) !== false) {
+            $bAuthor = true;
+            $iAuthorId = $oProfileAuthor->id();
     	}
 
         // featured
@@ -306,8 +300,7 @@ class BxForumGrid extends BxTemplGrid
                 $oProfile = BxDolProfile::getInstance();
             if(!$oProfile)
                 return '';
-            
-            $iProfileId = $oProfile->id();
+
             $iProfileAuthor = $oProfile->id();
             $oFavorite = $this->_oModule->getObjectFavorite();
             if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id())
@@ -338,7 +331,7 @@ class BxForumGrid extends BxTemplGrid
                         'opr' => $aCondition['operator']
                     );
             
-            $this->_aBrowseParams['author'] = $iProfileId; 
+            $this->_aBrowseParams['author'] = $iProfileAuthor; 
             $this->_aBrowseParams['join'] = $aJoinGroup;
             $this->_aBrowseParams['where'] = $aWhereGroup; 
         }
@@ -354,7 +347,7 @@ class BxForumGrid extends BxTemplGrid
 
         $sPrivacy = $CNF['OBJECT_PRIVACY_VIEW'];
         $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
-        $aCondition = $oPrivacy ? $oPrivacy->{'getContentPublic' . ($bIncludeContexts ? 'AndInContext' : '') . 'AsSQLPart'}($iAuthorId) : array();
+        $aCondition = $oPrivacy ? $oPrivacy->{'getContentPublic' . ($bIncludeContexts ? 'AndInContext' : '') . 'AsSQLPart'}($bAuthor ? $iAuthorId : 0) : [];
         if(isset($aCondition['join']))
             $sJoinClause .= $aCondition['join'];
         if(isset($aCondition['where']))

@@ -468,9 +468,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'name' => 'page',
                     'value' => $this->sPage
                 ),
-				'disabled' => array(
+                'disabled' => array(
                     'type' => 'checkbox',
-                    'name' => 'enabled',
+                    'name' => 'disabled',
                     'caption' => _t('_adm_dsg_txt_cover_disabled'),
                     'value' => 'on',
                     'checked' => getParam('sys_site_cover_disabled') == 'on',

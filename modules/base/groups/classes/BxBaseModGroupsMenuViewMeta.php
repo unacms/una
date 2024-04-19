@@ -33,7 +33,7 @@ class BxBaseModGroupsMenuViewMeta extends BxBaseModProfileMenuViewMeta
         $iContentProfileId = $this->_oContentProfile->id();
 
         if($this->_bIsApi) {
-            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, true, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
 
             $sUrl = $this->_oContentProfile->getUrl();
             if(!empty($CNF['URI_VIEW_MEMBERS']))
@@ -42,7 +42,7 @@ class BxBaseModGroupsMenuViewMeta extends BxBaseModProfileMenuViewMeta
             return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
                 'title' => $aCounter['countf'],
                 'link' => bx_api_get_relative_url($sUrl),
-                'list' => $oConnection->getConnectedListAPI($iContentProfileId, false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS)
+                'list' => $oConnection->getConnectedListAPI($iContentProfileId, true, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS)
             ]);
         }
 

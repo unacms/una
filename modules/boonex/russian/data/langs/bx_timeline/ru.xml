@@ -80,6 +80,7 @@
     <string name="_bx_timeline_option_for_you_sources"><![CDATA[Лента 'Для Вас' состоит из]]></string>
     <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[Для фида должен быть включен хотя бы один источник.]]></string>
     <string name="_bx_timeline_option_for_you_sources_feed"><![CDATA[Лента контекст (профиль) + подписки]]></string>
+    <string name="_bx_timeline_option_for_you_sources_channels"><![CDATA[Каналы]]></string>
     <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA['Горячая' хроника]]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_friends"><![CDATA[Ленты пользователей из списка 'Предложения друзей']]></string>
     <string name="_bx_timeline_option_for_you_sources_recom_subscriptions"><![CDATA[Ленты пользователей из списка 'На кого подписываться']]></string>
@@ -348,7 +349,8 @@
     <string name="_bx_timeline_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_timeline_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_timeline_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
-    <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Видимые]]></string>
+    <string name="_bx_timeline_grid_column_title_adm_status"><![CDATA[Статус]]></string>
     <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Событие]]></string>
     <string name="_bx_timeline_grid_column_title_adm_added"><![CDATA[Добавлено]]></string>
     <string name="_bx_timeline_grid_column_title_adm_author"><![CDATA[Автор]]></string>
@@ -385,6 +387,10 @@
     <string name="_bx_timeline_txt_or_jump_to"><![CDATA[... или перейти к:]]></string>
     <string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Перейти к {0} году]]></string>
     <string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Перейти к недавним сообщениям]]></string>
+    <string name="_bx_timeline_txt_status_active"><![CDATA[Активно]]></string>
+    <string name="_bx_timeline_txt_status_awaiting"><![CDATA[В ожидании]]></string>
+    <string name="_bx_timeline_txt_status_failed"><![CDATA[Неисправно]]></string>
+    <string name="_bx_timeline_txt_status_hidden"><![CDATA[Скрыто]]></string>
     <string name="_bx_timeline_txt_status_deleted"><![CDATA[Удалено]]></string>
     <string name="_bx_timeline_txt_hot"><![CDATA['Горячее' событие]]></string>
     <string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>

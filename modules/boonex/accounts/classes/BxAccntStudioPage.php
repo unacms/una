@@ -25,6 +25,15 @@ class BxAccntStudioPage extends BxTemplStudioModule
         parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->aMenuItems = [BX_DOL_STUDIO_MOD_TYPE_MANAGE => array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_accnt_menu_item_title_manage')] + $this->aMenuItems;
+
+        $aIcons = [
+            BX_DOL_STUDIO_MOD_TYPE_MANAGE => 'std-mi-manage.svg',
+            BX_DOL_STUDIO_MOD_TYPE_SETTINGS => 'std-mi-settings.svg'
+        ];
+
+        foreach($aIcons as $sName => $sIcon)
+            if(($sIconUrl = $this->_oModule->_oTemplate->getIconUrl($sIcon)) !== '')
+                $this->aMenuItems[$sName]['icon'] = $sIconUrl;
     }
 
     protected function getManage()

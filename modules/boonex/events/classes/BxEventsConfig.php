@@ -92,6 +92,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
 
             'URL_HOME' => 'page.php?i=events-home',
             'URL_ENTRY_FANS' => 'page.php?i=event-fans',
+            'URL_ENTRY_MANAGE' => 'page.php?i=event-manage',
             'URL_MANAGE_COMMON' => 'page.php?i=events-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=events-administration',
 

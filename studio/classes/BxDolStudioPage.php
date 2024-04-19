@@ -32,6 +32,9 @@ class BxDolStudioPage extends BxDol
     protected $aMarkers;
 
     protected $sError;
+    
+    protected $_bShowHeaderRightSearch;
+    protected $_bShowHeaderRightSite;
 
     function __construct($mixedPageName)
     {
@@ -55,6 +58,9 @@ class BxDolStudioPage extends BxDol
         );
 
         $this->sError = false;
+
+        $this->_bShowHeaderRightSearch = getParam('sys_std_show_header_right_search') == 'on';
+        $this->_bShowHeaderRightSite = getParam('sys_std_show_header_right_site') == 'on';
 
         if(is_string($mixedPageName)) {
             $this->aPage = $this->oDb->getPages(array('type' => 'by_page_name_full', 'value' => $mixedPageName));

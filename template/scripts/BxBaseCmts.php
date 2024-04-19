@@ -1547,17 +1547,20 @@ class BxBaseCmts extends BxDolCmts
                 $iWidth = $iHeight = 0;
 
                 if($bImage) {
-                    if($oTranscoder)
+                    if(!$this->_bIsApi && $oTranscoder)
                         $sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
 
-                    $aImageInfo = BxDolImageResize::getInstance()->getImageSize($sFile);
-                    if(isset($aImageInfo['w']))
-                        $iWidth = (int)$aImageInfo['w'];
-                    if(isset($aImageInfo['h']))
-                        $iHeight = (int)$aImageInfo['h'];
+                    if(empty($aFile['dimensions'])) {
+                        $aFileInfo = $oStorage->getFile($aFile['image_id']);
+                        if(!empty($aFileInfo['dimensions']))
+                            $aFile['dimensions'] = $aFileInfo['dimensions'];
+                    }
+
+                    if(!empty($aFile['dimensions']))
+                        list($iWidth, $iHeight) = explode('x', $aFile['dimensions']);
                 }
 
-                if(!$sPreview)
+                if(!$this->_bIsApi && !$sPreview)
                     $sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
 
                 $aTmplVarsFile = array(
@@ -1572,7 +1575,7 @@ class BxBaseCmts extends BxDolCmts
                     'h' => $iHeight
                 );
 
-                if (bx_is_api()){
+                if($this->_bIsApi){
                     $aTmplImages[] = array(
                         'is_image' => $bImage,
                         'file' => $aTmplVarsFile['file'],

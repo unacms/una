@@ -769,6 +769,17 @@
         @apply text-red-400;
     }
 
+    .bx-form-section.bx-form-section-header {
+        @apply border border-gray-200 dark:border-gray-900 rounded-2xl;
+        @apply overflow-hidden;
+    }
+    .bx-form-section.bx-form-section-header .bx-form-section-title:hover {
+        @apply bg-gray-100 dark:bg-gray-900;
+    }
+    .bx-form-section.bx-form-section-header:not(.bx-form-collapsed) .bx-form-section-title {
+        @apply bg-gray-100 dark:bg-gray-900;
+    }
+
     /* Common elements: Forms: Text Input */
     .bx-artificer .bx-form-input-slider,
     .bx-artificer .bx-form-input-doublerange,
@@ -799,7 +810,7 @@
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded-md;
     }
-
+    
     /* Common elements: Forms: Checkbox/Radio Set Input */
     .bx-artificer .bx-form-input-wrapper-checkbox_set,
     .bx-artificer .bx-form-input-wrapper-radio_set {
@@ -812,28 +823,34 @@
     }
 
     /* Common elements: Forms: Checkbox Input */
-    .bx-artificer .bx-form-input-checkbox,
-    .bx-artificer .bx-form-input-radio {
+    .bx-form-input-wrapper-checkbox,
+    .bx-form-input-wrapper-radio {
+        @apply block w-4 h-4;
+        @apply border-2 border-transparent;
+    }
+
+    .bx-form-input-checkbox,
+    .bx-form-input-radio {
         @apply block w-4 h-4;
         @apply bg-gray-50 dark:bg-gray-900/50 bg-origin-border;
-        @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70;
+        @apply border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70;
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
-        @apply rounded;
+        @apply scale-150 rounded;
         @apply appearance-none select-none;
     }
-    .bx-artificer .bx-def-font-inputs.bx-form-input-checkbox,
-    .bx-artificer .bx-def-font-inputs.bx-form-input-radio {
+    .bx-def-font-inputs.bx-form-input-checkbox,
+    .bx-def-font-inputs.bx-form-input-radio {
         @apply leading-6 text-base font-medium text-blue-600 dark:text-blue-600;
     }
-    .bx-artificer .bx-form-input-checkbox:checked,
-    .bx-artificer .bx-form-input-radio:checked {
+    .bx-form-input-checkbox:checked,
+    .bx-form-input-radio:checked {
         background-color: currentColor;
         border-color: transparent;
     }
-    .bx-artificer .bx-form-input-checkbox:checked {
+    .bx-form-input-checkbox:checked {
         background-image:url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTYgMTYnIGZpbGw9JyNmZmYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTEyLjIwNyA0Ljc5M2ExIDEgMCAwIDEgMCAxLjQxNGwtNSA1YTEgMSAwIDAgMS0xLjQxNCAwbC0yLTJhMSAxIDAgMCAxIDEuNDE0LTEuNDE0TDYuNSA5LjA4Nmw0LjI5My00LjI5M2ExIDEgMCAwIDEgMS40MTQgMHonLz48L3N2Zz4=)
     }
-    .bx-artificer .bx-form-input-radio:checked {
+    .bx-form-input-radio:checked {
         background-image:url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTYgMTYnIGZpbGw9JyNmZmYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PGNpcmNsZSBjeD0nOCcgY3k9JzgnIHI9JzMnLz48L3N2Zz4=)
     }
 
@@ -867,8 +884,8 @@
 
 
     /* Common elements: Popups */
-    .bx-artificer .bx-popup-wrapper {
-        @apply overflow-visible;
+    .bx-artificer > .bx-popup-wrapper {
+        @apply max-h-full overflow-x-hidden overflow-y-auto;
     }
 
     .bx-artificer .bx-popup-applied {
@@ -1215,6 +1232,24 @@
     .bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled,
     .bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled .sys-icon {
         @apply text-gray-300 dark:text-gray-700;
+    }
+
+    /* Studio */    
+    .bx-std #bx-std-pcap-menu-popup-help .bx-popup,
+    .bx-std #bx-std-pcap-menu-popup-actions .bx-popup,
+    .bx-std #bx-std-pcap-menu-popup-account .bx-popup,
+    .bx-std .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
+        @apply ring-1 ring-gray-600;
+    }
+
+    .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
+        @apply ring ring-blue-600 ring-offset-2 ring-offset-black;
+    }
+    
+    .bx-std .bx-stg-icon-gray-bg {
+        @apply h-8 w-8;
+        @apply bg-gray-200 bg-no-repeat bg-center;
+        @apply rounded-lg;
     }
 
 

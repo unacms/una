@@ -78,6 +78,7 @@ define('BX_TIMELINE_HFS_VOTE', 'vote');
 
 //--- For You Feed sources
 define('BX_TIMELINE_FYFS_FEED', 'feed');
+define('BX_TIMELINE_FYFS_CHANNELS', 'channels');
 define('BX_TIMELINE_FYFS_HOT', 'hot');
 define('BX_TIMELINE_FYFS_RECOM_FRIENDS', 'recom_friends');
 define('BX_TIMELINE_FYFS_RECOM_SUBSCRIPTIONS', 'recom_subscriptions');
@@ -2240,23 +2241,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
 
         $aItemData = $this->getItemData($iItemId, $aParams);
-        
+
         if (bx_is_api()){
-            $aEventAdd = [
-                'author_data' => BxDolProfile::getData($aItemData['event']['object_owner_id'])
-            ];
-
-            $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
-            if(!$oMenuActions)
-                $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
-            if($oMenuActions !== false) {
-                $oMenuActions->setEvent($aItemData['event'], $aParams);
-
-                $aEventAdd['menu_actions'] = $oMenuActions->getCodeAPI();
-            }
-
-            $aItemData['event'] = array_merge($aItemData['event'], $aEventAdd);
-
+            $aItemData['event'] = $this->_oTemplate->_getPostApi($aItemData['event'], $aParams);
             return [bx_api_get_block('feed_item', $aItemData)];
         }
         
@@ -3912,7 +3899,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         if($oForm->isSubmittedAndValid()) {
-            $aContent = [];
+            $aContent = unserialize($aEvent['content']);
 
             //--- Process Text ---//
             $sText = $oForm->getCleanValue('text');
@@ -5064,12 +5051,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aPhotos) || !is_array($aPhotos))
             return [];
 
+        $sStorage = $this->_oConfig->getObject('storage_photos');
         $oTranscoderSm = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
         $oTranscoderMd = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_medium'));
         $oTranscoderLg = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
 
         $aResult = [];
         foreach($aPhotos as $iPhotoId) {
+            if($this->_bIsApi) {
+                $aResult[] = bx_api_get_image($sStorage, $iPhotoId);
+                continue;
+            }
+
             $sPhotoSrcMd = $oTranscoderMd->getFileUrl($iPhotoId);
             if(empty($sPhotoSrcMd))
                 continue;
@@ -5315,9 +5308,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->_iOwnerId = $aParams['owner_id'];
 
         if(!empty($aParams['validate']) && is_array($aParams['validate'])) {
+            $iSlice = count($aParams['validate']);
+
             $aEvents = $this->_oDb->getEvents(array_merge($aParams, [
                 'start' => 0,
-                'per_page' => count($aParams['validate']),
+                'per_page' => 2 * $iSlice,
                 'from_cache' => $this->_oConfig->isCacheTable()
             ]));
 
@@ -5325,7 +5320,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 return $aEvent['id'];
             }, $aEvents);
 
-            $aResult = $aIds == $aParams['validate'] ? 'valid' : 'invalid';
+            $aResult = array_slice($aIds, 0, $iSlice) == $aParams['validate'] ? 'valid' : 'invalid';
         }
         else 
             $aResult = $this->_oTemplate->getViewBlock($aParams);
@@ -5372,8 +5367,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $mixedResult = $oProfileOwner->checkAllowedProfileView();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED) {
-            $this->_oTemplate->displayAccessDenied($mixedResult);
-            exit;
+            if(!$this->_bIsApi) {
+                $this->_oTemplate->displayAccessDenied($mixedResult);
+                exit;
+            }
+            else
+                return [bx_api_get_msg($mixedResult, ['ext' => ['msg_type' => 'result']])];
         }
 
         $sUserName = $this->getObjectUser($aParams['owner_id'])->getDisplayName();
@@ -5397,7 +5396,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if (!$sContent)
             $sContent = $this->_oTemplate->getViewBlock($aParams);
         
-        if(bx_is_api())
+        if($this->_bIsApi)
             return [bx_api_get_block('browse', [
                 'unit' => 'feed',  
                 'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',

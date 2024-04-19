@@ -14,6 +14,8 @@
  */
 class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
 {
+    protected $_bDisplayInvite;
+
     public function __construct($aInfo, $oTemplate = false)
     {
         if (!isset($this->_bAllowChangeUserForAdmins))
@@ -23,8 +25,21 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (isset($this->aInputs['initial_members']) && !isset($this->aInputs['initial_members']['value'])) {
-            $this->aInputs['initial_members']['value'] = isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']) && $CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'] == $this->aParams['display'] ? array() : array(bx_get_logged_profile_id());
+        $this->_bDisplayInvite = isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']) && $CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'] == $this->aParams['display'];
+
+        if (isset($this->aInputs['initial_members'])) {
+            if(!isset($this->aInputs['initial_members']['value']))
+                $this->aInputs['initial_members']['value'] = $this->_bDisplayInvite ? [] : [bx_get_logged_profile_id()];
+
+            if($this->_bDisplayInvite)
+                $this->aInputs['initial_members'] = array_merge($this->aInputs['initial_members'], [
+                    'required' => 1,
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_Enter_value_here'),
+                    ]                    
+                ]);
         }
     }
 

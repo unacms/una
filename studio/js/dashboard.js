@@ -20,79 +20,102 @@ function BxDolStudioDashboard(oOptions) {
 }
 
 BxDolStudioDashboard.prototype.checkForUpgrade = function() {
-	var $this = this;
-	var oDate = new Date();
-	var sDivId = 'bx-dbd-version';
+    var $this = this;
+    var oDate = new Date();
+    var sDivId = 'bx-dbd-version';
 
-	bx_loading(sDivId, true);
+    bx_loading(sDivId, true);
 
-	$.get(
-		this.sActionsUrl,
-		{
-			dbd_action: 'check_for_upgrade',
-			_t: oDate.getTime()
-		},
-		function(oData) {
-			bx_loading(sDivId, false);
+    $.get(
+        this.sActionsUrl,
+        {
+            dbd_action: 'check_for_upgrade',
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            bx_loading(sDivId, false);
 
-			if(!oData.data)
-			    return;
+            if(!oData.data)
+                return;
 
-			$('#' + sDivId + ' .bx-dbd-version-available').html(oData.data).show();
-		},
-		'json'
-	);
+            $('#' + sDivId + ' .bx-dbd-version-available b').html(oData.data.version).parents('.bx-dbd-version-available:hidden').show();
+
+            if(oData.data.upgrade != undefined && parseInt(oData.data.upgrade) == 1)
+                $('#' + sDivId + ' .bx-dbd-block-actions').show()
+        },
+        'json'
+    );
 };
 
 BxDolStudioDashboard.prototype.performUpgrade = function() {
-	var $this = this;
-	var oDate = new Date();
-	var sDivId = 'bx-dbd-version';
+    var $this = this;
+    var oDate = new Date();
+    var sDivId = 'bx-dbd-version';
 
-	bx_loading(sDivId, true);
+    bx_loading(sDivId, true);
 
-	$.get(
-		this.sActionsUrl,
-		{
-			dbd_action: 'perform_upgrade',
-			_t: oDate.getTime()
-		},
-		function(oData) {
-			bx_loading(sDivId, false);
+    $.get(
+        this.sActionsUrl,
+        {
+            dbd_action: 'perform_upgrade',
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            bx_loading(sDivId, false);
 
-			if(!oData.message)
-			    return;
+            if(!oData.message)
+                return;
 
-			$this.popup(oData.message);
-		},
-		'json'
-	);
+            $this.popup(oData.message);
+        },
+        'json'
+    );
 };
 
-BxDolStudioDashboard.prototype.getBlockContent = function(sType) {
-	var $this = this;
-	var oDate = new Date();
-	var sDivId = 'bx-dbd-' + sType;
+BxDolStudioDashboard.prototype.checkHostParams = function() {
+    var sType = 'htools';
+    var sDivId = 'bx-dbd-' + sType;
 
-	bx_loading(sDivId, true);
+    this.getBlockContent(sType, function(oData) {
+        if(!oData.data)
+            return;
 
-	$.get(
-		this.sActionsUrl,
-		{
-			dbd_action: 'get_block',
-			dbd_value: sType,
-			_t: oDate.getTime()
-		},
-		function(oData) {
-			bx_loading(sDivId, false);
+        $('#' + sDivId).replaceWith(oData.data);
+        $('#' + sDivId + ' .bx-dbd-block-actions').show();
+    });
+};
 
-			if(!oData.data)
-			    return;
+BxDolStudioDashboard.prototype.clearCacheSelect = function(oElement) {
+    bx_menu_popup_inline('#bx-std-cc-select-popup', oElement, {moveToDocRoot: false});
+};
 
-			$('#' + sDivId).replaceWith(oData.data);
-		},
-		'json'
-	);
+BxDolStudioDashboard.prototype.getBlockContent = function(sType, onComplete) {
+    var $this = this;
+    var oDate = new Date();
+    var sDivId = 'bx-dbd-' + sType;
+
+    bx_loading(sDivId, true);
+
+    $.get(
+        this.sActionsUrl,
+        {
+            dbd_action: 'get_block',
+            dbd_value: sType,
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            bx_loading(sDivId, false);
+
+            if(typeof onComplete == 'function')
+                return onComplete(oData);
+
+            if(!oData.data)
+                return;
+
+            $('#' + sDivId).replaceWith(oData.data);
+        },
+        'json'
+    );
 };
 
 BxDolStudioDashboard.prototype.initChart = function(sType, oData) {

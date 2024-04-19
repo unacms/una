@@ -1,7 +1,15 @@
-<ul class="bx-menu-toolbar">
+<ul class="bx-menu-toolbar gap-x-4">
+    <bx_if:show_search>
+        <li class="bx-menu-tab-search flex-auto">
+            <img class="ml-2" src="<bx_icon_url:tmi-search.svg />" />
+            <div class="bx-form-input-wrapper bx-form-input-wrapper-text">
+                <input type="text" name="search" value="" placeholder="<bx_text_attribute:_adm_tmi_cpt_search />" class="bx-def-font-inputs bx-form-input-text" onkeydown="return oBxDolStudioMenuTop.searchWidget(event)" />
+            </div>
+        </li>
+    </bx_if:show_search>
     <bx_repeat:menu_items>
-        <li class="bx-menu-tab-__name__  __class_add__">
-            <a href="__link__" onclick="__onclick__" class="bx-def-font-contrasted" title="__title__"__attrs__><bx_if:icon><i class="sys-icon __icon__ bx-def-round-corners bx-def-font-contrasted"></i></bx_if:icon><bx_if:image><img src="__icon_url__" /></bx_if:image><bx_if:image_inline>__image__</bx_if:image_inline></a>
+        <li class="bx-menu-tab-__name__  __class_add__ hover:scale-105 active:scale-100 active:opacity-80 duration-300">
+            <a href="__link__" onclick="__onclick__" class="text-gray-400 hover:text-white" title="__title__"__attrs__><bx_if:icon><i class="sys-icon __icon__ bx-def-round-corners bx-def-font-contrasted"></i></bx_if:icon><bx_if:image><img src="__icon_url__" /></bx_if:image><bx_if:image_inline>__image__</bx_if:image_inline></a>
         </li>
     </bx_repeat:menu_items>
 </ul>

@@ -166,6 +166,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $iId = $oProfile->id();
         $oAccount = $oProfile->getAccountObject();
 
+        $aMembershipInfo = BxDolAcl::getInstance()->getMemberMembershipInfo($iId);
+
         $aRv = [
             'id' => $iId,
             'email' => $oAccount->getEmail(),
@@ -173,6 +175,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'url' => bx_api_get_relative_url($oProfile->getUrl()),
             'avatar' => $oProfile->getAvatar(),
             'settings' => $oProfile->getSettings(),
+            'membership' => $aMembershipInfo['id'],
             //'level' => BxDolAcl::getInstance()->getMemberMembershipInfo($iId),
             'moderator' => (bool)BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_ADMINISTRATOR, MEMBERSHIP_ID_MODERATOR], $iId),
             'operator' => isAdmin(),

@@ -162,6 +162,32 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
             'object_options' => ['show_counter' => false]
         ]));
     }
+
+    protected function _getMenuItemMessenger($aItem, $aParams = array())
+    {
+        $aItem = BxTemplMenu::_getMenuItem($aItem);
+        if($aItem === false)
+            return false;
+
+        if(!$this->_bIsApi)
+            return $this->_getMenuItemDefault($aItem);
+
+        $sModule = 'bx_messenger';
+        $sMethod = 'find_convo';
+        if(!bx_is_srv($sModule, $sMethod))
+            return false;
+
+        return [
+            'id' => $aItem['id'],
+            'name' => $aItem['name'],
+            'title' => $aItem['title'],
+            'display_type' => 'callback',
+            'data' => [
+                'request_url' => $sModule . '/get_convo_url/Services&params[]=' . json_encode(['recipient' => $this->_oProfile->id()]),
+                'on_callback' => 'redirect'
+            ]
+        ];
+    }
 }
 
 /** @} */

@@ -4,8 +4,8 @@
 }
 
 .bx-form-advanced-wrapper .bx-form-section-divider:first-child {
-    border-top:none; 
-    padding-top:0; 
+    border:none; 
+    padding:0; 
 }
 
 .bx-form-advanced-wrapper .bx-form-section-divider:first-child .bx-form-section-content {
@@ -25,12 +25,7 @@
 }
 
 .bx-form-section {
-    padding:0px;
-}
-
-.bx-form-section {
     margin:0;
-    border: none;
 }
 
 .bx-form-section-header .bx-form-section-title {
@@ -38,11 +33,15 @@
     display: flex;
     -webkit-align-items: center;
     align-items: center;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
 
-    line-height: 1.25rem;
+    line-height: 1.5rem;
     text-transform: uppercase;
+}
+
+.bx-form-section-header .bx-form-section-title .sys-icon {
+    color: inherit;
 }
 
 .bx-form-section-header .bx-form-section-title u {
@@ -50,9 +49,6 @@
 }
 
 .bx-form-section-header .bx-form-section-title span {
-    width: 100%;
-    padding-left: 1.25rem;
-
     white-space: nowrap;
     text-transform: none;
     font-size: 0.75rem;
@@ -99,10 +95,10 @@
 
     text-decoration:none;
 
-    -moz-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
 
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;

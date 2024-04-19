@@ -214,48 +214,16 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
     {
-        if(!$iInitiator || !$iContent || $iInitiator == $iContent)
-            return _t('_sys_txt_access_denied');
+        $aResult = $this->_checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap, $isCheckExists);
 
-        $oInitiator = BxDolProfile::getInstance($iInitiator);
-        $oContent = BxDolProfile::getInstance($iContent);
-        if(!$oInitiator || !$oContent)
-            return _t('_sys_txt_access_denied');
-
-        // check ACL
-        if(($mixedResult = $this->_checkAllowedConnectInitiator($oInitiator, $isPerformAction)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return $mixedResult;
-
-        // check content's visibility
-        if(!$this->isConnected($iContent, $iInitiator) && ($mixedResult = $this->_checkAllowedConnectContent($oContent)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return $mixedResult;
-
-        if(!$isCheckExists)
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        if($isSwap)
-            $isConnected = $this->isConnected($iContent, $iInitiator, $isMutual);
-        else
-            $isConnected = $this->isConnected($iInitiator, $iContent, $isMutual);
-
-        if($isInvertResult)
-            $isConnected = !$isConnected;
-
-        return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
+        return $aResult['code'] == 0 ? CHECK_ACTION_RESULT_ALLOWED : $aResult['message'];
     }
 
-    protected function _checkAllowedConnectInitiator ($oInitiator, $isPerformAction = false)
+    public function checkAllowedAddConnection ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
     {
-        $aCheck = checkActionModule($oInitiator->id(), 'connect', 'system', $isPerformAction);
-        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
+        $aResult = $this->_checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap, $isCheckExists);
 
-        return CHECK_ACTION_RESULT_ALLOWED;
-    }
-
-    protected function _checkAllowedConnectContent ($oContent)
-    {
-        return $oContent->checkAllowedProfileView();
+        return $aResult['code'] == 0 || ($aResult['code'] == 4  && $this->_sObject == 'sys_profiles_friends') ? CHECK_ACTION_RESULT_ALLOWED : $aResult['message'];
     }
 
     /**
@@ -953,6 +921,54 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     public function onModuleProfileDeleteContent ($sModuleName)
     {
         return $this->_oQuery->onModuleProfileDelete ($sModuleName, 'content');
+    }
+
+    protected function _checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
+    {
+        $sErr = _t('_sys_txt_access_denied');
+
+        if(!$iInitiator || !$iContent || $iInitiator == $iContent)
+            return ['code' => 1, 'message' => $sErr];
+
+        $oInitiator = BxDolProfile::getInstance($iInitiator);
+        $oContent = BxDolProfile::getInstance($iContent);
+        if(!$oInitiator || !$oContent)
+            return ['code' => 2, 'message' => $sErr];
+
+        // check ACL
+        if(($mixedResult = $this->_checkAllowedConnectInitiator($oInitiator, $isPerformAction)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return ['code' => 3, 'message' => $mixedResult];
+
+        // check content's visibility
+        if(!$this->isConnected($iContent, $iInitiator) && ($mixedResult = $this->_checkAllowedConnectContent($oContent)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return ['code' => 4, 'message' => $mixedResult];
+
+        if(!$isCheckExists)
+            return ['code' => 0];
+
+        if($isSwap)
+            $isConnected = $this->isConnected($iContent, $iInitiator, $isMutual);
+        else
+            $isConnected = $this->isConnected($iInitiator, $iContent, $isMutual);
+
+        if($isInvertResult)
+            $isConnected = !$isConnected;
+
+        return $isConnected ? ['code' => 5, 'message' => $sErr] : ['code' => 0];
+    }
+
+    protected function _checkAllowedConnectInitiator ($oInitiator, $isPerformAction = false)
+    {
+        $aCheck = checkActionModule($oInitiator->id(), 'connect', 'system', $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    protected function _checkAllowedConnectContent ($oContent)
+    {
+        return $oContent->checkAllowedProfileView();
     }
 }
 

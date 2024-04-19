@@ -18,8 +18,12 @@ module.exports = {
     './modules/boonex/**/data/template/**/*.html',
 
     './studio/template/*.html',
+    './studio/template/scripts/*.php',
+    './studio/template/scripts_templ/*.php',
 
     './template/*.html',
+    './template/scripts/*.php',
+    './template/scripts_templ/*.php'
   ],
   safelist: [
     'w-8', 'w-10', 'w-16', 'w-24', 'w-48', 'w-4/6', 
@@ -62,7 +66,7 @@ module.exports = {
     'bx-def-color-bg-box-active', 
 
     'bx-form-caption', 'bx-form-value', 'bx-form-required', 'bx-form-warn', 
-    'bx-form-input-wrapper-checkbox_set', 'bx-form-input-wrapper-radio_set',
+    'bx-form-input-wrapper-checkbox', 'bx-form-input-wrapper-radio', 'bx-form-input-wrapper-checkbox_set', 'bx-form-input-wrapper-radio_set',
     'bx-form-input-slider', 'bx-form-input-doublerange', 'bx-form-input-select_multiple', 'bx-form-input-select', 'bx-form-input-radio_set', 'bx-form-input-checkbox_set', 'bx-form-input-number', 'bx-form-input-time', 'bx-form-input-datepicker', 'bx-form-input-datetime', 'bx-form-input-textarea', 'bx-form-input-text', 'bx-form-input-price', 'bx-form-input-checkbox', 'bx-form-input-radio', 
     'bx-switcher-cont', 
 

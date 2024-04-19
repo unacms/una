@@ -279,7 +279,7 @@ class BxAntispamModule extends BxDolModule
             $this->serviceOnToxicContentPosted($sModule, $iEntry);
         }
 
-        if($this->_oConfig->getAntispamOption('lm_enable') == 'on' && (bx_srv('system', 'is_module_content', [$sModule]) || bx_srv('system', 'is_module_context', [$sModule])) && ($oModule = BxDolModule::getInstance($sModule)) !== null) {
+        if($this->_oConfig->getAntispamOption('lm_enable') == 'on' && (bx_srv('system', 'is_module_content', [$sModule]) || bx_srv('system', 'is_module_context', [$sModule]) || in_array($sModule, ['bx_timeline'])) && ($oModule = BxDolModule::getInstance($sModule)) !== null) {
             $CNF = &$oModule->_oConfig->CNF;
 
             $iAuthorId = bx_get_logged_profile_id();

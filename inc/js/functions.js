@@ -438,7 +438,7 @@ function bx_menu_popup_inline (jSel, e, options) {
     else {
         var options = options || {};
         var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {
-            pointer:{el:$(e)}, 
+            pointer: e != undefined && $(e).length != 0 ? {el:$(e)} : false, 
             cssClass: 'bx-popup-menu',
             onShow: function(oPopup) {
                 oPopup.find('a').each(function () {

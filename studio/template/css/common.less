@@ -6,10 +6,10 @@
  */
 
 /* body */
-a:not(.bx-btn) {
+a {
 	color: rgba(30, 140, 240, 1); 
 }
-a:not(.bx-btn):hover {
+a:hover {
 	color: rgba(10, 120, 220, 1); 
 }
 .sys-icon:not(.sys-colored),
@@ -30,14 +30,36 @@ a:hover > .sys-icon-a i {
 }
 
 /* design boxes */
+.bx-db-container {
+    box-shadow: none;
+}
 .bx-db-header {
-    padding: 1.0rem 1.5rem;
+    padding: 1.25rem 1.5rem;
 }
 .bx-db-header .bx-db-menu-tab-btn .bx-btn {
     display: inline-flex;
 }
+.bx-db-header .bx-db-title {
+    line-height: 2rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+.bx-db-content.bx-content-padding-block {
+    padding: 1.5rem;
+}
+.bx-db-content.bx-content-padding-block .bx-dbd-block-actions {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
 .bx-db-content.bx-def-padding-top {
     padding: 1rem;
+}
+div.bx-db-note {
+    position: relative;
+    float: left;
+    line-height: 40px;
+    font-size: 11px;
 }
 
 /* popup */
@@ -45,7 +67,7 @@ a:hover > .sys-icon-a i {
 .bx-popup-applied.bx-popup-chain .bx-popup-chain-item {
     margin: 0.5rem;
 
-    .radius(3px);
+    .radius(16px);
 
     -webkit-box-shadow: 0px 3px 5px 1px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 3px 5px 1px rgba(0,0,0,0.1);
@@ -86,9 +108,11 @@ a:hover > .sys-icon-a i {
 .bx-btn.bx-btn-primary {
     .box-sizing(border-box);
 
-    height: 2.4rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding: 0 1rem;
 
-    .radius(6px);
+    .radius(8px);
 
     -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
     -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
@@ -101,14 +125,14 @@ a:hover > .sys-icon-a i {
     font-weight: 500;
 }
 .bx-btn {
-    border: 1px solid rgba(228, 228, 231, 1.0);
-    .background-color(rgba(255, 255, 255, 1.0));
-    color: rgba(82, 82, 91, 1.0);
+    border: 1px solid rgba(228, 228, 231, 1);
+    .background-color(rgba(255, 255, 255, 1));
+    color: rgba(39, 39, 42, 1)
 }
 .bx-btn.bx-btn-primary {
     border-width: 0px;
-    .background-color(rgba(68, 134, 244, 1.0));
-    color: rgba(251, 252, 253, 1.0);
+    .background-color(rgba(28, 100, 242, 1));
+    color: rgba(255, 255, 255, 1);
 }
 
 .bx-btn:not(.bx-btn-primary):hover,
@@ -142,24 +166,19 @@ a:hover > .sys-icon-a i {
 .bx-btn.bx-btn-small {
     .box-sizing(border-box);
 
-    height: 1.5rem;
-    line-height: 1.5rem;
+    height: 2.0rem;
+    line-height: 2.0rem;
+    padding: 0 1rem;
 
-    .radius(4px);
+    .radius(6px);
 
     text-shadow: none;
 
     font-family: sans-serif;
-    font-size: 0.75rem;
-    font-weight: 400;
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 
 /**
  * General
  */
-div.bx-db-note {
-    position: relative;
-    float: left;
-    line-height: 40px;
-    font-size: 11px;
-}

@@ -36,7 +36,8 @@ $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());
 $oTemplate->setPageContent('page_caption_code', $oPage->getPageCaption());
 $oTemplate->setPageContent('page_attributes', $oPage->getPageAttributes());
-$oTemplate->setPageContent('page_menu_code', $oPage->getPageMenu());
+if($oPage->isLeftColumn())
+    $oTemplate->setPageContent('page_menu_code', $oPage->getPageMenu());
 $oTemplate->setPageContent('page_main_code', $sPageCode);
 $oTemplate->addCss($oPage->getPageCss());
 $oTemplate->addJs($oPage->getPageJs());

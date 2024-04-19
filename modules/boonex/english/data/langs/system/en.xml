@@ -591,7 +591,7 @@
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Select Layout...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Page (Meta) Description]]></string>
 	<string name="_adm_bp_txt_page_meta_keywords"><![CDATA[Keywords]]></string>
-    <string name="_adm_bp_txt_page_meta_title"><![CDATA[Page (Meta) Title]]></string>
+        <string name="_adm_bp_txt_page_meta_title"><![CDATA[Page (Meta) Title]]></string>
 	<string name="_adm_bp_txt_page_meta_robots"><![CDATA[Meta Robots]]></string>
         <string name="_adm_bp_txt_page_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_bp_dsc_page_submenu"><![CDATA[Page submenu can be selected here]]></string>
@@ -629,16 +629,14 @@
         <string name="_adm_btn_settings_mix_publish"><![CDATA[Publish]]></string>
 	<string name="_adm_btn_store_search"><![CDATA[Search]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
-	<string name="_adm_dbd_txt_version_n_available"><![CDATA[UNA {0} is available!]]></string>
-	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA on]]></string>
-	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
+        <string name="_adm_dbd_txt_available"><![CDATA[Available:]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_updated"><![CDATA[Updated:]]></string>
-	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
-    <string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute.<br />Don't forget to <a href="{0}store.php?page=updates">check for modules updates</a> after that.]]></string>
+        <string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute.<br />Don't forget to <a href="{0}store.php?page=updates">check for modules updates</a> after that.]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[System]]></string>
 	<string name="_adm_dbd_txt_su_system_media"><![CDATA[System Media]]></string>
+        <string name="_adm_dbd_txt_c_select"><![CDATA[Select...]]></string>
 	<string name="_adm_dbd_txt_c_clear_all"><![CDATA[Clear all caches]]></string>
 	<string name="_adm_dbd_txt_c_db"><![CDATA[DB]]></string>
 	<string name="_adm_dbd_txt_c_clear_db"><![CDATA[Clear DB cache]]></string>
@@ -648,17 +646,17 @@
 	<string name="_adm_dbd_txt_c_clear_css"><![CDATA[Clear CSS cache]]></string>
         <string name="_adm_dbd_txt_c_less"><![CDATA[LESS]]></string>
         <string name="_adm_dbd_txt_c_clear_less"><![CDATA[Clear LESS cache]]></string>
-    <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Clear Purifier cache]]></string>
-    <string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
-    <string name="_adm_dbd_txt_c_clear_js"><![CDATA[Clear JavaScript cache]]></string>
-    <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Clear Custom cache]]></string>
-    <string name="_adm_dbd_txt_c_opcache"><![CDATA[Opcache]]></string>
-    <string name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Clear Opcache]]></string>
-    <string name="_adm_dbd_err_c_clean_failed"><![CDATA[Failed to clear cache]]></string>
-    <string name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Cache clearing is unsupported]]></string>
-    <string name="_adm_dbd_msg_c_clean_success"><![CDATA[Cache was successfully cleared]]></string>
-    <string name="_adm_dbd_msg_c_all_disabled"><![CDATA[All caches are disabled]]></string>
-    <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
+        <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Clear Purifier cache]]></string>
+        <string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
+        <string name="_adm_dbd_txt_c_clear_js"><![CDATA[Clear JavaScript cache]]></string>
+        <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Clear Custom cache]]></string>
+        <string name="_adm_dbd_txt_c_opcache"><![CDATA[Opcache]]></string>
+        <string name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Clear Opcache]]></string>
+        <string name="_adm_dbd_err_c_clean_failed"><![CDATA[Failed to clear cache]]></string>
+        <string name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Cache clearing is unsupported]]></string>
+        <string name="_adm_dbd_msg_c_clean_success"><![CDATA[Cache was successfully cleared]]></string>
+        <string name="_adm_dbd_msg_c_all_disabled"><![CDATA[All caches are disabled]]></string>
+        <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_dsg_btn_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_dsg_btn_make_default"><![CDATA[Make Default]]></string>
 	<string name="_adm_dsg_dsc_alt_text"><![CDATA[Serves as "ALT" text for logo image. Used as a logo when no logo image is uploaded.]]></string>
@@ -1510,18 +1508,18 @@
     <string name="_adm_stg_cpt_category_notifications"><![CDATA[Notifications]]></string>
     <string name="_adm_stg_cpt_category_notifications_push"><![CDATA[Push Notifications]]></string>
     <string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
-    <string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    <string name="_adm_stg_cpt_category_general"><![CDATA[System]]></string>
     <string name="_adm_stg_cpt_category_hidden"><![CDATA[Hidden]]></string>
     <string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
     <string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
     <string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
-    <string name="_adm_stg_cpt_category_site_settings"><![CDATA[Site Settings]]></string>
+    <string name="_adm_stg_cpt_category_site_settings"><![CDATA[General]]></string>
     <string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
     <string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
     <string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Location]]></string>
-    <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Social Settings]]></string>
+    <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Social]]></string>
     <string name="_adm_stg_cpt_category_api_general"><![CDATA[General]]></string>
     <string name="_adm_stg_cpt_category_api_layout"><![CDATA[Layout]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Image width to resize before upload (0 - disable)]]></string>
@@ -1779,6 +1777,21 @@
     <string name="_adm_stg_cpt_option_sys_sockets_secret"><![CDATA[App secret]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_disabled"><![CDATA[Disabled]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_soketi"><![CDATA[Soketi]]></string>
+    
+    <string name="_adm_stg_cpt_option_sys_std_show_header_left"><![CDATA[Studio: Show header left area]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_center"><![CDATA[Studio: Show header center area]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right"><![CDATA[Studio: Show header right area]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Studio: Show search in header]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Studio: Show 'site' link in header]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Studio: Show left area with menu in Launcher]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+
+    
+    
+    
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
@@ -1868,8 +1881,9 @@
 	<string name="_adm_strg_err_width"><![CDATA[Width is essential. Please, fill in this field.]]></string>
 	<string name="_adm_strg_txt_height"><![CDATA[Height]]></string>
 	<string name="_adm_strg_err_height"><![CDATA[Height is essential. Please, fill in this field.]]></string>
-        <string name="_adm_tmi_cpt_account"><![CDATA[Account]]></string>
+        <string name="_adm_tmi_cpt_account"><![CDATA[Menu]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
+        <string name="_adm_tmi_cpt_search"><![CDATA[Search...]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Launcher]]></string>
         <string name="_adm_txt_active_api"><![CDATA[Available in App]]></string>
@@ -2857,6 +2871,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_layout_1_column"><![CDATA[1 column]]></string>
         <string name="_sys_layout_1_column_thin"><![CDATA[1 column (thin)]]></string>
         <string name="_sys_layout_1_column_half"><![CDATA[1 column (half)]]></string>
+        <string name="_sys_layout_1_column_wiki"><![CDATA[1 column (wiki)]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 columns]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 columns]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[With left bar]]></string>
@@ -3249,6 +3264,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_set_title_studio_account_popup"><![CDATA[Account Popup (Studio)]]></string>
     <string name="_sys_menu_item_title_system_sa_account"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_sa_account"><![CDATA[{member_display_name}]]></string>
+    <string name="_sys_menu_item_title_system_sa_site"><![CDATA[Go To Site]]></string>
+    <string name="_sys_menu_item_title_sa_site"><![CDATA[Go To Site]]></string>
     <string name="_sys_menu_item_title_system_sa_edit"><![CDATA[Manage Apps]]></string>
     <string name="_sys_menu_item_title_sa_edit"><![CDATA[Manage Apps]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Language]]></string>

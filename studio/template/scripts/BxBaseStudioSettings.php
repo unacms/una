@@ -17,7 +17,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
     public function getPageCss()
     {
-        return array_merge(parent::getPageCss(), $this->oOptions->getCss());
+        return array_merge(parent::getPageCss(), $this->oOptions->getCss(), ['settings.css']);
     }
 
     public function getPageJs()

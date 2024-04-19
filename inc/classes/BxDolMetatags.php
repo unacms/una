@@ -449,7 +449,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
 
         foreach ($a as $sKeyword) {
             $f = function ($a) use ($sKeyword, $iId) {
-                return $a[1] . '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword, $iId) . '"><s>#</s><b>' . $sKeyword . '</b></a>';
+                return $a[1] . '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword, $iId) . '">' . (bx_is_api() ? '#' . $sKeyword : '<s>#</s><b>' . $sKeyword . '</b>') . '</a>';
             };
 
             $s = preg_replace_callback('/([^\pN^\pL])\#(' . preg_quote($sKeyword, '/') . ')/u', $f, $s);
@@ -478,7 +478,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $s;
     }
 	
-	public function keywordsGetHashTagUrl($sKeyword, $iId, $mixedSection = false) 
+    public function keywordsGetHashTagUrl($sKeyword, $iId, $mixedSection = false) 
     {   
         $sSectionPart = '';
         if (!empty($mixedSection)) {
@@ -496,8 +496,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
            'sObject' => $this->_sObject,
            'section' => $mixedSection,
         ));
-	    return $sUrl;
-	}
+    
+        return bx_is_api() ? bx_api_get_relative_url($sUrl) : $sUrl;
+    }
 
     /**
      * Add keywords meta info to the head section

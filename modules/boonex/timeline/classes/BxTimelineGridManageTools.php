@@ -21,11 +21,11 @@ class BxTimelineGridManageTools extends BxBaseModGeneralGridAdministration
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
         $iAffected = 0;
+        $aResult = [];
+
         $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        if(!$aIds || !is_array($aIds))
+            return $this->_getActionResult($aResult);
 
         $aIdsAffected = [];
         foreach($aIds as $iId) {
@@ -36,7 +36,12 @@ class BxTimelineGridManageTools extends BxBaseModGeneralGridAdministration
             }
         }
 
-        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete'])));
+        if($iAffected)
+            $aResult = !$this->_bIsApi ? ['grid' => $this->getCode(false), 'blink' => $aIdsAffected] : [];
+        else
+            $aResult = ['msg' => _t($CNF['T']['grid_action_err_delete'])];
+                
+        return $this->_getActionResult($aResult);
     }
 
     protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -44,11 +49,7 @@ class BxTimelineGridManageTools extends BxBaseModGeneralGridAdministration
         if($sType == 'single' && $this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->isAllowedDelete($aRow) !== true)
             return '';
 
-        
-        if (bx_is_api()){
-            return array_merge($a, ['type' => 'callback', 'on_callback' => 'hide_row', 'params' => '&id=' . $aRow[$this->_aOptions['field_id']] ]);
-        }
-    	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return parent::_getActionDelete($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getCellDescription($mixedValue, $sKey, $aField, $aRow)
@@ -68,6 +69,9 @@ class BxTimelineGridManageTools extends BxBaseModGeneralGridAdministration
 
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
+        if($this->_bIsApi)
+            return ['type' => 'time', 'data' => $mixedValue];
+
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
 

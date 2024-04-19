@@ -56,14 +56,7 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         $oTemplate->addInjection('injection_header', 'text', $sActions . $sHelp);
 
         //--- Menu Right ---//
-        $aItemsRight = array(
-            'site' => array(
-                'name' => 'site',
-                'icon' => 'tmi-site.svg',
-                'link' => '{url_root}',
-                'title' => '_adm_tmi_cpt_site'
-            ),
-        );
+        $aItemsRight = [];
 
         if($bHelp)
             $aItemsRight['help'] = array(
@@ -81,6 +74,14 @@ class BxBaseStudioWidget extends BxDolStudioWidget
                 'title' => '_adm_txt_show_actions'
             );
 
+        if($this->_bShowHeaderRightSite)
+            $aItemsRight['site'] = [
+                'name' => 'site',
+                'icon' => 'tmi-site.svg',
+                'link' => '{url_root}',
+                'title' => '_adm_tmi_cpt_site'
+            ];
+
         $aItemsRight['account'] = array(
             'name' => 'account',
             'icon' => 'tmi-account.svg',
@@ -90,6 +91,7 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         );
 
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
+        $oTopMenu->setPageName($this->aPage['name']);
         $oTopMenu->setContent(BX_DOL_STUDIO_MT_LEFT, $this->getPageBreadcrumb());
         $oTopMenu->setSelected(BX_DOL_STUDIO_MT_CENTER, $this->aPage['name']);
         $oTopMenu->setContent(BX_DOL_STUDIO_MT_RIGHT, array(
@@ -269,7 +271,7 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         );
 
         foreach($this->aActions as $aAction) {
-            if($aAction['name'] == 'rearrange' && empty($iWidgetId))
+            if($aAction['name'] == 'rearrange' && (empty($iWidgetId) || getParam('sys_std_show_launcher_left') != 'on'))
                 continue;
 
             $aInput = array(

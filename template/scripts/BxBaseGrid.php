@@ -297,7 +297,7 @@ class BxBaseGrid extends BxDolGrid
      * Get grid code API.
      * @return array
      */
-    public function getCodeAPI()
+    public function getCodeAPI($bForceReturn = false)
     {
         $this->_replaceMarkers();
 
@@ -339,7 +339,7 @@ class BxBaseGrid extends BxDolGrid
                 'query_append' => $aQueryAppend
             ],
             'header' => $this->_getRowHeadAPI(),
-            'data' => defined('BX_API_PAGE') ? [] : $aData,
+            'data' => defined('BX_API_PAGE') && !$bForceReturn ? [] : $aData,
             'actions' => [
                 'independent' => $this->_getActionsAPI('independent'), 
                 'bulk' => $this->_getActionsAPI('bulk')
@@ -702,7 +702,7 @@ class BxBaseGrid extends BxDolGrid
     protected function _getCellDefault ($mixedValue, $sKey, $aField, $aRow)
     {
         if($this->_bIsApi)
-            return ['type' => 'text', 'value'=> $mixedValue];    
+            return ['type' => 'text', 'value'=> (int)$aField['translatable'] ? _t($mixedValue) : $mixedValue];    
 
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_cell',

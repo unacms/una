@@ -27,12 +27,12 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
      */
     protected $_bSettingsGrouped;
     protected $_aSettingsTypes;
+    protected $_aDeliveryTypes;
 
     protected $_aModulesProfiles;
     protected $_aModulesContexts;
 
     protected $_iDeliveryTimeout;
-    protected $_iProcessedEvent;
 
     protected $_bEventsGrouped;
 
@@ -52,6 +52,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             // some params
             'PARAM_QUEUE_ADD_THRESHOLD' => 0,
             'PARAM_COMMENT_POST_EXT' => 'bx_notifications_enable_comment_post_ext',
+            'PARAM_PROCESSED_EVENT' => 'bx_notifications_processed_event',
 
             // objects
             'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
@@ -92,6 +93,12 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             BX_NTFS_STYPE_FOLLOW_CONTEXT,
             //BX_NTFS_STYPE_OTHER           //TODO: May be it can be removed, because there is no events(alerts) for this type.
         );
+
+        $this->_aDeliveryTypes = [
+            BX_NTFS_DTYPE_SITE,
+            BX_NTFS_DTYPE_EMAIL,
+            BX_NTFS_DTYPE_PUSH
+        ];
 
         $this->_aModulesProfiles = false;
         $this->_aModulesContexts = false;
@@ -139,7 +146,6 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     	}
 
         $this->_iDeliveryTimeout = (int)getParam($sOptionPrefix . 'delivery_timeout');
-        $this->_iProcessedEvent = (int)getParam($sOptionPrefix . 'processed_event');
 
         $this->_bEventsGrouped = getParam($sOptionPrefix . 'enable_group_events') == 'on';
 
@@ -194,6 +200,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     {
         return $this->_aSettingsTypes;
     }
+    
+    public function getDeliveryTypes()
+    {
+        return $this->_aDeliveryTypes;
+    }
 
     public function getDeliveryTimeout()
     {
@@ -209,17 +220,15 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     {
         return $this->_bClickedIndicator;
     }
-            
+
     public function getProcessedEvent()
     {
-        return $this->_iProcessedEvent;
+        return (int)getParam($this->CNF['PARAM_PROCESSED_EVENT'], false);
     }
-    
+
     public function setProcessedEvent($iEvent)
     {
-        $this->_iProcessedEvent = $iEvent;
-
-        setParam($this->getPrefix('option') . 'processed_event', $iEvent);
+        setParam($this->CNF['PARAM_PROCESSED_EVENT'], $iEvent);
     }
 
     /**

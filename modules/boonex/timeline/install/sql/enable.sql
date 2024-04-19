@@ -396,7 +396,7 @@ VALUES (@iTypeId, 'bx_timeline_feed_for_you', '_bx_timeline_options_category_fee
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
-('bx_timeline_for_you_sources', 'feed,hot,recom_friends,recom_subscriptions', @iCategId, '_bx_timeline_option_for_you_sources', 'list', 'Avail', '', '_bx_timeline_option_for_you_sources_err', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:29:"get_for_you_sources_checklist";}', 1),
+('bx_timeline_for_you_sources', 'feed,channels,hot,recom_friends,recom_subscriptions', @iCategId, '_bx_timeline_option_for_you_sources', 'list', 'Avail', '', '_bx_timeline_option_for_you_sources_err', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:29:"get_for_you_sources_checklist";}', 1),
 ('bx_timeline_for_you_threshold_recom_friends', '1', @iCategId, '_bx_timeline_option_for_you_threshold_recom_friends', 'digit', '', '', '', '', 10),
 ('bx_timeline_for_you_threshold_recom_subscriptions', '1', @iCategId, '_bx_timeline_option_for_you_threshold_recom_subscriptions', 'digit', '', '', '', '', 11);
 
@@ -565,10 +565,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_timeline_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_timeline_administration', 'switcher', '_bx_timeline_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_timeline_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '', '', 3),
-('bx_timeline_administration', 'description', '_bx_timeline_grid_column_title_adm_description', '25%', 0, '25', '', 4),
-('bx_timeline_administration', 'date', '_bx_timeline_grid_column_title_adm_added', '20%', 1, '25', '', 5),
-('bx_timeline_administration', 'owner_id', '_bx_timeline_grid_column_title_adm_author', '20%', 0, '25', '', 6),
-('bx_timeline_administration', 'actions', '', '20%', 0, '', '', 7),
+('bx_timeline_administration', 'status', '_bx_timeline_grid_column_title_adm_status', '5%', 1, 0, '', 4),
+('bx_timeline_administration', 'description', '_bx_timeline_grid_column_title_adm_description', '25%', 0, '25', '', 5),
+('bx_timeline_administration', 'date', '_bx_timeline_grid_column_title_adm_added', '15%', 1, 0, '', 6),
+('bx_timeline_administration', 'owner_id', '_bx_timeline_grid_column_title_adm_author', '20%', 0, 0, '', 7),
+('bx_timeline_administration', 'actions', '', '20%', 0, '', '', 8),
 
 ('bx_timeline_common', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
 ('bx_timeline_common', 'switcher', '_bx_timeline_grid_column_title_adm_active', '8%', 0, 0, '', 2),

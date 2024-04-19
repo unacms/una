@@ -1,13 +1,28 @@
 /**
  * Overwrite
  */
-body.bx-std-bg.bx-std-page-launcher {
-    background: #001529;
+.bx-std-bg.bx-std-page-launcher {
+    background: rgba(0, 0, 0, 1);
 }
 
+div.bx-std-menu-top-wrp {
+    position: fixed;
+    top: 0;
+
+    z-index: 1000;
+}
+
+/**-- For Single Column mode --**/
+
+/**-- For Dual Columns mode --**/
+.bx-std-page-launcher div.bx-std-page-columns-cnt,
 .bx-std-page-launcher div.bx-std-page-column.bx-std-page-menu,
 .bx-std-page-launcher div.bx-std-page-column.bx-std-page-content {
     background-color: transparent;
+}
+
+.bx-std-page-launcher div.bx-std-page-column.bx-std-page-menu {
+    border-width: 0;
 }
 
 /**
@@ -66,7 +81,7 @@ div.bx-std-widgets-highlight {
 }
 div.bx-std-widget {
     position: relative;
-    padding: 24px;
+    padding: 24px 24px 12px 24px;
 }
 div.bx-std-widget-empty {
     width: 5.0rem;
@@ -83,35 +98,24 @@ div.bx-std-widget-empty {
 .bx-std-widget-icon {
     position: relative;
     top: 0px;
-    width: 5.0rem;
-    height: 5.0rem;
+    width: 6.0rem;
+    height: 6.0rem;
 
-    background-color:transparent;
+    background-color: transparent;
 
-    line-height: 5.0rem;
+    line-height: 6.0rem;
 }
 
 .bx-std-widget-icon i.sys-icon {
     position: absolute;
     z-index: 2;
     left: 0px;
-    width: 5.0rem;
+    width: 6.0rem;
 
     font-size: 48px;
     text-align: center;
     text-shadow: none;
     color: white;
-}
-
-.bx-std-widget-icon-trans {
-    -webkit-transition: all 0.15s ease-out;
-    -moz-transition: all 0.15s ease-out;
-    -ms-transition: all 0.15s ease-out;
-    -o-transition: all 0.15s ease-out;
-}
-
-.bx-std-widget-icon:hover {
-    top:3px;
 }
 
 .bx-std-widget-icon-disabled {
@@ -126,8 +130,8 @@ div.bx-std-widget-empty {
     position:relative;
     z-index:2;
 
-    width: 5.0rem;
-    height: 5.0rem;
+    width: 6.0rem;
+    height: 6.0rem;
 
     background-color: transparent;
     background-position:0px 0px;
@@ -138,8 +142,8 @@ div.bx-std-widget-icon-jitter {
     position: absolute;
     top: 24px;
     left: 24px;
-    width: 5.0rem;
-    height: 5.0rem;
+    width: 6.0rem;
+    height: 6.0rem;
     z-index: 5;
 
     background-color: transparent;
@@ -149,7 +153,7 @@ div.bx-std-widget-icon-jitter img {
     position:absolute;
 
     bottom: -0.125rem;
-    left: 1.375rem;
+    left: 1.875rem;
     width: 2.25rem;
     height: 1.25rem;
 
@@ -224,10 +228,10 @@ div.bx-std-widget-action i.sys-icon {
 .bx-std-widget-loading {
     display: none;
     position: absolute;
-    top: 6.75rem;
+    top: 7.5rem;
     left: 1.5rem;
-    width: 5.0rem;
-    height: 0.75rem;
+    width: 6.0rem;
+    height: 2.0rem;
 
     background-image: url(../images/loading.gif);
     background-repeat: no-repeat;
@@ -239,18 +243,17 @@ div.bx-std-widget-action i.sys-icon {
 }
 div.bx-std-widget-caption {
     position: relative;
-    width: 5.0rem;
-    height: 1.25rem;
+    width: 6.0rem;
+    height: 2rem;
 
-    line-height: 1.25rem;
+    line-height: 2rem;
     white-space: nowrap;
     text-align: center; 
     text-overflow: ellipsis;
     overflow: hidden;
 
-    font-stretch: condensed;
-    font-weight: 500;
-    font-size: 0.75rem;
+    font-weight: 400;
+    font-size: 0.875rem;
 }
 div.bx-std-widget-caption-jitter {
     position: absolute;
@@ -261,8 +264,7 @@ div.bx-std-widget-caption-jitter {
 }
 div.bx-std-widget-caption,
 div.bx-std-widget-caption a {
-    color: #ffffff;
-    font-weight:normal;
+    color: rgb(156 163 175);
 }
 
 /**

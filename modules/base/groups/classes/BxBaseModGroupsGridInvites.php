@@ -41,28 +41,43 @@ class BxBaseModGroupsGridinvites extends BxTemplGrid
         return parent::getCode($isDisplayHeader);        
     }
 
+    public function getCodeAPI($bForceReturn = false)
+    {
+        if(!$this->_bManageMembers)
+            return [];
+
+        return parent::getCodeAPI($bForceReturn);
+    }
+
     protected function _getCellName ($mixedValue, $sKey, $aField, $aRow)
     {
         $oProfile = BxDolProfile::getInstance($aRow['invited_profile_id']);
-        if (!$oProfile)
-            return _t('_sys_txt_error_occured');
+        if(!$oProfile && ($sMessage = _t('_sys_txt_error_occured')) !== false)
+            return $this->_bIsApi ? ['type' => 'text', 'value' => $sMessage] : $sMessage;
+
+        if($this->_bIsApi)
+            return ['type' => 'profile', 'data' => BxDolProfile::getData($oProfile->id())];
 
         return parent::_getCellDefault ($oProfile->getUnit(), $sKey, $aField, $aRow);
     }
     
     protected function _getCellAdded ($mixedValue, $sKey, $aField, $aRow)
     {
+        if($this->_bIsApi)
+            return ['type' => 'time', 'data' => $mixedValue];
+
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
-    
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
-        $aCheck = checkActionModule(bx_get_logged_profile_id(), 'delete invites', $this->_sContentModule, false);
-        
-         if ($aRow['author_profile_id'] == bx_get_logged_profile_id() || $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
-            return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
-         
-         return '';
+        $iLoggedId = bx_get_logged_profile_id();
+
+        $aCheck = checkActionModule($iLoggedId, 'delete invites', $this->_sContentModule, false);
+        if($aRow['author_profile_id'] != $iLoggedId && $aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $this->_bIsApi ? [] : '';
+
+        return parent::_getActionDelete($sType, $sKey, $a, $isSmall, $isDisabled, $aRow); 
     }
     
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

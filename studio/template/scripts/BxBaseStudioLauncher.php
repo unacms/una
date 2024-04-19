@@ -20,6 +20,11 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         $this->sPageUrl = BX_DOL_URL_STUDIO . 'launcher.php';
     }
 
+    public function getPageIndex()
+    {
+        return $this->isLeftColumn() ? parent::getPageIndex() : 4;
+    }
+
     public function getPageCss()
     {
         $aCss = array(

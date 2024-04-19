@@ -66,7 +66,7 @@ class BxBaseStudioOptions extends BxDolStudioOptions
         $bWrap = count($aCategories) > 1;
         $aForm = [
             'form_attrs' => [
-                'id' => 'adm-settings-form',
+                'id' => 'adm-settings-form' . ($bWrap ? '-categorized' : ''),
                 'name' => 'adm-settings-form',
                 'action' => bx_append_url_params($this->sBaseUrl, ['type' => $this->sType]),
                 'method' => 'post',

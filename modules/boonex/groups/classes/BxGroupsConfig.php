@@ -79,6 +79,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
 
             'URL_HOME' => 'page.php?i=groups-home',
             'URL_ENTRY_FANS' => 'page.php?i=group-fans',
+            'URL_ENTRY_MANAGE' => 'page.php?i=group-manage',
             'URL_MANAGE_COMMON' => 'page.php?i=groups-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=groups-administration',
 

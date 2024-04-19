@@ -27,6 +27,13 @@ define('BX_NTFS_STYPE_FOLLOW_CONTEXT', 'follow_context');
 define('BX_NTFS_STYPE_OTHER', 'other');
 
 /**
+ * DTYPE - Delivery Type
+ */
+define('BX_NTFS_DTYPE_SITE', 'site');
+define('BX_NTFS_DTYPE_EMAIL', 'email');
+define('BX_NTFS_DTYPE_PUSH', 'push');
+
+/**
  * SLTMODE - Silent mode:
  * It is needed for alert sending module to tell that the alert should be ignored 
  * with Notifications module completely or partially. Available values: 
@@ -99,6 +106,8 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             'GetUnreadNotificationsNum' => '',
             'GetUnreadNotificationsNumEx' => '',
             'MarkAsRead' => '',
+            'EnableSetting' => '',
+            'ChangeSetting' => '',
         ];
     }
 
@@ -557,7 +566,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return $mixedResult;
     }
 
-    public function _changeSettingsValueLike($iId, $sField, $mixedValue, $bAdministration = false)
+    public function changeSettingsValueLike($iId, $sField, $mixedValue, $bAdministration = false)
     {
         $aSetting = $this->_oDb->getSetting(array(
             'by' => $bAdministration ? 'id' : 'tsu_id', 
@@ -679,6 +688,45 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             return false;
 
         return $this->_oDb->markAsRead($iOwnerId, $aEvent['id']) !== false;
+    }
+
+    public function serviceEnableSetting($mixedParams)
+    {
+        if(!is_array($mixedParams))
+            $mixedParams = json_decode($mixedParams, true);
+
+        if(!isset($mixedParams['id'], $mixedParams['value']))
+            return false;
+
+        $iId = (int)$mixedParams['id'];
+        $iValue = (int)$mixedParams['value'];
+        $bAdministration = isset($mixedParams['admin']) && $mixedParams['admin'];
+
+        if(!$this->_oConfig->isSettingsGrouped())
+            $mixedResult = $this->_oDb->updateSetting(['active' => $iValue], ['id' => $iId]);
+        else 
+            $mixedResult = $this->enableSettingsLike($iId, $iValue, $bAdministration);
+
+        return $mixedResult !== false;
+    }
+            
+    public function serviceChangeSetting($mixedParams)
+    {
+        if(!is_array($mixedParams))
+            $mixedParams = json_decode($mixedParams, true);
+
+        if(!isset($mixedParams['id'], $mixedParams['value']))
+            return false;
+
+        $iId = (int)$mixedParams['id'];
+        $iValue = (int)$mixedParams['value'];
+
+        if(!$this->_oConfig->isSettingsGrouped())
+            $mixedResult = $this->_oDb->updateSetting(['value' => $iValue], ['id' => $iId]);
+        else 
+            $mixedResult = $this->changeSettingsValueLike($iId, 'value', $iValue, true);
+
+        return $mixedResult !== false;
     }
 
     /*

@@ -84,6 +84,11 @@ class BxDolEmbed extends BxDolFactoryObject
         $aData = json_decode($sData, true);
         return $aData;
     }
+    
+    public function getHtml ($sUrl, $sTheme)
+    {
+        // override this function in particular editor class
+    }
 }
 
 /** @} */

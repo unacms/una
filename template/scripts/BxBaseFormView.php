@@ -401,6 +401,12 @@ class BxBaseFormView extends BxDolForm
                     if (isset($aInput['value'], $aInput['html']) && (int)$aInput['html'] == 0)
                         $aInput['value'] = strip_tags($aInput['value']);
                 }
+
+                if (isset($aInput['type'], $aInput['values_src']) && in_array($aInput['type'], ['select', 'select_multiple', 'checkbox_set', 'radio_set']) && strncmp(BX_DATA_LISTS_KEY_PREFIX, $aInput['values_src'], 2) === 0) {
+                    $aInput['values'] = array_map(function($sKey) use($aInput) {
+                        return ['key' => $sKey, 'value' => $aInput['values'][$sKey]];
+                    }, array_keys($aInput['values']));
+                }
             }
             else{
                 $keysToRemove[] = $key;
@@ -907,8 +913,18 @@ BLAH;
         if(!$this->_bViewMode)
             return $this->genRowStandard($aInput);
 
-        $aInput['caption_src'] = '_sys_form_input_age';
-        $aInput['caption'] = _t($aInput['caption_src']);
+        $sTxtAge = '_sys_form_input_age';
+        $aInput = array_merge($aInput, [
+            'caption_src' => $sTxtAge,
+            'caption' => _t($sTxtAge),
+        ]);
+
+        if(bx_is_api())
+            $aInput = array_merge($aInput, [
+                'type' => 'text',
+                'value' => bx_birthday2age($aInput['value'])
+            ]);
+
         return $this->genViewRowWrapped($aInput);
     }
 
@@ -965,7 +981,7 @@ BLAH;
         $sClassOneLineCaption = '';
         $sClassOneLineValue = '';
         if ($isOneLine) {
-            $sClassOneLineCaption = ' bx-form-caption-oneline bx-form-caption-oneline-' . $aInput['type'] . ' bx-def-margin-sec-left';
+            $sClassOneLineCaption = ' bx-form-caption-oneline bx-form-caption-oneline-' . $aInput['type'] . ' bx-def-margin-left';
             $sClassOneLineValue = ' bx-form-value-oneline bx-form-value-oneline-' . $aInput['type'];
             if (!isset($aInput['attrs']) || !is_array($aInput['attrs']))
                 $aInput['attrs'] = [];
@@ -1085,51 +1101,66 @@ BLAH;
         $aAttrs = empty($aInput['attrs']) ? '' : $aInput['attrs'];
 
         // if there is no caption - show divider only
-
-        if (empty($aInput['caption'])) {
-            $sCode = $this->{$this->_sSectionClose}();
-            $sCode .= $this->{$this->_sSectionOpen}($aAttrs);
-            return $sCode;
-        }
+        if (empty($aInput['caption']))
+            return $this->{$this->_sSectionOpen}($aAttrs);
 
         // if section is collapsed by default, add necessary code
-
         $sClassAddCollapsable = 'bx-form-collapsable';
-        if (isset($aInput['collapsed']) and $aInput['collapsed'])
+        if(isset($aInput['collapsed']) && $aInput['collapsed'])
             $sClassAddCollapsable .= ' bx-form-collapsed bx-form-section-hidden';
 
         // display section with caption
-
-        $sCode = $this->{$this->_sSectionClose}();
-
-        if (empty($aAttrs))
-            $aAttrs = array('class' => 'bx-form-collapsable ' . $sClassAddCollapsable);
+        if(empty($aAttrs))
+            $aAttrs = ['class' => $sClassAddCollapsable];
         else
-            $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
+            $aAttrs['class'] .= ' ' . $sClassAddCollapsable;
 
-        if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
-        else
-            $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
+        $bViewMode = !empty($this->aParams['view_mode']);
+
+        $sCaption = bx_process_output($aInput['caption'], BX_DATA_HTML);
+        $sInfo = !empty($aInput['info']) ? bx_process_output($aInput['info']) : '';
+        $bInfo = !empty($sInfo);
+
+        $sTitle = $this->oTemplate->parseHtmlByName('form_field_section_title.html', [
+            'bx_if:show_view' => [
+                'condition' => $bViewMode,
+                'content' => [
+                    'caption' => $sCaption,
+                    'bx_if:show_view_info' => [
+                        'condition' => $bInfo,
+                        'content' => [
+                            'info' => $sInfo
+                        ]
+                    ]
+                ]
+            ],
+            'bx_if:show_default' => [
+                'condition' => !$bViewMode,
+                'content' => [
+                    'caption' => $sCaption,
+                    'bx_if:show_default_info' => [
+                        'condition' => $bInfo,
+                        'content' => [
+                            'info' => $sInfo
+                        ]
+                    ]
+                ]
+            ]
+        ]);
 
         if (isset($aInput['name'])) {
             if (!isset($aInput['tr_attrs']) || !is_array($aInput['tr_attrs']))
                 $aInput['tr_attrs'] = [];
+
             $aInput['tr_attrs']['id'] = "bx-form-section-" . $aInput['name'];
         }
 
-        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sTitle, !empty($aInput['tr_attrs']) ? $aInput['tr_attrs'] : []);
-
-        return $sCode;
+        return $this->{$this->_sSectionOpen}($aAttrs, $sTitle, !empty($aInput['tr_attrs']) ? $aInput['tr_attrs'] : []);
     }
 
     function genBlockEnd()
     {
-        $aNextTbodyAdd = false; // need to have some default
-        $sCode = '';
-        $sCode .= $this->{$this->_sSectionClose}();
-        $sCode .= $this->{$this->_sSectionOpen}($aNextTbodyAdd);
-        return $sCode;
+        return $this->{$this->_sSectionClose}();
     }
 
     /**
@@ -2262,7 +2293,7 @@ BLAH;
 
     function genInfoIcon($sInfo)
     {
-        return '<div class="bx-form-info bx-def-font-grayed bx-def-font-small">' . bx_process_output($sInfo, BX_DATA_HTML) . '</div>';
+        return '<div class="bx-form-info bx-def-font-grayed bx-def-font-small mt-1">' . bx_process_output($sInfo, BX_DATA_HTML) . '</div>';
     }
 
     function genErrorIcon( $sError = '' )
@@ -2275,43 +2306,30 @@ BLAH;
         }
     }
 
-    function getOpenSection($aAttrs = array(), $sTitle = '', $aWrapperAttrs = [])
+    function getOpenSection($aAttrs = [], $sTitle = '', $aWrapperAttrs = [])
     {
-        if (!$this->_isSectionOpened) {
+        $sClose = '';
+        if($this->_isSectionOpened)
+            $sClose = $this->{$this->_sSectionClose}();
 
-            if (!$aAttrs || !is_array($aAttrs))
-                $aAttrs = array();
+        $sWrapperAttrs = bx_convert_array2attrs($aWrapperAttrs, "bx-form-section-wrapper my-4");
+            
+        if(!$aAttrs || !is_array($aAttrs))
+            $aAttrs = [];
 
-            if ($sTitle)
-                $sClassesAdd = "bx-form-section-header";
-            else
-                $sClassesAdd = "bx-form-section-divider";
+        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider"));
 
-            $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-def-padding-sec-top bx-def-border-top " . $sClassesAdd);
-
-            $sWrapperAttrs = bx_convert_array2attrs($aWrapperAttrs, "bx-form-section-wrapper bx-def-margin-top");
-
-            $this->_isSectionOpened = true;
-
-            return "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sTitle ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
-
-        } else {
-
-            return '';
-        }
+        $this->_isSectionOpened = true;
+        return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content py-4" . ($sTitle ? ' px-6' : '') . "\">\n";
     }
 
     function getCloseSection()
     {
-        if ($this->_isSectionOpened) {
-
-            $this->_isSectionOpened = false;
-            return "</div> </div> </div> \n<!-- form header content ends -->\n";
-
-        } else {
-
+        if(!$this->_isSectionOpened)
             return '';
-        }
+
+        $this->_isSectionOpened = false;
+        return "</div> </div> </div> \n<!-- form header content ends -->\n";
     }
 
     function getOpenSectionViewMode($aAttrs = array(), $sTitle = '', $aWrapperAttrs = [])

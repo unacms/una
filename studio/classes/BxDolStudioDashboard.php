@@ -57,7 +57,7 @@ class BxDolStudioDashboard extends BxTemplStudioWidget
                     if(!isset($this->aBlocks[$sValue]))
                         break;
 
-                    $aBlock = $this->{$this->aBlocks[$sValue]}(false);
+                    $aBlock = $this->{$this->aBlocks[$sValue]}(true);
                     if(!empty($aBlock['content']))
                         $aResult = array('code' => 0, 'data' => $aBlock['content']);
 

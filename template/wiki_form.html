@@ -10,9 +10,8 @@
                 formData.push({name: 'translations', value: JSON.stringify(window.glBxDolWiki__block_id__.getTranslations())});
             },
             success: function (data) {
-                if ('{' == data[0]) {
-                    var oResponce = JSON.parse(data);
-                    window.glBxDolWiki__block_id__.processResponce(oResponce);
+                if ('object' == typeof(data) && data.constructor == ({}).constructor) {
+                    window.glBxDolWiki__block_id__.processResponce(data);
                 }
                 else {
                     $("#bx-wiki-form-__block_id__").parent().html(data).bxProcessHtml();

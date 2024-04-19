@@ -637,6 +637,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'params' => &$aParams,
         ]);
 
+        $bValidate = !empty($aParams['validate']) && is_array($aParams['validate']);
+
         $sTable = isset($aParams['from_cache']) && $aParams['from_cache'] === true ? $this->_sTableSlice : $this->_sTable;
         $sTableAlias = $this->getTableAlias();
 
@@ -708,9 +710,17 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if($bCount)
             return array_sum($aSqlParts);
 
-        $sSql = bx_replace_markers('(' . implode(') UNION (', $aSqlParts) . ') {order} {limit}', [
-            'order' => str_replace("`{$sTableAlias}`.", '', $sOrderClause),
-            'limit' => str_replace("`{$sTableAlias}`.", '', $sLimitClause),
+        /*
+         * TODO: Should be updated when GROUP BY `source` will be used in sub selects.
+         */
+        $sSqlMaskUnion = '(' . implode(') UNION (', $aSqlParts) . ')';
+        if($bValidate)
+            $sSqlMaskUnion = 'SELECT MAX(`tu`.`id`) AS `id` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
+        $sSqlMaskUnion .= ' {order} {limit}';
+
+        $sSql = bx_replace_markers($sSqlMaskUnion, [
+            'order' => str_replace("`{$sTableAlias}`.", $bValidate ? '`tu`.' : '', $sOrderClause),
+            'limit' => str_replace("`{$sTableAlias}`.", $bValidate ? '`tu`.' : '', $sLimitClause),
         ]);
 
         //echoDbg($sSql); exit;
@@ -1216,10 +1226,22 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     $mixedWhereSubclause['p4'] = "`{$sTableAlias}`.`promoted` <> '0'";
                 }
 
+                //--- 'For You' feed only: Channels
+                if($bForYou && in_array(BX_TIMELINE_FYFS_CHANNELS, $aForYouSources)) {
+                    $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+
+                    //--- Join System posts received by following channels.
+                    $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($sTableAlias, 'owner_id', $aParams['owner_id']);
+                    $aJoin1 = $aQueryParts['join'];
+
+                    $mixedJoinSubclause['p5'] = "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                    $mixedWhereSubclause['p5'] = "`{$sTableAlias}`.`type`='bx_channels'";
+                }
+                
                 //--- 'For You' feed only: Add Hot posts
                 if($bForYou && in_array(BX_TIMELINE_FYFS_HOT, $aForYouSources)) {
-                    $mixedJoinSubclause['p5'] = "INNER JOIN `{$this->_sTableHotTrack}` ON `{$sTableAlias}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
-                    $mixedWhereSubclause['p5'] = "1";
+                    $mixedJoinSubclause['p6'] = "INNER JOIN `{$this->_sTableHotTrack}` ON `{$sTableAlias}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
+                    $mixedWhereSubclause['p6'] = "1";
                 }
 
                 //--- 'For You' feed only: Add posts from recommended friends
@@ -1229,8 +1251,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     ]);
 
                     if(!empty($aList) && is_array($aList)) {
-                        $mixedJoinSubclause['p6'] = "";
-                        $mixedWhereSubclause['p6'] = "`{$sTableAlias}`.`owner_id` IN (" . $this->implode_escape(array_keys($aList)) . ")";
+                        $mixedJoinSubclause['p7'] = "";
+                        $mixedWhereSubclause['p7'] = "`{$sTableAlias}`.`owner_id` IN (" . $this->implode_escape(array_keys($aList)) . ")";
                     }
                 }
 
@@ -1241,8 +1263,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     ]);
 
                     if(!empty($aList) && is_array($aList)) {
-                        $mixedJoinSubclause['p7'] = "";
-                        $mixedWhereSubclause['p7'] = "`{$sTableAlias}`.`owner_id` IN (" . $this->implode_escape(array_keys($aList)) . ")";
+                        $mixedJoinSubclause['p8'] = "";
+                        $mixedWhereSubclause['p8'] = "`{$sTableAlias}`.`owner_id` IN (" . $this->implode_escape(array_keys($aList)) . ")";
                     }
                 }
                 break;

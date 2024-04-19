@@ -274,12 +274,33 @@ function bx_process_macros ($s)
     if (!bx_is_macros_in_content($s))
         return $s;
 
-    return preg_replace_callback(
-        "/{{\~(.*?)\~}}/", 
-        function ($aMatches) {
-            return BxDolService::callMacro($aMatches[1]); 
-        }, 
+    $aCode = [];
+    $c = 1;
+
+    $s = preg_replace_callback(
+        "/(<code>)(.*?)(<\/code>)/s",
+        function ($aMatches) use (&$c, &$aCode) {
+            $aCode[$c] = $aMatches[2];
+            return $aMatches[1] . '___' . $c++ . '___' . $aMatches[3];
+        },
         $s);
+
+    $s = preg_replace_callback(
+        "/{{\~(.*?)\~}}/",
+        function ($aMatches) {
+            return BxDolService::callMacro($aMatches[1]);
+        },
+        $s);
+
+    $s = preg_replace_callback(
+        "/(<code>)___(.*?)___(<\/code>)/s",
+        function ($aMatches) use (&$aCode) {
+            $sCode = isset($aCode[$aMatches[2]]) ? $aCode[$aMatches[2]] : 'n/a';
+            return $aMatches[1] . $sCode . $aMatches[3];
+        },
+        $s);
+
+    return $s;
 }
 
 /*
@@ -1167,17 +1188,27 @@ function bx_get_site_info_fix_relative_url ($sSourceUrl, $s)
 
 function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $sAttrContentName, $sCharset = false, $bSpecialCharsDecode = true)
 {
-    if (!preg_match("/<{$sTag}\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"]\s+{$sAttrContentName}[='\" ]+([^'>\"]*)['\"][^>]*>/i", $sContent, $aMatch) || !isset($aMatch[1]))
-        preg_match("/<{$sTag}\s+{$sAttrContentName}[='\" ]+([^'>\"]*)['\"]\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"][^>]*>/i", $sContent, $aMatch);
+    // This regex is designed to be more flexible with attribute orders and spacing
+    $regex = "/<{$sTag}\s+(?:[^>]*?\s+)?{$sAttrNameName}\s*=\s*['\"]?{$sAttrNameValue}['\"]?\s+[^>]*{$sAttrContentName}\s*=\s*['\"]([^'\"]*)['\"][^>]*>/i";
+    if (!preg_match($regex, $sContent, $aMatch)) {
+        // Try reversing the attribute order in case the first regex fails
+        $regex = "/<{$sTag}\s+(?:[^>]*?\s+)?{$sAttrContentName}\s*=\s*['\"]([^'\"]*)['\"]\s+[^>]*{$sAttrNameName}\s*=\s*['\"]?{$sAttrNameValue}['\"]?[^>]*>/i";
+        preg_match($regex, $sContent, $aMatch);
+    }
 
+    // Extract the attribute content if available
     $s = isset($aMatch[1]) ? $aMatch[1] : '';
 
-    if ($s && $sCharset)
+    // Optionally convert character encoding
+    if ($s && $sCharset) {
         $s = mb_convert_encoding($s, 'UTF-8', $sCharset);
+    }
 
-    if ($bSpecialCharsDecode)
+    // Optionally decode special HTML characters
+    if ($bSpecialCharsDecode) {
         $s = htmlspecialchars_decode($s);
-        
+    }
+
     return $s;
 }
 
@@ -2132,6 +2163,31 @@ function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
     return $text;
 }
 
+function bx_linkify_embeded($text)
+{
+    $urlRegex = '/\b((https?:\/\/)|(www\.))((([0-9a-zA-Z_!~*\'().&=+$%-]+:)?[0-9a-zA-Z_!~*\'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*\'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,16})(:[0-9]{1,4})?((\/[0-9a-zA-Z_!~*\'().;?:@&=+$,%#-]*)*))/';
+    preg_match_all($urlRegex, $text, $matches, PREG_SET_ORDER);
+
+    // Reverse the matches to mimic JavaScript's reverse order processing
+    $matches = array_reverse($matches);
+    $sLink = '';
+    foreach ($matches as $match) {
+        // Assuming APP_URL and UNA_URL are defined constants
+        if (!strstr($match[0], 'https://ci.una.io/') && !strstr($match[0], 'https://ci.una.io/')) {
+            $sLink = $match[0]; // Returns the first URL that doesn't include the restricted domains
+        }
+    }
+    
+    $text = '';
+    if ($sLink){
+        bx_import('BxDolEmbed');
+        $oEmbed = BxDolEmbed::getObjectInstance('sys_system');
+        $text = $oEmbed->getHtml($sLink, '');
+    }
+    
+    return $text;
+}
+
 /**
  * Wrap in A tag links in HTML string, which aren't wrapped in A tag yet
  * @param $sHtmlOrig - HTML string
@@ -2522,7 +2578,7 @@ function bx_api_get_image($sStorage, $iId)
     if(!empty($aFile['dimensions'])){
         $aTmp = explode('x', $aFile['dimensions']);
         $iWidth = (int) $aTmp[0];
-        $$iHeight = (int) $aTmp[1];
+        $iHeight = (int) $aTmp[1];
     }
     if (!empty($sUrl)){
         return [

@@ -91,6 +91,7 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected $_bDynamicMode;
     protected $_bAddNoFollow;
 
+    protected $_bSelModuleCheck;
     protected $_sSelModule;
     protected $_sSelName;
 
@@ -118,6 +119,8 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         $this->_bDynamicMode = false;
         $this->_bAddNoFollow = getParam('sys_add_nofollow') == 'on';
+
+        $this->_bSelModuleCheck = false;
 
         $this->_sObject = isset($aObject['object']) ? $aObject['object'] : 'bx-menu-obj-' . time() . rand(0, PHP_INT_MAX);
         $this->_aObject = $aObject;
@@ -399,9 +402,10 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     protected function _isSelected ($a)
     {
-        if ($this->_sSelModule || $this->_sSelName)
-            return (!isset($a['module']) || $a['module'] == $this->_sSelModule) && (isset($a['name']) && $a['name'] == $this->_sSelName) ? true : false;
-        return (!isset($a['module']) || $a['module'] == self::$SEL_MODULE) && (isset($a['name']) && $a['name'] == self::$SEL_NAME) ? true : false;
+        if($this->_sSelModule || $this->_sSelName)
+            return (!$this->_bSelModuleCheck || !isset($a['module']) || $a['module'] == $this->_sSelModule) && (isset($a['name']) && $a['name'] == $this->_sSelName) ? true : false;
+
+        return (!$this->_bSelModuleCheck || !isset($a['module']) || $a['module'] == self::$SEL_MODULE) && (isset($a['name']) && $a['name'] == self::$SEL_NAME) ? true : false;
     }
 
     /**

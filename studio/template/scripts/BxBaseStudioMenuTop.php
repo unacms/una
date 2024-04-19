@@ -32,6 +32,8 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop
 
     function getCode()
     {
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
         $aTmplVars = array();
         foreach($this->aItems as $sPosition => $mixedItems) {
             if(!$this->aVisible[$sPosition])
@@ -49,6 +51,14 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop
                 ));
 
                 $sContent = $oMenu->getCode();
+                if($sPosition == BX_DOL_STUDIO_MT_RIGHT) {
+                    $sContent = $oTemplate->parseHtmlByContent($sContent, [
+                        'bx_if:show_search' => [
+                            'condition' => $this->sPageName == 'home' && getParam('sys_std_show_header_right_search') == 'on',
+                            'content' => []
+                        ]
+                    ]);
+                }
             }
 
             $aTmplVars[] = array(
@@ -60,7 +70,6 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop
         if(empty($aTmplVars))
             return '';
 
-        $oTemplate = BxDolStudioTemplate::getInstance();
         $oTemplate->addJs($this->getJs());
         $oTemplate->addCss($this->getCss());
         return $oTemplate->parseHtmlByName('menu_top.html', array('bx_repeat:menus' => $aTmplVars));

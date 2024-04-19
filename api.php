@@ -10,8 +10,9 @@ header('Content-Type: application/json');
 
 bx_api_check_access();
 
-if (bx_get('cnf') ){   
-   echo getParam('sys_api_config');
+if (bx_get('cnf') ){
+   $sCnf = getParam('sys_api_config');
+   echo json_encode(['data' => $sCnf, 'hash' => md5($sCnf)]);
    exit();
 }
 
@@ -98,6 +99,7 @@ $aRv = [
     'method' => $sMethod,
     'params' => $aParams,
     'data' => $mixedRet,
+    'hash' => md5(getParam('sys_api_config')),
 ];
 
 echo json_encode($aRv);
