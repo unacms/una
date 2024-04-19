@@ -770,8 +770,14 @@
     }
 
     .bx-form-section.bx-form-section-header {
-        @apply border rounded-2xl;
+        @apply border border-gray-200 dark:border-gray-900 rounded-2xl;
         @apply overflow-hidden;
+    }
+    .bx-form-section.bx-form-section-header .bx-form-section-title:hover {
+        @apply bg-gray-100 dark:bg-gray-900;
+    }
+    .bx-form-section.bx-form-section-header:not(.bx-form-collapsed) .bx-form-section-title {
+        @apply bg-gray-100 dark:bg-gray-900;
     }
 
     /* Common elements: Forms: Text Input */

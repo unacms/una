@@ -53,14 +53,6 @@ import url(../../../../../../../template/css/forms.css);
     text-transform: uppercase;
 }
 
-.bx-form-section-header .bx-form-section-title:hover {
-    background-color: rgba(243, 244, 246, 1);
-}
-
-.bx-form-section-header:not(.bx-form-collapsed) .bx-form-section-title {
-    background-color: rgba(243, 244, 246, 1);
-}
-
 .bx-form-section-header .bx-form-section-title .sys-icon {
     color: inherit !important;
 }
