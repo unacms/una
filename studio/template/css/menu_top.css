@@ -29,6 +29,10 @@ div.bx-std-menu-top.bx-std-menu-top-left,
 div.bx-std-menu-top.bx-std-menu-top-right {    
     min-width: 15%;
 }
+div.bx-std-menu-top.bx-std-menu-top-right {    
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
 div.bx-std-menu-top-center ul {
     position: relative;
     display: -webkit-flex;
@@ -201,6 +205,8 @@ div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search {
     align-items: center;
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
+
+    max-width: 24rem;
 }
 div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search .bx-form-input-text {
     height: 3rem;
@@ -226,6 +232,10 @@ div.bx-std-menu-top .bx-menu-toolbar li a {
     
     border-radius: 1.5rem;
     backgroud-color: rgba(55, 65, 81, 1);
+}
+
+div.bx-std-menu-top .bx-menu-toolbar li a:hover {
+    color: #ffffff;
 }
 
 div.bx-std-menu-top .bx-menu-toolbar li svg g {
@@ -263,7 +273,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     display: block;
     content: '';
 
-    top: 0.3rem;
+    top: 0.25rem;
     right: 1.0rem;
     width: 0.5rem;
     height: 0.5rem;
@@ -284,7 +294,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-actions .bx-popup,
 #bx-std-pcap-menu-popup-account .bx-popup,
 .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
-    box-shadow: inset -1px -1px 0px rgba(240, 240, 240, 0.2), inset 1px 1px 0px rgba(240, 240, 240, 0.2);
+    border-width: 0; 
     background-color: #001529;
 }
 #bx-std-pcap-menu-popup-actions .bx-popup-content {

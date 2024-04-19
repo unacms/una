@@ -1,7 +1,3 @@
-.bx-std-bg {
-    background: rgba(0, 0, 0, 1);
-}
-
 /*--- 2 columns ---*/
 .bx-std-pc-stretch {
     position: relative;
@@ -29,10 +25,10 @@ div.bx-std-page-columns-cnt {
 
 div.bx-std-page-column.bx-std-page-menu {
     position: relative;
-    -webkit-flex: 0 0 230px;
-    flex: 0 0 230px;
+    -webkit-flex: 0 0 20rem;
+    flex: 0 0 20rem;
 
-    width: 230px;
+    width: 20rem;
     height: 100%;
 
     background-color: #ffffff;

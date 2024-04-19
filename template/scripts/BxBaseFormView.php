@@ -981,7 +981,7 @@ BLAH;
         $sClassOneLineCaption = '';
         $sClassOneLineValue = '';
         if ($isOneLine) {
-            $sClassOneLineCaption = ' bx-form-caption-oneline bx-form-caption-oneline-' . $aInput['type'] . ' bx-def-margin-sec-left';
+            $sClassOneLineCaption = ' bx-form-caption-oneline bx-form-caption-oneline-' . $aInput['type'] . ' bx-def-margin-left';
             $sClassOneLineValue = ' bx-form-value-oneline bx-form-value-oneline-' . $aInput['type'];
             if (!isset($aInput['attrs']) || !is_array($aInput['attrs']))
                 $aInput['attrs'] = [];
@@ -2293,7 +2293,7 @@ BLAH;
 
     function genInfoIcon($sInfo)
     {
-        return '<div class="bx-form-info bx-def-font-grayed bx-def-font-small">' . bx_process_output($sInfo, BX_DATA_HTML) . '</div>';
+        return '<div class="bx-form-info bx-def-font-grayed bx-def-font-small mt-1">' . bx_process_output($sInfo, BX_DATA_HTML) . '</div>';
     }
 
     function genErrorIcon( $sError = '' )
@@ -2317,7 +2317,7 @@ BLAH;
         if(!$aAttrs || !is_array($aAttrs))
             $aAttrs = [];
 
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider") . " border rounded-2xl overflow-hidden");
+        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider"));
 
         $this->_isSectionOpened = true;
         return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content py-4" . ($sTitle ? ' px-6' : '') . "\">\n";

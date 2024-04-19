@@ -185,7 +185,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 	public function serviceGetBlockHostTools($bDynamic = true)
 	{
 		$sJsObject = $this->getPageJsObject();
-
+/*
 		$aMenu = array(
 			array(
 				'name' => 'audit', 
@@ -200,6 +200,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 				'onclick' => $sJsObject . '.permissions()'
 			)
 		);
+ */
 
 		$oAudit = new BxDolStudioToolsAudit();
 
@@ -239,7 +240,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
        		)
 	    ));
 
-		return array('content' => $sContent, 'menu' => $aMenu);
+		return array('content' => $sContent);
 	}
 
 	public function serviceGetBlockCache()

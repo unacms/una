@@ -1,6 +1,9 @@
 /**
  * Overwrite
  */
+.bx-std-bg.bx-std-page-launcher {
+    background: rgba(0, 0, 0, 1);
+}
 
 div.bx-std-menu-top-wrp {
     position: fixed;
@@ -78,7 +81,7 @@ div.bx-std-widgets-highlight {
 }
 div.bx-std-widget {
     position: relative;
-    padding: 24px;
+    padding: 24px 24px 12px 24px;
 }
 div.bx-std-widget-empty {
     width: 5.0rem;
@@ -249,9 +252,8 @@ div.bx-std-widget-caption {
     text-overflow: ellipsis;
     overflow: hidden;
 
-    font-stretch: condensed;
     font-weight: 400;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
 }
 div.bx-std-widget-caption-jitter {
     position: absolute;
@@ -262,7 +264,7 @@ div.bx-std-widget-caption-jitter {
 }
 div.bx-std-widget-caption,
 div.bx-std-widget-caption a {
-    color: rgba(107, 114, 128, 1);
+    color: rgb(156 163 175);
 }
 
 /**

@@ -1,11 +1,17 @@
-<div id="bx-dbd-htools" class="bx-dbd-block-content">
-    <bx_if:show_content>
-        <div class="bx-dbd-htools bx-clearfix">
-            <bx_repeat:items>
-                <div class="bx-dbd-htools-item bx-def-margin-sec-bottom">__status__ __msg__</div>
-            </bx_repeat:items>
-        </div>
-    </bx_if:show_content>
+<div id="bx-dbd-htools">
+    <div class="bx-dbd-block-content">
+        <bx_if:show_content>
+            <div class="bx-dbd-htools bx-clearfix">
+                <bx_repeat:items>
+                    <div class="bx-dbd-htools-item bx-def-margin-sec-bottom">__status__ __msg__</div>
+                </bx_repeat:items>
+            </div>
+        </bx_if:show_content>
+    </div>
+    <div class="bx-dbd-block-actions border-t border-b-zinc-200 space-x-4">
+        <a class="bx-btn" href="javascript:void(0)" onclick="javascript:__js_object__.serverAudit()"><bx_text:_sys_inst_server_audit /></a>
+        <a class="bx-btn" href="javascript:void(0)" onclick="javascript:__js_object__.permissions()"><bx_text:_sys_audit_permissions /></a>
+    </div>
     <bx_if:show_loader>
         <script language="javascript">
             $(document).ready(function() {
@@ -13,4 +19,3 @@
             });
         </script>
     </bx_if:show_loader>
-</div>

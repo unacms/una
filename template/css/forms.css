@@ -33,14 +33,14 @@
     display: flex;
     -webkit-align-items: center;
     align-items: center;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
 
     line-height: 1.5rem;
     text-transform: uppercase;
 }
 .bx-form-section-header .bx-form-section-title:hover {
-    background-color: rgba(229, 231, 235, 1);
+    background-color: rgba(243, 244, 246, 1);
 }
 
 .bx-form-section-header:not(.bx-form-collapsed) .bx-form-section-title {

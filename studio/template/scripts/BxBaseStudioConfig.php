@@ -15,13 +15,13 @@ class BxBaseStudioConfig extends BxBaseConfig
         parent::__construct();
 
         $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
-            'bx-margin' => '30px',
-            'bx-margin-sec' => '20px',
-            'bx-margin-thd' => '10px',
+            'bx-margin' => '24px',
+            'bx-margin-sec' => '16px',
+            'bx-margin-thd' => '8px',
 
-            'bx-padding' => '30px',
-            'bx-padding-sec' => '20px',
-            'bx-padding-thd' => '10px',
+            'bx-padding' => '24px',
+            'bx-padding-sec' => '16px',
+            'bx-padding-thd' => '8px',
 
             'bx-color-page' => '#f0f2f5',
             'bx-border-color-layout' => '#d9d9d9',

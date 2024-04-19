@@ -591,7 +591,7 @@
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Select Layout...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Page (Meta) Description]]></string>
 	<string name="_adm_bp_txt_page_meta_keywords"><![CDATA[Keywords]]></string>
-    <string name="_adm_bp_txt_page_meta_title"><![CDATA[Page (Meta) Title]]></string>
+        <string name="_adm_bp_txt_page_meta_title"><![CDATA[Page (Meta) Title]]></string>
 	<string name="_adm_bp_txt_page_meta_robots"><![CDATA[Meta Robots]]></string>
         <string name="_adm_bp_txt_page_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_bp_dsc_page_submenu"><![CDATA[Page submenu can be selected here]]></string>
@@ -629,14 +629,11 @@
         <string name="_adm_btn_settings_mix_publish"><![CDATA[Publish]]></string>
 	<string name="_adm_btn_store_search"><![CDATA[Search]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
-	<string name="_adm_dbd_txt_version_n_available"><![CDATA[UNA {0} is available!]]></string>
-	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA on]]></string>
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
         <string name="_adm_dbd_txt_available"><![CDATA[Available:]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_updated"><![CDATA[Updated:]]></string>
-	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
-    <string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute.<br />Don't forget to <a href="{0}store.php?page=updates">check for modules updates</a> after that.]]></string>
+        <string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute.<br />Don't forget to <a href="{0}store.php?page=updates">check for modules updates</a> after that.]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[System]]></string>
 	<string name="_adm_dbd_txt_su_system_media"><![CDATA[System Media]]></string>
@@ -649,17 +646,17 @@
 	<string name="_adm_dbd_txt_c_clear_css"><![CDATA[Clear CSS cache]]></string>
         <string name="_adm_dbd_txt_c_less"><![CDATA[LESS]]></string>
         <string name="_adm_dbd_txt_c_clear_less"><![CDATA[Clear LESS cache]]></string>
-    <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Clear Purifier cache]]></string>
-    <string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
-    <string name="_adm_dbd_txt_c_clear_js"><![CDATA[Clear JavaScript cache]]></string>
-    <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Clear Custom cache]]></string>
-    <string name="_adm_dbd_txt_c_opcache"><![CDATA[Opcache]]></string>
-    <string name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Clear Opcache]]></string>
-    <string name="_adm_dbd_err_c_clean_failed"><![CDATA[Failed to clear cache]]></string>
-    <string name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Cache clearing is unsupported]]></string>
-    <string name="_adm_dbd_msg_c_clean_success"><![CDATA[Cache was successfully cleared]]></string>
-    <string name="_adm_dbd_msg_c_all_disabled"><![CDATA[All caches are disabled]]></string>
-    <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
+        <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Clear Purifier cache]]></string>
+        <string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
+        <string name="_adm_dbd_txt_c_clear_js"><![CDATA[Clear JavaScript cache]]></string>
+        <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Clear Custom cache]]></string>
+        <string name="_adm_dbd_txt_c_opcache"><![CDATA[Opcache]]></string>
+        <string name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Clear Opcache]]></string>
+        <string name="_adm_dbd_err_c_clean_failed"><![CDATA[Failed to clear cache]]></string>
+        <string name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Cache clearing is unsupported]]></string>
+        <string name="_adm_dbd_msg_c_clean_success"><![CDATA[Cache was successfully cleared]]></string>
+        <string name="_adm_dbd_msg_c_all_disabled"><![CDATA[All caches are disabled]]></string>
+        <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_dsg_btn_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_dsg_btn_make_default"><![CDATA[Make Default]]></string>
 	<string name="_adm_dsg_dsc_alt_text"><![CDATA[Serves as "ALT" text for logo image. Used as a logo when no logo image is uploaded.]]></string>
