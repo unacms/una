@@ -75,6 +75,7 @@ CREATE TABLE `sys_objects_embeds` (
 
 
 INSERT INTO `sys_objects_embeds` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
+('sys_system', 'System', 'BxTemplEmbedSystem', ''),
 ('sys_embedly', 'Embedly', 'BxTemplEmbedEmbedly', ''),
 ('sys_iframely', 'Iframely', 'BxTemplEmbedIframely', ''),
 ('sys_oembed', 'Oembed', 'BxTemplEmbedOembed', '');
@@ -89,6 +90,16 @@ CREATE TABLE `sys_iframely_data` (
   PRIMARY KEY (id)
 );
 
+
+
+CREATE TABLE `sys_embeded_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
+  `data` text DEFAULT NULL,
+  `added` int(11) DEFAULT NULL,
+  `theme` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
 -- --------------------------------------------------------
 
 
@@ -505,7 +516,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 45),
 
-(@iCategoryId, 'sys_embed_default', '_adm_stg_cpt_option_sys_embed_default', 'sys_oembed', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_options_embed_default";s:5:"class";s:13:"TemplServices";}', '', '', 79),
+(@iCategoryId, 'sys_embed_default', '_adm_stg_cpt_option_sys_embed_default', 'sys_system', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_options_embed_default";s:5:"class";s:13:"TemplServices";}', '', '', 79),
 (@iCategoryId, 'sys_embedly_api_key', '_adm_stg_cpt_option_sys_embedly_api_key', '', 'digit', '', '', '', 80),
 
 (@iCategoryId, 'sys_iframely_api_key', '_adm_stg_cpt_option_sys_iframely_api_key', '', 'digit', '', '', '', 90);
