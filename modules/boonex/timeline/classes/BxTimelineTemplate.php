@@ -1950,6 +1950,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ];
         }
 
+        if ($aEvent['content']['url'])
         $aEvent['url'] = bx_ltrim_str($aEvent['content']['url'], BX_DOL_URL_ROOT);
 
         if(!empty($aEvent['content']) && !empty($aEvent['content']['text'])) {
@@ -1958,6 +1959,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $sMethodPrepare .= 'BriefCard';
 
             $aEvent['content']['text'] = $this->$sMethodPrepare($aEvent['content']['text'], $aEvent['id']);
+            $aEvent['content']['embed'] = bx_linkify_embeded($aEvent['content']['text']);
         }
 
         if(empty($aEventAdd['menu_actions'])) {
