@@ -1242,9 +1242,16 @@
         @apply ring-1 ring-gray-600;
     }
 
-    .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
+    .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
         @apply ring ring-blue-600 ring-offset-2 ring-offset-black;
     }
+    
+    .bx-std .bx-stg-icon-gray-bg {
+        @apply h-8 w-8;
+        @apply bg-gray-200 bg-no-repeat bg-center;
+        @apply rounded-lg;
+    }
+
 
     /* Modules: Timeline */
     .bx-artificer .group\/item:hover .bx-tl-item-text .bx-tl-content.bx-tl-overflow .bx-tl-content-overflow {

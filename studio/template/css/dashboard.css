@@ -38,8 +38,12 @@ div.bx-dbd-htools .bx-btn {
 }
 
 div.bx-dbd-htools .bx-dbd-htools-item {
-    float: left;
-    width: 50%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
 }
 
 /*--- Queues block ---*/

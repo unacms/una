@@ -627,7 +627,6 @@
         <string name="_adm_btn_settings_mix_publish"><![CDATA[Публиковать]]></string>
 	<string name="_adm_btn_store_search"><![CDATA[Поиск]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Обновить]]></string>
-	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
         <string name="_adm_dbd_txt_available"><![CDATA[Доступна:]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Установлено:]]></string>
         <string name="_adm_dbd_txt_updated"><![CDATA[Обновлено:]]></string>
@@ -635,6 +634,7 @@
 	<string name="_adm_dbd_txt_su_database"><![CDATA[База данных]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[Система]]></string>
 	<string name="_adm_dbd_txt_su_system_media"><![CDATA[Системные медиа]]></string>
+        <string name="_adm_dbd_txt_c_select"><![CDATA[Выбрать...]]></string>
 	<string name="_adm_dbd_txt_c_clear_all"><![CDATA[Очистить весь кэш]]></string>
 	<string name="_adm_dbd_txt_c_db"><![CDATA[БД]]></string>
 	<string name="_adm_dbd_txt_c_clear_db"><![CDATA[Очистить кэш БД]]></string>

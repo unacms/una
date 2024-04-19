@@ -7,6 +7,10 @@ body.bx-dev-page-body-columns div.bx-std-page-menu {
     background-color: #4c6678;
     box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2);
 }
+div.bx-std-page-menu div.bx-std-page-column-cnt {
+    padding-left: 0;
+    padding-right: 0;
+}
 body.bx-dev-page-body-columns div.bx-std-page-column.bx-std-page-content {
     overflow-x: visible;
 }

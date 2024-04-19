@@ -629,7 +629,6 @@
         <string name="_adm_btn_settings_mix_publish"><![CDATA[Publish]]></string>
 	<string name="_adm_btn_store_search"><![CDATA[Search]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
-	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
         <string name="_adm_dbd_txt_available"><![CDATA[Available:]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_updated"><![CDATA[Updated:]]></string>
@@ -637,6 +636,7 @@
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[System]]></string>
 	<string name="_adm_dbd_txt_su_system_media"><![CDATA[System Media]]></string>
+        <string name="_adm_dbd_txt_c_select"><![CDATA[Select...]]></string>
 	<string name="_adm_dbd_txt_c_clear_all"><![CDATA[Clear all caches]]></string>
 	<string name="_adm_dbd_txt_c_db"><![CDATA[DB]]></string>
 	<string name="_adm_dbd_txt_c_clear_db"><![CDATA[Clear DB cache]]></string>
