@@ -145,7 +145,7 @@
 	<string name="_bx_invites_btn_copy"><![CDATA[Copy]]></string>
 	<string name="_bx_invites_btn_request"><![CDATA[Request Invitation]]></string>
 	<string name="_bx_invites_msg_invitation"><![CDATA[Hello! This site might be interesting for you.]]></string>
-	<string name="_bx_invites_msg_invitation_sent"><![CDATA[Invitation message was sent to {0} email addresses from the list.]]></string>
+	<string name="_bx_invites_msg_invitation_sent"><![CDATA[Invitation message was queued to send to {0} email addresses from the list.]]></string>
 	<string name="_bx_invites_msg_request_sent"><![CDATA[Invitation request was sent.]]></string>
 	<string name="_bx_invites_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
 	<string name="_bx_invites_err_limit_reached"><![CDATA[The number of invitations sent by you reached the limit.]]></string>

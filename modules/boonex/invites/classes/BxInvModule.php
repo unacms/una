@@ -442,7 +442,12 @@ class BxInvModule extends BxDolModule
                 continue;
 
             $sKey = $oKeys->getNewKey(false, $iKeyLifetime);
-            if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $this->getJoinLink($sKey), 'seen_image_url' => $this->getSeenImageUrl($sKey)), BX_EMAIL_SYSTEM)) {
+            $aMarkers = [
+                'join_url' => $this->getJoinLink($sKey), 
+                'seen_image_url' => $this->getSeenImageUrl($sKey)
+            ];
+
+            if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, $aMarkers, BX_EMAIL_SYSTEM, 'html', false, [], true)) {
                 $iInviteId = (int)$this->_oDb->insertInvite([
                     'account_id' => $iAccountId, 
                     'profile_id' => $iProfileId, 

@@ -145,7 +145,7 @@
 	<string name="_bx_invites_btn_copy"><![CDATA[Скопировать]]></string>
 	<string name="_bx_invites_btn_request"><![CDATA[Запросить приглашение]]></string>
 	<string name="_bx_invites_msg_invitation"><![CDATA[Привет! Этот сайт может оказаться интересным для Вас.]]></string>
-	<string name="_bx_invites_msg_invitation_sent"><![CDATA[Пригласительное сообщение послано по {0} эл. адресам из списка.]]></string>
+	<string name="_bx_invites_msg_invitation_sent"><![CDATA[Сообщение с приглашением было поставлено в очередь для отправки по {0} эл. адресам из списка.]]></string>
 	<string name="_bx_invites_msg_request_sent"><![CDATA[Запрос на приглашение послан.]]></string>
 	<string name="_bx_invites_err_cannot_perform"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 	<string name="_bx_invites_err_limit_reached"><![CDATA[Число посланных Вами приглашений достигло лимита.]]></string>
