@@ -41,12 +41,12 @@ class BxBaseModGroupsGridinvites extends BxTemplGrid
         return parent::getCode($isDisplayHeader);        
     }
 
-    public function getCodeAPI()
+    public function getCodeAPI($bForceReturn = false)
     {
         if(!$this->_bManageMembers)
             return [];
 
-        return parent::getCodeAPI();
+        return parent::getCodeAPI($bForceReturn);
     }
 
     protected function _getCellName ($mixedValue, $sKey, $aField, $aRow)
