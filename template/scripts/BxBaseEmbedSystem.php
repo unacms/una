@@ -116,8 +116,8 @@ class BxBaseEmbedSystem extends BxDolEmbed
         $aData = $this->getData($sUrl, $sTheme);
         
         return '<a href="'.$aData['url'].'" target="_blank" style="text-decoration: none; color: inherit;">
-    <div style="display: flex; flex-direction: row; column-gap:  height: 128px; border: 1px solid #ccc; align-items: stretch;">
-        <div style="flex: 0 0 128px; height: 128px; background: url('. ($aData['image'] ? $aData['image'] : $aData['logo']) .') center center / cover no-repeat;">
+    <div style="display: flex; flex-direction: row; column-gap:  height: 128px; border: 1px solid rgba(107, 114, 128, 0.2); border-radius:16px; align-items: stretch;">
+        <div style="flex: 0 0 128px; height: 128px; border-radius:16px 0 0 16px; background: url('. ($aData['image'] ? $aData['image'] : $aData['logo']) .') center center / cover no-repeat;">
         </div>
         <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;margin: 0 1rem">
             <div style="padding-top: 0.5rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;  overflow: hidden; text-overflow: ellipsis"><b> '.$aData['title'].'</b></div>
