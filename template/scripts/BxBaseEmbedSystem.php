@@ -8,7 +8,8 @@
  */
 
 /**
- * Iframely integration.
+ * System (default) integration.
+ * 
  * @see BxDolEmbed
  */
 class BxBaseEmbedSystem extends BxDolEmbed
@@ -26,9 +27,11 @@ class BxBaseEmbedSystem extends BxDolEmbed
 
     public function getLinkHTML ($sLink, $sTitle = '', $sMaxWidth = '')
     {
-        $aAttrs = array(
+        $aData = $this->getData($sLink, '');
+
+        $aAttrs = [
             'title' => bx_html_attribute($sTitle),
-        );
+        ];
 
         // check for external link
         if (strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) !== 0) {
@@ -38,58 +41,43 @@ class BxBaseEmbedSystem extends BxDolEmbed
                 $aAttrs['rel'] = 'nofollow';
         }
 
-        return $this->_oTemplate->parseHtmlByName('embed_iframely_link.html', array(
-            'link' => $sLink,
-            'title' => $sTitle,
+        return $this->_oTemplate->parseHtmlByName('embed_system_link.html', [
+            'link' => $aData['url'],
             'attrs' => bx_convert_array2attrs($aAttrs),
             'width' => $sMaxWidth,
-        ));
+            'image' => $aData['image'] ? $aData['image'] : $aData['logo'],
+            'logo' => $aData['logo'],
+            'title' => $aData['title'],
+            'description' => $aData['description'],
+            'domain' => $aData['domain'],
+        ]);
     }
 
-    public function addProcessLinkMethod ()
-    {
-        return "
-        <script>
-            function bx_embed_link(e)
-            {
-                window.iframely && iframely.load(e);
-            }
-        </script>";
-    }
-
-  
-    
     public function getDataFromApi ($sUrl, $sTheme)
     {
-        $a  = bx_get_site_info($sUrl, array(
-            'thumbnailUrl' => array('tag' => 'link', 'content_attr' => 'href'),
-            'OGImage' => array('name_attr' => 'property', 'name' => 'og:image'),
-            'icon' => array('tag' => 'link', 'name_attr' => 'rel', 'name' => 'shortcut icon', 'content_attr' => 'href'),
-            'icon2' => array('tag' => 'link', 'name_attr' => 'rel', 'name' => 'icon', 'content_attr' => 'href'),
-            'icon3' => array('tag' => 'link', 'name_attr' => 'rel', 'name' => 'apple-touch-icon', 'content_attr' => 'href'),
-        ));
+        $a  = bx_get_site_info($sUrl, [
+            'thumbnailUrl' => ['tag' => 'link', 'content_attr' => 'href'],
+            'OGImage' => ['name_attr' => 'property', 'name' => 'og:image'],
+            'icon' => ['tag' => 'link', 'name_attr' => 'rel', 'name' => 'shortcut icon', 'content_attr' => 'href'],
+            'icon2' => ['tag' => 'link', 'name_attr' => 'rel', 'name' => 'icon', 'content_attr' => 'href'],
+            'icon3' => ['tag' => 'link', 'name_attr' => 'rel', 'name' => 'apple-touch-icon', 'content_attr' => 'href'],
+        ]);
 
-        $a['image'] = $a['OGImage'] ? $a['OGImage'] : $a['thumbnailUrl'];
-        $a['logo'] = $a['icon2'] ? $a['icon2'] : ($a['icon3'] ? $a['icon3'] : $a['icon']);
-        $a['url'] = $sUrl;
+        $a = array_merge($a, [
+           'image' => $a['OGImage'] ? $a['OGImage'] : $a['thumbnailUrl'],
+           'logo' => $a['icon2'] ? $a['icon2'] : ($a['icon3'] ? $a['icon3'] : $a['icon']),
+           'url' => $sUrl
+        ]);
 
+        unset($a['OGImage'], $a['thumbnailUrl'], $a['icon'], $a['icon2'], $a['icon3']);
 
-        unset($a['OGImage']);
-        unset($a['thumbnailUrl']);
-        unset($a['icon2']);
-        unset($a['icon3']);
-        unset($a['icon']);
-
-        if ($a['image']){
-            $oStorage = BxDolStorage::getObjectInstance('sys_images');
-
+        if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
             $iMediaId = $oStorage->storeFileFromUrl($a['image'], false);
-            if ($iMediaId){
-               $a['image'] =  $oStorage->getFileUrlById($iMediaId);
-            }
+            if($iMediaId)
+                $a['image'] =  $oStorage->getFileUrlById($iMediaId);
         }
-        
-        if ($a['image'] == ''){
+
+        if($a['image'] == '') {
             $b = json_decode(bx_file_get_contents("https://api.microlink.io/?url=" . $sUrl), true);
             $a = [
                 'title' => $b['data']['title'],
@@ -99,43 +87,18 @@ class BxBaseEmbedSystem extends BxDolEmbed
                 'url' => $sUrl,
             ];
         }
-        
-        $aU = parse_url($sUrl);
-        $a['domain'] = $aU['host'];
+
+        $aUrl = parse_url($sUrl);
+        $a['domain'] = $aUrl['host'];
+
         return json_encode($a);
     }
-    
-    public function getDataHtml ($sUrl, $sTheme)
+
+    public function parseLinks(&$aLinks)
     {
-        $aData = $this->getData($sUrl, $sTheme);
-        return $aData;
-    }
-    
-    public function getHtml ($sUrl, $sTheme)
-    {
-        $aData = $this->getData($sUrl, $sTheme);
-        
-        return '<a href="'.$aData['url'].'" target="_blank" style="text-decoration: none; color: inherit;">
-    <div style="display: flex; flex-direction: row; column-gap:  height: 128px; border: 1px solid rgba(107, 114, 128, 0.2); border-radius:16px; align-items: stretch;">
-        <div style="flex: 0 0 128px; height: 128px; border-radius:16px 0 0 16px; background: url('. ($aData['image'] ? $aData['image'] : $aData['logo']) .') center center / cover no-repeat;">
-        </div>
-        <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;margin: 0 1rem">
-            <div style="padding-top: 0.5rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;  overflow: hidden; text-overflow: ellipsis"><b> '.$aData['title'].'</b></div>
-            <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;  overflow: hidden; text-overflow: ellipsis;">
-                 '.$aData['description'].'
-            </div>
-             <div style="display: flex; flex-direction: row; column-gap: 8px; align-items: center; padding-bottom: 0.5rem;">
-               <img src="'.$aData['logo'].'" width=24 height=24  >'.$aData['domain'].'
-            </div>
-        </div>
-    </div>
-</a>';
-        
-    }
-    
-    public function parseLinks(&$aLinks) {
         $aResult = [];
-        if ($aLinks && is_array($aLinks)) {
+
+        if($aLinks && is_array($aLinks)) {
             $oEmbera = $this->getEmberaInstance();
 
             foreach ($aLinks as $sLink) {
@@ -144,9 +107,9 @@ class BxBaseEmbedSystem extends BxDolEmbed
                 $aResult[] = ['html' => $sHtml != $sLink ? $sHtml : ''];
             }
         }
+
         return $aResult;
     }
-    
 }
 
 /** @} */

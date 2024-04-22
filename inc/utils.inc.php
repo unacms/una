@@ -2163,29 +2163,31 @@ function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
     return $text;
 }
 
-function bx_linkify_embeded($text)
+function bx_linkify_embeded($sText)
 {
-    $urlRegex = '/\b((https?:\/\/)|(www\.))((([0-9a-zA-Z_!~*\'().&=+$%-]+:)?[0-9a-zA-Z_!~*\'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*\'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,16})(:[0-9]{1,4})?((\/[0-9a-zA-Z_!~*\'().;?:@&=+$,%#-]*)*))/';
-    preg_match_all($urlRegex, $text, $matches, PREG_SET_ORDER);
+    $sRegex = '/\b((https?:\/\/)|(www\.))((([0-9a-zA-Z_!~*\'().&=+$%-]+:)?[0-9a-zA-Z_!~*\'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*\'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,16})(:[0-9]{1,4})?((\/[0-9a-zA-Z_!~*\'().;?:@&=+$,%#-]*)*))/';
+    $aMatches = [];
+    preg_match_all($sRegex, $sText, $aMatches, PREG_SET_ORDER);
 
     // Reverse the matches to mimic JavaScript's reverse order processing
-    $matches = array_reverse($matches);
+    $aMatches = array_reverse($aMatches);
+
     $sLink = '';
-    foreach ($matches as $match) {
+    foreach ($aMatches as $match) {
         // Assuming APP_URL and UNA_URL are defined constants
         if (!strstr($match[0], 'https://ci.una.io/') && !strstr($match[0], 'https://ci.una.io/')) {
             $sLink = $match[0]; // Returns the first URL that doesn't include the restricted domains
         }
     }
-    
-    $text = '';
-    if ($sLink){
+
+    $sResult = '';
+    if($sLink) {
         bx_import('BxDolEmbed');
-        $oEmbed = BxDolEmbed::getObjectInstance('sys_system');
-        $text = $oEmbed->getHtml($sLink, '');
+        if(($oEmbed = BxDolEmbed::getObjectInstance('sys_system')) !== false)
+            $sResult = $oEmbed->getLinkHTML($sLink);
     }
-    
-    return $text;
+
+    return $sResult;
 }
 
 /**
