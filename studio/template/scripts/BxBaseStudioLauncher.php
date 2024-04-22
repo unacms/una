@@ -46,6 +46,7 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
             'jquery.easing.js',
             'jquery.cookie.min.js',
             'launcher.js',
+            'hammer.min.js',
             'shepherd/js/shepherd.min.js',
         );
         foreach($this->aIncludes as $sName => $oInclude)

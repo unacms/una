@@ -132,6 +132,10 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $bEnabled = empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] == 1;
 
         $sCaption = _t($mixedWidget['caption']);
+
+        $sStyles = 'animation-delay: -.' . rand(1 , 75) . 's; animation-duration: .' . rand(15 , 20) . 's';
+        if($bFeatured && (int)$mixedWidget['featured'] != 1)
+            $sStyles .= ' display:none;';
         
         return $oTemplate->parseHtmlByName('widget.html', array(
             'id' => $mixedWidget['id'],
@@ -173,7 +177,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
             'caption_attr' => bx_html_attribute($sCaption),
             'widget_disabled_class' => !$bEnabled ? 'bx-std-widget-icon-disabled' : '',
             'widget_featured_class' => (int)$mixedWidget['featured'] == 1 ? 'bx-std-widget-icon-featured' : '',
-            'widget_styles' => $bFeatured && (int)$mixedWidget['featured'] != 1 ? 'display:none;' : ''
+            'widget_styles' => $sStyles
         ));
     }
 

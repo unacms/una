@@ -13,6 +13,7 @@ function BxDolStudioLauncher(oOptions) {
     this.bInit = oOptions.bInit == undefined ? true : oOptions.bInit;
 
     //--- Jitter Settings ---//
+    this.bJitterMode = false;
     this.aJitterConf = {
         item: '.bx-std-widget-icon',
         elements: '.bx-std-widget-actions,.bx-std-widget-icon-jitter,.bx-std-widget-caption-jitter'
@@ -32,10 +33,18 @@ BxDolStudioLauncher.prototype.init = function() {
     var $this = this;
 
     $(document).ready(function() {
+        var hammertime = new Hammer($('.bx-std-widgets').get(0));
+        hammertime.on('press', function(oEvent) {
+            if(!$this.bJitterMode)
+                $this.enableJitter();
+            else
+                $this.disableJitter();
+        });
+
     	//--- Enable Sorting for Page Edit mode ---//
     	$($this.aSortingConf.parent).sortable({
             disabled: true,
-            handle: '.bx-std-widget-icon-jitter > img',
+            handle: '.bx-std-widget-icon-jitter',
             items: $this.aSortingConf.item,
             placeholder: $this.aSortingConf.placeholder,
             start: function(oEvent, oUi) {
@@ -238,13 +247,17 @@ BxDolStudioLauncher.prototype.enableJitter = function() {
 
     $(this.aJitterConf.elements).fadeIn('fast');
     $(this.aJitterConf.item).removeClass('bx-std-widget-icon-trans');
-    $(this.aSortingConf.parent).sortable('option', 'disabled', false);
+    $(this.aSortingConf.parent).addClass('bx-std-jitter').sortable('option', 'disabled', false);
+
+    this.bJitterMode = true;
 };
 
 BxDolStudioLauncher.prototype.disableJitter = function() {
     $(this.aJitterConf.elements).fadeOut('fast');	
     $(this.aJitterConf.item).addClass('bx-std-widget-icon-trans');
-	$(this.aSortingConf.parent).sortable('option', 'disabled', true);
+    $(this.aSortingConf.parent).removeClass('bx-std-jitter').sortable('option', 'disabled', true);
+
+    this.bJitterMode = false;
 };
 
 BxDolStudioLauncher.prototype.enableFeatured = function() {
