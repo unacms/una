@@ -15,7 +15,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_artificer_stg_cpt_option_switcher_name', 'Artificer', 'digit', '', '', '', 1), 
 (@iCategoryId, CONCAT(@sName, '_page_width'), '_bx_artificer_stg_cpt_option_page_width', '1280', 'digit', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_header_stretched'), '_bx_artificer_stg_cpt_option_header_stretched', '', 'checkbox', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_color_scheme'), '_bx_artificer_stg_cpt_option_color_scheme', 'auto', 'select', 'a:2:{s:6:"module";s:12:"bx_artificer";s:6:"method";s:24:"get_options_color_scheme";}', '', '', 4);
+(@iCategoryId, CONCAT(@sName, '_color_scheme'), '_bx_artificer_stg_cpt_option_color_scheme', 'auto', 'select', 'a:2:{s:6:"module";s:12:"bx_artificer";s:6:"method";s:24:"get_options_color_scheme";}', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_use_htmx'), '_bx_artificer_stg_cpt_option_use_htmx', '', 'checkbox', '', '', '', 5);
 
 -- SETTINGS: Artificer template Custom Styles
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 

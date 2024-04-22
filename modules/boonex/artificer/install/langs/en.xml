@@ -13,6 +13,8 @@
     <string name="_bx_artificer_stg_cpt_option_color_scheme_auto"><![CDATA[Auto with switcher]]></string>
     <string name="_bx_artificer_stg_cpt_option_color_scheme_light_only"><![CDATA[Light mode only]]></string>
     <string name="_bx_artificer_stg_cpt_option_color_scheme_dark_only"><![CDATA[Dark mode only]]></string>
+    <string name="_bx_artificer_stg_cpt_option_use_htmx"><![CDATA[Use HTMX in Top menu and Page submenu (experimental)]]></string>
+    
 
     <string name="_bx_artificer_stg_cpt_category_styles_custom"><![CDATA[Custom Styles]]></string>
     <string name="_bx_artificer_stg_cpt_option_styles_custom"><![CDATA[Custom Styles]]></string>

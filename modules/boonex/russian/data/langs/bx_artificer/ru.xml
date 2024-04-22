@@ -13,6 +13,7 @@
     <string name="_bx_artificer_stg_cpt_option_color_scheme_auto"><![CDATA[Авто с переключателем]]></string>
     <string name="_bx_artificer_stg_cpt_option_color_scheme_light_only"><![CDATA[Только светлый режим]]></string>
     <string name="_bx_artificer_stg_cpt_option_color_scheme_dark_only"><![CDATA[Только темный режим]]></string>
+    <string name="_bx_artificer_stg_cpt_option_use_htmx"><![CDATA[Использовать HTMX в верхнем меню и подменю страницы (экспериментально)]]></string>
 
     <string name="_bx_artificer_stg_cpt_category_styles_custom"><![CDATA[Пользовательские стили]]></string>
     <string name="_bx_artificer_stg_cpt_option_styles_custom"><![CDATA[Пользовательские стили]]></string>

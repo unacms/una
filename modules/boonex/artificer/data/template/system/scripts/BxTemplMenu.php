@@ -19,9 +19,9 @@ class BxTemplMenu extends BxBaseMenu
         if(isset($aObject['object'])) {
             //--- For page submenus ---//
             if(strpos($aObject['object'], '_submenu') !== false) {
-                $this->_bHx = true;
-                $this->_bHxHead = true;
-                $this->_mHxPreload = true;
+                $this->_bHx = getParam('bx_artificer_use_htmx') == 'on';
+                $this->_bHxHead = $this->_bHx && true;
+                $this->_mHxPreload = $this->_bHx && true;
                 $this->_aHx = [
                     'get' => '',
                     'trigger' => 'click',
@@ -40,9 +40,7 @@ class BxTemplMenu extends BxBaseMenu
 
                 $sInjection = '';
                 if(($sExtensions = trim($sExtensions)) != '')
-                    $sInjection = 'hx-ext="' . $sExtensions . '"';
-
-                $this->_oTemplate->addInjection('injection_body', 'text', $sInjection);
+                    $this->_oTemplate->addInjection('injection_body', 'text', 'hx-ext="' . $sExtensions . '"');
             }
         }
 

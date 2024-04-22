@@ -35,11 +35,11 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $this->_bSiteMenu = $this->_sObject == 'sys_site';
         $this->_bSiteMenuInPanel = $this->_sObject == 'sys_site_in_panel';
         $this->_bApplicationMenu = $this->_sObject == 'sys_application';
-        
+
         if($this->_bSiteMenu) {
-            $this->_bHx = true;
-            $this->_bHxHead = true;
-            $this->_mHxPreload = true;
+            $this->_bHx = getParam('bx_artificer_use_htmx') == 'on';
+            $this->_bHxHead = $this->_bHx && true;
+            $this->_mHxPreload = $this->_bHx && true;
             $this->_aHx = [
                 'get' => '',
                 'trigger' => 'click',
