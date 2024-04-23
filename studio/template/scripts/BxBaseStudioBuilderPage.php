@@ -118,11 +118,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aMenuItems = array(
             BX_DOL_STUDIO_MODULE_SYSTEM => array(
                 'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
-                'icon' => 'cog',
+                'icon' => 'mi-cog.svg',
+                'icon_bg' => true
             ),
             BX_DOL_STUDIO_MODULE_CUSTOM => array(
                 'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
-                'icon' => 'wrench',
+                'icon' => 'mi-wrench.svg',
+                'icon_bg' => true,
                 'title' => '_adm_bp_cpt_type_' . BX_DOL_STUDIO_MODULE_CUSTOM,
             )
         );
@@ -142,15 +144,12 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 $aMenuItems[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModuleDb, 'menu', false); 
         }
 
-        $aMenu = array();
+        $aMenu = [];
         foreach($aMenuItems as $aMenuItem)
-            $aMenu[] = array(
-                'name' => $aMenuItem['name'],
-                'icon' => $aMenuItem['icon'],
+            $aMenu[] = array_merge($aMenuItem, [
                 'link' =>  sprintf($this->sTypeUrl, $aMenuItem['name']),
-                'title' => $aMenuItem['title'],
                 'selected' => $aMenuItem['name'] == $this->sType
-            );
+            ]);
 
         return parent::getPageMenu($aMenu);
     }
@@ -507,19 +506,22 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aMenu = array(
             BX_DOL_STUDIO_BP_SKELETONS => array(
                 'name' => BX_DOL_STUDIO_BP_SKELETONS,
-                'icon' => 'qrcode',
+                'icon' => 'mi-qrcode.svg',
+                'icon_bg' => true,
                 'title' => '_sys_block_types_skeletons',
                 'selected' => $sSelected == BX_DOL_STUDIO_BP_SKELETONS,
             ),
             BX_DOL_STUDIO_MODULE_SYSTEM => array(
                 'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
-                'icon' => 'cog',
+                'icon' => 'mi-cog.svg',
+                'icon_bg' => true,
                 'title' => '_sys_block_types_system',
                 'selected' => $sSelected == BX_DOL_STUDIO_MODULE_SYSTEM,
             ),
             BX_DOL_STUDIO_MODULE_CUSTOM => array(
                 'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
-                'icon' => 'wrench',
+                'icon' => 'mi-wrench.svg',
+                'icon_bg' => true,
                 'title' => '_sys_block_types_custom',
                 'selected' => $sSelected == BX_DOL_STUDIO_MODULE_CUSTOM,
             )

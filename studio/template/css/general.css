@@ -153,12 +153,27 @@ div.bx-std-pmen-item-cnt {
 span.bx-std-pmen-item-counter {}
 span.bx-std-pmen-ic-num {}
 
+div.bx-std-pmen-item .bx-std-pmen-ic-icon {
+    display: none;
+    flex: 0 0 auto;
+
+    width: 3.0rem;
+    height: 3.0rem;
+    box-sizing: border-box;
+
+    margin-right: 1rem;
+    
+    border-radius: 0.75rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
 div.bx-std-pmen-item img,
 div.bx-std-pmen-item svg,
 div.bx-std-pmen-item .sys-icon {
-    width: 3.0rem;
-    height: 3.0rem;
-    margin-right: 1rem;
+    width: 100%;
+    height: 100%;
+
     border-radius: 0.75rem;
 }
 

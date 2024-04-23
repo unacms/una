@@ -7,7 +7,8 @@ body.bx-dev-page-body-columns div.bx-std-page-menu {
     background-color: #4c6678;
     box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2);
 }
-div.bx-std-page-menu div.bx-std-page-column-cnt {
+body.bx-dev-page-body-single div.bx-std-page-menu div.bx-std-page-column-cnt,
+body.bx-dev-page-body-columns div.bx-std-page-menu div.bx-std-page-column-cnt {
     padding-left: 0;
     padding-right: 0;
 }
@@ -95,9 +96,9 @@ div.bx-dev-page-columns-cnt {
 
 div.bx-dev-page-column.bx-dev-page-menu {
     position: relative;
-    -webkit-flex: 0 0 230px;
-    flex: 0 0 230px;
-    width: 230px;
+    -webkit-flex: 0 0 20rem;
+    flex: 0 0 20rem;
+    width: 20rem;
     background-color: #ffffff;
     
     overflow-y: auto;

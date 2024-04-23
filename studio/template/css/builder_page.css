@@ -79,6 +79,9 @@ div.adm-bpb-icon-bg {
     background-color: #323c46;
     border-radius: 0.5rem;
 }
+div.adm-bpb-icon img {
+    border-radius: 0.5rem;
+}
 div.adm-bpb-icon i.sys-icon {
     position: absolute;
     top: 0px;
@@ -221,6 +224,9 @@ div.adm-bp-epf-left {
     overflow-y: auto; 
 }
 div.adm-bp-epf-left-cnt {}
+div.adm-bp-epf-left .bx-std-pmen-item {
+    height: 2.5rem;
+}
 div.adm-bp-epf-right {
     position: relative;
     width: 620px;
@@ -243,8 +249,8 @@ div.adm-bp-layout {
 	float: left;
 	width: 66px;
 	height: 66px;
-	margin-left: 10px;
-	margin-right: 10px; 
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 	border: 2px solid transparent;
 }
 div.adm-bp-layout-active {

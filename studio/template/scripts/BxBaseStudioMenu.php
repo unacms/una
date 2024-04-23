@@ -10,11 +10,16 @@
 
 class BxBaseStudioMenu extends BxDolStudioMenu
 {
+    protected $_bMenuSide;
     protected $_bInlineIcons;
+    
+    protected $_sIconBgUrl;
 
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_bMenuSide = $this->_aObject['template'] == 'menu_side.html';
 
         $this->_bInlineIcons = in_array($this->_aObject['template'], array(
             'menu_side.html', 
@@ -22,6 +27,8 @@ class BxBaseStudioMenu extends BxDolStudioMenu
             'menu_launcher_browser.html',
             'page_breadcrumb.html'
         ));
+
+        $this->_sIconBgUrl = $this->_oTemplate->getIconUrl('mi-empty.svg');
     }
 
     public function setInlineIcons($bInlineIcons)
@@ -49,6 +56,20 @@ class BxBaseStudioMenu extends BxDolStudioMenu
                     ),
                 ),
             ));
+        }
+
+        if($this->_bMenuSide) {
+            $aItem['bx_if:show_icon'] = [
+                'condition' => $aItem['bx_if:icon']['condition'] || $aItem['bx_if:image']['condition'] || $aItem['bx_if:image_inline']['condition'],
+                'content' => []
+            ];
+
+            $aItem['bx_if:show_icon_bg'] = [
+                'condition' => isset($aItem['icon_bg']) && $aItem['icon_bg'] === true,
+                'content' => [
+                    'icon_bg_url' => $this->_sIconBgUrl
+                ]
+            ];
         }
 
         return $aItem;
