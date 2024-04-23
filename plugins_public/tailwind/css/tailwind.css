@@ -825,7 +825,7 @@
     /* Common elements: Forms: Checkbox Input */
     .bx-form-input-wrapper-checkbox,
     .bx-form-input-wrapper-radio {
-        @apply block w-4 h-4;
+        @apply block w-4 h-5;
         @apply border-2 border-transparent;
     }
 

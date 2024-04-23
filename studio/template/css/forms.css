@@ -120,3 +120,13 @@ div.bx-form-input-language {
 div.bx-form-input-language-current {
 	font-weight: bold;
 }
+
+/**
+ * Forms in popup.
+ */
+.bx-popup .bx-form-element .bx-form-input-wrapper-input_set {
+    margin: 0 -1.5rem;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+
+    border-top: 1px solid rgba(228, 228, 231, 1.0);
+}

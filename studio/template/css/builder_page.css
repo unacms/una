@@ -219,8 +219,8 @@ div.adm-bp-epf-left {
     left: 0px;
     width: 179px;
     height: 310px;
-    border-style: solid;
-    border-width: 1px 1px 0px 0px;
+    border-right-style: solid;
+    border-right-width: 1px;
     overflow-y: auto; 
 }
 div.adm-bp-epf-left-cnt {}
@@ -232,8 +232,6 @@ div.adm-bp-epf-right {
     width: 620px;
     height: 310px;
     margin-left: 180px;
-    border-style: solid;
-    border-width: 1px 0px 0px 0px;
     overflow-y: auto;
 }
 div.adm-bp-epf-right-cnt {}

@@ -3,6 +3,10 @@
     margin-top:0;
 }
 
+.bx-form-advanced-wrapper .bx-form-section-wrapper:last-child {
+    margin-bottom:0;
+}
+
 .bx-form-advanced-wrapper .bx-form-section-divider:first-child {
     border:none; 
     padding:0; 
