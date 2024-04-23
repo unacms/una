@@ -65,6 +65,15 @@ class BxDolEmbed extends BxDolFactoryObject
     }
 
     /**
+     * Execute an initialization JS code
+     */
+    public function addProcessLinkMethod ()
+    {
+        // override this function in particular embed provider class
+        return '';
+    }
+    
+    /**
      * Add css/js files which are needed for embed display and functionality.
      */
     public function addJsCss ()

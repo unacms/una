@@ -2172,11 +2172,13 @@ function bx_linkify_embeded($sText)
     // Reverse the matches to mimic JavaScript's reverse order processing
     $aMatches = array_reverse($aMatches);
 
+    $sUrlRoot = BX_DOL_URL_ROOT;
+    $sUrlRootApi = bx_api_get_base_url();
+
     $sLink = '';
-    foreach ($aMatches as $match) {
-        // Assuming APP_URL and UNA_URL are defined constants
-        if (!strstr($match[0], 'https://ci.una.io/') && !strstr($match[0], 'https://ci.una.io/')) {
-            $sLink = $match[0]; // Returns the first URL that doesn't include the restricted domains
+    foreach($aMatches as $aMatch) {
+        if(!strstr($aMatch[0], $sUrlRoot) && ($sUrlRootApi === false || !strstr($aMatch[0], $sUrlRootApi))) {
+            $sLink = $aMatch[0]; // Returns the first URL that doesn't include the restricted domains
         }
     }
 
@@ -2552,6 +2554,17 @@ function bx_api_check_access()
     // check_logged();
 }
 
+function bx_api_get_base_url()
+{
+    if(($sResult = getParam('sys_api_url_root_email')) != '')
+        return $sResult;
+
+    if(($sResult = getParam('sys_api_url_root_push')) != '')
+        return $sResult;
+
+    return false;
+}
+    
 function bx_api_get_relative_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
 {
     return '/' . bx_ltrim_str($sUrl, $sPrefix);
