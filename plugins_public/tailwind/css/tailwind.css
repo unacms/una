@@ -613,7 +613,7 @@
     .bx-def-border-radius-block,
     .bx-def-box-round-corners,
     .bx-popup-border {
-        @apply rounded-md;
+        @apply rounded-xl;
     }
     .bx-content-padding-block {
         @apply p-3 md:p-4;
@@ -909,7 +909,7 @@
     }
 
     .bx-artificer .bx-popup-border {
-        @apply ring-1 ring-gray-300 dark:ring-gray-700 rounded-md;
+        @apply ring-1 ring-gray-300 dark:ring-gray-700 rounded-xl;
     }
 
     .bx-artificer .bx-popup-width {

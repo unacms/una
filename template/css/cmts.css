@@ -17,8 +17,12 @@ div.cmt-reply.cmt-reply-min div.cmt-body {
 /*--- Add Comment/Reply Form Styles ---*/
 form.cmt-post-reply div#bx-form-element-cmt_image,
 form.cmt-post-reply .bx-form-input-files-uploaders {
-    margin-top: 0px;
+    margin-top: 0;
     position: relative;
+}
+form.cmt-post-reply .bx-form-input-files-uploaders SPAN {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 form.cmt-post-reply .bx-form-input-files-uploaders a.cmts-uploader-button {

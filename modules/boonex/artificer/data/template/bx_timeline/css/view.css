@@ -110,7 +110,7 @@ div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > a,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > div,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > span {
-    margin-top: 1.0rem;
+    margin-top: 0.5rem;
 }
 
 .bx-menu-object-bx_timeline_menu_item_manage .menu-custom-item-ver a,
