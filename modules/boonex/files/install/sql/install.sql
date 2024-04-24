@@ -71,6 +71,22 @@ CREATE TABLE IF NOT EXISTS `bx_files_photos_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_files_sounds_resized` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
 -- TABLE: comments
 CREATE TABLE IF NOT EXISTS `bx_files_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -269,15 +285,20 @@ CREATE TABLE IF NOT EXISTS `bx_files_scores_track` (
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_files_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_files', 'deny-allow', '', '{dangerous}', 0, 0, 0, 0, 0, 0),
-('bx_files_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_photos_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0);
+('bx_files_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_photos_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
+('bx_files_sounds_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_sounds_resized', 'allow-deny', '{audio}', '', 0, 0, 0, 0, 0, 0);
 
-INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
-('bx_files_preview', 'bx_files_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_files_files";}', 'no', '1', '2592000', '0'),
-('bx_files_gallery', 'bx_files_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_files_files";}', 'no', '1', '2592000', '0');
+INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 
+('bx_files_preview', 'bx_files_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_files_files";}', 'no', '1', '2592000', '0', '', ''),
+('bx_files_gallery', 'bx_files_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_files_files";}', 'no', '1', '2592000', '0', '', ''),
+
+('bx_files_sounds_mp3', 'bx_files_sounds_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_files_files";}', 'no', '0', '0', '0', 'BxDolTranscoderAudio', '');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_files_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
-('bx_files_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
+('bx_files_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0'),
+
+('bx_files_sounds_mp3', 'Mp3', 'a:0:{}', 0);
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

@@ -2435,6 +2435,7 @@
 	<string name="_sys_file_handlers_google_viewer"><![CDATA[Google просмотрщик]]></string>
 	<string name="_sys_file_handlers_images_viewer"><![CDATA[Просмотр изображений]]></string>
 	<string name="_sys_file_handlers_code_viewer"><![CDATA[Просмотр програмного кода]]></string>
+        <string name="_sys_file_handlers_sounds_viewer"><![CDATA[Звуковой плеер]]></string>
 	<string name="_sys_form_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
 	<string name="_sys_form_account_input_agreement_value"><![CDATA[Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.]]></string>

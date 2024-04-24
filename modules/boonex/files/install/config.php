@@ -67,8 +67,9 @@ $aConfig = array(
      * Transcoders.
      */
     'transcoders' => array(
-		'bx_files_preview',
+        'bx_files_preview',
         'bx_files_gallery',
+        'bx_files_sounds_mp3'
     ),
 
 	/**

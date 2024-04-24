@@ -95,6 +95,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE' => 'bx_files_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_files_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_files_gallery',
+            'OBJECT_SOUNDS_TRANSCODER' => 'bx_files_sounds_mp3',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
             'OBJECT_REPORTS' => 'bx_files',
             'OBJECT_VIEWS' => 'bx_files',

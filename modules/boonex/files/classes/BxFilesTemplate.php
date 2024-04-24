@@ -91,8 +91,8 @@ class BxFilesTemplate extends BxBaseModTextTemplate
 
     public function entryFilePreview ($aData)
     {
+        $CNF = &$this->_oConfig->CNF;
         $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = $oModule->_oConfig->CNF;
 
         $sNoPreview = MsgBox(_t('_bx_files_txt_preview_not_available'));
         if (!($aFile = $oModule->getContentFile($aData)))
@@ -103,6 +103,9 @@ class BxFilesTemplate extends BxBaseModTextTemplate
             return $sNoPreview;
         if (!($sFileUrl = $oStorage->getFileUrlById($aFile['id'])))
             return $sNoPreview;
+        
+        if(strncmp('audio/', $aFile['mime_type'], 6) === 0 && ($oTranscoder = BxDolTranscoderAudio::getObjectInstance($CNF['OBJECT_SOUNDS_TRANSCODER'])) !== false)
+            $oFileHandler->setTranscoder($oTranscoder);
 
         return $oFileHandler->display($sFileUrl, $aFile);
     }
