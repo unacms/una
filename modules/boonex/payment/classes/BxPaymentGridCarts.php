@@ -19,9 +19,9 @@ class BxPaymentGridCarts extends BxBaseModPaymentGridCarts
         parent::__construct ($aOptions, $oTemplate);
     }
     
-    public function getCodeAPI()
+    public function getCodeAPI($bForceReturn = false)
     {
-        $aData = parent::getCodeAPI();
+        $aData = parent::getCodeAPI($bForceReturn);
         $aData['settings']['field_id'] = 'id';
         foreach ($aData['data'] as &$aRow){
             $aRow['id'] = $aRow['checkbox']['data'];
