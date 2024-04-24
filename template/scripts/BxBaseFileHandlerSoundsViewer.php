@@ -22,7 +22,7 @@ class BxBaseFileHandlerSoundsViewer extends BxBaseFileHandler
         $this->_oTranscoder = null;
     }
 
-    public function setTranscoder(&$oTranscoder)
+    public function setTranscoder($oTranscoder)
     {
         $this->_oTranscoder = $oTranscoder;
     }

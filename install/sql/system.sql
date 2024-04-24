@@ -121,7 +121,8 @@ INSERT INTO `sys_objects_file_handlers` (`object`, `title`, `preg_ext`, `active`
 ('sys_google_viewer', '_sys_file_handlers_google_viewer', '/\\.(pdf|doc|docx|xls|xlsx|ppt|pptx|ai|svg|ps|tif|tiff)$/i', 1, 2, 'BxTemplFileHandlerGoogleViewer', ''),
 ('sys_images_viewer', '_sys_file_handlers_images_viewer', '/\\.(jpg|jpeg|png|gif|webp)$/i', 1, 3, 'BxTemplFileHandlerImagesViewer', ''),
 ('sys_code_viewer', '_sys_file_handlers_code_viewer', '/\\.(1st|aspx|asp|json|js|jsp|java|php|xml|html|htm|rdf|xsd|xsl|xslt|sax|rss|cfm|js|asm|pl|prl|bas|b|vbs|fs|src|cs|ws|cgi|bat|py|c|cpp|cc|cp|h|hh|cxx|hxx|c++|m|lua|swift|sh|as|cob|tpl|lsp|x|cmd|rb|cbl|pas|pp|vb|f|perl|jl|lol|bal|pli|css|less|sass|saas|bcc|coffee|jade|j|tea|c#|sas|diff|pro|for|sh|bsh|bash|twig|csh|lisp|lsp|cobol|pl|d|git|rb|hrl|cr|inp|a|go|as3|m|sql|md|txt|csv)$/i', 1, 4, 'BxTemplFileHandlerCodeViewer', ''),
-('sys_sounds_viewer', '_sys_file_handlers_sounds_viewer', '/\\.(mp3|m4a|m4b|wma|wav|3gp)$/i', 1, 5, 'BxTemplFileHandlerSoundsViewer', '');
+('sys_sounds_viewer', '_sys_file_handlers_sounds_viewer', '/\\.(mp3|m4a|m4b|wma|wav|3gp)$/i', 1, 5, 'BxTemplFileHandlerSoundsViewer', ''),
+('sys_videos_viewer', '_sys_file_handlers_videos_viewer', '/\\.(avi|flv|mpg|mpeg|wmv|mp4|m4v|mov|qt|divx|xvid|3gp|3g2|webm|mkv|ogv|ogg|rm|rmvb|asf|drc|ts)$/i', 1, 5, 'BxTemplFileHandlerVideosViewer', '');
 
 
 -- --------------------------------------------------------

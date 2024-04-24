@@ -103,9 +103,17 @@ class BxFilesTemplate extends BxBaseModTextTemplate
             return $sNoPreview;
         if (!($sFileUrl = $oStorage->getFileUrlById($aFile['id'])))
             return $sNoPreview;
-        
-        if(strncmp('audio/', $aFile['mime_type'], 6) === 0 && ($oTranscoder = BxDolTranscoderAudio::getObjectInstance($CNF['OBJECT_SOUNDS_TRANSCODER'])) !== false)
-            $oFileHandler->setTranscoder($oTranscoder);
+
+        if(strncmp('audio/', $aFile['mime_type'], 6) === 0 && !empty($CNF['OBJECT_SOUNDS_TRANSCODER']))
+            $oFileHandler->setTranscoder(BxDolTranscoderAudio::getObjectInstance($CNF['OBJECT_SOUNDS_TRANSCODER']));
+        else if(strncmp('video/', $aFile['mime_type'], 6) === 0 && !empty($CNF['OBJECT_VIDEOS_TRANSCODERS']) && is_array($CNF['OBJECT_VIDEOS_TRANSCODERS'])) {
+            $aTranscoders = $CNF['OBJECT_VIDEOS_TRANSCODERS'];
+            array_walk($aTranscoders, function(&$sValue) {
+                $sValue = BxDolTranscoderVideo::getObjectInstance($sValue);
+            });
+
+            $oFileHandler->setTranscoder($aTranscoders);
+        }
 
         return $oFileHandler->display($sFileUrl, $aFile);
     }

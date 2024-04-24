@@ -96,7 +96,12 @@ class BxFilesConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_files_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_files_gallery',
             'OBJECT_SOUNDS_TRANSCODER' => 'bx_files_sounds_mp3',
-            'OBJECT_VIDEOS_TRANSCODERS' => array(),
+            'OBJECT_VIDEOS_TRANSCODERS' => [
+                'poster' => 'bx_files_videos_poster', 
+            	'poster_preview' => 'bx_files_videos_poster_preview',
+            	'mp4' => 'bx_files_videos_mp4', 
+            	'mp4_hd' => 'bx_files_videos_mp4_hd'
+            ],
             'OBJECT_REPORTS' => 'bx_files',
             'OBJECT_VIEWS' => 'bx_files',
             'OBJECT_VOTES' => 'bx_files',
