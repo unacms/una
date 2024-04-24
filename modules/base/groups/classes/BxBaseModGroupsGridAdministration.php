@@ -143,10 +143,10 @@ class BxBaseModGroupsGridAdministration extends BxBaseModProfileGridAdministrati
         }
 
     	if(!empty($this->_sFilter1Value))
-            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $this->_sStatusField . "`=?", $this->_sFilter1Value);
+            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `td`.`" . $this->_sStatusField . "`=?", $this->_sFilter1Value);
 
         if($this->_bContentFilter && !empty($this->_sFilter2Value))
-            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $CNF['FIELD_CF'] . "`=?", $this->_sFilter2Value);
+            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `td`.`" . $CNF['FIELD_CF'] . "`=?", $this->_sFilter2Value);
 
         return parent::_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
