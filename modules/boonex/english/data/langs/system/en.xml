@@ -3190,6 +3190,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_template_title_main_submenu_more_auto"><![CDATA[Site Navigation Submenu (with Auto More)]]></string>
     <string name="_sys_menu_template_title_panel"><![CDATA[Site Panel Menu]]></string>
     <string name="_sys_menu_template_title_main_in_panel"><![CDATA[Site Navigation Menu in Panel]]></string>
+    <string name="_sys_menu_template_title_multilevel"><![CDATA[Multilevel Menu]]></string>
     <string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>
     <string name="_sys_menu_template_title_ver"><![CDATA[Vertical Links]]></string>
     <string name="_sys_menu_template_title_ver_lite"><![CDATA[Vertical Links (lite)]]></string>

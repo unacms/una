@@ -727,6 +727,8 @@ function bx_menu_toggle(oLink, sMenu, sMenuItem, sSelectorParent) {
         i: sMenuItem,
         v: oParent.hasClass(sClass) ? 1 : 0
     });
+    
+    return false;
 }
 
 function bx_menu_followings_load_more(oLink, sMenu, sContextModule, iStart, iPerPage) {

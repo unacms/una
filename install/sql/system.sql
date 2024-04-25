@@ -4586,7 +4586,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (28, 'menu_main.html', '_sys_menu_template_title_main', 0),
 (29, 'menu_add_content.html', '_sys_menu_template_title_add_content', 0),
 (30, 'menu_panel.html', '_sys_menu_template_title_panel', 0),
-(31, 'menu_main_in_panel.html', '_sys_menu_template_title_main_in_panel', 0);
+(31, 'menu_main_in_panel.html', '_sys_menu_template_title_main_in_panel', 0),
+(32, 'menu_multilevel.html', '_sys_menu_template_title_multilevel', 1);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

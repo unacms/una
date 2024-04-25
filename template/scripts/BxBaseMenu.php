@@ -309,11 +309,23 @@ class BxBaseMenu extends BxDolMenu
                     $aSubitems[] = $aSubitem;
             }
 
+            if(!$bOnClick)
+                $a['bx_if:onclick'] = [
+                    'condition' => true,
+                    'content' => [
+                        'onclick' => "javascript:return bx_menu_toggle(this, '" . $this->_sObject . "', '" . $a['name'] . "')"
+                    ]
+                ];
+
             $aTmplVarsSubitems['subitems'] = $this->_oTemplate->parseHtmlByName(str_replace('.html', '_subitems.html', $this->getTemplateName()), array(
                 'bx_repeat:menu_items' => $aSubitems,
             ));
         }
 
+        $a['bx_if:show_toggler'] = [
+            'condition' => $bTmplVarsSubitems,
+            'content' => []
+        ];
         $a['bx_if:show_subitems'] = array (
             'condition' => $bTmplVarsSubitems,
             'content' => $aTmplVarsSubitems
