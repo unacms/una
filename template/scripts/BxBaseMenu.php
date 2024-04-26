@@ -20,6 +20,8 @@ class BxBaseMenu extends BxDolMenu
     protected $_aOptionalParams = array('target' => '', 'onclick' => '');
     protected $_bDisplayAddons = false;
 
+    protected $_aSelected; // Selected menu item.
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject);
@@ -30,6 +32,7 @@ class BxBaseMenu extends BxDolMenu
             $this->_oTemplate = BxDolTemplate::getInstance();
 
         $this->_iPageType = false;
+        $this->_aSelected = [];
     }
 
     public function getDisplayAddons()
@@ -114,10 +117,14 @@ class BxBaseMenu extends BxDolMenu
      */
     protected function _getTemplateVars ()
     {
-        return array (
+        $aMenuItems = $this->getMenuItems();
+        $sMenuItemSelected = _t($aMenuItems && $this->_aSelected && !empty($this->_aSelected['title']) ? $this->_aSelected['title'] : '_Contents');
+
+        return [
             'object' => $this->_sObject,
-            'bx_repeat:menu_items' => $this->getMenuItems (),
-        );
+            'menu_item_selected' => $sMenuItemSelected,
+            'bx_repeat:menu_items' => $aMenuItems,
+        ];
     }
 
     /**
@@ -196,6 +203,10 @@ class BxBaseMenu extends BxDolMenu
             return $aResult;
         }
 
+        $bIsSelected = $this->_isSelected($a);
+        if($bIsSelected)
+            $this->_aSelected = $a;
+
         $a['object'] = $this->_sObject;
 
         $a['title'] = _t($a['title']);
@@ -226,7 +237,7 @@ class BxBaseMenu extends BxDolMenu
 
         list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getMenuIcon($a);
 
-        $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
+        $a['class_add'] = $bIsSelected ? 'bx-menu-tab-active' : '';
         $a['class_add'] .= $this->_getVisibilityClass($a);
         $a['class_link'] = '';
 
@@ -240,7 +251,7 @@ class BxBaseMenu extends BxDolMenu
             $this->_aHx['get'] = $a['link'];
             $a['attrs'] .= bx_get_htmx_attrs($this->_aHx, $this->_mHxPreload);
 
-            if(!bx_is_htmx_request() && !$this->_isSelected($a))
+            if(!bx_is_htmx_request() && !$bIsSelected)
                 $a['attrs_wrp'] .= bx_get_htmx_attrs([
                     'get' => $a['link'],
                     'trigger' => 'load',

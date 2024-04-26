@@ -712,6 +712,19 @@ function bx_menu_show_more_less(oLink, sMenu, sSelectorParent) {
     });
 }
 
+function bx_menu_toggle_contents(oLink, sSelectorParent) {
+    if(!sSelectorParent)
+        sSelectorParent = '.bx-menu-contents';
+
+    var sClass = 'bx-m-collapsed';
+    var oParent = $(oLink).parents(sSelectorParent + ':first');
+
+    oParent.toggleClass(sClass);
+    oParent.siblings('.bx-menu-content').toggle();
+
+    return false;
+}
+
 function bx_menu_toggle(oLink, sMenu, sMenuItem, sSelectorParent) {
     if(!sSelectorParent)
         sSelectorParent = 'li';

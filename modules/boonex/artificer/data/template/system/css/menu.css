@@ -184,18 +184,22 @@ div.bx-popup-menu-main.sys-add-content ul {
 }
 
 /*--- Profile Followings Menu ---*/
+.bx-menu-contents .bx-menu-show,
 .bx-menu-ver.bx-menu-multilevel li .bx-menu-show,
 .bx-menu-ver.bx-menu-object-sys_profile_followings li .bx-menu-show {
     display: none;
 }
+.bx-menu-contents .bx-menu-hide,
 .bx-menu-ver.bx-menu-multilevel li .bx-menu-hide, 
 .bx-menu-ver.bx-menu-object-sys_profile_followings li .bx-menu-hide {
     display: inline;
 }
+.bx-menu-contents.bx-m-collapsed .bx-menu-show,
 .bx-menu-ver.bx-menu-multilevel li.bx-mi-collapsed .bx-menu-show,
 .bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-mi-collapsed .bx-menu-show {
     display: inline;
 }
+.bx-menu-contents.bx-m-collapsed .bx-menu-hide,
 .bx-menu-ver.bx-menu-multilevel li.bx-mi-collapsed .bx-menu-hide,
 .bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-mi-collapsed .bx-menu-hide {
     display: none;

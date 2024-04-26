@@ -26,6 +26,7 @@
 	<string name="_Can not delete comments with replies"><![CDATA[Cannot delete comments with replies]]></string>
 	<string name="_Cancel"><![CDATA[Cancel]]></string>
 	<string name="_Content"><![CDATA[Content]]></string>
+        <string name="_Contents"><![CDATA[Contents]]></string>
 	<string name="_Count"><![CDATA[Count]]></string>
 	<string name="_DELETE_SUCCESS"><![CDATA[You account was successfully deleted]]></string>
 	<string name="_DELETE_TEXT"><![CDATA[All your content will be deleted. Are you sure you want to delete your account?]]></string>

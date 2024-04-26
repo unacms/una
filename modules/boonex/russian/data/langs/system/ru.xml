@@ -24,6 +24,7 @@
 	<string name="_Can not delete comments with replies"><![CDATA[Невозможно удалить комментарии с ответами]]></string>
 	<string name="_Cancel"><![CDATA[Отменить]]></string>
 	<string name="_Content"><![CDATA[Содержимое]]></string>
+        <string name="_Contents"><![CDATA[Содержание]]></string>
 	<string name="_Count"><![CDATA[Счётчик]]></string>
 	<string name="_DELETE_SUCCESS"><![CDATA[Ваш аккаунт был удачно удалён]]></string>
 	<string name="_DELETE_TEXT"><![CDATA[Всё Ваше содержимое будет удалено. Вы уверены, что ходите удалить свой аккаунт?]]></string>
