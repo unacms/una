@@ -102,10 +102,18 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
 
     protected function _isAvailablePage ($a)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         if(!$this->_aContentInfo)
             return false;
+
+        return parent::_isAvailablePage($a);
+    }
+
+    protected function _isVisiblePage ($a)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(($mixedCheckResult = $this->_oModule->checkAllowedView($this->_aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED) 
+            return $mixedCheckResult;
 
         if(!empty($CNF['FIELD_CF'])) {
             $oCf = BxDolContentFilter::getInstance();
@@ -113,19 +121,11 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
                 return false;
         }
 
-        return parent::_isAvailablePage($a);
-    }
-
-    protected function _isVisiblePage ($a)
-    {
-        if(($mixedCheckResult = $this->_oModule->checkAllowedView($this->_aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED) 
-            return $mixedCheckResult;
-
         if(!parent::_isVisiblePage($a))
             return false;
-        
+
         $this->_oModule->checkAllowedView($this->_aContentInfo, true);
-        
+
         return true;
     }
 
