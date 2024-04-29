@@ -647,6 +647,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         $oSession = null;
         $aSession = array_merge([
             'mode' => $sMode,
+            'customer_creation' => 'always',
             'payment_method_types' => ['card'],
             'customer_email' => !empty($aClient['email']) ? $aClient['email'] : ''
         ], $aParams);
