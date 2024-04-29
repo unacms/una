@@ -79,7 +79,8 @@ div.bx-std-widgets {
 div.bx-std-widgets-highlight {
     background-color: red;
 }
-div.bx-std-widget {
+div.bx-std-widget,
+div.bx-std-widget-cont {
     position: relative;
 }
 div.bx-std-widget-empty {
@@ -151,8 +152,8 @@ div.bx-std-widget-icon-jitter {
 
 div.bx-std-widget-notices {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: -1rem;
+    left: -1rem;
     width: 30px;
     height: 30px;
     z-index: 3;
@@ -171,8 +172,8 @@ div.bx-std-widget-notices {
 div.bx-std-widget-actions {
     position: absolute;
     display: none;
-    top: 1rem;
-    right: 0.25rem;
+    top: -1rem;
+    right: -1rem;
     z-index: 10;
 }
 div.bx-std-widget-actions-cnt {
@@ -212,8 +213,7 @@ div.bx-std-widget-action i.sys-icon {
 .bx-std-widget-loading {
     display: none;
     position: absolute;
-    top: 7.5rem;
-    left: 1.5rem;
+    bottom: -2.0rem;
     width: 6.0rem;
     height: 2.0rem;
 
