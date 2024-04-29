@@ -239,6 +239,9 @@ div.adm-bp-epf-controls {
     border-style: solid;
     border-width: 1px 0px 0px 0px;
 }
+div.adm-bp-epf-controls .bx-def-margin-sec-left {
+    margin-left: 0.5rem;
+}
 div#adm-bp-settings-group-layout {
     margin: 0px -10px;
 }

@@ -1794,7 +1794,7 @@
     
     
 
-	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
+	<string name="_adm_stg_cpt_type_system"><![CDATA[Global]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>

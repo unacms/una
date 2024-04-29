@@ -770,14 +770,18 @@
     }
 
     .bx-form-section.bx-form-section-header {
-        @apply border border-gray-200 dark:border-gray-900 rounded-2xl;
+        @apply border border-gray-300 dark:border-gray-900 rounded-2xl;
+        @apply bg-gray-100 dark:bg-gray-800;
         @apply overflow-hidden;
     }
     .bx-form-section.bx-form-section-header .bx-form-section-title:hover {
-        @apply bg-gray-100 dark:bg-gray-900;
+        @apply bg-white dark:bg-gray-900 bg-gradient-to-b from-gray-100 dark:from-gray-800;
     }
-    .bx-form-section.bx-form-section-header:not(.bx-form-collapsed) .bx-form-section-title {
-        @apply bg-gray-100 dark:bg-gray-900;
+    .bx-form-section.bx-form-section-header:not(.bx-form-collapsed) {
+        @apply bg-white dark:bg-gray-900;
+    }
+    .bx-form-section.bx-form-section-header .bx-form-section-content {
+        @apply bg-white dark:bg-gray-900;
     }
 
     /* Common elements: Forms: Text Input */
@@ -825,7 +829,7 @@
     /* Common elements: Forms: Checkbox Input */
     .bx-form-input-wrapper-checkbox,
     .bx-form-input-wrapper-radio {
-        @apply block w-4 h-5;
+        @apply block w-5 h-5 m-0.5;
         @apply border-2 border-transparent;
     }
 
@@ -1234,7 +1238,7 @@
         @apply text-gray-300 dark:text-gray-700;
     }
 
-    /* Studio */    
+    /* Studio */
     .bx-std #bx-std-pcap-menu-popup-help .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-actions .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-account .bx-popup,
@@ -1245,11 +1249,20 @@
     .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
         @apply ring ring-blue-600 ring-offset-2 ring-offset-black;
     }
-    
+    .bx-std .bx-menu-top-center .bx-menu-item-static,
+    .bx-std .bx-menu-top-center .bx-menu-item-dynamic {
+        @apply hidden md:flex;
+    }
+
     .bx-std .bx-stg-icon-gray-bg {
         @apply h-8 w-8;
         @apply bg-gray-200 bg-no-repeat bg-center;
         @apply rounded-lg;
+    }
+
+    /* Studio: Launcher */
+    .bx-std-widgets .bx-std-widget {
+        @apply px-6 pt-6 pb-3 sm:px-10 sm:pt-10 sm:pb-4;
     }
 
 

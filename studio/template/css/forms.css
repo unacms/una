@@ -18,14 +18,15 @@
 .bx-form-value .bx-form-input-text,
 .bx-form-value .bx-form-input-price,
 .bx-form-value .bx-form-input-wrapper-price span {
-    height: 36px;
-    height: 2.4rem;
+    height: 2.5rem;
+    padding: 0 0.75rem;
     box-sizing: border-box;
 
-    border-color: rgba(136, 143, 153, 1);
-    border-width: 1px;
-    
-    font-size: 1.075rem;
+    border: 1px solid rgba(107, 114, 128, 0.2);
+    border-radius: 0.5rem;
+
+    line-height: 1.25rem;
+    font-size: 1.0rem;
 }
 .bx-form-input-rgb-list{
     color:#fff;
@@ -62,8 +63,12 @@
 .bx-form-value .bx-form-input-text:focus,
 .bx-form-value .bx-form-input-price:focus,
 .bx-form-value .bx-form-input-wrapper-password.bx-form-input-focus {
-    border-color: rgba(136, 143, 153, 1);
+    outline: 2px solid rgba(59,130,246,.5);
+    outline-offset: 2px;
+
     background-color: rgba(255, 255, 255, 1);
+
+    transition-duration: .1s;
 }
 
 .bx-form-value .bx-form-input-select_multiple,

@@ -208,6 +208,10 @@ div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search {
 
     max-width: 24rem;
 }
+div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search img {
+    height: 2rem;
+}
+
 div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search .bx-form-input-text {
     height: 3rem;
     padding-left: 0.5rem;
@@ -265,24 +269,6 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-account {
     overflow: visible;
 }
-.bx-std-mod-popup-settings-wrapper::before,
-#bx-std-pcap-menu-popup-help:before,
-#bx-std-pcap-menu-popup-actions:before,
-#bx-std-pcap-menu-popup-account::before {
-    position: absolute;
-    display: block;
-    content: '';
-
-    top: 0.25rem;
-    right: 1.0rem;
-    width: 0.5rem;
-    height: 0.5rem;
-
-    box-shadow: inset 1px 1px 0px rgba(240, 240, 240, 0.2);
-    background-color: #001529;
-
-    transform: rotate(45deg);
-}
 .bx-std-mod-popup-settings-wrapper .bx-popup-gap,
 #bx-std-pcap-menu-popup-help .bx-popup-gap,
 #bx-std-pcap-menu-popup-actions .bx-popup-gap,
@@ -323,7 +309,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     align-items: center;
 }
 #bx-std-pcap-menu-popup-account .bx-popup li svg {
-    margin-right: 0.25rem;
+    margin-right: 0.75rem;
 }
 
 .bx-std-mod-popup-settings-wrapper,

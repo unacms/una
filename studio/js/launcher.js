@@ -34,6 +34,7 @@ BxDolStudioLauncher.prototype.init = function() {
 
     $(document).ready(function() {
         var hammertime = new Hammer($('.bx-std-widgets').get(0));
+        hammertime.get('press').set({time: 1000});
         hammertime.on('press', function(oEvent) {
             if(!$this.bJitterMode)
                 $this.enableJitter();

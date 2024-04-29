@@ -1761,7 +1761,7 @@
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Студия: Показывать ссылку 'сайт' в заголовке]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Студия: Показать левую область с меню в лаунчере]]></string>
     
-    <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
+    <string name="_adm_stg_cpt_type_system"><![CDATA[Глобальные]]></string>
     <string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
     <string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
     <string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
