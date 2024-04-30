@@ -508,7 +508,7 @@ class BxBaseServiceAccount extends BxDol
     {
         $aResult = array();
 
-        $aChoices = array('no', 'no_login_delete', 'no_login_suspend', 'no_confirm_delete', 'no_profile_delete');
+        $aChoices = array('no_login_delete', 'no_login_suspend', 'no_confirm_delete', 'no_profile_delete');
         foreach($aChoices as $sChoice) 
             $aResult[] = array('key' => $sChoice, 'value' => _t('_adm_stg_cpt_option_value_sys_account_pruning_' . $sChoice));
 

@@ -858,52 +858,54 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         $iTime = time() - getParam('sys_account_accounts_pruning_interval') * 86400;
         $oAccountQuery = BxDolAccountQuery::getInstance();
         $aAccounts = [];
+        $aAccountsSuspend = [];
         $bSuspend = false;
-        
-        switch(getParam('sys_account_accounts_pruning')) {
- 
-            case 'no_login_delete':
-                $aAccounts = $oAccountQuery->getAccountsForPruning('no_login', $iTime);   
-                break;
-            
-            case 'no_login_suspend':
-                $bSuspend = true;
-                $aAccounts = $oAccountQuery->getAccountsForPruning('no_login', $iTime);   
-                break;  
-                
-    		case 'no_confirm_delete':
-                $aAccounts = $oAccountQuery->getAccountsForPruning('no_confirm', $iTime);
-                foreach ($aAccounts as $k => $aAccount) {
-                    $oAccount = BxDolAccount::getInstance($aAccount['id']);
-                    if($oAccount->isConfirmed()){
-                        unset($aAccounts[$k]);
+        $aPruning = explode(',', getParam('sys_account_accounts_pruning'));
+        foreach ($aPruning as $sPruning) {
+            switch($sPruning) {
+                 case 'no_login_suspend':
+                    $aAccountsSuspend = $oAccountQuery->getAccountsForPruning('no_login', $iTime);   
+                    break;  
+
+                case 'no_login_delete':
+                    $aAccounts = array_merge($aAccounts, $oAccountQuery->getAccountsForPruning('no_login', $iTime));   
+                    break;
+
+
+
+                case 'no_confirm_delete':
+                    $aAccounts1 = $oAccountQuery->getAccountsForPruning('no_confirm', $iTime);
+                    foreach ($aAccounts1 as $k => $aAccount) {
+                        $oAccount = BxDolAccount::getInstance($aAccount['id']);
+                        if($oAccount->isConfirmed()){
+                            unset($aAccounts1[$k]);
+                        }
                     }
-                }
-                break;
-                
-            case 'no_profile_delete':
-                $aAccounts = $oAccountQuery->getAccountsForPruning('no_profile', $iTime);
-                break;
+                    $aAccounts = array_merge($aAccounts, $aAccounts1);   
+                    break;
+
+                case 'no_profile_delete':
+                    $aAccounts = array_merge($aAccounts, $aAccounts = $oAccountQuery->getAccountsForPruning('no_profile', $iTime));
+                    break;
+            }
+        }
+        
+        foreach ($aAccountsSuspend as $k => $aAccount) {
+            $oAccount = BxDolAccount::getInstance($aAccount['id']);
+            $oProfile = BxDolProfile::getInstanceAccountProfile($aAccount['id']);
+            $oProfile->suspend(BX_PROFILE_ACTION_AUTO, 0 ,false);
+            $aProfiles = $oAccount->getProfiles();
+            foreach($aProfiles as $aProfile){
+                BxDolProfile::getInstance($aProfile['id'])->suspend(BX_PROFILE_ACTION_AUTO, 0 ,false);
+            }
+            $iCount++;
         }
 
-        if ($bSuspend){
-            foreach ($aAccounts as $k => $aAccount) {
-                $oAccount = BxDolAccount::getInstance($aAccount['id']);
-                $oProfile = BxDolProfile::getInstanceAccountProfile($aAccount['id']);
-                $oProfile->suspend(BX_PROFILE_ACTION_AUTO, 0 ,false);
-                $aProfiles = $oAccount->getProfiles();
-                foreach($aProfiles as $aProfile){
-                    BxDolProfile::getInstance($aProfile['id'])->suspend(BX_PROFILE_ACTION_AUTO, 0 ,false);
-                }
-                $iCount++;
-            }
-        }
-        else{
-            foreach ($aAccounts as $k => $aAccount) {
-                $oAccount = BxDolAccount::getInstance($aAccount['id']);
-                $oAccount->delete(false);
-                $iCount++;
-            }
+        
+        foreach ($aAccounts as $k => $aAccount) {
+            $oAccount = BxDolAccount::getInstance($aAccount['id']);
+            $oAccount->delete(false);
+            $iCount++;
         }
 
         return $iCount;
