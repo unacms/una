@@ -20,6 +20,7 @@
         <string name="_apps"><![CDATA[Apps]]></string>
 	<string name="_Are_you_sure"><![CDATA[Are you sure?]]></string>
 	<string name="_Auth type"><![CDATA[Auth type]]></string>
+        <string name="_by_author"><![CDATA[by]]></string>
 	<string name="_Basic"><![CDATA[Basic]]></string>
 	<string name="_CONTACT_H"><![CDATA[Contact us]]></string>
 	<string name="_CONTACT_H1"><![CDATA[Contact]]></string>
@@ -1968,7 +1969,7 @@
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
 	<string name="_adm_wgt_cpt_storages"><![CDATA[Storage]]></string>
-	<string name="_adm_wgt_cpt_store"><![CDATA[Apps Market]]></string>
+	<string name="_adm_wgt_cpt_store"><![CDATA[App Store]]></string>
         <string name="_cmt_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[All]]></string>
@@ -2397,7 +2398,7 @@ If it is not enabled then please consider implement this optimization, since it 
 {email_footer}]]></string>
     <string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Site was successfully upgraded to {new_version}.</p>
-<p>Please go to <b>Studio &gt; Apps Market &gt; Updates</b> to check for modules updates.</p>
+<p>Please go to <b>Studio &gt; App Store &gt; Updates</b> to check for modules updates.</p>
 <p> </p>
 {conclusion}
 <p> </p>
@@ -3843,7 +3844,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Can't apply upgrade because too many files({0}%) were modified]]></string>
 	<string name="_sys_upgrade_files_checksum_failed_too_many_module"><![CDATA[Can't apply upgrade because too many files({0}%) were modified in {1} module]]></string>
 	<string name="_sys_upgrade_get_version_info_failed"><![CDATA[Get version info failed, please check internet connection on the web-server or web-server firewall]]></string>
-        <string name="_sys_upgrade_modules_upgrade_first"><![CDATA[You have outdated modules. Upgrade them first in Studio &gt; Apps Market &gt; Updates.]]></string>
+        <string name="_sys_upgrade_modules_upgrade_first"><![CDATA[You have outdated modules. Upgrade them first in Studio &gt; App Store &gt; Updates.]]></string>
 	<string name="_sys_upgrade_patch_checksum_failed"><![CDATA[Downloaded patch file checksum is invalid]]></string>
 	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Patch download failed, or downloaded file can't be saved]]></string>
 	<string name="_sys_upgrade_patch_invalid"><![CDATA[Invalid patch, it can't be applied to your version or incorrect files structure in the patch.]]></string>

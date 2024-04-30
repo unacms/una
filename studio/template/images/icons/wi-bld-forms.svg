@@ -1,13 +1,14 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="48" height="48" fill="url(#paint0_linear_214_1435)"/>
-<path d="M17.25 10.75C14.9163 10.82 13.5249 11.0798 12.5622 12.0434C11.2441 13.3627 11.2441 15.486 11.2441 19.7325V29.4916C11.2441 33.7383 11.2441 35.8615 12.5622 37.1808C13.8802 38.5 16.0015 38.5 20.2441 38.5H27.7442C31.9868 38.5 34.1081 38.5 35.4261 37.1808C36.7442 35.8615 36.7442 33.7383 36.7442 29.4916V19.7325C36.7442 15.486 36.7442 13.3627 35.4261 12.0434C34.4634 11.0798 33.072 10.82 30.7383 10.75" stroke="white" stroke-width="2.25"/>
-<path d="M17.2441 11.125C17.2441 9.67525 18.4194 8.5 19.8691 8.5H28.1192C29.5689 8.5 30.7442 9.67525 30.7442 11.125C30.7442 12.5748 29.5689 13.75 28.1192 13.75H19.8691C18.4194 13.75 17.2441 12.5748 17.2441 11.125Z" stroke="white" stroke-width="2.25" stroke-linejoin="round"/>
-<path d="M15.75 20.5H21.75" stroke="white" stroke-width="2.25" stroke-linecap="round"/>
-<path d="M26.25 22C26.25 22 27 22 27.75 23.5C27.75 23.5 30.1323 19.75 32.25 19" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M15.75 29.5H21.75" stroke="white" stroke-width="2.25" stroke-linecap="round"/>
-<path d="M26.25 31C26.25 31 27 31 27.75 32.5C27.75 32.5 30.1323 28.75 32.25 28" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="48" height="48" fill="url(#paint0_linear_337_2104)"/>
+<path d="M9.75 23.5C9.75 16.7825 9.75 13.4237 11.8369 11.3369C13.9237 9.25 17.2825 9.25 24 9.25C30.7175 9.25 34.0763 9.25 36.1632 11.3369C38.25 13.4237 38.25 16.7825 38.25 23.5C38.25 30.2175 38.25 33.5763 36.1632 35.6632C34.0763 37.75 30.7175 37.75 24 37.75C17.2825 37.75 13.9237 37.75 11.8369 35.6632C9.75 33.5763 9.75 30.2175 9.75 23.5Z" stroke="white" stroke-width="2.25"/>
+<path d="M25.5 16H33.5" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.5 20H31.5" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.5 27H33.5" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.5 31H31.5" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 18C15 16.5858 15 15.8787 15.4393 15.4393C15.8787 15 16.5858 15 18 15C19.4142 15 20.1213 15 20.5607 15.4393C21 15.8787 21 16.5858 21 18C21 19.4142 21 20.1213 20.5607 20.5607C20.1213 21 19.4142 21 18 21C16.5858 21 15.8787 21 15.4393 20.5607C15 20.1213 15 19.4142 15 18Z" stroke="white" stroke-width="2"/>
+<path d="M15 29C15 27.5858 15 26.8787 15.4393 26.4393C15.8787 26 16.5858 26 18 26C19.4142 26 20.1213 26 20.5607 26.4393C21 26.8787 21 27.5858 21 29C21 30.4142 21 31.1213 20.5607 31.5607C20.1213 32 19.4142 32 18 32C16.5858 32 15.8787 32 15.4393 31.5607C15 31.1213 15 30.4142 15 29Z" stroke="white" stroke-width="2"/>
 <defs>
-<linearGradient id="paint0_linear_214_1435" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_337_2104" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
 <stop stop-color="#3B82F6"/>
 <stop offset="1" stop-color="#5850EC"/>
 </linearGradient>

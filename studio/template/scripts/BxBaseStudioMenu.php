@@ -12,8 +12,6 @@ class BxBaseStudioMenu extends BxDolStudioMenu
 {
     protected $_bMenuSide;
     protected $_bInlineIcons;
-    
-    protected $_sIconBgUrl;
 
     public function __construct ($aObject, $oTemplate)
     {
@@ -27,8 +25,6 @@ class BxBaseStudioMenu extends BxDolStudioMenu
             'menu_launcher_browser.html',
             'page_breadcrumb.html'
         ));
-
-        $this->_sIconBgUrl = $this->_oTemplate->getIconUrl('mi-empty.svg');
     }
 
     public function setInlineIcons($bInlineIcons)
@@ -65,10 +61,8 @@ class BxBaseStudioMenu extends BxDolStudioMenu
             ];
 
             $aItem['bx_if:show_icon_bg'] = [
-                'condition' => isset($aItem['icon_bg']) && $aItem['icon_bg'] === true,
-                'content' => [
-                    'icon_bg_url' => $this->_sIconBgUrl
-                ]
+                'condition' => (isset($aItem['icon_bg']) && $aItem['icon_bg'] === true) || strpos($aItem['icon'], '.') === false,
+                'content' => []
             ];
         }
 

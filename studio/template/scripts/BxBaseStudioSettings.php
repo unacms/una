@@ -61,6 +61,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             return false;
 
         return $sResult . $this->getBlockCode(array(
+            'type' => BX_DB_CONTENT_ONLY,
             'content' => $this->oOptions->getCode()
         ));
     }

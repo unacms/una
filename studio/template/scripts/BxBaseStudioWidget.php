@@ -159,6 +159,13 @@ class BxBaseStudioWidget extends BxDolStudioWidget
     }
     public function getBlockCode($aBlock)
     {
+        $aTypeI2S = [
+            BX_DB_CONTENT_ONLY => 'cnt',
+            BX_DB_DEF => 'cnt-ttl-bg bg-white rounded-2xl',
+            BX_DB_NO_CAPTION => 'cnt-bg bg-white rounded-2xl'
+        ];
+        $iType = isset($aBlock['type'], $aTypeI2S[$aBlock['type']]) ? $aBlock['type'] : BX_DB_NO_CAPTION;
+
         $sContent = '';
         if(!empty($aBlock['content']))
             $sContent = $aBlock['content'];
@@ -166,7 +173,8 @@ class BxBaseStudioWidget extends BxDolStudioWidget
             $sContent = $aBlock['items'];
 
     	return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_block.html', array(
-            'caption' => $this->getBlockCaption($aBlock),
+            'type' => $aTypeI2S[$iType],
+            'caption' => !in_array($iType, [BX_DB_CONTENT_ONLY, BX_DB_NO_CAPTION]) ? $this->getBlockCaption($aBlock) : '',
             'panel_top' => $this->getBlockPanelTop($aBlock),
             'items' => $sContent,
             'panel_bottom' => $this->getBlockPanelBottom($aBlock)

@@ -3,6 +3,13 @@
 /**
  * Overwrite default styles
  */
+.bx-form-element-wrapper.bx-def-margin-top-auto {
+    margin-top: 2rem;
+}
+.bx-form-element-wrapper.bx-def-margin-top-auto:first-child {
+    margin-top: 0;
+}
+
 .bx-form-value .bx-form-input-slider,
 .bx-form-value .bx-form-input-doublerange,
 .bx-form-value .bx-form-input-select_multiple,
@@ -35,7 +42,8 @@
 .bx-form-value .bx-form-input-select_multiple,
 .bx-form-value .bx-form-input-radio_set,
 .bx-form-value .bx-form-input-checkbox_set {
-    height:auto;
+    height: auto;
+    padding: .5rem .75rem;
 }
 
 .bx-form-value .bx-form-input-textarea {
@@ -75,6 +83,13 @@
 .bx-form-value .bx-form-input-radio_set,
 .bx-form-value .bx-form-input-checkbox_set {
     height:auto;
+}
+.bx-form-value .bx-form-input-checkbox_set {
+    line-height: 1.75rem;
+}
+
+.bx-form-caption-oneline.bx-def-margin-left {
+    margin-left: 0.5rem;
 }
 
 /**

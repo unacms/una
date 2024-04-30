@@ -2320,7 +2320,7 @@ BLAH;
         $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-section bx-form-section-" . ($sTitle ? "header" : "divider"));
 
         $this->_isSectionOpened = true;
-        return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content py-4" . ($sTitle ? ' px-6' : '') . "\">\n";
+        return $sClose . "<!-- form header content begins -->\n <div $sWrapperAttrs> <div $sAttrs> $sTitle <div class=\"bx-form-section-content pt-4 pb-6" . ($sTitle ? ' px-6' : '') . "\">\n";
     }
 
     function getCloseSection()

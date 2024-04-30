@@ -53,7 +53,7 @@ class BxDolStudioModules extends BxDol implements iBxDolSingleton
                 'caption' => _t('_adm_txt_settings'),
                 'link' => '',
                 'click' => $sJsObject . ".settings('" . $aWidget['page_name'] . "', " . $aWidget['id'] . ")",
-                'icon' => 'cog',
+                'icon' => 'wi-act-settings.svg',
                 'check_func' => ''
             )
         );
@@ -64,7 +64,7 @@ class BxDolStudioModules extends BxDol implements iBxDolSingleton
                 'caption' => _t('_adm_txt_uninstall'),
                 'link' => '',
                 'click' => $sJsObject . ".uninstall('" . $aWidget['page_name'] . "', " . $aWidget['id'] . ", 0)",
-                'icon' => 'times',
+                'icon' => 'wi-act-uninstall.svg',
                 'check_func' => 'is_disabled'
             );
 

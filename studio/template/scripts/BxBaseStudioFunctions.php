@@ -87,6 +87,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
             $aService = unserialize($mixedWidget['cnt_actions']);
             $aActions = bx_srv_ii($aService['module'], $aService['method'], array_merge(array($mixedWidget), $aService['params']), $aService['class']);
 
+            $aTmplVarsActionsLeft = $aTmplVarsActionsRight = [];
             foreach($aActions as $iIndex => $aAction) {
                 if(!empty($aAction['check_func'])) {
                     $sCheckFunc = bx_gen_method_name($aAction['check_func']);
@@ -101,7 +102,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
                     $sActionIcon = $oTemplate->getIconUrl($sActionIcon);
 
                 $sCaption = _t($aAction['caption']);
-                $aTmplVarsActions[] = array(
+                $aTmplVarsAction = array(
                     'name' => !empty($aAction['name']) ? $aAction['name'] : $sPage . '-' . $iIndex,
                     'caption' => $sCaption,
                     'url' => !empty($aAction['url']) ? bx_replace_markers($aAction['url'], $aMarkers) : 'javascript:void(0)',
@@ -120,6 +121,11 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
                         'content' => array('icon_url' => $sActionIcon, 'caption' => $sCaption),
                     ),
                 );
+
+                if(in_array($aAction['name'], ['settings']))
+                    $aTmplVarsActionsLeft[] = $aTmplVarsAction;
+                else
+                    $aTmplVarsActionsRight[] = $aTmplVarsAction;
             }
         }
 
@@ -136,7 +142,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $sStyles = 'animation-delay: -.' . rand(1 , 75) . 's; animation-duration: .' . rand(15 , 20) . 's';
         if($bFeatured && (int)$mixedWidget['featured'] != 1)
             $sStyles .= ' display:none;';
-        
+
         return $oTemplate->parseHtmlByName('widget.html', array(
             'id' => $mixedWidget['id'],
             'name' => strtolower($sCaption),
@@ -159,10 +165,16 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
                     'content' => $sNotices
                 )
             ),
-            'bx_if:show_actions' => array(
-                'condition' => !empty($aTmplVarsActions),
+            'bx_if:show_actions_left' => array(
+                'condition' => !empty($aTmplVarsActionsLeft),
                 'content' => array(
-                    'bx_repeat:actions' => $aTmplVarsActions,
+                    'bx_repeat:actions' => $aTmplVarsActionsLeft,
+                )
+            ),
+            'bx_if:show_actions_right' => array(
+                'condition' => !empty($aTmplVarsActionsRight),
+                'content' => array(
+                    'bx_repeat:actions' => $aTmplVarsActionsRight,
                 )
             ),
             'bx_if:icon' => array (

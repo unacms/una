@@ -38,27 +38,26 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $aMenu = array();
-        $aMenuItems = array(
-	        'goodies' => array('icon' => 'home'),
-        	'latest' => array('icon' => 'th-large'),
-	        'featured' => array('icon' => 'thumbs-up'),
-        	'popular' => array('icon' => 'star'),
-        	'categories' => array('icon' => 'tag'),
-        	'search' => array('icon' => 'search'),
-	        'purchases' => array('icon' => 'shopping-cart'), 
-	        'updates' => array('icon' => 'sync'), 
-	        'checkout' => array('icon' => 'credit-card'), 
-	        'downloaded' => array('icon' => 'list')
-        );
+        $aMenu = [];
+        $aMenuItems = [
+            'goodies' => ['icon' => 'mi-str-home.svg', 'icon_bg' => true],
+            'latest' => ['icon' => 'mi-str-latest.svg', 'icon_bg' => true],
+            'featured' => ['icon' => 'mi-str-featured.svg', 'icon_bg' => true],
+            'popular' => ['icon' => 'mi-str-popular.svg', 'icon_bg' => true],
+            'categories' => ['icon' => 'mi-str-categories.svg', 'icon_bg' => true],
+            'search' => ['icon' => 'mi-str-search.svg', 'icon_bg' => true],
+            'purchases' => ['icon' => 'mi-str-purchases.svg', 'icon_bg' => true], 
+            'updates' => ['icon' => 'mi-str-updates.svg', 'icon_bg' => true], 
+            'checkout' => ['icon' => 'mi-str-checkout.svg', 'icon_bg' => true], 
+            'downloaded' => ['icon' => 'mi-str-downloaded.svg', 'icon_bg' => true]
+        ];
         foreach($aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = array_merge([
                 'name' => $sMenuItem,
-                'icon' => $aItem['icon'],
                 'link' => $this->getBaseUrl($sMenuItem),
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            );
+            ], $aItem);
 
         $iCounter = BxDolStudioCart::getInstance()->getCount();
 
@@ -85,7 +84,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         if(!method_exists($this, $sMethod))
             return '';
 
-        return $sResult . $this->$sMethod();
+        return $this->$sMethod() . $sResult;
     }
 
     function getPageContent()
@@ -563,6 +562,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         if(!empty($sModules))
             $sContent .= $this->getBlockCode(array(
+                'type' => BX_DB_DEF,
                 'caption' => '_adm_block_cpt_downloaded_modules',
                 'items' => $oTemplate->parseHtmlByName('str_products.html', array(
                     'list' => $sModules,
@@ -572,6 +572,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         if(!empty($sUpdates))
             $sContent .= $this->getBlockCode(array(
+                'type' => BX_DB_DEF,
                 'caption' => '_adm_block_cpt_downloaded_updates',
                 'items' => $oTemplate->parseHtmlByName('str_products.html', array(
                     'list' => $sUpdates,
@@ -747,7 +748,12 @@ class BxBaseStudioStore extends BxDolStudioStore
 			),
         ));
 
-        return array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'popup' => PopupBox('bx-std-str-popup-product', $aProduct['title'], $sContent, true), 'screenshots' => $iScreenshots);
+        return [
+            'code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 
+            'message' => '', 
+            'popup' => BxTemplStudioFunctions::getInstance()->popupBox('bx-std-str-popup-product', $aProduct['title'], $sContent, true), 
+            'screenshots' => $iScreenshots
+        ];
     }
 
     protected function getFile($iFileId)

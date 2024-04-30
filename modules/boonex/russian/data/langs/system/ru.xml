@@ -19,6 +19,7 @@
 	<string name="_Are_you_sure"><![CDATA[Вы уверены?]]></string>
 	<string name="_Auth type"><![CDATA[Тип авторизации]]></string>
 	<string name="_Basic"><![CDATA[Базовая]]></string>
+        <string name="_by_author"><![CDATA[от]]></string>
 	<string name="_CONTACT_H"><![CDATA[Написать нам]]></string>
 	<string name="_CONTACT_H1"><![CDATA[Написать]]></string>
 	<string name="_Can not delete comments with replies"><![CDATA[Невозможно удалить комментарии с ответами]]></string>

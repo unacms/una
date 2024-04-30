@@ -913,7 +913,7 @@
     }
 
     .bx-artificer .bx-popup-border {
-        @apply ring-1 ring-gray-300 dark:ring-gray-700 rounded-xl;
+        @apply m-px ring-1 ring-gray-300 dark:ring-gray-700 rounded-xl;
     }
 
     .bx-artificer .bx-popup-width {
@@ -947,7 +947,6 @@
         @apply hover:text-gray-800 dark:hover:text-gray-200;
     }
     .bx-stl-mil-hover-bg {
-        @apply hover:border-gray-200/50 dark:hover:border-gray-700/50;
         @apply hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
     }
     .bx-stl-mil-hover {
@@ -1109,7 +1108,7 @@
         @apply border-4 border-transparent;
     }
     .bx-artificer .bx-menu-toolbar .bx-menu-toolbar-item .bx-menu-toolbar-item-unit .bx-def-icon-size {
-        @apply h-6 w-6 md:h-8 md:w-8;
+        @apply h-8 w-8;
     }
 
     /* Common elements: Page Submenu */
@@ -1239,6 +1238,11 @@
     }
 
     /* Studio */
+    .bx-std.bx-def-font,
+    .bx-std .bx-def-font-inputs {
+        @apply font-inter;
+    }
+
     .bx-std #bx-std-pcap-menu-popup-help .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-actions .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-account .bx-popup,

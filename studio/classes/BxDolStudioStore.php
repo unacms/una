@@ -221,7 +221,7 @@ class BxDolStudioStore extends BxTemplStudioWidget
 
     protected function loadGoodies()
     {
-        $iPerPage = 3;
+        $iPerPage = 4;
         $aProducts = array();
 
         $sVersion = bx_get_ver();

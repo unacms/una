@@ -52,6 +52,8 @@ div.bx-std-page-column.bx-std-page-content {
 
     height: 100%;
 
+    background-color: rgba(229, 231, 235, 1.0);
+
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -60,5 +62,6 @@ div.bx-std-page-column.bx-std-page-content::-webkit-scrollbar {
 }
 div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     width: 100%;
-    padding-top: 5rem;
+    height: max-content;
+    padding: 6.5rem 1.5rem  1.5rem  1.5rem;
 }

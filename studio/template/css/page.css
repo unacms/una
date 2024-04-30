@@ -31,8 +31,10 @@ div.bx-std-blocks-line .bx-std-block-wrp {
  * Block Styles
  */
 div.bx-std-block {
+    /*
     min-height: calc(100vh - 5rem);
     background-color: rgba(229, 231, 235, 1.0);
+    */
 }
 div.bx-std-block-caption {
     position: relative;
@@ -41,16 +43,16 @@ div.bx-std-block-caption {
     -webkit-align-items: center;
     align-items: center;
 
-    padding: 1.0rem 1.5rem;
+    padding: 1.25rem 1.5rem;
 }
 div.bx-std-bcap-text {
     -webkit-flex: 1 1 auto;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 
-    line-height: 1.5;
-    font-size: 1rem;
+    line-height: 2rem;
     font-weight: 600;
+    font-size: 1.5rem;
 }
 div.bx-std-bcap-actions {
     position: relative;

@@ -1,4 +1,4 @@
-<div class="bx-std-product-view">
+<div class="bx-std-product-view pt-4">
 	<bx_if:show_screenshots>
             <div class="bx-std-pv-screenshots bx-def-margin-bottom">
                 <div class="bx-std-pvs-left">
@@ -90,34 +90,34 @@
 		</span> __description__
 	</div>
 	<div class="bx-std-pv-actions bx-def-margin-top">
-		<bx_if:show_purchase>
-			<div class="bx-std-pv-action bx-std-pva-price bx-def-margin-right">
-				<bx_if:show_purchase_single>
-					<a class="bx-btn" onclick="javascript:__js_object__.addToCart(__vendor_id__, __id__, this)">__price_single__</a>
-				</bx_if:show_purchase_single>
-				<bx_if:show_checkout_single>
-					<a class="bx-btn bx-std-pva-checkout" onclick="javascript:__js_object__.checkoutCart(__vendor_id__, this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
-						<bx_text:_adm_btn_checkout_submit />
-					</a>
-				</bx_if:show_checkout_single>
-				<bx_if:show_purchase_recurring>
-					<span class="bx-std-pva-or bx-def-margin-sec-leftright bx-def-font-grayed"><bx_text:_adm_str_txt_or /></span>
-					<a class="bx-btn" onclick="javascript:__js_object__.subscribe(__vendor_id__, __id__, this)">__price_recurring__</a>
-				</bx_if:show_purchase_recurring>
-			</div>
-		</bx_if:show_purchase>
-		<bx_if:show_download>
-			<a class="bx-btn bx-def-margin-right" onclick="javascript:__js_object__.getFile(__file_id__, this)">
-				<bx_text:_adm_btn_download_submit />
-			</a>
-		</bx_if:show_download>
-		<bx_if:show_download_disabled>
-			<a class="bx-btn bx-btn-disabled bx-def-margin-right" type="button" disabled="disabled">
-				<bx_text:_adm_btn_download_submit />
-			</a>
-		</bx_if:show_download_disabled>
-		<a class="bx-btn bx-def-margin-right" onclick="javascript:$('.bx-popup-applied:visible').dolPopupHide();">
-			<bx_text:_adm_btn_cancel_submit />
-		</a>
+            <bx_if:show_purchase>
+                <div class="bx-std-pv-action bx-std-pva-price bx-def-margin-right">
+                    <bx_if:show_purchase_single>
+                        <a class="bx-btn bx-btn-primary" onclick="javascript:__js_object__.addToCart(__vendor_id__, __id__, this)">__price_single__</a>
+                    </bx_if:show_purchase_single>
+                    <bx_if:show_checkout_single>
+                        <a class="bx-btn bx-btn-primary bx-std-pva-checkout" onclick="javascript:__js_object__.checkoutCart(__vendor_id__, this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
+                            <bx_text:_adm_btn_checkout_submit />
+                        </a>
+                    </bx_if:show_checkout_single>
+                    <bx_if:show_purchase_recurring>
+                        <span class="bx-std-pva-or bx-def-margin-sec-leftright bx-def-font-grayed"><bx_text:_adm_str_txt_or /></span>
+                        <a class="bx-btn bx-btn-primary" onclick="javascript:__js_object__.subscribe(__vendor_id__, __id__, this)">__price_recurring__</a>
+                    </bx_if:show_purchase_recurring>
+                </div>
+            </bx_if:show_purchase>
+            <bx_if:show_download>
+                <a class="bx-btn bx-btn-primary bx-def-margin-right" onclick="javascript:__js_object__.getFile(__file_id__, this)">
+                    <bx_text:_adm_btn_download_submit />
+                </a>
+            </bx_if:show_download>
+            <bx_if:show_download_disabled>
+                <a class="bx-btn bx-btn-disabled bx-def-margin-right" type="button" disabled="disabled">
+                    <bx_text:_adm_btn_download_submit />
+                </a>
+            </bx_if:show_download_disabled>
+            <a class="bx-btn bx-def-margin-right" onclick="javascript:$('.bx-popup-applied:visible').dolPopupHide();">
+                <bx_text:_adm_btn_cancel_submit />
+            </a>
 	</div>
 </div>
