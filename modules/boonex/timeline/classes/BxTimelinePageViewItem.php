@@ -29,6 +29,14 @@ class BxTimelinePageViewItem extends BxTemplPage
 
         $this->_iItemId = $iItemId;
     }
+    
+    protected function _isAvailablePage ($a)
+    {
+        if (!$this->_iItemId)
+            return false;
+
+        return parent::_isAvailablePage($a);
+    }
 
     public function getCode()
     {

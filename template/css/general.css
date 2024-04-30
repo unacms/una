@@ -681,3 +681,6 @@ video.bx-player-embed {
 .bx-cont-ph-inline {
     display:inline-block;
 }
+.bx-embeded-image{
+    display: none;
+}

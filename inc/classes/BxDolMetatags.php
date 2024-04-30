@@ -240,6 +240,8 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             }
         }
 
+        $aValues = array_slice($aValues, 0, (int)getParam('sys_profiles_search_limit'));
+        
         return $aValues;
     }
 

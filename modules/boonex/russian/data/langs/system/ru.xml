@@ -1557,7 +1557,6 @@
     <string name="_adm_stg_cpt_option_sys_accounts_force_password_change_after_expiration"><![CDATA[Принудительная смена пароля после истечения срока действия пароля]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Заблокировать сайт от неавторизованных пользователей]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Cписок URI страниц (разделенный запятыми), которые доступны для неавторизованных пользователей]]></string>
-    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[Не удалять]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_delete"><![CDATA[Удалить учетные записи без входа в течение N дней]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_suspend"><![CDATA[Приостановить учетные записи без входа в систему на N дней]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_confirm_delete"><![CDATA[Удалить учетные записи, которые не подтверждали электронную почту в течение N дней]]></string>

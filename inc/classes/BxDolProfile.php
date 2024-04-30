@@ -164,7 +164,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             $oProfile = $mixedProfileId;
 
         $iId = $oProfile->id();
-        $oAccount = $oProfile->getAccountObject();
+        $oAccount = BxDolAccount::getInstance(getLoggedId());
 
         $aMembershipInfo = BxDolAcl::getInstance()->getMemberMembershipInfo($iId);
 
