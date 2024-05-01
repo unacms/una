@@ -27,29 +27,38 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
     public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
     {
-        if ($isAssociateWithContent)
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($isAssociateWithContent)
             return parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent);
 
         $aMediasOld = $this->_oModule->_oDb->getMediaListByContentId($iContentId);                
-        
-        if ($b = parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent)) {
-            $aMediasNew = $this->_oModule->_oDb->getMediaListByContentId($iContentId);
-            $aIdsOld = array_column($aMediasOld, 'id');
-            $aIdsNew = array_column($aMediasNew, 'id');
-            $aIdsAdded = array_diff($aIdsNew, $aIdsOld);
-            
+
+        if(!parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent)) 
+            return false;
+
+        $aMediasNew = $this->_oModule->_oDb->getMediaListByContentId($iContentId);
+
+        $aIdsOld = array_column($aMediasOld, 'id');
+        $aIdsNew = array_column($aMediasNew, 'id');
+        $aIdsAdded = array_diff($aIdsNew, $aIdsOld);
+
+        if(!empty($aIdsAdded)) {
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
             $iProfileId = $this->getContentOwnerProfileId($iContentId);
-            if (!empty($aIdsAdded))
-                bx_alert($this->_oModule->getName(), 'medias_added', $iContentId, $iProfileId, array(
-                    'object_author_id' => $iProfileId,
 
-                    'subobjects_ids' => $aIdsAdded,
+            bx_alert($this->_oModule->getName(), 'medias_added', $iContentId, $iProfileId, [
+                'object_author_id' => $iProfileId,
 
-                    'medias_added' => $aIdsAdded,
-                ));
+                'subobjects_ids' => $aIdsAdded,
+                'medias_added' => $aIdsAdded,
+
+                'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']],
+                'cf' => $aContentInfo[$CNF['FIELD_CF']]
+            ]);
         }
 
-        return $b;
+        return true;
     }
     
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
