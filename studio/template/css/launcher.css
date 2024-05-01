@@ -153,9 +153,6 @@ div.bx-std-widget-icon-jitter {
 div.bx-std-widget-notices {
     position: absolute;
     z-index: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     box-sizing: content-box;
 
     top: -1rem;
@@ -165,27 +162,19 @@ div.bx-std-widget-notices {
     
     background-color: #ff3b38;
     border: 2px solid #000000;
-    border-radius: 16px;
+    border-radius: 1.25rem;
 
-    color:#fff;
-    font-weight:bold;
-    text-align:center;
+    line-height: 2rem;
+    text-align: center;
+
+    font-weight: 600;
+    font-size: 1.0rem;
+    color: #fff;
 
     overflow:visible;
 }
 .bx-std-widgets.bx-std-jitter .bx-std-widget-notices {
     display: none;
-}
-
-div.bx-std-widget-notices .bx-std-wn-cnt  {
-    width: 1.5rem;
-    height: 1.5rem;
-
-    border: 2px solid #ffffff;
-    border-radius: 0.5rem;
-
-    line-height: 1.25rem;
-    font-size: 0.75rem;
 }
 
 div.bx-std-widget-actions {
