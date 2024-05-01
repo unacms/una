@@ -5650,7 +5650,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
 );
 
 INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `cover`, `layout_id`, `submenu`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`, `sticky_columns`) VALUES
-('sys_home', 'home', '_sys_page_title_system_home', '_sys_page_title_home', 'system', 2, 13, 'sys_homepage_submenu', 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxTemplPageHome', '', 1),
+('sys_home', 'home', '_sys_page_title_system_home', '_sys_page_title_home', 'system', 2, 13, 'sys_homepage_submenu', 2147483647, 1, 'page.php?i=home', '', '', '', 0, 1, 0, 'BxTemplPageHome', '', 1),
 ('sys_about', 'about', '_sys_page_title_system_about', '_sys_page_title_about', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=about', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_terms', 'terms', '_sys_page_title_system_terms', '_sys_page_title_terms', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=terms', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_privacy', 'privacy', '_sys_page_title_system_privacy', '_sys_page_title_privacy', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=privacy', '', '', '', 0, 1, 0, '', '', 0),
