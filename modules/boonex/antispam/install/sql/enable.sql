@@ -32,10 +32,10 @@ VALUES (@iTypeId, 'bx_antispam_dnsbl', '_bx_antispam_adm_stg_cpt_category_dnsbl'
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'bx_antispam_dnsbl_enable', '_bx_antispam_option_dnsbl_enable', 'on', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'bx_antispam_dnsbl_enable', '_bx_antispam_option_dnsbl_enable', '', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'bx_antispam_dnsbl_behaviour_login', '_bx_antispam_option_dnsbl_behaviour_login', 'block', 'select', 'a:3:{s:6:"module";s:11:"bx_antispam";s:6:"method";s:13:"config_values";s:6:"params";a:1:{i:0;s:11:"dnsbl_login";}}', '', '', 20),
 (@iCategoryId, 'bx_antispam_dnsbl_behaviour_join', '_bx_antispam_option_dnsbl_behaviour_join', 'approval', 'select', 'a:3:{s:6:"module";s:11:"bx_antispam";s:6:"method";s:13:"config_values";s:6:"params";a:1:{i:0;s:10:"dnsbl_join";}}', '', '', 30),
-(@iCategoryId, 'bx_antispam_uridnsbl_enable', '_bx_antispam_option_uridnsbl_enable', 'on', 'checkbox', '', '', '', 40);
+(@iCategoryId, 'bx_antispam_uridnsbl_enable', '_bx_antispam_option_uridnsbl_enable', '', 'checkbox', '', '', '', 40);
 
 
 
