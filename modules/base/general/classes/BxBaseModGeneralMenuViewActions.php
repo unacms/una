@@ -448,7 +448,12 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $aSrvParams = [bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, $aRepostParams];
 
         if($this->_bIsApi && bx_is_srv('bx_timeline', 'get_repost_element_block_api'))
-            return bx_srv('bx_timeline', 'get_repost_element_block_api', $aSrvParams);
+            return [
+                'id' => $aItem['id'],
+                'name' => $aItem['name'],
+                'display_type' => 'element',
+                'data' => bx_srv('bx_timeline', 'get_repost_element_block_api', $aSrvParams)
+            ];
 
         if(!bx_is_srv('bx_timeline', 'get_repost_element_block'))
             return '';
