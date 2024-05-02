@@ -3127,6 +3127,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($iId))
             return array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost'));
 
+        $this->_oDb->updateEvent([
+            'source' => $this->getName() . '_' . $iAuthorId . '_' . $iId
+        ], ['id' => $iId]);
+
         $this->onRepost($iId, $aReposted);
 
         return $iId;
