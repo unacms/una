@@ -518,6 +518,30 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     	return array($sResult, $this->_sClassMiSa);
     }
 
+    protected function _getMenuItemSocialSharing($aItem, $aParams = array())
+    {
+        if(!$this->_bIsApi)
+            return true;
+
+        if(empty($this->_oMenuSocialSharing) && !$this->_initMenuSocialSharing())
+            return [];
+
+        return [
+            'id' => $aItem['id'],
+            'name' => $aItem['name'],
+            'display_type' => 'element',
+            'data' => [
+                'type' => 'shares',
+                'system' => $this->_sModule,
+                'object_id' => $this->_iContentId,
+                'params' => [],
+                'action' => [
+                    'url' => bx_replace_markers('{url_encoded}', $this->_aMarkers)
+                ]
+            ]
+        ];
+    }
+
     protected function _getMenuItemNotes($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
