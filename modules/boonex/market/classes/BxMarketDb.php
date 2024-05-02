@@ -180,11 +180,21 @@ class BxMarketDb extends BxBaseModTextDb
                     break;
 
             case 'keyword':
+                if(getParam('useLikeOperator') == 'on') {
+                    $sKeyword = $this->escape('%' . preg_replace('/\s+/', '%', $aParams['value']) . '%');
+
+                    $aWhereSubclause = [];
+                    foreach ([$CNF['FIELD_TITLE'], $CNF['FIELD_TEXT']] as $sField)
+                        $aWhereSubclause []= "`" . $sField . "` LIKE  " . $sKeyword;
+                        
+                    $sWhereClause .=  ' AND (' . implode(' OR ', $aWhereSubclause) . ')';
+                }
+                else {
                     $sFieldsClause .= $this->prepareAsString(" MATCH(`" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_TEXT'] . "`) AGAINST (?) AS `search_condition`, ", $aParams['value']);
-                    $sJoinClause .= "";
                     $sWhereClause .= $this->prepareAsString(" AND MATCH(`" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_TEXT'] . "`) AGAINST (?) ", $aParams['value']);
                     $sOrderClause = "`search_condition` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-                    break;
+                }
+                break;
 
             case 'granted':
                     $sFieldsClause .= " '" . $aParams['license']['license'] . "' AS `license`, '" . $aParams['license']['profile_id'] . "' AS `purchased_by`, '' AS `purchased_for`, '" . $aParams['license']['added'] . "' AS `purchased_on`, ";
