@@ -5344,17 +5344,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!empty($aParams['validate']) && is_array($aParams['validate'])) {
             $iSlice = count($aParams['validate']);
 
-            $aEvents = $this->_oDb->getEvents(array_merge($aParams, [
+            $aEventsIds = $this->_oDb->getEvents(array_merge($aParams, [
                 'start' => 0,
                 'per_page' => 2 * $iSlice,
                 'from_cache' => $this->_oConfig->isCacheTable()
             ]));
 
-            $aIds = array_map(function($aEvent) {
-                return $aEvent['id'];
-            }, $aEvents);
+            $iIds = 0;
+            $aIds = [];
+            foreach($aEventsIds as $aEventId) {
+                $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => (int)$aEventId['id']]);
+                if(empty($aEvent) || !is_array($aEvent))
+                    continue;
 
-            $aResult = array_slice($aIds, 0, $iSlice) == $aParams['validate'] ? 'valid' : 'invalid';
+                $sEvent = $this->_oTemplate->getPost($aEvent, $aParams);
+                if(empty($sEvent))
+                    continue;
+
+                $aIds[] = $aEvent['id'];
+                if(++$iIds == $iSlice)
+                    break;
+            }
+
+            $aResult = $aIds == $aParams['validate'] ? 'valid' : 'invalid';
         }
         else 
             $aResult = $this->_oTemplate->getViewBlock($aParams);
