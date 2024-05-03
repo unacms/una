@@ -357,7 +357,7 @@ class BxBaseFormView extends BxDolForm
         // TODO: process inputs to translate titles, alerts, etc
         $keysToRemove = [];
         
-        foreach ($this->aInputs as &$aInput) {
+        foreach ($this->aInputs as $key => &$aInput) {
             if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput)) {
                 if (isset($aInput['type']) && 'files' == $aInput['type']){
                     $oStorage = BxDolStorage::getObjectInstance($aInput['storage_object']);
