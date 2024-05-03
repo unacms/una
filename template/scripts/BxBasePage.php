@@ -558,8 +558,8 @@ class BxBasePage extends BxDolPage
 
                     $aMenuManage = $oMenuManage->getCodeAPI();
                     if(!empty($aMenuManage) && is_array($aMenuManage)) {
-                        if(!empty($a['menu']) && is_array($a['menu']))
-                            $a['menu']['items'] = array_merge($a['menu']['items'], $aMenuManage['items']);
+                        if(isset($a['cover_block'], $a['cover_block']['actions_menu']) && is_array($a['cover_block']['actions_menu']))
+                            $a['cover_block']['actions_menu']['items'] = array_merge($a['cover_block']['actions_menu']['items'], $aMenuManage['items']);
                         else
                             $a['menu'] = $aMenuManage;
                     }

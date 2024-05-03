@@ -554,16 +554,19 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return $this->_bIsApi ? bx_api_get_msg('_sys_txt_error_occured') : MsgBox(_t('_sys_txt_error_occured'));
 
         // process metatags
-        if (!empty($CNF['OBJECT_METATAGS'])) {
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $aSpecificValues =[];
+        if (!empty($CNF['OBJECT_METATAGS']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) !== false) {
             if ($oMetatags->keywordsIsEnabled()) {
                 $aFields = $oMetatags->metaFields($aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
                 $oForm->setMetatagsKeywordsData($iContentId, $aFields, $oMetatags);
             }
+
+            if ($oMetatags->locationsIsEnabled())
+                $aSpecificValues = $oMetatags->locationGet($iContentId, empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }        
 
         // display profile
-        $oForm->initChecker($aContentInfo);
+        $oForm->initChecker($aContentInfo, $aSpecificValues);
         
         if ($this->_bIsApi)
             return [bx_api_get_block('entity_info', $oForm->getCodeAPI())];

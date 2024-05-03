@@ -18,12 +18,12 @@ $aConfig = array(
     'name' => 'bx_polls',
     'title' => 'Polls',
     'note' => 'Basic poll module.',
-    'version' => '13.0.7.DEV',
-    'vendor' => 'BoonEx',
+    'version' => '14.0.0.DEV',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '14.0.x'
     ),
 
     /**
