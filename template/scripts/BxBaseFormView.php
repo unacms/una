@@ -1385,7 +1385,7 @@ BLAH;
                 $this->addCssJsUi ();
                 break;
             case 'dateselect':
-                if(strpos($aInput['value'], ' ') !== false)
+                if(!empty($aInput['value']) && strpos($aInput['value'], ' ') !== false)
                     list($aInput['value']) = explode(' ', $aInput['value']);
 
                 $this->_addJs(array(
