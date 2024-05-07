@@ -48,7 +48,7 @@ INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `typ
 UPDATE `sys_options` SET `order` = 31 WHERE `name` = 'sys_metatags_hashtags_max';
 UPDATE `sys_options` SET `order` = 32 WHERE `name` = 'sys_metatags_mentions_max';
 
-UPDATE `sys_options` SET `type` = 'list' WHERE `name` =  'sys_account_accounts_pruning';
+UPDATE `sys_options` SET `type` = 'list' WHERE `name` = 'sys_account_accounts_pruning';
 UPDATE `sys_options` SET `value` = '' WHERE `name` =  'sys_account_accounts_pruning' AND `value` = 'no';
 
 
