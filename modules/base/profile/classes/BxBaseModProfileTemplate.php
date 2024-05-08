@@ -433,15 +433,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 
                 'bx_if:show_ava_image' => array(
                     'condition' => $bUrlAvatar,
-                    'content' => []
+                    'content' => [true]
                 ),
                 'bx_if:show_ava_letter' => array(
                     'condition' => !$bUrlAvatar,
-                    'content' => []
+                    'content' => [true]
                 ),
                 'bx_if:show_online' => array(
                     'condition' => $oProfile->isOnline(),
-                    'content' => []
+                    'content' => [true]
                 ),
                 'bx_if:is_avatar' => array(
                     'condition' => $bUrlAvatar,
@@ -514,7 +514,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             ],
             'bx_if:show_avatar_placeholder' => [
                 'condition' => !$bTmplVarsShowAvatar,
-                'content' => []
+                'content' => [true]
             ],
             'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']]),
             'action_menu' => $sActionsMenu,
@@ -553,11 +553,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $aTmplVars = array_merge($aTmplVars, $aTmplVarsShowCover, [
                 'bx_if:show_cover' => [
                     'condition' => $bUrlCover,
-                    'content' => []
+                    'content' => [true]
                 ],
                 'bx_if:show_cover_placeholder' => [
                     'condition' => !$bUrlCover,
-                    'content' => []
+                    'content' => [true]
                 ],
             ]);
 
