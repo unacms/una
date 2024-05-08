@@ -3057,6 +3057,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $aKeyWrappers = $this->_getKeyWrappers($mixedKeyWrapperHtml);
 
         for($i = 0; $i < count($aKeys); $i++) {
+            $sVarNameKey = $aVarName . "['" . $aKeys[$i] . "']";
+
             if(strpos($aKeys[$i], 'bx_repeat:') === 0) {
                 $sKey = "'<" . $aKeys[$i] . ">(.*)<\/" . $aKeys[$i] . ">'s";
 
@@ -3069,13 +3071,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                         return false;
 
                     $sIndex = "\$" . str_repeat("i", $iVarDepth);
-                    $sValue .= "<?php if(is_array(" . $aVarName . "['" . $aKeys[$i] . "'])) for(" . $sIndex . "=0; " . $sIndex . "<count(" . $aVarName . "['" . $aKeys[$i] . "']); " . $sIndex . "++){ ?>";
-                    if(($sInnerValue = $this->_compileContent($aMatches[1], $aVarName . "['" . $aKeys[$i] . "'][" . $sIndex . "]", $iVarDepth + 1, current($aValues[$i]), $mixedKeyWrapperHtml)) === false)
+                    $sValue .= "<?php if(is_array(" . $sVarNameKey . ")) for(" . $sIndex . "=0; " . $sIndex . "<count(" . $sVarNameKey . "); " . $sIndex . "++){ ?>";
+                    if(($sInnerValue = $this->_compileContent($aMatches[1], $sVarNameKey . "[" . $sIndex . "]", $iVarDepth + 1, current($aValues[$i]), $mixedKeyWrapperHtml)) === false)
                         return false;
+
                     $sValue .= $sInnerValue;
-                    $sValue .= "<?php } else if(is_string(" . $aVarName . "['" . $aKeys[$i] . "'])) echo " . $aVarName . "['" . $aKeys[$i] . "']; ?>";
+                    $sValue .= "<?php } else if(is_string(" . $sVarNameKey . ")) echo " . $sVarNameKey . "; ?>";
                 }
-            } else if(strpos($aKeys[$i], 'bx_if:') === 0) {
+            } 
+            else if(strpos($aKeys[$i], 'bx_if:') === 0) {
                 $sKey = "'<" . $aKeys[$i] . ">(.*)<\/" . $aKeys[$i] . ">'s";
 
                 $aMatches = array();
@@ -3083,18 +3087,20 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
                 $sValue = '';
                 if(isset($aMatches[1]) && !empty($aMatches[1])) {
-                    if(!is_array($aValues[$i]) || !isset($aValues[$i]['content']) || empty($aValues[$i]['content']) || !is_array($aValues[$i]['content']))
+                    if(!is_array($aValues[$i]) || empty($aValues[$i]['content']) || !is_array($aValues[$i]['content']))
                         return false;
 
-                    $sValue .= "<?php if(" . $aVarName . "['" . $aKeys[$i] . "']['condition']){ ?>";
-                    if(($sInnerValue = $this->_compileContent($aMatches[1], $aVarName . "['" . $aKeys[$i] . "']['content']", $iVarDepth, $aValues[$i]['content'], $mixedKeyWrapperHtml)) === false)
+                    $sValue .= "<?php if(isset(" . $sVarNameKey .") && " . $sVarNameKey . "['condition']){ ?>";
+                    if(($sInnerValue = $this->_compileContent($aMatches[1], $sVarNameKey . "['content']", $iVarDepth, $aValues[$i]['content'], $mixedKeyWrapperHtml)) === false)
                         return false;
+
                     $sValue .= $sInnerValue;
                     $sValue .= "<?php } ?>";
                 }
-            } else {
+            } 
+            else {
                 $sKey = "'" . $aKeyWrappers['left'] . $aKeys[$i] . $aKeyWrappers['right'] . "'s";
-                $sValue = "<?php echo " . $aVarName . "['" . $aKeys[$i] . "'];?>";
+                $sValue = "<?php echo(isset(" . $sVarNameKey . ") ? " . $sVarNameKey . " : '');?>";
             }
 
             $aKeys[$i] = $sKey;
