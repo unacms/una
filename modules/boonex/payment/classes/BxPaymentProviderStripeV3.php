@@ -605,6 +605,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                             $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
                         }
                 }
+
+                $aParams['customer_creation'] = 'always';
                 break;
 
             case BX_PAYMENT_TYPE_RECURRING:
@@ -647,7 +649,6 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         $oSession = null;
         $aSession = array_merge([
             'mode' => $sMode,
-            'customer_creation' => 'always',
             'payment_method_types' => ['card'],
             'customer_email' => !empty($aClient['email']) ? $aClient['email'] : ''
         ], $aParams);
