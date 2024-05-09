@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '4f14cd0b3e74019bdc5948d467c849c678e5c706',
+        'reference' => '3a5374de6035ec1dbbc3e3b296d278d3ddf678ff',
         'name' => 'unaio/una',
         'dev' => true,
     ),
@@ -359,7 +359,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '4f14cd0b3e74019bdc5948d467c849c678e5c706',
+            'reference' => '3a5374de6035ec1dbbc3e3b296d278d3ddf678ff',
             'dev_requirement' => false,
         ),
         'wikimedia/less.php' => array(
