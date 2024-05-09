@@ -1,12 +1,7 @@
 <bx_repeat:blocks>
     <div id="__html_id__" class="adm-bp-block<bx_if:is_inactive> adm-bpb-inactive</bx_if:is_inactive> bx-def-border">
         <div class="adm-bpb-content">
-            <bx_if:show_drag_handle>
-                <div class="adm-bpb-drag-handle bx-def-margin-thd-right">
-                    <i class="sys-icon align-justify"></i>
-                </div>
-            </bx_if:show_drag_handle>
-            <div class="adm-bpb-icon bx-def-margin-thd-right">
+            <div class="adm-bpb-icon<bx_if:show_drag_handle> adm-bpb-drag-handle</bx_if:show_drag_handle>">
             	<bx_if:icon>
                     <div class="adm-bpb-icon-bg"></div>
                     <i class="sys-icon __icon__"></i>
@@ -14,9 +9,9 @@
                 <bx_if:image><img src="__icon_url__" /></bx_if:image>
             </div>
             <div class="adm-bpb-info">
-                <div class="adm-bpb-title">
+                <div class="adm-bpb-title text-gray-900">
                     <bx_if:show_link>
-                        <a href="javascript:void(0)" onclick="javascript:__onclick__">__title__</a>
+                        <a class="text-gray-900 hover:text-gray-700" href="javascript:void(0)" onclick="javascript:__onclick__">__title__</a>
                     </bx_if:show_link>
                     <bx_if:show_text>__title__</bx_if:show_text>
                     <bx_if:show_api>

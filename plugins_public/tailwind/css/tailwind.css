@@ -587,7 +587,7 @@
         @apply gap-y-4 lg:gap-y-6;
     }
     .bx-def-color-bg-page{
-	    @apply bg-gray-100 dark:bg-gray-900;
+        @apply bg-gray-100 dark:bg-gray-900;
     }
 
     /* Common elements: Blocks, Boxes, etc. */
@@ -1251,7 +1251,7 @@
     }
 
     .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
-        @apply ring ring-blue-600 ring-offset-2 ring-offset-black;
+        @apply ring-4 ring-blue-800 ring-offset-4 ring-offset-black;
     }
     .bx-std .bx-menu-top-center .bx-menu-item-static,
     .bx-std .bx-menu-top-center .bx-menu-item-dynamic {
