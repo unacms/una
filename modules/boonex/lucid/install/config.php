@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_lucid',
     'title' => 'Lucid',
     'note' => 'Design template',
-    'version' => '14.0.0.DEV',
+    'version' => '14.0.1.DEV',
     'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
