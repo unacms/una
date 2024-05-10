@@ -5419,14 +5419,14 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_agents_automators', 'Sql', 'SELECT * FROM `sys_agents_automators` WHERE 1 ', 'sys_agents_automators', 'id', '', 'active', '', 20, NULL, 'start', '', '', '', 'like', '', '', 'BxTemplStudioAgentsAutomators', '');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `hidden_on`, `order`) VALUES
-('sys_studio_agents_automators', 'checkbox', '', '1%', 0, 0, '', '', 1),
-('sys_studio_agents_automators', 'switcher', '_sys_agents_automators_txt_active', '8%', 0, '', '', 2),
-('sys_studio_agents_automators', 'type', '_sys_agents_automators_txt_type', '20%', 0, 0, '', '', 3),
+('sys_studio_agents_automators', 'checkbox', '', '2%', 0, 0, '', '', 1),
+('sys_studio_agents_automators', 'switcher', '_sys_agents_automators_txt_active', '8%', 0, 0, '', '', 2),
+('sys_studio_agents_automators', 'type', '_sys_agents_automators_txt_type', '10%', 0, 0, '', '', 3),
 ('sys_studio_agents_automators', 'model_id', '_sys_agents_automators_txt_model_id', '20%', 0, 0, '', '', 4),
 ('sys_studio_agents_automators', 'profile_id', '_sys_agents_automators_txt_profile_id', '20%', 0, 0, '', '', 5),
 ('sys_studio_agents_automators', 'messages', '_sys_agents_automators_txt_messages', '10%', 0, 0, '', '', 6),
 ('sys_studio_agents_automators', 'status', '_sys_agents_automators_txt_status', '10%', 0, 0, '', '', 7),
-('sys_studio_agents_automators', 'actions', '', '19%', 0, 0, '', '', 8);
+('sys_studio_agents_automators', 'actions', '', '20%', 0, 0, '', '', 8);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_studio_agents_automators', 'bulk', 'delete', '_Delete', '', 0, 1, 1),

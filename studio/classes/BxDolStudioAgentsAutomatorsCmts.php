@@ -18,6 +18,20 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
     {
         return false;
     }
+    
+    public function onPostAfter($iCmtId, $aDp = [])
+    {
+        $mixedResult = parent::onPostAfter($iCmtId, $aDp);
+        if($mixedResult !== false) {
+            $iObjId = (int)$this->getId();
+
+            $aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
+
+            //TODO: Send to AI $aCmt['cmt_text']
+        }
+
+        return $mixedResult;
+    }
 
     protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
