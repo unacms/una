@@ -1,0 +1,7 @@
+/**--- Automators ---**/
+.cmt .bx-menu-custom.bx-menu-custom-hor > li > span {
+    margin-right: 0;
+}
+.cmt .bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
+  display: none;
+}

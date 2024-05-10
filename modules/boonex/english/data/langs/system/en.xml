@@ -1105,6 +1105,7 @@
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" language?</h3><p>Uninstalling "{0}" language will also delete all of its data. Do you want to continue?</p>]]></string>
     <string name="_adm_lmi_cpt_actions"><![CDATA[Actions]]></string>
     <string name="_adm_lmi_cpt_api_config"><![CDATA[Configuration]]></string>
+    <string name="_adm_lmi_cpt_automators"><![CDATA[Automators]]></string>
     <string name="_adm_lmi_cpt_badges"><![CDATA[Badges]]></string>
     <string name="_adm_lmi_cpt_categories"><![CDATA[Categories]]></string>
     <string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
@@ -1297,6 +1298,7 @@
         <string name="_adm_nav_txt_block_hidden_on_col_wide"><![CDATA[Wide]]></string>
         <string name="_adm_nav_txt_block_hidden_on_col_full"><![CDATA[Full]]></string>
         <string name="_adm_page_cpt_api"><![CDATA[API]]></string>
+        <string name="_adm_page_cpt_agents"><![CDATA[Agents]]></string>
         <string name="_adm_page_cpt_audit"><![CDATA[Audit]]></string>
         <string name="_adm_page_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Forms]]></string>
@@ -1756,6 +1758,8 @@
     <string name="_adm_stg_cpt_option_sys_api_conn_in_prof_units"><![CDATA[Use connections lists in profiles/groups units]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_email"><![CDATA[Site main URL in email notifications]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_push"><![CDATA[Site main URL in push notifications]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_url"><![CDATA[Endpoint URL]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Profile]]></string>   
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Viewport meta tag]]></string>
 
     <string name="_adm_stg_cpt_category_pwa_manifest"><![CDATA[Manifest]]></string>
@@ -1784,15 +1788,7 @@
     <string name="_adm_stg_cpt_option_sys_std_show_header_right"><![CDATA[Studio: Show header right area]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Studio: Show search in header]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Studio: Show 'site' link in header]]></string>
-    <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Studio: Show left area with menu in Launcher]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-
-    
-    
-    
+    <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Studio: Show left area with menu in Launcher]]></string>       
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Global]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
@@ -1956,6 +1952,7 @@
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Help is not available]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Uninstall]]></string>
         <string name="_adm_wgt_cpt_api"><![CDATA[API]]></string>
+        <string name="_adm_wgt_cpt_agents"><![CDATA[Agents]]></string>
         <string name="_adm_wgt_cpt_audit"><![CDATA[Audit]]></string>
         <string name="_adm_wgt_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Forms]]></string>
@@ -2128,6 +2125,35 @@
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
         <string name="_sys_acl_state"><![CDATA[State: ]]></string>
         <string name="_sys_acl_state_trial"><![CDATA[Trial]]></string>
+
+        <string name="_sys_agents_automators_txt_active"><![CDATA[Active]]></string>
+        <string name="_sys_agents_automators_txt_type"><![CDATA[Type]]></string>
+        <string name="_sys_agents_automators_txt_model_id"><![CDATA[Model]]></string>
+        <string name="_sys_agents_automators_txt_profile_id"><![CDATA[Profile]]></string>
+        <string name="_sys_agents_automators_txt_messages"><![CDATA[Messages]]></string>
+        <string name="_sys_agents_automators_txt_status"><![CDATA[Status]]></string>
+        <string name="_sys_agents_automators_btn_add"><![CDATA[Add]]></string>
+        <string name="_sys_agents_automators_btn_tune"><![CDATA[Tune]]></string>
+        <string name="_sys_agents_automators_popup_add"><![CDATA[Add automator]]></string>
+        <string name="_sys_agents_automators_popup_edit"><![CDATA[Edit automator]]></string>
+        <string name="_sys_agents_automators_field_model_id"><![CDATA[Model]]></string>
+        <string name="_sys_agents_automators_field_profile_id"><![CDATA[Profile]]></string>
+        <string name="_sys_agents_automators_field_profile_id_inf"><![CDATA[Leave empty to use default.]]></string>
+        <string name="_sys_agents_automators_field_type"><![CDATA[Type]]></string>
+        <string name="_sys_agents_automators_field_type_event"><![CDATA[Event]]></string>
+        <string name="_sys_agents_automators_field_type_scheduler"><![CDATA[Scheduler]]></string>
+        <string name="_sys_agents_automators_field_type_webhook"><![CDATA[Webhook]]></string>
+        <string name="_sys_agents_automators_field_alert_unit"><![CDATA[Event Type]]></string>
+        <string name="_sys_agents_automators_field_alert_action"><![CDATA[Event Action]]></string>
+        <string name="_sys_agents_automators_field_scheduler_time"><![CDATA[Scheduler Time]]></string>
+        <string name="_sys_agents_automators_field_message"><![CDATA[Prompt]]></string>
+        <string name="_sys_agents_automators_field_status_auto"><![CDATA[Auto]]></string>
+        <string name="_sys_agents_automators_field_status_manual"><![CDATA[Manual]]></string>
+        <string name="_sys_agents_automators_field_status_ready"><![CDATA[Ready]]></string>
+        <string name=""><![CDATA[]]></string>
+        <string name=""><![CDATA[]]></string>
+        <string name=""><![CDATA[]]></string>
+        
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>
