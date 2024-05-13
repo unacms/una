@@ -450,6 +450,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get connected content count
+     * @param $iInitiator initiator of the connection
+     * @param $isMutual get mutual connections only
+     * @param $aParams additional params
+     * @return number of connections
+     */
+    public function getConnectedContentCountExt ($iInitiator, $isMutual = false, $aParams = [])
+    {
+        return $this->_oQuery->getConnectedContentCountExt($iInitiator, $isMutual, $aParams);
+    }
+
+    /**
      * Get connected initiators count
      * @param $iContent content of the connection
      * @param $isMutual get mutual connections only

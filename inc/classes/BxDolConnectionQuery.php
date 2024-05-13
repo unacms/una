@@ -260,11 +260,21 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getConnectedContentCount ($iInitiator, $isMutual = false, $iFromDate = 0)
     {
-        $sJoin = $this->_aObject['profile_initiator'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`status` = \'active\'' : ''; 
+        return $this->getConnectedContentCountExt($iInitiator, $isMutual, ['from_date' => $iFromDate]);
+    }
+
+    public function getConnectedContentCountExt ($iInitiator, $isMutual = false, $aParams = [])
+    {
+        $sJoin = $this->_aObject['profile_content'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`status` = \'active\'' : ''; 
         $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ?", $iInitiator);
-        if ($iFromDate > 0)
-            $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ? AND `c`.`added` > ?", $iInitiator, $iFromDate);
-        $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
+        
+        if(isset($aParams['from_date']) && ($iFromDate = (int)$aParams['from_date']) > 0)
+            $sWhere .= $this->prepareAsString(" AND `c`.`added` > ?", $iFromDate);
+        
+        if(!empty($aParams['by_type']) && is_array($aParams['by_type']) && $this->_aObject['profile_content'])
+            $sWhere .= " AND `p`.`type` IN (" . $this->implode_escape($aParams['by_type']) . ")";
+
+        $sQuery = $this->_getConnectionsQueryCount($sWhere, $sJoin, $isMutual);
         return $this->getOne($sQuery);
     }
 

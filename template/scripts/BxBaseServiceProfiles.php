@@ -641,9 +641,8 @@ class BxBaseServiceProfiles extends BxDol
         return $oConnection->getConnectedInitiatorsCount($iProfileId);
     }
 
-    public function serviceProfileFollowingCount ($iProfileId = 0)
+    public function serviceProfileFollowingCount ($iProfileId = 0, $bProfilesOnly = false)
     {
-        
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -653,7 +652,15 @@ class BxBaseServiceProfiles extends BxDol
         if(!$oConnection)
             return false;
 
-        return $oConnection->getConnectedContentCount($iProfileId);
+        if(!$bProfilesOnly)
+            return $oConnection->getConnectedContentCount($iProfileId);
+
+        $aProfileModules = bx_srv('system', 'get_modules_by_type', ['profile']);
+        $aProfileModulesNames = array_map(function($item) {
+            return $item['name'];
+        }, $aProfileModules);
+
+        return $oConnection->getConnectedContentCountExt($iProfileId, false, ['by_type' => $aProfileModulesNames]);
     }
 
     public function serviceProfileRecommendationFollowingCount ($iProfileId = 0, $aParams = [])
