@@ -38,7 +38,8 @@ BxDolStudioDashboard.prototype.checkForUpgrade = function() {
             if(!oData.data)
                 return;
 
-            $('#' + sDivId + ' .bx-dbd-version-available b').html(oData.data.version).parents('.bx-dbd-version-available:hidden').show();
+            if(oData.data.version != undefined && oData.data.version.length > 0)
+                $('#' + sDivId + ' .bx-dbd-version-available b').html(oData.data.version).parents('.bx-dbd-version-available:hidden').show();
 
             if(oData.data.upgrade != undefined && parseInt(oData.data.upgrade) == 1)
                 $('#' + sDivId + ' .bx-dbd-block-actions').show()
