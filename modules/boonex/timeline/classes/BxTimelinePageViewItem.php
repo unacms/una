@@ -34,7 +34,7 @@ class BxTimelinePageViewItem extends BxTemplPage
     
     protected function _isAvailablePage ($a)
     {
-        if (!$this->_iItemId)
+        if (!$this->_iItemId || $this->_aItemData['code'] == 1)
             return false;
 
         return parent::_isAvailablePage($a);
@@ -43,6 +43,9 @@ class BxTimelinePageViewItem extends BxTemplPage
     protected function _isVisiblePage ($a)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_aItemData['code'] == 2)
+            return false;
 
         $oCf = BxDolContentFilter::getInstance();
         if($oCf->isEnabled() && !$oCf->isAllowed($this->_aItemData['event'][$CNF['FIELD_CF']]))
