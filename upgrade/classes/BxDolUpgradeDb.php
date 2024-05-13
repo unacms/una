@@ -69,6 +69,8 @@ class BxDolUpgradeDb
         $this->_sDbname = is_array(BX_DATABASE_NAME) ? array_values(BX_DATABASE_NAME)[0] : BX_DATABASE_NAME;
         $this->_sUser = is_array(BX_DATABASE_USER) ? array_values(BX_DATABASE_USER)[0] : BX_DATABASE_USER;
         $this->_sPassword = is_array(BX_DATABASE_PASS) ? array_values(BX_DATABASE_PASS)[0] : BX_DATABASE_PASS;
+        if (defined('BX_DATABASE_ENGINE'))
+            $this->_sStorageEngine = is_array(BX_DATABASE_ENGINE) ? array_values(BX_DATABASE_ENGINE)[0] : BX_DATABASE_ENGINE;
 
         @set_exception_handler(array($this, 'pdoExceptionHandler'));
     }
@@ -116,7 +118,7 @@ class BxDolUpgradeDb
 				PDO::ATTR_PERSISTENT => $this->_bPdoPersistent
 	        ));
 
-	    	$this->pdoExec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
+            $this->pdoExec("SET NAMES 'utf8mb4' COLLATE '" . (defined('BX_DATABASE_COLLATE') ? BX_DATABASE_COLLATE : 'utf8mb4_unicode_ci') . "'");
             $this->pdoExec("SET sql_mode = ''");
 
             $sVer = $this->getVersion();
