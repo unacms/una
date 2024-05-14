@@ -121,6 +121,11 @@
  */
 
 /**
+ * @page alerts Alerts (hooks)
+ * Alerts(hooks) allow to inject custiom code into various functionality.
+ */
+
+/**
  * @defgroup    UnaCore UNA Core
  * @{
  */
