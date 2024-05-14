@@ -52,28 +52,95 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             $sMessage = $oForm->getCleanValue('message');
             $bMessage = !empty($sMessage);
+            $sMessageAdd = '';
 
             if($bMessage)
                 $aValsToAdd['messages'] = 1;
 
-            if(($iId = $oForm->insert($aValsToAdd)) !== false) {
-                if($bMessage && ($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
-                    $oCmts->add([
-                        'cmt_author_id' => bx_get_logged_profile_id(),
-                        'cmt_parent_id' => 0,
-                        'cmt_text' => $sMessage
-                    ]);
+            $oAI = BxDolAI::getInstance();
+            
+            $iModel = $oForm->getCleanValue('model');
+            $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $iModel]);
+            if(!empty($aModel['params']))
+                $aModel['params'] = json_decode($aModel['params'], true);
 
-                    //TODO: Send to AI
-                }                
+            $bIsValid = true;
+            $sType = $oForm->getCleanValue('type');
+            switch($sType) {
+                case 'event':
+                    $aMessages = [
+                        ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_alert_instructions.html' )],
+                        ['role' => 'user', 'content' => $sMessage]
+                    ];
 
-                $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
+                    $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
+                    if(trim($sResponse) != 'false') {
+                        $sResponse = str_replace(['```json', '```'], '', $sResponse);
+                        $aResponse = json_decode($sResponse, true);
+                        $aValsToAdd = array_merge($aValsToAdd, [
+                            'alert_unit' => $aResponse['alert_unit'],
+                            'alert_action' => $aResponse['alert_action']
+                        ]);
+                        $sMessageAdd = $aResponse['trigger'];
+                    }
+                    else {
+                        $oForm->aInputs['message']['err'] = _t('_sys_agents_automators_err_event_not_found');
+                        $bIsValid = false;
+                    }
+                    break;
+
+                case 'scheduler':
+                    $aMessages = [
+                        ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_cron_instructions.html' )],
+                        ['role' => 'user', 'content' => $sMessage]
+                    ];
+
+                    $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
+                    if(trim($sResponse) != 'false') {
+                        $aValsToAdd['params'] = json_encode(['scheduler_time' => $aResponse]);
+                    }
+                    else {
+                        $oForm->aInputs['message']['err'] = _t('_sys_agents_automators_err_event_not_found');
+                        $bIsValid = false;
+                    }
+                    break;
             }
-            else
-                $aRes = ['msg' => _t('_sys_txt_error_occured')];
 
-            return echoJson($aRes);
-        } 
+            if($bIsValid) {
+                $aMessages = [
+                    ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_' . $sType . '_instructions.html' ) . file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_common_instructions.html' )],
+                    ['role' => 'user', 'content' => $sMessage . $sMessageAdd]
+                ];
+
+                $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
+                if(trim($sResponse) != 'false') {
+                    $sResponse = str_replace(['```php', '```'], '', $sResponse);
+                    $aValsToAdd['code'] = $sResponse;
+                }
+                else {
+                    $oForm->aInputs['message']['err'] = _t('_sys_agents_automators_err_cannot_get_code');
+                    $bIsValid = false;
+                }
+            }
+
+            if($bIsValid) {
+                if(($iId = $oForm->insert($aValsToAdd)) !== false) {
+                    if($bMessage && ($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
+                        $oCmts->add([
+                            'cmt_author_id' => bx_get_logged_profile_id(),
+                            'cmt_parent_id' => 0,
+                            'cmt_text' => $sMessage
+                        ]);
+                    }
+
+                    $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
+                }
+                else
+                    $aRes = ['msg' => _t('_sys_txt_error_occured')];
+
+                return echoJson($aRes);
+            }
+        }
 
         $sFormId = $oForm->getId();
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($sFormId . '_popup', _t('_sys_agents_automators_popup_add'), $this->_oTemplate->parseHtmlByName('agents_automator_form.html', [
@@ -271,7 +338,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     ]
                 ],
                 'alert_unit' => [
-                    'type' => 'text',
+                    'type' => 'hidden',
                     'name' => 'alert_unit',
                     'caption' => _t('_sys_agents_automators_field_alert_unit'),
                     'value' => isset($aAutomator['alert_unit']) ? $aAutomator['alert_unit'] : '',
@@ -283,7 +350,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     ],
                 ],
                 'alert_action' => [
-                    'type' => 'text',
+                    'type' => 'hidden',
                     'name' => 'alert_action',
                     'caption' => _t('_sys_agents_automators_field_alert_action'),
                     'value' => isset($aAutomator['alert_action']) ? $aAutomator['alert_action'] : '',
@@ -295,7 +362,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     ],
                 ],
                 'scheduler_time' => [
-                    'type' => 'text',
+                    'type' => 'hidden',
                     'name' => 'scheduler_time',
                     'caption' => _t('_sys_agents_automators_field_scheduler_time'),
                     'value' => isset($aAutomator['params']['scheduler_time']) ? $aAutomator['params']['scheduler_time'] : '',

@@ -2125,6 +2125,8 @@
         <string name="_sys_agents_automators_field_status_auto"><![CDATA[Авто]]></string>
         <string name="_sys_agents_automators_field_status_manual"><![CDATA[Ручной]]></string>
         <string name="_sys_agents_automators_field_status_ready"><![CDATA[Готовый]]></string>
+        <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Событие не найдено. Перефразируйте запрос.]]></string>
+        <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Невозможно сгенерировать код. Перефразируйте запрос.]]></string>
         <string name=""><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>
