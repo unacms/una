@@ -131,7 +131,7 @@ function bx_login($iId, $bRememberMe = false)
      * @page alerts
      * @section System
      * @subsection system-login 'system', 'login' - hook after user performed login
-     * Used in @ref sendMail function 
+     * Used in @ref bx_login function
      * - $unit_name - `system`
      * - $action - `login` 
      * - $object_id - account id 
