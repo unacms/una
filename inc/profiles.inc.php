@@ -127,6 +127,17 @@ function bx_login($iId, $bRememberMe = false)
             BxDolRecommendation::updateData($iProfileId);
     }
 
+    /**
+     * @page alerts
+     * @section System
+     * @subsection system-login 'system', 'login' - hook after user performed login
+     * Used in @ref sendMail function 
+     * - $unit_name - `system`
+     * - $action - `login` 
+     * - $object_id - account id 
+     * - $sender_id - not used 
+     * - $extra_params - not used
+     */
     bx_alert('account', 'login',  $iId);
 
     bx_audit($iId, 'bx_accounts', '_sys_audit_action_account_login',  array(
