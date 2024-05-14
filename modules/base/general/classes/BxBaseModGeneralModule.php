@@ -3152,6 +3152,20 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $sModule = $this->getName();
         $aParams = $this->_alertParams($aContentInfo);
+
+        /**
+         * @page alerts
+         * @section bx_base_general Base General
+         * @subsection bx_base_general-approved '{module_name}', 'approved' - hook when module content has been approved
+         * Used in @ref BxBaseModGeneralModule::alertAfterApprove "alertAfterApprove" method
+         * - $unit_name - module name
+         * - $action - `approved` 
+         * - $object_id - content id 
+         * - $sender_id - not used, always `false`
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `source` - [string] uniq string for particular content in the following format `{module}_{content}`
+         *      - `object_author_id` - [int] content author profile id
+         */
         bx_alert($sModule, 'approved', $iId, false, $aParams);
     }
 
