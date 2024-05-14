@@ -10,9 +10,7 @@
 
 class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 {
-    protected $_sUrlPage;
-
-    
+    protected $_sUrlPage;   
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -53,13 +51,14 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $sMessage = $oForm->getCleanValue('message');
             $bMessage = !empty($sMessage);
             $sMessageAdd = '';
+            $sMessageResponse = '';
 
             if($bMessage)
                 $aValsToAdd['messages'] = 1;
 
             $oAI = BxDolAI::getInstance();
-            
-            $iModel = $oForm->getCleanValue('model');
+
+            $iModel = $oForm->getCleanValue('model_id');
             $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $iModel]);
             if(!empty($aModel['params']))
                 $aModel['params'] = json_decode($aModel['params'], true);
@@ -115,7 +114,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
                 if(trim($sResponse) != 'false') {
                     $sResponse = str_replace(['```php', '```'], '', $sResponse);
-                    $aValsToAdd['code'] = $sResponse;
+                    $sMessageResponse = $sResponse;
                 }
                 else {
                     $oForm->aInputs['message']['err'] = _t('_sys_agents_automators_err_cannot_get_code');
@@ -125,12 +124,25 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             if($bIsValid) {
                 if(($iId = $oForm->insert($aValsToAdd)) !== false) {
-                    if($bMessage && ($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
-                        $oCmts->add([
-                            'cmt_author_id' => bx_get_logged_profile_id(),
-                            'cmt_parent_id' => 0,
-                            'cmt_text' => $sMessage
-                        ]);
+                    if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
+                        if($bMessage)
+                            $oCmts->addAuto([
+                                'cmt_author_id' => bx_get_logged_profile_id(),
+                                'cmt_parent_id' => 0,
+                                'cmt_text' => $sMessage
+                            ]);
+
+                        if($sMessageResponse) {
+                            sleep(1);
+
+                            $oCmts->addAuto([
+                                'cmt_author_id' => $this->_iProfileAi,
+                                'cmt_parent_id' => 0,
+                                'cmt_text' => $sMessageResponse
+                            ]);
+
+                            $aValsToAdd['messages']++;
+                        }
                     }
 
                     $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];

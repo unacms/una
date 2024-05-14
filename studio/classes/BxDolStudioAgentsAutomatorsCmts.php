@@ -11,14 +11,16 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 {
     protected $_oQueryAgents;
     protected $_iProfileAi;
+    protected $_bAuto;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
-        
+
         $this->_oQueryAgents = new BxDolStudioAgentsQuery();
 
         $this->_iProfileAi = (int)getParam('sys_profile_bot'); 
+        $this->_bAuto = false;
     }
 
     public function getCommentsBlock($aBp = [], $aDp = [])
@@ -87,16 +89,36 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         return false;
     }
 
+    public function addAuto($aValues)
+    {
+        $this->_bAuto = true;
+        $mixedResult = $this->add($aValues);
+
+        $this->_bAuto = false;
+        return $mixedResult;
+    }
+
     public function onPostAfter($iCmtId, $aDp = [])
     {
         $mixedResult = parent::onPostAfter($iCmtId, $aDp);
-        if($mixedResult !== false) {
+        if(!$this->_bAuto && $mixedResult !== false) {
             $iObjId = (int)$this->getId();
 
-            $aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
             $aAutomator = $this->_oQueryAgents->getAutomatorsBy(['sample' => 'id_full', 'id' => $iObjId]);
 
-            //TODO: Send to AI $aCmt['cmt_text']
+            $aMessages = [
+                ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_' . $aAutomator['type'] . '_instructions.html' ) . file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_common_instructions.html' )],
+            ];
+            
+            $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
+            foreach($aComments as $aComment) {
+                $aMessages[] = [
+                    'role' => (int)$aComment['cmt_author_id'] == $this->_iProfileAi ? 'assistant' : 'user',
+                    'content' => $aComment['cmt_text']
+                ];
+            }
+
+            //TODO: Send to AI $aMessages
         }
 
         return $mixedResult;

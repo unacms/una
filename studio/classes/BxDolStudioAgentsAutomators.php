@@ -13,6 +13,8 @@ class BxDolStudioAgentsAutomators extends BxTemplStudioGrid
 
     protected $_sCmts;
 
+    protected $_iProfileAi;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
@@ -20,6 +22,8 @@ class BxDolStudioAgentsAutomators extends BxTemplStudioGrid
         $this->_oDb = new BxDolStudioAgentsQuery();
 
         $this->_sCmts = 'sys_agents_automators';
+
+        $this->_iProfileAi = (int)getParam('sys_profile_bot');
     }
 
     protected function _delete ($mixedId)
