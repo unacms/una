@@ -2150,8 +2150,8 @@
         <string name="_sys_agents_automators_field_status_auto"><![CDATA[Auto]]></string>
         <string name="_sys_agents_automators_field_status_manual"><![CDATA[Manual]]></string>
         <string name="_sys_agents_automators_field_status_ready"><![CDATA[Ready]]></string>
-        <string name=""><![CDATA[]]></string>
-        <string name=""><![CDATA[]]></string>
+        <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Event isn't found, please rephrase your prompt.]]></string>
+        <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Can't generate code, please rephrase your prompt.]]></string>
         <string name=""><![CDATA[]]></string>
         
 

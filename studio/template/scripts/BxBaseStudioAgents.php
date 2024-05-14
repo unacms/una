@@ -72,10 +72,11 @@ class BxBaseStudioAgents extends BxDolStudioAgents
 
     protected function getAutomators()
     {
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
         if(($iId = bx_get('id')) !== false) {
-            $oCmts = BxDolCmts::getObjectInstance('sys_agents_automators', (int)$iId);
-            $aCmts = $oCmts->getCommentsBlock([], ['in_designbox' => false]);
-            return $aCmts['content'];
+            $oCmts = BxDolCmts::getObjectInstance('sys_agents_automators', (int)$iId, true, $oTemplate);
+            return $oCmts->getCommentsBlock();
         }
 
         return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS]);

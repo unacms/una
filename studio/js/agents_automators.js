@@ -22,28 +22,28 @@ BxDolStudioAgentsAutomators.prototype.onChangeType = function(oSelect) {
     var aShow = [];
     switch($(oSelect).val()) {
         case 'event':
-            aHide = ['scheduler_time'];
-            aShow = ['alert_unit', 'alert_action'];
+            aHide = []; //['scheduler_time'];
+            aShow = []; //['alert_unit', 'alert_action'];
             break;
 
         case 'scheduler':
-            aHide = ['alert_unit', 'alert_action'];
-            aShow = ['scheduler_time'];
+            aHide = []; //['alert_unit', 'alert_action'];
+            aShow = []; //['scheduler_time'];
             break;
             
         default:
-            aHide = ['alert_unit', 'alert_action', 'scheduler_time'];
+            aHide = []; //['alert_unit', 'alert_action', 'scheduler_time'];
             aShow = [];
     }
 
     var sHide = '';
     aHide.forEach((sItem) => {
-        sHide += "#bx_std_agents_automators #bx-form-element-" + sItem + ",";
+        sHide += ".bx-form-advanced #bx-form-element-" + sItem + ",";
     });
 
     var sShow = '';
     aShow.forEach((sItem) => {
-        sShow += "#bx_std_agents_automators #bx-form-element-" + sItem + ",";
+        sShow += ".bx-form-advanced #bx-form-element-" + sItem + ",";
     });
 
     $(sHide.substring(0, sHide.length - 1)).bx_anim('hide', this.sAnimationEffect, 0);
