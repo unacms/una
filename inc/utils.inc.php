@@ -509,7 +509,7 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     
     /**
      * @page alerts
-     * @section System
+     * @section system System
      * @subsection system-check_send_mail 'system', 'check_send_mail' - hook for disabling mail sending 
      * Used in @ref sendMail function 
      * - $unit_name - `system`
@@ -537,7 +537,7 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     if (!$isDisableAlert) {
         /**
          * @page alerts
-         * @section System
+         * @section system System
          * @subsection system-before_send_mail 'system', 'before_send_mail' - hook before mail sending
          * It's equivalent to @ref system-check_send_mail 
          */
@@ -566,7 +566,7 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     if (!$isDisableAlert) {
         /**
          * @page alerts
-         * @section System
+         * @section system System
          * @subsection system-send_mail 'system', 'send_mail' - hook when mail was sent
          * It's equivalent to @ref system-check_send_mail 
          * except `override_result` parameter in $extra_params is missing

@@ -3157,7 +3157,7 @@ class BxBaseModGeneralModule extends BxDolModule
          * @page alerts
          * @section bx_base_general Base General
          * @subsection bx_base_general-approved '{module_name}', 'approved' - hook when module content has been approved
-         * Used in @ref BxBaseModGeneralModule::alertAfterApprove methodunction 
+         * Used in @ref BxBaseModGeneralModule::alertAfterApprove "alertAfterApprove" method
          * - $unit_name - module name
          * - $action - `approved` 
          * - $object_id - content id 

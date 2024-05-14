@@ -129,7 +129,7 @@ function bx_login($iId, $bRememberMe = false)
 
     /**
      * @page alerts
-     * @section System
+     * @section system System
      * @subsection system-login 'system', 'login' - hook after user performed login
      * Used in @ref bx_login function
      * - $unit_name - `system`
