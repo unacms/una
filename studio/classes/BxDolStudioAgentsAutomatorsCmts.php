@@ -9,9 +9,13 @@
 
 class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 {
+    protected $_oQueryAgents;
+
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
+        
+        $this->_oQueryAgents = new BxDolStudioAgentsQuery();
     }
     
     public function isAttachImageEnabled()
@@ -26,6 +30,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
             $iObjId = (int)$this->getId();
 
             $aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
+            $aAutomator = $this->_oQueryAgents->getAutomatorsBy(['sample' => 'id_full', 'id' => $iObjId]);
 
             //TODO: Send to AI $aCmt['cmt_text']
         }

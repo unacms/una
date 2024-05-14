@@ -825,7 +825,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_agents_url', '_adm_stg_cpt_option_sys_agents_url', '/', 'digit', '', '', '', 10),
+(@iCategoryId, 'sys_agents_url', '_adm_stg_cpt_option_sys_agents_url', '', 'digit', '', '', '', 10),
 (@iCategoryId, 'sys_agents_profile', '_adm_stg_cpt_option_sys_agents_profile', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:26:"get_options_agents_profile";s:5:"class";s:13:"TemplServices";}', '', '', 20);
 
 --
@@ -6269,12 +6269,16 @@ CREATE TABLE `sys_api_origins` (
 
 CREATE TABLE `sys_agents_models` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(64) NOT NULL default '',
+  `url` varchar(255) NOT NULL default '',
+  `key` varchar(64) NOT NULL default '',
+  `model` varchar(32) NOT NULL default '',
+  `params` text NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO `sys_agents_models`(`name`) VALUES
-('default');
+INSERT INTO `sys_agents_models`(`name`, `url`, `key`, `model`, `params`) VALUES
+('default', '', '', '', '');
 
 CREATE TABLE `sys_agents_automators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
