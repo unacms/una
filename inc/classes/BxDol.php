@@ -5,6 +5,15 @@
  */
 
 /**
+ * @mainpage Index
+ * - @subpage objects Objects
+ * - @subpage service Service Calls
+ * - @subpage hooks Alerts(hooks)
+ * - @subpage public_api API Public
+ * - @subpage private_api API Private
+ */
+
+/**
  * @page objects Objects
  * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms.
  *
@@ -121,7 +130,7 @@
  */
 
 /**
- * @page alerts Alerts (hooks)
+ * @page hooks Alerts(hooks)
  * Alerts(hooks) allow to inject custiom code into various functionality.
  */
 

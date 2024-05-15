@@ -508,9 +508,9 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     );
     
     /**
-     * @page alerts
-     * @section system System
-     * @subsection system-check_send_mail 'system', 'check_send_mail' - hook for disabling mail sending 
+     * @page hooks
+     * @section hooks_system System
+     * @subsection hooks_system-check_send_mail 'system', 'check_send_mail' - hook for disabling mail sending 
      * Used in @ref sendMail function 
      * - $unit_name - `system`
      * - $action - `check_send_mail` 
@@ -536,10 +536,10 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     // system alert
     if (!$isDisableAlert) {
         /**
-         * @page alerts
-         * @section system System
-         * @subsection system-before_send_mail 'system', 'before_send_mail' - hook before mail sending
-         * It's equivalent to @ref system-check_send_mail 
+         * @page hooks
+         * @section hooks_system System
+         * @subsection hooks_system-before_send_mail 'system', 'before_send_mail' - hook before mail sending
+         * It's equivalent to @ref hooks_system-check_send_mail 
          */
         bx_alert('system', 'before_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
         if ($bResult !== null)
@@ -565,10 +565,10 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     // system alert
     if (!$isDisableAlert) {
         /**
-         * @page alerts
-         * @section system System
-         * @subsection system-send_mail 'system', 'send_mail' - hook when mail was sent
-         * It's equivalent to @ref system-check_send_mail 
+         * @page hooks
+         * @section hooks_system System
+         * @subsection hooks_system-send_mail 'system', 'send_mail' - hook when mail was sent
+         * It's equivalent to @ref hooks_system-check_send_mail 
          * except `override_result` parameter in $extra_params is missing
          */
         bx_alert('system', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
