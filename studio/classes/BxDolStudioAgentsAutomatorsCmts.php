@@ -10,7 +10,7 @@
 class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 {
     protected $_oQueryAgents;
-    protected $_iProfileAi;
+    protected $_iProfileIdAi;
     protected $_bAuto;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
@@ -19,7 +19,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 
         $this->_oQueryAgents = new BxDolStudioAgentsQuery();
 
-        $this->_iProfileAi = (int)getParam('sys_profile_bot'); 
+        $this->_iProfileIdAi = BxDolAI::getInstance()->getProfileId(); 
         $this->_bAuto = false;
     }
 
@@ -77,7 +77,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $aComments = $this->_oQuery->getCommentsBy(['type' => 'latest', 'start' => 0, 'per_page' => 1]);
         if(!empty($aComments) && is_array($aComments)) {
             $aLast = current($aComments);
-            if($aLast['cmt_author_id'] != $this->_iProfileAi)
+            if($aLast['cmt_author_id'] != $this->_iProfileIdAi)
                 return '';
         }
 
@@ -104,21 +104,31 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         if(!$this->_bAuto && $mixedResult !== false) {
             $iObjId = (int)$this->getId();
 
-            $aAutomator = $this->_oQueryAgents->getAutomatorsBy(['sample' => 'id_full', 'id' => $iObjId]);
+            $oAI = BxDolAI::getInstance();
 
             $aMessages = [
-                ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_' . $aAutomator['type'] . '_instructions.html' ) . file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_common_instructions.html' )],
+                ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($aAutomator['type'], true)],
             ];
-            
+
+            $aAutomator = $oAI->getAutomator($iObjId, true);
+
             $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
-            foreach($aComments as $aComment) {
+            if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
+                $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
+
+            foreach($aComments as $aComment)
                 $aMessages[] = [
-                    'role' => (int)$aComment['cmt_author_id'] == $this->_iProfileAi ? 'assistant' : 'user',
+                    'role' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi ? 'assistant' : 'user',
                     'content' => $aComment['cmt_text']
                 ];
-            }
 
-            //TODO: Send to AI $aMessages
+            $sResponse = $oAI->chat($aAutomator['url'], $aAutomator['model'], $aAutomator['key'], $aAutomator['params'], $aMessages);
+            if($sResponse != 'false') 
+                $this->addAuto([
+                    'cmt_author_id' => $this->_iProfileIdAi,
+                    'cmt_parent_id' => 0,
+                    'cmt_text' => $sResponse
+                ]);
         }
 
         return $mixedResult;

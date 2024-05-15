@@ -2130,7 +2130,9 @@
         <string name="_sys_agents_automators_txt_type"><![CDATA[Type]]></string>
         <string name="_sys_agents_automators_txt_model_id"><![CDATA[Model]]></string>
         <string name="_sys_agents_automators_txt_profile_id"><![CDATA[Profile]]></string>
+        <string name="_sys_agents_automators_txt_message_id"><![CDATA[Prompt]]></string>
         <string name="_sys_agents_automators_txt_messages"><![CDATA[Messages]]></string>
+        <string name="_sys_agents_automators_txt_added"><![CDATA[Added]]></string>
         <string name="_sys_agents_automators_txt_status"><![CDATA[Status]]></string>
         <string name="_sys_agents_automators_btn_add"><![CDATA[Add]]></string>
         <string name="_sys_agents_automators_btn_tune"><![CDATA[Tune]]></string>

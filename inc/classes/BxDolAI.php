@@ -7,9 +7,15 @@
  * @{
  */
 
+define('BX_DOL_AI_AUTOMATOR_EVENT', 'event');
+define('BX_DOL_AI_AUTOMATOR_SCHEDULER', 'scheduler');
+define('BX_DOL_AI_AUTOMATOR_WEBHOOK', 'webhook');
+
 class BxDolAI extends BxDolFactory implements iBxDolSingleton
 {
+    protected $_oDb;
     protected $_sPathInst;
+    protected $_iProfileId;
 
     protected function __construct()
     {
@@ -18,7 +24,9 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         parent::__construct();
 
+        $this->_oDb = new BxDolAIQuery();
         $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
+        $this->_iProfileId = (int)getParam('sys_profile_bot'); 
     }
 
     /**
@@ -41,6 +49,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
+    public function getProfileId()
+    {
+        return $this->_iProfileId;
+    }
+
     public function getAutomatorInstructions($sType, $bIncludeCommon = false)
     {
         $sResult = file_get_contents($this->_sPathInst . $sType . '.html');
@@ -48,6 +61,26 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
             $sResult .= file_get_contents($this->_sPathInst. 'common.html');
 
         return $sResult;
+    }
+    
+    public function getModel($iId)
+    {
+        $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $iId]);
+        if(!empty($aModel['params']))
+            $aModel['params'] = json_decode($aModel['params'], true);
+
+        return $aModel;
+    }
+
+    public function getAutomator($iId, $bFullInfo = false)
+    {
+        $aAutomator = $this->_oDb->getAutomatorsBy(['sample' => 'id' . ($bFullInfo ? '_full' : ''), 'id' => $iId]);
+        if(!empty($aAutomator['params']))
+            $aAutomator['params'] = json_decode($aAutomator['params'], true);
+        if($bFullInfo && !empty($aAutomator['model_params']))
+            $aAutomator['model_params'] = json_decode($aAutomator['model_params'], true);
+
+        return $aAutomator;
     }
 
     public function chat($sEndpoint, $sModel, $sApiKey, $aParams, $aMessages)
@@ -61,9 +94,13 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
             $aData = array_merge($aData, $aParams);
 
         $sRv = bx_file_get_contents($sEndpoint, $aData, "post-json", ["Authorization: Bearer ".$sApiKey, 'Content-Type: application/json', 'OpenAI-Beta: assistants=v1']);
-
         $aRv = json_decode($sRv, true);
 
-        return $aRv['choices'][0]['message']['content'];
+        if(isset($aRv['error'])) {
+            //TODO: log error in AI related log file.
+            return 'false';
+        }
+
+        return trim(str_replace(['```json', '```php', '```'], '', $aRv['choices'][0]['message']['content']));
     }
 }

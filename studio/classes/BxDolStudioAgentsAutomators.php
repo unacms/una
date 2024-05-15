@@ -13,17 +13,19 @@ class BxDolStudioAgentsAutomators extends BxTemplStudioGrid
 
     protected $_sCmts;
 
-    protected $_iProfileAi;
+    protected $_iProfileIdAi;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_sDefaultSortingOrder = 'DESC';
+
         $this->_oDb = new BxDolStudioAgentsQuery();
 
         $this->_sCmts = 'sys_agents_automators';
 
-        $this->_iProfileAi = (int)getParam('sys_profile_bot');
+        $this->_iProfileIdAi = BxDolAI::getInstance()->getProfileId();
     }
 
     protected function _delete ($mixedId)

@@ -33,8 +33,8 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $aValsToAdd = [];
-            
+            $aValsToAdd = ['added' => time()];
+
             $iProfileId = $oForm->getCleanValue('profile_id');
             if(empty($iProfileId)) {
                 $iProfileId = (int)getParam('sys_agents_profile');
@@ -48,53 +48,48 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             if(!empty($sSchedulerTime))
                 $aValsToAdd['params'] = json_encode(['scheduler_time' => $sSchedulerTime]);
 
+            $iModel = $oForm->getCleanValue('model_id');
             $sType = $oForm->getCleanValue('type');
             $sMessage = $oForm->getCleanValue('message');
             $bMessage = !empty($sMessage);
             $sMessageAdd = '';
             $sMessageResponse = '';
 
-            if($bMessage)
-                $aValsToAdd['messages'] = 1;
-
             $oAI = BxDolAI::getInstance();
-            
+
             $aMessages = [
                 ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($sType . '_init')],
                 ['role' => 'user', 'content' => $sMessage]
             ];
 
-            $iModel = $oForm->getCleanValue('model_id');
-            $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $iModel]);
-            if(!empty($aModel['params']))
-                $aModel['params'] = json_decode($aModel['params'], true);
+            $aModel = $oAI->getModel($iModel);
 
-            $bIsValid = true;
+            $bIsValid = true;/*
             switch($sType) {
-                case 'event':
+                case BX_DOL_AI_AUTOMATOR_EVENT:
                     $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
-                    if(trim($sResponse) != 'false') {
-                        $sResponse = str_replace(['```json', '```'], '', $sResponse);
+                    if($sResponse != 'false') {
                         $aResponse = json_decode($sResponse, true);
                         $aValsToAdd = array_merge($aValsToAdd, [
                             'alert_unit' => $aResponse['alert_unit'],
-                            'alert_action' => $aResponse['alert_action']
+                            'alert_action' => $aResponse['alert_action'],
+                            'params' => json_encode(['trigger' => $aResponse['trigger']])
                         ]);
                         $sMessageAdd = $aResponse['trigger'];
                     }
                     else {
-                        $oForm->aInputs['message']['err'] = _t('_sys_agents_automators_err_event_not_found');
+                        $oForm->aInputs['message']['error'] = _t('_sys_agents_automators_err_event_not_found');
                         $bIsValid = false;
                     }
                     break;
 
-                case 'scheduler':
+                case BX_DOL_AI_AUTOMATOR_SCHEDULER:
                     $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
-                    if(trim($sResponse) != 'false') {
-                        $aValsToAdd['params'] = json_encode(['scheduler_time' => $aResponse]);
+                    if($sResponse != 'false') {
+                        $aValsToAdd['params'] = json_encode(['scheduler_time' => $sResponse]);
                     }
                     else {
-                        $oForm->aInputs['message']['err'] = _t('_sys_agents_automators_err_event_not_found');
+                        $oForm->aInputs['message']['error'] = _t('_sys_agents_automators_err_event_not_found');
                         $bIsValid = false;
                     }
                     break;
@@ -107,36 +102,37 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 ];
 
                 $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
-                if(trim($sResponse) != 'false') {
-                    $sResponse = str_replace(['```php', '```'], '', $sResponse);
+                if($sResponse != 'false') {
                     $sMessageResponse = $sResponse;
                 }
                 else {
-                    $oForm->aInputs['message']['err'] = _t('_sys_agents_automators_err_cannot_get_code');
+                    $oForm->aInputs['message']['error'] = _t('_sys_agents_automators_err_cannot_get_code');
                     $bIsValid = false;
                 }
             }
-
+*/
             if($bIsValid) {
                 if(($iId = $oForm->insert($aValsToAdd)) !== false) {
                     if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
-                        if($bMessage)
-                            $oCmts->addAuto([
+                        if($bMessage) {
+                            $aResult = $oCmts->addAuto([
                                 'cmt_author_id' => bx_get_logged_profile_id(),
                                 'cmt_parent_id' => 0,
                                 'cmt_text' => $sMessage
                             ]);
 
+                            if(!empty($aResult['id']))
+                                $this->_oDb->updateAutomators(['message_id' => $aResult['id']], ['id' => $iId]);
+                        }
+
                         if($sMessageResponse) {
                             sleep(1);
 
                             $oCmts->addAuto([
-                                'cmt_author_id' => $this->_iProfileAi,
+                                'cmt_author_id' => $this->_iProfileIdAi,
                                 'cmt_parent_id' => 0,
                                 'cmt_text' => $sMessageResponse
                             ]);
-
-                            $aValsToAdd['messages']++;
                         }
                     }
 
@@ -234,6 +230,22 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     protected function _getCellType($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(_t('_sys_agents_automators_field_type_' . $mixedValue), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellData($sKey, $aField, $aRow)
+    {
+        if($sKey == 'message_id' && ($iCmtId = (int)$aRow[$sKey]) != 0 && ($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $aRow['id'])) !== null) {
+            $aCmt = $oCmts->getCommentSimple($iCmtId);
+            if(!empty($aCmt) && is_array($aCmt))
+                $aRow[$sKey] = $aCmt['cmt_text'];
+        }
+
+        return parent::_getCellData($sKey, $aField, $aRow);
+    }
+
+    protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
 
     protected function _getCellStatus($mixedValue, $sKey, $aField, $aRow)

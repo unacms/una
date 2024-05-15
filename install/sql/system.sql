@@ -5416,17 +5416,19 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- GRID: Agents Automators
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('sys_studio_agents_automators', 'Sql', 'SELECT * FROM `sys_agents_automators` WHERE 1 ', 'sys_agents_automators', 'id', '', 'active', '', 20, NULL, 'start', '', '', '', 'like', '', '', 'BxTemplStudioAgentsAutomators', '');
+('sys_studio_agents_automators', 'Sql', 'SELECT * FROM `sys_agents_automators` WHERE 1 ', 'sys_agents_automators', 'id', 'added', 'active', '', 20, NULL, 'start', '', '', '', 'like', '', '', 'BxTemplStudioAgentsAutomators', '');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `hidden_on`, `order`) VALUES
 ('sys_studio_agents_automators', 'checkbox', '', '2%', 0, 0, '', '', 1),
 ('sys_studio_agents_automators', 'switcher', '_sys_agents_automators_txt_active', '8%', 0, 0, '', '', 2),
 ('sys_studio_agents_automators', 'type', '_sys_agents_automators_txt_type', '10%', 0, 0, '', '', 3),
-('sys_studio_agents_automators', 'model_id', '_sys_agents_automators_txt_model_id', '20%', 0, 0, '', '', 4),
-('sys_studio_agents_automators', 'profile_id', '_sys_agents_automators_txt_profile_id', '20%', 0, 0, '', '', 5),
-('sys_studio_agents_automators', 'messages', '_sys_agents_automators_txt_messages', '10%', 0, 0, '', '', 6),
-('sys_studio_agents_automators', 'status', '_sys_agents_automators_txt_status', '10%', 0, 0, '', '', 7),
-('sys_studio_agents_automators', 'actions', '', '20%', 0, 0, '', '', 8);
+('sys_studio_agents_automators', 'model_id', '_sys_agents_automators_txt_model_id', '10%', 0, 0, '', '', 4),
+('sys_studio_agents_automators', 'profile_id', '_sys_agents_automators_txt_profile_id', '10%', 0, 0, '', '', 5),
+('sys_studio_agents_automators', 'message_id', '_sys_agents_automators_txt_message_id', '20%', 0, 32, '', '', 6),
+('sys_studio_agents_automators', 'messages', '_sys_agents_automators_txt_messages', '10%', 0, 0, '', '', 7),
+('sys_studio_agents_automators', 'added', '_sys_agents_automators_txt_added', '5%', 0, 0, '', '', 8),
+('sys_studio_agents_automators', 'status', '_sys_agents_automators_txt_status', '5%', 0, 0, '', '', 9),
+('sys_studio_agents_automators', 'actions', '', '20%', 0, 0, '', '', 10);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_studio_agents_automators', 'bulk', 'delete', '_Delete', '', 0, 1, 1),
@@ -6288,7 +6290,9 @@ CREATE TABLE `sys_agents_automators` (
   `params` text NOT NULL,
   `alert_unit` varchar(128) NOT NULL default '',
   `alert_action` varchar(128) NOT NULL default '',
+  `message_id` int(11) NOT NULL default '0',
   `code` text NOT NULL,
+  `added` int(11) unsigned NOT NULL DEFAULT '0',
   `messages` int(11) NOT NULL default '0',
   `status` enum('auto','manual','ready') NOT NULL DEFAULT 'auto',
   `active` tinyint(4) NOT NULL DEFAULT '0',
