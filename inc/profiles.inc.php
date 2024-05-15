@@ -128,15 +128,14 @@ function bx_login($iId, $bRememberMe = false)
     }
 
     /**
-     * @page hooks
-     * @section hooks_system System
-     * @subsection hooks_system-login 'system', 'login' - hook after user performed login
-     * Used in @ref bx_login function
-     * - $unit_name - `system`
-     * - $action - `login` 
+     * @hooks
+     * @hookdef hook-account-login 'account', 'login' - hook after user performed login
+     * - $unit_name - equals `system`
+     * - $action - equals `login` 
      * - $object_id - account id 
      * - $sender_id - not used 
      * - $extra_params - not used
+     * @hook @ref hook-account-login
      */
     bx_alert('account', 'login',  $iId);
 

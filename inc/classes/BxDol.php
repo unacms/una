@@ -5,17 +5,13 @@
  */
 
 /**
- * @mainpage Index
+ * @mainpage UNA Abstracts
  * - @subpage objects Objects
  * - @subpage service Service Calls
- * - @subpage hooks Alerts(hooks)
- * - @subpage public_api API Public
- * - @subpage private_api API Private
  */
 
 /**
  * @defgroup UnaModules UNA Modules
- *
  * @{
  * @}
  */

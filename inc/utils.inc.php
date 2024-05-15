@@ -508,12 +508,10 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     );
     
     /**
-     * @page hooks
-     * @section hooks_system System
-     * @subsection hooks_system-check_send_mail 'system', 'check_send_mail' - hook for disabling mail sending 
-     * Used in @ref sendMail function 
-     * - $unit_name - `system`
-     * - $action - `check_send_mail` 
+     * @hooks
+     * @hookdef hook-system-check_send_mail 'system', 'check_send_mail' - hook for disabling mail sending 
+     * - $unit_name - equals `system`
+     * - $action - equals `check_send_mail` 
      * - $object_id - recipient profile id 
      * - $sender_id - not used 
      * - $extra_params - array of additional params with the following array keys:
@@ -527,6 +525,7 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
      *      - `html` - [boolean] `true` if email content is HTML, if `false` then email content is text
      *      - `custom_headers` - [array] custom email headers array as key&value pairs
      *      - `override_result` - [boolean] override result of `sendMail` function, if `true` then mail sending should continue as usual, if `false` then mail sending should stop
+     * @hook @ref hook-system-check_send_mail
      */
     bx_alert('system', 'check_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
     
@@ -536,10 +535,10 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     // system alert
     if (!$isDisableAlert) {
         /**
-         * @page hooks
-         * @section hooks_system System
-         * @subsection hooks_system-before_send_mail 'system', 'before_send_mail' - hook before mail sending
-         * It's equivalent to @ref hooks_system-check_send_mail 
+         * @hooks
+         * @hookdef hook-system-before_send_mail 'system', 'before_send_mail' - hook before mail sending
+         * It's equivalent to @ref hook-system-check_send_mail 
+         * @hook @ref hook-system-before_send_mail
          */
         bx_alert('system', 'before_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
         if ($bResult !== null)
@@ -565,11 +564,11 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     // system alert
     if (!$isDisableAlert) {
         /**
-         * @page hooks
-         * @section hooks_system System
-         * @subsection hooks_system-send_mail 'system', 'send_mail' - hook when mail was sent
-         * It's equivalent to @ref hooks_system-check_send_mail 
+         * @hooks
+         * @hookdef hook-system-send_mail 'system', 'send_mail' - hook when mail was sent
+         * It's equivalent to @ref hook-system-check_send_mail 
          * except `override_result` parameter in $extra_params is missing
+         * @hook @ref hook-system-send_mail
          */
         bx_alert('system', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
     }
