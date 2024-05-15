@@ -17,6 +17,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
+        $this->_sTmplNameItemContent = 'agents_comment_content.html';
         $this->_bLiveUpdates = false;
 
         $this->_oQueryAgents = new BxDolStudioAgentsQuery();
@@ -145,11 +146,14 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
             $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
 
-        foreach($aComments as $aComment)
+        foreach($aComments as $aComment) {
+            $bAuthorAi = (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi;
+
             $aMessages[] = [
-                'role' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi ? 'assistant' : 'user',
-                'content' => $aComment['cmt_text']
+                'role' => $bAuthorAi ? 'assistant' : 'user',
+                'content' => $aComment['cmt_text'] . ($bAuthorAi ? '' : ' return only function, without explanation or false if you havn`t enougth data')
             ];
+        }
 
         $sResponse = $oAI->chat($aAutomator['model_url'], $aAutomator['model_model'], $aAutomator['model_key'], $aAutomator['model_params'], $aMessages);
         if($sResponse != 'false') {
@@ -168,12 +172,31 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 
     protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
-        return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
+        if((int)$aCmt['cmt_author_id'] != $this->_iProfileIdAi)
+            return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
+
+        return '<a class="bx-btn bx-btn-small" onclick="alert(\'Under construction\')">Approve</a>';
     }
-    
+
+    protected function _getCountersBox(&$aCmt, $aBp = [], $aDp = [])
+    {
+        return '';
+    }
+
     protected function _getFormBox($sType, $aBp, $aDp)
     {
         return parent::_getFormBox($sType, $aBp, array_merge($aDp, ['min_post_form' => false]));
+    }
+
+    protected function _getTmplVarsText($aCmt)
+    {
+        $aResult = parent::_getTmplVarsText($aCmt);
+
+        //TODO: Custom template for AI responces.
+        if((int)$aCmt['cmt_author_id'] == $this->_iProfileIdAi)
+            $aResult['text'] = '<pre>' . $aResult['text'] . '</pre>';
+
+        return $aResult;
     }
 }
 

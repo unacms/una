@@ -1083,6 +1083,19 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
+    protected function _getCountersBox(&$aCmt, $aBp = [], $aDp = [])
+    {
+        $bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
+
+        $oMenuCounters = BxDolMenu::getObjectInstance($this->_sMenuObjCounters);
+        if(!$oMenuCounters)
+            return '';
+
+        $oMenuCounters->setCmtsData($this, $aCmt['cmt_id'], $aBp, $aDp);
+        $oMenuCounters->setDynamicMode($bDynamicMode);
+        return $oMenuCounters->getCode();
+    }
+
     protected function _getFormBox($sType, $aBp, $aDp)
     {
         $iCmtParentId = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
@@ -1432,13 +1445,7 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getContent($aCmt, $aBp = [], $aDp = [])
     {
-        $bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
-
         $sAttachments = $this->_getAttachments($aCmt);
-
-        $oMenuCounters = BxDolMenu::getObjectInstance($this->_sMenuObjCounters);
-        $oMenuCounters->setCmtsData($this, $aCmt['cmt_id'], $aBp, $aDp);
-        $oMenuCounters->setDynamicMode($bDynamicMode);
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameItemContent, array_merge(array(
             'style_prefix' => $this->_sStylePrefix,
@@ -1450,7 +1457,7 @@ class BxBaseCmts extends BxDolCmts
                     'attached' => $sAttachments
                 )
             ),
-            'counters' => $oMenuCounters->getCode(),
+            'counters' => $this->_getCountersBox($aCmt, $aBp, $aDp),
         ), $this->_getTmplVarsText($aCmt)));
     }
 

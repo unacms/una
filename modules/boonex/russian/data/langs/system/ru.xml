@@ -2103,10 +2103,14 @@
 
         <string name="_sys_agents_automators_txt_active"><![CDATA[Активный]]></string>
         <string name="_sys_agents_automators_txt_type"><![CDATA[Тип]]></string>
+        <string name="_sys_agents_automators_txt_alert_unit"><![CDATA[Тип события]]></string>
+        <string name="_sys_agents_automators_txt_alert_action"><![CDATA[Действие события]]></string>
+        <string name="_sys_agents_automators_txt_scheduler_time"><![CDATA[Время для планировщика]]></string>
         <string name="_sys_agents_automators_txt_model_id"><![CDATA[Модель]]></string>
         <string name="_sys_agents_automators_txt_profile_id"><![CDATA[Профиль]]></string>
         <string name="_sys_agents_automators_txt_message_id"><![CDATA[Инструкции]]></string>
         <string name="_sys_agents_automators_txt_messages"><![CDATA[Сообщения]]></string>
+        <string name="_sys_agents_automators_txt_code"><![CDATA[Код]]></string>
         <string name="_sys_agents_automators_txt_added"><![CDATA[Добавлено]]></string>
         <string name="_sys_agents_automators_txt_status"><![CDATA[Статус]]></string>
         <string name="_sys_agents_automators_btn_add"><![CDATA[Добавить]]></string>
