@@ -3154,10 +3154,10 @@ class BxBaseModGeneralModule extends BxDolModule
         $aParams = $this->_alertParams($aContentInfo);
 
         /**
-         * @page alerts
-         * @section bx_base_general Base General
-         * @subsection bx_base_general-approved '{module_name}', 'approved' - hook when module content has been approved
-         * Used in @ref BxBaseModGeneralModule::alertAfterApprove "alertAfterApprove" method
+         * @page hooks
+         * @section hooks_bx_base_general "Base General"
+         * @subsection hooks_bx_base_general-approved '{module_name}', 'approved' - hook when module content has been approved
+         * Used in @ref alertAfterApprove "alertAfterApprove" method
          * - $unit_name - module name
          * - $action - `approved` 
          * - $object_id - content id 
