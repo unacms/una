@@ -226,6 +226,13 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         return $aResult['code'] == 0 || ($aResult['code'] == 4  && $this->_sObject == 'sys_profiles_friends') ? CHECK_ACTION_RESULT_ALLOWED : $aResult['message'];
     }
 
+    public function checkAllowedRemoveConnection ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
+    {
+        $aResult = $this->_checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap, $isCheckExists);
+
+        return $aResult['code'] == 0 || ($aResult['code'] == 4  && $this->_sObject == 'sys_profiles_friends') ? CHECK_ACTION_RESULT_ALLOWED : $aResult['message'];
+    }
+
     /**
      * Add new connection.
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
@@ -951,12 +958,15 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if(($mixedResult = $this->_checkAllowedConnectInitiator($oInitiator, $isPerformAction)) !== CHECK_ACTION_RESULT_ALLOWED)
             return ['code' => 3, 'message' => $mixedResult];
 
+        $iCode = 0;
+        $sMessage = '';
+
         // check content's visibility
         if(!$this->isConnected($iContent, $iInitiator) && ($mixedResult = $this->_checkAllowedConnectContent($oContent)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return ['code' => 4, 'message' => $mixedResult];
+            list($iCode, $sMessage) = [4, $mixedResult];
 
         if(!$isCheckExists)
-            return ['code' => 0];
+            return ['code' => $iCode, 'message' => $sMessage != '' ? $sMessage : null];
 
         if($isSwap)
             $isConnected = $this->isConnected($iContent, $iInitiator, $isMutual);
@@ -966,7 +976,10 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if($isInvertResult)
             $isConnected = !$isConnected;
 
-        return $isConnected ? ['code' => 5, 'message' => $sErr] : ['code' => 0];
+        if($isConnected)
+            list($iCode, $sMessage) = [5, $sErr];
+
+        return ['code' => $iCode, 'message' => $sMessage != '' ? $sMessage : null];
     }
 
     protected function _checkAllowedConnectInitiator ($oInitiator, $isPerformAction = false)

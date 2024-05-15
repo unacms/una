@@ -1784,9 +1784,10 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedFriendRemove (&$aDataEntry, $isPerformAction = false)
     {
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, true, true))
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, ['sys_profiles_friends', 'checkAllowedRemoveConnection'], false, true, true))
             return CHECK_ACTION_RESULT_ALLOWED;
-        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, true, false);
+
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, ['sys_profiles_friends', 'checkAllowedRemoveConnection'], false, true, false);
     }
 
     /**
