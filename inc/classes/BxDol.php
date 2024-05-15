@@ -133,7 +133,7 @@
  */
 
 /**
- * @page hooks Alerts(hooks)
+ * @page hook Alerts(hooks)
  * Alerts(hooks) allow to inject custiom code into various functionality.
  */
 
