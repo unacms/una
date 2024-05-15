@@ -14,6 +14,13 @@
  */
 
 /**
+ * @defgroup UnaModules UNA Modules
+ *
+ * @{
+ * @}
+ */
+
+/**
  * @page objects Objects
  * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms.
  *
