@@ -9,13 +9,16 @@
 
 class BxDolAI extends BxDolFactory implements iBxDolSingleton
 {
-    
+    protected $_sPathInst;
+
     protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::__construct();
+
+        $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
     }
 
     /**
@@ -37,16 +40,26 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
-    
+
+    public function getAutomatorInstructions($sType, $bIncludeCommon = false)
+    {
+        $sResult = file_get_contents($this->_sPathInst . $sType . '.html');
+        if($bIncludeCommon)
+            $sResult .= file_get_contents($this->_sPathInst. 'common.html');
+
+        return $sResult;
+    }
+
     public function chat($sEndpoint, $sModel, $sApiKey, $aParams, $aMessages)
     {
-         $aData = array_merge(
-             [
-                'model' => $sModel,
-                'messages' => $aMessages
-            ], 
-            $aParams
-        );
+        $aData = [
+            'model' => $sModel,
+            'messages' => $aMessages
+        ];
+
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
         $sRv = bx_file_get_contents($sEndpoint, $aData, "post-json", ["Authorization: Bearer ".$sApiKey, 'Content-Type: application/json', 'OpenAI-Beta: assistants=v1']);
 
         $aRv = json_decode($sRv, true);

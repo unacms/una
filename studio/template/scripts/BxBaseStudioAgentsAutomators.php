@@ -48,6 +48,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             if(!empty($sSchedulerTime))
                 $aValsToAdd['params'] = json_encode(['scheduler_time' => $sSchedulerTime]);
 
+            $sType = $oForm->getCleanValue('type');
             $sMessage = $oForm->getCleanValue('message');
             $bMessage = !empty($sMessage);
             $sMessageAdd = '';
@@ -57,6 +58,11 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 $aValsToAdd['messages'] = 1;
 
             $oAI = BxDolAI::getInstance();
+            
+            $aMessages = [
+                ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($sType . '_init')],
+                ['role' => 'user', 'content' => $sMessage]
+            ];
 
             $iModel = $oForm->getCleanValue('model_id');
             $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $iModel]);
@@ -64,14 +70,8 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 $aModel['params'] = json_decode($aModel['params'], true);
 
             $bIsValid = true;
-            $sType = $oForm->getCleanValue('type');
             switch($sType) {
                 case 'event':
-                    $aMessages = [
-                        ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_alert_instructions.html' )],
-                        ['role' => 'user', 'content' => $sMessage]
-                    ];
-
                     $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
                     if(trim($sResponse) != 'false') {
                         $sResponse = str_replace(['```json', '```'], '', $sResponse);
@@ -89,11 +89,6 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     break;
 
                 case 'scheduler':
-                    $aMessages = [
-                        ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_cron_instructions.html' )],
-                        ['role' => 'user', 'content' => $sMessage]
-                    ];
-
                     $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
                     if(trim($sResponse) != 'false') {
                         $aValsToAdd['params'] = json_encode(['scheduler_time' => $aResponse]);
@@ -107,7 +102,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             if($bIsValid) {
                 $aMessages = [
-                    ['role' => 'system', 'content' => file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_' . $sType . '_instructions.html' ) . file_get_contents(BX_DIRECTORY_PATH_ROOT. '/ai_common_instructions.html' )],
+                    ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($sType, true)],
                     ['role' => 'user', 'content' => $sMessage . $sMessageAdd]
                 ];
 
