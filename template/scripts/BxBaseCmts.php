@@ -198,7 +198,7 @@ class BxBaseCmts extends BxDolCmts
         $oSockets = BxDolSockets::getInstance();
         $bSockets = $oSockets->isEnabled();
 
-        if(!$bSockets) {
+        if($this->_bLiveUpdates && !$bSockets) {
             //add live update
             $this->actionResumeLiveUpdate();
 
@@ -213,7 +213,7 @@ class BxBaseCmts extends BxDolCmts
         $sCommentsPinned = $this->getCommentsPinned(array_merge($aBp, ['pinned' => 1]), $aDp);
         $sContentBefore = $this->_getContentBefore($aBp, $aDp);
         $sContentAfter = $this->_getContentAfter($aBp, $aDp);
-        if($bSockets)
+        if($this->_bLiveUpdates && $bSockets)
             $sContentAfter .= $this->getLiveUpdateButton();
         $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP]));
         $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM]));

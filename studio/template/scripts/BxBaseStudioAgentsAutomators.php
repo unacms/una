@@ -64,7 +64,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             $aModel = $oAI->getModel($iModel);
 
-            $bIsValid = true;/*
+            $bIsValid = true;
             switch($sType) {
                 case BX_DOL_AI_AUTOMATOR_EVENT:
                     $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
@@ -110,7 +110,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     $bIsValid = false;
                 }
             }
-*/
+
             if($bIsValid) {
                 if(($iId = $oForm->insert($aValsToAdd)) !== false) {
                     if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {

@@ -17,10 +17,37 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
-        $this->_oQueryAgents = new BxDolStudioAgentsQuery();
+        $this->_bLiveUpdates = false;
 
+        $this->_oQueryAgents = new BxDolStudioAgentsQuery();
         $this->_iProfileIdAi = BxDolAI::getInstance()->getProfileId(); 
         $this->_bAuto = false;
+    }
+
+    public function actionGetCmt ()
+    {
+        if(!$this->isEnabled())
+            return echoJson([]);
+
+        if($this->isViewAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson([]);
+
+        $mixedCmtId = bx_process_input(bx_get('Cmt'));
+        $sCmtBrowse = ($sCmtBrowse = bx_get('CmtBrowse')) !== false ? bx_process_input($sCmtBrowse, BX_DATA_TEXT) : '';
+        $sCmtDisplay = ($sCmtDisplay = bx_get('CmtDisplay')) !== false ? bx_process_input($sCmtDisplay, BX_DATA_TEXT) : '';
+
+        $aCmtIds = strpos($mixedCmtId, ',') !== false ? explode(',', $mixedCmtId) : [$mixedCmtId];
+
+        $sContent = '';
+        foreach($aCmtIds as $iCmtId)
+            $sContent .= $this->getComment((int)$iCmtId, ['type' => $sCmtBrowse], ['type' => $sCmtDisplay, 'dynamic_mode' => true]);
+
+        $aCmt = $this->getCommentRow((int)reset($aCmtIds));
+        echoJson([
+            'parent_id' => $aCmt['cmt_parent_id'],
+            'vparent_id' => $aCmt['cmt_parent_id'],
+            'content' => $sContent
+        ]);
     }
 
     public function getCommentsBlock($aBp = [], $aDp = [])
@@ -101,34 +128,39 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
     public function onPostAfter($iCmtId, $aDp = [])
     {
         $mixedResult = parent::onPostAfter($iCmtId, $aDp);
-        if(!$this->_bAuto && $mixedResult !== false) {
-            $iObjId = (int)$this->getId();
+        if($this->_bAuto || $mixedResult === false) 
+            return $mixedResult;
+        
+        $iObjId = (int)$this->getId();
 
-            $oAI = BxDolAI::getInstance();
+        $oAI = BxDolAI::getInstance();
 
-            $aMessages = [
-                ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($aAutomator['type'], true)],
+        $aMessages = [
+            ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($aAutomator['type'], true)],
+        ];
+
+        $aAutomator = $oAI->getAutomator($iObjId, true);
+
+        $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
+        if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
+            $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
+
+        foreach($aComments as $aComment)
+            $aMessages[] = [
+                'role' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi ? 'assistant' : 'user',
+                'content' => $aComment['cmt_text']
             ];
 
-            $aAutomator = $oAI->getAutomator($iObjId, true);
+        $sResponse = $oAI->chat($aAutomator['model_url'], $aAutomator['model_model'], $aAutomator['model_key'], $aAutomator['model_params'], $aMessages);
+        if($sResponse != 'false') {
+            $mixedResultAuto = $this->addAuto([
+                'cmt_author_id' => $this->_iProfileIdAi,
+                'cmt_parent_id' => 0,
+                'cmt_text' => $sResponse
+            ]);
 
-            $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
-            if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
-                $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
-
-            foreach($aComments as $aComment)
-                $aMessages[] = [
-                    'role' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi ? 'assistant' : 'user',
-                    'content' => $aComment['cmt_text']
-                ];
-
-            $sResponse = $oAI->chat($aAutomator['url'], $aAutomator['model'], $aAutomator['key'], $aAutomator['params'], $aMessages);
-            if($sResponse != 'false') 
-                $this->addAuto([
-                    'cmt_author_id' => $this->_iProfileIdAi,
-                    'cmt_parent_id' => 0,
-                    'cmt_text' => $sResponse
-                ]);
+            if($mixedResultAuto !== false)
+                $mixedResult['id'] .= ',' . $mixedResultAuto['id'];
         }
 
         return $mixedResult;
