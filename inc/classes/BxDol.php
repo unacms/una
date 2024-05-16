@@ -5,12 +5,16 @@
  */
 
 /**
- * @mainpage Index
+ * @mainpage UNA Abstracts
  * - @subpage objects Objects
  * - @subpage service Service Calls
- * - @subpage hooks Alerts(hooks)
- * - @subpage public_api API Public
- * - @subpage private_api API Private
+ * - @subpage hook Alerts(hooks)
+ */
+
+/**
+ * @defgroup UnaModules UNA Modules
+ * @{
+ * @}
  */
 
 /**
@@ -130,7 +134,7 @@
  */
 
 /**
- * @page hooks Alerts(hooks)
+ * @page hook Alerts(hooks)
  * Alerts(hooks) allow to inject custiom code into various functionality.
  */
 
