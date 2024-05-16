@@ -10,7 +10,7 @@
 
 class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 {
-    protected $_sUrlPage;   
+    protected $_sUrlPage;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -19,9 +19,9 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
         $this->_sUrlPage = BX_DOL_URL_STUDIO . 'agents.php?page=automators';
     }
 
-    public function getJsObject()
+    public function getPageJsObject()
     {
-        return 'oBxDolStudioAgentsAutomators';
+        return 'oBxDolStudioPageAgents';
     }
 
     public function performActionAdd()
@@ -202,15 +202,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
         return echoJson(['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]]);
     }
 
-    public function getCode($isDisplayHeader = true)
+    protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
     {
-        return $this->_oTemplate->parseHtmlByName('agents_automator.html', [
-            'content' => parent::getCode($isDisplayHeader),
-            'js_object' => $this->getJsObject(),
-            'page_url' => $this->_sUrlPage,
-            'grid_object' => $this->_sObject,
-            'params_divider' => $this->sParamsDivider
-        ]);
+        if(empty($aRow['code']) || $aRow['status'] != BX_DOL_AI_AUTOMATOR_STATUS_READY)
+            return parent::_getCellDefault('', $sKey, $aField, $aRow);
+
+        return parent::_getCellSwitcher ($mixedValue, $sKey, $aField, $aRow);
     }
 
     protected function _getCellModelId($mixedValue, $sKey, $aField, $aRow)
@@ -349,7 +346,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                         'webhook' => _t('_sys_agents_automators_field_type_webhook'),
                     ],
                     'attrs' => [
-                        'onchange' => $this->getJsObject() . '.onChangeType(this)',
+                        'onchange' => $this->getPageJsObject() . '.onChangeType(this)',
                     ],
                     'required' => '1',
                     'db' => [

@@ -2115,6 +2115,7 @@
         <string name="_sys_agents_automators_txt_status"><![CDATA[Статус]]></string>
         <string name="_sys_agents_automators_btn_add"><![CDATA[Добавить]]></string>
         <string name="_sys_agents_automators_btn_tune"><![CDATA[Настройка]]></string>
+        <string name="_sys_agents_automators_btn_approve"><![CDATA[Одобрить]]></string>
         <string name="_sys_agents_automators_popup_add"><![CDATA[Добавить автоматизатор]]></string>
         <string name="_sys_agents_automators_popup_edit"><![CDATA[Редактировать автоматизатор]]></string>
         <string name="_sys_agents_automators_field_model_id"><![CDATA[Модель]]></string>

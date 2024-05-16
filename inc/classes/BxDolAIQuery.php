@@ -78,6 +78,36 @@ class BxDolAIQuery extends BxDolDb
                 $sJoinClause .= " LEFT JOIN `sys_agents_models` AS `tam` ON `taa`.`model_id`=`tam`.`id`";
                 $sWhereClause .= " AND `taa`.`id`=:id";
                 break;
+            
+            case 'events':
+                $aMethod['params'][1] = [
+                    'type' => BX_DOL_AI_AUTOMATOR_EVENT,
+                    'alert_unit' => $aParams['alert_unit'],
+                    'alert_action' => $aParams['alert_action']
+                ];
+
+                $sWhereClause .= " AND `taa`.`type`=:type AND `taa`.`alert_unit`=:alert_unit AND `taa`.`alert_action`=:alert_action";
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][1]['active'] = (int)$aParams['active'];
+
+                    $sWhereClause .= " AND `taa`.`active`=:active";
+                }
+                break;
+                
+            case 'schedulers':
+                $aMethod['params'][1] = [
+                    'type' => BX_DOL_AI_AUTOMATOR_SCHEDULER,
+                ];
+
+                $sWhereClause .= " AND `taa`.`type`=:type";
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][1]['active'] = (int)$aParams['active'];
+
+                    $sWhereClause .= " AND `taa`.`active`=:active";
+                }
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . "

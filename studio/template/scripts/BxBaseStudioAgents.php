@@ -11,6 +11,7 @@
 class BxBaseStudioAgents extends BxDolStudioAgents
 {
     protected $sSubpageUrl;
+    protected $aPageJsOptions;
     protected $aMenuItems;
     protected $aGridObjects;
 
@@ -18,9 +19,17 @@ class BxBaseStudioAgents extends BxDolStudioAgents
     {
         parent::__construct($sPage);
 
-        $this->aPageCss = array_merge($this->aPageCss, ['cmts.css', 'agents_automators.css']);
-
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'agents.php?page=';
+
+        $this->aPageJs = array_merge($this->aPageJs, ['agents.js']);
+        $this->aPageCss = array_merge($this->aPageCss, ['cmts.css', 'agents.css']);
+
+        $this->sPageJsClass = 'BxDolStudioPageAgents';
+        $this->sPageJsObject = 'oBxDolStudioPageAgents';
+        $this->aPageJsOptions = [
+            'sActionUrl' => BX_DOL_URL_STUDIO . 'agents.php',
+            'sPageUrl' => $this->sSubpageUrl
+        ];
 
         $this->aMenuItems = [
             BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'cogs'],
@@ -34,11 +43,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
 
     public function getPageJsCode($aOptions = [], $bWrap = true)
     {
-        $aOptions = array_merge($aOptions, [
-            'sActionUrl' => BX_DOL_URL_STUDIO . 'agents.php'
-        ]);
-
-        return parent::getPageJsCode($aOptions, $bWrap);
+        return parent::getPageJsCode(array_merge($aOptions, $this->aPageJsOptions), $bWrap);
     }
 
     public function getPageMenu($aMenu = [], $aMarkers = [])
@@ -73,9 +78,21 @@ class BxBaseStudioAgents extends BxDolStudioAgents
     protected function getAutomators()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
+        
+        $this->aPageJsOptions['sPageUrl'] .= 'automators';
 
         if(($iId = bx_get('id')) !== false) {
-            $oCmts = BxDolCmts::getObjectInstance('sys_agents_automators', (int)$iId, true, $oTemplate);
+            $sCmts = 'sys_agents_automators';
+
+            $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
+                'sPageUrl' => $this->sSubpageUrl . 'automators&id=' . $iId,
+                'sActionUrlCmts' => bx_append_url_params(BX_DOL_URL_ROOT . 'cmts.php', [
+                    'sys' => $sCmts,
+                    'id' => $iId
+                ])
+            ]);
+
+            $oCmts = BxDolCmts::getObjectInstance($sCmts, (int)$iId, true, $oTemplate);
             return $oCmts->getCommentsBlock();
         }
 

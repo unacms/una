@@ -2140,6 +2140,7 @@
         <string name="_sys_agents_automators_txt_status"><![CDATA[Status]]></string>
         <string name="_sys_agents_automators_btn_add"><![CDATA[Add]]></string>
         <string name="_sys_agents_automators_btn_tune"><![CDATA[Tune]]></string>
+        <string name="_sys_agents_automators_btn_approve"><![CDATA[Approve]]></string>
         <string name="_sys_agents_automators_popup_add"><![CDATA[Add automator]]></string>
         <string name="_sys_agents_automators_popup_edit"><![CDATA[Edit automator]]></string>
         <string name="_sys_agents_automators_field_model_id"><![CDATA[Model]]></string>

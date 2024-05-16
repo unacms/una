@@ -10,7 +10,9 @@
 class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 {
     protected $_oQueryAgents;
+    protected $_sUrlPageAgents;
     protected $_iProfileIdAi;
+
     protected $_bAuto;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
@@ -21,7 +23,9 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $this->_bLiveUpdates = false;
 
         $this->_oQueryAgents = new BxDolStudioAgentsQuery();
-        $this->_iProfileIdAi = BxDolAI::getInstance()->getProfileId(); 
+        $this->_sUrlPageAgents = BX_DOL_URL_STUDIO . 'agents.php?page=automators';
+        $this->_iProfileIdAi = BxDolAI::getInstance()->getProfileId();
+
         $this->_bAuto = false;
     }
 
@@ -49,6 +53,27 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
             'vparent_id' => $aCmt['cmt_parent_id'],
             'content' => $sContent
         ]);
+    }
+    
+    public function actionApproveCode()
+    {
+        if(!$this->isEnabled())
+            return echoJson([]);
+
+        $iCmt = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
+        $aCmt = $this->getCommentRow($iCmt);
+        if(empty($aCmt) || !is_array($aCmt))
+            return echoJson([]);
+
+        if(!$this->_oQueryAgents->updateAutomators(['code' => $aCmt['cmt_text'], 'status' => 'ready'], ['id' => (int)$this->getId()]))
+            return echoJson([]);
+
+        return echoJson(['redirect' => $this->_sUrlPageAgents]);
+    }
+
+    public function getPageJsObject()
+    {
+        return 'oBxDolStudioPageAgents';
     }
 
     public function getCommentsBlock($aBp = [], $aDp = [])
@@ -175,7 +200,10 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         if((int)$aCmt['cmt_author_id'] != $this->_iProfileIdAi)
             return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
 
-        return '<a class="bx-btn bx-btn-small" onclick="alert(\'Under construction\')">Approve</a>';
+        return $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_agents_automators_btn_approve'), [
+            'class' => 'bx-btn bx-btn-small',
+            'onclick' => $this->getPageJsObject() . '.approveCode(this, ' . $aCmt['cmt_id'] . ')',
+        ]);
     }
 
     protected function _getCountersBox(&$aCmt, $aBp = [], $aDp = [])

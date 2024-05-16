@@ -11,11 +11,17 @@ define('BX_DOL_AI_AUTOMATOR_EVENT', 'event');
 define('BX_DOL_AI_AUTOMATOR_SCHEDULER', 'scheduler');
 define('BX_DOL_AI_AUTOMATOR_WEBHOOK', 'webhook');
 
+define('BX_DOL_AI_AUTOMATOR_STATUS_AUTO', 'auto');
+define('BX_DOL_AI_AUTOMATOR_STATUS_MANUAL', 'manual');
+define('BX_DOL_AI_AUTOMATOR_STATUS_READY', 'ready');
+
 class BxDolAI extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oDb;
     protected $_sPathInst;
     protected $_iProfileId;
+    
+    protected $_aExcludeAlertUnits;
 
     protected function __construct()
     {
@@ -27,6 +33,10 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         $this->_oDb = new BxDolAIQuery();
         $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
         $this->_iProfileId = (int)getParam('sys_profile_bot'); 
+
+        $this->_aExcludeAlertUnits = [
+            'system', 'module_template_method_call'
+        ];
     }
 
     /**
@@ -82,6 +92,28 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $aAutomator;
     }
+    
+    public function getAutomatorsEvent($sUnit, $sAction)
+    {
+        if(in_array($sUnit, $this->_aExcludeAlertUnits))
+            return [];
+
+        return $this->_oDb->getAutomatorsBy([
+            'sample' => 'events', 
+            'alert_unit' => $sUnit,
+            'alert_action' => $sAction,
+            'active' => true
+        ]);
+    }
+    public function getAutomatorsScheduler()
+    {
+        $aAutomators = $this->_oDb->getAutomatorsBy(['sample' => 'schedulers', 'active' => true]);
+        foreach($aAutomators as &$aAutomator)
+            if(!empty($aAutomator['params']))
+                $aAutomator['params'] = json_decode($aAutomator['params'], true);
+
+        return $aAutomators;
+    }
 
     public function chat($sEndpoint, $sModel, $sApiKey, $aParams, $aMessages)
     {
@@ -102,5 +134,34 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         }
 
         return trim(str_replace(['```json', '```php', '```'], '', $aRv['choices'][0]['message']['content']));
+    }
+
+    public function callAutomator($sType, $aParams = [])
+    {
+        $sMethod = '_callAutomator' . bx_gen_method_name($sType);
+        if(!method_exists($this, $sMethod))
+            return false;
+
+        return $this->$sMethod($aParams);
+    }
+
+    protected function _callAutomatorEvent($aParams = [])
+    {
+        if(!isset($aParams['automator'], $aParams['alert']) || !is_a($aParams['alert'], 'BxDolAlerts'))
+            return false;
+
+        $oAlert = &$aParams['alert'];
+
+        //TODO: Call the code in appropriate way using data from $oAlert
+        eval($aParams['automator']['code']);
+    }
+
+    protected function _callAutomatorScheduler($aParams = [])
+    {
+        if(!isset($aParams['automator']))
+            return false;
+
+        //TODO: Call the code in appropriate way
+        eval($aParams['automator']['code']);
     }
 }

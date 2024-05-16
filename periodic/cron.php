@@ -159,4 +159,15 @@ foreach($aJobs as $aRow) {
             runJob($aRow);
 }
 
+// run automators (schedulers)
+bx_import('BxDolAI');
+$oAi = BxDolAI::getInstance();
+
+$aAutomators = $oAi->getAutomatorsScheduler();
+foreach($aAutomators as $aAutomator) {
+    if(checkCronJob($aAutomator['params']['scheduler_time'], $aDate))
+        $oAi->callAutomator(BX_DOL_AI_AUTOMATOR_SCHEDULER, [
+            'automator' => $aAutomator
+        ]);
+}
 /** @} */
