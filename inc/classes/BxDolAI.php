@@ -149,19 +149,64 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     {
         if(!isset($aParams['automator'], $aParams['alert']) || !is_a($aParams['alert'], 'BxDolAlerts'))
             return false;
-
+        
         $oAlert = &$aParams['alert'];
 
-        //TODO: Call the code in appropriate way using data from $oAlert
-        eval($aParams['automator']['code']);
+        $this->evalCode($aParams['automator'], true, ['alert' => $oAlert]);
     }
 
     protected function _callAutomatorScheduler($aParams = [])
     {
         if(!isset($aParams['automator']))
             return false;
-
-        //TODO: Call the code in appropriate way
-        eval($aParams['automator']['code']);
+        
+        $this->evalCode($aParams['automator'], true);
     }
+    
+    
+    public function evalCode($aAutomator, $isWriteLog = true, $aParams = null)
+    {
+        ob_start();
+        set_error_handler("evalErrorHandler");
+        try{
+             $sCode = '';
+             if ($aAutomator['type'] == 'scheduler'){
+                 $sCode = $aAutomator['code'] . '; onCron();';
+             }
+             
+             if ($aAutomator['type'] == 'event'){
+                 $sCode = $aAutomator['code']. '; onAlert($aParams["alert"]->iObject , $aParams["alert"]->iSender , $aParams["alert"]->aExtras);';  
+             }
+             
+             
+             eval($sCode);
+            
+        }
+        catch (Exception $oException) {
+            if ($isWriteLog){
+                $this->writeLog($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
+            }
+            return $oException->getMessage();
+        } finally {
+             $sOutput = ob_get_clean();
+             if ($sOutput != '')
+                return "Eval error: " . $sOutput;
+            restore_error_handler();
+        }
+    }
+    
+    private function writeLog($sString)
+	{
+        bx_log('sys_agents', $sString);
+	}
+}
+
+class EvalException extends Exception {}
+
+function evalErrorHandler($errno, $errstr, $errfile, $errline) {
+    if (!(error_reporting() & $errno)) {
+        // This error code is not included in error_reporting
+        return false;
+    }
+    throw new EvalException($errstr, $errno);
 }

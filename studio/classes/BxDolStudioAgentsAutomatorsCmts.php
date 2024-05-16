@@ -14,11 +14,18 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
     protected $_iProfileIdAi;
 
     protected $_bAuto;
+    
+    protected $_oAI;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
+        if ($oTemplate)
+            $this->_oTemplate = $oTemplate;
+        else
+            $this->_oTemplate = BxDolStudioTemplate::getInstance();
+        
         $this->_sTmplNameItemContent = 'agents_comment_content.html';
         $this->_bLiveUpdates = false;
 
@@ -27,6 +34,8 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $this->_iProfileIdAi = BxDolAI::getInstance()->getProfileId();
 
         $this->_bAuto = false;
+        
+        $this->_oAI = BxDolAI::getInstance();
     }
 
     public function actionGetCmt ()
@@ -64,6 +73,19 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $aCmt = $this->getCommentRow($iCmt);
         if(empty($aCmt) || !is_array($aCmt))
             return echoJson([]);
+        
+        $iObjId = (int)$this->getId();
+        
+        $aAutomator = $this->_oAI->getAutomator($iObjId, true);
+        $aAutomator['code'] = $aCmt['cmt_text'];
+        
+        $oAlert = new BxDolAlerts('test', 'test', -1, -1, []);
+        $sRv = $this->_oAI->evalCode($aAutomator, false, ['alert' => $oAlert]);
+        
+        
+        if ($sRv != ''){
+            return echoJson(['msg' => 'Error in code: ' . $sRv]);
+        }
 
         if(!$this->_oQueryAgents->updateAutomators(['code' => $aCmt['cmt_text'], 'status' => 'ready'], ['id' => (int)$this->getId()]))
             return echoJson([]);
@@ -158,14 +180,12 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
             return $mixedResult;
         
         $iObjId = (int)$this->getId();
-
-        $oAI = BxDolAI::getInstance();
+        
+        $aAutomator = $this->_oAI->getAutomator($iObjId, true);
 
         $aMessages = [
-            ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($aAutomator['type'], true)],
+            ['role' => 'system', 'content' => $this->_oAI->getAutomatorInstructions($aAutomator['type'], true)],
         ];
-
-        $aAutomator = $oAI->getAutomator($iObjId, true);
 
         $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
         if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
@@ -180,7 +200,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
             ];
         }
 
-        $sResponse = $oAI->chat($aAutomator['model_url'], $aAutomator['model_model'], $aAutomator['model_key'], $aAutomator['model_params'], $aMessages);
+        $sResponse = $this->_oAI->chat($aAutomator['model_url'], $aAutomator['model_model'], $aAutomator['model_key'], $aAutomator['model_params'], $aMessages);
         if($sResponse != 'false') {
             $mixedResultAuto = $this->addAuto([
                 'cmt_author_id' => $this->_iProfileIdAi,
@@ -201,7 +221,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
             return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
 
         return $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_agents_automators_btn_approve'), [
-            'class' => 'bx-btn bx-btn-small',
+            'class' => 'bx-btn bx-btn-small bx-btn-primary',
             'onclick' => $this->getPageJsObject() . '.approveCode(this, ' . $aCmt['cmt_id'] . ')',
         ]);
     }
@@ -220,10 +240,17 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
     {
         $aResult = parent::_getTmplVarsText($aCmt);
 
-        //TODO: Custom template for AI responces.
         if((int)$aCmt['cmt_author_id'] == $this->_iProfileIdAi)
             $aResult['text'] = '<pre>' . $aResult['text'] . '</pre>';
 
+        return $aResult;
+    }
+    
+    protected function _getForm($sAction, $iId)
+    {
+        $aResult = parent::_getForm($sAction, $iId);
+
+        $aResult->aInputs['cmt_text']['db']['pass'] = 'xss';
         return $aResult;
     }
 }
