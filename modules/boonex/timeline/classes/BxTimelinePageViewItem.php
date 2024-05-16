@@ -15,6 +15,7 @@ class BxTimelinePageViewItem extends BxTemplPage
     protected $_oModule;
 
     protected $_iItemId;
+    protected $_aItemData;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -28,30 +29,52 @@ class BxTimelinePageViewItem extends BxTemplPage
             return;
 
         $this->_iItemId = $iItemId;
+        $this->_aItemData = $this->_oModule->getItemData($this->_iItemId);
     }
+    
+    protected function _isAvailablePage ($a)
+    {
+        if (!$this->_iItemId || $this->_aItemData['code'] == 1)
+            return false;
+
+        return parent::_isAvailablePage($a);
+    }
+    
+    protected function _isVisiblePage ($a)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_aItemData['code'] == 2)
+            return false;
+
+        $oCf = BxDolContentFilter::getInstance();
+        if($oCf->isEnabled() && !$oCf->isAllowed($this->_aItemData['event'][$CNF['FIELD_CF']]))
+            return false;
+
+        return parent::_isVisiblePage($a);
+    }
+    
 
     public function getCode()
     {
-        $aItemData = $this->_oModule->getItemData($this->_iItemId);
-
-        if($aItemData['code'] != 0) {
-            switch($aItemData['code']) {
+        if($this->_aItemData['code'] != 0) {
+            switch($this->_aItemData['code']) {
                 case 1:
                     $this->_oTemplate->displayPageNotFound();
                     break;
 
                 case 2: 
-                    $this->_oTemplate->displayAccessDenied($aItemData['content']);
+                    $this->_oTemplate->displayAccessDenied($this->_aItemData['content']);
                     break;
 
                 default:
-                    $this->_oTemplate->displayMsg($aItemData['content']);
+                    $this->_oTemplate->displayMsg($this->_aItemData['content']);
             }
         }
 
         $sPageUrl = 'page.php?i=' . $this->_aObject['uri'] . '&id=' . $this->_iItemId;
-        if(!empty($aItemData['event']['content']['url']))
-            $sPageUrl = $aItemData['event']['content']['url'];
+        if(!empty($this->_aItemData['event']['content']['url']))
+            $sPageUrl = $this->_aItemData['event']['content']['url'];
 
         BxDolTemplate::getInstance()->setPageUrl($sPageUrl);
 

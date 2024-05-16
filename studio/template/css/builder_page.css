@@ -1,21 +1,22 @@
 /*--- Panel Top style ---*/
 div.bx-std-pt-pages {
-	position: relative;
+    position: relative;
     float: left;
 }
 div.bx-std-pt-pages div.bx-form-element-wrapper {
-	width: 165px;
+    width: 165px;
 }
 div.bx-std-pt-buttons {
-	float: right;
+    float: right;
 }
 
 /*--- Main section style ---*/
-div.adm-bp-cell {
-    background-color: rgba(255,255,255,0.8);
+.bx-std .bx-layout-wrapper {
+    padding-top: 0;
 }
+div.adm-bp-cell {}
 div.adm-bp-cell-cnt {
-    padding: 3px 6px 50px 6px;
+    padding: 1rem;
 }
 div.adm-bp-blocks {
     position: relative;
@@ -23,27 +24,20 @@ div.adm-bp-blocks {
 div.adm-bp-block {
     position: relative;
     overflow: hidden;
-    margin: 3px 0px;
 
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px 5px 5px 5px;
+    border: 1px solid rgb(229 231 235);
+    border-radius: 1rem;
 
-    box-shadow: 0 0 1px rgba(51, 51, 51, 0.3);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 
-    background-color: #ececec;
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ececec));
-    background-image: -webkit-linear-gradient(top, #fff, #ececec); 
-    background-image: -moz-linear-gradient(top, #fff, #ececec); 
-    background-image: -ms-linear-gradient(top, #fff, #ececec); 
-    background-image: -o-linear-gradient(top, #fff, #ececec); 
-    background-image: linear-gradient(top, #fff, #ececec);	
+    background-color: #ffffff;
 }
-div.adm-bpb-inactive {
+div.adm-bp-block.adm-bpb-inactive,
+div.bx-lr-dump div.adm-bp-block {
     opacity: 0.5;
 }
 div.adm-bp-block-empty {
-    height: 42px;
+    height: 4rem;
     border-style: dashed;
     box-shadow: none;
 }
@@ -52,25 +46,23 @@ div.adm-bpb-content {
     position: relative;
     display: -webkit-flex; 
     display: flex;
-
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
-
     -webkit-align-items: center;
     align-items: center;
-
     -webkit-flex-flow: row nowrap;
     flex-flow: row nowrap;
-    
-    padding: 0.5rem;
+
+    padding: 0.625rem;
 }
 
 div.adm-bpb-icon,
 div.adm-bpb-icon-bg,
 div.adm-bpb-icon img,
 div.adm-bpb-icon i.sys-icon {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.75rem;
 }
 div.adm-bpb-icon {
     position: relative;
@@ -79,16 +71,19 @@ div.adm-bpb-icon-bg {
     background-color: #323c46;
     border-radius: 0.5rem;
 }
+div.adm-bpb-icon img {
+    border-radius: 0.5rem;
+}
 div.adm-bpb-icon i.sys-icon {
     position: absolute;
     top: 0px;
     left: 0px;
 
+    text-align: center;
+    text-shadow: none;
+    line-height: 2.5rem;
+    font-size: 20px;
     color:white;
-    font-size:20px;
-    text-align:center;
-    text-shadow:none;
-    line-height: 2rem;
 }
 div.adm-bpb-info {
     -webkit-flex-grow: 2;
@@ -106,9 +101,12 @@ div.adm-bpb-title {
 
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden;
+    line-height: 1.25rem;    
 
-    font-weight: bold;
+    letter-spacing: -0.4px;
+    font-weight: 600;
+
+    overflow: hidden;
 }
 div.adm-bpb-title .bx-std-api {
     margin-left: 0.25rem;
@@ -216,24 +214,28 @@ div.adm-bp-epf-left {
     left: 0px;
     width: 179px;
     height: 310px;
-    border-style: solid;
-    border-width: 1px 1px 0px 0px;
+    border-right-style: solid;
+    border-right-width: 1px;
     overflow-y: auto; 
 }
 div.adm-bp-epf-left-cnt {}
+div.adm-bp-epf-left .bx-std-pmen-item {
+    height: 2.5rem;
+}
 div.adm-bp-epf-right {
     position: relative;
     width: 620px;
     height: 310px;
     margin-left: 180px;
-    border-style: solid;
-    border-width: 1px 0px 0px 0px;
     overflow-y: auto;
 }
 div.adm-bp-epf-right-cnt {}
 div.adm-bp-epf-controls {
     border-style: solid;
     border-width: 1px 0px 0px 0px;
+}
+div.adm-bp-epf-controls .bx-def-margin-sec-left {
+    margin-left: 0.5rem;
 }
 div#adm-bp-settings-group-layout {
     margin: 0px -10px;
@@ -243,8 +245,8 @@ div.adm-bp-layout {
 	float: left;
 	width: 66px;
 	height: 66px;
-	margin-left: 10px;
-	margin-right: 10px; 
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 	border: 2px solid transparent;
 }
 div.adm-bp-layout-active {

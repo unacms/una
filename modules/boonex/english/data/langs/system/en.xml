@@ -20,12 +20,14 @@
         <string name="_apps"><![CDATA[Apps]]></string>
 	<string name="_Are_you_sure"><![CDATA[Are you sure?]]></string>
 	<string name="_Auth type"><![CDATA[Auth type]]></string>
+        <string name="_by_author"><![CDATA[by]]></string>
 	<string name="_Basic"><![CDATA[Basic]]></string>
 	<string name="_CONTACT_H"><![CDATA[Contact us]]></string>
 	<string name="_CONTACT_H1"><![CDATA[Contact]]></string>
 	<string name="_Can not delete comments with replies"><![CDATA[Cannot delete comments with replies]]></string>
 	<string name="_Cancel"><![CDATA[Cancel]]></string>
 	<string name="_Content"><![CDATA[Content]]></string>
+        <string name="_Contents"><![CDATA[Contents]]></string>
 	<string name="_Count"><![CDATA[Count]]></string>
 	<string name="_DELETE_SUCCESS"><![CDATA[You account was successfully deleted]]></string>
 	<string name="_DELETE_TEXT"><![CDATA[All your content will be deleted. Are you sure you want to delete your account?]]></string>
@@ -1103,6 +1105,7 @@
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" language?</h3><p>Uninstalling "{0}" language will also delete all of its data. Do you want to continue?</p>]]></string>
     <string name="_adm_lmi_cpt_actions"><![CDATA[Actions]]></string>
     <string name="_adm_lmi_cpt_api_config"><![CDATA[Configuration]]></string>
+    <string name="_adm_lmi_cpt_automators"><![CDATA[Automators]]></string>
     <string name="_adm_lmi_cpt_badges"><![CDATA[Badges]]></string>
     <string name="_adm_lmi_cpt_categories"><![CDATA[Categories]]></string>
     <string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
@@ -1295,6 +1298,7 @@
         <string name="_adm_nav_txt_block_hidden_on_col_wide"><![CDATA[Wide]]></string>
         <string name="_adm_nav_txt_block_hidden_on_col_full"><![CDATA[Full]]></string>
         <string name="_adm_page_cpt_api"><![CDATA[API]]></string>
+        <string name="_adm_page_cpt_agents"><![CDATA[Agents]]></string>
         <string name="_adm_page_cpt_audit"><![CDATA[Audit]]></string>
         <string name="_adm_page_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Forms]]></string>
@@ -1574,7 +1578,6 @@
     
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Lock site from unauthenticated users]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Comma separated list of pages URIs, which are avalilable for unauthenticated users]]></string>
-    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[No pruning]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_delete"><![CDATA[Delete accounts with no login within N days]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_suspend"><![CDATA[Suspend accounts with no login within N days]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_confirm_delete"><![CDATA[Delete accounts which didn't confirm email within N days]]></string>
@@ -1755,6 +1758,8 @@
     <string name="_adm_stg_cpt_option_sys_api_conn_in_prof_units"><![CDATA[Use connections lists in profiles/groups units]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_email"><![CDATA[Site main URL in email notifications]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_push"><![CDATA[Site main URL in push notifications]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_url"><![CDATA[Endpoint URL]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Profile]]></string>   
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Viewport meta tag]]></string>
 
     <string name="_adm_stg_cpt_category_pwa_manifest"><![CDATA[Manifest]]></string>
@@ -1783,17 +1788,9 @@
     <string name="_adm_stg_cpt_option_sys_std_show_header_right"><![CDATA[Studio: Show header right area]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Studio: Show search in header]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Studio: Show 'site' link in header]]></string>
-    <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Studio: Show left area with menu in Launcher]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Studio: Show left area with menu in Launcher]]></string>       
 
-    
-    
-    
-
-	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
+	<string name="_adm_stg_cpt_type_system"><![CDATA[Global]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>
@@ -1955,6 +1952,7 @@
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Help is not available]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Uninstall]]></string>
         <string name="_adm_wgt_cpt_api"><![CDATA[API]]></string>
+        <string name="_adm_wgt_cpt_agents"><![CDATA[Agents]]></string>
         <string name="_adm_wgt_cpt_audit"><![CDATA[Audit]]></string>
         <string name="_adm_wgt_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Forms]]></string>
@@ -1967,7 +1965,7 @@
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
 	<string name="_adm_wgt_cpt_storages"><![CDATA[Storage]]></string>
-	<string name="_adm_wgt_cpt_store"><![CDATA[Apps Market]]></string>
+	<string name="_adm_wgt_cpt_store"><![CDATA[App Store]]></string>
         <string name="_cmt_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[All]]></string>
@@ -2127,6 +2125,42 @@
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
         <string name="_sys_acl_state"><![CDATA[State: ]]></string>
         <string name="_sys_acl_state_trial"><![CDATA[Trial]]></string>
+
+        <string name="_sys_agents_automators_txt_active"><![CDATA[Active]]></string>
+        <string name="_sys_agents_automators_txt_type"><![CDATA[Type]]></string>
+        <string name="_sys_agents_automators_txt_alert_unit"><![CDATA[Unit]]></string>
+        <string name="_sys_agents_automators_txt_alert_action"><![CDATA[Action]]></string>
+        <string name="_sys_agents_automators_txt_scheduler_time"><![CDATA[Time]]></string>
+        <string name="_sys_agents_automators_txt_model_id"><![CDATA[Model]]></string>
+        <string name="_sys_agents_automators_txt_profile_id"><![CDATA[Profile]]></string>
+        <string name="_sys_agents_automators_txt_message_id"><![CDATA[Prompt]]></string>
+        <string name="_sys_agents_automators_txt_messages"><![CDATA[Messages]]></string>
+        <string name="_sys_agents_automators_txt_code"><![CDATA[Code]]></string>
+        <string name="_sys_agents_automators_txt_added"><![CDATA[Added]]></string>
+        <string name="_sys_agents_automators_txt_status"><![CDATA[Status]]></string>
+        <string name="_sys_agents_automators_btn_add"><![CDATA[Add]]></string>
+        <string name="_sys_agents_automators_btn_tune"><![CDATA[Tune]]></string>
+        <string name="_sys_agents_automators_btn_approve"><![CDATA[Approve]]></string>
+        <string name="_sys_agents_automators_popup_add"><![CDATA[Add automator]]></string>
+        <string name="_sys_agents_automators_popup_edit"><![CDATA[Edit automator]]></string>
+        <string name="_sys_agents_automators_field_model_id"><![CDATA[Model]]></string>
+        <string name="_sys_agents_automators_field_profile_id"><![CDATA[Profile]]></string>
+        <string name="_sys_agents_automators_field_profile_id_inf"><![CDATA[Leave empty to use default.]]></string>
+        <string name="_sys_agents_automators_field_type"><![CDATA[Type]]></string>
+        <string name="_sys_agents_automators_field_type_event"><![CDATA[Event]]></string>
+        <string name="_sys_agents_automators_field_type_scheduler"><![CDATA[Scheduler]]></string>
+        <string name="_sys_agents_automators_field_type_webhook"><![CDATA[Webhook]]></string>
+        <string name="_sys_agents_automators_field_alert_unit"><![CDATA[Event Type]]></string>
+        <string name="_sys_agents_automators_field_alert_action"><![CDATA[Event Action]]></string>
+        <string name="_sys_agents_automators_field_scheduler_time"><![CDATA[Scheduler Time]]></string>
+        <string name="_sys_agents_automators_field_message"><![CDATA[Prompt]]></string>
+        <string name="_sys_agents_automators_field_status_auto"><![CDATA[Auto]]></string>
+        <string name="_sys_agents_automators_field_status_manual"><![CDATA[Manual]]></string>
+        <string name="_sys_agents_automators_field_status_ready"><![CDATA[Ready]]></string>
+        <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Event isn't found, please rephrase your prompt.]]></string>
+        <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Can't generate code, please rephrase your prompt.]]></string>
+        <string name=""><![CDATA[]]></string>
+        
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>
@@ -2396,7 +2430,7 @@ If it is not enabled then please consider implement this optimization, since it 
 {email_footer}]]></string>
     <string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Site was successfully upgraded to {new_version}.</p>
-<p>Please go to <b>Studio &gt; Apps Market &gt; Updates</b> to check for modules updates.</p>
+<p>Please go to <b>Studio &gt; App Store &gt; Updates</b> to check for modules updates.</p>
 <p> </p>
 {conclusion}
 <p> </p>
@@ -2472,6 +2506,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_file_handlers_google_viewer"><![CDATA[Google Viewer]]></string>
 	<string name="_sys_file_handlers_images_viewer"><![CDATA[Images Viewer]]></string>
 	<string name="_sys_file_handlers_code_viewer"><![CDATA[Code Viewer]]></string>
+        <string name="_sys_file_handlers_sounds_viewer"><![CDATA[Sounds Player]]></string>
+        <string name="_sys_file_handlers_videos_viewer"><![CDATA[Videos Player]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>
 	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
 	<string name="_sys_form_account_input_agreement_value"><![CDATA[By signing up, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.]]></string>
@@ -3188,6 +3224,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_template_title_main_submenu_more_auto"><![CDATA[Site Navigation Submenu (with Auto More)]]></string>
     <string name="_sys_menu_template_title_panel"><![CDATA[Site Panel Menu]]></string>
     <string name="_sys_menu_template_title_main_in_panel"><![CDATA[Site Navigation Menu in Panel]]></string>
+    <string name="_sys_menu_template_title_multilevel"><![CDATA[Multilevel Menu]]></string>
     <string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>
     <string name="_sys_menu_template_title_ver"><![CDATA[Vertical Links]]></string>
     <string name="_sys_menu_template_title_ver_lite"><![CDATA[Vertical Links (lite)]]></string>
@@ -3839,7 +3876,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Can't apply upgrade because too many files({0}%) were modified]]></string>
 	<string name="_sys_upgrade_files_checksum_failed_too_many_module"><![CDATA[Can't apply upgrade because too many files({0}%) were modified in {1} module]]></string>
 	<string name="_sys_upgrade_get_version_info_failed"><![CDATA[Get version info failed, please check internet connection on the web-server or web-server firewall]]></string>
-        <string name="_sys_upgrade_modules_upgrade_first"><![CDATA[You have outdated modules. Upgrade them first in Studio &gt; Apps Market &gt; Updates.]]></string>
+        <string name="_sys_upgrade_modules_upgrade_first"><![CDATA[You have outdated modules. Upgrade them first in Studio &gt; App Store &gt; Updates.]]></string>
 	<string name="_sys_upgrade_patch_checksum_failed"><![CDATA[Downloaded patch file checksum is invalid]]></string>
 	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Patch download failed, or downloaded file can't be saved]]></string>
 	<string name="_sys_upgrade_patch_invalid"><![CDATA[Invalid patch, it can't be applied to your version or incorrect files structure in the patch.]]></string>
@@ -3897,7 +3934,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_view_n_views"><![CDATA[{0} views]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Like]]></string>
-	<string name="_vote_do_unlike"><![CDATA[Dislike]]></string>
+	<string name="_vote_do_unlike"><![CDATA[Like]]></string>
 	<string name="_vote_do_by"><![CDATA[Liked by]]></string>
         <string name="_vote_do_by_reactions"><![CDATA[Reacted by]]></string>
         <string name="_vote_do_by_x_reaction"><![CDATA["{0}" by]]></string>

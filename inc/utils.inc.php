@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    UnaCore UNA Core
+ * @defgroup    UnaCoreFunctions UNA Core Functions
  * @{
  */
 
@@ -507,7 +507,26 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
         'override_result' => &$bResult,
     );
     
-    // alert for disable sending
+    /**
+     * @hooks
+     * @hookdef hook-system-check_send_mail 'system', 'check_send_mail' - hook for disabling mail sending 
+     * - $unit_name - equals `system`
+     * - $action - equals `check_send_mail` 
+     * - $object_id - recipient profile id 
+     * - $sender_id - not used 
+     * - $extra_params - array of additional params with the following array keys:
+     *      - `email` - [string] recipient email 
+     *      - `subject` - [string] email subject 
+     *      - `body` - [string] email body 
+     *      - `header` - [string] email headers, headers are separated with double new line character
+     *      - `params` - [string] parameters for php mail function 
+     *      - `recipient` - [array] recipient info array
+     *      - `email_type` - [int] email type, one of the following BX_EMAIL_SYSTEM, BX_EMAIL_NOTIFY, BX_EMAIL_MASS
+     *      - `html` - [boolean] `true` if email content is HTML, if `false` then email content is text
+     *      - `custom_headers` - [array] custom email headers array as key&value pairs
+     *      - `override_result` - [boolean] override result of `sendMail` function, if `true` then mail sending should continue as usual, if `false` then mail sending should stop
+     * @hook @ref hook-system-check_send_mail
+     */
     bx_alert('system', 'check_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
     
     if ($bResult !== null)
@@ -515,6 +534,12 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
 
     // system alert
     if (!$isDisableAlert) {
+        /**
+         * @hooks
+         * @hookdef hook-system-before_send_mail 'system', 'before_send_mail' - hook before mail sending
+         * It's equivalent to @ref hook-system-check_send_mail 
+         * @hook @ref hook-system-before_send_mail
+         */
         bx_alert('system', 'before_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
         if ($bResult !== null)
             return $bResult;
@@ -537,8 +562,16 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);
 
     // system alert
-    if (!$isDisableAlert)
+    if (!$isDisableAlert) {
+        /**
+         * @hooks
+         * @hookdef hook-system-send_mail 'system', 'send_mail' - hook when mail was sent
+         * It's equivalent to @ref hook-system-check_send_mail 
+         * except `override_result` parameter in $extra_params is missing
+         * @hook @ref hook-system-send_mail
+         */
         bx_alert('system', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
+    }
 
     return $bResult;
 }
@@ -2163,29 +2196,33 @@ function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
     return $text;
 }
 
-function bx_linkify_embeded($text)
+function bx_linkify_embeded($sText)
 {
-    $urlRegex = '/\b((https?:\/\/)|(www\.))((([0-9a-zA-Z_!~*\'().&=+$%-]+:)?[0-9a-zA-Z_!~*\'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*\'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,16})(:[0-9]{1,4})?((\/[0-9a-zA-Z_!~*\'().;?:@&=+$,%#-]*)*))/';
-    preg_match_all($urlRegex, $text, $matches, PREG_SET_ORDER);
+    $sRegex = '/\b((https?:\/\/)|(www\.))((([0-9a-zA-Z_!~*\'().&=+$%-]+:)?[0-9a-zA-Z_!~*\'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*\'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,16})(:[0-9]{1,4})?((\/[0-9a-zA-Z_!~*\'().;?:@&=+$,%#-]*)*))/';
+    $aMatches = [];
+    preg_match_all($sRegex, $sText, $aMatches, PREG_SET_ORDER);
 
     // Reverse the matches to mimic JavaScript's reverse order processing
-    $matches = array_reverse($matches);
+    $aMatches = array_reverse($aMatches);
+
+    $sUrlRoot = BX_DOL_URL_ROOT;
+    $sUrlRootApi = bx_api_get_base_url();
+
     $sLink = '';
-    foreach ($matches as $match) {
-        // Assuming APP_URL and UNA_URL are defined constants
-        if (!strstr($match[0], 'https://ci.una.io/') && !strstr($match[0], 'https://ci.una.io/')) {
-            $sLink = $match[0]; // Returns the first URL that doesn't include the restricted domains
+    foreach($aMatches as $aMatch) {
+        if(!strstr($aMatch[0], $sUrlRoot) && ($sUrlRootApi === false || !strstr($aMatch[0], $sUrlRootApi))) {
+            $sLink = $aMatch[0]; // Returns the first URL that doesn't include the restricted domains
         }
     }
-    
-    $text = '';
-    if ($sLink){
+
+    $sResult = '';
+    if($sLink) {
         bx_import('BxDolEmbed');
-        $oEmbed = BxDolEmbed::getObjectInstance('sys_system');
-        $text = $oEmbed->getHtml($sLink, '');
+        if(($oEmbed = BxDolEmbed::getObjectInstance('sys_system')) !== false)
+            $sResult = $oEmbed->getLinkHTML($sLink);
     }
-    
-    return $text;
+
+    return $sResult;
 }
 
 /**
@@ -2550,6 +2587,17 @@ function bx_api_check_access()
     // check_logged();
 }
 
+function bx_api_get_base_url()
+{
+    if(($sResult = getParam('sys_api_url_root_email')) != '')
+        return $sResult;
+
+    if(($sResult = getParam('sys_api_url_root_push')) != '')
+        return $sResult;
+
+    return false;
+}
+    
 function bx_api_get_relative_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
 {
     return '/' . bx_ltrim_str($sUrl, $sPrefix);

@@ -111,27 +111,24 @@ BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
         var oParent = oCmtForm.parents('.cmt-reply:first');
 
         if(oData && oData.id != undefined) {
-            var iCmtId = parseInt(oData.id);
-            if(iCmtId > 0) {
-                $this._getCmt(oCmtForm, iCmtId);
+            $this._getCmt(oCmtForm, oData.id);
 
-                //--- Update form
-                var iCmtParentId = parseInt(oData.parent_id);
-                if(iCmtParentId == 0)
-                    $this._getForm(undefined, {CmtParent: iCmtParentId}, function(sFormWrp) {
-                        if(sFormWrp && sFormWrp.length > 0)
-                            sFormWrp = $(sFormWrp).html();
+            //--- Update form
+            var iCmtParentId = parseInt(oData.parent_id);
+            if(iCmtParentId == 0)
+                $this._getForm(undefined, {CmtParent: iCmtParentId}, function(sFormWrp) {
+                    if(sFormWrp && sFormWrp.length > 0)
+                        sFormWrp = $(sFormWrp).html();
 
-                        oParent.hide().html(sFormWrp).bxProcessHtml().show();
+                    oParent.hide().html(sFormWrp).bxProcessHtml().show();
 
-                        $this.cmtInitFormPost(oParent.find('form'));
-                    });
-                else
-                    oParent.remove();
+                    $this.cmtInitFormPost(oParent.find('form'));
+                });
+            else
+                oParent.remove();
 
-                //--- Update counter
-                $this.cmtUpdateCounter(oCmtForm, oData);
-            }
+            //--- Update counter
+            $this.cmtUpdateCounter(oCmtForm, oData);
 
             return;
         }
@@ -938,15 +935,17 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
                     var oAdded = null;
                     switch($this._sPostFormPosition) {
                         case 'top':
-                            oAdded = $(this).children('li.cmt:first').before($(oData.content).hide()).prev('li.cmt:hidden');
+                            oAdded = $(this).children('li.cmt:first').before($(oData.content).hide()).prevAll('li.cmt:hidden');
                             break;
 
                         case 'bottom':
-                            oAdded = $(this).children('li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden');
+                            oAdded = $(this).children('li.cmt:last').after($(oData.content).hide()).nextAll('li.cmt:hidden');
                             break;
                     }
 
-                    oAdded.bxProcessHtml().bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+                    oAdded.each(function() {
+                        $(this).bxProcessHtml().bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+                    });
                 }
                 //-- There is no comments at all ---//
                 else

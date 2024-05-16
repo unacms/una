@@ -109,7 +109,7 @@ class BxBaseRecommendation extends BxDolRecommendation
             'per_page' => count($aParams['validate'])
         ]));
 
-        return array_keys($aItems) == $aParams['validate'] ? 'valid' : 'invalid';
+        return sort(array_keys($aItems)) == sort($aParams['validate']) ? 'valid' : 'invalid';
     }
 }
 

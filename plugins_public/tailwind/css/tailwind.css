@@ -587,7 +587,7 @@
         @apply gap-y-4 lg:gap-y-6;
     }
     .bx-def-color-bg-page{
-	    @apply bg-gray-100 dark:bg-gray-900;
+        @apply bg-gray-100 dark:bg-gray-900;
     }
 
     /* Common elements: Blocks, Boxes, etc. */
@@ -613,7 +613,7 @@
     .bx-def-border-radius-block,
     .bx-def-box-round-corners,
     .bx-popup-border {
-        @apply rounded-md;
+        @apply rounded-xl;
     }
     .bx-content-padding-block {
         @apply p-3 md:p-4;
@@ -770,14 +770,18 @@
     }
 
     .bx-form-section.bx-form-section-header {
-        @apply border border-gray-200 dark:border-gray-900 rounded-2xl;
+        @apply border border-gray-300 dark:border-gray-900 rounded-2xl;
+        @apply bg-gray-100 dark:bg-gray-800;
         @apply overflow-hidden;
     }
     .bx-form-section.bx-form-section-header .bx-form-section-title:hover {
-        @apply bg-gray-100 dark:bg-gray-900;
+        @apply bg-white dark:bg-gray-900 bg-gradient-to-b from-gray-100 dark:from-gray-800;
     }
-    .bx-form-section.bx-form-section-header:not(.bx-form-collapsed) .bx-form-section-title {
-        @apply bg-gray-100 dark:bg-gray-900;
+    .bx-form-section.bx-form-section-header:not(.bx-form-collapsed) {
+        @apply bg-white dark:bg-gray-900;
+    }
+    .bx-form-section.bx-form-section-header .bx-form-section-content {
+        @apply bg-white dark:bg-gray-900;
     }
 
     /* Common elements: Forms: Text Input */
@@ -825,7 +829,7 @@
     /* Common elements: Forms: Checkbox Input */
     .bx-form-input-wrapper-checkbox,
     .bx-form-input-wrapper-radio {
-        @apply block w-4 h-4;
+        @apply block w-5 h-5 m-0.5;
         @apply border-2 border-transparent;
     }
 
@@ -909,7 +913,7 @@
     }
 
     .bx-artificer .bx-popup-border {
-        @apply ring-1 ring-gray-300 dark:ring-gray-700 rounded-md;
+        @apply m-px ring-1 ring-gray-300 dark:ring-gray-700 rounded-xl;
     }
 
     .bx-artificer .bx-popup-width {
@@ -943,7 +947,6 @@
         @apply hover:text-gray-800 dark:hover:text-gray-200;
     }
     .bx-stl-mil-hover-bg {
-        @apply hover:border-gray-200/50 dark:hover:border-gray-700/50;
         @apply hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
     }
     .bx-stl-mil-hover {
@@ -1105,7 +1108,7 @@
         @apply border-4 border-transparent;
     }
     .bx-artificer .bx-menu-toolbar .bx-menu-toolbar-item .bx-menu-toolbar-item-unit .bx-def-icon-size {
-        @apply h-6 w-6 md:h-8 md:w-8;
+        @apply h-8 w-8;
     }
 
     /* Common elements: Page Submenu */
@@ -1234,7 +1237,12 @@
         @apply text-gray-300 dark:text-gray-700;
     }
 
-    /* Studio */    
+    /* Studio */
+    .bx-std.bx-def-font,
+    .bx-std .bx-def-font-inputs {
+        @apply font-inter;
+    }
+
     .bx-std #bx-std-pcap-menu-popup-help .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-actions .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-account .bx-popup,
@@ -1243,13 +1251,22 @@
     }
 
     .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
-        @apply ring ring-blue-600 ring-offset-2 ring-offset-black;
+        @apply ring-4 ring-blue-800 ring-offset-4 ring-offset-black;
     }
-    
+    .bx-std .bx-menu-top-center .bx-menu-item-static,
+    .bx-std .bx-menu-top-center .bx-menu-item-dynamic {
+        @apply hidden md:flex;
+    }
+
     .bx-std .bx-stg-icon-gray-bg {
         @apply h-8 w-8;
         @apply bg-gray-200 bg-no-repeat bg-center;
         @apply rounded-lg;
+    }
+
+    /* Studio: Launcher */
+    .bx-std-widgets .bx-std-widget {
+        @apply px-6 pt-6 pb-3 sm:px-10 sm:pt-10 sm:pb-4;
     }
 
 

@@ -5,6 +5,19 @@
  */
 
 /**
+ * @mainpage UNA Abstracts
+ * - @subpage objects Objects
+ * - @subpage service Service Calls
+ * - @subpage hook Alerts(hooks)
+ */
+
+/**
+ * @defgroup UnaModules UNA Modules
+ * @{
+ * @}
+ */
+
+/**
  * @page objects Objects
  * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms.
  *
@@ -118,6 +131,11 @@
 /**
  * @page service Service Calls
  * Service calls
+ */
+
+/**
+ * @page hook Alerts(hooks)
+ * Alerts(hooks) allow to inject custiom code into various functionality.
  */
 
 /**

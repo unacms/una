@@ -209,6 +209,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected $_iRememberTime = 2592000;
 
+    protected $_bLiveUpdates = true;
+
     /**
      * Constructor
      * $sSystem - comments system name

@@ -761,12 +761,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
             return '';
 
-        if($this->_bIsApi)
+        self::$_aMemoryCacheItemsData[$sMemoryCacheItemsKey] = $aEvent;
+        
+        if($this->_bIsApi){
+            self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = 'OK';
             return 'OK';
+        }
 
         self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = $this->_getPost($aEvent['content_type'], $aEvent, $aBrowseParams);
-        self::$_aMemoryCacheItemsData[$sMemoryCacheItemsKey] = $aEvent;
-
         return self::$_aMemoryCacheItems[$sMemoryCacheItemsKey];
     }
 
@@ -1959,7 +1961,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $sMethodPrepare .= 'BriefCard';
 
             $aEvent['content']['text'] = $this->$sMethodPrepare($aEvent['content']['text'], $aEvent['id']);
-            $aEvent['content']['embed'] = bx_linkify_embeded($aEvent['content']['text']);
+            if (!empty($aEvent['content']['links']) && is_array($aEvent['content']['links'])) {
+                bx_import('BxDolEmbed');
+                if(($oEmbed = BxDolEmbed::getObjectInstance('sys_system')) !== false)
+                    $aEvent['content']['embed'] = $oEmbed->getLinkHTML(current($aEvent['content']['links'])['url']);
+            }
+
+            if ($aEvent['content']['embed'] == '')
+                $aEvent['content']['embed'] = bx_linkify_embeded($aEvent['content']['text']);
         }
 
         if(empty($aEventAdd['menu_actions'])) {

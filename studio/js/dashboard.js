@@ -38,7 +38,8 @@ BxDolStudioDashboard.prototype.checkForUpgrade = function() {
             if(!oData.data)
                 return;
 
-            $('#' + sDivId + ' .bx-dbd-version-available b').html(oData.data.version).parents('.bx-dbd-version-available:hidden').show();
+            if(oData.data.version != undefined && oData.data.version.length > 0)
+                $('#' + sDivId + ' .bx-dbd-version-available b').html(oData.data.version).parents('.bx-dbd-version-available:hidden').show();
 
             if(oData.data.upgrade != undefined && parseInt(oData.data.upgrade) == 1)
                 $('#' + sDivId + ' .bx-dbd-block-actions').show()
@@ -194,36 +195,34 @@ BxDolStudioDashboard.prototype.serverAudit = function() {
 };
 
 BxDolStudioDashboard.prototype.hostTools = function(sAction) {
-	var $this = this;
-	var oDate = new Date();
-	var sDivId = 'bx-dbd-htools';
+    var $this = this;
+    var oDate = new Date();
+    var sDivId = 'bx-dbd-htools';
 
-	$('#' + sDivId).parents('.bx-page-block-container').find('.bx-db-header .bx-popup-applied:visible').dolPopupHide();
+    bx_loading(sDivId, true);
 
-	bx_loading(sDivId, true);
+    $.get(
+        this.sActionsUrl,
+        {
+            dbd_action: sAction,
+            _t: oDate.getTime()
+        },
+        function(sData) {
+            bx_loading(sDivId, false);
 
-	$.get(
-		this.sActionsUrl,
-		{
-			dbd_action: sAction,
-			_t: oDate.getTime()
-		},
-		function(sData) {
-			bx_loading(sDivId, false);
+            if(!sData.length)
+                return;
 
-			if(!sData.length)
-			    return;
-
-			$('#' + sDivId).hide().html(sData).bx_anim('show', 'fade', 'slow', function() {
-				$(this).bxProcessHtml();
-			});
-		},
-		'html'
-	);
+            $('#' + sDivId + ' .bx-dbd-block-content').hide().html(sData).bx_anim('show', 'fade', 'slow', function() {
+                $(this).bxProcessHtml();
+            });
+        },
+        'html'
+    );
 };
 
 BxDolStudioDashboard.prototype.popup = function(sValue) {
-	var sId = 'bx-std-dbd-popup';
+    var sId = 'bx-std-dbd-popup';
 
     $('#' + sId).remove();
     $('<div id="' + sId + '" style="display: none;"></div>').prependTo('body').html(sValue);

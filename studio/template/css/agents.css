@@ -1,0 +1,18 @@
+/**--- Automators ---**/
+.cmt .bx-menu-custom.bx-menu-custom-hor > li > span {
+    margin-right: 0;
+}
+.cmt .bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
+  display: none;
+}
+.bx-def-vanilla-html pre,
+.cmt-body.bx-def-vanilla-html pre{
+    max-height: 20rem;
+
+    border-width: 0;
+    border-radius: 0.375rem;
+
+    background-color: #1f2937;
+
+    color: #e5e7eb;
+}

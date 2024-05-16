@@ -293,7 +293,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
                 ]
             ],
             'bx_if:show_clicked_indicator' => [
-                'condition' => $bClickedIndicator && (int)$aEvent['clicked'] == 0,
+                'condition' => $bClickedIndicator && (!isset($aEvent['clicked']) || (int)$aEvent['clicked'] == 0),
                 'content' => []
             ],
         ));

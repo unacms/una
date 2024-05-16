@@ -1289,6 +1289,26 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetOptionsAgentsProfile($bSelectOne = true)
+    {
+        $aResult = [];
+        if($bSelectOne)
+            $aResult[] = ['key' => '', 'value' => _t('_Select_one')];
+
+        $aAccountsIds = BxDolAccountQuery::getInstance()->getOperators();
+        foreach($aAccountsIds as $iAccountId) {
+            $aProfilesIds = BxDolAccount::getInstance($iAccountId)->getProfilesIds(true, false);
+            foreach($aProfilesIds as $iProfileId)
+                if(($oProfile = BxDolProfile::getInstance($iProfileId)) !== false && ($sProfileModule = $oProfile->getModule()) != 'system')
+                    $aResult[] = [
+                        'key' => $iProfileId,
+                        'value' => _t('_sys_profile_with_type', $oProfile->getDisplayName(), _t('_' . $sProfileModule))
+                    ];
+        }
+
+        return $aResult;
+    }
+
     public function serviceRedirect($sUrl = false)
     {
         if (!getParam('sys_confirmation_before_redirect')) {

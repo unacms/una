@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    UnaCore UNA Core
+ * @defgroup    UnaCoreFunctions UNA Core Functions
  * @{
  */
 
@@ -127,6 +127,16 @@ function bx_login($iId, $bRememberMe = false)
             BxDolRecommendation::updateData($iProfileId);
     }
 
+    /**
+     * @hooks
+     * @hookdef hook-account-login 'account', 'login' - hook after user performed login
+     * - $unit_name - equals `system`
+     * - $action - equals `login` 
+     * - $object_id - account id 
+     * - $sender_id - not used 
+     * - $extra_params - not used
+     * @hook @ref hook-account-login
+     */
     bx_alert('account', 'login',  $iId);
 
     bx_audit($iId, 'bx_accounts', '_sys_audit_action_account_login',  array(
@@ -239,6 +249,7 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
 		if (bx_is_api()){
             return [strip_tags(_t("_sys_txt_login_locked", bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))),''), bx_api_get_relative_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))];
         }
+        return _t("_sys_txt_login_locked", bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')));
 	}
 
     $aAccountInfo = $oAccount->getInfo();

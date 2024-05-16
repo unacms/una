@@ -2793,16 +2793,39 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetRepostElementBlockApi($iOwnerId, $sType, $sAction, $iObjectId, $aParams = [])
     {
-        if(!bx_is_api())
-            return;
+        if(!$this->_bIsApi || !$this->isEnabled())
+            return [];
 
-        //TODO: Implement the functionality here.
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        if(empty($aReposted) || !is_array($aReposted))
+            return [];
+        
+        $aParams = array_merge($this->_oConfig->getRepostDefaults(), $aParams);
 
-        $sClass = get_class($this);
+        $bPerformed = $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $this->getUserId());
+        $bDisabled = $this->isAllowedRepost($aReposted) !== true;
+
+        $sDo = isset($aParams['do']) ? $aParams['do'] : 'repost';
+
         return [
-            'display_type' => 'element',
-            'name' => md5($sClass),
-            'title' => get_class($this)
+            'type' => 'reposts',
+            'system' => $sType . (!empty($sAction) ? '_' . $sAction : ''),
+            'object_id' => $iObjectId,
+            'params' => $aParams,
+            'action' => [
+                'is_undo' => false,
+                'is_performed' => $bPerformed,
+                'is_disabled' => $bDisabled || $bPerformed,
+                'title' => _t($aParams['text_do_' . $sDo]),
+                'data' => [
+                    'author_id' => $iOwnerId,
+                    'owner_id' => $iOwnerId,
+                    'type' => $sType,
+                    'action' => $sAction,
+                    'object_id' => $iObjectId
+                ]
+            ],
+            'counter' => []
         ];
     }
 
@@ -2976,8 +2999,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceRepost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $bForce = false)
     {
         $mixedResult = $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, false, $bForce);
-        if(bx_is_api() && !is_array($mixedResult))
-            $mixedResult = ['code' => 0, 'id' => $mixedResult];
+        if($this->_bIsApi && !is_array($mixedResult))
+            $mixedResult = [
+                'code' => 0, 
+                'id' => $mixedResult,
+                'performer_id' => $iAuthorId,
+                'is_performed' => true,
+                'is_disabled' => true,
+                'counter' => []
+            ];
 
         return $mixedResult;
     }
@@ -3096,6 +3126,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         if(empty($iId))
             return array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost'));
+
+        $this->_oDb->updateEvent([
+            'source' => $this->getName() . '_' . $iAuthorId . '_' . $iId
+        ], ['id' => $iId]);
 
         $this->onRepost($iId, $aReposted);
 
@@ -5310,17 +5344,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!empty($aParams['validate']) && is_array($aParams['validate'])) {
             $iSlice = count($aParams['validate']);
 
-            $aEvents = $this->_oDb->getEvents(array_merge($aParams, [
+            $aEventsIds = $this->_oDb->getEvents(array_merge($aParams, [
                 'start' => 0,
                 'per_page' => 2 * $iSlice,
                 'from_cache' => $this->_oConfig->isCacheTable()
             ]));
 
-            $aIds = array_map(function($aEvent) {
-                return $aEvent['id'];
-            }, $aEvents);
+            $iIds = 0;
+            $aIds = [];
+            foreach($aEventsIds as $aEventId) {
+                $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => (int)$aEventId['id']]);
+                if(empty($aEvent) || !is_array($aEvent))
+                    continue;
 
-            $aResult = array_slice($aIds, 0, $iSlice) == $aParams['validate'] ? 'valid' : 'invalid';
+                $sEvent = $this->_oTemplate->getPost($aEvent, $aParams);
+                if(empty($sEvent))
+                    continue;
+
+                $aIds[] = $aEvent['id'];
+                if(++$iIds == $iSlice)
+                    break;
+            }
+
+            $aResult = sort($aIds) == sort($aParams['validate']) ? 'valid' : 'invalid';
         }
         else 
             $aResult = $this->_oTemplate->getViewBlock($aParams);

@@ -151,8 +151,16 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
     {
         if (!$this->isAllowManageByContext($iContextId))
             return;
-        
-        $this->_oDb->deleteList($iId);  
+
+        $CNF = &$this->_oConfig->CNF;
+
+        $aTasks = $this->_oDb->getTasks($iContextId, $iId);
+        $this->_oDb->deleteList($iId);
+        if (!empty($aTasks) && ($oConn = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTION']))) {
+            foreach ($aTasks as &$aTask)
+                $oConn->onDeleteContent($aTask[$CNF['FIELD_ID']]);
+        }
+
         echoJson(array(
             'context_id' => $iContextId,
         ));

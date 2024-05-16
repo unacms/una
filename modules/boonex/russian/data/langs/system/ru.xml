@@ -19,11 +19,13 @@
 	<string name="_Are_you_sure"><![CDATA[Вы уверены?]]></string>
 	<string name="_Auth type"><![CDATA[Тип авторизации]]></string>
 	<string name="_Basic"><![CDATA[Базовая]]></string>
+        <string name="_by_author"><![CDATA[от]]></string>
 	<string name="_CONTACT_H"><![CDATA[Написать нам]]></string>
 	<string name="_CONTACT_H1"><![CDATA[Написать]]></string>
 	<string name="_Can not delete comments with replies"><![CDATA[Невозможно удалить комментарии с ответами]]></string>
 	<string name="_Cancel"><![CDATA[Отменить]]></string>
 	<string name="_Content"><![CDATA[Содержимое]]></string>
+        <string name="_Contents"><![CDATA[Содержание]]></string>
 	<string name="_Count"><![CDATA[Счётчик]]></string>
 	<string name="_DELETE_SUCCESS"><![CDATA[Ваш аккаунт был удачно удалён]]></string>
 	<string name="_DELETE_TEXT"><![CDATA[Всё Ваше содержимое будет удалено. Вы уверены, что ходите удалить свой аккаунт?]]></string>
@@ -1087,6 +1089,7 @@
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Удалить "{0}" язык?</h3><p>Удаление "{0}" языка также удалит все его данные. Вы хотите продолжить?</p>]]></string>
     <string name="_adm_lmi_cpt_actions"><![CDATA[Действия]]></string>
     <string name="_adm_lmi_cpt_api_config"><![CDATA[Конфигурация]]></string>
+    <string name="_adm_lmi_cpt_automators"><![CDATA[Автоматизаторы]]></string>
     <string name="_adm_lmi_cpt_badges"><![CDATA[Бейджи]]></string>
     <string name="_adm_lmi_cpt_categories"><![CDATA[Категории]]></string>
     <string name="_adm_lmi_cpt_checkout"><![CDATA[Оплата {checkout_counter}]]></string>
@@ -1278,6 +1281,7 @@
         <string name="_adm_nav_txt_block_hidden_on_col_wide"><![CDATA[Широкая]]></string>
         <string name="_adm_nav_txt_block_hidden_on_col_full"><![CDATA[Полная]]></string>
         <string name="_adm_page_cpt_api"><![CDATA[API]]></string>
+        <string name="_adm_page_cpt_agents"><![CDATA[Агенты]]></string>
         <string name="_adm_page_cpt_audit"><![CDATA[Аудит]]></string>
         <string name="_adm_page_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Формы]]></string>
@@ -1555,7 +1559,6 @@
     <string name="_adm_stg_cpt_option_sys_accounts_force_password_change_after_expiration"><![CDATA[Принудительная смена пароля после истечения срока действия пароля]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Заблокировать сайт от неавторизованных пользователей]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Cписок URI страниц (разделенный запятыми), которые доступны для неавторизованных пользователей]]></string>
-    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[Не удалять]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_delete"><![CDATA[Удалить учетные записи без входа в течение N дней]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_suspend"><![CDATA[Приостановить учетные записи без входа в систему на N дней]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_confirm_delete"><![CDATA[Удалить учетные записи, которые не подтверждали электронную почту в течение N дней]]></string>
@@ -1730,6 +1733,8 @@
     <string name="_adm_stg_cpt_option_sys_api_conn_in_prof_units"><![CDATA[Использовать списки связей в блоках профилей/групп.]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_email"><![CDATA[Основной URL-адрес сайта в уведомлениях по электронной почте]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_push"><![CDATA[Основной URL-адрес сайта в push-уведомлениях]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_url"><![CDATA[URL конечной точки]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Профиль]]></string>   
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Метатег области просмотра]]></string>
 
     <string name="_adm_stg_cpt_category_pwa_manifest"><![CDATA[Manifest]]></string>
@@ -1760,7 +1765,7 @@
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Студия: Показывать ссылку 'сайт' в заголовке]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Студия: Показать левую область с меню в лаунчере]]></string>
     
-    <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
+    <string name="_adm_stg_cpt_type_system"><![CDATA[Глобальные]]></string>
     <string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
     <string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
     <string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
@@ -1922,6 +1927,7 @@
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Помошь недоступна]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Демонтировать]]></string>
         <string name="_adm_wgt_cpt_api"><![CDATA[API]]></string>
+        <string name="_adm_wgt_cpt_agents"><![CDATA[Агенты]]></string>
         <string name="_adm_wgt_cpt_audit"><![CDATA[Аудит]]></string>
         <string name="_adm_wgt_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Формы]]></string>
@@ -2094,6 +2100,44 @@
 	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>
         <string name="_sys_acl_state"><![CDATA[Состояние: ]]></string>
         <string name="_sys_acl_state_trial"><![CDATA[Пробный]]></string>
+
+        <string name="_sys_agents_automators_txt_active"><![CDATA[Активный]]></string>
+        <string name="_sys_agents_automators_txt_type"><![CDATA[Тип]]></string>
+        <string name="_sys_agents_automators_txt_alert_unit"><![CDATA[Тип события]]></string>
+        <string name="_sys_agents_automators_txt_alert_action"><![CDATA[Действие события]]></string>
+        <string name="_sys_agents_automators_txt_scheduler_time"><![CDATA[Время для планировщика]]></string>
+        <string name="_sys_agents_automators_txt_model_id"><![CDATA[Модель]]></string>
+        <string name="_sys_agents_automators_txt_profile_id"><![CDATA[Профиль]]></string>
+        <string name="_sys_agents_automators_txt_message_id"><![CDATA[Инструкции]]></string>
+        <string name="_sys_agents_automators_txt_messages"><![CDATA[Сообщения]]></string>
+        <string name="_sys_agents_automators_txt_code"><![CDATA[Код]]></string>
+        <string name="_sys_agents_automators_txt_added"><![CDATA[Добавлено]]></string>
+        <string name="_sys_agents_automators_txt_status"><![CDATA[Статус]]></string>
+        <string name="_sys_agents_automators_btn_add"><![CDATA[Добавить]]></string>
+        <string name="_sys_agents_automators_btn_tune"><![CDATA[Настройка]]></string>
+        <string name="_sys_agents_automators_btn_approve"><![CDATA[Одобрить]]></string>
+        <string name="_sys_agents_automators_popup_add"><![CDATA[Добавить автоматизатор]]></string>
+        <string name="_sys_agents_automators_popup_edit"><![CDATA[Редактировать автоматизатор]]></string>
+        <string name="_sys_agents_automators_field_model_id"><![CDATA[Модель]]></string>
+        <string name="_sys_agents_automators_field_profile_id"><![CDATA[Профиль]]></string>
+        <string name="_sys_agents_automators_field_profile_id_inf"><![CDATA[Оставьте пустым, чтобы использовать значение по умолчанию.]]></string>
+        <string name="_sys_agents_automators_field_type"><![CDATA[Тип]]></string>
+        <string name="_sys_agents_automators_field_type_event"><![CDATA[Событие]]></string>
+        <string name="_sys_agents_automators_field_type_scheduler"><![CDATA[Планировщик]]></string>
+        <string name="_sys_agents_automators_field_type_webhook"><![CDATA[Вебхук]]></string>
+        <string name="_sys_agents_automators_field_alert_unit"><![CDATA[Тип события]]></string>
+        <string name="_sys_agents_automators_field_alert_action"><![CDATA[Действие события]]></string>
+        <string name="_sys_agents_automators_field_scheduler_time"><![CDATA[Время для планировщика]]></string>
+        <string name="_sys_agents_automators_field_message"><![CDATA[Инструкции]]></string>
+        <string name="_sys_agents_automators_field_status_auto"><![CDATA[Авто]]></string>
+        <string name="_sys_agents_automators_field_status_manual"><![CDATA[Ручной]]></string>
+        <string name="_sys_agents_automators_field_status_ready"><![CDATA[Готовый]]></string>
+        <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Событие не найдено. Перефразируйте запрос.]]></string>
+        <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Невозможно сгенерировать код. Перефразируйте запрос.]]></string>
+        <string name=""><![CDATA[]]></string>
+        <string name=""><![CDATA[]]></string>
+        <string name=""><![CDATA[]]></string>
+        <string name=""><![CDATA[]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Информация]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Контент изменен]]></string>
@@ -2435,6 +2479,8 @@
 	<string name="_sys_file_handlers_google_viewer"><![CDATA[Google просмотрщик]]></string>
 	<string name="_sys_file_handlers_images_viewer"><![CDATA[Просмотр изображений]]></string>
 	<string name="_sys_file_handlers_code_viewer"><![CDATA[Просмотр програмного кода]]></string>
+        <string name="_sys_file_handlers_sounds_viewer"><![CDATA[Звуковой плеер]]></string>
+        <string name="_sys_file_handlers_videos_viewer"><![CDATA[Видео плеер]]></string>
 	<string name="_sys_form_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
 	<string name="_sys_form_account_input_agreement_value"><![CDATA[Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.]]></string>
@@ -3140,6 +3186,7 @@
     <string name="_sys_menu_template_title_main_submenu_more_auto"><![CDATA[Навигация по сайту - Подменю (перестраиваемое)]]></string>
     <string name="_sys_menu_template_title_panel"><![CDATA[Панель сайта - Меню]]></string>
     <string name="_sys_menu_template_title_main_in_panel"><![CDATA[Навигация по сайту - Панель]]></string>
+    <string name="_sys_menu_template_title_multilevel"><![CDATA[Многоуровневое меню]]></string>
     <string name="_sys_menu_template_title_toolbar"><![CDATA[Панель инструментов - Кнопки]]></string>
     <string name="_sys_menu_template_title_ver"><![CDATA[Вертикальные ссылки]]></string>
     <string name="_sys_menu_template_title_ver_lite"><![CDATA[Вертикальные ссылки (облегчённые)]]></string>
@@ -3809,7 +3856,7 @@
 	<string name="_view_n_views"><![CDATA[{0} просмотров]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Нравится]]></string>
-	<string name="_vote_do_unlike"><![CDATA[Не нравится]]></string>
+	<string name="_vote_do_unlike"><![CDATA[Нравится]]></string>
 	<string name="_vote_do_by"><![CDATA[Проголосовали]]></string>
         <string name="_vote_do_by_reactions"><![CDATA[Отреагировали]]></string>
         <string name="_vote_do_by_x_reaction"><![CDATA["{0}" от]]></string>

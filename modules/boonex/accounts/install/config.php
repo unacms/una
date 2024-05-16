@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_accounts',
     'title' => 'Accounts Manager',
     'note' => 'Accounts Manager module.',
-    'version' => '13.0.8.DEV',
-    'vendor' => 'BoonEx',
+    'version' => '14.0.1.DEV',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '14.0.x'
     ),
 
     /**

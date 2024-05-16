@@ -31,6 +31,18 @@ class BxTasksFormsEntryHelper extends BxBaseModTextFormsEntryHelper
             'profile_id' => bx_get_logged_profile_id(),
         ));
     }
+
+    public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
+    {
+        $s = parent::onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile);
+        if(!empty($s))
+            return $s;
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
+        $oConnection->onDeleteContent($iContentId);
+        return '';
+    }
 }
 
 /** @} */

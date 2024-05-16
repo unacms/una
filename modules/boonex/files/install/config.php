@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_files',
     'title' => 'Files',
     'note' => 'Basic blogging module.',
-    'version' => '14.0.2.DEV',
+    'version' => '14.0.3.DEV',
     'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
@@ -67,8 +67,15 @@ $aConfig = array(
      * Transcoders.
      */
     'transcoders' => array(
-		'bx_files_preview',
+        'bx_files_preview',
         'bx_files_gallery',
+
+        'bx_files_sounds_mp3',
+
+        'bx_files_videos_poster',
+        'bx_files_videos_poster_preview',
+        'bx_files_videos_mp4',
+        'bx_files_videos_mp4_hd'
     ),
 
 	/**

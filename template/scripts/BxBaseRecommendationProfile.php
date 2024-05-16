@@ -24,7 +24,7 @@ class BxBaseRecommendationProfile extends BxDolRecommendationProfile
     {
         $oProfile = BxDolProfile::getInstance($iId);
         if(!$oProfile)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return $oProfile->{'getUnit' . ($this->_bIsApi ? 'API' : '')}(0, [
             'template' => 'unit_with_cover', 
