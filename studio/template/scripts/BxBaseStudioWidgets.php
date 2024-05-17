@@ -104,6 +104,7 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
 
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
         $oTopMenu->setPageName($this->aPage['name']);
+        $oTopMenu->setContent(BX_DOL_STUDIO_MT_LEFT, $this->getPageBreadcrumb());
         $oTopMenu->setContent(BX_DOL_STUDIO_MT_RIGHT, $aItemsRight);
 
         return '';

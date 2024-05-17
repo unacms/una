@@ -31,7 +31,8 @@ div.bx-std-page-column.bx-std-page-menu {
     width: 20rem;
     height: 100%;
 
-    background-color: #ffffff;
+    border-right: 1px solid rgb(209, 213, 219);
+    background-color: rgb(229, 231, 235);
 
     overflow-y: auto;
 }
@@ -63,5 +64,5 @@ div.bx-std-page-column.bx-std-page-content::-webkit-scrollbar {
 div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     width: 100%;
     height: max-content;
-    padding: 6.5rem 1.5rem  1.5rem  1.5rem;
+    padding: 6.0rem 1.0rem  1.0rem  1.0rem;
 }

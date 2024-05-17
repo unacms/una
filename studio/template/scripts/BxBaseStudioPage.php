@@ -109,36 +109,39 @@ class BxBaseStudioPage extends BxDolStudioPage
 
         $this->addMarkers($aMarkers);
 
-        $aMenuItems = array(
-            'home' => array(
+        $aMenuItems = [];
+        if($this->aPage['name'] != 'home')
+            $aMenuItems['home'] = [
                 'name' => 'home',
                 'icon' => 'bc-home.svg',
-                'link' => 'javascript:void(0)',
-                'onclick' => bx_replace_markers('return {js_object_launcher}.browser(this)', $this->aMarkers),
+                'link' => BX_DOL_URL_STUDIO,
+                //'onclick' => bx_replace_markers('return {js_object_launcher}.browser(this)', $this->aMarkers),
                 'title' => ''
-            )
-        );
+            ];
 
-        if($bWidgetType)
-            $aMenuItems['type'] = array(
+        /**
+         * Hidden for now.
+         */
+        if(false && $bWidgetType)
+            $aMenuItems['type'] = [
                 'name' => 'type',
                 'icon' => $this->getPageTypeIcon(),
                 'link' => $this->getPageTypeUrl(),
                 'onclick' => bx_replace_markers("return {js_object_launcher}.browser(this, '{widget_type}')", $this->aMarkers),
                 'title' => ''
-            );
+            ];
 
-        $aMenuItems['page'] = array(
+        $aMenuItems['page'] = [
             'name' => 'page',
             'icon' => $this->aPage['icon'],
             'link' => $this->getPageUrl(),
             'title' => _t($this->aPage['caption'])
-        );       
+        ];
 
-        $oMenu = new BxTemplStudioMenu(array(
+        $oMenu = new BxTemplStudioMenu([
             'template' => 'page_breadcrumb.html',
             'menu_items' => $aMenuItems
-        ));
+        ]);
 
         return $oMenu->getCode();
     }

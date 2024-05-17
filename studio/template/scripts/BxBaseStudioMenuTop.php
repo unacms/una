@@ -51,7 +51,7 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop
                 ));
 
                 $sContent = $oMenu->getCode();
-                if($sPosition == BX_DOL_STUDIO_MT_CENTER) {
+                if($sPosition == BX_DOL_STUDIO_MT_RIGHT) {
                     $sContent = $oTemplate->parseHtmlByContent($sContent, [
                         'bx_if:show_search' => [
                             'condition' => $this->sPageName == 'home' && getParam('sys_std_show_header_right_search') == 'on',
