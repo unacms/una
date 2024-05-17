@@ -33,7 +33,7 @@ BxDolVoteReactions.prototype.init = function()
 
     var $this = this;
     var bMobile = bx_check_mq() == 'mobile';
-
+    
     if(!this._bQuickMode || !bMobile)
         $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).hover(function() {
             $this.onVoteIn(this);
@@ -113,8 +113,9 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
         if(oData && oData.disabled)
             $(this).removeAttr('onclick').addClass($(this).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-vote-disabled');
-        else
-            $(this).toggleClass($this._sClassDoVoted);
+
+        if(oData && oData.voted != undefined)
+            $(this).toggleClass($this._sClassDoVoted, oData.voted);
     });
 
     //--- Update Counter.
@@ -172,6 +173,9 @@ BxDolVoteReactions.prototype.onVoteOut = function(oLink)
 
 BxDolVoteReactions.prototype.onTouch = function(oLink)
 {
+    if($(oLink).hasClass(this._sClassDoVoted))
+        return;
+
     var oPopup = this.getDoPopup();
     if(oPopup !== false)
         return;
@@ -288,13 +292,14 @@ BxDolVoteReactions.prototype._getCounter = function(oElement)
 (function($) {
     $.fn.onLongTouch = function(fCallback) {
         return this.each(function() {
-            var iTimeoutId;
+            var oSource = this;
+            var iTimeoutId = null;
 
             this.addEventListener('touchstart', function(e) {
                 iTimeoutId = setTimeout(function() {
                     iTimeoutId = null;
                     e.stopPropagation();
-                    fCallback(e.target);
+                    fCallback(oSource);
                 }, 500);
             });
 
@@ -302,12 +307,12 @@ BxDolVoteReactions.prototype._getCounter = function(oElement)
                 e.preventDefault();
             });
 
-            this.addEventListener('touchend', function () {
+            this.addEventListener('touchend', function() {
                 if(iTimeoutId) 
                     clearTimeout(iTimeoutId);
             });
 
-            this.addEventListener('touchmove', function () {
+            this.addEventListener('touchmove', function() {
                 if(iTimeoutId) 
                     clearTimeout(iTimeoutId);
             });
