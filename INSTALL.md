@@ -51,13 +51,13 @@ copy the instruction below
 chmod +x ./plugins/ffmpeg/ffmpeg.exe
 
 # Set permissions for the specified directories
-chmod 755 ./inc
-chmod 755 ./cache
-chmod 755 ./cache_public
-chmod 755 ./logs
-chmod 755 ./tmp
-chmod 755 ./storage
-chmod 755 ./periodic
+chmod 777 ./inc
+chmod 777 ./cache
+chmod 777 ./cache_public
+chmod 777 ./logs
+chmod 777 ./tmp
+chmod 777 ./storage
+chmod 777 ./periodic
 
 ```
 
@@ -94,3 +94,6 @@ This command will start the Docker containers according to the specifications in
 
 
 This guide details the steps to download Composer using Docker, install PHP dependencies using Composer, and run the application using Docker Compose. The `INSTALL.md` file should serve as a helpful guide for someone looking to install and run your application using Docker and Composer.
+
+
+
