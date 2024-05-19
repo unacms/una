@@ -32,6 +32,35 @@ This command will run Composer in a Docker container, and the PHP dependencies w
 ## 3. Setting Permissions
 Before running the Docker containers, ensure that proper permissions are set for directories and files. Follow the instructions below to set permissions:
 
+create file
+
+```bash
+
+vim set_permissions.sh
+
+```
+
+copy the instruction below
+
+```sh
+
+#!/bin/bash
+# set_permissions.sh
+
+# Set execute permissions for ffmpeg.exe
+chmod +x ./plugins/ffmpeg/ffmpeg.exe
+
+# Set permissions for the specified directories
+chmod 755 ./inc
+chmod 755 ./cache
+chmod 755 ./cache_public
+chmod 755 ./logs
+chmod 755 ./tmp
+chmod 755 ./storage
+chmod 755 ./periodic
+
+```
+
 Make sure you are in the root directory of the application.
 
 Make the set_permissions.sh script executable using the command:
