@@ -46,7 +46,7 @@ Run the set_permissions.sh script using the command:
 
 ```bash
 
-./set_permissions.sh
+sudo ./set_permissions.sh
 
 ```
 This will automatically apply the appropriate permissions for all directories and files specified in the script.
