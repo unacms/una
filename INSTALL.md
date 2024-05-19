@@ -1,4 +1,4 @@
-# Installation Guide for the AUNA application using Docker and Composer
+# Installation Guide for the UNA application using Docker and Composer
 
 This guide outlines the steps required to install and run the application using Docker and Composer.
 
