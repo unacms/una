@@ -29,7 +29,7 @@ To run the application, use docker-compose. Make sure you have a properly config
 
 ```bash
 
-$ docker-compose up
+docker-compose up
 
 ```
 
