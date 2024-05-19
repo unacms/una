@@ -16,7 +16,7 @@ div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
 }
 #adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper,
 #adm-settings-form-categorized .bx-form-advanced-wrapper .bx-form-section-wrapper {
-    padding: 0 1.5rem;
+    padding: 0 1.0rem;
 }
 #adm-settings-form-categorized .bx-form-advanced-wrapper .bx-form-section-wrapper:last-child {
     position: absolute;
