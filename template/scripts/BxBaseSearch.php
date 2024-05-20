@@ -145,6 +145,18 @@ class BxBaseSearch extends BxDolSearch
             $aForm['inputs']['keyword']['attrs']['onpaste'] = $aForm['inputs']['keyword']['attrs']['onkeydown'];
         }
         
+        /**
+         * @hooks
+         * @hookdef hook-search-get_form 'search', 'get_form' - hook in create search form 
+         * - $unit_name - equals `search`
+         * - $action - equals `get_form` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [object] current search object
+         *      - `override_result` - [array] by ref, form arrray defenition, can be overridden in hook processing
+         * @hook @ref hook-search-get_form
+         */
         bx_alert('search', 'get_form', 0, 0, array('object' => $this, 'override_result' => &$aForm));
 
         return $aForm;

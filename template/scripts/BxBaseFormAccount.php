@@ -195,6 +195,20 @@ class BxBaseFormAccount extends BxTemplFormView
             $oAccount = BxDolAccount::getInstance($val, true);
             if ($oAccount) { 
                 $aAccountInfo = $oAccount->getInfo();
+                /**
+                 * @hooks
+                 * @hookdef hook-account-change_receive_news 'account', 'change_receive_news' - hook after change receive_news parameter for account
+                 * - $unit_name - equals `system`
+                 * - $action - equals `change_receive_news` 
+                 * - $object_id - not used 
+                 * - $sender_id - not used 
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `account_id` - [int] account id 
+                 *      - `old_value` - [bool] old value for receive_news parameter
+                 *      - `new_value` - [bool] new value for receive_news parameter
+                 *      - `email` - [string] account's email
+                 * @hook @ref hook-account-change_receive_news
+                 */
                 bx_alert('account', 'change_receive_news', 0, false, array('account_id' => $val, 'old_value' => $aAccountInfo['receive_news'], 'new_value' => $this->getCleanValue('receive_news'), 'email' => $aAccountInfo['email']));
             }
         }

@@ -93,6 +93,19 @@ class BxBaseReport extends BxDolReport
                 $this->_trigger();
 
                 bx_alert($this->_sSystem, 'undoReport', $iObjectId, $iAuthorId, array('report_id' => $iId, 'report_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+                /**
+                 * @hooks
+                 * @hookdef hook-report-undo 'report', 'undo' - hook on cancel report 
+                 * - $unit_name - equals `report`
+                 * - $action - equals `undo` 
+                 * - $object_id - report id 
+                 * - $sender_id - profile_id for report's author
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `object_system` - [string] system name, ex: bx_posts
+                 *      - `object_id` - [int] reported object id 
+                 *      - `object_author_id` - [int] author's profile_id for reported object_id 
+                 * @hook @ref hook-report-undo
+                 */
                 bx_alert('report', 'undo', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
                 $aReport = $this->_getReport($iObjectId, true);
@@ -173,6 +186,21 @@ class BxBaseReport extends BxDolReport
                 $this->_trigger();
 
                 bx_alert($this->_sSystem, 'doReport', $iObjectId, $iAuthorId, array('report_id' => $iId, 'report_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
+                /**
+                 * @hooks
+                 * @hookdef hook-report-do 'report', 'do' - hook on create new report 
+                 * - $unit_name - equals `report`
+                 * - $action - equals `do` 
+                 * - $object_id - report id 
+                 * - $sender_id - profile_id for report's author
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `object_system` - [string] system name, ex: bx_posts
+                 *      - `object_id` - [int] reported object id 
+                 *      - `object_author_id` - [int] author's profile_id for reported object_id 
+                 *      - `type` - [string] report type
+                 *      - `text` - [bool] report text
+                 * @hook @ref hook-report-do
+                 */
                 bx_alert('report', 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
 
                 $aResult = $this->_returnReportData($iObjectId, $iAuthorId, $iId, $aReport, !$bPerformed);

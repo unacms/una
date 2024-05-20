@@ -488,6 +488,19 @@ class BxBaseServiceProfiles extends BxDol
             return strcmp($r1['label'], $r2['label']);
         });
 
+         /**
+         * @hooks
+         * @hookdef hook-system-profiles_search_by_location 'system', 'profiles_search_by_location' - hook on serach profiles by location
+         * - $unit_name - equals `system`
+         * - $action - equals `profiles_search_by_location` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string]  module name
+         *      - `term` - [string] term for searching
+         *      - `result` - [array] by ref, array of results, can be overridden in hook processing
+         * @hook @ref hook-account-profiles_search_by_location
+         */
         bx_alert('system', 'profiles_search', 0, 0, array(
             'module' => is_array($mixedParems) && isset($mixedParems['module']) ? $mixedParems['module'] : '',
             'term' => $sTerm,
@@ -527,6 +540,20 @@ class BxBaseServiceProfiles extends BxDol
             $aResult = array_merge($aResult, $oProfileQuery->getProfiles(['type' => 'id_by_module_content_id', 'module' => $aModule['name'], 'content_id' => $aContentIds]));
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-system-profiles_search_by_location 'system', 'profiles_search_by_location' - hook on serach profiles by location
+         * - $unit_name - equals `system`
+         * - $action - equals `profiles_search_by_location` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string]  module name
+         *      - `location` - [array] location's info
+         *      - `radius` - [int] radius for search
+         *      - `result` - [array] by ref, array of results, can be overridden in hook processing
+         * @hook @ref hook-account-profiles_search_by_location
+         */
         bx_alert('system', 'profiles_search_by_location', 0, 0, [
             'module' => $sModule,
             'location' => $aLocation,
@@ -957,6 +984,24 @@ class BxBaseServiceProfiles extends BxDol
         $aVars = array (
             'bx_repeat:row' => array(),
         );
+        
+        /**
+         * @hooks
+         * @hookdef hook-system-account_profile_switcher 'system', 'account_profile_switcher' - hook to get account profile switcher
+         * - $unit_name - equals `system`
+         * - $action - equals `account_profile_switcher` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `account_id` - [int] account id 
+         *      - `active_profile_id` - [int] by ref, current profile id, can be overridden in hook processing
+         *      - `url_profile_action` - [string] url profile action
+         *      - `show_all` - [bool] by ref, show all profiles or not, can be overridden in hook processing
+         *      - `button_title` - [string] by ref,  title for button, can be overridden in hook processing
+         *      - `profile_template` - [string] by ref,  profile template, can be overridden in hook processing
+         *      - `profiles` - [array] by ref, array of profiles info , can be overridden in hook processing
+         * @hook @ref hook-system-account_profile_switcher
+         */
         
         bx_alert('system', 'account_profile_switcher', 0, false, array(
             'account_id' => $iAccountId,

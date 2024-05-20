@@ -158,6 +158,21 @@ class BxBaseServiceLogin extends BxDol
 
         $sCustomHtmlBefore = '';
         $sCustomHtmlAfter = '';
+        /**
+         * @hooks
+         * @hookdef hook-profile-show_login_form 'profile', 'show_login_form' - hook before dhow login form
+         * - $unit_name - equals `profile`
+         * - $action - equals `show_login_form` 
+         * - $object_id - not used  
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `oForm` - [object] by ref, object of BxDolForm, can be overridden in hook processing
+         *      - `sParams` - [string] by ref, paramenters, can be overridden in hook processing
+         *      - `sCustomHtmlBefore` - [string] by ref, html before form, can be overridden in hook processing
+         *      - `sCustomHtmlAfter` - [string] by ref,  html after form, can be overridden in hook processing
+         *      - `aAuthTypes` - [array] by ref,  Auth Types, can be overridden in hook processing
+         * @hook @ref hook-account-show_login_form
+         */
         bx_alert('profile', 'show_login_form', 0, 0, array('oForm' => &$oForm, 'sParams' => &$sParams, 'sCustomHtmlBefore' => &$sCustomHtmlBefore, 'sCustomHtmlAfter' => &$sCustomHtmlAfter, 'aAuthTypes' => &$aAuthTypes));
 
         if (isset($oForm->aInputs['relocate'])) {
@@ -250,6 +265,20 @@ class BxBaseServiceLogin extends BxDol
             $sActivationCode = rand(1000, 9999);
             $sActivationText =_t('_sys_txt_login_2fa_sms_text', $sActivationCode);
             $ret = null;
+            
+            /**
+             * @hooks
+             * @hookdef hook-account-before_2fa_send_sms 'account', 'before_2fa_send_sms' - hook after user performed login
+             * - $unit_name - equals `system`
+             * - $action - equals `before_2fa_send_sms` 
+             * - $object_id - account id 
+             * - $sender_id - not used 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `phone_number` - [array] contains account info from $oAccount->getInfo()
+             *      - `sms_text` - [string] the password entered by the user
+             *      - `override_result` - [string] the password after encription, to save in db
+             * @hook @ref hook-account-before_2fa_send_sms
+             */
             bx_alert('account', 'before_2fa_send_sms', $oAccount->id(), false, array('phone_number' => $sPhoneNumber, 'sms_text' => $sActivationText, 'override_result' => &$ret));
             if ($ret === null) 
             {
@@ -288,6 +317,18 @@ class BxBaseServiceLogin extends BxDol
             if (!$sUrlRelocate || 0 !== strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
                 $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';
 
+            /**
+             * @hooks
+             * @hookdef hook-account-login_after 'account', 'login_after' - hook on after login to rewrite url for redirect after login
+             * - $unit_name - equals `account`
+             * - $action - equals `login_after` 
+             * - $object_id - account id 
+             * - $sender_id - not used 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `account` - [array] contains account info from $oAccount->getInfo()
+             *      - `url_relocate` - [string] by ref, rl for redirect after login, can be overridden in hook processing
+             * @hook @ref hook-account-login_after
+             */
             bx_alert('account', 'login_after', $oAccount->id(),  false, array(
                 'account' => $aAccount,
                 'url_relocate' => &$sUrlRelocate               

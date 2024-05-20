@@ -336,7 +336,7 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
      * - $object_id - account id  
      * - $sender_id - not used 
      * - $extra_params - array of additional params with the following array keys:
-     *      - `error_msg` - [string] by ref, contains string with error description, can be overrided in hook processing
+     *      - `error_msg` - [string] by ref, contains string with error description, can be overridden in hook processing
      * @hook @ref hook-account-check_login
      */
     bx_alert('account', 'check_login',  $aAccountInfo['id'], false, array('error_msg' => &$sErrorMsg));

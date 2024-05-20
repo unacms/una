@@ -488,6 +488,21 @@ class BxBaseCmts extends BxDolCmts
         
         $sResult = $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, $aVars);
         
+        /**
+         * @hooks
+         * @hookdef hook-system-view_comment 'system', 'view_comment' - hook on get comment
+         * - $unit_name - equals `system`
+         * - $action - equals `view_comment` 
+         * - $object_id - comment_id
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `comment` - [array] comment's data
+         *      - `system` - [string] comment's system name
+         *      - `tmpl_name` - [string] template file path
+         *      - `tmpl_vars` - [string] params for template file parsing
+         *      - `override_result` - [string] by ref, if account confirmed = true, otherwise false, can be overridden in hook processing
+         * @hook @ref hook-system-view_comment
+         */
         bx_alert('system', 'view_comment', $aCmt['cmt_id'], 0, array('comment' => $aCmt, 'system' => $this->_sSystem, 'tmpl_name' => $this->_sTmplNameItem, 'tmpl_vars' => $aVars, 'override_result' => &$sResult));
         
         return $sResult;
