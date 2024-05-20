@@ -616,7 +616,7 @@
 	<string name="_adm_btn_download_submit"><![CDATA[Скачать]]></string>
 	<string name="_adm_btn_install_submit"><![CDATA[Установить]]></string>
 	<string name="_adm_btn_installed_submit"><![CDATA[Установленные]]></string>
-	<string name="_adm_btn_login_submit"><![CDATA[Вход в Студию]]></string>
+	<string name="_adm_btn_login_submit"><![CDATA[Войти]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[В очереди]]></string>
         <string name="_adm_btn_settings_export"><![CDATA[Экспортировать]]></string>
 	<string name="_adm_btn_settings_import"><![CDATA[Импортировать]]></string>
@@ -1863,8 +1863,12 @@
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Забыли пароль?]]></string>
 	<string name="_adm_txt_form_view_missing"><![CDATA[отсутствует]]></string>
-	<string name="_adm_txt_login_password"><![CDATA[пароль]]></string>
-	<string name="_adm_txt_login_email"><![CDATA[эл. адрес]]></string>
+	<string name="_adm_txt_login_password"><![CDATA[Пароль]]></string>
+        <string name="_adm_txt_login_password_placeholder"><![CDATA[ваш пароль]]></string>
+	<string name="_adm_txt_login_email"><![CDATA[Эл. адрес]]></string>
+        <string name="_adm_txt_login_email_placeholder"><![CDATA[operator@example.com]]></string>
+        <string name="_adm_txt_login_title"><![CDATA[Войти]]></string>
+        <string name="_adm_txt_login_subtitle"><![CDATA[Введите свой адрес электронной почты и пароль для входа в Студию.]]></string>
 	<string name="_adm_txt_module_custom"><![CDATA[Индивидуальный]]></string>
 	<string name="_adm_txt_module_skeletons"><![CDATA[Скелеты]]></string>
 	<string name="_adm_txt_module_system"><![CDATA[Система]]></string>

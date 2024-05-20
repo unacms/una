@@ -27,7 +27,7 @@ div.bx-std-menu-top.bx-std-menu-top-right {
 }
 div.bx-std-menu-top.bx-std-menu-top-left,
 div.bx-std-menu-top.bx-std-menu-top-right {    
-    min-width: 12%;
+    min-width: 10%;
 }
 div.bx-std-menu-top.bx-std-menu-top-center {    
     -webkit-flex-grow: 1;

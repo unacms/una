@@ -618,7 +618,7 @@
 	<string name="_adm_btn_download_submit"><![CDATA[Download]]></string>
 	<string name="_adm_btn_install_submit"><![CDATA[Install]]></string>
 	<string name="_adm_btn_installed_submit"><![CDATA[Installed]]></string>
-	<string name="_adm_btn_login_submit"><![CDATA[Enter]]></string>
+	<string name="_adm_btn_login_submit"><![CDATA[Sign in]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
         <string name="_adm_btn_settings_export"><![CDATA[Export]]></string>
 	<string name="_adm_btn_settings_import"><![CDATA[Import]]></string>
@@ -1888,8 +1888,12 @@
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Forgot password?]]></string>
 	<string name="_adm_txt_form_view_missing"><![CDATA[missing]]></string>
-	<string name="_adm_txt_login_password"><![CDATA[password]]></string>
-	<string name="_adm_txt_login_email"><![CDATA[email]]></string>
+	<string name="_adm_txt_login_password"><![CDATA[Password]]></string>
+        <string name="_adm_txt_login_password_placeholder"><![CDATA[your password]]></string>
+	<string name="_adm_txt_login_email"><![CDATA[Email address]]></string>
+        <string name="_adm_txt_login_email_placeholder"><![CDATA[operator@example.com]]></string>
+        <string name="_adm_txt_login_title"><![CDATA[Login]]></string>
+        <string name="_adm_txt_login_subtitle"><![CDATA[Enter your email and password to login to Studio.]]></string>
 	<string name="_adm_txt_module_custom"><![CDATA[Custom]]></string>
 	<string name="_adm_txt_module_skeletons"><![CDATA[Skeletons]]></string>
 	<string name="_adm_txt_module_system"><![CDATA[System]]></string>
