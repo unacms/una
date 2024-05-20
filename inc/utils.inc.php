@@ -773,6 +773,19 @@ function clear_xss($val)
     if (!$GLOBALS['logged']['admin'])
         $sNewVal = $oHtmlPurifier->purify($val);
 
+    /**
+     * @hooks
+     * @hookdef hook-account-clear_xss 'account', 'clear_xss' - hook after string is checked for xss
+     * - $unit_name - equals `system`
+     * - $action - equals `clear_xss` 
+     * - $object_id - not used 
+     * - $sender_id - not used 
+     * - $extra_params - array of additional params with the following array keys:
+     *      - `oHtmlPurifier` - [object] HtmlPurifier object 
+     *      - `input_data` - [string] string before check xss
+     *      - `return_data` - [string] by ref, string before check xss, can be overridden in hook processing
+     * @hook @ref hook-system-clear_xss
+     */
     bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'input_data' => $val, 'return_data' => &$sNewVal));
 
     return $val;

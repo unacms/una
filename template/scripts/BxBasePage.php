@@ -602,6 +602,7 @@ class BxBasePage extends BxDolPage
         else if(!$bIsVisible)
             $a['page_status'] = 403;
 
+        
         bx_alert('system', 'get_page_api', 0, 0, $aExtras);
 
         return $a;

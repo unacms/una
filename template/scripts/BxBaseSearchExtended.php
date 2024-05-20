@@ -172,6 +172,19 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             $aParamsSearch['order'] = [['field' => $aTmp[0], 'direction' => $aTmp[1]]];
         }
         
+        /**
+         * @hooks
+         * @hookdef hook-search-get_data 'search', 'get_data' - hook in get data for serach
+         * - $unit_name - equals `search`
+         * - $action - equals `get_data` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [array] by ref, object info for current search, can be overridden in hook processing
+         *      - `search_params` - [string] by ref, search params, can be overridden in hook processing
+         *      - `search_results` - [string] by ref, html for block, can be overridden in hook processing
+         * @hook @ref hook-search-get_data
+         */
         bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => &$aParamsSearch, 'search_results' => &$aResults));
 
     	if($aResults === false)

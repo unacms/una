@@ -130,7 +130,7 @@ function bx_login($iId, $bRememberMe = false)
     /**
      * @hooks
      * @hookdef hook-account-login 'account', 'login' - hook after user performed login
-     * - $unit_name - equals `system`
+     * - $unit_name - equals `account`
      * - $action - equals `login` 
      * - $object_id - account id 
      * - $sender_id - not used 
@@ -155,8 +155,19 @@ function bx_logout($bNotify = true)
     if (!($iMemberId = BxDolSession::getInstance()->getUserId()))
         return;
 
-    if ($bNotify && isMember())
+    if ($bNotify && isMember()){
+        /**
+         * @hooks
+         * @hookdef hook-account-logout 'account', 'logout' - hook after user performed logout
+         * - $unit_name - equals `account`
+         * - $action - equals `logout` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - not used
+         * @hook @ref hook-account-logout
+         */
         bx_alert('account', 'logout', $iMemberId);
+    }
 
     bx_audit(
         $iMemberId, 
@@ -225,6 +236,16 @@ function check_logged()
 
     if($bID && $bLogged) {
         header("Cache-Control: no-cache, no-store, must-revalidate");
+        /**
+         * @hooks
+         * @hookdef hook-account-logged 'account', 'logged' - hook after user performed logged
+         * - $unit_name - equals `account`
+         * - $action - equals `logged` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - not used
+         * @hook @ref hook-account-logged
+         */
         bx_alert('account', 'logged', getLoggedId());
     }
 
@@ -257,6 +278,19 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
     $sPassCheck = encryptUserPwd($sPassword, $aAccountInfo['salt']);
 
 	// regenerate password using another encrypt function if necessary
+    /**
+     * @hooks
+     * @hookdef hook-account-encrypt_password_after 'account', 'encrypt_password_after' - hook after user performed login
+     * - $unit_name - equals `system`
+     * - $action - equals `encrypt_password_after` 
+     * - $object_id - not used 
+     * - $sender_id - not used 
+     * - $extra_params - array of additional params with the following array keys:
+     *      - `info` - [array] contains account info from $oAccount->getInfo()
+     *      - `pwd` - [string] the password entered by the user
+     *      - `password` - [string] the password after encription, to save in db
+     * @hook @ref hook-account-encrypt_password_after
+     */
 	bx_alert('system', 'encrypt_password_after', 0, false, array(
             'info' => $aAccountInfo,
 			'pwd' => $sPassword,
@@ -294,6 +328,17 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
         return '';
 
     $sErrorMsg = '';
+    /**
+     * @hooks
+     * @hookdef hook-account-check_login 'account', 'check_login' - hook after user's login/password check
+     * - $unit_name - equals `account`
+     * - $action - equals `check_login` 
+     * - $object_id - account id  
+     * - $sender_id - not used 
+     * - $extra_params - array of additional params with the following array keys:
+     *      - `error_msg` - [string] by ref, contains string with error description, can be overridden in hook processing
+     * @hook @ref hook-account-check_login
+     */
     bx_alert('account', 'check_login',  $aAccountInfo['id'], false, array('error_msg' => &$sErrorMsg));
     
     return $sErrorMsg;

@@ -421,6 +421,19 @@ class BxBaseServiceAccount extends BxDol
                     $sActivationCode = rand(1000, 9999);
                     $sActivationText =_t('_sys_txt_confirm_phone_sms_text', $sActivationCode);
                     $ret = null;
+                    /**
+                     * @hooks
+                     * @hookdef hook-account-before_confirm_phone_send_sms 'account', 'before_confirm_phone_send_sms' - hook in confirm phone 
+                     * - $unit_name - equals `account`
+                     * - $action - equals `before_confirm_phone_send_sms` 
+                     * - $object_id - account id 
+                     * - $sender_id - logged profile_id
+                     * - $extra_params - array of additional params with the following array keys:
+                     *      - `phone_number` - [string]  by ref, phone number to send sms, can be overridden in hook processing
+                     *      - `sms_text` - [string] by ref, text for sms, can be overridden in hook processing
+                     *      - `override_result` - [mixed] by ref, can be object, can be overridden in hook processing
+                     * @hook @ref hook-account-before_confirm_phone_send_sms
+                     */
                     bx_alert('account', 'before_confirm_phone_send_sms', $oAccount->id(), bx_get_logged_profile_id(), array('phone_number' => $sPhoneNumber, 'sms_text' => $sActivationText, 'override_result' => &$ret));
                     if ($ret === null) 
                     {
@@ -464,6 +477,17 @@ class BxBaseServiceAccount extends BxDol
 
         // redirect with success message
         $sUrl = getParam('sys_redirect_after_email_confirmation');
+        /**
+         * @hooks
+         * @hookdef hook-account-after_email_confirmation 'account', 'after_email_confirmation' - hook after email confirmed
+         * - $unit_name - equals `account`
+         * - $action - equals `after_email_confirmation` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [string] by ref, url for redirect after email confirmed, can be overridden in hook processing
+         * @hook @ref hook-account-after_email_confirmation
+         */
         bx_alert('account', 'after_email_confirmation', $mixedAccountId, false, ['override_result' => &$sUrl]);
 
         $oTemplate = BxDolTemplate::getInstance();
@@ -605,6 +629,19 @@ class BxBaseServiceAccount extends BxDol
                 $sSmsText = _t('_sys_txt_forgot_pasword_sms_text', $sForgotPasswordUrl);
 
                 $mixedOverrideResult = null;
+                /**
+                 * @hooks
+                 * @hookdef hook-account-before_forgot_password_send_sms 'account', 'before_forgot_password_send_sms' - hook in  $oAccount->isConfirmed check
+                 * - $unit_name - equals `account`
+                 * - $action - equals `before_forgot_password_send_sms` 
+                 * - $object_id - account id 
+                 * - $sender_id - not used 
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `phone_number` - [string]  by ref, phone number to send sms, can be overridden in hook processing
+                 *      - `sms_text` - [string] by ref, text for sms, can be overridden in hook processing
+                 *      - `override_result` - [mixed] by ref, can be object, can be overridden in hook processing
+                 * @hook @ref hook-account-before_forgot_password_send_sms
+                 */
                 bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => &$sPhone, 'sms_text' => &$sSmsText, 'override_result' => &$mixedOverrideResult));
                 if ($mixedOverrideResult === null) {
                     $oTwilio = BxDolTwilio::getInstance();
@@ -679,6 +716,19 @@ class BxBaseServiceAccount extends BxDol
         $bAllowSwitchToAnyProfile = $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
 
         $bCanSwitch = ($iSwitchToAccountId == $iViewerAccountId || $bAllowSwitchToAnyProfile);
+        /**
+         * @hooks
+         * @hookdef hook-account-check_switch_context 'account', 'check_switch_context' - hook on switch profile_id
+         * - $unit_name - equals `account`
+         * - $action - equals `check_switch_context` 
+         * - $object_id - account id 
+         * - $sender_id - viewer profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `switch_to_profile` - [int] profile_id to switch
+         *      - `viewer_account` - [int] viewer's profile_id, can be overridden in hook processing
+         *      - `override_result` - [bool] by ref, true if allow switch profile, otherwise false, can be overridden in hook processing
+         * @hook @ref hook-account-check_switch_context
+         */
         bx_alert('account', 'check_switch_context', $iSwitchToAccountId, $iViewerProfileId, array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
 
         if (!$bCanSwitch) {
@@ -771,6 +821,17 @@ class BxBaseServiceAccount extends BxDol
         
         $this->_oAccountQuery->updatePassword($sPasswordHash, $sSalt, $iAccountId, $iPasswordExpired);
 
+        /**
+         * @hooks
+         * @hookdef hook-account-edited 'account', 'edited' - hook on account edited
+         * - $unit_name - equals `account`
+         * - $action - equals `edited` 
+         * - $object_id - account id 
+         * - $sender_id - account id 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `action` - [string] can be forgot_password/change_password or $sDisplayName  (display name for current form)
+         * @hook @ref hook-account-edited
+         */
         bx_alert('account', 'edited', $iAccountId, $iAccountId, array('action' => 'forgot_password'));
 
         return $sPwd;

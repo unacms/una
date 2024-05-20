@@ -82,6 +82,19 @@ class BxBaseSearchResult extends BxDolSearchResult
             ]);
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-simple_search-show_data 'simple_search', 'show_data' - hook in display block for search
+         * - $unit_name - equals `simple_search`
+         * - $action - equals `show_data` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [array] by ref, object info for current search, can be overridden in hook processing
+         *      - `mode` - [string], search mode
+         *      - `search_results` - [string] by ref, html for block, can be overridden in hook processing
+         * @hook @ref hook-simple_search-show_data
+         */
         bx_alert('simple_search', 'show_data', 0, false, [
             'object' => &$this->aCurrent, 
             'mode' => $this->_sMode, 

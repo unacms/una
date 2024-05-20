@@ -123,6 +123,18 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
                 
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-account-is_confirmed 'account', 'is_confirmed' - hook in  $oAccount->isConfirmed check
+         * - $unit_name - equals `account`
+         * - $action - equals `is_confirmed` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] confirmation type can be none/phone/email/email_and_phone/email_or_phone
+         *      - `override_result` - [bool] by ref, if account confirmed = true, otherwise false, can be overridden in hook processing
+         * @hook @ref hook-account-is_confirmed
+         */
         bx_alert('account', 'is_confirmed', $iId, false, array('type' => $sConfirmationType, 'override_result' => &$bResult));
 
         return $bResult;
@@ -156,6 +168,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         else 
             $bResult = true;
 
+        /**
+         * @hooks
+         * @hookdef hook-account-is_confirmed 'account', 'is_confirmed_email' - hook in  $oAccount->isConfirmedEmail check
+         * - $unit_name - equals `account`
+         * - $action - equals `is_confirmed_email` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [bool] by ref, if email confirmed = true, otherwise false, can be overridden in hook processing
+         * @hook @ref hook-account-is_confirmed_email
+         */
         bx_alert('account', 'is_confirmed_email', $iId, false, array('override_result' => &$bResult));
 
         return $bResult;
@@ -174,6 +197,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         else
             $bResult = true;
 
+        /**
+         * @hooks
+         * @hookdef hook-account-is_confirmed_phone 'account', 'is_confirmed_phone' - hook in  $oAccount->isConfirmedPhone check
+         * - $unit_name - equals `account`
+         * - $action - equals `is_confirmed_phone` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [bool] by ref, if phone confirmed = true, otherwise false, can be overridden in hook processing
+         * @hook @ref hook-account-is_confirmed_phone
+         */
         bx_alert('account', 'is_confirmed_phone', $iId, false, array('override_result' => &$bResult));
 
         return $bResult;
@@ -216,6 +250,16 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
 
         if ($this->_oQuery->updateEmailConfirmed($isConfirmed, $iId)) {
             $this->_aInfo = false;
+            /**
+             * @hooks
+             * @hookdef hook-account-confirm 'account', 'confirm' - hook in email confirmation $oAccount->updateEmailConfirmed 
+             * - $unit_name - equals `account`
+             * - $action - can be confirm/unconfirm
+             * - $object_id - account id 
+             * - $sender_id - not used 
+             * - $extra_params - not used 
+             * @hook @ref hook-account-confirm
+             */
             bx_alert('account', $this->isConfirmed() ? 'confirm' : 'unconfirm', $iId);
             return true;
         }
@@ -256,6 +300,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         $iPasswordExpired = $this->getPasswordExpiredDateByAccount($iAccountId);
         
         if((int)$this->_oQuery->updatePassword($sPasswordHash, $sSalt, $iId, $iPasswordExpired) > 0) {
+            /**
+             * @hooks
+             * @hookdef hook-account-edited 'account', 'edited' - hook on account edited $oAccount->updatePassword 
+             * - $unit_name - equals `account`
+             * - $action - equals edited
+             * - $object_id - account id 
+             * - $sender_id - account sender id 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `action` - [string] action's name, can be reset_password
+             * @hook @ref hook-account-edited
+             */
             bx_alert('account', 'edited', $iId, $oAccountSender ? $oAccountSender->id() : $iId, array('action' => 'reset_password'));
             $this->doAudit($iId, '_sys_audit_action_account_reset_password');
             return true;
@@ -272,6 +327,16 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     {
         $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         if ($this->_oQuery->updatePhone($sPhone, $iId)) {
+            /**
+             * @hooks
+             * @hookdef hook-account-set_phone 'account', 'set_phone' - hook after accout password changed
+             * - $unit_name - equals `account`
+             * - $action - equals `set_phone` 
+             * - $object_id - account id 
+             * - $sender_id - not used 
+             * - $extra_params - not used
+             * @hook @ref hook-account-set_phone
+             */
             bx_alert('account', 'set_phone', $iId);
             return true;
         }
@@ -318,6 +383,18 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             return false;
 
         $ret = null;
+        /**
+         * @hooks
+         * @hookdef hook-account-before_switch_context 'account', 'before_switch_context' - hook before switch profile_id frof current logged user
+         * - $unit_name - equals `account`
+         * - $action - equals `before_switch_context` 
+         * - $object_id - account id 
+         * - $sender_id - profile_id to switch to
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile_id_current` - [int] current profile_id
+         *      - `override_result` - [int] by ref, profile_id to switch to, can be overridden in hook processing
+         * @hook @ref hook-account-before_switch_context
+         */
         bx_alert('account', 'before_switch_context', $iId, $iSwitchToProfileId, array('profile_id_current' => $aInfo['profile_id'], 'override_result' => &$ret));
         if ($ret !== null)
             return $ret;
@@ -326,7 +403,18 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             return false;
 
         $this->_aInfo = false;
-            
+        
+        /**
+         * @hooks
+         * @hookdef hook-account-switch_context 'account', 'switch_context' - hook before switch profile_id frof current logged user
+         * - $unit_name - equals `account`
+         * - $action - equals `switch_context` 
+         * - $object_id - account id 
+         * - $sender_id - profile_id to switch to
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile_id_old` - [int] old profile_id
+         * @hook @ref hook-account-switch_context
+         */
         bx_alert('account', 'switch_context', $iId, $iSwitchToProfileId, array('profile_id_old' => $aInfo['profile_id']));
 
         return true;
@@ -410,6 +498,19 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         $aInfo = $this->getInfo($iAccountId);
 
         $sDisplayName = !empty($aInfo['name']) ? $aInfo['name'] : _t('_sys_txt_user_n', $aInfo['id']);
+        
+        /**
+         * @hooks
+         * @hookdef hook-account-account_name 'account', 'account_name' - hook on get account display name
+         * - $unit_name - equals `account`
+         * - $action - equals `account_name` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `info` - [array] contains account info from $oAccount->getInfo()
+         *      - `display_name` - [string] by ref, account display name,  can be overridden in hook processing
+         * @hook @ref hook-account-account_name
+         */
         bx_alert('account', 'account_name', $iAccountId, 0, array('info' => $aInfo, 'display_name' => &$sDisplayName));
 
         return bx_process_output($sDisplayName);
@@ -569,6 +670,18 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     public function isProfilesLimitReached ()
     {
         $iProfilesLimit = (int)getParam('sys_account_limit_profiles_number');
+        /**
+         * @hooks
+         * @hookdef hook-account-get_limit_profiles_number 'account', 'get_limit_profiles_number' - hook on get account limit on the number of profiles
+         * - $unit_name - equals `account`
+         * - $action - equals `get_limit_profiles_number` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `account_id` - [int] account id 
+         *      - `number` - [int] by ref, account limit on the number of profiles,  can be overridden in hook processing
+         * @hook @ref hook-account-get_limit_profiles_number
+         */
         bx_alert('account', 'get_limit_profiles_number', 0, 0, array('account_id' => $this->_iAccountID, 'number' => &$iProfilesLimit));
         if (!isAdmin() && $iProfilesLimit && ($iProfilesNum = $this->getProfilesNumber()) && $iProfilesNum >= $iProfilesLimit)
             return true;
@@ -633,6 +746,18 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
 
         // create system event before deletion
         $isStopDeletion = false;
+        /**
+         * @hooks
+         * @hookdef hook-account-before_delete 'account', 'before_delete' - hook on before delete account, 
+         * - $unit_name - equals `account`
+         * - $action - equals `before_delete` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `delete_with_content` - [bool] if account will delete with content = true, otherwise = false
+         *      - `stop_deletion` - [bool] by ref, if it set to true account deletion will stopped, can be overridden in hook processing
+         * @hook @ref hook-account-before_delete
+         */
         bx_alert('account', 'before_delete', $this->_iAccountID, 0, array('delete_with_content' => $bDeleteWithContent, 'stop_deletion' => &$isStopDeletion));
         if ($isStopDeletion)
             return false;
@@ -656,7 +781,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         $sClass = __CLASS__ . '_' . $this->_iAccountID;
         unset($GLOBALS['bxDolClasses'][$sClass]);
 
-       // create system event
+       /**
+         * @hooks
+         * @hookdef hook-account-delete 'account', 'delete' - hook on after delete account 
+         * - $unit_name - equals `account`
+         * - $action - equals `delete` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `delete_with_content` - [bool] if account will delete with content = true, otherwise = false
+         * @hook @ref hook-account-delete
+         */
         bx_alert('account', 'delete', $this->_iAccountID, 0, array ('delete_with_content' => $bDeleteWithContent));
         
         $this->doAudit($this->_iAccountID, $bDeleteWithContent ? '_sys_audit_action_account_deleted_with_content' : '_sys_audit_action_account_deleted');
@@ -761,7 +896,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         if (isset($aPageParams['i']) && $aPageParams['i'] == 'account-settings-password')
             $bNeedRedirectToChangePassword = false;
 
-        
+        /**
+         * @hooks
+         * @hookdef hook-account-is_need_to_change_password 'account', 'is_need_to_change_password' - hook on after delete account 
+         * - $unit_name - equals `account`
+         * - $action - equals `is_need_to_change_password` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [bool] by ref, if Need Redirect To Change Password = true, otherwise = false, can be overridden in hook processing
+         * @hook @ref hook-account-is_need_to_change_password
+         */
         bx_alert('account', 'is_need_to_change_password',  $iAccountId, false, array('override_result' => &$bNeedRedirectToChangePassword));
         
         if ($aAccountInfo['password_expired'] >0 && $aAccountInfo['password_expired'] < time() && $bNeedRedirectToChangePassword){
@@ -813,6 +958,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         if($oProfile && $oProfile->getAccountId() != getLoggedId())
             $bResult = false;
 
+        /**
+         * @hooks
+         * @hookdef hook-account-allow_create_another_profile 'profile', 'allow_create_another_profile' - hook on check allow create profile 
+         * - $unit_name - equals `profile`
+         * - $action - equals `allow_create_another_profile` 
+         * - $object_id - profile id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [bool] by ref, if allow create another profile = true, otherwise = false, can be overridden in hook processing
+         * @hook @ref hook-account-allow_create_another_profile
+         */
         bx_alert('profile', 'allow_create_another_profile', $iProfileId, 0, [
             'override_result' => &$bResult
         ]);
