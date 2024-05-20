@@ -132,13 +132,14 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
             $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
             foreach ($aResult as &$aItem) {
                 $aItem['symbol'] = bx_get('symbol');
+                $aItem['url'] = bx_api_get_relative_url($aItem['url']);
             }
         }
 
         if($sSymbol == '#'){
             $aData = BxDolMetatags::getMetatagsDataByTerm('keywords', 'keyword', bx_get('term'));
             foreach ($aData as $aItem) {
-                $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => $aItem['url'], 'symbol' => bx_get('symbol')];
+                $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => bx_api_get_relative_url($aItem['url']), 'symbol' => bx_get('symbol')];
             }
         }
 

@@ -931,6 +931,16 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsParse($iId, $s) 
     {
+        if (!bx_is_api())
+            return $s;
+        
+        if(($sRootUrl = getParam('sys_api_url_root_email')) !== '') {
+            if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
+                $sRootUrl .= '/';
+
+            $s = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $s);
+        }
+        
         return $s;
     }
 
