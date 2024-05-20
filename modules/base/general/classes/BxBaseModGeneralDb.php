@@ -79,7 +79,35 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
             case 'search_ids':
                 $this->_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
-                bx_alert('system', 'search_ids', 0, 0, array('module_name' => $this->_oConfig->getName(), 'params' => &$aParams, 'select_clause' => &$sSelectClause, 'join_clause' => &$sJoinClause, 'where_clause' => &$sWhereClause, 'order_clause' => &$sOrderClause, 'limit_clause' => &$sLimitClause, 'bindings' => &$aMethod['params'][1]));
+                
+                /**
+                 * @hooks
+                 * @hookdef hook-system-search_ids 'system', 'search_ids' - hook to modify a list found content ids
+                 * - $unit_name - equals `system`
+                 * - $action - equals `search_ids`
+                 * - $object_id - not used
+                 * - $sender_id - not used
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `module_name` - [string] content's module name
+                 *      - `params` - [array] by ref, override search params
+                 *      - `select_clause` - [string] by ref, select part of MySQL query, can be overridden in hook processing
+                 *      - `join_clause` - [string] by ref, join part of MySQL query, can be overridden in hook processing
+                 *      - `where_clause` - [string] by ref, where part of MySQL query, can be overridden in hook processing
+                 *      - `order_clause` - [string] by ref, order part of MySQL query, can be overridden in hook processing
+                 *      - `limit_clause` - [string] by ref, limit part of MySQL query, can be overridden in hook processing
+                 *      - `bindings` - [array] by ref, bindings of MySQL query, can be overridden in hook processing
+                 * @hook @ref hook-system-search_ids
+                 */
+                bx_alert('system', 'search_ids', 0, 0, [
+                    'module_name' => $this->_oConfig->getName(), 
+                    'params' => &$aParams, 
+                    'select_clause' => &$sSelectClause, 
+                    'join_clause' => &$sJoinClause, 
+                    'where_clause' => &$sWhereClause, 
+                    'order_clause' => &$sOrderClause, 
+                    'limit_clause' => &$sLimitClause, 
+                    'bindings' => &$aMethod['params'][1]
+                ]);
                 break;
 
             case 'all_ids':

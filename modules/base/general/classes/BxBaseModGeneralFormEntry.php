@@ -608,10 +608,22 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
         $aQueryParams['fi'] = '';
         
-        bx_alert('system', 'editor_query_params', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-editor_query_params 'system', 'editor_query_params' - hook to override http(s) request's query params, which is used in HTML editor
+         * - $unit_name - equals `system`
+         * - $action - equals `editor_query_params`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `form` - [object] an instance of form, @see BxDolForm
+         *      - `override_result` - [array] by ref, query string params, can be overridden in hook processing
+         * @hook @ref hook-system-editor_query_params
+         */
+        bx_alert('system', 'editor_query_params', 0, 0, [
             'form' => $this,
             'override_result' => &$aQueryParams
-        ));
+        ]);
         
         return $aQueryParams;
     }

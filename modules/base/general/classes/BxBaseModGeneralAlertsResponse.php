@@ -72,6 +72,18 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
                 $this->_oModule->onFailed($iContentId);
 
                 if($bNotify)
+                    /**
+                     * @hooks
+                     * @hookdef hook-bx_base_general-publish_failed '{module_name}', 'publish_failed' - hook to notify about failed content publishing
+                     * - $unit_name - module name
+                     * - $action - equals `publish_failed`
+                     * - $object_id - content id 
+                     * - $sender_id - system bot profile id
+                     * - $extra_params - array of additional params with the following array keys:
+                     *      - `object_author_id` - [int] content author profile id
+                     *      - `privacy_view` - [int] privacy for view action, equals to BX_DOL_PG_ALL, @see BxDolPrivacy
+                     * @hook @ref hook-bx_base_general-publish_failed
+                     */
                     bx_alert($this->_oModule->getName(), 'publish_failed', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
                         'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
                         'privacy_view' => BX_DOL_PG_ALL
@@ -101,6 +113,18 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
         $this->_oModule->onPublished($iContentId);
 
         if($bNotify)
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_general-publish_succeeded '{module_name}', 'publish_succeeded' - hook to notify about successfully published content
+             * - $unit_name - module name
+             * - $action - equals `publish_succeeded`
+             * - $object_id - content id 
+             * - $sender_id - system bot profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_author_id` - [int] content author profile id
+             *      - `privacy_view` - [int] privacy for view action, equals to BX_DOL_PG_ALL, @see BxDolPrivacy
+             * @hook @ref hook-bx_base_general-publish_succeeded
+             */
             bx_alert($this->MODULE, 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, [
                 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
                 'privacy_view' => BX_DOL_PG_ALL
