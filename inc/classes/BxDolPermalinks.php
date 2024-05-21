@@ -205,6 +205,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
     function unpermalink($sLink, $isStripBaseUrl = true)
     {
         $sRet = null;
+        
         bx_alert('system', 'unpermalink', 0, 0, array('link' => $sLink, 'strip_base_url' => $isStripBaseUrl, 'return_data' => &$sRet));
         if (null !== $sRet)
             return $sRet;

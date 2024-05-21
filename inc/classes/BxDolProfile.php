@@ -310,6 +310,18 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     {
         $aInfo = $this->getInfo($iProfileId);
         $sDisplayName = BxDolService::call($aInfo['type'], 'profile_name', array($aInfo['content_id']));
+        /**
+         * @hooks
+         * @hookdef hook-profile-profile_name 'profile', 'profile_name' - hook on before profile deletion
+         * - $unit_name - equals `profile`
+         * - $action - equals `profile_name` 
+         * - $object_id - profile_id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `info` - [array] profile info
+         *      - `display_name` - [bool] by ref, display profile name, can be overridden in hook processing
+         * @hook @ref hook-profile-profile_name
+         */
         bx_alert('profile', 'profile_name', $iProfileId, 0, array('info' => $aInfo, 'display_name' => &$sDisplayName));
         return $sDisplayName;
     }
@@ -505,8 +517,20 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         if (!$bForceDelete && $ID == $aAccountInfo['profile_id'])
             $oAccount->updateProfileContextAuto($ID);
 
-        // create system event before deletion
         $isStopDeletion = false;
+        /**
+         * @hooks
+         * @hookdef hook-profile-before_delete 'profile', 'before_delete' - hook on before profile deletion
+         * - $unit_name - equals `profile`
+         * - $action - equals `before_delete` 
+         * - $object_id - profile_id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `delete_with_content` - [bool] also delete content for profile or not
+         *      - `stop_deletion` - [bool] by ref, if true then stop profile deletion, can be overridden in hook processing
+         *      - `type` - [string] module name
+         * @hook @ref hook-profile-before_delete
+         */
         bx_alert('profile', 'before_delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent, 'stop_deletion' => &$isStopDeletion, 'type' => $aProfileInfo['type']));
         if ($isStopDeletion)
             return false;
@@ -541,7 +565,18 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         if (!$this->_oQuery->delete($ID))
             return false;
 
-        // create system event
+        /**
+         * @hooks
+         * @hookdef hook-profile-delete 'profile', 'delete' - hook on profile deleted
+         * - $unit_name - equals `profile`
+         * - $action - equals `delete` 
+         * - $object_id - profile_id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `delete_with_content` - [bool] also delete content for profile or not
+         *      - `type` - [string] module name
+         * @hook @ref hook-profile-delete
+         */
         bx_alert('profile', 'delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent, 'type' => $aProfileInfo['type']));
 
         // unset class instance to prevent creating the instance again
@@ -565,6 +600,22 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $oQuery = BxDolProfileQuery::getInstance();
         if (!($iProfileId = $oQuery->insertProfile ($iAccountId, $iContentId, $sStatus, $sType)))
             return false;
+         /**
+         * @hooks
+         * @hookdef hook-profile-add 'profile', 'add' - hook on profile added
+         * - $unit_name - equals `profile`
+         * - $action - equals `add` 
+         * - $object_id - profile_id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] action id
+         *      - `content` - [int] content_id in module
+         *      - `account` - [int] account_id
+         *      - `status` - [string] status 
+         *      - `action` - [int] action id
+         *      - `profile_id` - [int] by ref, iprofile_id, can be overridden in hook processing
+         * @hook @ref hook-profile-add
+         */
         bx_alert('profile', 'add', $iProfileId, 0, array('module' => $sType, 'content' => $iContentId, 'account' => $iAccountId, 'status' => $sStatus, 'action' => $iAction, 'profile_id' => &$iProfileId));
         return $iProfileId;
     }
@@ -650,7 +701,19 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
         $this->_aProfile = array();
 
-        // alert about status changing
+        /**
+         * @hooks
+         * @hookdef hook-profile-approve 'profile', 'approve' - hook on switch profile
+         * - $unit_name - equals `profile`
+         * - $action - equals `approve` 
+         * - $object_id - profile_id for current user
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `action` - [int] action id
+         *      - `status` - [string] by ref, status, can be overridden in hook processing
+         *      - `send_email_notification` - [bool] by ref, if need to send notification about changed status = true, otherwise false, can be overridden in hook processing
+         * @hook @ref hook-profile-approve
+         */
         bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction, 'status' => &$sStatus, 'send_email_notification' => &$bSendEmailNotification));
         
         $this->doAudit('_sys_audit_action_set_status_' . $sStatus);
@@ -689,6 +752,19 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $iSwitchToAccountId = $this->getAccountId();
         $iSwitchToProfileId = $this->id();
         $bCanSwitch = ($iSwitchToAccountId == $iViewerAccountId || $bAllowSwitchToAnyProfile);
+        /**
+         * @hooks
+         * @hookdef hook-account-check_switch_context 'account', 'check_switch_context' - hook on switch profile
+         * - $unit_name - equals `account`
+         * - $action - equals `check_switch_context` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `switch_to_profile` - [int] profile_id for switched profile
+         *      - `viewer_account` - [int] profile_id for viewer profile
+         *      - `override_result` - [bool] by ref, if allow to switch to profile = true, otherwise false, can be overridden in hook processing
+         * @hook @ref hook-account-check_switch_context
+         */
         bx_alert('account', 'check_switch_context', $iSwitchToAccountId, $iViewerProfileId, array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
 
         if(!$bCanSwitch ||  $iViewerProfileId == $iSwitchToProfileId)

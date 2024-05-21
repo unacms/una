@@ -255,7 +255,34 @@ class BxDolVote extends BxDolObject
 
         $this->_trigger();
 
+        /**
+         * @hooks
+         * @hookdef hook-vote-undo 'vote', 'undo' - hook on cancel vote 
+         * - $unit_name - equals `vote`
+         * - $action - equals `undo` 
+         * - $object_id - vote id 
+         * - $sender_id - profile_id for vote's author
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_system` - [string] system name, ex: bx_posts
+         *      - `object_id` - [int] reported object id 
+         *      - `object_author_id` - [int] author's profile_id for reported object_id 
+         * @hook @ref hook-vote-undo
+         */
         bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array_merge(['vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
+        /**
+         * @hooks
+         * @hookdef hook-vote-do 'vote', 'do' - hook on new vote 
+         * - $unit_name - equals `vote`
+         * - $action - equals `do` 
+         * - $object_id - vote id 
+         * - $sender_id - profile_id for vote's author
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_system` - [string] system name, ex: bx_posts
+         *      - `object_id` - [int] reported object id 
+         *      - `object_author_id` - [int] author's profile_id for reported object_id 
+         * @hook @ref hook-vote-do
+         */
+        
         bx_alert('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array_merge(['object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
 
         $aResult = $this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, !$bVoted, $aRequestParamsData);

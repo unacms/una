@@ -265,6 +265,7 @@ class BxDolRelation extends BxDolConnection
     {
         $aRelations = BxDolFormQuery::getDataItems($this->_sPreList, false, BX_DATA_VALUES_ALL);
 
+        
         bx_alert($this->_sObject, 'get_relations', 0, bx_get_logged_profile_id(), array(
             'initiator' => (int)$iInitiator,
             'content' => (int)$iContent,

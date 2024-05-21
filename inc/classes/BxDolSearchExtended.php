@@ -143,6 +143,18 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
             }
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-search-get_mention 'search', 'get_mention' - hook on get mention list
+         * - $unit_name - equals `search`
+         * - $action - equals `get_mention` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] array of parameters
+         *      - `override_result` - [array] by ref, array of colors, can be overridden in hook processing
+         * @hook @ref hook-search-get_mention
+         */
         bx_alert('search', 'get_mention', 0, 0, array('params' => $a[1], 'override_result' => &$aResult));
         
         header('Content-Type:text/javascript; charset=utf-8');

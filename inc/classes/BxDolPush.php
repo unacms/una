@@ -66,6 +66,17 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             'email_hash' => $sEmail ? hash_hmac('sha256', $sEmail, getParam('sys_push_app_id')) : '',
         );
 
+         /**
+         * @hooks
+         * @hookdef hook-system-is_confirmed 'system', 'push_tags' - hook on get tags to send to PUSH server
+         * - $unit_name - equals `system`
+         * - $action - equals `push_tags` 
+         * - $object_id - profile_id from current user
+         * - $sender_id - profile_id from current user
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `tags` - [array] by ref, array of tags, can be overridden in hook processing
+         * @hook @ref hook-system-push_tags
+         */
         bx_alert('system', 'push_tags', $iProfileId, $iProfileId, array('tags' => &$a));
 
         return $a;

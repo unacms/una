@@ -129,6 +129,21 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
     {
         $aTemplate = $this->getTemplate($sTemplateName, $iAccountId);
         
+        /**
+         * @hooks
+         * @hookdef hook-system-parse_email_template 'system', 'parse_email_template' - hook on template with neccessary markers replaced
+         * - $unit_name - equals `system`
+         * - $action - equals `parse_email_template` 
+         * - $object_id - not used
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `template_name` - [string] by ref, name of necessary template, can be overridden in hook processing
+         *      - `template_keys` - [array] by ref, key ane value pairs to replace in subject and body, can be overridden in hook processing
+         *      - `account_id` - [int] by ref, account ID of registered member, can be overridden in hook processing
+         *      - `profile_id` - [int] by ref, profile ID of registered member, can be overridden in hook processing
+         *      - `template` - [array] by ref, template, can be overridden in hook processing
+         * @hook @ref hook-system-parse_email_template
+         */
         bx_alert('system', 'parse_email_template', 0, 0, array('template_name' => &$sTemplateName, 'template_keys' => &$aTemplateKeys, 'account_id' => &$iAccountId, 'profile_id' => &$iProfileId, 'template' => &$aTemplate));
         
         if (!$aTemplate)
