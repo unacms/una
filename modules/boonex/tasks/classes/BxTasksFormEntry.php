@@ -226,6 +226,18 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
         foreach($aMembersToAdd as $iProfileId){
             $oConn->addConnection($iProfileId, $iContentId);
 
+             /**
+             * @hooks
+             * @hookdef hook-bx_tasks-assigned 'bx_tasks', 'assigned' - hook on task assigned to profile
+             * - $unit_name - equals `bx_tasks`
+             * - $action - equals `assigned` 
+             * - $object_id - task id 
+             * - $sender_id - not used 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_author_id` - [int] id for assigned profile
+             *      - `privacy_view` - [string] privacy view value
+             * @hook @ref hook-bx_tasks-assigned
+             */
             bx_alert($this->MODULE, 'assigned', $iContentId, false, array(
                 'object_author_id' => $iProfileId,
                 'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
@@ -235,6 +247,18 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
         foreach($aMembersToRemove as $iProfileId){
             $oConn->removeConnection($iProfileId, $iContentId);
 
+            /**
+             * @hooks
+             * @hookdef hook-bx_tasks-unassigned 'bx_tasks', 'unassigned' - hook on task unassigned to profile
+             * - $unit_name - equals `bx_tasks`
+             * - $action - equals `unassigned` 
+             * - $object_id - task id 
+             * - $sender_id - not used 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_author_id` - [int] id for unassigned profile
+             *      - `privacy_view` - [string] privacy view value
+             * @hook @ref hook-bx_tasks-unassigned
+             */
             bx_alert($this->MODULE, 'unassigned', $iContentId, false, array(
                 'object_author_id' => $iProfileId,
                 'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]

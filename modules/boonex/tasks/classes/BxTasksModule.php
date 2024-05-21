@@ -57,6 +57,18 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
 
         $iContentAuthor = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+        /**
+         * @hooks
+         * @hookdef hook-bx_tasks-completed 'bx_tasks', 'completed' - hook on task unassigned to profile
+         * - $unit_name - equals `bx_tasks`
+         * - $action - can be `completed` or `reopened`
+         * - $object_id - task id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] profile_id for task's author
+         *      - `privacy_view` - [string] privacy view value
+         * @hook @ref hook-bx_tasks-completed
+         */
         bx_alert($this->getName(), $sActionName, $iContentId, false, array(
             'object_author_id' => $iContentAuthor,
             'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
@@ -669,11 +681,24 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         if($oConnection) {
             $aProfileIds = $oConnection->getConnectedContent($iContentId);
             if(!empty($aProfileIds) && is_array($aProfileIds))
-                foreach($aProfileIds as $iProfileId)
+                foreach($aProfileIds as $iProfileId){
+                    /**
+                     * @hooks
+                     * @hookdef hook-bx_tasks-expired 'bx_tasks', 'expired' - hook on task unassigned to profile
+                     * - $unit_name - equals `bx_tasks`
+                     * - $action - equals `expired`
+                     * - $object_id - task id 
+                     * - $sender_id - not used 
+                     * - $extra_params - array of additional params with the following array keys:
+                     *      - `object_author_id` - [int] profile_id for task's author
+                     *      - `privacy_view` - [string] privacy view value
+                     * @hook @ref hook-bx_tasks-expired
+                     */
                     bx_alert($this->getName(), 'expired', $iContentId, false, array(
                         'object_author_id' => $iProfileId,
                         'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
                     ));
+                }
         }
     }
     

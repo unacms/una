@@ -113,6 +113,17 @@ class BxAnalyticsModule extends BxDolModule
             }
         }
         
+        /**
+         * @hooks
+         * @hookdef hook-bx_analytics-get_modules 'bx_analytics', 'get_modules' - hook on get modules list with avalaible analytics
+         * - $unit_name - equals `get_modules`
+         * - $action - equals `get_modules` 
+         * - $object_id - not used
+         * - $sender_id -not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `list` - [array] by ref, array of modules for analytics as [module_name] = module_title, can be overridden in hook processing
+         * @hook @ref hook-bx_analytics-get_modules
+         */
         bx_alert($this->_aModule['name'], 'get_modules', 0, 0, array(
             'list' => &$aResult,
         ));
@@ -158,7 +169,18 @@ class BxAnalyticsModule extends BxDolModule
             $aRv[BX_ANALYTICS_CONTENT_TOTAL] = _t('_bx_analytics_type_content_growth');
             $aRv[BX_ANALYTICS_CONTENT_SPEED] = _t('_bx_analytics_type_content_speed');
         }
-        
+        /**
+         * @hooks
+         * @hookdef hook-bx_analytics-get_reports 'bx_analytics', 'get_reports' - hook on get avalaible reports for specified module
+         * - $unit_name - equals `bx_analytics`
+         * - $action - equals `get_reports` 
+         * - $object_id - not used
+         * - $sender_id -not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `list` - [array] by ref, array of avalaible reports for analytics as [report_name] = report_title, can be overridden in hook processing
+         * @hook @ref hook-bx_analytics-get_reports
+         */
         bx_alert($this->_aModule['name'], 'get_reports', 0, 0, array(
             'module' => $sModuleName,
             'list' => &$aRv,
@@ -316,6 +338,23 @@ class BxAnalyticsModule extends BxDolModule
                 $aData = array();
                 $iValuePrev = 0;
                 
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_analytics-get_chart_data_line 'bx_analytics', 'get_chart_data_line' - hook on get avalaible reports for specified module
+                 * - $unit_name - equals `bx_analytics`
+                 * - $action - equals `get_chart_data_line` 
+                 * - $object_id - not used
+                 * - $sender_id -not used
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `module` - [string] module name
+                 *      - `report_name` - [string] report name
+                 *      - `report_type` - [string]  by ref, report name, can be overridden in hook processing
+                 *      - `date_from` - [int] report's start of interval in php time format
+                 *      - `date_to` - [int] report's end of interval in php time format
+                 *      - `data` - [array] by ref, array of data for chart, can be overridden in hook processing
+                 *      - `prev_value` - [int] by ref, previous value for chart (started value), can be overridden in hook processing
+                 * @hook @ref hook-bx_analytics-get_chart_data_line
+                 */
                 bx_alert($this->_aModule['name'], 'get_chart_data_line', 0, 0, array(
                     'module' => $sModuleName,
                     'report_name' => $sReportName,

@@ -87,6 +87,19 @@ class BxInvResponse extends BxDolAlertsResponse
             return;
         
 		$bNeedToFriend = true;
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_invites-add_friend 'bx_invites', 'add_friend' - hook on add friend on new user registred by invitaion
+         * - $unit_name - equals `add_friend`
+         * - $action - equals `invite` 
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile_id` - [int] profile_id for user registred by invitaion
+         *      - `override_result` - [bool] by ref, if true friend will be added, can be overridden in hook processing
+         * @hook @ref hook-bx_invites-add_friend
+         */
 		bx_alert($this->_sModule, 'add_friend', 0, 0, [
 			'profile_id' => $oAlert->iObject,
 			'override_result' => &$bNeedToFriend,

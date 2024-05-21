@@ -138,6 +138,26 @@ class BxSMTPModule extends BxDolModule
             'ret'       => $iRet,
             'error_message' => $sErrorMessage,            
         );
+        /**
+         * @hooks
+         * @hookdef hook-profile-send_mail 'profile', 'send_mail' - hook in  $oAccount->isConfirmed check
+         * - $unit_name - equals `profile`
+         * - $action - equals `send_mail` 
+         * - $object_id - not used 
+         * - $sender_id - recipient profile_id 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `test_mode` - [bool] test mode or not
+         *      - `email` - [string] email
+         *      - `subject` - [string] letter subject
+         *      - `body` - [string] letter body
+         *      - `header` - [string] letter header
+         *      - `params` - [string] letter params
+         *      - `recipient` - [array] recipient info
+         *      - `html` - [bool] is html letter or not
+         *      - `ret` - [bool] sent successfuly  or not
+         *      - `error_message` - [string] error message
+         * @hook @ref hook-profile-send_mail
+         */
         bx_alert('profile', 'send_mail', $aRecipientInfo && isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
         //--- create system event [ end ]
 

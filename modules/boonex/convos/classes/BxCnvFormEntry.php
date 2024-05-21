@@ -54,6 +54,19 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         // check for spam
         $bSpam = false;
         $sValue = $this->getCleanValue($CNF['FIELD_TEXT']);
+         /**
+         * @hooks
+         * @hookdef hook-system-check_spam 'system', 'check_spam' - hook on check spam in some content
+         * - $unit_name - equals `system`
+         * - $action - equals `check_spam` 
+         * - $object_id - not used  
+         * - $sender_id - account id for current user
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `is_spam` - [bool] by ref, сontain spam content or not, can be overridden in hook processing
+         *      - `content` - [string] by ref, content, can be overridden in hook processing
+         *      - `where` - [string] module name
+         * @hook @ref hook-system-check_spam
+         */
         bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$sValue, 'where' => $this->MODULE));
         self::setSubmittedValue($CNF['FIELD_TEXT'], $sValue, $this->aFormAttrs['method']);
 
@@ -114,6 +127,20 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             else {
                 if($iRecipient != $iSender) {
                     $bCanContact = true;
+                    /**
+                     * @hooks
+                     * @hookdef hook-profile-check_contact 'profile', 'check_contact' - hook on check some profile to allow contact him
+                     * - $unit_name - equals `profile`
+                     * - $action - equals `check_contact` 
+                     * - $object_id - not used  
+                     * - $sender_id - not used
+                     * - $extra_params - array of additional params with the following array keys:
+                     *      - `can_contact` - [bool] by ref, can contact or not, can be overridden in hook processing
+                     *      - `sender` - [int] profile_id for sender
+                     *      - `recipient` - [int] profile_id for recipient 
+                     *      - `where` - [string] module name
+                     * @hook @ref hook-profile-check_contact
+                     */
                     bx_alert('profile', 'check_contact', 0, false, array('can_contact' => &$bCanContact, 'sender' => $iSender, 'recipient' => $iRecipient, 'where' => $this->MODULE));
                     if(!$bCanContact)
                         $iFolder = BX_CNV_FOLDER_SPAM;

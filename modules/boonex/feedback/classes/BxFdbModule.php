@@ -304,11 +304,29 @@ class BxFdbModule extends BxBaseModGeneralModule
      */
     public function onAddQuestion($iId)
     {
+        /**
+         * @hooks
+         * @hookdef hook-bx_feedback-added_question 'bx_feedback', 'added_question' - hook on new question added
+         * - $unit_name - equals `bx_feedback`
+         * - $action - equals `added_question` 
+         * - $object_id - question_id
+         * - $sender_id - not used
+         * @hook @ref hook-bx_feedback-added_question
+         */
         bx_alert($this->getName(), 'added_question', $iId);
     }
 
     public function onEditQuestion($iId)
     {
+        /**
+         * @hooks
+         * @hookdef hook-bx_feedback-edited_question 'bx_feedback', 'edited_question' - hook on new question edited
+         * - $unit_name - equals `bx_feedback`
+         * - $action - equals `edited_question` 
+         * - $object_id - question_id
+         * - $sender_id - not used
+         * @hook @ref hook-bx_feedback-edited_question
+         */
         bx_alert($this->getName(), 'edited_question', $iId);
     }
 
@@ -328,6 +346,18 @@ class BxFdbModule extends BxBaseModGeneralModule
                 $this->_oDb->deleteAnswer2User(array('answer_id' => $aAnswer[$CNF['FIELD_ANS_ID']]));
             }
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_feedback-deleted_question 'bx_feedback', 'deleted_question' - hook on question deleted
+         * - $unit_name - equals `bx_feedback`
+         * - $action - equals `deleted_question` 
+         * - $object_id - question_id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `question` - [array] all question info
+         *      - `answers` - [array] answers for current question
+         * @hook @ref hook-bx_feedback-deleted_question
+         */
         bx_alert($this->getName(), 'deleted_question', $aQuestion[$CNF['FIELD_ID']], false, array(
             'question' => $aQuestion,
             'answers' => $aAnswers,
@@ -341,6 +371,21 @@ class BxFdbModule extends BxBaseModGeneralModule
         $sModule = $this->getName();
         $aAnswer = $this->_oDb->getAnswers(array('type' => 'id', 'id' => $iAnswerId));
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_feedback-added_answer 'bx_feedback', 'added_answer' - hook on new answer added
+         * - $unit_name - equals `bx_feedback`
+         * - $action - equals `added_answer` 
+         * - $object_id - answer id
+         * - $sender_id - current user profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] current user profile_id
+         *      - `question_id` - [int] question id
+         *      - `important` - [string] answer's important value
+         *      - `data` - [string] answer's content
+         *      - `votes` - [int] count of votes
+         * @hook @ref hook-bx_feedback-added_answer
+         */
         bx_alert($sModule, 'added_answer', $iAnswerId, $iProfileId, array_merge(array(
             'object_author_id' => $iProfileId,
             'question_id' => $iQuestionId, 
@@ -349,6 +394,21 @@ class BxFdbModule extends BxBaseModGeneralModule
             'votes' => $aAnswer['votes']
         ), $aParams));
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_feedback-added_answer_notif 'bx_feedback', 'added_answer_notif' - hook on new answer added
+         * - $unit_name - equals `bx_feedback`
+         * - $action - equals `added_answer_notif` 
+         * - $object_id - question_id
+         * - $sender_id - current user profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] current user profile_id
+         *      - `subobject_id` - [int] answer id
+         *      - `important` - [string] answer's important value
+         *      - `data` - [string] answer's content
+         *      - `votes` - [int] count of votes
+         * @hook @ref hook-bx_feedback-added_answer_notif
+         */
         bx_alert($sModule, 'added_answer_notif', $iQuestionId, $iProfileId, array_merge(array(
             'object_author_id' => $iProfileId,
             'subobject_id' => $iAnswerId, 
@@ -365,6 +425,20 @@ class BxFdbModule extends BxBaseModGeneralModule
         $sModule = $this->getName();
         $aAnswer = $this->_oDb->getAnswers(array('type' => 'id', 'id' => $iAnswerId));
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_feedback-deleted_answer 'bx_feedback', 'deleted_answer' - hook on new answer deleted
+         * - $unit_name - equals `bx_feedback`
+         * - $action - equals `deleted_answer` 
+         * - $object_id - answer id
+         * - $sender_id - current user profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `question_id` - [int] question id
+         *      - `important` - [string] answer's important value
+         *      - `data` - [string] answer's content
+         *      - `votes` - [int] count of votes
+         * @hook @ref hook-bx_feedback-deleted_answer
+         */
         bx_alert($sModule, 'deleted_answer', $iAnswerId, $iProfileId, array_merge(array(
             'question_id' => $iQuestionId,
             'important' => $aAnswer['important'],
@@ -372,6 +446,20 @@ class BxFdbModule extends BxBaseModGeneralModule
             'votes' => $aAnswer['votes']
         ), $aParams));
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_feedback-deleted_answer_notif 'bx_feedback', 'added_answer_notif' - hook on new answer deleted
+         * - $unit_name - equals `bx_feedback`
+         * - $action - equals `added_answer_notif` 
+         * - $object_id - question_id
+         * - $sender_id - current user profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `subobject_id` - [int] answer id
+         *      - `important` - [string] answer's important value
+         *      - `data` - [string] answer's content
+         *      - `votes` - [int] count of votes
+         * @hook @ref hook-bx_feedback-added_answer_notif
+         */
         bx_alert($sModule, 'deleted_answer_notif', $iQuestionId, $iProfileId, array_merge(array(
             'subobject_id' => $iAnswerId,
             'important' => $aAnswer['important'],
