@@ -1,63 +1,125 @@
 version: '3'
+
+networks:
+  private_network:
+    external: true
+
 services:
     web:
         image: nginx:latest
+        deploy:
+            resources:
+                limits:
+                    cpus: '1.5'       # Limit the service to 1.5 CPUs
+                    memory: 6G      # Limit the service to 512MB of memory
+                reservations:
+                    memory: 6G      # Soft limit: reserve 256MB of memory
+        hostname: localhost
+        domainname: www.exemple.com
         ports:
             - "80:80"
         volumes:
             - ./scripts/docker-compose/nginx.conf:/etc/nginx/conf.d/default.conf
+            # - ./scripts/docker-compose/phpmyadmin.conf:/etc/nginx/conf.d/phpmyadmin.conf
             - ./:/opt/una
         depends_on:
             - php
+        networks:
+            - private_network
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    memcached:
+        image: memcached:latest
+        hostname: localhost
+        ports:
+            - "11211:11211"
+        networks:
+            - private_network
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
     php:
         build:
             context: .
             dockerfile: scripts/docker-compose/PHP.Dockerfile
+        deploy:
+            resources:
+                limits:
+                    cpus: '2'       # Limit the service to 1.5 CPUs
+                    memory: 12G      # Limit the service to 512MB of memory
+                reservations:
+                    memory: 12G      # Soft limit: reserve 256MB of memory
+        hostname: localhost
+        domainname: www.exemple.com
         volumes:
             - ./scripts/docker-compose/php.ini:/usr/local/etc/php/php.ini
-            - ./:/opt/una
+            - ./scripts/docker-compose/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./:/opt/una:Z
         depends_on:
             - mysql
+        networks:
+            - private_network
+        env_file:
+            - .env
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
     cron:
         build:
             context: .
             dockerfile: scripts/docker-compose/Cron.Dockerfile
+        deploy:
+            resources:
+                limits:
+                    cpus: '1.5'       # Limit the service to 1.5 CPUs
+                    memory: 8G      # Limit the service to 512MB of memory
+                reservations:
+                    memory: 8G      # Soft limit: reserve 256MB of memory
+        hostname: localhost
+        domainname: www.exemple.com
         volumes:
             - ./scripts/docker-compose/php.ini:/usr/local/etc/php/php.ini
-            - ./:/opt/una
+            - ./scripts/docker-compose/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./:/opt/una:Z
         depends_on:
             - mysql
+        networks:
+            - private_network
+        env_file:
+            - .env
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
     mysql:
         image: mariadb:latest
         environment:
-            MYSQL_ROOT_PASSWORD: 'root'
-            MYSQL_USER: 'una'
-            MYSQL_PASSWORD: 'una'
-            MYSQL_DATABASE: 'una'
+            MYSQL_ROOT_PASSWORD: 'password'
+            MYSQL_USER: 'exemple'
+            MYSQL_PASSWORD: 'password'
+            MYSQL_DATABASE: 'exemple'
         volumes:
             - mysqldata:/var/lib/mysql
             - ./scripts/docker-compose/db_dump.sql:/docker-entrypoint-initdb.d/db_dump.sql
             - ./scripts/docker-compose/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
         ports:
             - 3306:3306
+        networks:
+            - private_network
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
     jot:
         image: unaio/jot-server:latest
+        hostname: localhost
+        domainname: www.exemple.com
         restart: always
         ports:
             - 5000:5000
-    phpmyadmin:
-        image: phpmyadmin
-        restart: always
-        ports:
-            - 8080:80
-        environment:
-            - PMA_HOST=mysql
-            - PMA_USER=root
-            - PMA_PASSWORD=root
-            - UPLOAD_LIMIT=200M
-        volumes:
-            - ./scripts/docker-compose/phpmyadmin.inc.php:/etc/phpmyadmin/config.user.inc.php
-        depends_on:
-            - mysql
+        networks:
+            - private_network
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
 volumes:
     mysqldata: {}
