@@ -79,7 +79,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $aVars = $this->unitVars($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
         
-        $aExtras = array(
+        $aExtras = [
             'module' => $oModule->getName(),
             'data' => $aData,
             'check_private_content' => $isCheckPrivateContent,
@@ -87,8 +87,33 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'params' => $aParams,
             'tmpl_name' => &$sTemplate,
             'tmpl_vars' => &$aVars
-        );
+        ];
+        
+        /**
+         * @hooks
+         * @hookdef hook-profile-unit 'profile', 'unit' - hook to override profile browsing unit
+         * - $unit_name - equals `profile`
+         * - $action - equals `unit`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `data` - [array] profile info array as key&value pairs
+         *      - `check_private_content` - [boolean] check if it's a provate profile
+         *      - `template` - [string] or [array] with template for profile unit
+         *      - `params` - [array] additional params array as key&value pairs
+         *      - `tmpl_name` - [string] by ref, template name, can be overridden in hook processing
+         *      - `tmpl_vars` - [array] by ref, template parsable variables as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-profile-unit
+         */
         bx_alert('profile', 'unit', 0, 0, $aExtras);
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_profile-unit '{module_name}', 'unit' - hook to override profile browsing unit
+         * It's equivalent to @ref hook-profile-unit
+         * @hook @ref hook-bx_base_profile-unit
+         */
         bx_alert($aExtras['module'], 'unit', 0, 0, $aExtras);
  
         return $this->parseHtmlByName($sTemplate, $aVars);
@@ -351,12 +376,34 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             $sAddClassCover = "";
             if(isset($CNF['FIELD_COVER']) && isset($CNF['OBJECT_UPLOADERS_COVER']) && isset($CNF['OBJECT_STORAGE_COVER']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])){
-                bx_alert('system', 'image_editor', 0, 0, array(
+                /**
+                 * @hooks
+                 * @hookdef hook-system-image_editor 'system', 'image_editor' - hook to override profile cover editor
+                 * - $unit_name - equals `system`
+                 * - $action - equals `image_editor`
+                 * - $object_id - not used
+                 * - $sender_id - not used
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `module` - [string] module name
+                 *      - `content_id` - [int] profile content id
+                 *      - `is_allow_edit` - [boolean] if edit action is allowed to current user
+                 *      - `image_type` - [string] image type equals to `cover`
+                 *      - `image_url` - [string] image URL
+                 *      - `uploader` - [string] uploader name
+                 *      - `storage` - [string] storage name
+                 *      - `transcoder` - [string] transcoder name
+                 *      - `field` - [string] field name
+                 *      - `is_background` - [boolean] if image is used as background, always `true`
+                 *      - `add_class` - [string] by ref, class to add, can be overridden in hook processing
+                 *      - `add_code` - [array] by ref, code to add, can be overridden in hook processing
+                 * @hook @ref hook-system-image_editor
+                 */
+                bx_alert('system', 'image_editor', 0, 0, [
                    'module' => $oModule->getName(),
-                   'image_type' => 'cover',
-                   'is_allow_edit' => $bIsAllowEditCover,
-                   'image_url' => $aData[$CNF['FIELD_COVER']] ? $sUrlCover : '',
                    'content_id' => $aData[$CNF['FIELD_ID']],
+                   'is_allow_edit' => $bIsAllowEditCover,
+                   'image_type' => 'cover',
+                   'image_url' => $aData[$CNF['FIELD_COVER']] ? $sUrlCover : '',
                    'uploader' => $CNF['OBJECT_UPLOADERS_COVER'][0],
                    'storage' => $CNF['OBJECT_STORAGE_COVER'],
                    'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER'],
@@ -364,7 +411,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                    'is_background' => true,
                    'add_class' => &$sAddClassCover,
                    'add_code' => &$sAddCode
-                ));
+                ]);
             }
             
             $sCoverTweak = '';
@@ -402,12 +449,34 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             $sAddClassPicture = "";
             if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){
-                bx_alert('system', 'image_editor', 0, 0, array(
+                /**
+                 * @hooks
+                 * @hookdef hook-system-image_editor 'system', 'image_editor' - hook to override profile avatar editor
+                 * - $unit_name - equals `system`
+                 * - $action - equals `image_editor`
+                 * - $object_id - not used
+                 * - $sender_id - not used
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `module` - [string] module name
+                 *      - `content_id` - [int] profile content id
+                 *      - `is_allow_edit` - [boolean] if edit action is allowed to current user
+                 *      - `image_type` - [string] image type equals to `avatar`
+                 *      - `image_url` - [string] image URL
+                 *      - `uploader` - [string] uploader name
+                 *      - `storage` - [string] storage name
+                 *      - `transcoder` - [string] transcoder name
+                 *      - `field` - [string] field name
+                 *      - `is_background` - [boolean] if image used is as background, always `false`
+                 *      - `add_class` - [string] by ref, class to add, can be overridden in hook processing
+                 *      - `add_code` - [array] by ref, code to add, can be overridden in hook processing
+                 * @hook @ref hook-system-image_editor
+                 */
+                bx_alert('system', 'image_editor', 0, 0, [
                    'module' => $oModule->getName(),
-                   'image_type' => 'avatar',
-                   'is_allow_edit' => $bIsAllowEditPicture,
-                   'image_url' =>  $aData[$CNF['FIELD_PICTURE']] ? $sUrlPicture : '',
                    'content_id' => $aData[$CNF['FIELD_ID']],
+                   'is_allow_edit' => $bIsAllowEditPicture,
+                   'image_type' => 'avatar',
+                   'image_url' =>  $aData[$CNF['FIELD_PICTURE']] ? $sUrlPicture : '',
                    'uploader' => $CNF['OBJECT_UPLOADERS_PICTURE'][0],
                    'storage' => $CNF['OBJECT_STORAGE'],
                    'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR_BIG'],
@@ -415,7 +484,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                    'is_background' => false,
                    'add_class' => &$sAddClassPicture,
                    'add_code' => &$sAddCode
-                )); 
+                ]); 
             }
             
             $sPictureTweak = '';

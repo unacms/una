@@ -176,10 +176,16 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         if(bx_is_api())
             return bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000]);
 
-        bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_groups-redirect_after_edit '{module_name}', 'redirect_after_edit' - hook to override redirect URL which is used after content changing
+         * It's equivalent to @ref hook-bx_base_general-redirect_after_edit
+         * @hook @ref hook-bx_base_groups-redirect_after_edit
+         */
+        bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, [
             'content' => $aContentInfo,
             'override_result' => &$sUrl,
-        ));
+        ]);
 
         $this->_redirectAndExit($sUrl);
     }

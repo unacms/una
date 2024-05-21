@@ -2811,7 +2811,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         /**
          * @hooks
-         * @hookdef hook-system-check_allowed_view 'system', 'check_allowed_view' - hook to override the result of checking whether 'view' action allowed or not to specified profile
+         * @hookdef hook-system-check_allowed_view 'system', 'check_allowed_view' - hook to override the result of checking whether 'view' action is allowed or not to specified profile
          * - $unit_name - equals `system`
          * - $action - equals `check_allowed_view`
          * - $object_id - not used
@@ -2846,7 +2846,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $mixedResult = null;
         /**
          * @hooks
-         * @hookdef hook-system-check_allowed_browse 'system', 'check_allowed_browse' - hook to override the result of checking whether 'browse' action allowed or not to currently logged in profile
+         * @hookdef hook-system-check_allowed_browse 'system', 'check_allowed_browse' - hook to override the result of checking whether 'browse' action is allowed or not to currently logged in profile
          * It's equivalent to @ref hook-system-check_allowed_view 
          * except `content_info` parameter in $extra_params is missing
          * @hook @ref hook-system-check_allowed_browse
