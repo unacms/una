@@ -1,6 +1,18 @@
-# Installation Guide for the UNA application using Docker and Composer
+# Installation Guide for the Application using Docker and Composer
 
 This guide outlines the steps required to install and run the application using Docker and Composer.
+
+```bash
+
+gh repo clone unacms/una
+
+```
+
+```bash
+
+cd una
+
+```
 
 ```bash
 
@@ -49,7 +61,7 @@ copy the instruction below
 
 # Set execute permissions for ffmpeg.exe
 chmod +x ./plugins/ffmpeg/ffmpeg.exe
-
+chmod +x ./periodic/cron.php
 # Set permissions for the specified directories
 chmod 777 ./inc
 chmod 777 ./cache
@@ -78,9 +90,13 @@ Run the set_permissions.sh script using the command:
 sudo ./set_permissions.sh
 
 ```
+
 This will automatically apply the appropriate permissions for all directories and files specified in the script.
 
-## 4. Running Docker Containers using docker-compose
+## 4 Add .env variable
+
+
+## 5. Running Docker Containers using docker-compose
 
 To run the application, use docker-compose. Make sure you have a properly configured docker-compose.yml file for your application.
 
