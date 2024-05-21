@@ -27,12 +27,32 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         if ($CNF['OBJECT_STORAGE'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction && isset($CNF['FIELD_PICTURE'])) {
             $bResult = (int)$this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_PICTURE']) > 0;
             if($bResult)
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_base_profile-profile_picture_deleted '{module_name}', 'profile_picture_deleted' - hook after profile picture was deleted
+                 * - $unit_name - module name
+                 * - $action - equals `profile_picture_deleted`
+                 * - $object_id - context id
+                 * - $sender_id - not used
+                 * - $extra_params - not used
+                 * @hook @ref hook-bx_base_profile-profile_picture_deleted
+                 */
                 bx_alert($sModule, 'profile_picture_deleted', $oAlert->iObject);
         }
 
         if ($CNF['OBJECT_STORAGE_COVER'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction && isset($CNF['FIELD_COVER'])) {
             $bResult = (int)$this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_COVER']) > 0;
             if($bResult)
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_base_profile-profile_cover_deleted '{module_name}', 'profile_cover_deleted' - hook after profile cover was deleted
+                 * - $unit_name - module name
+                 * - $action - equals `profile_cover_deleted`
+                 * - $object_id - context id
+                 * - $sender_id - not used
+                 * - $extra_params - not used
+                 * @hook @ref hook-bx_base_profile-profile_cover_deleted
+                 */
                 bx_alert($sModule, 'profile_cover_deleted', $oAlert->iObject);
         }
 

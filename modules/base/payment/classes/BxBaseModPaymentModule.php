@@ -353,7 +353,24 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         $sSystem = 'system';
         $sModule = $this->getName();
         foreach([$sSystem, $sModule] as $sUnit)
-            bx_alert($sUnit, $sAction, $iObjectId, $iSender, ($sUnit == $sSystem ? array_merge(array('module' => $sModule), $aExtras) : $aExtras));
+            /**
+             * @hooks
+             * @hookdef hook-system-bx_payment_action 'system', '{payment_action}' - hook after some payment related action happened
+             * - $unit_name - equals `system`
+             * - $action - action (Finalize Checkout, Register Payment, Refund Payment, etc)
+             * - $object_id - object id, not used in most cases
+             * - $sender_id - action performer profile id
+             * - $extra_params - array of additional params including currently active payment processing module name
+             * @hook @ref hook-system-bx_payment_action
+             */
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_payment-bx_payment_action '{payment_module_name}', '{payment_action}' - hook after some payment related action happened
+             * It's equivalent to @ref hook-system-bx_payment_action
+             * except `module` parameter in $extra_params is missing
+             * @hook @ref hook-bx_base_payment-bx_payment_action
+             */
+            bx_alert($sUnit, $sAction, $iObjectId, $iSender, ($sUnit == $sSystem ? array_merge(['module' => $sModule], $aExtras) : $aExtras));
     }
 
     public function callGetPaymentData($mixedModule)

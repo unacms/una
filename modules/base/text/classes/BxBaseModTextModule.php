@@ -821,7 +821,50 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             $sAction = 'deferred';
 
         $aParams = $this->_alertParamsAdd($aContentInfo);
-        bx_alert('system', 'prepare_alert_params', 0, 0, array('unit'=> $this->getName(), 'action' => &$sAction, 'object_id' => &$iId, 'sender_id' => &$iAuthorId, 'extras' => &$aParams));
+        
+        /**
+         * @hooks
+         * @hookdef hook-system-prepare_alert_params 'system', 'prepare_alert_params' - hook to override alert (hook) params
+         * - $unit_name - equals `system`
+         * - $action - equals `prepare_alert_params`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `unit` - [string] unit name
+         *      - `action` - [string] by ref, action, can be overridden in hook processing
+         *      - `object_id` - [int] by ref, object id, can be overridden in hook processing
+         *      - `sender_id` - [int] by ref, action performer profile id, can be overridden in hook processing
+         *      - `extras` - [array] by ref, extra params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-system-prepare_alert_params
+         */
+        bx_alert('system', 'prepare_alert_params', 0, 0, [
+            'unit'=> $this->getName(), 
+            'action' => &$sAction, 
+            'object_id' => &$iId, 
+            'sender_id' => &$iAuthorId, 
+            'extras' => &$aParams
+        ]);
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_text-added '{module_name}', 'added' - hook after content was added (published)
+         * - $unit_name - module name
+         * - $action - equals `added`
+         * - $object_id - content id
+         * - $sender_id - content author profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `status` - [string] content status
+         *      - `status_admin` - [string] content admin status
+         *      - `privacy_view` - [int] or [string] privacy for view content action, @see BxDolPrivacy
+         *      - `cf` - [int] content's audience filter value
+         * @hook @ref hook-bx_base_text-added
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_text-deferred '{module_name}', 'deferred' - hook after content was added with pending approval status
+         * It's equivalent to @ref hook-bx_base_text-added
+         * @hook @ref hook-bx_base_text-deferred
+         */
         bx_alert($this->getName(), $sAction, $iId, $iAuthorId, $aParams);
 
         $this->_processModerationNotifications($aContentInfo);
@@ -834,6 +877,13 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
 
         $aParams = $this->_alertParamsEdit($aContentInfo);
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_text-edited '{module_name}', 'edited' - hook after content was changed
+         * It's equivalent to @ref hook-bx_base_text-added
+         * @hook @ref hook-bx_base_text-edited
+         */
         bx_alert($this->getName(), 'edited', $iId, false, $aParams);
     }
 
