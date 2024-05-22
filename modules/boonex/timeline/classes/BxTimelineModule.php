@@ -982,6 +982,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewHotOutline' => '',
             'GetBlockViewAccount' => '',
             'GetBlockViewAccountOutline' => '',
+            'GetBlockItem' => '',
             'GetPosts' => '',
             'Repost' => '',
             'Delete' => '',
@@ -5366,7 +5367,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                     break;
             }
 
-            $aResult = sort($aIds) == sort($aParams['validate']) ? 'valid' : 'invalid';
+            sort($aIds);
+            sort($aParams['validate']);
+            $aResult = $aIds == $aParams['validate'] ? 'valid' : 'invalid';
         }
         else 
             $aResult = $this->_oTemplate->getViewBlock($aParams);
