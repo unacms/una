@@ -224,7 +224,6 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
     {
         $sRet = null;
         
-<<<<<<< HEAD
         /**
          * @hooks
          * @hookdef hook-system-unpermalink 'system', 'unpermalink' - hook to override link during permalink to link conversion
@@ -243,9 +242,6 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
             'strip_base_url' => $isStripBaseUrl, 
             'return_data' => &$sRet
         ]);
-=======
-        bx_alert('system', 'unpermalink', 0, 0, array('link' => $sLink, 'strip_base_url' => $isStripBaseUrl, 'return_data' => &$sRet));
->>>>>>> 2d79728c96ec4de3e5c6c11f8892e10bbb4c55e7
         if (null !== $sRet)
             return $sRet;
 

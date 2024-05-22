@@ -279,7 +279,6 @@ class BxDolRelation extends BxDolConnection
     {
         $aRelations = BxDolFormQuery::getDataItems($this->_sPreList, false, BX_DATA_VALUES_ALL);
 
-<<<<<<< HEAD
         /**
          * @hooks
          * @hookdef hook-bx_dol_relation-get_relations '{object_name}', 'get_relations' - hook to override relation info 
@@ -295,10 +294,6 @@ class BxDolRelation extends BxDolConnection
          * @hook @ref hook-bx_dol_relation-get_relations
          */
         bx_alert($this->_sObject, 'get_relations', 0, bx_get_logged_profile_id(), [
-=======
-        
-        bx_alert($this->_sObject, 'get_relations', 0, bx_get_logged_profile_id(), array(
->>>>>>> 2d79728c96ec4de3e5c6c11f8892e10bbb4c55e7
             'initiator' => (int)$iInitiator,
             'content' => (int)$iContent,
             'pre_list' => $this->_sPreList,
