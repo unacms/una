@@ -126,7 +126,17 @@ class BxDolInformer extends BxDolFactory implements iBxDolSingleton
                 $oProfile->addInformerPermanentMessages($this);
         }
 
-        // add permament messages from modules
+        /**
+         * @hooks
+         * @hookdef hook-system-informer_permament_messages 'system', 'informer_permament_messages' - hook on informer
+         * - $unit_name - equals `system`
+         * - $action - equals `informer_permament_messages` 
+         * - $object_id - label id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `informer` - [object] object with informer
+         * @hook @ref hook-system-informer_permament_messages
+         */
         bx_alert('system', 'informer_permament_messages', 0, false, array('informer' => $this));
     }
 

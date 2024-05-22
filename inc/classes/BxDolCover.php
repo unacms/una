@@ -136,6 +136,19 @@ class BxDolCover extends BxDolFactory implements iBxDolSingleton
         if (false !== $sTemplateName)
             $this->_sTemplateName = $sTemplateName;
 
+         /**
+         * @hooks
+         * @hookdef hook-system-set_cover 'system', 'set_cover' - hook in set cover 
+         * - $unit_name - equals `account`
+         * - $action - equals `set_cover` 
+         * - $object_id - not used
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `options` - [array] by ref, cover options, default template supports the following: title, can be overridden in hook processing
+         *      - `override_result` - [string] by ref, template name, can be overridden in hook processing
+         *      - `cover` - [object] object cover
+         * @hook @ref hook-system-set_cover
+         */
         bx_alert('system', 'set_cover', 0, false, array('options' => &$this->_aOptions, 'template_name' => &$this->_sTemplateName, 'cover' => $this));
     }
 
@@ -158,6 +171,18 @@ class BxDolCover extends BxDolFactory implements iBxDolSingleton
         if(!$this->_sCoverImageUrl)
             return false;
 
+        /**
+         * @hooks
+         * @hookdef hook-system-set_cover 'system', 'set_cover_image' - hook on cover image
+         * - $unit_name - equals `system`
+         * - $action - equals `set_cover_image` 
+         * - $object_id - not used
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `cover_image` - [string] by ref, cover image url, or array with file id and storage or transcoder object, can be overridden in hook processing
+         *      - `cover` - [object] object cover
+         * @hook @ref hook-system-set_cover_image
+         */
         bx_alert('system', 'set_cover_image', 0, false, array('cover_image' => &$this->_sCoverImageUrl, 'cover' => $this));
 
         return true;

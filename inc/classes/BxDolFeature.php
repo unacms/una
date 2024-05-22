@@ -176,6 +176,32 @@ class BxDolFeature extends BxDolObject
         );
 
         bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'feature', $iObjectId, $iAuthorId, array('object_author_id' => $iObjectAuthorId));
+        /**
+         * @hooks
+         * @hookdef hook-feature-undo 'feature', 'undo' - hook on cancel feature 
+         * - $unit_name - equals `feature`
+         * - $action - equals `undo` 
+         * - $object_id - report id 
+         * - $sender_id - profile_id for feature's author
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_system` - [string] system name, ex: bx_posts
+         *      - `object_id` - [int] feature object id 
+         *      - `object_author_id` - [int] author's profile_id for feature object_id 
+         * @hook @ref hook-feature-undo
+         */
+        /**
+         * @hooks
+         * @hookdef hook-feature-do 'feature', 'do' - hook on feature 
+         * - $unit_name - equals `feature`
+         * - $action - equals `do` 
+         * - $object_id - report id 
+         * - $sender_id - profile_id for feature's author
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_system` - [string] system name, ex: bx_posts
+         *      - `object_id` - [int] feature object id 
+         *      - `object_author_id` - [int] author's profile_id for feature object_id 
+         * @hook @ref hook-feature-do
+         */
         bx_alert('feature', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
         return array(

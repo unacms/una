@@ -548,6 +548,17 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         $aResult = self::$_aColors;
 
+        /**
+         * @hooks
+         * @hookdef hook-system-get_color_palette 'system', 'get_color_palette' - hook on get color palette
+         * - $unit_name - equals `system`
+         * - $action - equals `get_color_palette` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [array] by ref, array of colors, can be overridden in hook processing
+         * @hook @ref hook-system-get_color_palette
+         */
         bx_alert('system', 'get_color_palette', 0, false, array(
             'override_result' => &$aResult
         ));
@@ -692,6 +703,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(!self::$_aImages)
             self::$_aImages = [];
 
+        /**
+         * @hooks
+         * @hookdef hook-system-get_layout_images 'system', 'get_layout_images' - hook on get layout images
+         * - $unit_name - equals `system`
+         * - $action - equals `get_layout_images` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `code` - [string] page code
+         *      - `override_result` - [array] by ref, array of images, can be overridden in hook processing
+         * @hook @ref hook-system-get_layout_images
+         */
         bx_alert('system', 'get_layout_images', 0, false, [
             'code' => $this->_sCode,
             'override_result' => &self::$_aImages
@@ -2835,6 +2858,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
             switch($sAction) {
                 case 'add':
+                    /**
+                     * @hooks
+                     * @hookdef hook-system-add_files 'system', 'add_files' - hook on add file to page 
+                     * - $unit_name - equals `system`
+                     * - $action - equals `add_files` 
+                     * - $object_id - not used 
+                     * - $sender_id - not used 
+                     * - $extra_params - array of additional params with the following array keys:
+                     *      - `file` - [string] file name
+                     *      - `type` - [string] file type
+                     *      - `dynamic` - [bool] true if added as dynamic
+                     *      - `system` - [bool] true if system file
+                     *      - `url` - [string] by ref, file url, can be overridden in hook processing
+                     *      - `path` - [string] by ref, file path, can be overridden in hook processing
+                     * @hook @ref hook-system-add_files
+                     */
                     bx_alert('system', 'add_files', 0, 0, [
                         'file' => $sFile,
                         'type' => $sType,
@@ -3637,6 +3676,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if (empty($oTemplate))
            $oTemplate = $this;
 
+        /**
+         * @hooks
+         * @hookdef hook-system-design_before_output 'system', 'design_before_output' - hook on before page's html generated
+         * - $unit_name - equals `system`
+         * - $action - equals `design_before_output` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `page` - [array] by ref, page object paramenters, can be overridden in hook processing
+         *      - `page_content` - [array] by ref, page content values, can be overridden in hook processing
+         * @hook @ref hook-system-design_before_output
+         */
         bx_alert('system', 'design_before_output', 0, 0, ['page' => &$this->aPage, 'page_content' => &$this->aPageContent]);
 
         header( 'Content-type: text/html; charset=utf-8' );
@@ -3646,6 +3697,17 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         $sResult = $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());
         
+        /**
+         * @hooks
+         * @hookdef hook-system-design_after_output 'system', 'design_after_output' - hook on after page's html generated
+         * - $unit_name - equals `system`
+         * - $action - equals `design_after_output` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [string] by ref, html content for current page, can be overridden in hook processing
+         * @hook @ref hook-system-design_after_output
+         */
         bx_alert('system', 'design_after_output', 0, false, ['override_result' => &$sResult]);
         
         echo $sResult;

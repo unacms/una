@@ -384,6 +384,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         if ($iRet = $this->_oQuery->keywordsAdd($iId, array($s), $bDeletePreviousKeywords)) {
             $sSource = $this->_sObject . '_' . $iId;
 
+<<<<<<< HEAD
             /**
              * @hooks
              * @hookdef hook-bx_dol_metatags-keyword_added '{object_name}', 'keyword_added' - hook after a keyword (hashtag) was recognized in provided text
@@ -416,6 +417,24 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
                 'object' => $this->_sObject, 
                 'source' => $sSource
             ]);
+=======
+            bx_alert($this->_aObject['module'], 'keyword_added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'source' => $sSource));
+            /**
+             * @hooks
+             * @hookdef hook-meta_keyword-added 'meta_keyword', 'added' - hook on new keyword added
+             * - $unit_name - equals `meta_keyword`
+             * - $action - equals `added` 
+             * - $object_id - meta keyword id
+             * - $sender_id - profile_id for current user 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `meta` - [string] keyword
+             *      - `content_id` - [string] content id
+             *      - `object` - [string] object name
+             *      - `source` - [string] source
+             * @hook @ref hook-meta_keyword-added
+             */
+            bx_alert('meta_keyword', 'added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'object' => $this->_sObject, 'source' => $sSource));
+>>>>>>> 2d79728c96ec4de3e5c6c11f8892e10bbb4c55e7
         }
 
         return $iRet;
@@ -521,6 +540,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         }
         
         $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . $sSectionPart;
+<<<<<<< HEAD
         
         /**
          * @hooks
@@ -545,6 +565,30 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             'section' => $mixedSection,
             'sObject' => $this->_sObject, //depricated, will be removed in future versions, approximately in UNA 15.
         ]);
+=======
+        /**
+         * @hooks
+         * @hookdef hook-meta_keyword-url 'meta_keyword', 'url' - hook on get URL for hashtags
+         * - $unit_name - equals `meta_keyword`
+         * - $action - equals `url` 
+         * - $object_id - not used
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `url` - [string] by ref, url for hashtag
+         *      - `keyword` - [string] hashtag
+         *      - `id` - [int] hashtag id
+         *      - `sObject` - [string] object name
+         *      - `section` - [string] section name
+         * @hook @ref hook-meta_keyword-url
+         */
+        bx_alert('meta_keyword', 'url', 0, false, array(
+           'url' => &$sUrl,
+           'keyword' => $sKeyword,
+		   'id' => $iId,
+           'sObject' => $this->_sObject,
+           'section' => $mixedSection,
+        ));
+>>>>>>> 2d79728c96ec4de3e5c6c11f8892e10bbb4c55e7
     
         return bx_is_api() ? bx_api_get_relative_url($sUrl) : $sUrl;
     }

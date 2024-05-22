@@ -490,6 +490,21 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
                 }
             }
 
+            /**
+             * @hooks
+             * @hookdef hook-system-transcode 'system', 'transcode' - hook on cancel vote 
+             * - $unit_name - equals `system`
+             * - $action - equals `transcode` 
+             * - $object_id - file handler
+             * - $sender_id - profile_id for vote's author
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `transcoder_object` - [array] transcoder object properties
+             *      - `object` - [object] transcoder object
+             *      - `db` - [object] database object
+             *      - `file_path` - [string] file path
+             *      - `ret` - [bool] return 
+             * @hook @ref hook-system-transcode
+             */
             bx_alert('system', 'transcode', $mixedHandler, false, array(
                 'transcoder_object' => $this->_aObject['object'],
                 'object' => $this,
@@ -523,6 +538,18 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
         } while (false);
 
+        /**
+         * @hooks
+         * @hookdef hook-system-transcoded 'system', 'transcoded' - hook on cancel vote 
+         * - $unit_name - equals `system`
+         * - $action - equals `transcoded` 
+         * - $object_id - file handler
+         * - $sender_id - profile_id for vote's author
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [object] transcoder object
+         *      - `ret` - [bool] reported object id 
+         * @hook @ref hook-system-transcoded
+         */
         bx_alert($this->_aObject['object'], 'transcoded', $mixedHandler, false, array(
             'object' => $this,
             'ret' => $bRet,

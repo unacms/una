@@ -125,6 +125,21 @@ class BxAlbumsModule extends BxBaseModTextModule
         $aContentInfo = $this->_oDb->getContentInfoById($aMediaInfo['content_id']);
         $iSender = isLogged() ? bx_get_logged_profile_id() : $aMediaInfo['author'];
         $iAuthor = isset($aContentInfo[$CNF['FIELD_AUTHOR']]) ? $aContentInfo[$CNF['FIELD_AUTHOR']] : $aMediaInfo['author'];
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_albums-media_deleted 'bx_albums', 'media_deleted' - hook on new media deleted from album
+         * - $unit_name - equals `bx_albums`
+         * - $action - equals `media_deleted` 
+         * - $object_id - album_id
+         * - $sender_id - author's profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] confirmation type can be none/phone/email/email_and_phone/email_or_phone
+         *      - `subobject_id` - [int] id for added media
+         *      - `media_id` - [int] id for added media
+         *      - `media_info` - [array] media info
+         * @hook @ref hook-bx_albums-media_deleted
+         */
         bx_alert($this->getName(), 'media_deleted', $aMediaInfo['content_id'], $iSender, array(
             'object_author_id' => $iAuthor,
 

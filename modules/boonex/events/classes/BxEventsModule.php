@@ -136,6 +136,17 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         if(!$this->_oDb->checkIn($iProfileId, $iId))
             return false;
 
+         /**
+         * @hooks
+         * @hookdef hook-bx_events-check_in 'bx_events', 'check_in' - hook in on somebody check-in some event 
+         * - $unit_name - equals `bx_events`
+         * - $action - equals `check_in` 
+         * - $object_id - event_id
+         * - $sender_id - current user's profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `event_profile_id` - [int] profile_id from checked event
+         * @hook @ref hook-bx_events-check_in
+         */
         bx_alert($this->getName(), 'check_in', $iId, $iProfileId, [
             'event_profile_id' => $aDataEntry['profile_id'],
         ]);
@@ -247,6 +258,23 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             $aEntry['cover'] = $this->serviceGetCover($aEntry['id']);
         }
         
+        /**
+         * @hooks
+         * @hookdef hook-bx_events-calendar_data 'bx_events', 'calendar_data' - hook in get data for calendar
+         * - $unit_name - equals `bx_events`
+         * - $action - equals `calendar_data` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] array of paramaretes in calendar 
+         *      - `event` - [int] event id
+         *      - `context_id` - [int] profile_id for context of current event
+         *      - `start` - [string] start date in format date('d.m.Y')
+         *      - `end` - [string] end date in format date('d.m.Y')
+         *      - `sql_part` - [array] by ref, sql for data selection, can be overridden in hook processing
+         *      - `data` - [array] by ref, data for calendar, can be overridden in hook processing
+         * @hook @ref hook-bx_events-calendar_data
+         */
         bx_alert($this->getName(), 'calendar_data', 0, false, array(
             'params' => $aParams,
             'event' => $iContentId,
@@ -640,6 +668,18 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
                 if($bUseIn)
                     $this->sendReminders($aEntry);
 
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_events-reminder 'bx_events', 'reminder' - hook on enent's reminder
+                 * - $unit_name - equals `bx_events`
+                 * - $action - equals `reminder` 
+                 * - $object_id - event_id
+                 * - $sender_id - event profile_id
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `object_author_id` - [int] event profile_id 
+                 *      - `reminder` - [int] reminder id
+                 * @hook @ref hook-bx_events-reminder
+                 */
                 bx_alert($sModule, 'reminder', $aEntry[$CNF['FIELD_ID']], $iEventProfileId, array(
                     'object_author_id' => $iEventProfileId,
                     'reminder' => $iReminder
