@@ -607,7 +607,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $aQueryParams['cid'] = $this->_iContentId;
         }
         $aQueryParams['fi'] = '';
-        
+
         /**
          * @hooks
          * @hookdef hook-system-editor_query_params 'system', 'editor_query_params' - hook to override http(s) request's query params, which is used in HTML editor

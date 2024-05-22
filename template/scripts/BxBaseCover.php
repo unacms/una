@@ -67,13 +67,26 @@ class BxBaseCover extends BxDolCover
         
             $aParams = array_merge($this->_aOptiondDefault, $mixedOptions);
         }
-        
-        bx_alert('system', 'display_cover', 0, 0, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-system-display_cover 'system', 'display_cover' - hook to override page cover code to be output
+         * - $unit_name - equals `system`
+         * - $action - equals `display_cover`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `res` - [string] by ref, when null the default generation mechanism will be used, can be overridden in hook processing
+         *      - `template_name` - [string] by ref, template name, can be overridden in hook processing
+         *      - `params` - [array] by ref, additional params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-system-display_cover
+         */
+        bx_alert('system', 'display_cover', 0, 0, [
             'res' => &$sResult, 
             'template_name' => &$this->_sTemplateName, 
             'params' => &$aParams, 
-        ));
-        
+        ]);
+
         if ($sResult  != null)
             return $sResult;
         

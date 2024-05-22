@@ -508,6 +508,22 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                     $sSeoTitleLimited = BxTemplFunctions::getInstance()->getStringWithLimitedLength($sSeoTitle, 45);
                     $sUri = uriGenerate ($sSeoTitleLimited, 'sys_seo_links', 'uri', ['cond' => ['module' => $sPageModule, 'page_uri' => $sPageUri]]);
 
+                    /**
+                     * @hooks
+                     * @hookdef hook-system-uri_generate 'system', 'uri_generate' - hook to override SEO URI generated for a page
+                     * - $unit_name - equals `system`
+                     * - $action - equals `uri_generate`
+                     * - $object_id - not used
+                     * - $sender_id - not used
+                     * - $extra_params - array of additional params with the following array keys:
+                     *      - `module` - [string] module name
+                     *      - `page_uri` - [string] page default URI
+                     *      - `param_name` - [string] param name
+                     *      - `param_value` - [string] param value
+                     *      - `title` - [string] SEO page title
+                     *      - `uri` - [string] by ref, generated SEO URI, can be overridden in hook processing
+                     * @hook @ref hook-system-uri_generate
+                     */
                     bx_alert('system', 'uri_generate', 0, false, [
                         'module' => $sPageModule,
                         'page_uri' =>$sPageUri,

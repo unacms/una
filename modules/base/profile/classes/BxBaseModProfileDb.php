@@ -129,10 +129,10 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
          * - $extra_params - array of additional params with the following array keys:
          *      - `module` - [string] profile module name
          *      - `table` - [string] db table name
-         *      - `select` - [string] by ref, select part of SQL query, can be overridden in hook processing
-         *      - `join` - [string] by ref, join part of SQL query, can be overridden in hook processing
-         *      - `where` - [string] by ref, where part of SQL query, can be overridden in hook processing
-         *      - `order_by` - [string] by ref, order part of SQL query, can be overridden in hook processing
+         *      - `select` - [string] by ref, 'select' part of SQL query, can be overridden in hook processing
+         *      - `join` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `where` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `order_by` - [string] by ref, 'order' part of SQL query, can be overridden in hook processing
          * @hook @ref hook-profile-search_by_term
          */
         bx_alert('profile', 'search_by_term', 0, 0, [

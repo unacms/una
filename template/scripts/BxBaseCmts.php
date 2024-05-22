@@ -222,6 +222,31 @@ class BxBaseCmts extends BxDolCmts
         $sBlockTitle = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll(0, true));
         $sBlockMenu = $this->_getControlsBox();
 
+        /**
+         * @hooks
+         * @hookdef hook-system-view_comments 'system', 'view_comments' - hook to override comments block
+         * - $unit_name - equals `system`
+         * - $action - equals `view_comments`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [object] an instance of comments, @see BxDolCmts
+         *      - `system` - [string] comments object name
+         *      - `id` - [int] commented content id
+         *      - `params_browse` - [array] browse params array as key&value pairs
+         *      - `params_display` - [array] display params array as key&value pairs
+         *      - `post_form_top` - [string] by ref, post form code for top section, can be overridden in hook processing
+         *      - `content_before` - [string] by ref, a code to be displayed before comments list, can be overridden in hook processing
+         *      - `comments` - [string] by ref, a comments list code, can be overridden in hook processing
+         *      - `comments_pinned` - [string] by ref, a pinned comments list code, can be overridden in hook processing
+         *      - `content_after` - [string] by ref, a code to be displayed after comments list, can be overridden in hook processing
+         *      - `post_form_bottom` - [string] by ref, post form code for bottom section, can be overridden in hook processing
+         *      - `js_content` - [string] by ref, comments JavaScript code, can be overridden in hook processing
+         *      - `block_title` - [string] by ref, block title, can be overridden in hook processing
+         *      - `block_menu` - [string] by ref, block submenu, can be overridden in hook processing
+         *      
+         * @hook @ref hook-system-view_comments
+         */
         bx_alert('system', 'view_comments', 0, 0, [
             'object' => $this,
             'system' => $this->_sSystem,
