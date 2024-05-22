@@ -41,7 +41,25 @@ class BxDolModuleProxy
 
             // make it possible to override the call or arguments
             $res = null;
-            bx_alert($this->_sObjectType . '_method_call', $sMethodName, 0, 0, array('module' => $oModule, 'args' => &$aArguments, 'override_result' => &$res));
+            
+            /**
+             * @hooks
+             * @hookdef hook-module_template_method_call-method_name 'module_template_method_call', '{method_name}' - hook to override a method from template class in a module
+             * - $unit_name - equals `module_template_method_call`
+             * - $action - method name
+             * - $object_id - not used
+             * - $sender_id - not used
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `module` - [object] an instance of a module, @see BxDolModule
+             *      - `args` - [array] by ref, array with method call arguments, can be overridden in hook processing
+             *      - `override_result` - [mixed] by ref, method call response, if equals to 'null', the default method will be called, can be overridden in hook processing
+             * @hook @ref hook-module_template_method_call-method_name
+             */
+            bx_alert($this->_sObjectType . '_method_call', $sMethodName, 0, 0, [
+                'module' => $oModule, 
+                'args' => &$aArguments, 
+                'override_result' => &$res
+            ]);
             if (null !== $res)
                 return $res;
 

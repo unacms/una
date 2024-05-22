@@ -866,9 +866,20 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         }
 
-        bx_alert('system', 'form_check', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-form_check 'system', 'form_check' - hook to override form object after data checking was performed
+         * - $unit_name - equals `system`
+         * - $action - equals `form_check`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [object] by ref, an instance of form, @see BxDolForm, can be overridden in hook processing
+         * @hook @ref hook-system-form_check
+         */
+        bx_alert('system', 'form_check', 0, 0, [
             'object' => &$this,
-        ));
+        ]);
     }
 
     function getKeyValuesPair ()
@@ -895,12 +906,26 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         if ($oDb->query($sSql)) {
             $iRes = $oDb->lastId();
 
-            bx_alert('system', 'form_submitted', $iRes, bx_get_logged_profile_id(), array(
+            /**
+             * @hooks
+             * @hookdef hook-system-form_submitted 'system', 'form_submitted' - hook to override form object after data was submitted and saved in database
+             * - $unit_name - equals `system`
+             * - $action - equals `form_submitted`
+             * - $object_id - newly created database record id
+             * - $sender_id - currently logged in profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `action` - [string] action equals to 'insert'
+             *      - `module` - [string] module name if it's available
+             *      - `entry_id` - [int] newly created database record id
+             *      - `form_object` - [object] by ref, an instance of form, @see BxDolForm, can be overridden in hook processing
+             * @hook @ref hook-system-form_submitted
+             */
+            bx_alert('system', 'form_submitted', $iRes, bx_get_logged_profile_id(), [
+                'action' => 'insert',
                 'module' => isset($this->aParams['module']) ? $this->aParams['module'] : '',
                 'entry_id' => $iRes,
-                'action' => 'insert',
                 'form_object' => &$this,
-            ));
+            ]);
 
             return $iRes;
         }
@@ -918,12 +943,26 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             return false;
         $bRes = BxDolDb::getInstance()->query($sSql);
 
-        bx_alert('system', 'form_submitted', $val, bx_get_logged_profile_id(), array(
+        /**
+         * @hooks
+         * @hookdef hook-system-form_submitted 'system', 'form_submitted' - hook to override form object after data was submitted and saved in database
+         * - $unit_name - equals `system`
+         * - $action - equals `form_submitted`
+         * - $object_id - updated database record id
+         * - $sender_id - currently logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `action` - [string] action equals to 'update'
+         *      - `module` - [string] module name if it's available
+         *      - `entry_id` - [int] updated database record id
+         *      - `form_object` - [object] by ref, an instance of form, @see BxDolForm, can be overridden in hook processing
+         * @hook @ref hook-system-form_submitted
+         */
+        bx_alert('system', 'form_submitted', $val, bx_get_logged_profile_id(), [
+            'action' => 'update',
             'module' => isset($this->aParams['module']) ? $this->aParams['module'] : '',
             'entry_id' => $val,
-            'action' => 'update',
             'form_object' => &$this,
-        ));
+        ]);
 
         return $bRes;
     }
@@ -1753,7 +1792,26 @@ class BxDolFormCheckerHelper
     static public function checkIsSpam(&$val, $sType = 'textarea')
     {
         $bSpam = false;
-        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$val, 'where' => 'form', 'type' => $sType));
+        /**
+         * @hooks
+         * @hookdef hook-system-check_spam 'system', 'check_spam' - hook to override (perform) spam checking 
+         * - $unit_name - equals `system`
+         * - $action - equals `check_spam`
+         * - $object_id - not used
+         * - $sender_id - currently logged in account id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `is_spam` - [boolean] by ref, if checked conetent is spam or not, can be overridden in hook processing
+         *      - `content` - [string] by ref, content to check, can be overridden in hook processing
+         *      - `where` - [string] where the content was received from, equals to 'form'
+         *      - `type` - [string] subsection where the content was received from
+         * @hook @ref hook-system-check_spam
+         */
+        bx_alert('system', 'check_spam', 0, getLoggedId(), [
+            'is_spam' => &$bSpam, 
+            'content' => &$val, 
+            'where' => 'form', 
+            'type' => $sType
+        ]);
         return $bSpam;
     }
 

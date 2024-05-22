@@ -323,12 +323,27 @@ class BxBaseFormView extends BxDolForm
 
         $sInclude = '';
         $this->sCode = false;
-        bx_alert('system', 'form_output', 0, 0, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-system-form_output 'system', 'form_output' - hook to override form object and/or code to be output
+         * - $unit_name - equals `system`
+         * - $action - equals `form_output`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `dynamic` - [boolean] is dynamic mode
+         *      - `object` - [object] by ref, an instance of form class, @see BxDolForm, can be overridden in hook processing
+         *      - `code` - [boolean] or [string] by ref, when false the default generation mechanism will be used, can be overridden in hook processing
+         *      - `include` - [string] by ref, additional data to be attached to output, can be overridden in hook processing
+         * @hook @ref hook-system-form_output
+         */
+        bx_alert('system', 'form_output', 0, 0, [
             'dynamic' => $this->_bDynamicMode,
             'object' => &$this,
             'code' => &$this->sCode,
             'include' => &$sInclude
-        ));
+        ]);
 
         if($this->sCode === false)
             $this->sCode = $this->genForm();
@@ -344,12 +359,24 @@ class BxBaseFormView extends BxDolForm
     
         
         $this->sCode = false;
-        bx_alert('system', 'form_output', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-form_output_api 'system', 'form_output_api' - hook to override form object and/or code to be output. Is used in API calls.
+         * - $unit_name - equals `system`
+         * - $action - equals `form_output_api`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `dynamic` - [boolean] is dynamic mode
+         *      - `object` - [object] by ref, an instance of form class, @see BxDolForm, can be overridden in hook processing
+         *      - `code` - [boolean] by ref, when false the default generation mechanism will be used, can be overridden in hook processing
+         * @hook @ref hook-system-form_output_api
+         */
+        bx_alert('system', 'form_output_api', 0, 0, [
             'dynamic' => $this->_bDynamicMode,
             'object' => &$this,
             'code' => &$this->sCode,
-            'include' => &$sInclude
-        ));
+        ]);
 
         if($this->sCode === false)
             $this->genForm();
@@ -1539,12 +1566,24 @@ BLAH;
     function getHtmlEditorQueryParams($aInput)
     {
         $aQueryParams = ['i' => $aInput['name'], 'f' => $this->aFormAttrs['id'], 'fi' => ''];
-        
-        bx_alert('system', 'editor_query_params', 0, 0, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-system-editor_query_params 'system', 'editor_query_params' - hook to override http(s) request's query params, which is used in HTML editor
+         * - $unit_name - equals `system`
+         * - $action - equals `editor_query_params`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `form` - [object] an instance of form, @see BxDolForm
+         *      - `override_result` - [array] by ref, query string params, can be overridden in hook processing
+         * @hook @ref hook-system-editor_query_params
+         */
+        bx_alert('system', 'editor_query_params', 0, 0, [
             'form' => $this,
             'override_result' => &$aQueryParams
-        ));
-        
+        ]);
+
         return $aQueryParams;
     }
 

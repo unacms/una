@@ -225,7 +225,24 @@ class BxDolCmtsQuery extends BxDolDb
     function getCommentsCountAll ($iId, $iAuthorId = 0, $bForceCalculate = false)
     {
         $iCount = false;
-        bx_alert('comment', 'get_comments_count', 0, $iAuthorId, ['system' => $this->_oMain->getSystemInfo(), 'object_id' => $iId, 'result' => &$iCount]);
+        /**
+         * @hooks
+         * @hookdef hook-comment-get_comments_count 'comment', 'get_comments_count' - hook to override number of comments for commented object
+         * - $unit_name - equals `comment`
+         * - $action - equals `get_comments_count`
+         * - $object_id - not used
+         * - $sender_id - profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `system` - [string] comment object name
+         *      - `object_id` - [int] commented object id
+         *      - `result` - [int] by ref, number of comments, can be overridden in hook processing
+         * @hook @ref hook-comment-get_comments_count
+         */
+        bx_alert('comment', 'get_comments_count', 0, $iAuthorId, [
+            'system' => $this->_oMain->getSystemInfo(), 
+            'object_id' => $iId, 
+            'result' => &$iCount
+        ]);
         if ($iCount !== false)
             return $iCount;
 
@@ -272,12 +289,26 @@ class BxDolCmtsQuery extends BxDolDb
         if(($oCf = $this->_oMain->getObjectContentFilter()) !== false)
             $sWhereClause .= $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
-        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array(
+        /**
+         * @hooks
+         * @hookdef hook-comment-get_comments 'comment', 'get_comments' - hook to override comments list. Is used during comments count retrieving.
+         * - $unit_name - equals `comment`
+         * - $action - equals `get_comments`
+         * - $object_id - not used
+         * - $sender_id - currently logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `system` - [string] comment object name
+         *      - `join_clause` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `where_clause` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `params` - [array] by ref, SQL query bindings array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-comment-get_comments
+         */
+        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), [
             'system' => $this->_oMain->getSystemInfo(), 
             'join_clause' => &$sJoinClause, 
             'where_clause' => &$sWhereClause, 
             'params' => &$aBindings
-        ));
+        ]);
         
         $sQuery = "SELECT
                 COUNT(*) 
@@ -412,7 +443,24 @@ class BxDolCmtsQuery extends BxDolDb
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id) 
             LEFT JOIN `sys_profiles` AS `p` ON `p`.`id` = `{$this->_sTable}`.`cmt_author_id`";
 
-        bx_alert('comment', 'get_comments', 0, $iAuthorId, array(
+        /**
+         * @hooks
+         * @hookdef hook-comment-get_comments 'comment', 'get_comments' - hook to override comments list.
+         * - $unit_name - equals `comment`
+         * - $action - equals `get_comments`
+         * - $object_id - not used
+         * - $sender_id - profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `system` - [string] comment object name
+         *      - `select_clause` - [string] by ref, 'select' part of SQL query, can be overridden in hook processing
+         *      - `join_clause` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `where_clause` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `order_clause` - [string] by ref, 'order' part of SQL query, can be overridden in hook processing
+         *      - `limit_clause` - [string] by ref, 'limit' part of SQL query, can be overridden in hook processing
+         *      - `params` - [array] by ref, SQL query bindings array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-comment-get_comments
+         */
+        bx_alert('comment', 'get_comments', 0, $iAuthorId, [
             'system' => $this->_oMain->getSystemInfo(), 
             'select_clause' => &$sQuery, 
             'join_clause' => &$sJoin, 
@@ -420,7 +468,7 @@ class BxDolCmtsQuery extends BxDolDb
             'order_clause' => &$sOrder, 
             'limit_clause' => &$sLimit, 
             'params' => &$aBindings
-        ));
+        ]);
 
         $sQuery = $sQuery . $sJoin . " WHERE `{$this->_sTable}`.`cmt_object_id`=:cmt_object_id AND (ISNULL(`p`.`status`) OR `p`.`status`='active' OR `{$this->_sTable}`.`cmt_replies`!=0)" . $sWhereClause . $sOrder . $sLimit;
 

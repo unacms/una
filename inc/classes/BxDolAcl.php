@@ -320,6 +320,21 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 
         /* Check membership action with ability to overwrite params - begin */
         $bContinue = true;
+        /**
+         * @hooks
+         * @hookdef hook-membership-check_action 'membership', 'check_action' - hook to override the result of checking whether an action is allowed or not
+         * - $unit_name - equals `membership`
+         * - $action - equals `check_action`
+         * - $object_id - action id
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `action` - [string] by ref, action name, can be overridden in hook processing
+         *      - `perform` - [boolean] by ref, check only or mark action as performed after checking, can be overridden in hook processing
+         *      - `result` - [array] by ref, check action result array, can be overridden in hook processing
+         *      - `lang` - [array] by ref, array of parsable into check result message variables, can be overridden in hook processing
+         *      - `continue` - [boolean] by ref, continue or not the default check operation after the hook, can be overridden in hook processing
+         * @hook @ref hook-membership-check_action
+         */
         bx_alert('membership', 'check_action', $iActionId, $iProfileId, array(
             'action' => &$aAction,
             'perform' => &$bPerformAction,
@@ -664,7 +679,27 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 
         $bProlong = $iLevelId == $aMembershipCurrent['id'];
 
-        // raise membership alert
+        /**
+         * @hooks
+         * @hookdef hook-profile-set_membership 'profile', 'set_membership' - hook after a new membership level was set
+         * - $unit_name - equals `profile`
+         * - $action - equals `set_membership`
+         * - $object_id - not used
+         * - $sender_id - profile id to set level to 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `mlevel` - [int] membership level id
+         *      - `period` - [int] number of periods
+         *      - `period_unit` - [string] period unit (day, week, month, etc)
+         *      - `starts_now` - [boolean] if new membership starts immediately or queued
+         *      - `txn_id` - [string] related payment transaction id
+         * @hook @ref hook-profile-set_membership
+         */
+        /**
+         * @hooks
+         * @hookdef hook-profile-prolong_membership 'profile', 'prolong_membership' - hook after current membership level was prolonged
+         * It's equivalent to @ref hook-profile-set_membership
+         * @hook @ref hook-profile-prolong_membership
+         */
         bx_alert('profile', ($bProlong ? 'prolong' : 'set') . '_membership', '', $iProfileId, [
             'mlevel'=> $iLevelId, 
             'period' => $mixedPeriod['period'], 
