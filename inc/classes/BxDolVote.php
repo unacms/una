@@ -246,6 +246,12 @@ class BxDolVote extends BxDolObject
         if($this->_isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted))
             return ['code' => BX_DOL_OBJECT_ERR_DUPLICATE, 'message' => _t('_vote_err_duplicate_vote')];
 
+        if($bPerformUndo) {
+            $aTrack = $this->_getTrack($iObjectId, $iAuthorId);
+            if(!empty($aTrack) && is_array($aTrack))
+                $aVoteData = array_intersect_key($aTrack, $aVoteData);
+        }
+
         $iId = $this->_putVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, $bPerformUndo);
         if($iId === false)
             return ['code' => BX_DOL_OBJECT_ERR_CANNOT_PERFORM];
