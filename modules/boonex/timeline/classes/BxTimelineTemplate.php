@@ -652,6 +652,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 bx_api_get_block('entity_author', [
                     'author_data' => BxDolProfile::getData($aResult[$CNF['FIELD_OBJECT_OWNER_ID']]),
                     'entry_date' => !empty($aEvent[$CNF['FIELD_ADDED']]) ? $aEvent[$CNF['FIELD_ADDED']] : '',
+                    'entry_id' => $iId,
+                    'entry_url' => bx_api_get_relative_url($this->_oConfig->getItemViewUrl($aEvent)),
                     'entry_context' => !empty($CNF[$sFldOpv]) && (int)$aEvent[$CNF[$sFldOpv]] < 0 ? BxDolProfile::getData(abs((int)$aEvent[$CNF[$sFldOpv]])) : '',
                     'menu_manage' => $sMenuManage
                 ])
@@ -2010,9 +2012,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aEvent['cmts'] = $aCmts;
             $aEvent['cmts']['count'] = $aEvent['comments']['count'];
             
-            if (getParam('sys_api_comments_modal') == 'on'){
-                $aEvent['cmts_list'] = bx_srv('system', 'get_data_api', [['module' => $aEvent['comments']['system'], 'object_id' =>  $aEvent['comments']['object_id']]], 'TemplCmtsServices');
-            }
+           
         }
 
         return $aEvent;
