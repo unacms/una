@@ -7,7 +7,7 @@ This guide outlines the steps required to install and run the application using 
 Begin by cloning the application repository using the following command:
 
 ```bash
-gh repo clone olariuromeo/una
+gh repo clone unacms/una una
 
 ```
 
