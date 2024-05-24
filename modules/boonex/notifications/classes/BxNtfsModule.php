@@ -434,10 +434,24 @@ class BxNtfsModule extends BxBaseModNotificationsModule
                 continue;
 
             $bEventCanceled = false;
+            
+            /**
+             * @hooks
+             * @hookdef hook-bx_notifications-is_notification 'bx_notifications', 'is_notification' - hook to override checking if an event is available or not
+             * - $unit_name - equals `bx_notifications`
+             * - $action - equals `is_notification`
+             * - $object_id - not used
+             * - $sender_id - not used
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `browse_params` - [array] browse params array as key&value pairs
+             *      - `event` - [array] by ref, array with event data as key&value pairs, can be overridden in hook processing
+             *      - `event_canceled` - [boolean] by ref, if event is canceled (not available) or not, can be overridden in hook processing
+             * @hook @ref hook-bx_notifications-is_notification
+             */
             bx_alert($sModule, 'is_notification', 0, 0, [
+                'browse_params' => $aBrowseParams,
                 'event' => &$aEvent, 
-                'event_canceled' => &$bEventCanceled,
-                'browse_params' => $aBrowseParams
+                'event_canceled' => &$bEventCanceled
             ]);
 
             if($bEventCanceled)
@@ -609,7 +623,28 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             $aTemplateMarkers = array_merge($aTemplateMarkers, $aSettings['markers']);              
 
         $aTemplate = null;
-        bx_alert($this->_aModule['name'], 'before_parse_email_template', 0, 0, array('profile_id' => $iProfile, 'template' => $sTemplate, 'markers' => $aTemplateMarkers, 'notification' => $aNotification, 'override_result' => &$aTemplate));
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-before_parse_email_template 'bx_notifications', 'before_parse_email_template' - hook to override email template
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `before_parse_email_template`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile_id` - [int] recipient profile id
+         *      - `template` - [string] email template name
+         *      - `markers` - [array] parsable variables array as key&value pairs
+         *      - `notification` - [array] notification data array as key&value pairs
+         *      - `override_result` - [array] by ref, email template (subject and body), if null, then default one will be used, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-before_parse_email_template
+         */
+        bx_alert($this->_aModule['name'], 'before_parse_email_template', 0, 0, [
+            'profile_id' => $iProfile, 
+            'template' => $sTemplate, 
+            'markers' => $aTemplateMarkers, 
+            'notification' => $aNotification, 
+            'override_result' => &$aTemplate
+        ]);
         if(is_null($aTemplate))
             $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sTemplate, $aTemplateMarkers, 0, $iProfile);
         if(!$aTemplate)
@@ -627,11 +662,30 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $aContent = &$aNotification['content'];
         $aSettings = &$aNotification['settings'];
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-before_send_notification_push 'bx_notifications', 'before_send_notification_push' - hook to override push message
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `before_send_notification_push`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile_id` - [int] recipient profile id
+         *      - `content` - [array] by ref, push message params array as key&value pairs, can be overridden in hook processing
+         *      - `setting` - [array] by ref, push settings array as key&value pairs, can be overridden in hook processing
+         *      - `subject` - [string] by ref, push message subject, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-before_send_notification_push
+         */
+        bx_alert($this->_aModule['name'], 'before_send_notification_push', 0, 0, [
+            'profile_id' => $iProfile, 
+            'content' => &$aContent, 
+            'setting' => &$aSettings, 
+            'subject' => &$sSubject
+        ]);
 
         $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
-        
-        bx_alert($this->_aModule['name'], 'before_send_notification_push', 0, 0, array('profile_id' => $iProfile, 'content' => &$aContent, 'setting' => &$aSettings, 'subject' => &$sSubject));
-   
+
         return BxDolPush::getInstance()->send($iProfile, array(
             'contents' => array(
                 'en' => $aContent['message']

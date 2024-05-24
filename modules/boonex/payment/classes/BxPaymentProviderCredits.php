@@ -165,10 +165,22 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
 
     public function cancelRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
     {
-        bx_alert($this->MODULE, $this->_sName . '_cancel_subscription', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-credits_cancel_subscription 'bx_payment', 'credits_cancel_subscription' - hook after a subscription was canceled
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `credits_cancel_subscription`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `pending_id` - [string] pending transaction id
+         *      - `subscription_id` - [string] unique subscription id
+         * @hook @ref hook-bx_payment-credits_cancel_subscription
+         */
+        bx_alert($this->MODULE, $this->_sName . '_cancel_subscription', 0, false, [
             'pending_id' => $iPendingId,
             'subscription_id' => $sSubscriptionId,
-        ));
+        ]);
 
         return true;
     }

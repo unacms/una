@@ -150,11 +150,25 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
         );
 
         $sResult = null;
-        bx_alert($this->_oConfig->getName(), 'donate', 0, 0, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_donations-donate 'bx_donations', 'donate' - hook to override the content of donate block
+         * - $unit_name - equals `bx_donations`
+         * - $action - equals `donate`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `tmpl_name` - [string] by ref, template name, can be overridden in hook processing
+         *      - `tmpl_vars` - [array] by ref, template parsable variables as key&value pairs, can be overridden in hook processing
+         *      - `override_result` - [string] by ref, string with HTML code to be output, if null the default template parsing function will be used, can be overridden in hook processing
+         * @hook @ref hook-bx_donations-donate
+         */
+        bx_alert($this->_oConfig->getName(), 'donate', 0, 0, [
             'tmpl_name' => &$sTmplName,
             'tmpl_vars' => &$aTmplVars,
             'override_result' => &$sResult
-        ));
+        ]);
         if($sResult !== null)
             return $sResult;
 

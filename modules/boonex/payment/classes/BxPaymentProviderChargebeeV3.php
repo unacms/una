@@ -294,10 +294,22 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     public function getJsCode($aParams = array())
     {
     	$sSite = '';
-    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_js_code', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-chargebee_v3_get_js_code 'bx_payment', 'chargebee_v3_get_js_code' - hook to override JavaScript code
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `chargebee_v3_get_js_code`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `site` - [string] by ref, site name from ChargeBee account, can be overridden in hook processing
+         *      - `params` - [array] by ref, params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-chargebee_v3_get_js_code
+         */
+    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_js_code', 0, 0, [
             'site' => &$sSite,
             'params' => &$aParams
-    	));
+    	]);
 
     	return $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
             'sProvider' => $this->_sName,
@@ -368,11 +380,25 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     protected function _getButtonJs($sType, $iClientId, $iVendorId, $aParams = array())
     {
         $sSite = '';
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-chargebee_v3_get_button 'bx_payment', 'chargebee_v3_get_button' - hook to override checkout/subscibe button
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `chargebee_v3_get_button`
+         * - $object_id - not used
+         * - $sender_id - client (buyer) profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] by ref, payment type ('single' or 'recurring'), can be overridden in hook processing
+         *      - `site` - [string] by ref, site name from ChargeBee account, can be overridden in hook processing
+         *      - `params` - [array] by ref, params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-chargebee_v3_get_button
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, [
             'type' => &$sType, 
             'site' => &$sSite,
             'params' => &$aParams
-        ));
+        ]);
 
         $sJsMethod = '';
         $sJsObject = $this->getJsObject($aParams);

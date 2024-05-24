@@ -439,10 +439,22 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'inclusive' => $bInclusive,
         ];
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_tax', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_create_tax 'bx_payment', 'stripe_v3_create_tax' - hook to override tax data redurned by payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_create_tax`
+         * - $object_id - pending transaction id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `tax_object` - [object] by ref, an instance of tax, redurned by payment provider, can be overridden in hook processing
+         *      - `tax_params` - [array] by ref, array with tax parameters, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_create_tax
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_tax', 0, false, [
             'tax_object' => &$oTax, 
             'tax_params' => &$aTax
-        ));
+        ]);
 
         try {
             if(empty($oTax))
@@ -462,10 +474,23 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     public function retrieveTax($sId)
     {
         $oTax = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_tax', 0, false, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_tax 'bx_payment', 'stripe_v3_retrieve_tax' - hook to override tax data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_retrieve_tax`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `tax_id` - [string] by ref, unique tax id, can be overridden in hook processing
+         *      - `tax_object` - [object] by ref, an instance of tax, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_tax
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_tax', 0, false, [
             'tax_id' => &$sId,
             'tax_object' => &$oTax
-        ));
+        ]);
 
         try {
             if(empty($oTax))
@@ -482,14 +507,30 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     {
         $sCode = $this->_getVerificationCodeSession($iVendorId, $iCustomerId, $fAmount, $sCurrency);
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_session', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_get_code_session 'bx_payment', 'stripe_v3_get_code_session' - hook to override session verification code
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_get_code_session`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `provider` - [object] an instance of provider, @see BxBaseModPaymentProvider
+         *      - `vendor_id` - [int] vendor (seller) profile id
+         *      - `customer_id` - [int] customer (buyer) profile id
+         *      - `amount` - [float] session amount
+         *      - `currency` - [string] session currency code
+         *      - `override_result` - [string] by ref, verification code, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_get_code_session
+         */        
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_session', 0, false, [
             'provider' => $this,
             'vendor_id' => $iVendorId, 
             'customer_id' => $iCustomerId,
             'amount' => $fAmount,
             'currency' => $sCurrency,
             'override_result' => &$sCode
-        ));
+        ]);
 
         return $sCode;
     }
@@ -498,13 +539,28 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     {
         $bCheckResult = $this->_checkVerificationCodeSession($iVendorId, $iCustomerId, $aResult);
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_verify_session', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_verify_session 'bx_payment', 'stripe_v3_verify_session' - hook to override checking of session verification code
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_verify_session`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `provider` - [object] an instance of provider, @see BxBaseModPaymentProvider
+         *      - `vendor_id` - [int] vendor (seller) profile id
+         *      - `customer_id` - [int] customer (buyer) profile id
+         *      - `result` - [array] results array received from payment provider
+         *      - `override_result` - [boolean] by ref, is verification passed or not, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_verify_session
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_verify_session', 0, false, [
             'provider' => $this,
             'vendor_id' => $iVendorId, 
             'customer_id' => $iCustomerId,
             'result' => $aResult,
             'override_result' => &$bCheckResult
-        ));
+        ]);
 
         return $bCheckResult;
     }
@@ -523,11 +579,18 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     protected function _retrieveCustomer($sType, $sId)
     {
         $oCustomer = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_customer 'bx_payment', 'stripe_v3_retrieve_customer' - hook to override customer data retrieved from payment provider
+         * It's equivalent to @ref hook-bx_payment-stripe_retrieve_customer
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_customer
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, [
             'type' => $sType,
             'customer_id' => &$sId,
             'customer_object' => &$oCustomer
-        ));
+        ]);
 
         try {
             if(empty($oCustomer))
@@ -671,10 +734,22 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             }
         }
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_session', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_create_session 'bx_payment', 'stripe_v3_create_session' - hook to override session data redurned by payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_create_session`
+         * - $object_id - pending transaction id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `session_object` - [object] by ref, an instance of session, redurned by payment provider, can be overridden in hook processing
+         *      - `session_params` - [array] by ref, array with session parameters, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_create_session
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_session', 0, false, [
             'session_object' => &$oSession, 
             'session_params' => &$aSession
-        ));
+        ]);
 
         try {
             if(empty($oSession))
@@ -735,10 +810,23 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     protected function _retrieveSession($sId)
     {
         $oSession = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_session', 0, false, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_session 'bx_payment', 'stripe_v3_retrieve_session' - hook to override session data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_retrieve_session`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `session_id` - [string] by ref, unique session id, can be overridden in hook processing
+         *      - `session_object` - [object] by ref, an instance of session, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_session
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_session', 0, false, [
             'session_id' => &$sId,
             'session_object' => &$oSession
-        ));
+        ]);
 
         try {
             if(empty($oSession))
@@ -758,10 +846,23 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     protected function _retrieveSetupIntent($sId)
     {
         $oSetupIntent = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_setup_intent', 0, false, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_setup_intent 'bx_payment', 'stripe_v3_retrieve_setup_intent' - hook to override SetupIntent data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_retrieve_setup_intent`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `setup_intent_id` - [string] by ref, unique SetupIntent id, can be overridden in hook processing
+         *      - `setup_intent_object` - [object] by ref, an instance of SetupIntent, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_setup_intent
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_setup_intent', 0, false, [
             'setup_intent_id' => &$sId,
             'setup_intent_object' => &$oSetupIntent
-        ));
+        ]);
 
         try {
             if(empty($oSetupIntent))
@@ -780,10 +881,23 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     protected function _createPaymentIntent($sSetupIntentId, $fAmount, $sCurrency, $bConfirm = true)
     {
         $oPaymentIntent = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_payment_intent', 0, false, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_create_payment_intent 'bx_payment', 'stripe_v3_create_payment_intent' - hook to override PaymentIntent data redurned by payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_create_payment_intent`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `setup_intent_id` - [string] by ref, unique SetupIntent id, can be overridden in hook processing
+         *      - `payment_intent_object` - [object] by ref, an instance of PaymentIntent, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_create_payment_intent
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_payment_intent', 0, false, [
             'setup_intent_id' => &$sSetupIntentId,
             'payment_intent_object' => &$oPaymentIntent
-        ));
+        ]);
 
         try {
             if(empty($oPaymentIntent)) {
@@ -817,10 +931,23 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     protected function _retrievePaymentIntent($sId)
     {
         $oPaymentIntent = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_payment_intent', 0, false, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_payment_intent 'bx_payment', 'stripe_v3_retrieve_payment_intent' - hook to override PaymentIntent data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_retrieve_payment_intent`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `payment_intent_id` - [string] by ref, unique PaymentIntent id, can be overridden in hook processing
+         *      - `payment_intent_object` - [object] by ref, an instance of PaymentIntent, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_payment_intent
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_payment_intent', 0, false, [
             'payment_intent_id' => &$sId,
             'payment_intent_object' => &$oPaymentIntent
-        ));
+        ]);
 
         try {
             if(empty($oPaymentIntent))
@@ -839,10 +966,23 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     protected function _retrieveSubscription($sCustomerId, $sSubscriptionId)
     {
         $oSubscription = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_subscription', 0, false, array(
-            'subscription_id' => &$sId,
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_subscription 'bx_payment', 'stripe_v3_retrieve_subscription' - hook to override subscription data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_retrieve_subscription`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `subscription_id` - [string] by ref, unique subscription id, can be overridden in hook processing
+         *      - `subscription_object` - [object] by ref, an instance of subscription, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_subscription
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_subscription', 0, false, [
+            'subscription_id' => &$sSubscriptionId,
             'subscription_object' => &$oSubscription
-        ));
+        ]);
 
         try {
             if(empty($oSubscription))
@@ -938,10 +1078,23 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             $sClientEmail = $oClient->getAccountObject()->getEmail();
 
         $sPublicKey = '';
-    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_get_button 'bx_payment', 'stripe_v3_get_button' - hook to override checkout/subscibe button
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_v3_get_button`
+         * - $object_id - not used
+         * - $sender_id - client (buyer) profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] by ref, payment type ('single' or 'recurring'), can be overridden in hook processing
+         *      - `public_key` - [string] by ref, public key from Stripe account, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_v3_get_button
+         */
+    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, [
             'type' => &$sType, 
             'public_key' => &$sPublicKey
-        ));
+        ]);
 
         $sJsMethod = '';
         $sJsObject = $this->getJsObject($aParams);

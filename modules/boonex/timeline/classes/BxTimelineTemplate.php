@@ -398,6 +398,20 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aLiveUpdateParams[] = $iEvent;
 
         $sLiveUpdateCode = null;
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-add_live_update 'bx_timeline', 'add_live_update' - hook to override params and/or code for live updates
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `add_live_update`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `browse_params` - [array] browse params array as key&value pairs
+         *      - `live_update_params` - [array] by ref, live update params array as key&value pairs, can be overridden in hook processing
+         *      - `override_result` - [string] by ref, live update code, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-add_live_update
+         */
         bx_alert($sModuleName, 'add_live_update', 0, 0, [
             'browse_params' => $aParams,
             'live_update_params' => &$aLiveUpdateParams,
@@ -426,7 +440,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'mask_markers' => array('object' => $sJsObject)
         )) . $this->getJsCode('repost');
 
-        bx_alert($sModuleName, 'get_view', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_view 'bx_timeline', 'get_view' - hook to override elements of view timeline block
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_view`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `event_first` - [int] the first event id
+         *      - `back` - [string] by ref, back link code, can be overridden in hook processing
+         *      - `empty` - [string] by ref, empty message code, can be overridden in hook processing
+         *      - `content_before` - [string] by ref, code for before content section, can be overridden in hook processing
+         *      - `content` - [string] by ref, content itself, can be overridden in hook processing
+         *      - `content_after` - [string] by ref, code for after content section, can be overridden in hook processing
+         *      - `load_more` - [string] by ref, load more link code, can be overridden in hook processing
+         *      - `js_content` - [string] by ref, JavaScript code, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_view
+         */
+        bx_alert($sModuleName, 'get_view', 0, 0, [
             'params' => $aParams,
             'event_first' => $iEvent,
             'back' => &$sBack,
@@ -436,7 +469,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'content_after' => &$sContentAfter,
             'load_more' => &$sLoadMore,
             'js_content' => &$sJsContent
-        ));
+        ]);
 
         return $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
@@ -870,6 +903,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aParams['event_index'] = $iEventIndex;
 
                 $mixedExternalPost = false;
+                
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_timeline-get_external_post 'bx_timeline', 'get_external_post' - hook to override (add) external post(s) in timeline
+                 * - $unit_name - equals `bx_timeline`
+                 * - $action - equals `get_external_post`
+                 * - $object_id - not used
+                 * - $sender_id - not used
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `params` - [array] browse params array as key&value pairs
+                 *      - `override_result` - [string] or [array] by ref, code to be added to events list, can be overridden in hook processing
+                 * @hook @ref hook-bx_timeline-get_external_post
+                 */
                 bx_alert($this->_oConfig->getName(), 'get_external_post', 0, 0, [
                     'params' => $aParams,
                     'override_result' => &$mixedExternalPost,
@@ -1217,11 +1263,24 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'user_unit' => $oModule->getObjectUser($iUserId)->getUnit()
             );
 
-        bx_alert($this->_oConfig->getName(), 'get_reposted_by', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_reposted_by 'bx_timeline', 'get_reposted_by' - hook to override a list of users reposted a content
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_reposted_by`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content_id` - [int] reposted content id
+         *      - `user_ids` - [array] an array with reposters' profile ids
+         *      - `users` - [array] by ref, an array with variables (keys) which will be used to parse HTML template, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_reposted_by
+         */
+        bx_alert($this->_oConfig->getName(), 'get_reposted_by', 0, 0, [
             'content_id' => $iId,
             'user_ids' => $aUserIds,
             'users' => &$aTmplUsers
-        ));
+        ]);
         
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
@@ -1920,13 +1979,29 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             self::$$sVariable = $this->getHtml('item_' . $aBrowseParams['view'] . '.html');
 
         $sTmplCode = self::$$sVariable;
-        bx_alert($this->_oConfig->getName(), 'get_post', 0, 0, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_post 'bx_timeline', 'get_post' - hook to override a post (event) before output
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_post`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] post type: post or repost
+         *      - `event` - [array] event data array as key&value pairs
+         *      - `browse_params` - [array] browse params array as key&value pairs
+         *      - `tmpl_code` - [string] by ref, template HTML code, can be overridden in hook processing
+         *      - `tmpl_vars` - [array] by ref, template parsable variables as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_post
+         */
+        bx_alert($this->_oConfig->getName(), 'get_post', 0, 0, [
             'type' => $sType,
             'event' => $aEvent,
             'browse_params' => $aBrowseParams,
             'tmpl_code' => &$sTmplCode,
             'tmpl_vars' => &$aTmplVars
-        ));
+        ]);
 
         return $this->parseHtmlByContent($sTmplCode, $aTmplVars);
     }
@@ -2031,13 +2106,20 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             self::$$sVariable = $this->getHtml('type_' . $sType . '.html');
 
         $sTmplCode = self::$$sVariable;
-        bx_alert($this->_oConfig->getName(), 'get_post_content', 0, 0, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_post_content 'bx_timeline', 'get_post_content' - hook to override a post's content before output
+         * It's equivalent to @ref hook-bx_timeline-get_post
+         * @hook @ref hook-bx_timeline-get_post_content
+         */
+        bx_alert($this->_oConfig->getName(), 'get_post_content', 0, 0, [
             'type' => $sType,
             'event' => $aEvent,
             'browse_params' => $aBrowseParams,
             'tmpl_code' => &$sTmplCode,
             'tmpl_vars' => &$aTmplVars
-        ));
+        ]);
 
         return $this->parseHtmlByContent($sTmplCode, $aTmplVars);
     }

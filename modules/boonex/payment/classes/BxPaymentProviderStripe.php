@@ -163,14 +163,30 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
     {
         $sCode = $this->_getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency);
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_charge', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_get_code_charge 'bx_payment', 'stripe_get_code_charge' - hook to override verification code for 'charge' action
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_get_code_charge`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `provider` - [object] an instance of provider, @see BxBaseModPaymentProvider
+         *      - `vendor_id` - [int] vendor (seller) profile id
+         *      - `customer_id` - [int] customer (buyer) profile id
+         *      - `amount` - [float] charge amount
+         *      - `currency` - [string] charge currency code
+         *      - `override_result` - [string] by ref, verification code, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_get_code_charge
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_charge', 0, false, [
             'provider' => $this,
             'vendor_id' => $iVendorId, 
             'customer_id' => $iCustomerId,
             'amount' => $fAmount,
             'currency' => $sCurrency,
             'override_result' => &$sCode
-        ));
+        ]);
 
         return $sCode;
     }
@@ -179,6 +195,21 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
     {
         $bCheckResult = $this->_checkVerificationCodeCharge($iVendorId, $iCustomerId, $aResult);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_verify_charge 'bx_payment', 'stripe_verify_charge' - hook to override code verification for 'charge' action
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_verify_charge`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `provider` - [object] an instance of provider, @see BxBaseModPaymentProvider
+         *      - `vendor_id` - [int] vendor (seller) profile id
+         *      - `customer_id` - [int] customer (buyer) profile id
+         *      - `result` - [array] results array received from payment provider
+         *      - `override_result` - [boolean] by ref, is verification passed or not, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_verify_charge
+         */
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_verify_charge', 0, false, array(
             'provider' => $this,
             'vendor_id' => $iVendorId, 
@@ -194,14 +225,30 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
     {
         $sCode = $this->_getVerificationCodeSubscription($iVendorId, $iCustomerId, $sSubscription, $sCurrency);
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_subscription', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_get_code_subscription 'bx_payment', 'stripe_get_code_subscription' - hook to override verification code for 'subscribe' action
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_get_code_subscription`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `provider` - [object] an instance of provider, @see BxBaseModPaymentProvider
+         *      - `vendor_id` - [int] vendor (seller) profile id
+         *      - `customer_id` - [int] customer (buyer) profile id
+         *      - `subscription` - [string] unique subscription id
+         *      - `currency` - [string] charge currency code
+         *      - `override_result` - [string] by ref, verification code, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_get_code_subscription
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_subscription', 0, false, [
             'provider' => $this,
             'vendor_id' => $iVendorId, 
             'customer_id' => $iCustomerId,
             'subscription' => $sSubscription,
             'currency' => $sCurrency,
             'override_result' => &$sCode
-        ));
+        ]);
 
         return $sCode;
     }
@@ -210,6 +257,12 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
     {
         $bCheckResult = $this->_checkVerificationCodeSubscription($iVendorId, $iCustomerId, $aResult);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_verify_subscription 'bx_payment', 'stripe_verify_subscription' - hook to override code verification for 'subscribe' action
+         * It's equivalent to @ref hook-bx_payment-stripe_verify_charge
+         * @hook @ref hook-bx_payment-stripe_verify_subscription
+         */
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_verify_subscription', 0, false, array(
             'provider' => $this,
             'vendor_id' => $iVendorId, 
@@ -241,11 +294,24 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
             'email' => !empty($aClient['email']) ? $aClient['email'] : ''
         );
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_customer', 0, $aClient['id'], array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_create_customer 'bx_payment', 'stripe_create_customer' - hook to override customer data redurned by payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_create_customer`
+         * - $object_id - not used
+         * - $sender_id - client (buyer) profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] payment type: single or recurring
+         *      - `customer_object` - [object] by ref, an instance of customer, redurned by payment provider, can be overridden in hook processing
+         *      - `customer_params` - [array] by ref, array with customer parameters, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_create_customer
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_customer', 0, $aClient['id'], [
             'type' => $sType,
             'customer_object' => &$oCustomer, 
             'customer_params' => &$aCustomer
-        ));
+        ]);
 
         try {
             $this->_oCustomer = !empty($oCustomer) ? $oCustomer : \Stripe\Customer::create($aCustomer);
@@ -281,10 +347,22 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
             )
         );
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_charge', $iPendingId, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_create_charge 'bx_payment', 'stripe_create_charge' - hook to override charge data redurned by payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_create_charge`
+         * - $object_id - pending transaction id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `charge_object` - [object] by ref, an instance of charge, redurned by payment provider, can be overridden in hook processing
+         *      - `charge_params` - [array] by ref, array with charge parameters, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_create_charge
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_charge', $iPendingId, false, [
             'charge_object' => &$oCharge, 
             'charge_params' => &$aCharge
-        ));
+        ]);
 
         try {
             if(empty($oCharge))
@@ -336,11 +414,24 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
             )
         );
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_subscription', $iPendingId, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_create_subscription 'bx_payment', 'stripe_create_subscription' - hook to override subscription data redurned by payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_create_subscription`
+         * - $object_id - pending transaction id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `customer` - [object] by ref, an instance of customer, can be overridden in hook processing
+         *      - `subscription_object` - [object] by ref, an instance of subscription, redurned by payment provider, can be overridden in hook processing
+         *      - `subscription_params` - [array] by ref, array with subscription parameters, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_create_subscription
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_subscription', $iPendingId, false, [
             'customer' => &$this->_oCustomer,
             'subscription_object' => &$oSubscription, 
             'subscription_params' => &$aSubscription
-        ));
+        ]);
 
         try {
             if(empty($oSubscription))
@@ -410,10 +501,23 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
             $sClientEmail = $oClient->getAccountObject()->getEmail();
 
         $sPublicKey = '';
-    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_get_button 'bx_payment', 'stripe_get_button' - hook to override checkout/subscibe button
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_get_button`
+         * - $object_id - not used
+         * - $sender_id - client (buyer) profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] by ref, payment type ('single' or 'recurring'), can be overridden in hook processing
+         *      - `public_key` - [string] by ref, Stripe public key, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_get_button
+         */
+    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, [
             'type' => &$sType, 
             'public_key' => &$sPublicKey
-        ));
+        ]);
 
         $sJsMethod = '';
         $sJsObject = $this->getJsObject($aParams);

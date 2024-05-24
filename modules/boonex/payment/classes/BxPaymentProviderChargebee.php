@@ -421,10 +421,28 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 
     public function onDeleteSubscription($sSubscriptionId, $aSubscription)
     {
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-chargebee_cancel_subscription 'bx_payment', 'chargebee_cancel_subscription' - hook after a subscription was canceled
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `chargebee_cancel_subscription`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `subscription_id` - [string] unique subscription id
+         *      - `subscription_info` - [array] subscription info
+         * @hook @ref hook-bx_payment-chargebee_cancel_subscription
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-chargebee_v3_cancel_subscription 'bx_payment', 'chargebee_v3_cancel_subscription' - hook after a subscription was canceled
+         * It's equivalent to @ref hook-bx_payment-chargebee_cancel_subscription
+         * @hook @ref hook-bx_payment-chargebee_v3_cancel_subscription
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, [
             'subscription_id' => $sSubscriptionId,
             'subscription_info' => $aSubscription
-        ));
+        ]);
     }
 
 

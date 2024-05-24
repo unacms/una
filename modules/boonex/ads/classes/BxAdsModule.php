@@ -158,12 +158,25 @@ class BxAdsModule extends BxBaseModTextModule
         if(!$iInterestId)
             return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));
 
-        bx_alert($this->getName(), 'doInterest', $iContentId, $iViewer, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-doInterest 'bx_ads', 'doInterest' - hook after 'interested' action was performed
+         * - $unit_name - equals `bx_ads`
+         * - $action - equals `doInterest`
+         * - $object_id - content id
+         * - $sender_id - profile id who performed the action
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `subobject_id` - [int] id of a database table record, created during the action
+         *      - `subobject_author_id` - [int] profile id who performed the action
+         *      - `object_author_id` - [int] content author profile id
+         * @hook @ref hook-bx_ads-doInterest
+         */
+        bx_alert($this->getName(), 'doInterest', $iContentId, $iViewer, [
             'subobject_id' => $iInterestId, 
             'subobject_author_id' => $iViewer, 
 
             'object_author_id' => $iContentAuthor
-        ));
+        ]);
 
         if(getParam($CNF['PARAM_USE_IIN']) == 'on')
             sendMailTemplate($CNF['ETEMPLATE_INTERESTED'], 0, $iContentAuthor, array(
@@ -1171,6 +1184,21 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aCommodity) || !is_array($aCommodity))
             return [];
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-order_authorize 'bx_ads', 'order_authorize' - hook after the order was authorized with payment processing module
+         * - $unit_name - equals `bx_ads`
+         * - $action - equals `order_authorize`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `id` - [int] commodity id 
+         *      - `type` - [string] commodity type, 'product' or 'promotion'
+         *      - `product_id` - [int] ad (entry) id the commodity is associated with
+         *      - `order` - [string] order number provided with payment processing module
+         *      - `count` - [int] number of items in order
+         * @hook @ref hook-bx_ads-order_authorize
+         */
         bx_alert($this->getName(), 'order_authorize', 0, false, [
             'id' => $aCommodity['id'],
             'type' => $aCommodity['type'],
@@ -1261,6 +1289,23 @@ class BxAdsModule extends BxBaseModTextModule
 
         $this->_oDb->updateEntriesBy($aUpdate, [$CNF['FIELD_ID'] => $iEntryId]);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-license_register 'bx_ads', 'license_register' - hook after the payment for an ad was processed with payment processing module
+         * - $unit_name - equals `bx_ads`
+         * - $action - equals `license_register`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `id` - [int] commodity id 
+         *      - `type` - [string] commodity type, 'product' or 'promotion'
+         *      - `product_id` - [int] ad (entry) id the commodity is associated with
+         *      - `profile_id` - [int] client (buyer) profile id
+         *      - `order` - [string] order number provided with payment processing module
+         *      - `license` - [string] license number generated for the order
+         *      - `count` - [int] number of items in order
+         * @hook @ref hook-bx_ads-license_register
+         */
         bx_alert($sModule, 'license_register', 0, false, [
             'id' => $aCommodity['id'],
             'type' => $aCommodity['type'],
@@ -1273,6 +1318,21 @@ class BxAdsModule extends BxBaseModTextModule
 
         if($bEntrySold) {
             $aParams = $this->_alertParams($aEntry);
+            
+            /**
+             * @hooks
+             * @hookdef hook-bx_ads-sold 'bx_ads', 'sold' - hook after the payment was processed with payment processing module and there is no the ad (entry) for selling anymore
+             * - $unit_name - equals `bx_ads`
+             * - $action - equals `sold`
+             * - $object_id - ad (entry) id
+             * - $sender_id - not used
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `status` - [string] content status
+             *      - `status_admin` - [string] content admin status
+             *      - `privacy_view` - [int] or [string] privacy for view content action, @see BxDolPrivacy
+             *      - `cf` - [int] content's audience filter value
+             * @hook @ref hook-bx_ads-sold
+             */
             bx_alert($sModule, 'sold', $iEntryId, false, $aParams);
         }
 
@@ -1301,6 +1361,22 @@ class BxAdsModule extends BxBaseModTextModule
         ];
 
         $bCancel = false;
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-license_register_notif 'bx_ads', 'license_register_notif' - hook before sending a notification about new license. Allows to override a notification message or cancel the notification
+         * - $unit_name - equals `bx_ads`
+         * - $action - equals `license_register_notif`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `entry_id` - [int] ad (entry) id
+         *      - `order` - [string] order number
+         *      - `recipient_id` - [int] by ref, client (buyer) profile id, can be overridden in hook processing
+         *      - `email_template` - [string] by ref, email template name, can be overridden in hook processing
+         *      - `email_params` - [array] by ref, email params array as key&value pairs, which will be parsed in email subject/body, can be overridden in hook processing
+         *      - `cancel` - [boolean] by ref, if email sending should be canceled or not, can be overridden in hook processing
+         * @hook @ref hook-bx_ads-license_register_notif
+         */
         bx_alert($sModule, 'license_register_notif', 0, false, [
             'entry_id' => $iEntryId,
             'order' => $sOrder,
@@ -1340,6 +1416,23 @@ class BxAdsModule extends BxBaseModTextModule
             $this->_oDb->updateEntriesBy($aUpdate, [$CNF['FIELD_ID'] => $iEntryId]);
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-promotion_register 'bx_ads', 'promotion_register' - hook after the payment for promotion was processed with payment processing module
+         * - $unit_name - equals `bx_ads`
+         * - $action - equals `promotion_register`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `id` - [int] commodity id 
+         *      - `type` - [string] commodity type, 'product' or 'promotion'
+         *      - `product_id` - [int] ad (entry) id the commodity is associated with
+         *      - `profile_id` - [int] client (buyer) profile id
+         *      - `amount` - [float] amount paid for the promotion
+         *      - `order` - [string] order number provided with payment processing module
+         *      - `license` - [string] license number generated for the order
+         * @hook @ref hook-bx_ads-promotion_register
+         */
         bx_alert($this->getName(), 'promotion_register', 0, false, [
             'id' => $aCommodity['id'],
             'type' => $aCommodity['type'],
@@ -1505,6 +1598,12 @@ class BxAdsModule extends BxBaseModTextModule
         if(!$this->_oDb->unregisterLicense($iClientId, $iEntryId, $sOrder, $sLicense))
             return false;
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-license_unregister 'bx_ads', 'license_unregister' - hook after the payment for ad was refunded with payment processing module
+         * It's equivalent to @ref hook-bx_ads-license_register
+         * @hook @ref hook-bx_ads-license_unregister
+         */
         bx_alert($this->getName(), 'license_unregister', 0, false, [
             'id' => $aCommodity['id'],
             'type' => $aCommodity['type'],
@@ -1531,6 +1630,12 @@ class BxAdsModule extends BxBaseModTextModule
         if(!$this->_oDb->unregisterPromotion($aEntry[$CNF['FIELD_AUTHOR']], $aCommodity['id'], $iEntryId, $sOrder, $sLicense))
             return false;
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-promotion_unregister 'bx_ads', 'promotion_unregister' - hook after the payment for promotion was refunded with payment processing module
+         * It's equivalent to @ref hook-bx_ads-promotion_register
+         * @hook @ref hook-bx_ads-promotion_unregister
+         */
         bx_alert($this->getName(), 'promotion_unregister', 0, false, [
             'id' => $aCommodity['id'],
             'type' => $aCommodity['type'],
@@ -1846,7 +1951,18 @@ class BxAdsModule extends BxBaseModTextModule
         $bModerator = $this->_isModerator();
 
         $mixedResult = null;
-        bx_alert($this->getName(), 'is_entry_active', 0, 0, ['viewer_id' => $iViewer, 'is_moderator' => $bModerator, 'content_info' => $aContentInfo, 'override_result' => &$mixedResult]);
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-is_entry_active 'bx_ads', 'is_entry_active' - hook to override whether an ad (entry) active or not
+         * It's equivalent to @ref hook-bx_base_general-is_entry_active
+         * @hook @ref hook-bx_ads-is_entry_active
+         */
+        bx_alert($this->getName(), 'is_entry_active', 0, 0, [
+            'viewer_id' => $iViewer, 
+            'is_moderator' => $bModerator, 
+            'content_info' => $aContentInfo, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
 
@@ -2024,6 +2140,23 @@ class BxAdsModule extends BxBaseModTextModule
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
         $aParams['override_result'] = &$aResult;
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-offer_added 'bx_ads', 'offer_added' - hook after an offer was added. Allows to override action results.
+         * - $unit_name - equals `bx_ads`
+         * - $action - equals `offer_added`
+         * - $object_id - offer id
+         * - $sender_id - offer author profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_id` - [int] content id
+         *      - `object_author_id` - [int] content author profile id
+         *      - `offer_id` - [int] offer id
+         *      - `offer_author_id` - [int] offer author profile id
+         *      - `privacy_view` - [int] privacy for view action, equals to BX_DOL_PG_ALL, @see BxDolPrivacy
+         *      - `override_result` - [array] by ref, results array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_ads-offer_added
+         */
         bx_alert($this->getName(), 'offer_added', $iOfferId, $aOfferInfo[$CNF['FIELD_OFR_AUTHOR']], $aParams);
     }
 
@@ -2061,6 +2194,15 @@ class BxAdsModule extends BxBaseModTextModule
             ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-offer_accepted 'bx_ads', 'offer_accepted' - hook after an offer was accepted.
+         * It's equivalent to @ref hook-bx_ads-offer_added
+         * except content author profile id is passed to $sender_id and
+         * `override_result` parameter in $extra_params is missing
+         * @hook @ref hook-bx_ads-offer_accepted
+         */
         bx_alert($this->getName(), 'offer_accepted', $iOfferId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
     }
 
@@ -2092,6 +2234,13 @@ class BxAdsModule extends BxBaseModTextModule
             ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-offer_declined 'bx_ads', 'offer_declined' - hook after an offer was declined.
+         * It's equivalent to @ref hook-bx_ads-offer_accepted
+         * @hook @ref hook-bx_ads-offer_declined
+         */
         bx_alert($this->getName(), 'offer_declined', $iOfferId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
     }
 
@@ -2128,6 +2277,14 @@ class BxAdsModule extends BxBaseModTextModule
             ]);
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-offer_canceled 'bx_ads', 'offer_canceled' - hook after an offer was declined.
+         * It's equivalent to @ref hook-bx_ads-offer_added
+         * except `override_result` parameter in $extra_params is missing
+         * @hook @ref hook-bx_ads-offer_canceled
+         */
         bx_alert($this->getName(), 'offer_canceled', $iOfferId, $aOfferInfo[$CNF['FIELD_OFR_AUTHOR']], $aParams);
     }
 
@@ -2165,12 +2322,29 @@ class BxAdsModule extends BxBaseModTextModule
             ));
 
         $aParams = $this->_alertParams($mixedContent);
-        $aParams = array_merge($aParams, array(
+        $aParams = array_merge($aParams, [
             'profile_src' => $iProfileSrc,
             'profile_dst' => $iProfileDst,
             'offer_id' => $bOffer ? (int)$aOffer[$CNF['FIELD_OFR_ID']] : 0,
-        ));
+        ]);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-shipped 'bx_ads', 'shipped' - hook after the ad (entry) was marked as shipped
+         * - $unit_name - equals `bx_ads`
+         * - $action - equals `shipped`
+         * - $object_id - ad (entry) id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `status` - [string] content status
+         *      - `status_admin` - [string] content admin status
+         *      - `privacy_view` - [int] or [string] privacy for view content action, @see BxDolPrivacy
+         *      - `cf` - [int] content's audience filter value
+         *      - `profile_src` - [int] sender profile id
+         *      - `profile_dst` - [int] recipient profile id
+         *      - `offer_id` - [int] offer id if the ad was sold by offer
+         * @hook @ref hook-bx_ads-shipped
+         */
         bx_alert($this->getName(), 'shipped', $iContentId, false, $aParams);
     }
 
@@ -2204,12 +2378,18 @@ class BxAdsModule extends BxBaseModTextModule
             ));
 
         $aParams = $this->_alertParams($mixedContent);
-        $aParams = array_merge($aParams, array(
+        $aParams = array_merge($aParams, [
             'profile_src' => $iProfileSrc,
             'profile_dst' => $iProfileDst,
             'offer_id' => $bOffer ? (int)$aOffer[$CNF['FIELD_OFR_ID']] : 0,
-        ));
+        ]);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_ads-received 'bx_ads', 'received' - hook after the ad (entry) was marked as received
+         * It's equivalent to @ref hook-bx_ads-shipped
+         * @hook @ref hook-bx_ads-received
+         */
         bx_alert($this->getName(), 'received', $iContentId, false, $aParams);
     }
 

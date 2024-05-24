@@ -633,6 +633,17 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function getEvents($aParams)
     {
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_events_before 'bx_timeline', 'get_events_before' - hook to override params which are used to get events
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_events_before`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] by ref, params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_events_before
+         */
         bx_alert($this->_oConfig->getName(), 'get_events_before', 0, 0, [
             'params' => &$aParams,
         ]);
@@ -655,6 +666,26 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $aAlertParams = $aParams;
         unset($aAlertParams['browse']);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_events 'bx_timeline', 'get_events' - hook to override events list which will be received from database
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_events`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `browse` - [string] browsing type
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `table` - [string] datatbase table name
+         *      - `table_alias` - [string] datatbase table alias
+         *      - `method` - [string] by ref, database class method name, @see BxDolDb, can be overridden in hook processing
+         *      - `select_clause` - [string] by ref, 'select' part of SQL query, can be overridden in hook processing
+         *      - `join_clause` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `where_clause` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `order_clause` - [string] by ref, 'order' part of SQL query, can be overridden in hook processing
+         *      - `limit_clause` - [string] by ref, 'limit' part of SQL query, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_events
+         */
         bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, [
             'browse' => $aParams['browse'],
             'params' => $aAlertParams,
@@ -1346,6 +1377,34 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $aAlertParams = $aParams;
         unset($aAlertParams['type'], $aAlertParams['owner_id']);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_list_by_type 'bx_timeline', 'get_list_by_type' - hook to override SQL query parts which are used to get events list
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_list_by_type`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] a type of events list
+         *      - `owner_id` - [int] owner profile id
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `table` - [string] datatbase table name
+         *      - `table_alias` - [string] datatbase table alias
+         *      - `join_clause` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `join_subclause` - [string] or [array] by ref, 'join subclause' part of SQL query, string is attached to 'join' part, array is used to create query with UNIONs, can be overridden in hook processing
+         *      - `where_clause` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_status` - [string] by ref, 'status' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_filter` - [string] by ref, 'filter' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_timeline` - [string] by ref, 'timeline' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_modules` - [string] by ref, 'modules' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_hidden` - [string] by ref, 'hidden' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_medias` - [string] by ref, 'medias' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_muted` - [string] by ref, 'muted' conditions in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_unpublished` - [string] by ref, 'unpublished' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_cf` - [string] by ref, 'cf' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_subclause` - [string] or [array] by ref, 'where subclause' part of SQL query, string is attached to 'where' part, array is used to create query with UNIONs, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_list_by_type
+         */
         bx_alert($this->_oConfig->getName(), 'get_list_by_type', 0, 0, [
             'type' => $aParams['type'],
             'owner_id' => $aParams['owner_id'],

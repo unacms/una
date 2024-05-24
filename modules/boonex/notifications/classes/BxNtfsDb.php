@@ -70,6 +70,17 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
     public function getEvents($aParams, $bReturnCount = false)
     {
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-get_events_before 'bx_notifications', 'get_events_before' - hook to override params which are used to get events
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `get_events_before`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] by ref, params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-get_events_before
+         */
         bx_alert($this->_oConfig->getName(), 'get_events_before', 0, 0, [
             'params' => &$aParams,
         ]);
@@ -132,6 +143,31 @@ class BxNtfsDb extends BxBaseModNotificationsDb
          * Parts: 
          * PO - notifications related to Owner's content
          * PC - notifications related to Connections' content
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-get_events 'bx_notifications', 'get_events' - hook to override events list which will be received from database
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `get_events`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `browse` - [string] browsing type
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `table` - [string] datatbase table name
+         *      - `method` - [string] by ref, database class method name, @see BxDolDb, can be overridden in hook processing
+         *      - `select_clause` - [string] by ref, 'select' part of SQL query, can be overridden in hook processing
+         *      - `join_clause_po` - [string] by ref, 'join' part of Owner's SQL query, can be overridden in hook processing
+         *      - `join_clause_pc` - [string] by ref, 'join' part of Connections' SQL query, can be overridden in hook processing
+         *      - `where_clause_po` - [string] by ref, 'where' part of Owner's SQL query, can be overridden in hook processing
+         *      - `where_clause_pc` - [string] by ref, 'where' part of Connections' SQL query, can be overridden in hook processing
+         *      - `order_clause_po` - [string] by ref, 'order' part of Owner's SQL query, can be overridden in hook processing
+         *      - `order_clause_pc` - [string] by ref, 'order' part of Connections' SQL query, can be overridden in hook processing
+         *      - `order_clause` - [string] by ref, 'order' part of SQL query, can be overridden in hook processing
+         *      - `limit_clause` - [string] by ref, 'limit' part of SQL query, can be overridden in hook processing
+         *      - `query_po` - [string] by ref, Owner's SQL query, can be overridden in hook processing
+         *      - `query_pc` - [string] by ref, Connections' SQL query, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-get_events
          */
         bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, [
             'browse' => $aParams['browse'],
@@ -261,7 +297,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
                     $sWhereClauseType = '';
                     if(!empty($aQueryParts['fields']['added']))
-                        $sWhereClauseType = "AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'];
+                        $sWhereClauseType = "AND `{$this->_sTable}`.`date` >= " . $aQueryParts['fields']['added'];
 
                     list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
                     $sJoinClause .= $this->prepareAsString(" INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1' AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . ")))", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
@@ -317,6 +353,28 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         $aAlertParams = $aParams;
         unset($aAlertParams['type'], $aAlertParams['owner_id']);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-get_list_by_type 'bx_notifications', 'get_list_by_type' - hook to override SQL query parts which are used to get events list
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `get_list_by_type`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] a type of events list
+         *      - `owner_id` - [int] owner profile id
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `table` - [string] datatbase table name
+         *      - `join_clause` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `where_clause` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_start_from` - [string] by ref, 'start_from' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_status` - [string] by ref, 'status' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_modules` - [string] by ref, 'modules' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_new` - [string] by ref, 'new' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_settings` - [string] by ref, 'settings' conditions in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_type` - [string] by ref, 'type' condition in 'where' part of SQL query, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-get_list_by_type
+         */
         bx_alert($this->_oConfig->getName(), 'get_list_by_type', 0, 0, [
             'type' => $aParams['type'],
             'owner_id' => $aParams['owner_id'],

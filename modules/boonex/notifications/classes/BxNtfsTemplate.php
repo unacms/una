@@ -220,13 +220,30 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $bEventParsed = false;
         $bEventCanceled = false;
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-get_notification 'bx_notifications', 'get_notification' - hook to override notification or even cancel it
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `get_notification`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `browse_params` - [array] browse params array as key&value pairs
+         *      - `event` - [array] by ref, event data array, can be overridden in hook processing        
+         *      - `event_parsed` - [boolean] by ref, if event was already parsed (ready to display), can be overridden in hook processing
+         *      - `event_canceled` - [boolean] by ref, if event was canceled, can be overridden in hook processing
+         *      - `owner` - [object] by ref, an instance of owner profile, @see BxDolProfile, can be overridden in hook processing
+         *      - `owner_unit` - [string] by ref, profile unit HTML code, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-get_notification
+         */
         bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, [
+            'browse_params' => $aBrowseParams,
             'event' => &$aEvent, 
             'event_parsed' => &$bEventParsed, 
             'event_canceled' => &$bEventCanceled,
             'owner' => &$oOwner, 
-            'owner_unit' => &$sOwnerUnit, 
-            'browse_params' => $aBrowseParams
+            'owner_unit' => &$sOwnerUnit
         ]);
         
         if ($bEventCanceled)
@@ -379,10 +396,22 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($aContent) || !is_array($aContent)) 
             return;
 
-        bx_alert($this->_oConfig->getName(), 'get_content', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-get_content 'bx_notifications', 'get_content' - hook to override notification content
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `get_content`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `event` - [array] by ref, event data array, can be overridden in hook processing        
+         *      - `override_result` - [array] by ref, event content array, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-get_content
+         */
+        bx_alert($this->_oConfig->getName(), 'get_content', 0, 0, [
             'event' => $aEvent,
             'override_result' => &$aContent
-        ));
+        ]);
 
         $aSet = array();
         if(!empty($aContent['entry_author'])) {

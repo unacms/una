@@ -737,7 +737,23 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCacheTableCheckFields()
     {
         $mixedResult = null;
-        bx_alert($this->getName(), 'cache_table_check_fields', 0, 0, ['check_fields' => $this->_aCacheTableCheckFields, 'override_result' => &$mixedResult]);
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-cache_table_check_fields 'bx_timeline', 'cache_table_check_fields' - hook to override cache table fields, which should be checked
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `cache_table_check_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `check_fields` - [array] an array with fields which are checked by default
+         *      - `override_result` - [array] by ref, new check fields array or null to use the dafault one, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-cache_table_check_fields
+         */
+        bx_alert($this->getName(), 'cache_table_check_fields', 0, 0, [
+            'check_fields' => $this->_aCacheTableCheckFields, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
         
