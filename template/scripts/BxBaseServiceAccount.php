@@ -344,11 +344,12 @@ class BxBaseServiceAccount extends BxDol
      */
     public function serviceEmailConfirmation($sMsg = false)
     {
+        $bApi = bx_is_api();
         // if user is logged in and email is confirmed then just display a message
         if (isLogged() && !bx_get('code')) {
             $oAccount = BxDolAccount::getInstance();
             if ($oAccount->isConfirmedEmail())
-                return MsgBox(_t("_sys_txt_confirm_email_already_confirmed"));
+                return $bApi ? [bx_api_get_msg(_t("_sys_txt_confirm_email_already_confirmed"))] : MsgBox(_t("_sys_txt_confirm_email_already_confirmed"));
         }
 
         // if confirmation code is provided in the URL - perform email confirmation right away
@@ -362,25 +363,39 @@ class BxBaseServiceAccount extends BxDol
                 $sMsg = _t('_sys_txt_confirm_email_sent');
             else
                 $sMsg = _t('_sys_txt_confirm_email_sent_failed');
-            return MsgBox($sMsg);
+            return $bApi ? [bx_api_get_msg($sMsg)] : MsgBox($sMsg);
         }
 
         // show and process code verification form
 
         $oForm = BxDolForm::getObjectInstance('sys_confirm_email', 'sys_confirm_email');
         if (!$oForm)
-            return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
+            return $bApi ? [bx_api_get_msg(_t("_sys_txt_confirm_email_error_occured"))] : MsgBox(_t("_sys_txt_confirm_email_error_occured"));
 
         $oForm->initChecker();
 
         if ($oForm->isSubmittedAndValid()) {
 
             $oKey = BxDolKey::getInstance();
-            if (!$oKey)
-                return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
-            else
-                return $this->confirmEmail(trim($oForm->getCleanValue('code')));
+            if (!$oKey){
+                return $bApi ? [bx_api_get_msg(_t("_sys_txt_confirm_email_error_occured"))] : MsgBox(_t("_sys_txt_confirm_email_error_occured"));
+            }
+            else{
+                $oRv = $this->confirmEmail(trim($oForm->getCleanValue('code')));
+                if (!$bApi)
+                    return $oRv;
+                
+                return $oRv;
+            }
 
+        }
+        
+        if ($bApi){
+            return [bx_api_get_block('form', $oForm->getCodeAPI(), [
+                'ext' => [
+                    'request' => ['url' => '/api.php?r=system/email_confirmation/TemplServiceAccount', 'immutable' => true]
+                ]
+            ])];
         }
 
         return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_confirm_email_desc") . '</div>' . $oForm->getCode();
@@ -471,9 +486,11 @@ class BxBaseServiceAccount extends BxDol
      */
     public function confirmEmail($sKey)
     {
+        $bApi = bx_is_api();
+        
         $mixedAccountId = $this->_confirmEmail($sKey);
         if(is_string($mixedAccountId) && !is_numeric($mixedAccountId))
-            return MsgBox($mixedAccountId);
+            return $bApi ? [bx_api_get_msg($mixedAccountId)] : MsgBox($mixedAccountId);
 
         // redirect with success message
         $sUrl = getParam('sys_redirect_after_email_confirmation');
@@ -489,6 +506,9 @@ class BxBaseServiceAccount extends BxDol
          * @hook @ref hook-account-after_email_confirmation
          */
         bx_alert('account', 'after_email_confirmation', $mixedAccountId, false, ['override_result' => &$sUrl]);
+        if ($bApi){
+            return  [bx_api_get_block('redirect', ['uri' => bx_api_get_relative_url(BxDolPermalinks::getInstance()->permalink($sUrl)), 'timeout' => 1000])];
+        }
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);

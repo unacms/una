@@ -118,7 +118,11 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
 
     protected function _isVisiblePage ($a)
     {
+        
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(!$this->_aContentInfo)
+            return false;
 
         if(($mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED) {
             $bPartiallyVisible = false;
