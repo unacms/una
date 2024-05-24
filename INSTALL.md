@@ -32,7 +32,6 @@ git checkout 14.0.0-B1
 Begin by downloading the Docker image for Composer using the following command:
 
 ```bash
-
 docker pull composer/composer
 
 ```
@@ -54,6 +53,11 @@ After setting the permissions, build the Docker images for the necessary service
 ```bash
 
 docker-compose build cron
+
+```
+
+```bash
+
 docker-compose build php
 
 ```
