@@ -55,10 +55,22 @@ class BxBaseAcl extends BxDolAcl
             )
     	));
 
-        bx_alert('system', 'page_output_block_acl_level', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-page_output_block_acl_level 'system', 'page_output_block_acl_level' - hook to override profile membership page block
+         * - $unit_name - equals `system`
+         * - $action - equals `page_output_block_acl_level`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `block_owner` - [int] profile id to show membership level for
+         *      - `block_code` - [string] by ref, block code, can be overridden in hook processing
+         * @hook @ref hook-system-page_output_block_acl_level
+         */
+        bx_alert('system', 'page_output_block_acl_level', 0, false, [
             'block_owner' => $iProfileId,
             'block_code' => &$sContent
-        ));
+        ]);
 
         $oTemplate->addCss(array('acl.css'));
     	return $sContent;

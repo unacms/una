@@ -524,7 +524,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             return false;
         
         $sDisplayName = $this->getProfileName($aContentInfo);
-        bx_alert($this->getName(), 'profile_name', $aContentInfo['profile_id'], 0, array('info' => $aContentInfo, 'display_name' => &$sDisplayName));
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_profile-profile_name '{module_name}', 'profile_name' - hook to override profile display name
+         * - $unit_name - module name
+         * - $action - equals `profile_name`
+         * - $object_id - profile id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `info` - [array] profile info array as key&value pairs
+         *      - `display_name` - [string] by ref, profile display name, can be overridden in hook processing
+         * @hook @ref hook-bx_base_profile-profile_name
+         */
+        bx_alert($this->getName(), 'profile_name', $aContentInfo['profile_id'], 0, [
+            'info' => $aContentInfo, 
+            'display_name' => &$sDisplayName
+        ]);
         
         return $sDisplayName;
     }
@@ -622,10 +638,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
                 $aRet[] = $iConnectedProfileId;
         }*/
 
-        bx_alert('system', 'get_participating_profiles', $iProfileId, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-get_participating_profiles 'system', 'get_participating_profiles' - hook to override context participants list
+         * - $unit_name - equals `system`
+         * - $action - equals `get_participating_profiles`
+         * - $object_id - context profile id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `profiles` - [array] by ref, a list of participating profiles ids, can be overridden in hook processing
+         * @hook @ref hook-system-get_participating_profiles
+         */
+        bx_alert('system', 'get_participating_profiles', $iProfileId, false, [
             'module' => $this->_oConfig->getName(),
             'profiles' => &$aRet
-        ));
+        ]);
 
         return $aRet;
     }
@@ -638,8 +666,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      * @return array which is ready to use for particular module
      */ 
     public function servicePrepareFields ($aFieldsProfile)
-    {        
-        bx_alert($this->getName(), 'prepare_fields', 0, 0, array('fields_orig' => $aFieldsProfile, 'fields_result' => &$aFieldsProfile));
+    {
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_profile-prepare_fields '{module_name}', 'prepare_fields' - hook to override prepared profile fields
+         * - $unit_name - module name
+         * - $action - equals `prepare_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `fields_orig` - [array] original fields array as key&value pairs
+         *      - `fields_result` - [array] by ref, resulting fields array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_base_profile-prepare_fields
+         */
+        bx_alert($this->getName(), 'prepare_fields', 0, 0, [
+            'fields_orig' => $aFieldsProfile, 
+            'fields_result' => &$aFieldsProfile
+        ]);
 
         return $aFieldsProfile;
     }
@@ -662,8 +705,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             if ($k != $v && !isset($aMap[$v]))
                 unset($aFieldsProfile[$v]);
         }
-        
-        bx_alert($this->getName(), 'prepare_fields', 0, 0, array('fields_orig' => $aFieldsOrig, 'fields_result' => &$aFieldsProfile));
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_profile-prepare_fields '{module_name}', 'prepare_fields' - hook to override prepared profile fields
+         * - $unit_name - module name
+         * - $action - equals `prepare_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `fields_orig` - [array] original fields array as key&value pairs
+         *      - `fields_result` - [array] by ref, resulting fields array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_base_profile-prepare_fields
+         */
+        bx_alert($this->getName(), 'prepare_fields', 0, 0, [
+            'fields_orig' => $aFieldsOrig, 
+            'fields_result' => &$aFieldsProfile
+        ]);
 
         return $aFieldsProfile;
     }
@@ -1561,7 +1619,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         // check alert to allow custom checks
         $mixedResult = null;
-        bx_alert('system', 'check_allowed_post', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
+
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_post 'system', 'check_allowed_post' - hook to override the result of checking whether 'post' action is allowed or not to specified profile
+         * It's equivalent to @ref hook-system-check_allowed_view
+         * @hook @ref hook-system-check_allowed_post
+         */
+        bx_alert('system', 'check_allowed_post', 0, 0, [
+            'module' => $this->getName(), 
+            'content_info' => $aDataEntry, 
+            'profile_id' => $iProfileId, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
 
@@ -1585,13 +1655,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         $mixedResult = $this->_serviceCheckAllowedContactForProfile($aDataEntry, $isPerformAction, $iProfileId);
 
-        // call alert to allow custom checks
-        bx_alert('system', 'check_allowed_contact', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_contact 'system', 'check_allowed_contact' - hook to override the result of checking whether 'contact' action is allowed or not to specified profile
+         * It's equivalent to @ref hook-system-check_allowed_view
+         * @hook @ref hook-system-check_allowed_contact
+         */
+        bx_alert('system', 'check_allowed_contact', 0, 0, [
             'module' => $this->getName(), 
             'content_info' => $aDataEntry, 
             'profile_id' => $iProfileId, 
             'override_result' => &$mixedResult
-        ));
+        ]);
 
         return $mixedResult;
     }
@@ -1841,13 +1916,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         $mixedResult = $this->_modProfileCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
 
-        // call alert to allow custom checks
-        bx_alert('system', 'check_allowed_subscribe_add', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_subscribe_add 'system', 'check_allowed_subscribe_add' - hook to override the result of checking whether 'subscribe' action is allowed or not to currently logged in user
+         * It's equivalent to @ref hook-system-check_allowed_view
+         * @hook @ref hook-system-check_allowed_subscribe_add
+         */
+        bx_alert('system', 'check_allowed_subscribe_add', 0, 0, [
             'module' => $this->getName(), 
             'content_info' => $aDataEntry, 
             'profile_id' => bx_get_logged_profile_id(), 
             'override_result' => &$mixedResult
-        ));
+        ]);
 
         return $mixedResult;
     }
@@ -1961,6 +2041,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         ];
 
         if(!empty($aField2Method[$sFiledName]))
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-profile_picture_changed '{module_name}', 'profile_picture_changed' - hook after profile picture was changed
+             * - $unit_name - module name
+             * - $action - equals `profile_picture_changed`
+             * - $object_id - image id
+             * - $sender_id - profile id who performed the action
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_author_id` - [int] profile id
+             *      - `content` - [int] profile content id
+             *      - `field` - [string] field name
+             * @hook @ref hook-bx_base_profile-profile_picture_changed
+             */
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-profile_cover_changed '{module_name}', 'profile_cover_changed' - hook after profile cover was changed
+             * It's equivalent to @ref hook-bx_base_profile-profile_picture_changed
+             * @hook @ref hook-bx_base_profile-profile_cover_changed
+             */
             bx_alert($sModule, 'profile_' . $aField2Method[$sFiledName] . '_changed', $sFiledValue, $iProfileId, [
                 'object_author_id' => $iProfileId, 
                 'content' => $iContentId, 
@@ -1993,6 +2092,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
 
         $aParams = $this->_alertParams($aContentInfo);
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_profile-added '{module_name}', 'added' - hook after profile was added
+         * - $unit_name - module name
+         * - $action - equals `added`
+         * - $object_id - profile content id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `status` - [string] context status
+         *      - `status_admin` - [string] context admin status
+         *      - `privacy_view` - [int] or [string] privacy for view context action, @see BxDolPrivacy
+         * @hook @ref hook-bx_base_profile-added
+         */
         bx_alert($this->getName(), 'added', $iContentId, false, $aParams);
     }
 
@@ -2004,10 +2117,32 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
 
         $aParams = $this->_alertParams($aContentInfo);
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_profile-edited '{module_name}', 'edited' - hook after profile was changed
+         * It's equivalent to @ref hook-bx_base_profile-added
+         * @hook @ref hook-bx_base_profile-edited
+         */
         bx_alert($sModule, 'edited', $iContentId, false, $aParams);
 
         $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModule);
-        bx_alert('profile', 'edit', $oProfile->id(), 0, array('content' => $iContentId, 'module' => $sModule));
+        
+        /**
+         * @hooks
+         * @hookdef hook-profile-edit 'profile', 'edit' - hook after profile was changed
+         * - $unit_name - equals `profile`
+         * - $action - equals `edit`
+         * - $object_id - profile id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content` - [int] profile content id
+         *      - `module` - [string] module name
+         * @hook @ref hook-profile-added
+         */
+        bx_alert('profile', 'edit', $oProfile->id(), 0, [
+            'content' => $iContentId, 
+            'module' => $sModule
+        ]);
     }
 
     public function getProfileByCurrentUrl ()

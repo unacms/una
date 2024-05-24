@@ -44,6 +44,17 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
 
     public function getCNF()
     {
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-get_cnf '{module_name}', 'get_cnf' - hook to override module's configuration array
+         * - $unit_name - module name
+         * - $action - equals `get_cnf`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [array] by ref, module's configuration array, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-get_cnf
+         */
         bx_alert($this->getName(), 'get_cnf', 0, 0, ['override_result' => &$this->CNF]);
         return $this->CNF;
     }

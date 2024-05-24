@@ -469,7 +469,24 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         // send invitation to the group 
         $sModule = $this->getName();
         if ($bSendInviteOnly && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
-            bx_alert($sModule, 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_groups-join_invitation '{module_name}', 'join_invitation' - hook before adding (sending) new join to context invitation
+             * - $unit_name - module name
+             * - $action - equals `join_invitation`
+             * - $object_id - context id
+             * - $sender_id - context profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `content` - [array] context info array as key&value pairs
+             *      - `entry_title` - [string] context title
+             *      - `entry_url` - [string] context URL
+             *      - `group_profile` - [int] context profile id
+             *      - `profile` - [int] profile id who was invited
+             *      - `notification_subobject_id` - [int] profile id who was invited
+             *      - `object_author_id` - [int] context profile id
+             * @hook @ref hook-bx_base_groups-join_invitation
+             */
+            bx_alert($sModule, 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
                 'content' => $aContentInfo, 
                 'entry_title' => $sEntryTitle, 
                 'entry_url' => $sEntryUrl, 
@@ -477,22 +494,50 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                 'profile' => $iProfileId, 
                 'notification_subobject_id' => $iProfileId, 
                 'object_author_id' => $iGroupProfileId
-            ));
+            ]);
 
             /**
              * 'Invitation Received' alert for Notifications module.
              * Note. It's essential to use Recipient ($iInitiatorId) in 'object_author_id' parameter. 
              * In this case notification will be received by Recipient profile.
              */
-            bx_alert($sModule, 'join_invitation_notif', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_groups-join_invitation_notif '{module_name}', 'join_invitation_notif' - hook before adding new join to context invitation. Is needed for Notifications module.
+             * - $unit_name - module name
+             * - $action - equals `join_invitation_notif`
+             * - $object_id - context id
+             * - $sender_id - context profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_author_id` - [int] profile id who was invited
+             *      - `privacy_view` - [int] or [string] privacy for view context action, @see BxDolPrivacy
+             * @hook @ref hook-bx_base_groups-join_invitation_notif
+             */
+            bx_alert($sModule, 'join_invitation_notif', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
                 'object_author_id' => $iInitiatorId, 
                 'privacy_view' => isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 3, 
-            ));
+            ]);
         }
         // send notification to group's admins that new connection is pending confirmation 
         elseif (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
-
-            bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_groups-join_request '{module_name}', 'join_request' - hook before adding new join to context request
+             * - $unit_name - module name
+             * - $action - equals `join_request`
+             * - $object_id - context id
+             * - $sender_id - context profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_author_id` - [int] context profile id
+             *      - `performer_id` - [int] profile id who wants to join
+             *      - `content` - [array] context info array as key&value pairs
+             *      - `entry_title` - [string] context title
+             *      - `entry_url` - [string] context URL
+             *      - `group_profile` - [int] context profile id
+             *      - `profile` - [int] profile id who wants to join
+             * @hook @ref hook-bx_base_groups-join_request
+             */
+            bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
             	'object_author_id' => $iGroupProfileId,
             	'performer_id' => $iProfileId, 
 
@@ -502,11 +547,17 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
             	'group_profile' => $iGroupProfileId, 
             	'profile' => $iProfileId
-            ));
+            ]);
         }
         // send notification that join request was accepted 
         else if (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
-            bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_groups-join_request_accepted '{module_name}', 'join_request_accepted' - hook before accepting join to context request
+             * It's equivalent to @ref hook-bx_base_groups-join_request
+             * @hook @ref hook-bx_base_groups-join_request_accepted
+             */
+            bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
             	'object_author_id' => $iGroupProfileId,
             	'performer_id' => $iProfileId,
 
@@ -516,7 +567,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
             	'group_profile' => $iGroupProfileId, 
             	'profile' => $iProfileId
-            ));
+            ]);
         }
 
         // new fan was added
@@ -528,8 +579,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             else{
                  $this->addFollower((int)$iInitiatorId, $oGroupProfile->id()); 
             }
-            
-            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_groups-fan_added '{module_name}', 'fan_added' - hook before adding (registering) new context member
+             * It's equivalent to @ref hook-bx_base_groups-join_request
+             * @hook @ref hook-bx_base_groups-fan_added
+             */
+            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
             	'object_author_id' => $iGroupProfileId,
             	'performer_id' => $iProfileId,
 
@@ -539,8 +596,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
             	'group_profile' => $iGroupProfileId, 
             	'profile' => $iProfileId,
-            ));
-            
+            ]);
+
             $this->doAudit($iGroupProfileId, $iInitiatorId, '_sys_audit_action_group_join_request_accepted');
             
             return false;
@@ -1529,13 +1586,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $mixedResult = $this->_modGroupsCheckAllowedFanAdd($aDataEntry, $isPerformAction);
 
-        // call alert to allow custom checks
-        bx_alert('system', 'check_allowed_fan_add', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_fan_add 'system', 'check_allowed_fan_add' - hook to override the result of checking whether 'fan add' to context action is allowed or not to currently logged in user
+         * - $unit_name - equals `system`
+         * - $action - equals `check_allowed_fan_add`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `content_info` - [array] context info array as key&value pairs
+         *      - `profile_id` - [int] currently logged in profile id to be checked the availability of the action to
+         *      - `override_result` - [string] or [int] by ref, check action result, can be overridden in hook processing. Return string with an error if action isn't allowed or CHECK_ACTION_RESULT_ALLOWED, @see BxDolAcl
+         * @hook @ref hook-system-check_allowed_fan_add
+         */
+        bx_alert('system', 'check_allowed_fan_add', 0, 0, [
             'module' => $this->getName(), 
             'content_info' => $aDataEntry, 
             'profile_id' => bx_get_logged_profile_id(), 
             'override_result' => &$mixedResult
-        ));
+        ]);
 
         return $mixedResult;
     }
@@ -1625,7 +1695,25 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             }
         }
 
-        // call alert to allow custom checks
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_action_by_role 'system', 'check_allowed_action_by_role' - hook to override the result of checking whether an action is allowed or not to context member by his role in the context
+         * - $unit_name - equals `system`
+         * - $action - equals `check_allowed_action_by_role`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `multi_roles` - [boolean] whether multi roles are enabled in context or not
+         *      - `action` - [string] action to be checked
+         *      - `action_module` - [string] module name which the action belongs to
+         *      - `content_profile_id` - [int] context profile id
+         *      - `content_info` - [array] context info array as key&value pairs
+         *      - `profile_id` - [int] profile id to be checked the availability of the action to
+         *      - `profile_role` - [int] profile role in the context
+         *      - `override_result` - [boolean] by ref, check action result, can be overridden in hook processing.
+         * @hook @ref hook-system-check_allowed_action_by_role
+         */
         bx_alert('system', 'check_allowed_action_by_role', 0, 0, [
             'module' => $this->getName(), 
             'multi_roles' => $this->_oConfig->isMultiRoles(),
@@ -1774,13 +1862,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $mixedResult = $this->_modGroupsCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
 
-        // call alert to allow custom checks
-        bx_alert('system', 'check_allowed_subscribe_add', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_subscribe_add 'system', 'check_allowed_subscribe_add' - hook to override the result of checking whether currently logged in user can subscribe (follow) the context or not
+         * - $unit_name - equals `system`
+         * - $action - equals `check_allowed_subscribe_add`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `content_info` - [array] context info array as key&value pairs
+         *      - `profile_id` - [int] currently logged in profile id to be checked the availability of the action to
+         *      - `override_result` - [string] or [int] by ref, check action result, can be overridden in hook processing. Return string with an error if action isn't allowed or CHECK_ACTION_RESULT_ALLOWED, @see BxDolAcl
+         * @hook @ref hook-system-check_allowed_subscribe_add
+         */
+        bx_alert('system', 'check_allowed_subscribe_add', 0, 0, [
             'module' => $this->getName(), 
             'content_info' => $aDataEntry, 
             'profile_id' => bx_get_logged_profile_id(), 
             'override_result' => &$mixedResult
-        ));
+        ]);
 
         return $mixedResult;
     }
@@ -1862,6 +1963,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         ];
 
         if(!empty($aField2Method[$sFiledName]))
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_groups-context_picture_changed '{module_name}', 'context_picture_changed' - hook after context picture was changed
+             * - $unit_name - module name
+             * - $action - equals `context_picture_changed`
+             * - $object_id - context id
+             * - $sender_id - profile id who performed the action
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `status` - [string] context status
+             *      - `status_admin` - [string] context admin status
+             *      - `privacy_view` - [int] or [string] privacy for view context action, @see BxDolPrivacy
+             *      - `cf` - [int] context's audience filter value
+             * @hook @ref hook-bx_base_groups-context_picture_changed
+             */
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_groups-context_cover_changed '{module_name}', 'context_cover_changed' - hook after context cover was changed
+             * It's equivalent to @ref hook-bx_base_groups-context_picture_changed 
+             * @hook @ref hook-bx_base_groups-context_cover_changed
+             */
             bx_alert($this->getName(), 'context_' . $aField2Method[$sFiledName] . '_changed', $iContentId, $iProfileId, $this->_alertParams($aContentInfo));
     }
 
@@ -1890,6 +2011,21 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $sModule = $this->getName();
         $aParams = $this->_alertParams($aContentInfo);
+        /**
+         * @hooks
+         * @hookdef hook-system-prepare_alert_params 'system', 'prepare_alert_params' - hook to override alert (hook) params
+         * - $unit_name - equals `system`
+         * - $action - equals `prepare_alert_params`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `unit` - [string] unit name
+         *      - `action` - [string] by ref, action, can be overridden in hook processing
+         *      - `object_id` - [int] by ref, object id, can be overridden in hook processing
+         *      - `sender_id` - [int] by ref, action performer profile id, can be overridden in hook processing
+         *      - `extras` - [array] by ref, extra params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-system-prepare_alert_params
+         */
         bx_alert('system', 'prepare_alert_params', 0, 0, [
             'unit'=> $sModule, 
             'action' => &$sAction, 
@@ -1897,6 +2033,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'sender_id' => &$iAuthorId, 
             'extras' => &$aParams
         ]);
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_groups-added '{module_name}', 'added' - hook after context was added (published)
+         * - $unit_name - module name
+         * - $action - equals `added`
+         * - $object_id - context id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `status` - [string] context status
+         *      - `status_admin` - [string] context admin status
+         *      - `privacy_view` - [int] or [string] privacy for view context action, @see BxDolPrivacy
+         *      - `cf` - [int] context's audience filter value
+         * @hook @ref hook-bx_base_groups-added
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_groups-deferred '{module_name}', 'deferred' - hook after context was added with pending approval status
+         * It's equivalent to @ref hook-bx_base_groups-added
+         * @hook @ref hook-bx_base_groups-deferred
+         */
         bx_alert($sModule, $sAction, $iId, false, $aParams);
 
         $this->_processModerationNotifications($aContentInfo);
@@ -2057,6 +2213,23 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ), BX_EMAIL_NOTIFY);
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_groups-set_role '{module_name}', 'set_role' - hook after 'set role' action was applied to context member
+         * - $unit_name - module name
+         * - $action - equals `set_role`
+         * - $object_id - context id
+         * - $sender_id - context profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] context profile id
+         *      - `performer_id` - [int] performer profile id
+         *      - `fan_id` - [int] context member profile id
+         *      - `content` - [array] context info array as key&value pairs
+         *      - `role` - [int] or [array] role or an array of roles to be set
+         *      - `group_profile` - [int] context profile id
+         *      - `profile` - [int] performer profile id
+         * @hook @ref hook-bx_base_groups-set_role
+         */
         bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             'object_author_id' => $iGroupProfileId,
             'performer_id' => $iProfileId, 
@@ -2105,6 +2278,23 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
         $aGroupProfileInfo = $this->_oDb->getContentInfoById((int)$oGroupProfile->getContentId());
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_groups-set_role '{module_name}', 'set_role' - hook after 'set role' action was applied to context member
+         * - $unit_name - module name
+         * - $action - equals `set_role`
+         * - $object_id - context id
+         * - $sender_id - context profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] context profile id
+         *      - `performer_id` - [int] performer profile id
+         *      - `fan_id` - [int] context member profile id
+         *      - `content` - [array] context info array as key&value pairs
+         *      - `role` - [int] or [array] role or an array of roles to be set
+         *      - `group_profile` - [int] context profile id
+         *      - `profile` - [int] performer profile id
+         * @hook @ref hook-bx_base_groups-set_role
+         */
         bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             'object_author_id' => $iGroupProfileId,
             'performer_id' => $iProfileId, 

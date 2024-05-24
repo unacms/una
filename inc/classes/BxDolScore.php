@@ -254,8 +254,55 @@ class BxDolScore extends BxDolObject
         $this->_trigger();
 
         $sTypeUc = ucfirst($sType);
-        bx_alert($this->_sSystem, 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, array('score_id' => $iId, 'score_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        bx_alert('score', 'do' . $sTypeUc, $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_score-doVoteUp '{object_name}', 'doVoteUp' - hook after score vote 
+         * - $unit_name - score object name
+         * - $action - equals `doVoteUp`
+         * - $object_id - object id which got a vote
+         * - $sender_id - profile id who voted
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `score_id` - [int] vote id
+         *      - `score_author_id` - [int] profile id who voted
+         *      - `object_author_id` - [int] author id of the object which got a vote
+         * @hook @ref hook-bx_dol_score-doVoteUp
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_score-doVoteDown '{object_name}', 'doVoteDown' - hook after score vote 
+         * It's equivalent to @ref hook-bx_dol_score-doVoteUp
+         * @hook @ref hook-bx_dol_score-doVoteDown
+         */
+        bx_alert($this->_sSystem, 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, [
+            'score_id' => $iId, 
+            'score_author_id' => $iAuthorId, 
+            'object_author_id' => $iObjectAuthorId
+        ]);
+
+        /**
+         * @hooks
+         * @hookdef hook-score-doVoteUp 'score', 'doUp' - hook after score vote 
+         * - $unit_name - equals `score`
+         * - $action - equals `doUp`
+         * - $object_id - score vote id
+         * - $sender_id - profile id who voted
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_system` - [string] vote object name
+         *      - `object_id` - [int] object id which got a vote
+         *      - `object_author_id` - [int] author id of the object which got a vote
+         * @hook @ref hook-score-doUp
+         */
+        /**
+         * @hooks
+         * @hookdef hook-score-doVoteDown 'score', 'doVoteDown' - hook after score vote 
+         * It's equivalent to @ref hook-score-doUp
+         * @hook @ref hook-score-doVoteDown
+         */
+        bx_alert('score', 'do' . $sTypeUc, $iId, $iAuthorId, [
+            'object_system' => $this->_sSystem, 
+            'object_id' => $iObjectId, 
+            'object_author_id' => $iObjectAuthorId
+        ]);
 
         $aRequestParamsData['show_script'] = false;
 

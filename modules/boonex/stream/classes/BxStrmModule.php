@@ -281,6 +281,18 @@ class BxStrmModule extends BxBaseModTextModule
 
         $this->onPublished($iContentId);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_stream-publish_succeeded 'bx_stream', 'publish_succeeded' - hook on stream published succeeded
+         * - $unit_name - equals `bx_stream`
+         * - $action - equals `publish_succeeded` 
+         * - $object_id - stream id
+         * - $sender_id - profile_id of stream's author
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] stream's author
+         *      - `privacy_view` - [int] BX_DOL_PG_ALL
+         * @hook @ref hook-bx_stream-publish_succeeded
+         */
         bx_alert($this->getName(), 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']], array(
             'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
             'privacy_view' => BX_DOL_PG_ALL,

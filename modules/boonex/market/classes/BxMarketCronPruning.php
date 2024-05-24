@@ -48,6 +48,16 @@ class BxMarketCronPruning extends BxDolCron
                 }
             }
 
+             /**
+             * @hooks
+             * @hookdef hook-bx_market-license_expire 'bx_market', 'license_expire' - hook on found expired license
+             * - $unit_name - equals `bx_market`
+             * - $action - equals `license_expire` 
+             * - $object_id - not used 
+             * - $sender_id - not used 
+             * - $extra_params - array of expired licenses
+             * @hook @ref hook-bx_market-license_expire
+             */
             bx_alert($this->_oModule->getName(), 'license_expire', 0, false, $aLicense);
             
             $this->_oModule->_oDb->processExpiredLicense($aLicense);

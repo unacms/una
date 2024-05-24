@@ -410,7 +410,30 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $sQuery .= " WHERE 1 ";
 
         $aResults = false;
-        bx_alert('grid', 'get_data', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'browse_params' => $this->_aBrowseParams, 'results' => &$aResults));
+        /**
+         * @hooks
+         * @hookdef hook-grid-get_data 'grid', 'get_data' - hook to override the data to be shown in the grid
+         * - $unit_name - equals `grid`
+         * - $action - equals `get_data`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [string] grid object name
+         *      - `options` - [array] grid options array as key&value pairs
+         *      - `markers` - [array] markers array as key&value pairs
+         *      - `filter` - [string] filter value
+         *      - `browse_params` - [array] additional browse params array as key&value pairs
+         *      - `results` - [array] by ref, array of grid rows, where each row is an array of fields values, can be overridden in hook processing
+         * @hook @ref hook-grid-get_data
+         */
+        bx_alert('grid', 'get_data', 0, false, [
+            'object' => $this->_sObject, 
+            'options' => $this->_aOptions, 
+            'markers' => $this->_aMarkers, 
+            'filter' => $sFilter, 
+            'browse_params' => $this->_aBrowseParams, 
+            'results' => &$aResults
+        ]);
     	if($aResults !== false)
     	    return $aResults;
 
@@ -509,7 +532,30 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $sCond = rtrim($sCond, ' OR ');
         }
 
-        bx_alert('grid', 'get_data_by_filter', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'browse_params' => $this->_aBrowseParams, 'conditions' => &$sCond));
+        /**
+         * @hooks
+         * @hookdef hook-grid-get_data_by_filter 'grid', 'get_data_by_filter' - hook to override the data to be shown in the grid
+         * - $unit_name - equals `grid`
+         * - $action - equals `get_data_by_filter`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [string] grid object name
+         *      - `options` - [array] grid options array as key&value pairs
+         *      - `markers` - [array] markers array as key&value pairs
+         *      - `filter` - [string] filter value
+         *      - `browse_params` - [array] additional browse params array as key&value pairs
+         *      - `conditions` - [string] by ref, 'where' part of SQL query in accordance with provided filter(s), can be overridden in hook processing
+         * @hook @ref hook-grid-get_data_by_filter
+         */
+        bx_alert('grid', 'get_data_by_filter', 0, false, [
+            'object' => $this->_sObject, 
+            'options' => $this->_aOptions, 
+            'markers' => $this->_aMarkers, 
+            'filter' => $sFilter, 
+            'browse_params' => $this->_aBrowseParams, 
+            'conditions' => &$sCond
+        ]);
 
         return $sCond ? ' AND (' . $sCond . ')' : $sCond;
     }

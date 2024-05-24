@@ -132,16 +132,29 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
             $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
             foreach ($aResult as &$aItem) {
                 $aItem['symbol'] = bx_get('symbol');
+                $aItem['url'] = bx_api_get_relative_url($aItem['url']);
             }
         }
 
         if($sSymbol == '#'){
             $aData = BxDolMetatags::getMetatagsDataByTerm('keywords', 'keyword', bx_get('term'));
             foreach ($aData as $aItem) {
-                $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => $aItem['url'], 'symbol' => bx_get('symbol')];
+                $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => bx_api_get_relative_url($aItem['url']), 'symbol' => bx_get('symbol')];
             }
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-search-get_mention 'search', 'get_mention' - hook on get mention list
+         * - $unit_name - equals `search`
+         * - $action - equals `get_mention` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] array of parameters
+         *      - `override_result` - [array] by ref, array of colors, can be overridden in hook processing
+         * @hook @ref hook-search-get_mention
+         */
         bx_alert('search', 'get_mention', 0, 0, array('params' => $a[1], 'override_result' => &$aResult));
         
         header('Content-Type:text/javascript; charset=utf-8');

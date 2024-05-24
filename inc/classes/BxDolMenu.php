@@ -175,11 +175,24 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         else
             $oMenu = $GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject];
 
-        bx_alert('system', 'get_object', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-get_object 'system', 'get_object' - hook to override menu object
+         * - $unit_name - equals `system`
+         * - $action - equals `get_object`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] object type, equals to 'menu'
+         *      - `name` - [string] menu object name
+         *      - `object` - [object] by ref, an instance of menu, @see BxDolMenu, can be overridden in hook processing
+         * @hook @ref hook-system-get_object
+         */
+        bx_alert('system', 'get_object', 0, false, [
             'type' => 'menu',
             'name' => $sObject,
             'object' => &$oMenu,
-        ));
+        ]);
 
         return $oMenu;
     }

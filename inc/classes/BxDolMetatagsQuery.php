@@ -67,8 +67,20 @@ class BxDolMetatagsQuery extends BxDolDb
     public function keywordsDelete($mixedContentId)
     {
         $mixedResult = $this->metaDelete($this->_aObject['table_keywords'], $mixedContentId);
-        if ($mixedResult != false)
+        if ($mixedResult != false){
+             /**
+             * @hooks
+             * @hookdef hook-meta_keyword-deleted 'meta_keyword', 'deleted' - hook on delete meta keyword
+             * - $unit_name - equals `meta_keyword`
+             * - $action - equals `deleted` 
+             * - $object_id - content_id
+             * - $sender_id - profile_id fror logged user
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object` - [string] object name
+             * @hook @ref hook-meta_keyword-deleted
+             */
             bx_alert('meta_keyword', 'deleted', $mixedContentId, bx_get_logged_profile_id(), array('object' => $this->_aObject['object']));
+        }
         return $mixedResult;
     }
 

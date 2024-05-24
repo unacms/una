@@ -60,7 +60,26 @@ class BxBaseModGeneralModule extends BxDolModule
         $bModerator = $this->_isModerator();
 
         $mixedResult = null;
-        bx_alert($this->getName(), 'is_entry_active', 0, 0, ['viewer_id' => $iProfileId, 'is_moderator' => $bModerator, 'content_info' => $aContentInfo, 'override_result' => &$mixedResult]);
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-is_entry_active '{module_name}', 'is_entry_active' - hook to override whether an entry (content) active or not
+         * - $unit_name - module name
+         * - $action - equals `is_entry_active`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `viewer_id` - [int] viewer profile id
+         *      - `is_moderator` - [boolean] is viewer has moderator status or not
+         *      - `content_info` - [array] content info array as key&value pairs
+         *      - `override_result` - [boolean] by ref, boolean value which determines whether entry (content) active or not, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-is_entry_active
+         */
+        bx_alert($this->getName(), 'is_entry_active', 0, 0, [
+            'viewer_id' => $iProfileId, 
+            'is_moderator' => $bModerator, 
+            'content_info' => $aContentInfo, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
 
@@ -93,7 +112,24 @@ class BxBaseModGeneralModule extends BxDolModule
             $iProfileId = bx_get_logged_profile_id();
 
         $mixedResult = null;
-        bx_alert($this->getName(), 'is_entry_author', 0, 0, ['viewer_id' => $iProfileId, 'content_info' => $aContentInfo, 'override_result' => &$mixedResult]);
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-is_entry_author '{module_name}', 'is_entry_author' - hook to check if a viewer is an author of viewed entry (content) or not
+         * - $unit_name - module name
+         * - $action - equals `is_entry_author`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `viewer_id` - [int] viewer profile id
+         *      - `content_info` - [array] content info array as key&value pairs
+         *      - `override_result` - [boolean] by ref, boolean value which determines whether the viewer is an author of viewed entry (content) or not, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-is_entry_author
+         */
+        bx_alert($this->getName(), 'is_entry_author', 0, 0, [
+            'viewer_id' => $iProfileId, 
+            'content_info' => $aContentInfo, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
 
@@ -1360,12 +1396,26 @@ class BxBaseModGeneralModule extends BxDolModule
             }
         }
 
-        bx_alert('system', 'get_object_form', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-get_object_form 'system', 'get_object_form' - hook to override an object of create content form, @see BxDolForm
+         * - $unit_name - equals `system`
+         * - $action - equals `get_object_form`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `type` - [string] 'add', 'edit', 'view' or 'delete' form display type
+         *      - `params` - [array] form params array as key&value pairs
+         *      - `form` - [object] by ref, an object of create content form, @see BxDolForm, can be overridden in hook processing
+         * @hook @ref hook-system-get_object_form
+         */
+        bx_alert('system', 'get_object_form', 0, 0, [
             'module' => $this->_oConfig->getName(),
             'type' => $sType,
             'params' => $aParams,
             'form' => &$oForm
-        ));
+        ]);
 
         return $oForm;
     }
@@ -2648,14 +2698,30 @@ class BxBaseModGeneralModule extends BxDolModule
         ));
 
         $sResult = false;
-        bx_alert('system', 'get_badges', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-get_badges 'system', 'get_badges' - hook to override bages assigned to an entry (content)
+         * - $unit_name - equals `system`
+         * - $action - equals `get_badges`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `content_id` - [int] content id
+         *      - `is_single` - [boolean] only one badge can be used or not
+         *      - `is_compact` - [boolean] badge in compact mode or not
+         *      - `badges` - [array] a list of all badges assigned to the content
+         *      - `override_result` - [string] or [boolean] by ref, if string is returned then it will be used as resulting badges code, can be overridden in hook processing
+         * @hook @ref hook-system-get_badges
+         */
+        bx_alert('system', 'get_badges', 0, 0, [
             'module' => $sModule, 
             'content_id' => $iContentId,
             'is_single' => $bIsSingle,
             'is_compact' => $bIsCompact,
             'badges' => $aBadges, 
             'override_result' => &$sResult
-        ));
+        ]);
         if($sResult !== false)
             return $sResult;
 
@@ -2743,8 +2809,26 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $mixedResult = $this->_serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
 
-        // check alert to allow custom checks        
-        bx_alert('system', 'check_allowed_view', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_view 'system', 'check_allowed_view' - hook to override the result of checking whether 'view' action is allowed or not to specified profile
+         * - $unit_name - equals `system`
+         * - $action - equals `check_allowed_view`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `content_info` - [array] content info array as key&value pairs
+         *      - `profile_id` - [boolean] or [int] profile id to be checked the availability of the action to
+         *      - `override_result` - [string] or [int] by ref, check action result, can be overridden in hook processing. Return string with an error if action isn't allowed or CHECK_ACTION_RESULT_ALLOWED, @see BxDolAcl
+         * @hook @ref hook-system-check_allowed_view
+         */
+        bx_alert('system', 'check_allowed_view', 0, 0, [
+            'module' => $this->getName(), 
+            'content_info' => $aDataEntry, 
+            'profile_id' => $iProfileId, 
+            'override_result' => &$mixedResult
+        ]);
 
         return $mixedResult;
     }
@@ -2759,9 +2843,19 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function checkAllowedBrowse ()
     {
-        // check alert to allow custom checks
         $mixedResult = null;
-        bx_alert('system', 'check_allowed_browse', 0, 0, array('module' => $this->getName(), 'profile_id' => $this->_iProfileId, 'override_result' => &$mixedResult));
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_browse 'system', 'check_allowed_browse' - hook to override the result of checking whether 'browse' action is allowed or not to currently logged in profile
+         * It's equivalent to @ref hook-system-check_allowed_view 
+         * except `content_info` parameter in $extra_params is missing
+         * @hook @ref hook-system-check_allowed_browse
+         */
+        bx_alert('system', 'check_allowed_browse', 0, 0, [
+            'module' => $this->getName(), 
+            'profile_id' => $this->_iProfileId, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
 
@@ -3122,8 +3216,20 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$aContentInfo)
             return;
 
-        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
-        bx_alert($this->getName(), 'failed', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-failed '{module_name}', 'failed' - hook after content creation when publishing was failed
+         * - $unit_name - module name
+         * - $action - equals `failed`
+         * - $object_id - content id
+         * - $sender_id - content author profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] content author profile id
+         * @hook @ref hook-bx_base_general-failed
+         */
+        bx_alert($this->getName(), 'failed', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], [
+            'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]
+        ]);
     }
 
     public function onApprove($mixedContent)
@@ -3528,7 +3634,28 @@ class BxBaseModGeneralModule extends BxDolModule
             'data_api' => &$aDataApi,
         ];
 
+        /**
+         * @hooks
+         * @hookdef hook-system-decode_data_api 'system', 'decode_data_api' - hook to override content data prepared for sending in API response
+         * - $unit_name - equals `system`
+         * - $action - equals `decode_data_api`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `data` - [array] content info array as key&value pairs
+         *      - `params` - [array] params array as key&value pairs
+         *      - `data_api` - [array] by ref, content data prepared for sending in API response, can be overridden in hook processing
+         * @hook @ref hook-system-decode_data_api
+         */
         bx_alert('system', 'decode_data_api', 0, 0, $aExtras);
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-decode_data_api '{module_name}', 'decode_data_api' - hook to override content data prepared for sending in API response
+         * It's equivalent to @ref hook-system-decode_data_api
+         * @hook @ref hook-bx_base_general-decode_data_api
+         */
         bx_alert($sModule, 'decode_data_api', 0, 0, $aExtras);
 
         return $aDataApi;
@@ -3596,11 +3723,24 @@ class BxBaseModGeneralModule extends BxDolModule
             if(is_numeric($iKey) && isset($mixedValue['name']) && $mixedValue['name'] == 'do_submit')
                 $oForm->aInputs['controls'][$iKey]['value'] = _t('_sys_form_manage_input_do_submit_approve');
 
-        bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-get_approve_form '{module_name}', 'get_approve_form' - hook to override approve content form
+         * - $unit_name - module name
+         * - $action - equals `get_approve_form`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content_id` - [int] content id
+         *      - `content_info` - [array] content info array as key&value pairs
+         *      - `override_result` - [object] by ref, an instance of approve content form, @see BxDolForm, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-get_approve_form
+         */
+        bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, [
             'content_id' => $iContentId,
             'content_info' => $aContentInfo,
             'override_result' => &$oForm
-        ));
+        ]);
 
         return $oForm;
     }
@@ -3618,13 +3758,28 @@ class BxBaseModGeneralModule extends BxDolModule
             'notes' => $oForm->getCleanValue('notes'),
         );
 
-        bx_alert($this->_oConfig->getName(), 'get_approve_message', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-get_approve_message '{module_name}', 'get_approve_form' - hook to override approve content message
+         * - $unit_name - module name
+         * - $action - equals `get_approve_message`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content_id` - [int] content id
+         *      - `content_info` - [array] content info array as key&value pairs
+         *      - `form` - [object] an instance of approve content form
+         *      - `email_template` - [string] by ref, email template name, @see BxDolEmailTemplates, can be overridden in hook processing
+         *      - `email_params` - [array] by ref, email template params, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-get_approve_message
+         */
+        bx_alert($this->_oConfig->getName(), 'get_approve_message', 0, 0, [
             'content_id' => $iContentId,
             'content_info' => $aContentInfo,
             'form' => $oForm,
             'email_template' => &$sETemplate,
             'email_params' => &$aEParams
-        ));
+        ]);
 
         return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams);
     }
@@ -3659,6 +3814,17 @@ class BxBaseModGeneralModule extends BxDolModule
             return;
 
         foreach($aRecipients as $iRecipientId)
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_general-pending_approval '{module_name}', 'pending_approval' - hook to notify admins/moderators about new pending approval content
+             * - $unit_name - module name
+             * - $action - equals `pending_approval`
+             * - $object_id - content id
+             * - $sender_id - content author profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_author_id` - [int] admin/moderator profile id
+             * @hook @ref hook-bx_base_general-pending_approval
+             */
             bx_alert($sModule, 'pending_approval', $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']], [
                 'object_author_id' => (int)$iRecipientId
             ]);

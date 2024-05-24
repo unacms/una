@@ -54,14 +54,31 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             return $sResult;            
 
         $aTemplateVars = $this->getUnit($aData, $aParams);
-        bx_alert($this->getModule()->getName(), 'unit', 0, 0, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_text-unit '{module_name}', 'unit' - hook to override content browsing unit
+         * - $unit_name - module name
+         * - $action - equals `unit`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `data` - [array] content info array as key&value pairs
+         *      - `check_private_content` - [boolean] check if it's a provate content
+         *      - `template` - [string] or [array] with template for content unit
+         *      - `params` - [array] additional params array as key&value pairs
+         *      - `tmpl_name` - [string] by ref, template name, can be overridden in hook processing
+         *      - `tmpl_vars` - [array] by ref, template parsable variables as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_base_text-unit
+         */
+        bx_alert($this->getModule()->getName(), 'unit', 0, 0, [
             'data' => $aData,
             'check_private_content' => $isCheckPrivateContent,
             'template' => $sTemplateName,
             'params' => $aParams,
             'tmpl_name' => &$sTemplateName,
             'tmpl_vars' => &$aTemplateVars
-        ));
+        ]);
 
         return $this->parseHtmlByName($sTemplateName, $aTemplateVars);
     }
@@ -656,12 +673,34 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $bIsAllowEditPicture =  CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData);
 
         if(isset($CNF['FIELD_THUMB']) && isset($CNF['OBJECT_UPLOADERS']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'])){
-            bx_alert('system', 'image_editor', 0, 0, array(
+            /**
+             * @hooks
+             * @hookdef hook-system-image_editor 'system', 'image_editor' - hook to override content header image editor
+             * - $unit_name - equals `system`
+             * - $action - equals `image_editor`
+             * - $object_id - not used
+             * - $sender_id - not used
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `module` - [string] module name
+             *      - `content_id` - [int] profile content id
+             *      - `is_allow_edit` - [boolean] if edit action is allowed to current user
+             *      - `image_type` - [string] image type equals to `header_image`
+             *      - `image_url` - [string] image URL
+             *      - `uploader` - [string] uploader name
+             *      - `storage` - [string] storage name
+             *      - `transcoder` - [string] transcoder name
+             *      - `field` - [string] field name
+             *      - `is_background` - [boolean] if image is used as background, always `false`
+             *      - `add_class` - [string] by ref, class to add, can be overridden in hook processing
+             *      - `add_code` - [array] by ref, code to add, can be overridden in hook processing
+             * @hook @ref hook-system-image_editor
+             */
+            bx_alert('system', 'image_editor', 0, 0, [
                 'module' => $oModule->getName(),
                 'content_id' => $aData[$CNF['FIELD_ID']],
+                'is_allow_edit' => $bIsAllowEditPicture,
                 'image_type' => 'header_image',
                 'image_url' => $sImage,
-                'is_allow_edit' => $bIsAllowEditPicture,
                 'uploader' => !empty($CNF['OBJECT_UPLOADERS']) && is_array($CNF['OBJECT_UPLOADERS']) ? $CNF['OBJECT_UPLOADERS'][0] : '',
                 'storage' => isset($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
                 'transcoder' => isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER']) ? $CNF['OBJECT_IMAGES_TRANSCODER_COVER'] : '',
@@ -669,7 +708,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'is_background' => false,
                 'add_class' => &$sAddClassPicture,
                 'add_code' => &$sAddCode
-            )); 
+            ]); 
         }
 
         $sImageTweak = '';

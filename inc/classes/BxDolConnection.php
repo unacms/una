@@ -326,20 +326,40 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         $iInitiator = (int)$iInitiator;
         $iContent = (int)$iContent;
 
-        $aAlertExtras = array(
+        $aAlertExtras = [
             'initiator' => &$iInitiator,
             'content' => &$iContent,
             'mutual' => &$iMutual,
             'object' => $this,
-        );
+        ];
         if(!empty($aParams['alert_extras']) && is_array($aParams['alert_extras']))
             $aAlertExtras = array_merge($aAlertExtras, $aParams['alert_extras']);
         
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_connection-connection_before_add '{object_name}', 'connection_before_add' - hook before connection was added. Connection params can be overridden
+         * - $unit_name - connection object name
+         * - $action - equals `connection_before_add`
+         * - $object_id - not used
+         * - $sender_id - logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `initiator` - [int] by ref, profile id who created the connection, can be overridden in hook processing
+         *      - `content` - [int] by ref, profile id with whom the connection was created, can be overridden in hook processing
+         *      - `mutual` - [int] by ref, if the relation is mutual or not, can be overridden in hook processing
+         *      - `object` - [object] an instance of relation, @see BxDolConnection
+         * @hook @ref hook-bx_dol_connection-connection_before_add
+         */
         bx_alert($this->_sObject, 'connection_before_add', 0, bx_get_logged_profile_id(), $aAlertExtras);
         
         if (!$this->_oQuery->addConnection((int)$iInitiator, (int)$iContent, $iMutual))
             return false;
-        
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_connection-connection_added '{object_name}', 'connection_added' - hook after connection was added. Connection params can be overridden
+         * It's equivalent to @ref hook-bx_dol_connection-connection_before_add
+         * @hook @ref hook-bx_dol_connection-connection_added
+         */
         bx_alert($this->_sObject, 'connection_added', 0, bx_get_logged_profile_id(), $aAlertExtras);
 
         $this->onAdded($iInitiator, $iContent, $iMutual);
@@ -386,6 +406,20 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if (!$this->_oQuery->removeConnection((int)$iInitiator, (int)$iContent))
             return false;
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_connection-connection_removed '{object_name}', 'connection_removed' - hook after a connection was removed.
+         * - $unit_name - connection object name
+         * - $action - equals `connection_removed`
+         * - $object_id - not used
+         * - $sender_id - logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `initiator` - [int] profile id who created the connection
+         *      - `content` - [int] profile id with whom the connection was created
+         *      - `mutual` - [int] if the relation is mutual or not
+         *      - `object` - [object] an instance of relation, @see BxDolConnection
+         * @hook @ref hook-bx_dol_connection-connection_removed
+         */
         bx_alert($this->_sObject, 'connection_removed', 0, bx_get_logged_profile_id(), array(
             'initiator' => (int)$iInitiator,
             'content' => (int)$iContent,
@@ -841,6 +875,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if(!$this->_oQuery->onDelete ($iIdInitiator, 'initiator'))
             return false;
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_connection-connection_removed_all '{object_name}', 'connection_removed_all' - hook after all connections with deleted 'initiator' were removed.
+         * - $unit_name - connection object name
+         * - $action - equals `connection_removed_all`
+         * - $object_id - not used
+         * - $sender_id - logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `initiator` - [int] profile id who created the connection
+         *      - `object` - [object] an instance of relation, @see BxDolConnection
+         * @hook @ref hook-bx_dol_connection-connection_removed_all
+         */
         bx_alert($this->_sObject, 'connection_removed_all', 0, bx_get_logged_profile_id(), array(
             'initiator' => (int)$iIdInitiator,
             'object' => $this,
@@ -859,6 +905,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if(!$this->_oQuery->onDelete ($iIdContent, 'content'))
             return false;
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_connection-connection_removed_all '{object_name}', 'connection_removed_all' - hook after all connections with deleted 'content' were removed.
+         * - $unit_name - connection object name
+         * - $action - equals `connection_removed_all`
+         * - $object_id - not used
+         * - $sender_id - logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content` - [int] profile id with whom the connection was created
+         *      - `object` - [object] an instance of relation, @see BxDolConnection
+         * @hook @ref hook-bx_dol_connection-connection_removed_all
+         */
         bx_alert($this->_sObject, 'connection_removed_all', 0, bx_get_logged_profile_id(), array(
             'content' => (int)$iIdContent,
             'object' => $this,

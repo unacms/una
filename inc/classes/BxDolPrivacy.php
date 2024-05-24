@@ -521,7 +521,22 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                     'table' => $this->_aObject['table'],
                 ),
             ),
-        );      
+        );   
+         /**
+         * @hooks
+         * @hookdef hook-system-privacy_condition 'system', 'privacy_condition' - hook on get necessary condition array to use privacy in search classes
+         * - $unit_name - equals `profile`
+         * - $action - equals `privacy_condition` 
+         * - $object_id - not used
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `group_id` - [int] group ID or array of group IDs
+         *      - `field` - [string] field name
+         *      - `object` - [array] array with object privacy 
+         *      - `privacy_object` - [array] object privacy 
+         *      - `result` - [bool] by ref, on success return true otherwise false, can be overridden in hook processing
+         * @hook @ref hook-system-privacy_condition
+         */
         bx_alert('system', 'privacy_condition', 0, false, array(
             'group_id' => $mixedGroupId,
             'field' => $this->convertActionToField($this->_aObject['action']),
@@ -598,6 +613,21 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     {
         $aObject = $this->getObjectInfo($this->convertActionToField($this->_aObject['action']), $iObjectId);
         $bRv = $this->_check($iObjectId, $iViewerId, $aObject);
+        /**
+         * @hooks
+         * @hookdef hook-system-check_privacy 'system', 'check_privacy' - check privacy for object
+         * - $unit_name - equals `profile`
+         * - $action - equals `check_privacy` 
+         * - $object_id - not used
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_id` - [int] object id
+         *      - `viewer_id` - [int] profile_id for viewer
+         *      - `object` - [array] object privacy 
+         *      - `object_privacy` - [array] arry with object privacy 
+         *      - `result` - [bool] by ref, on success return true otherwise false, can be overridden in hook processing
+         * @hook @ref hook-system-check_privacy
+         */
         bx_alert('system', 'check_privacy', 0, 0, array(
            'object_id' => $iObjectId,
            'viewer_id' => $iViewerId,

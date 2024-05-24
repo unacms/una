@@ -1479,14 +1479,75 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_delete_comment', $aAuditParams);
 
         $aAlertParams = $this->_prepareAlertParams($aCmt);
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_comment-commentRemoved '{object_name}', 'commentRemoved' - hook after a comment was removed
+         * - $unit_name - comment object name
+         * - $action - equals `commentRemoved`
+         * - $object_id - commented object id
+         * - $sender_id - profile id who performed the action
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `source` - [string] unique comment source string
+         *      - `object_system` - [string] comment object name
+         *      - `object_id` - [int] commented object id
+         *      - `object_author_id` - [int] commented object author profile id
+         *      - `comment_id` - [int] comment id unique in the comment object scope
+         *      - `comment_uniq_id` - [int] system wide unique comment id
+         *      - `comment_author_id` - [int] comment author profile id
+         *      - `comment_text` - [string] comment text
+         *      - `privacy_view` - [int] or [string] privacy for view comment action, @see BxDolPrivacy
+         *      - `cf` - [int] comment's audience filter value
+         * @hook @ref hook-bx_dol_comment-commentRemoved
+         */
         bx_alert($this->_sSystem, 'commentRemoved', $iObjId, $iPerformerId, $aAlertParams);
+        
+        /**
+         * @hooks
+         * @hookdef hook-comment-deleted 'comment', 'deleted' - hook after a comment was removed
+         * It's equivalent to @ref hook-bx_dol_comment-commentRemoved
+         * except 'comment id' is provided in $object_id
+         * @hook @ref hook-comment-deleted
+         */
         bx_alert('comment', 'deleted', $iCmtId, $iPerformerId, $aAlertParams);
 
         if(!empty($iCmtPrntId)) {
             $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
             if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
                 $aAlertParamsReply = $this->_prepareAlertParamsReply($aCmt, $aCmtPrnt);
+
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_dol_comment-replyRemoved '{object_name}', 'replyRemoved' - hook after a reply was removed
+                 * - $unit_name - comment object name
+                 * - $action - equals `replyRemoved`
+                 * - $object_id - commented object id
+                 * - $sender_id - profile id who performed the action
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `source` - [string] unique comment source string
+                 *      - `object_system` - [string] comment object name
+                 *      - `object_id` - [int] commented object id
+                 *      - `object_author_id` - [int] commented object author profile id
+                 *      - `object_author_id` - [int] commented object author profile id
+                 *      - `parent_id` - [int] parent comment id unique in the comment object scope
+                 *      - `parent_uniq_id` - [int] system wide unique parent comment id
+                 *      - `parent_author_id` - [int] parent comment author profile id
+                 *      - `comment_id` - [int] comment id unique in the comment object scope
+                 *      - `comment_uniq_id` - [int] system wide unique comment id
+                 *      - `comment_author_id` - [int] comment author profile id
+                 *      - `comment_text` - [string] comment text
+                 *      - `privacy_view` - [int] or [string] privacy for view comment action, @see BxDolPrivacy
+                 * @hook @ref hook-bx_dol_comment-replyRemoved
+                 */
                 bx_alert($this->_sSystem, 'replyRemoved', $iCmtPrntId, $iPerformerId, $aAlertParamsReply);
+                
+                /**
+                 * @hooks
+                 * @hookdef hook-reply-deleted 'reply', 'deleted' - hook after a reply was removed
+                 * It's equivalent to @ref hook-bx_dol_comment-replyRemoved
+                 * except 'comment id' is provided in $object_id
+                 * @hook @ref hook-reply-deleted
+                 */
                 bx_alert('reply', 'deleted', $iCmtId, $iPerformerId, $aAlertParamsReply);
             }
         }
@@ -1585,7 +1646,36 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $iPerformerId = (int)$aCmt['cmt_author_id'];
 
         $aAlertParams = $this->_prepareAlertParams($aCmt);
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_comment-commentPost '{object_name}', 'commentPost' - hook after a comment was added
+         * - $unit_name - comment object name
+         * - $action - equals `commentPost`
+         * - $object_id - commented object id
+         * - $sender_id - profile id who performed the action
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `source` - [string] unique comment source string
+         *      - `object_system` - [string] comment object name
+         *      - `object_id` - [int] commented object id
+         *      - `object_author_id` - [int] commented object author profile id
+         *      - `comment_id` - [int] comment id unique in the comment object scope
+         *      - `comment_uniq_id` - [int] system wide unique comment id
+         *      - `comment_author_id` - [int] comment author profile id
+         *      - `comment_text` - [string] comment text
+         *      - `privacy_view` - [int] or [string] privacy for view comment action, @see BxDolPrivacy
+         *      - `cf` - [int] comment's audience filter value
+         * @hook @ref hook-bx_dol_comment-commentPost
+         */
         bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, $aAlertParams);
+        
+        /**
+         * @hooks
+         * @hookdef hook-comment-added 'comment', 'added' - hook after a comment was added
+         * It's equivalent to @hook @ref hook-bx_dol_comment-commentPost
+         * except 'comment id' is provided in $object_id
+         * @hook @ref hook-comment-added
+         */
         bx_alert('comment', 'added', $iCmtId, $iPerformerId, $aAlertParams);
 
         $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
@@ -1595,7 +1685,39 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
             if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
                 $aAlertParamsReply = $this->_prepareAlertParamsReply($aCmt, $aCmtPrnt);
+                
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_dol_comment-replyPost '{object_name}', 'replyPost' - hook after a reply was added
+                 * - $unit_name - comment object name
+                 * - $action - equals `replyPost`
+                 * - $object_id - parent comment id
+                 * - $sender_id - profile id who performed the action
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `source` - [string] unique comment source string
+                 *      - `object_system` - [string] comment object name
+                 *      - `object_id` - [int] commented object id
+                 *      - `object_author_id` - [int] commented object author profile id
+                 *      - `object_author_id` - [int] commented object author profile id
+                 *      - `parent_id` - [int] parent comment id unique in the comment object scope
+                 *      - `parent_uniq_id` - [int] system wide unique parent comment id
+                 *      - `parent_author_id` - [int] parent comment author profile id
+                 *      - `comment_id` - [int] comment id unique in the comment object scope
+                 *      - `comment_uniq_id` - [int] system wide unique comment id
+                 *      - `comment_author_id` - [int] comment author profile id
+                 *      - `comment_text` - [string] comment text
+                 *      - `privacy_view` - [int] or [string] privacy for view comment action, @see BxDolPrivacy
+                 * @hook @ref hook-bx_dol_comment-replyPost
+                 */
                 bx_alert($this->_sSystem, 'replyPost', $iCmtPrntId, $iPerformerId, $aAlertParamsReply);
+                
+                /**
+                 * @hooks
+                 * @hookdef hook-comment-replied 'comment', 'replied' - hook after a reply was added
+                 * It's equivalent to @ref hook-bx_dol_comment-replyPost
+                 * except 'comment id' is provided in $object_id
+                 * @hook @ref hook-comment-replied
+                 */
                 bx_alert('comment', 'replied', $iCmtId, $iPerformerId, $aAlertParamsReply);
             }
         }
@@ -1630,7 +1752,35 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $iPerformerId = $this->_getAuthorId();
 
         $aAlertParams = $this->_prepareAlertParams($aCmt);
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_comment-commentUpdated '{object_name}', 'commentUpdated' - hook after a comment was updated (edited)
+         * - $unit_name - comment object name
+         * - $action - equals `commentUpdated`
+         * - $object_id - commented object id
+         * - $sender_id - profile id who performed the action
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `source` - [string] unique comment source string
+         *      - `object_system` - [string] comment object name
+         *      - `object_id` - [int] commented object id
+         *      - `object_author_id` - [int] commented object author profile id
+         *      - `comment_id` - [int] comment id unique in the comment object scope
+         *      - `comment_uniq_id` - [int] system wide unique comment id
+         *      - `comment_author_id` - [int] comment author profile id
+         *      - `comment_text` - [string] comment text
+         *      - `privacy_view` - [int] or [string] privacy for view comment action, @see BxDolPrivacy
+         *      - `cf` - [int] comment's audience filter value
+         * @hook @ref hook-bx_dol_comment-commentUpdated
+         */
         bx_alert($this->_sSystem, 'commentUpdated', $iObjId, $iPerformerId, $aAlertParams);
+        
+        /**
+         * @hooks
+         * @hookdef hook-comment-edited 'comment', 'edited' - hook after a comment was updated (edited)
+         * It's equivalent to @ref hook-bx_dol_comment-commentUpdated
+         * except 'comment id' is provided in $object_id
+         * @hook @ref hook-comment-edited
+         */
         bx_alert('comment', 'edited', $iCmtId, $iPerformerId, $aAlertParams);
 
         $aAuditParams = $this->_prepareAuditParams($iCmtId, ['comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']]);
@@ -2343,7 +2493,28 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'data_api' => &$aDataApi,
         ];
 
+        /**
+         * @hooks
+         * @hookdef hook-system-decode_comment_data_api 'system', 'decode_comment_data_api' - hook to override comment data prepared for sending in API response
+         * - $unit_name - equals `system`
+         * - $action - equals `decode_comment_data_api`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `data` - [array] comment info array as key&value pairs
+         *      - `params` - [array] params array as key&value pairs
+         *      - `data_api` - [array] by ref, comment data prepared for sending in API response, can be overridden in hook processing
+         * @hook @ref hook-system-decode_comment_data_api
+         */
         bx_alert('system', 'decode_comment_data_api', 0, 0, $aExtras);
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_comment-decode_comment_data_api '{object_name}', 'decode_comment_data_api' - hook to override comment data prepared for sending in API response
+         * It's equivalent to @ref hook-system-decode_comment_data_api
+         * @hook @ref hook-bx_dol_comment-decode_comment_data_api
+         */
         bx_alert($sModule, 'decode_comment_data_api', 0, 0, $aExtras);
 
         return $aDataApi;

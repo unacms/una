@@ -1326,6 +1326,19 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         else {
 
             $bSpam = null;
+            /**
+             * @hooks
+             * @hookdef hook-system-check_spam_url 'system', 'check_spam_url' - hook to override sClass for search
+             * - $unit_name - equals `system`
+             * - $action - equals `check_spam_url` 
+             * - $object_id - not used 
+             * - $sender_id - logged account id 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `is_spam` - [bool] by ref, spam url or not, can be overridden in hook processing
+             *      - `content` - [string] by ref, url of link, can be overridden in hook processing
+             *      - `where` - [string]  equal redirect
+             * @hook @ref hook-system-check_spam_url
+             */
             bx_alert('system', 'check_spam_url', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$sUrl, 'where' => 'redirect'));
 
             $sLangKey = $bSpam ? '_sys_redirect_confirmation_harmful' : '_sys_redirect_confirmation';
@@ -1393,6 +1406,17 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             bx_import('Search', $oModule->_aModule);
             $sClass = 'BxElsSearch';
         }
+        /**
+         * @hooks
+         * @hookdef hook-system-search_keyword 'system', 'search_keyword' - hook to override sClass for search
+         * - $unit_name - equals `system`
+         * - $action - equals `search_keyword` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [string] by ref, class name for search, can be overridden in hook processing
+         * @hook @ref hook-system-search_keyword
+         */
         bx_alert('system', 'search_keyword', 0, 0, array('class' => &$sClass));
 
         $oSearch = new $sClass(bx_get('section'));

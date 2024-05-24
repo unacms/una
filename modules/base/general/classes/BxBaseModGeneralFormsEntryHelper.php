@@ -329,11 +329,24 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sUrl == '')
             $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
         
-        bx_alert($this->_oModule->getName(), 'redirect_after_add', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-redirect_after_add '{module_name}', 'redirect_after_add' - hook to override redirect URL which is used after content creation
+         * - $unit_name - module name
+         * - $action - equals `redirect_after_add`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `ajax_mode` - [boolean] dynamic loading is used or not
+         *      - `content` - [array] content info array as key&value pairs
+         *      - `override_result` - [string] by ref, redirect URL, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-redirect_after_add
+         */
+        bx_alert($this->_oModule->getName(), 'redirect_after_add', 0, false, [
             'ajax_mode' => $this->_bAjaxMode,
             'content' => $aContentInfo,
             'override_result' => &$sUrl,
-        ));
+        ]);
 
         if (bx_is_api())
             return [bx_api_get_block('redirect', ['uri' => BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000])];
@@ -423,10 +436,17 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sUrl == '')
             $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
 
-        bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-redirect_after_edit '{module_name}', 'redirect_after_edit' - hook to override redirect URL which is used after content changing
+         * It's equivalent to @ref hook-bx_base_general-redirect_after_add
+         * except `ajax_mode` parameter in $extra_params is missing
+         * @hook @ref hook-bx_base_general-redirect_after_edit
+         */
+        bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, [
             'content' => $aContentInfo,
             'override_result' => &$sUrl,
-        ));
+        ]);
 
         if (bx_is_api())
             return bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000]);
@@ -482,11 +502,18 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             'profile_id' => bx_get_logged_profile_id(),
         );
 
-        bx_alert($this->_oModule->getName(), 'redirect_after_delete', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-redirect_after_delete '{module_name}', 'redirect_after_delete' - hook to override redirect URL which is used after content deletion
+         * It's equivalent to @ref hook-bx_base_general-redirect_after_add
+         * except `markers` parameter was added to $extra_params. It allows to override an array of markers, which can be parsed in URL.
+         * @hook @ref hook-bx_base_general-redirect_after_delete
+         */
+        bx_alert($this->_oModule->getName(), 'redirect_after_delete', 0, false, [
             'content' => $aContentInfo,
             'markers' => &$aMarkers,
             'override_result' => &$sUrl,
-        ));
+        ]);
         
         if (bx_is_api())
             return bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000]);
@@ -527,10 +554,20 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile))
             return $sResult;
 
-        // create an alert
-        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']], false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-deleted '{module_name}', 'deleted' - hook after content was deleted
+         * - $unit_name - module name
+         * - $action - equals `deleted`
+         * - $object_id - content id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content` - [array] by ref, content info array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-deleted
+         */
+        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']], false, [
             'content' => &$aContentInfo
-        ));
+        ]);
 
         return '';
     }

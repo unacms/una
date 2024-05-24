@@ -78,7 +78,22 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
     {
         $mixed = $this->_createProfileRaw($aProfileInfo, $sAlternativeName);
 
-        bx_alert($this->getName(), 'profile_created', 0, 0, array('override_result' => &$mixed, 'remote_profile_info' => $aProfileInfo));
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_connect-profile_created '{module_name}', 'profile_created' - hook after a profile was created 
+         * - $unit_name - module name
+         * - $action - equals `profile_created`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [string] or [array] by ref, result of profile creation, can be overridden in hook processing. If `string` then show error, if `array` with `join_page_redirect` key then show Create Account page, if `array` with `profile_id` key then redirect to profile page
+         *      - `remote_profile_info` - [array] array with remote profile info
+         * @hook @ref hook-bx_base_connect-profile_created
+         */
+        bx_alert($this->getName(), 'profile_created', 0, 0, [
+            'override_result' => &$mixed, 
+            'remote_profile_info' => $aProfileInfo
+        ]);
         
         // display error
         if (is_string($mixed)) {
@@ -131,7 +146,24 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         // convert fields to unique format
         $aFieldsProfile = $aFieldsAccount = $this->_convertRemoteFields($aProfileInfo, $sAlternativeName);
 
-        bx_alert($this->getName(), 'fields_converted', 0, 0, array('override_profile_fields' => &$aFieldsProfile, 'override_account_fields' => &$aFieldsAccount, 'remote_profile_info' => $aProfileInfo));
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_connect-fields_converted '{module_name}', 'fields_converted' - hook before a profile was created, which allows to modify account and/or profile fields before creation
+         * - $unit_name - module name
+         * - $action - equals `fields_converted`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_profile_fields` - [array] by ref, profile fields, can be overridden in hook processing
+         *      - `override_account_fields` - [array] by ref, account fields, can be overridden in hook processing
+         *      - `remote_profile_info` - [array] array with remote profile info
+         * @hook @ref hook-bx_base_connect-fields_converted
+         */
+        bx_alert($this->getName(), 'fields_converted', 0, 0, [
+            'override_profile_fields' => &$aFieldsProfile, 
+            'override_account_fields' => &$aFieldsAccount, 
+            'remote_profile_info' => $aProfileInfo
+        ]);
 
         if (empty($aFieldsProfile['email']))
             return _t('_Incorrect Email');
@@ -160,7 +192,25 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         // antispam check
         $sErrorMsg = '';
         $bSetPendingApproval = false;
-        bx_alert('account', 'check_join', 0, false, array('error_msg' => &$sErrorMsg, 'email' => $aFieldsAccount['email'], 'approve' => &$bSetPendingApproval));
+        
+        /**
+         * @hooks
+         * @hookdef hook-account-check_join 'account', 'check_join' - hook to check email address for spam
+         * - $unit_name - equals `account`
+         * - $action - equals `check_join`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `error_msg` - [string] by ref, error message, can be overridden in hook processing
+         *      - `email` - [string] email address to check
+         *      - `approve` - [boolean] by ref, pending approval status for created profile, can be overridden in hook processing
+         * @hook @ref hook-account-check_join
+         */
+        bx_alert('account', 'check_join', 0, false, [
+            'error_msg' => &$sErrorMsg, 
+            'email' => $aFieldsAccount['email'], 
+            'approve' => &$bSetPendingApproval
+        ]);
         if ($sErrorMsg)
             return $sErrorMsg;
 

@@ -215,12 +215,26 @@ class BxBasePage extends BxDolPage
                 exit;
             }
 
-            bx_alert('system', 'page_output_block', 0, false, array(
+            /**
+             * @hooks
+             * @hookdef hook-system-page_output_block 'system', 'page_output_block' - hook with page block data to be output
+             * - $unit_name - equals `system`
+             * - $action - equals `page_output_block`
+             * - $object_id - not used
+             * - $sender_id - not used
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `page_name` - [string] page object name
+             *      - `page_object` - [object] an instance of page class, @see BxDolPage 
+             *      - `page_query` - [object] an instance of page related query class
+             *      - `block_id` - [int] block id
+             * @hook @ref hook-system-page_output_block
+             */
+            bx_alert('system', 'page_output_block', 0, false, [
                 'page_name' => $this->_sObject,
                 'page_object' => $this,
                 'page_query' => $this->_oQuery,
                 'block_id' => (int)$iBlockId,
-            ));
+            ]);
 
             header( 'Content-type:text/html;charset=utf-8' );
 
@@ -281,13 +295,28 @@ class BxBasePage extends BxDolPage
             }
         }
         
-        bx_alert('system', 'page_output', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-system-page_output 'system', 'page_output' - hook with page data to be output
+         * - $unit_name - equals `system`
+         * - $action - equals `page_output`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `page_name` - [string] page object name
+         *      - `page_object` - [object] an instance of page class, @see BxDolPage 
+         *      - `page_query` - [object] an instance of page related query class
+         *      - `page_code` - [string] by ref, final page code to be output, can be overridden in hook processing
+         *      - `sub_page` - [boolean] if the page is used as subpage of some parent page
+         * @hook @ref hook-system-page_output
+         */
+        bx_alert('system', 'page_output', 0, false, [
             'page_name' => $this->_sObject,
             'page_object' => $this,
             'page_query' => $this->_oQuery,
             'page_code' => &$sPageCode,
             'sub_page' => $this->_bSubPage,
-        ));
+        ]);
 
         if (!$this->_bSubPage)
             $sPageCode .= $this->getJsScript();
@@ -602,6 +631,19 @@ class BxBasePage extends BxDolPage
         else if(!$bIsVisible)
             $a['page_status'] = 403;
 
+        /**
+         * @hooks
+         * @hookdef hook-system-get_page_api 'system', 'get_page_api' - hook to override page peremeters, is used in API calls
+         * - $unit_name - equals `system`
+         * - $action - equals `get_page_api`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `page` - [object] an instance of page class, @see BxDolPage 
+         *      - `blocks` - [array] array with page blocks
+         *      - `data` - [array] by ref, page peremeters array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-system-get_page_api
+         */
         bx_alert('system', 'get_page_api', 0, 0, $aExtras);
 
         return $a;

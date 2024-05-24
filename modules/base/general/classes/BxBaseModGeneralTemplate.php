@@ -68,6 +68,22 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ], $aParams);
 
         $sContent = false;
+        /**
+         * @hooks
+         * @hookdef hook-system-get_js_code 'system', 'get_js_code' - hook to override an instance of JavaScript class associate with the page
+         * - $unit_name - equals `system`
+         * - $action - equals `get_js_code`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `mask` - [string] by ref, a mask to generate JS code, can be overridden in hook processing
+         *      - `mask_markers` - [array] by ref, an array of markers to be parsed in the mask, can be overridden in hook processing
+         *      - `object` - [string] by ref, a string with JS object name, can be overridden in hook processing
+         *      - `class` - [string] by ref, a string with JS class name, can be overridden in hook processing
+         *      - `params` - [array] by ref, an array of parameters as key&value pairs which will be passed to constructor, can be overridden in hook processing
+         *      - `override_result` - [string] or [boolean] by ref, if string is returned then it will be used as resulting JS code, can be overridden in hook processing
+         * @hook @ref hook-system-get_js_code
+         */
         bx_alert('system', 'get_js_code', 0, 0, [
             'mask' => &$sMask,
             'mask_markers' => &$aMaskMarkers,

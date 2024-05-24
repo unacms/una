@@ -351,7 +351,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
     {
         $sResult = false;
 
-        $a = array(
+        $a = [
             'res' => &$sResult, 
             'menu' => $this->_sObject, 
             'menu_object' => $this, 
@@ -359,10 +359,35 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             'module' => $this->_sModule,
             'content_id' => $this->_iContentId,
             'content_data' => $this->_aContentInfo,
-        );
-        bx_alert($this->_sModule, 'menu_custom_item', 0, 0, $a);
-        bx_alert('menu', 'menu_custom_item', 0, 0, $a);
+        ];
         
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-menu_custom_item '{module_name}', 'menu_custom_item' - hook to override menu item
+         * - $unit_name - module name
+         * - $action - equals `menu_custom_item`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `res` - [string] by ref, menu item code, can be overridden in hook processing
+         *      - `menu` - [string] menu name
+         *      - `menu_object` - [object] an instance of menu, @see BxDolMenu
+         *      - `item` - [array] menu item array as key&value pairs
+         *      - `module` - [string] module name
+         *      - `content_id` - [int] content id
+         *      - `content_data` - [array] content info array as key&value pairs
+         * @hook @ref hook-bx_base_general-menu_custom_item
+         */
+        bx_alert($this->_sModule, 'menu_custom_item', 0, 0, $a);
+        
+        /**
+         * @hooks
+         * @hookdef hook-menu-menu_custom_item 'menu', 'menu_custom_item' - hook to override menu item
+         * It's equivalent to @ref hook-bx_base_general-menu_custom_item
+         * @hook @ref hook-menu-menu_custom_item
+         */
+        bx_alert('menu', 'menu_custom_item', 0, 0, $a);
+
         if (false !== $sResult)
             return $sResult;
 

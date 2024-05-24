@@ -550,10 +550,29 @@ class BxInvModule extends BxDolModule
 
     public function onRequest($iRequestId)
     {
-        //--- Event -> Request for Alerts Engine ---//
+        /**
+         * @hooks
+         * @hookdef hook-bx_invites-deleted_answer_notif 'bx_invites', 'request' - hook on create new request on invite
+         * - $unit_name - equals `bx_invites`
+         * - $action - equals `request` 
+         * - $object_id - request id
+         * - $sender_id - not used
+         * @hook @ref hook-bx_invites-request
+         */
         bx_alert($this->_oConfig->getObject('alert'), 'request', $iRequestId);
         $aProfiles = BxDolAclQuery::getInstance()->getProfilesByMembership(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR));
         foreach($aProfiles as $aProfile) {
+            /**
+             * @hooks
+             * @hookdef hook-bx_invites-request_notify 'bx_invites', 'request_notify' - hook on notify all admins&moderators about new request
+             * - $unit_name - equals `bx_invites`
+             * - $action - equals `request_notify` 
+             * - $object_id - request id
+             * - $sender_id - not used
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `parent_author_id` - [int] profile_id of notified profile
+             * @hook @ref hook-bx_invites-request_notify
+             */
             bx_alert($this->_oConfig->getObject('alert'), 'request_notify', $iRequestId, 0, array('parent_author_id' => $aProfile['id']));
         }
         //--- Event -> Request for Alerts Engine ---//
@@ -594,9 +613,16 @@ class BxInvModule extends BxDolModule
     {
         $this->isAllowedInvite($iProfileId, true);
 
-        //--- Event -> Invite for Alerts Engine ---//
+        /**
+         * @hooks
+         * @hookdef hook-bx_invites-invite 'bx_invites', 'invite' - hook on new invite
+         * - $unit_name - equals `bx_invites`
+         * - $action - equals `invite` 
+         * - $object_id - not used
+         * - $sender_id - invited profile_id
+         * @hook @ref hook-bx_invites-invite
+         */
         bx_alert($this->_oConfig->getObject('alert'), 'invite', 0, $iProfileId);
-        //--- Event -> Invite for Alerts Engine ---//
     }
     
     public function getJoinLink($sKey)

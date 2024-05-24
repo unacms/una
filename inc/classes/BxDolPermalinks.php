@@ -161,7 +161,25 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
     function permalink($sLink, $aParams = array())
     {
         $sRet = null;
-        bx_alert('system', 'permalink', 0, 0, array('link' => $sLink, 'params' => &$aParams, 'return_data' => &$sRet));
+        
+        /**
+         * @hooks
+         * @hookdef hook-system-permalink 'system', 'permalink' - hook to override permalink during link to permalink conversion
+         * - $unit_name - equals `system`
+         * - $action - equals `permalink`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `link` - [string] input link
+         *      - `params` - [array] by ref, additional params array as key&value pairs, can be overridden in hook processing
+         *      - `return_data` - [string] by ref, output permalink, can be overridden in hook processing
+         * @hook @ref hook-system-permalink
+         */
+        bx_alert('system', 'permalink', 0, 0, [
+            'link' => $sLink, 
+            'params' => &$aParams, 
+            'return_data' => &$sRet
+        ]);
         if (null !== $sRet)
             return $sRet;
 
@@ -205,7 +223,25 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
     function unpermalink($sLink, $isStripBaseUrl = true)
     {
         $sRet = null;
-        bx_alert('system', 'unpermalink', 0, 0, array('link' => $sLink, 'strip_base_url' => $isStripBaseUrl, 'return_data' => &$sRet));
+        
+        /**
+         * @hooks
+         * @hookdef hook-system-unpermalink 'system', 'unpermalink' - hook to override link during permalink to link conversion
+         * - $unit_name - equals `system`
+         * - $action - equals `unpermalink`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `link` - [string] input permalink
+         *      - `strip_base_url` - [boolean] strip base URL from output link
+         *      - `return_data` - [string] by ref, output link, can be overridden in hook processing
+         * @hook @ref hook-system-unpermalink
+         */
+        bx_alert('system', 'unpermalink', 0, 0, [
+            'link' => $sLink, 
+            'strip_base_url' => $isStripBaseUrl, 
+            'return_data' => &$sRet
+        ]);
         if (null !== $sRet)
             return $sRet;
 

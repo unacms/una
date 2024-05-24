@@ -248,6 +248,19 @@ class BxBaseFavorite extends BxDolFavorite
             $this->_triggerValue($bPerformUndo ? -1 : 1);
 
             bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, array('favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+            /**
+             * @hooks
+             * @hookdef hook-report-undo 'favorite', 'favorite' - hook on add new object to favorites lists or remove object from favorites lists 
+             * - $unit_name - equals `favorite`
+             * - $action - can be  do/undo 
+             * - $object_id - not used
+             * - $sender_id - profile_id for favorite's author
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_system` - [string] system name, ex: bx_posts
+             *      - `object_id` - [int] reported object id 
+             *      - `object_author_id` - [int] author's profile_id for reported object_id 
+             * @hook @ref hook-favorite-undo
+             */
             bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
             $aFavorite = $this->_oQuery->getFavorite($iObjectId);
@@ -310,6 +323,20 @@ class BxBaseFavorite extends BxDolFavorite
             $this->_trigger();
 
             bx_alert($this->_sSystem, 'favorite', $iObjectId, $iAuthorId, array('favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'list_ids' => $aList));
+            /**
+             * @hooks
+             * @hookdef hook-report-do 'favorite', 'favorite' - hook on add new object to  favorites lists
+             * - $unit_name - equals `favorite`
+             * - $action - equals `favorite` 
+             * - $object_id - favorited object id 
+             * - $sender_id - profile_id for favorite's author
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `object_system` - [string] system name, ex: bx_posts
+             *      - `object_id` - [int] reported object id 
+             *      - `object_author_id` - [int] author's profile_id for reported object_id 
+             *      - `list_ids` - [array] array of id's list 
+             * @hook @ref hook-favorite-do
+             */
             bx_alert('favorite', 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'list_ids' => $aList));
 
             $bPerformed = count($aList) > 0;

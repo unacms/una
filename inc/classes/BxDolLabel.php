@@ -139,6 +139,17 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
         if(empty($aLabel) || !is_array($aLabel))
             return;
 
+        /**
+         * @hooks
+         * @hookdef hook-label-edited 'label', 'added' - hook on new label added
+         * - $unit_name - equals `label`
+         * - $action - equals `added` 
+         * - $object_id - label id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `label` - [array] array with label info
+         * @hook @ref hook-label-added
+         */
         bx_alert('label', 'added', $iId, false, array('label' => $aLabel));
     }
 
@@ -148,6 +159,17 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
         if(empty($aLabel) || !is_array($aLabel))
             return;
 
+        /**
+         * @hooks
+         * @hookdef hook-label-edited 'label', 'edited' - hook on new label edited
+         * - $unit_name - equals `label`
+         * - $action - equals `edited` 
+         * - $object_id - label id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `label` - [array] array with label info
+         * @hook @ref hook-label-edited
+         */
         bx_alert('label', 'edited', $iId, false, array('label' => $aLabel));
     }
 
@@ -157,6 +179,17 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
         if(empty($aLabel) || !is_array($aLabel))
             return;
 
+         /**
+         * @hooks
+         * @hookdef hook-label-deleted 'label', 'deleted' - hook on new label deleted
+         * - $unit_name - equals `label`
+         * - $action - equals `deleted` 
+         * - $object_id - label id 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `label` - [array] array with label info
+         * @hook @ref hook-label-deleted
+         */
         bx_alert('label', 'deleted', $iId, false, array('label' => $aLabel));
     }
 

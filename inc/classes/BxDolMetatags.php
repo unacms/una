@@ -384,8 +384,38 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         if ($iRet = $this->_oQuery->keywordsAdd($iId, array($s), $bDeletePreviousKeywords)) {
             $sSource = $this->_sObject . '_' . $iId;
 
-            bx_alert($this->_aObject['module'], 'keyword_added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'source' => $sSource));
-            bx_alert('meta_keyword', 'added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'object' => $this->_sObject, 'source' => $sSource));
+            /**
+             * @hooks
+             * @hookdef hook-bx_dol_metatags-keyword_added '{object_name}', 'keyword_added' - hook after a keyword (hashtag) was recognized in provided text
+             * - $unit_name - metatags object name
+             * - $action - equals `keyword_added`
+             * - $object_id - content id
+             * - $sender_id - logged in profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `meta` - [string] recognized keyword
+             *      - `content_id` - [int] content id 
+             *      - `source` - [string] unique source id
+             * @hook @ref hook-bx_dol_metatags-keyword_added
+             */
+            bx_alert($this->_aObject['module'], 'keyword_added', $iId, bx_get_logged_profile_id(), [
+                'meta' => $s, 
+                'content_id' => $iId, 
+                'source' => $sSource
+            ]);
+
+            /**
+             * @hooks
+             * @hookdef hook-meta_keyword-added 'meta_keyword', 'added' - hook after a keyword (hashtag) was recognized in provided text
+             * It's equivalent to @ref hook-bx_dol_metatags-keyword_added 
+             * except `object` parameter with metatags object name was added in $extra_params
+             * @hook @ref hook-meta_keyword-added
+             */
+            bx_alert('meta_keyword', 'added', $iId, bx_get_logged_profile_id(), [
+                'meta' => $s, 
+                'content_id' => $iId, 
+                'object' => $this->_sObject, 
+                'source' => $sSource
+            ]);
         }
 
         return $iRet;
@@ -491,13 +521,30 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         }
         
         $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . $sSectionPart;
-        bx_alert('meta_keyword', 'url', 0, false, array(
-           'url' => &$sUrl,
-           'keyword' => $sKeyword,
-		   'id' => $iId,
-           'sObject' => $this->_sObject,
-           'section' => $mixedSection,
-        ));
+        
+        /**
+         * @hooks
+         * @hookdef hook-meta_keyword-url 'meta_keyword', 'url' - hook to override meta keyword URL
+         * - $unit_name - equals `meta_keyword`
+         * - $action - equals `url`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `url` - [string] by ref, keyword URL, can be overridden in hook processing
+         *      - `keyword` - [string] keyword
+         *      - `id` - [int] content id
+         *      - `object` - [string] metatags object name
+         *      - `section` - [string] a string with sections (modules) in which a search by keyword will be performed (for default hashtag URL)
+         * @hook @ref hook-meta_keyword-url
+         */
+        bx_alert('meta_keyword', 'url', 0, false, [
+            'url' => &$sUrl,
+            'keyword' => $sKeyword,
+            'id' => $iId,
+            'object' => $this->_sObject,
+            'section' => $mixedSection,
+            'sObject' => $this->_sObject, //depricated, will be removed in future versions, approximately in UNA 15.
+        ]);
     
         return bx_is_api() ? bx_api_get_relative_url($sUrl) : $sUrl;
     }
@@ -931,6 +978,16 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsParse($iId, $s) 
     {
+        if (!bx_is_api())
+            return $s;
+        
+        if(($sRootUrl = getParam('sys_api_url_root_email')) !== '') {
+            if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
+                $sRootUrl .= '/';
+
+            $s = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $s);
+        }
+        
         return $s;
     }
 
@@ -1061,11 +1118,85 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         if ($iRet = $this->_oQuery->$sFuncAdd($iId, $aMetas)) {
             foreach ($aMetas as $sMeta) {
                 $iObjectId = 'mention' == $sAlertName ? $sMeta : $iId;
-                bx_alert('meta_' . $sAlertName, 'before_added', $iObjectId, bx_get_logged_profile_id(), ['meta' => &$sMeta, 'content_id' => $iId, 'object' => $this->_sObject]);
+                
+                /**
+                 * @hooks
+                 * @hookdef hook-meta_keyword-before_added 'meta_keyword', 'before_added' - hook to override meta keyword before it will be processed
+                 * - $unit_name - equals `meta_keyword`
+                 * - $action - equals `before_added`
+                 * - $object_id - object id
+                 * - $sender_id - currently logged in profile id
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `meta` - [string] by ref, keyword, can be overridden in hook processing
+                 *      - `content_id` - [int] content id
+                 *      - `object` - [string] metatags object name
+                 * @hook @ref hook-meta_keyword-before_added
+                 */
+                /**
+                 * @hooks
+                 * @hookdef hook-meta_mention-before_added 'meta_mention', 'before_added' - hook to override meta mention before it will be processed
+                 * It's equivalent to @ref hook-meta_keyword-before_added
+                 * except mention value is used in $object_id
+                 * @hook @ref hook-meta_mention-before_added
+                 */
+                bx_alert('meta_' . $sAlertName, 'before_added', $iObjectId, bx_get_logged_profile_id(), [
+                    'meta' => &$sMeta, 
+                    'content_id' => $iId, 
+                    'object' => $this->_sObject
+                ]);
 
                 $sSource = $this->_sObject . '_' . $iId;
-                bx_alert($this->_sObject, $sAlertName . '_added', $iObjectId, bx_get_logged_profile_id(), ['meta' => $sMeta, 'content_id' => $iId, 'source' => $sSource]);
-                bx_alert('meta_' . $sAlertName, 'added', $iObjectId, bx_get_logged_profile_id(), ['meta' => $sMeta, 'content_id' => $iId, 'source' => $sSource, 'object' => $this->_sObject]);
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_dol_metatags-keyword_added '{object_name}', 'keyword_added' - hook after meta keyword was processed (added)
+                 * - $unit_name - metatags object name
+                 * - $action - equals `keyword_added`
+                 * - $object_id - object id
+                 * - $sender_id - currently logged in profile id
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `meta` - [string] keyword
+                 *      - `content_id` - [int] content id
+                 *      - `source` - [string] unique source id
+                 * @hook @ref hook-bx_dol_metatags-keyword_added
+                 */
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_dol_metatags-mention_added '{object_name}', 'mention_added' - hook after meta mention was processed
+                 * It's equivalent to @ref hook-bx_dol_metatags-keyword_added
+                 * @hook @ref hook-bx_dol_metatags-mention_added
+                 */
+                bx_alert($this->_sObject, $sAlertName . '_added', $iObjectId, bx_get_logged_profile_id(), [
+                    'meta' => $sMeta, 
+                    'content_id' => $iId, 
+                    'source' => $sSource
+                ]);
+
+                /**
+                 * @hooks
+                 * @hookdef hook-meta_keyword-added 'meta_keyword', 'added' - hook after meta keyword was processed (added)
+                 * - $unit_name - equals `meta_keyword`
+                 * - $action - equals `added`
+                 * - $object_id - object id
+                 * - $sender_id - currently logged in profile id
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `meta` - [string] keyword
+                 *      - `content_id` - [int] content id
+                 *      - `source` - [string] unique source id
+                 *      - `object` - [string] metatags object name
+                 * @hook @ref hook-meta_keyword-added
+                 */
+                /**
+                 * @hooks
+                 * @hookdef hook-meta_mention-added 'meta_mention', 'added' - hook after meta mention was processed
+                 * It's equivalent to @ref hook-meta_keyword-added
+                 * @hook @ref hook-meta_mention-added
+                 */
+                bx_alert('meta_' . $sAlertName, 'added', $iObjectId, bx_get_logged_profile_id(), [
+                    'meta' => $sMeta, 
+                    'content_id' => $iId, 
+                    'source' => $sSource, 
+                    'object' => $this->_sObject
+                ]);
             }
         }
 

@@ -121,7 +121,24 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
     {
         $sResult = false;
 
-        bx_alert('comment', 'menu_custom_item', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-comment-menu_custom_item 'comment', 'menu_custom_item' - hook to override menu item
+         * - $unit_name - equals `comment`
+         * - $action - equals `menu_custom_item`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `res` - [string] by ref, menu item code, can be overridden in hook processing
+         *      - `menu` - [string] menu name
+         *      - `menu_object` - [object] an instance of menu, @see BxDolMenu
+         *      - `item` - [array] menu item array as key&value pairs
+         *      - `content_id` - [int] content id
+         *      - `content_data` - [array] content info array as key&value pairs
+         *      - `cmts_object` - [object] an instance of comments, @see BxDolCmts
+         * @hook @ref hook-comment-menu_custom_item
+         */
+        bx_alert('comment', 'menu_custom_item', 0, 0, [
             'res' => &$sResult, 
             'menu' => $this->_sObject, 
             'menu_object' => $this, 
@@ -129,7 +146,7 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
             'content_id' => $this->_aCmt['cmt_id'],
             'content_data' => $this->_aCmt,
             'cmts_object' => $this->_oCmts
-        ));
+        ]);
 
         if (false !== $sResult)
             return $sResult;

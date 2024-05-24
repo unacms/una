@@ -741,6 +741,18 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function getSearchData ()
     {
+        /**
+         * @hooks
+         * @hookdef hook-simple_search-before_get_data 'simple_search', 'before_get_data' - hook on before after get data 
+         * - $unit_name - equals `simple_search`
+         * - $action - equals `before_get_data` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [array] by ref, array of parameters, can be overridden in hook processing
+         *      - `mode` - [string] search mode
+         * @hook @ref hook-simple_search-before_get_data
+         */
         bx_alert('simple_search', 'before_get_data', 0, false, [
             'object' => &$this->aCurrent, 
             'mode' => $this->_sMode
@@ -758,6 +770,19 @@ class BxDolSearchResult implements iBxDolReplaceable
             $aData = sort($aIds) == sort($this->_aParams['validate']) ? 'valid' : 'invalid';
         }
 
+        /**
+         * @hooks
+         * @hookdef hook-simple_search-get_data 'simple_search', 'get_data' - hook on after get data 
+         * - $unit_name - equals `simple_search`
+         * - $action - equals `get_data` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [array] by ref, array of parameters, can be overridden in hook processing
+         *      - `mode` - [string] search mode
+         *      - `search_object` - [string] search object name
+         * @hook @ref hook-simple_search-get_data
+         */
         bx_alert('simple_search', 'get_data', 0, false, [
             'object' => &$this->aCurrent, 
             'mode' => $this->_sMode, 
@@ -786,6 +811,20 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->setConditionParams();
         $aQuery = $this->getSearchDataByParams($aParams);
 
+        /**
+         * @hooks
+         * @hookdef hook-simple_search-get_query 'simple_search', 'get_query' - hook on get sql queries
+         * - $unit_name - equals `simple_search`
+         * - $action - equals `get_query` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [array] by ref, array of parameters, can be overridden in hook processing
+         *      - `mode` - [string] search mode
+         *      - `search_object` - [string] search object name
+         *      - `search_query` - [array] by ref, array of sql, can be overridden in hook processing
+         * @hook @ref hook-simple_search-get_query
+         */
         bx_alert('simple_search', 'get_query', 0, false, [
             'object' => &$this->aCurrent, 
             'mode' => $this->_sMode, 

@@ -50,16 +50,28 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
             return false;
 
         $aInfo = $oAccount->getInfo();
-		$sPassCheck = encryptUserPwd($s, $aInfo['salt']);
-		
-		// regenerate password using another encrypt function if necessary
-		bx_alert('system', 'encrypt_password_after', 0, false, array(
+        $sPassCheck = encryptUserPwd($s, $aInfo['salt']);
+                
+        /**
+         * @hooks
+         * @hookdef hook-system-encrypt_password_after 'system', 'encrypt_password_after' - hook to override password using another encrypt function
+         * - $unit_name - equals `system`
+         * - $action - equals `encrypt_password_after`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `info` - [array]  account info array as key&value pairs
+         *      - `pwd` - [string] original password
+         *      - `password` - [string] by ref, encrypt password, can be overridden in hook processing
+         * @hook @ref hook-system-encrypt_password_after
+         */
+        bx_alert('system', 'encrypt_password_after', 0, false, [
             'info' => $aInfo,
-			'pwd' => $s,
+            'pwd' => $s,
             'password' => &$sPassCheck,
-        ));
-		
-		return $aInfo['password'] == $sPassCheck;
+        ]);
+
+        return $aInfo['password'] == $sPassCheck;
     }
     
     /**
@@ -127,7 +139,25 @@ class BxBaseFormAccount extends BxTemplFormView
         if (isLogged() || !$this->isSubmitted()) return true; // exit in case it is an account edit or form has not been submitted yet
 
         $sErrorMsg = '';
-        bx_alert('account', 'check_join', 0, false, array('error_msg' => &$sErrorMsg, 'email' => $this->getCleanValue('email'), 'approve' => &$this->_bSetPendingApproval));
+        
+        /**
+         * @hooks
+         * @hookdef hook-account-check_join 'account', 'check_join' - hook to check email address for spam
+         * - $unit_name - equals `account`
+         * - $action - equals `check_join`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `error_msg` - [string] by ref, error message, can be overridden in hook processing
+         *      - `email` - [string] email address to check
+         *      - `approve` - [boolean] by ref, pending approval status for created profile, can be overridden in hook processing
+         * @hook @ref hook-account-check_join
+         */
+        bx_alert('account', 'check_join', 0, false, [
+            'error_msg' => &$sErrorMsg, 
+            'email' => $this->getCleanValue('email'), 
+            'approve' => &$this->_bSetPendingApproval
+        ]);
         if ($sErrorMsg)
             $this->_setCustomError ($sErrorMsg);
 
@@ -195,6 +225,20 @@ class BxBaseFormAccount extends BxTemplFormView
             $oAccount = BxDolAccount::getInstance($val, true);
             if ($oAccount) { 
                 $aAccountInfo = $oAccount->getInfo();
+                /**
+                 * @hooks
+                 * @hookdef hook-account-change_receive_news 'account', 'change_receive_news' - hook after change receive_news parameter for account
+                 * - $unit_name - equals `system`
+                 * - $action - equals `change_receive_news` 
+                 * - $object_id - not used 
+                 * - $sender_id - not used 
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `account_id` - [int] account id 
+                 *      - `old_value` - [bool] old value for receive_news parameter
+                 *      - `new_value` - [bool] new value for receive_news parameter
+                 *      - `email` - [string] account's email
+                 * @hook @ref hook-account-change_receive_news
+                 */
                 bx_alert('account', 'change_receive_news', 0, false, array('account_id' => $val, 'old_value' => $aAccountInfo['receive_news'], 'new_value' => $this->getCleanValue('receive_news'), 'email' => $aAccountInfo['email']));
             }
         }

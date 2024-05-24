@@ -21,17 +21,53 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function getContentInfoById ($iContentId)
     {
-        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`active` AS `profile_last_active`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `c`.`id` = ?", $this->_oConfig->getName(), $iContentId);
-        $aInfo = $this->getRow($sQuery);
-        bx_alert('profile', 'content_info_by_id', $iContentId, 0, array('module' => $this->_oConfig->getName(), 'info' => &$aInfo));
+        $aInfo = $this->getRow("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`active` AS `profile_last_active`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `c`.`id` = :id", [
+            'type' => $this->_oConfig->getName(),
+            'id' => $iContentId
+        ]);
+        
+        /**
+         * @hooks
+         * @hookdef hook-profile-content_info_by_id 'profile', 'content_info_by_id' - hook to modify profile info retrieved by content id
+         * - $unit_name - equals `profile`
+         * - $action - equals `content_info_by_id`
+         * - $object_id - content id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] profile module name
+         *      - `info` - [array] by ref, profile info array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-profile-content_info_by_id
+         */
+        bx_alert('profile', 'content_info_by_id', $iContentId, 0, [
+            'module' => $this->_oConfig->getName(), 
+            'info' => &$aInfo
+        ]);
         return $aInfo;
     }
 
     public function getContentInfoByProfileId ($iProfileId)
     {
-        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`active` AS `profile_last_active`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `p`.`id` = ?", $this->_oConfig->getName(), $iProfileId);
-        $aInfo = $this->getRow($sQuery);
-        bx_alert('profile', 'content_info_by_profile_id', $iProfileId, 0, array('module' => $this->_oConfig->getName(), 'info' => &$aInfo));
+        $aInfo = $this->getRow("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`active` AS `profile_last_active`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `p`.`id` = :profile_id", [
+            'type' => $this->_oConfig->getName(),
+            'profile_id' => $iProfileId
+        ]);
+        
+        /**
+         * @hooks
+         * @hookdef hook-profile-content_info_by_profile_id 'profile', 'content_info_by_profile_id' - hook to modify profile info retrieved by profile id
+         * - $unit_name - equals `profile`
+         * - $action - equals `content_info_by_profile_id`
+         * - $object_id - profile id
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] profile module name
+         *      - `info` - [array] by ref, profile info array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-profile-content_info_by_profile_id
+         */
+        bx_alert('profile', 'content_info_by_profile_id', $iProfileId, 0, [
+            'module' => $this->_oConfig->getName(), 
+            'info' => &$aInfo
+        ]);
         return $aInfo;
     }
 
@@ -83,7 +119,30 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
         $sOrderBy = $this->prepareAsString(" ORDER BY `a`.`logged` DESC LIMIT ?", (int)$iLimit);
 
-        bx_alert('profile', 'search_by_term', 0, 0, array('module' => $this->_oConfig->getName(), 'table' => $this->_oConfig->CNF['TABLE_ENTRIES'], 'select' => &$sSelect,  'join' => &$sJoin, 'where' => &$sWhere, 'order_by' => &$sOrderBy));
+        /**
+         * @hooks
+         * @hookdef hook-profile-search_by_term 'profile', 'search_by_term' - hook to modify a list of profiles found by term
+         * - $unit_name - equals `profile`
+         * - $action - equals `search_by_term`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] profile module name
+         *      - `table` - [string] db table name
+         *      - `select` - [string] by ref, 'select' part of SQL query, can be overridden in hook processing
+         *      - `join` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `where` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `order_by` - [string] by ref, 'order' part of SQL query, can be overridden in hook processing
+         * @hook @ref hook-profile-search_by_term
+         */
+        bx_alert('profile', 'search_by_term', 0, 0, [
+            'module' => $this->_oConfig->getName(), 
+            'table' => $this->_oConfig->CNF['TABLE_ENTRIES'], 
+            'select' => &$sSelect,  
+            'join' => &$sJoin, 
+            'where' => &$sWhere, 
+            'order_by' => &$sOrderBy
+        ]);
         
         return $this->getAll("SELECT " . $sSelect . " FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` " . $sJoin . " WHERE " . $sWhere . $sOrderBy, $aBindings);
     }

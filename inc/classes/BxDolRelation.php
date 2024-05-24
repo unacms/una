@@ -121,12 +121,26 @@ class BxDolRelation extends BxDolConnection
         if(!$this->_oQuery->updateConnectionMutual((int)$iInitiator, (int)$iContent, $iMutual))
             return false;
 
-        bx_alert($this->_sObject, 'connection_confirmed', 0, bx_get_logged_profile_id(), array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_relation-connection_confirmed '{object_name}', 'connection_confirmed' - hook after relation was confirmed
+         * - $unit_name - relation object name
+         * - $action - equals `connection_confirmed`
+         * - $object_id - not used
+         * - $sender_id - logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `initiator` - [int] profile id who created the connection
+         *      - `content` - [int] profile id with whom the connection was created
+         *      - `mutual` - [int] if the relation is mutual or not
+         *      - `object` - [object] an instance of relation, @see BxDolRelation
+         * @hook @ref hook-bx_dol_relation-connection_confirmed
+         */
+        bx_alert($this->_sObject, 'connection_confirmed', 0, bx_get_logged_profile_id(), [
             'initiator' => (int)$iInitiator,
             'content' => (int)$iContent,
             'mutual' => (int)$iMutual,
             'object' => $this,
-        ));
+        ]);
 
         return true;
     }
@@ -265,12 +279,26 @@ class BxDolRelation extends BxDolConnection
     {
         $aRelations = BxDolFormQuery::getDataItems($this->_sPreList, false, BX_DATA_VALUES_ALL);
 
-        bx_alert($this->_sObject, 'get_relations', 0, bx_get_logged_profile_id(), array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_relation-get_relations '{object_name}', 'get_relations' - hook to override relation info 
+         * - $unit_name - relation object name
+         * - $action - equals `get_relations`
+         * - $object_id - not used
+         * - $sender_id - logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `initiator` - [int] profile id who created the connection
+         *      - `content` - [int] profile id with whom the connection was created
+         *      - `pre_list` - [string] predefined list name with all available relation types
+         *      - `relations` - [array] by ref, array with relations between 'initiator' and 'content' profiles, can be overridden in hook processing
+         * @hook @ref hook-bx_dol_relation-get_relations
+         */
+        bx_alert($this->_sObject, 'get_relations', 0, bx_get_logged_profile_id(), [
             'initiator' => (int)$iInitiator,
             'content' => (int)$iContent,
             'pre_list' => $this->_sPreList,
             'relations' => &$aRelations
-        ));
+        ]);
 
         if($this->isConnected($iContent, $iInitiator)) {
             $iRelation = $this->getRelation($iContent, $iInitiator);

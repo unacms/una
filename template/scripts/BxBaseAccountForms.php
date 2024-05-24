@@ -27,6 +27,17 @@ class BxBaseAccountForms extends BxDolProfileForms
     {
         $oForm = BxDolForm::getObjectInstance('sys_account', 'sys_account_create');
 
+        /**
+         * @hooks
+         * @hookdef hook-account-add_form_get 'account', 'add_form_get' - hook in get some account form
+         * - $unit_name - equals `account`
+         * - $action - equals `add_form_get` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `form_object` - [object] by ref, form object, can be overridden in hook processing
+         * @hook @ref hook-account-add_form_get
+         */
         bx_alert('account', 'add_form_get', 0, 0, [
             'form_object' => &$oForm
         ]);
@@ -60,6 +71,17 @@ class BxBaseAccountForms extends BxDolProfileForms
         $oForm->aFormAttrs['action'] = !empty($aParams['action']) ? $aParams['action'] : bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'));
         $oForm->initChecker(self::$PROFILE_FIELDS);
 
+        /**
+         * @hooks
+         * @hookdef hook-account-add_form_check 'account', 'add_form_check' - hook in  some account form after check
+         * - $unit_name - equals `account`
+         * - $action - equals `add_form_check` 
+         * - $object_id - not used 
+         * - $sender_id - not used 
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `form_object` - [object] by ref, form object, can be overridden in hook processing
+         * @hook @ref hook-account-add_form_check
+         */
         bx_alert('account', 'add_form_check', 0, 0, array(
             'form_object' => &$oForm
         ));
@@ -68,6 +90,18 @@ class BxBaseAccountForms extends BxDolProfileForms
             
             $sCode = $oForm->getCode();
 
+            /**
+             * @hooks
+             * @hookdef hook-account-add_form 'account', 'add_form' - hook in  some account form after check
+             * - $unit_name - equals `account`
+             * - $action - equals `add_form` 
+             * - $object_id - not used 
+             * - $sender_id - not used 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `form_object` - [object] by ref, form object, can be overridden in hook processing
+             *      - `form_code` - [string] by ref, html for form, can be overridden in hook processing
+             * @hook @ref hook-account-add_form
+             */
             bx_alert('account', 'add_form', 0, 0, array(
                     'form_object' => &$oForm,
                     'form_code' => &$sCode
@@ -155,8 +189,7 @@ class BxBaseAccountForms extends BxDolProfileForms
 
     public function onAccountCreated ($iAccountId, $isSetPendingApproval, $iAction = BX_PROFILE_ACTION_MANUAL, $bNeedToLogin = true)
     {
-        // alert
-        bx_alert('account', 'add', $iAccountId, 0);
+        bx_alert('account', 'add', $iAccountId);
 
         // if email_confirmation procedure is enabled - send email confirmation letter
         $oAccount = BxDolAccount::getInstance($iAccountId);
@@ -173,7 +206,16 @@ class BxBaseAccountForms extends BxDolProfileForms
         if ($sStatus == BX_PROFILE_STATUS_PENDING && $isAutoApprove)
             $oProfile->approve(BX_PROFILE_ACTION_AUTO, $iProfileId, getParam('sys_account_activation_letter') == 'on');
 
-        // alert
+        /**
+         * @hooks
+         * @hookdef hook-account-added 'account', 'added' - hook on new account created
+         * - $unit_name - equals `system`
+         * - $action - equals `added` 
+         * - $object_id - account id 
+         * - $sender_id - not used 
+         * - $extra_params - not used
+         * @hook @ref hook-account-added
+         */
         bx_alert('account', 'added', $iAccountId);
 
         // login to the created account automatically
@@ -299,7 +341,7 @@ class BxBaseAccountForms extends BxDolProfileForms
                 $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);  // change profile to 'pending' only if some text fields were changed and profile is active
         }
 
-        // create an alert
+        
         bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('display' => $sDisplayName));
 
         // display result message            

@@ -29,7 +29,14 @@ class BxCnvFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         if ($sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile))
             return $sResult;
 
-        // create an alert
+        /**
+         * @hooks
+         * @hookdef hook-bx_convos-deleted 'bx_convos', 'deleted' - hook on delete conversation
+         * - $unit_name - equals `bx_convos`
+         * - $action - equals `deleted` 
+         * - $object_id - conversation id
+         * @hook @ref hook-bx_convos-deleted
+         */
         bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
 
         return '';

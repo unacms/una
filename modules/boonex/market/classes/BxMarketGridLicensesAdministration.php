@@ -92,6 +92,16 @@ class BxMarketGridLicensesAdministration extends BxTemplGrid
                 continue;
 
             if((int)$mixedResult > 0)
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_market-license_reset 'bx_market', 'license_reset' - hook on license reset
+                 * - $unit_name - equals `bx_market`
+                 * - $action - equals `license_reset` 
+                 * - $object_id - not used 
+                 * - $sender_id - not used 
+                 * - $extra_params - array of reseted licenses
+                 * @hook @ref hook-bx_market-license_reset
+                 */
                 bx_alert($this->_oModule->getName(), 'license_reset', 0, false, $this->_oModule->_oDb->getLicense([
                     'type' => 'id',
                     'id' => $iId

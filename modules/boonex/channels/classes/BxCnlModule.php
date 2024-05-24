@@ -91,6 +91,23 @@ class BxCnlModule extends BxBaseModGroupsModule
 
         $iCnlProfileId = $oCnlProfile->id();
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_channels-hashtag_added 'bx_channels', 'hashtag_added' - hook on found hashtag in content
+         * - $unit_name - equals `bx_channels`
+         * - $action - equals `hashtag_added` 
+         * - $object_id - content_id in channel
+         * - $sender_id - channel profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] profile_id for content's author
+         *      - `privacy_view` - [string] equal - channel_profile_id
+         *      - `subobject_id` - [int]  content_id in channel
+         *      - `content_module` - [string] module name for content
+         *      - `content_id` - [int] content_id
+         *      - `content_author_id` - [int] equal with object_author_id
+         *      - `timeline_group` - [array] parameters for group event in timeline  ['by' => $sModuleName . '_' . $iAuthorId . '_' . $iContentId, 'field' => 'owner_id']
+         * @hook @ref hook-bx_channels-hashtag_added
+         */
         bx_alert($this->_aModule['name'], 'hashtag_added', $iId, $iCnlProfileId, array(
             'object_author_id' => $iAuthorId, 
             'privacy_view' => -$iCnlProfileId,
@@ -113,6 +130,22 @@ class BxCnlModule extends BxBaseModGroupsModule
             'content_author_id' => $iAuthorId
         );
         bx_alert('system', 'prepare_alert_params', 0, 0, array('unit'=> $this->_aModule['name'], 'action' => 'hashtag_added_notif', 'object_id' => $mixedCnlId, 'sender_id' => $iCnlProfileId, 'extras' => &$aParams));
+        /**
+         * @hooks
+         * @hookdef hook-bx_channels-hashtag_added_notif 'bx_channels', 'hashtag_added_notif' - hook on after found hashtag in content
+         * - $unit_name - equals `bx_channels`
+         * - $action - equals `hashtag_added_notif` 
+         * - $object_id - channel id
+         * - $sender_id - channel profile_id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] profile_id for content's author
+         *      - `privacy_view` - [string] equal - channel_profile_id
+         *      - `subobject_id` - [int]  content_id in channel
+         *      - `content_module` - [string] module name for content
+         *      - `content_id` - [int] content_id
+         *      - `content_author_id` - [int] equal with object_author_id
+         * @hook @ref hook-bx_channels-hashtag_added_notif
+         */
         bx_alert($this->_aModule['name'], 'hashtag_added_notif', $mixedCnlId, $iCnlProfileId, $aParams);
     }
     
@@ -124,7 +157,27 @@ class BxCnlModule extends BxBaseModGroupsModule
         foreach ($aData as $aRow) {
             $iProfileInfo = $oDolProfileQuery->getProfileByContentAndType($aRow['cnl_id'], $this->_aModule['name']);
             if(is_array($iProfileInfo)){
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_channels-hashtag_deleted 'bx_channels', 'hashtag_deleted' - hook on before delete content from channel
+                 * - $unit_name - equals `bx_channels`
+                 * - $action - equals `hashtag_deleted` 
+                 * - $object_id - content id in channel
+                 * - $sender_id - channel profile_id
+                 * @hook @ref hook-bx_channels-hashtag_deleted
+                 */
                 bx_alert($this->_aModule['name'], 'hashtag_deleted', $aRow['id'], $iProfileInfo['id']);
+                 /**
+                 * @hooks
+                 * @hookdef hook-bx_channels-hashtag_deleted_notif 'bx_channels', 'hashtag_deleted_notif' - hook on before delete content from channel
+                 * - $unit_name - equals `bx_channels`
+                 * - $action - equals `hashtag_deleted_notif` 
+                 * - $object_id - channel id
+                 * - $sender_id - channel profile_id
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `subobject_id` - [int] content id in channel
+                 * @hook @ref hook-bx_channels-hashtag_deleted_notif
+                 */
                 bx_alert($this->_aModule['name'], 'hashtag_deleted_notif', $aRow['cnl_id'], $iProfileInfo['id'], array('subobject_id' => $aRow['id']));
             }
         }
