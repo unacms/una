@@ -24,9 +24,9 @@ class BxTimelineGridMute extends BxDolGridConnections
         $this->_sObjectConnections = $this->_oModule->_oConfig->getObject('grid_mute');
     }
 
-    public function init()
+    public function init($bForceInit = false)
     {
-        if(!parent::init())
+        if(!parent::init($bForceInit))
             return false;
 
         $aSQLParts = $this->_oConnection->getConnectedContentAsSQLParts('p', 'id', $this->_oProfile->id());
