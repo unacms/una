@@ -1,7 +1,8 @@
 <?php
 
 $bMarkdown = false; // use Markdown format output, when `true` then 'league/html-to-markdown' library need to be installed with `composer require league/html-to-markdown`
-$sBaseUrl = 'wiki/Alerts-hooks'; // base URL for the generated docs
+$sBaseUrl = 'wiki/alerts-hooks'; // base URL for the generated docs
+$sBaseDocUrl = 'https://ci.una.io/docs/';
 
 use League\HTMLToMarkdown\HtmlConverter;
 $oConverter = null;
@@ -10,7 +11,6 @@ if ($bMarkdown) {
     $oConverter = new HtmlConverter();
 }
 
-$sBaseDocUrl = 'https://ci.una.io/docs/';
 $sXml = file_get_contents('xml/hook.xml'); // xml folder should contain XML output from doxygen
 
 $oHooks = new SimpleXMLElement($sXml);
@@ -42,11 +42,11 @@ foreach ($oHooks->xpath('//listitem/para/ref') as $oRef) {
     }
 
     // parse page content to get hook snippet
-    $iStart = mb_strpos($s, $sAnchor);
+    $iStart = mb_strpos($s, '"' . $sAnchor . '"');
     if ($iStart === false)
         continue;
     $iEnd = mb_strpos($s, '<dl class="hook"><dt><b><a class="el" href="hook.html', $iStart);
-    $sSnippetHtml = mb_substr($s, $iStart - 26, $iEnd - $iStart + 26);
+    $sSnippetHtml = mb_substr($s, $iStart - 25, $iEnd - $iStart + 25);
     if ($bMarkdown)
         $sSnippetMd = $oConverter->convert($sSnippetHtml);
 
@@ -68,7 +68,7 @@ foreach ($oHooks->xpath('//listitem/para/ref') as $oRef) {
     }, $sSnippetHtmlFixed);
 
     if ($bMarkdown) {
-        $sSnippetMd = preg_replace_callback('/\((.*?\.html.*?)\)/', function ($m) use ($sBaseDocUrl) {
+        $sSnippetMd = preg_replace_callback('/\((.*?\.html.*?)\)/', function ($m) use ($sBaseDocUrl, $sBaseUrl) {
             if (false === ($i = mb_strpos($m[1], '#hook-')))
                 return '(' . $sBaseDocUrl . $m[1] . ')';
             else
