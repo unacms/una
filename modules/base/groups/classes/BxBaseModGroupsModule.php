@@ -223,6 +223,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return array_merge(parent::serviceGetSafeServices(), [
             'GetQuestionnaire' => '',
             'GetInitialMembers' => '',
+            'EntityInvite' => '',
         ]);
     }
 
