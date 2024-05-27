@@ -14,6 +14,7 @@
  */
 class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 {
+    protected $_sCanonicalUrl;
     protected $_aProfileInfo;
     protected $_oProfile;
 
@@ -34,8 +35,10 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         }
 
-        if ($iProfileId)
+        if ($iProfileId) {
+            $this->_sCanonicalUrl = 'page.php?i=' . $this->_aObject['uri'] . '&profile_id=' . $iProfileId;
             $this->_oProfile = BxDolProfile::getInstance($iProfileId);
+        }
 
         if (!$this->_oProfile && $iContentId)
             $this->_oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
@@ -138,7 +141,11 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 
         $this->_oTemplate->addCss('main.css');
 
-        return parent::getCode();
+        $sResult = parent::getCode();
+        if($this->_sCanonicalUrl)
+            BxDolTemplate::getInstance()->setPageUrl($this->_sCanonicalUrl);
+
+        return $sResult;
     }
 
     protected function _isVisiblePage ($a)
