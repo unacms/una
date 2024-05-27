@@ -1,5 +1,7 @@
 <?php
-$bMarkdown = false;
+
+$bMarkdown = false; // use Markdown format output, when `true` then 'league/html-to-markdown' library need to be installed with `composer require league/html-to-markdown`
+$sBaseUrl = 'wiki/Alerts-hooks'; // base URL for the generated docs
 
 use League\HTMLToMarkdown\HtmlConverter;
 $oConverter = null;
@@ -70,8 +72,10 @@ foreach ($oHooks->xpath('//listitem/para/ref') as $oRef) {
             if (false === ($i = mb_strpos($m[1], '#hook-')))
                 return '(' . $sBaseDocUrl . $m[1] . ')';
             else
-                return '(' . mb_substr($m[1], -mb_strlen($m[1]) + $i) . ')';
+                return '(' . $sBaseUrl . mb_substr($m[1], -mb_strlen($m[1]) + $i) . ')';
         }, $sSnippetMd);
+        $sSnippetMd = preg_replace('/\((#hook-.*?)\)/', '(' . $sBaseUrl . '$1)', $sSnippetMd);
+        $sSnippetMd = preg_replace('/[=]{3,}/', '-------------------------------', $sSnippetMd);
     }
 
     // add to output
