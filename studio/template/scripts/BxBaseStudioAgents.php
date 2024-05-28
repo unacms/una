@@ -32,9 +32,9 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         ];
 
         $this->aMenuItems = [
-            BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'cogs'],
-            BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'cogs'],
-            BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'cogs'],
+            BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'mi-cog.svg', 'icon_bg' => true],
+            BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'mi-agt-providers.svg', 'icon_bg' => true],
+            BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
         ];
 
         $this->aGridObjects = [
@@ -54,13 +54,12 @@ class BxBaseStudioAgents extends BxDolStudioAgents
 
         $aMenu = [];
         foreach($this->aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = [
+            $aMenu[] = array_merge($aItem, [
                 'name' => $sMenuItem,
-                'icon' => $aItem['icon'],
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            ];
+            ]);
 
         return parent::getPageMenu($aMenu);
     }

@@ -52,12 +52,12 @@ class BxBaseStudioStore extends BxDolStudioStore
             'downloaded' => ['icon' => 'mi-str-downloaded.svg', 'icon_bg' => true]
         ];
         foreach($aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array_merge([
+            $aMenu[] = array_merge($aItem, [
                 'name' => $sMenuItem,
                 'link' => $this->getBaseUrl($sMenuItem),
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            ], $aItem);
+            ]);
 
         $iCounter = BxDolStudioCart::getInstance()->getCount();
 

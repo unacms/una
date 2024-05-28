@@ -77,13 +77,12 @@ class BxBaseStudioModule extends BxDolStudioModule
 
         $aMenu = array();
         foreach($this->aMenuItems as $sName => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = array_merge($aItem, [
                 'name' => $sName,
-                'icon' => $aItem['icon'],
                 'link' => isset($aItem['link'])  ? $aItem['link'] : bx_append_url_params($this->sManageUrl, array('page' => $sName)),
                 'title' => _t(!empty($aItem['title']) ? $aItem['title'] : $aItem['caption']),
                 'selected' => $sName == $this->sPage
-            );
+            ]);
 
         return parent::getPageMenu($aMenu);
     }

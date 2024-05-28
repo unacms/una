@@ -33,7 +33,10 @@ class BxAccntStudioPage extends BxTemplStudioModule
 
         foreach($aIcons as $sName => $sIcon)
             if(($sIconUrl = $this->_oModule->_oTemplate->getIconUrl($sIcon)) !== '')
-                $this->aMenuItems[$sName]['icon'] = $sIconUrl;
+                $this->aMenuItems[$sName] = array_merge($this->aMenuItems[$sName], [
+                    'icon' => $sIconUrl, 
+                    'icon_bg' => true
+                ]);
     }
 
     protected function getManage()
