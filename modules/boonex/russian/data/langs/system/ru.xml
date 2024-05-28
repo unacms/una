@@ -1734,6 +1734,7 @@
     <string name="_adm_stg_cpt_option_sys_api_conn_in_prof_units"><![CDATA[Использовать списки связей в блоках профилей/групп.]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_email"><![CDATA[Основной URL-адрес сайта в уведомлениях по электронной почте]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_push"><![CDATA[Основной URL-адрес сайта в push-уведомлениях]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_ai_inst_path"><![CDATA[Путь к папке с файлами инструкций AI]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_url"><![CDATA[URL конечной точки]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Профиль]]></string>   
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Метатег области просмотра]]></string>
