@@ -13,6 +13,7 @@ function BxDolStudioPageAgents(oOptions)
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioPageAgents' : oOptions.sObjName;
 
     this.sActionUrlCmts = oOptions.sActionUrlCmts == undefined ? this.sActionUrl : oOptions.sActionUrlCmts;
+    this.sActionUrlGrid = oOptions.sActionUrlGrid == undefined ? this.sActionUrl : oOptions.sActionUrlGrid;
 
     /*
      * Note. Are needed for Grid and don't used for now.
@@ -26,7 +27,7 @@ function BxDolStudioPageAgents(oOptions)
 BxDolStudioPageAgents.prototype = Object.create(BxDolStudioPage.prototype);
 BxDolStudioPageAgents.prototype.constructor = BxDolStudioPageAgents;
 
-BxDolStudioPageAgents.prototype.onChangeType = function(oSelect) {
+BxDolStudioPageAgents.prototype.onChangeAutomatorType = function(oSelect) {
     var aHide = [];
     var aShow = [];
     switch($(oSelect).val()) {
@@ -78,6 +79,21 @@ BxDolStudioPageAgents.prototype.approveCode = function(oSource, iCmtId) {
         'json'
     );
 };
+
+BxDolStudioPageAgents.prototype.providerAdd = function(oButton, sName) {
+    var oButton = $(oButton);
+
+    var oSubentry = oButton.parents('#bx-form-element-' + sName).find('.bx-form-input-provider:first').clone();
+    oSubentry.find("select").val('');
+    oSubentry.find("input[type = 'hidden']").remove();
+
+    oButton.parents('.bx-form-input-provider-add:first').before(oSubentry);
+};
+
+BxDolStudioPageAgents.prototype.providerDelete = function(oButton) {
+    $(oButton).parents('.bx-form-input-provider:first').remove();
+};
+
 
 BxDolStudioPageAgents.prototype._getDefaultData = function() {
     var oDate = new Date();

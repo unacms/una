@@ -500,6 +500,7 @@ class BxBasePage extends BxDolPage
 
         $bIsAvailable = $this->_isAvailablePage($this->_aObject);
         $bIsVisible = $this->_isVisiblePage($this->_aObject);
+        //TODO: If page isn't Available or isn't Visible then we should exit with related Error Codes immediately.
 
         $sMetaTitle = $this->_getPageMetaTitle();
         $sName = $this->_getPageTitle();

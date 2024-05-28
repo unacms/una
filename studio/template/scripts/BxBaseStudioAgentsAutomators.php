@@ -113,6 +113,14 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             if($bIsValid) {
                 if(($iId = $oForm->insert($aValsToAdd)) !== false) {
+                    $aProviders = $oForm->getCleanValue('providers');
+                    if(!empty($aProviders) && is_array($aProviders))
+                        foreach($aProviders as $iProviderId)
+                            $this->_oDb->insertAutomatorProvider([
+                                'automator_id' => $iId, 
+                                'provider_id' => $iProviderId
+                            ]);
+
                     if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
                         if($bMessage) {
                             $aResult = $oCmts->addAuto([
@@ -162,6 +170,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
         $iId = $this->_getId();
         $aAutomator = $this->_oDb->getAutomatorsBy(['sample' => 'id', 'id' => $iId]);
+        $aAutomator['providers'] = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
 
         $aForm = $this->_getFormEdit($sAction, $aAutomator);
         $oForm = new BxTemplFormView($aForm);
@@ -169,7 +178,30 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
         if($oForm->isSubmittedAndValid()) {
             $aValsToAdd = [];
-            
+
+            $aProvidersIds = $oForm->getCleanValue('providers_ids');
+            $aProvidersValues = $oForm->getCleanValue('providers');
+
+            //--- Remove deleted
+            $this->_oDb->deleteAutomatorProvidersById(array_diff(array_keys($aAutomator['providers']), $aProvidersIds));
+
+            //--- Update existed
+            foreach($aProvidersIds as $iIndex => $iApId)
+                $this->_oDb->updateAutomatorProvider(['provider_id' => (int)$aProvidersValues[$iIndex]], ['id' => (int)$iApId]);
+
+
+            //--- Add new
+            $iProvidersIds = count($aProvidersIds);
+            $iProvidersValues = count($aProvidersValues);
+            if($iProvidersValues > $iProvidersIds) {
+                $aProvidersValues = array_slice($aProvidersValues, $iProvidersIds);
+                foreach($aProvidersValues as $iProvidersValue)
+                    $this->_oDb->insertAutomatorProvider([
+                        'automator_id' => $iId,
+                        'provider_id' => (int)$iProvidersValue,
+                    ]);
+            }
+
             $iProfileId = $oForm->getCleanValue('profile_id');
             if(empty($iProfileId)) {
                 $iProfileId = (int)getParam('sys_agents_profile');
@@ -183,7 +215,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             if(!empty($sSchedulerTime))
                 $aValsToAdd['params'] = json_encode(['scheduler_time' => $sSchedulerTime]);
 
-            if($oForm->update($iId, $aValsToAdd))
+            if($oForm->update($iId, $aValsToAdd) !== false)
                 $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
             else
                 $aRes = ['msg' => _t('_sys_txt_error_occured')];
@@ -278,12 +310,22 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     {
         return false;
     }
+    
+    protected function _delete ($mixedId)
+    {
+        $mixedResult = parent::_delete($mixedId);
+        if($mixedResult)
+            $this->_oDb->deleteAutomatorProviders(['automator_id' => (int)$mixedId]);
+
+        return $mixedResult;
+    }
 
     protected function _getFormEdit($sAction, $aAutomator = [])
     {
         $aForm = $this->_getForm($sAction, $aAutomator);
         $aForm['form_attrs']['action'] .= '&id=' . $aAutomator['id'];
 
+        unset($aForm['inputs']['type']);
         unset($aForm['inputs']['message']);
 
         return $aForm;
@@ -291,6 +333,8 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
     protected function _getForm($sAction, $aAutomator = [])
     {
+        $sJsObject = $this->getPageJsObject();
+
         $sType = isset($aAutomator['type']) ? $aAutomator['type'] : 'event';
 
         if(!empty($aAutomator['params']))
@@ -346,7 +390,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                         'webhook' => _t('_sys_agents_automators_field_type_webhook'),
                     ],
                     'attrs' => [
-                        'onchange' => $this->getPageJsObject() . '.onChangeType(this)',
+                        'onchange' => $this->getPageJsObject() . '.onChangeAutomatorType(this)',
                     ],
                     'required' => '1',
                     'db' => [
@@ -386,6 +430,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                         'style' => $sType != 'scheduler' ? 'display:none' : ''
                     ],
                 ],
+                'providers' => [
+                    'type' => 'custom',
+                    'name' => 'providers',
+                    'caption' => _t('_sys_agents_automators_field_providers'),
+                    'value' => '',
+                ],
                 'message' => [
                     'type' => 'textarea',
                     'name' => 'message',
@@ -408,6 +458,70 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             ),
         );
+        
+        if($aForm['inputs']['providers']) {
+            $oForm = new BxTemplFormView([]);
+
+            $sProviders = 'providers';
+            $aProviders = array_map(function($sTitle) {
+                return _t($sTitle);
+            }, ['' => '_sys_please_select'] + $this->_oDb->getProviderBy(['sample' => 'all_pairs', 'active' => 1]));
+
+            $aTmplVarsProviders = array();
+            if(!empty($aAutomator['providers']) && is_array($aAutomator['providers'])) {
+                foreach($aAutomator['providers'] as $iApId => $iProviderId) {
+                    $aInputSelect = [
+                        'type' => 'select',
+                        'name' => 'providers[]',
+                        'values' => $aProviders,
+                        'value' => (int)$iProviderId,
+                        'attrs' => [
+                            'class' => 'bx-def-margin-sec-top-auto'
+                        ]
+                    ];
+                    $sInput = $oForm->genInput($aInputSelect);
+
+                    $aInputHidden = [
+                        'type' => 'hidden',
+                        'name' => 'providers_ids[]',
+                        'value' => (int)$iApId,
+                    ];
+                    $sInput .= $oForm->genInput($aInputHidden);
+
+                    $aTmplVarsProviders[] = ['js_object' => $sJsObject, 'input_select' => $sInput];
+                }
+            }
+            else  {
+                $aInputSelect = [
+                    'type' => 'select',
+                    'name' => 'providers[]',
+                    'values' => $aProviders,
+                    'value' => '',
+                    'attrs' => [
+                        'class' => 'bx-def-margin-sec-top-auto'
+                    ]
+                ];
+
+                $aTmplVarsProviders = [
+                    ['js_object' => $sJsObject, 'input_select' => $oForm->genInput($aInputSelect)],
+                ];
+            }
+        
+            $aInputButton = [
+                'type' => 'button',
+                'name' => 'providers_add',
+                'value' => _t('_sys_agents_automators_field_providers_add'),
+                'attrs' => [
+                    'class' => 'bx-def-margin-sec-top',
+                    'onclick' => $sJsObject . ".providerAdd(this, '" . $sProviders . "');"
+                ]
+            ];
+
+            $aForm['inputs']['providers']['content'] = $this->_oTemplate->parseHtmlByName('agents_automator_form_providers.html', [
+                'bx_repeat:providers' => $aTmplVarsProviders,
+                'btn_add' => $oForm->genInputButton($aInputButton)
+            ]);
+        }
 
         return $aForm;
     }

@@ -14,6 +14,36 @@ class BxDolAIQuery extends BxDolDb
         parent::__construct();
     }
 
+    static public function getProviderObject($iId)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $aProvider = $oDb->getRow("SELECT * FROM `sys_agents_providers` WHERE `id` = :id", ['id' => $iId]);
+        if(!$aProvider || !is_array($aProvider))
+            return false;
+
+        // get type
+        $aProviderType = $oDb->getRow("SELECT * FROM `sys_agents_provider_types` WHERE `id` = :id", ['id' => $aProvider['type_id']]);
+        if(!$aProviderType || !is_array($aProviderType))
+            return false;
+
+        $aProvider['type'] = $aProviderType;
+
+        // get options
+        $sQuery = "SELECT
+               `tpo`.`name` AS `name`,
+               `tpv`.`value` AS `value`
+            FROM `sys_agents_provider_options` AS `tpo`
+            LEFT JOIN `sys_agents_providers_values` AS `tpv` ON `tpo`.`id` = `tpv`.`option_id` AND `tpv`.`provider_id` = :provider_id
+            WHERE 1 ORDER BY `tpo`.`order`";
+
+        $aProvider['options'] = $this->getAllWithKey($sQuery, 'name', [
+            'provider_id' => $iId
+        ]);
+
+        return $aProvider;
+    }
+
     public function getModelsBy($aParams = [])
     {
         $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
@@ -108,6 +138,19 @@ class BxDolAIQuery extends BxDolDb
                     $sWhereClause .= " AND `taa`.`active`=:active";
                 }
                 break;
+
+            case 'providers_by_id_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'provider_id';
+                $aMethod['params'][3] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sSelectClause = "`tap`.`id`, `tap`.`provider_id`";
+                $sJoinClause = "INNER JOIN `sys_agents_automators_providers` AS `tap` ON `taa`.`id`=`tap`.`automator_id`";
+                $sWhereClause = " AND `taa`.`id`=:id";
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . "
@@ -124,7 +167,187 @@ class BxDolAIQuery extends BxDolDb
 
         return (int)$this->query("UPDATE `sys_agents_automators` SET " . $this->arrayToSQL($aSetClause) . " WHERE " . $this->arrayToSQL($aWhereClause)) > 0;
     }
+
+    public function insertAutomatorProvider($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `sys_agents_automators_providers` SET " . $this->arrayToSQL($aParamsSet)) > 0 ? (int)$this->lastId() : false;
+    }
+
+    public function updateAutomatorProvider($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        return $this->query("UPDATE `sys_agents_automators_providers` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function deleteAutomatorProviders($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `sys_agents_automators_providers` WHERE " . $this->arrayToSQL($aParamsWhere)) > 0;
+    }
     
+    public function deleteAutomatorProvidersById($mixedId)
+    {
+        if(!is_array($mixedId))
+            $mixedId = [$mixedId];
+
+        return (int)$this->query("DELETE FROM `sys_agents_automators_providers` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
+    }
+
+    public function getProviderTypesBy($aParams = [])
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+    	$sWhereClause = "";
+
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause .= " AND `id`=:id";
+                break;
+
+            case 'name':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'name' => $aParams['name']
+                ];
+
+                $sWhereClause .= " AND `name`=:name";
+                break;
+
+            case 'all_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'title';
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT * 
+            FROM `sys_agents_provider_types`
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function getProviderOptionsBy($aParams = [])
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+    	$sWhereClause = "";
+
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause .= " AND `id`=:id";
+                break;
+
+            case 'provider_type_id':
+            	$aMethod['params'][1] = [
+                    'provider_type_id' => $aParams['provider_type_id']
+                ];
+
+                $sWhereClause .= " AND `provider_type_id`=:provider_type_id";
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT * 
+            FROM `sys_agents_provider_options`
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function getProviderBy($aParams = [])
+    {
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+    	$sSelectClause = "`tp`.*";
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause = " AND `tp`.`id`=:id";
+                break;
+
+            case 'options_by_id':
+                $aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sSelectClause = "`tpo`.`id`, `tpo`.`name`, `tpo`.`type`, `tpo`.`title`, `tpo`.`description`, `tpv`.`value`";
+                $sJoinClause = "INNER JOIN `sys_agents_providers_values` AS `tpv` ON `tp`.`id`=`tpv`.`provider_id` INNER JOIN `sys_agents_provider_options` AS `tpo` ON `tpv`.`option_id`=`tpo`.`id`";
+                $sWhereClause = " AND `tp`.`id`=:id";
+                break;
+            
+            case 'all_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'title';
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][3] = [
+                        'active' => $aParams['active']
+                    ];
+
+                    $sWhereClause = " AND `tp`.`active`=:active";
+                }
+                break;
+        }
+
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+                " . $sSelectClause . "
+            FROM `sys_agents_providers` AS `tp` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function insertProviderValue($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `sys_agents_providers_values` SET " . $this->arrayToSQL($aParamsSet)) > 0 ? (int)$this->lastId() : false;
+    }
+
+    public function updateProviderValue($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        $sWhereClause = "1";
+        if(!empty($aParamsWhere) && is_array($aParamsWhere))
+            $sWhereClause = $this->arrayToSQL($aParamsWhere, ' AND ');
+
+        return $this->query("UPDATE `sys_agents_providers_values` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause) !== false;
+    }
+
+    public function deleteProviderValues($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `sys_agents_providers_values` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
+    }
 }
 
 /** @} */

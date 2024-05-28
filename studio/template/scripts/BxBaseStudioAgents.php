@@ -34,10 +34,12 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         $this->aMenuItems = [
             BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'cogs'],
             BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'cogs'],
+            BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'cogs'],
         ];
 
         $this->aGridObjects = [
             BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => 'sys_studio_agents_automators',
+            BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => 'sys_studio_agents_providers',
         ];
     }
 
@@ -97,6 +99,18 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         }
 
         return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS]);
+    }
+
+    protected function getProviders()
+    {
+        $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
+            'sPageUrl' => $this->sSubpageUrl . 'providers',
+            'sActionUrlGrid' => bx_append_url_params(BX_DOL_URL_ROOT . 'grid.php', [
+                'o' => 'sys_studio_agents_providers'
+            ])
+        ]);
+
+        return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS]);
     }
 
     protected function getGrid($sObjectName)
