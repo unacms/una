@@ -37,7 +37,7 @@ class BxDolAIQuery extends BxDolDb
             LEFT JOIN `sys_agents_providers_values` AS `tpv` ON `tpo`.`id` = `tpv`.`option_id` AND `tpv`.`provider_id` = :provider_id
             WHERE 1 ORDER BY `tpo`.`order`";
 
-        $aProvider['options'] = $this->getAllWithKey($sQuery, 'name', [
+        $aProvider['options'] = $oDb->getAllWithKey($sQuery, 'name', [
             'provider_id' => $iId
         ]);
 

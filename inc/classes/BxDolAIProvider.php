@@ -9,6 +9,7 @@
 
 class BxDolAIProvider extends BxDol
 {
+    protected $_oDb;
     protected $_iId;
     protected $_sName;
     protected $_sCaption;
@@ -19,15 +20,15 @@ class BxDolAIProvider extends BxDol
     {
         parent::__construct();
 
-        if(empty($aProvider) || !is_array($aProvider) || strcmp($aProvider['name'], $this->_sName) != 0)
+        if(empty($aProvider) || !is_array($aProvider) || strcmp($aProvider['type']['name'], $this->_sName) != 0)
             $this->_log("Unexpected value provided for the credentials");
 
         $this->_oDb = new BxDolAIQuery();
 
         $this->_iId = (int)$aProvider['id'];
-        $this->_sName = $aProvider['name'];
-        $this->_sCaption = _t($aProvider['caption']);
-        $this->_sPrefix = $aProvider['option_prefix'];
+        $this->_sName = $aProvider['type']['name'];
+        $this->_sCaption = _t($aProvider['title']);
+        $this->_sPrefix = $aProvider['type']['option_prefix'];
 
         $this->_aOptions = [];
         if(!empty($aProvider['options']) && is_array($aProvider['options']))
@@ -47,18 +48,18 @@ class BxDolAIProvider extends BxDol
             return $GLOBALS['bxDolClasses'][$sPrefix . $iId];
 
         $aProvider = BxDolAIQuery::getProviderObject($iId);
-        if (!$aProvider || !is_array($aProvider))
+        if(!$aProvider || !is_array($aProvider))
             return false;
 
         $sClass = 'BxDolAIProvider';
-        if(!empty($aObject['class_name'])) {
-            $sClass = $aObject['class_name'];
-            if(!empty($aObject['class_file']))
-                require_once(BX_DIRECTORY_PATH_ROOT . $aObject['class_file']);
+        if(!empty($aProvider['type']['class_name'])) {
+            $sClass = $aProvider['type']['class_name'];
+            if(!empty($aProvider['type']['class_file']))
+                require_once(BX_DIRECTORY_PATH_ROOT . $aProvider['type']['class_file']);
         }
 
         $o = new $sClass($aProvider);
-        return ($GLOBALS['bxDolClasses'][$sPrefix . $sObject] = $o);
+        return ($GLOBALS['bxDolClasses'][$sPrefix . $iId] = $o);
     }
 
     public function initOptions($aOptions)
@@ -74,12 +75,19 @@ class BxDolAIProvider extends BxDol
         return isset($this->_aOptions[$sName]) ? $this->_aOptions[$sName]['value'] : '';
     }
 
+    public function processActionWebhook()
+    {
+        // Should be overwritten to process webhooks.
+    }
+
+    public function call($sRequest, $aParams, $sMethod = 'post-json', $aHeaders = [])
+    {
+        // Should be overwritten to process calls.
+    }
+
     /**
      * Internal methods.
      */
-    protected function _call($sRequest, $aParams, $sMethod = 'post-json', $aHeaders = [])
-    {}
-
     protected function _log($sMessage, $bUseLog = false)
     {
         if($bUseLog) {

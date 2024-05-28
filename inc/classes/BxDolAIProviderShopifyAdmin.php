@@ -38,11 +38,11 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
     protected $_sEndpoint;
     protected $_sStorefront;
 
-    public function __construct($iProfile, $aSource)
+    public function __construct($aProvider)
     {
         $this->_sName = self::$NAME;
 
-        parent::__construct($iProfile, $aSource);
+        parent::__construct($aProvider);
 
         $this->_sShopDomain = $this->getOption('shop_domain');
         $this->_sAccessToken = $this->getOption('access_token');
@@ -53,9 +53,7 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
 
     public function getEntry($sId)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $sProduct = $this->_call('products/' . $sId . '.json', [
+        $sProduct = $this->call('products/' . $sId . '.json', [
             'fields' => 'id,title,handle,body_html,tags,variants',
         ], 'get');
         
@@ -69,10 +67,12 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
         return $aProduct['product'];
     }
 
-    /**
-     * Internal methods.
-     */
-    protected function _call($sRequest, $aParams, $sMethod = 'post-json', $aHeaders = [])
+    public function processActionWebhook()
+    {
+        echo 'TODO: Webhook processing here';
+    }
+
+    public function call($sRequest, $aParams, $sMethod = 'post-json', $aHeaders = [])
     {
         $aHeaders[] = 'Content-Type: application/json';
         if(!empty($this->_sAccessToken))
@@ -80,9 +80,20 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
         else
             $aHeaders[] = 'Authorization: Basic ' . base64_encode($this->_sApiKey . ':' . $this->_sApiSecretKey);
 
-        return bx_file_get_contents($this->_sEndpoint . $sRequest, $aParams, $sMethod, $aHeaders);
+        $sResponse = bx_file_get_contents($this->_sEndpoint . $sRequest, $aParams, $sMethod, $aHeaders);
+        if(empty($sResponse))
+            return false;
+        
+        $aResponse = json_decode($sResponse, true);
+        if(empty($aResponse) || !is_array($aResponse))
+            return false;
+
+        return $aResponse;
     }
-    
+
+    /**
+     * Internal methods.
+     */    
     protected function _dateI2S($iTimestamp)
     {
         return date("Y-m-d", $iTimestamp);

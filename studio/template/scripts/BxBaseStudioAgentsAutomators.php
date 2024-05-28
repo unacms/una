@@ -180,19 +180,22 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $aValsToAdd = [];
 
             $aProvidersIds = $oForm->getCleanValue('providers_ids');
+            $bProvidersIds = !empty($aProvidersIds) && is_array($aProvidersIds);
             $aProvidersValues = $oForm->getCleanValue('providers');
+            $bProvidersValues = !empty($aProvidersValues) && is_array($aProvidersValues);
 
             //--- Remove deleted
-            $this->_oDb->deleteAutomatorProvidersById(array_diff(array_keys($aAutomator['providers']), $aProvidersIds));
+            if(!empty($aAutomator['providers']) && is_array($aAutomator['providers']))
+                $this->_oDb->deleteAutomatorProvidersById(array_diff(array_keys($aAutomator['providers']), $aProvidersIds));
 
             //--- Update existed
-            foreach($aProvidersIds as $iIndex => $iApId)
-                $this->_oDb->updateAutomatorProvider(['provider_id' => (int)$aProvidersValues[$iIndex]], ['id' => (int)$iApId]);
-
+            if($bProvidersIds)
+                foreach($aProvidersIds as $iIndex => $iApId)
+                    $this->_oDb->updateAutomatorProvider(['provider_id' => (int)$aProvidersValues[$iIndex]], ['id' => (int)$iApId]);
 
             //--- Add new
-            $iProvidersIds = count($aProvidersIds);
-            $iProvidersValues = count($aProvidersValues);
+            $iProvidersIds = $bProvidersIds ? count($aProvidersIds) : 0;
+            $iProvidersValues = $bProvidersValues ? count($aProvidersValues) : 0;
             if($iProvidersValues > $iProvidersIds) {
                 $aProvidersValues = array_slice($aProvidersValues, $iProvidersIds);
                 foreach($aProvidersValues as $iProvidersValue)
