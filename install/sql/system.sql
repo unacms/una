@@ -6687,7 +6687,7 @@ CREATE TABLE `sys_std_pages_widgets` (
 -- Dumping data for table `sys_std_pages`
 --
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'home', '_adm_page_cpt_home', '_adm_page_cpt_home', 'wi-home.svg');
+(3, 'home', '_adm_page_cpt_home', '_adm_page_cpt_home', 'bc-home.svg');
 SET @iIdHome = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

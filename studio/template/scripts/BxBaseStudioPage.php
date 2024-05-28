@@ -133,7 +133,7 @@ class BxBaseStudioPage extends BxDolStudioPage
 
         $aMenuItems['page'] = [
             'name' => 'page',
-            'icon' => $this->aPage['icon'],
+            'icon' => '', //$this->aPage['icon'],
             'link' => $this->getPageUrl(),
             'title' => _t($this->aPage['caption'])
         ];

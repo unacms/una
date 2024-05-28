@@ -31,7 +31,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         parent::__construct();
 
         $this->_oDb = new BxDolAIQuery();
-        $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
+        $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . getParam('sys_agents_ai_inst_path');
         $this->_iProfileId = (int)getParam('sys_profile_bot'); 
 
         $this->_aExcludeAlertUnits = [
