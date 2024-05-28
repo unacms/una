@@ -581,7 +581,10 @@ class BxBaseCmtsServices extends BxDol
             
             // add view (form + new comment)
             if($oForm['form']->isSubmittedAndValid()){
-               $aParams['insert'] = $aParams['order_way'] == 'desc' ? 'before' : 'after';
+                $sInsert = $aParams['order_way'] == 'desc' ? 'after' : 'before';
+                if (bx_get('cmt_parent_id') > 0)
+                     $sInsert = 'after';
+                $aParams['insert'] = $sInsert;
                 $aParams['comment_id'] = $oForm['res'];
                 $bIsList = true;
                 $aForm['inputs']['cmt_parent_id']['value'] = 0;
