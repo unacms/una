@@ -178,30 +178,23 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $mixedResult = parent::onPostAfter($iCmtId, $aDp);
         if($this->_bAuto || $mixedResult === false) 
             return $mixedResult;
-        
-        $iObjId = (int)$this->getId();
-        
-        $aAutomator = $this->_oAI->getAutomator($iObjId, true);
 
-        $aMessages = [
-            ['role' => 'system', 'content' => $this->_oAI->getAutomatorInstructions($aAutomator['type'], true)],
-        ];
+        $iObjId = (int)$this->getId();
+        $aAutomator = $this->_oAI->getAutomator($iObjId, true);
 
         $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
         if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
             $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
 
-        foreach($aComments as $aComment) {
-            $bAuthorAi = (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi;
-
+        $aMessages = [];
+        foreach($aComments as $aComment)
             $aMessages[] = [
-                'role' => $bAuthorAi ? 'assistant' : 'user',
-                'content' => $aComment['cmt_text'] . ($bAuthorAi ? '' : ' return only function, without explanation or false if you havn`t enougth data')
+                'ai' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi,
+                'content' => $aComment['cmt_text']
             ];
-        }
 
-        $sResponse = $this->_oAI->chat($aAutomator['model_url'], $aAutomator['model_model'], $aAutomator['model_key'], $aAutomator['model_params'], $aMessages);
-        if($sResponse != 'false') {
+        $oAIModel = $this->_oAI->getModel($aAutomator['model_id']);
+        if(($sResponse = $oAIModel->getResponse($aAutomator['type'], $aMessages)) !== false) {
             $mixedResultAuto = $this->addAuto([
                 'cmt_author_id' => $this->_iProfileIdAi,
                 'cmt_parent_id' => 0,

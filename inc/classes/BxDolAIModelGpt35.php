@@ -24,21 +24,28 @@ class BxDolAIModelGpt35 extends BxDolAIModel
         $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
     }
 
-    public function getResponse($sType, $sMessage, $bInit = false)
+    public function getResponse($sType, $mixedMessage, $bInit = false)
     {
         $aMessages = [];
 
         if($bInit)
             $aMessages = [
-                ['role' => 'system', 'content' => $this->_getInstructions($sType . '_init')],
-                ['role' => 'user', 'content' => $sMessage]
+                ['role' => 'system', 'content' => $this->_getInstructions($sType . '_init')]
             ];
         else
             $aMessages = [
-                ['role' => 'system', 'content' => $this->_getInstructions($sType, true)],
-                ['role' => 'user', 'content' => $sMessage]
+                ['role' => 'system', 'content' => $this->_getInstructions($sType, true)]
             ];
         
+        if(is_array($mixedMessage)) {
+            foreach($mixedMessage as $aMessage)
+                $aMessages[] = [
+                    'role' => $aMessage['ai'] ? 'assistant' : 'user',
+                    'content' => $aMessage['content'] . (!$aMessage['ai'] ? ' return only function, without explanation or false if you havn`t enougth data' : '')
+                ];
+        }
+        else
+            $aMessages[] = ['role' => 'user', 'content' => $mixedMessage];
 
         $sResponse = $this->call($aMessages);
         if($sResponse == 'false')
