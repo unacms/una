@@ -6301,8 +6301,8 @@ CREATE TABLE IF NOT EXISTS `sys_agents_models` (
 );
 
 INSERT INTO `sys_agents_models`(`name`, `title`, `key`, `params`, `class_name`, `class_file`) VALUES
-('gpt-3.5-turbo', 'GPT-3.5-TURBO', '', '{"temperature":0.1}', 'BxDolAIModelGpt35', ''),
-('gpt-4o', 'GPT-4.O', '', '{"temperature":0.1}', 'BxDolAIModelGpt40', '');
+('gpt-3.5-turbo', 'GPT-3.5-TURBO', '', '{"call":{"temperature":0.1}}', 'BxDolAIModelGpt35', ''),
+('gpt-4o', 'GPT-4.O', '', '{"call":{},"assistants":{"event_init":"asst_HcEyaghqWZefkAyoEML40joY","event":"asst_wqaXtKjcsBKceMtJ2NxID2LT","scheduler_init":"asst_kEbDH1hUy2Y45nOKk9jaSTB8","scheduler":"asst_M6zOv4osQwZmRItaiYptjjOS"}}', 'BxDolAIModelGpt40', '');
 
 CREATE TABLE IF NOT EXISTS `sys_agents_automators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

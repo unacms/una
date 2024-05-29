@@ -106,7 +106,7 @@ class BxDolAIQuery extends BxDolDb
                     'id' => $aParams['id']
                 ];
 
-                $sSelectClause .= ", `tam`.`name` AS `model_name`, `tam`.`url` AS `model_url`, `tam`.`key` AS `model_key`, `tam`.`model` AS `model_model`, `tam`.`params` AS `model_params`";
+                $sSelectClause .= ", `tam`.`name` AS `model_name`, `tam`.`title` AS `model_title`, `tam`.`key` AS `model_key`, `tam`.`params` AS `model_params`";
                 $sJoinClause .= " LEFT JOIN `sys_agents_models` AS `tam` ON `taa`.`model_id`=`tam`.`id`";
                 $sWhereClause .= " AND `taa`.`id`=:id";
                 break;

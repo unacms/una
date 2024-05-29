@@ -58,17 +58,17 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $oAIModel = BxDolAI::getInstance()->getModelObject($iModel);
 
             $bIsValid = true;
+            $aResponseInit = [];
             switch($sType) {
                 case BX_DOL_AI_AUTOMATOR_EVENT:
-                    if(($sResponse = $oAIModel->getResponse($sType, $sMessage, true)) !== false) {
-                        $aResponse = json_decode($sResponse, true);
+                    if(($aResponseInit = $oAIModel->getResponseInit($sType, $sMessage)) !== false) {
+                        $oAIModel->setParams($aResponseInit['params']);
 
-                        $aValsToAdd = array_merge($aValsToAdd, [
-                            'alert_unit' => $aResponse['alert_unit'],
-                            'alert_action' => $aResponse['alert_action'],
-                            'params' => json_encode(['trigger' => $aResponse['trigger']])
-                        ]);
-                        $sMessageAdd = $aResponse['trigger'];
+                        $sMessageAdd = $aResponseInit['params']['trigger'];
+
+                        $aValsToAdd = array_merge($aValsToAdd, $aResponseInit);
+                        if(!empty($aValsToAdd['params']) && is_array($aValsToAdd['params']))
+                            $aValsToAdd['params'] = json_encode($aValsToAdd['params']);
                     }
                     else {
                         $oForm->aInputs['message']['error'] = _t('_sys_agents_automators_err_event_not_found');
@@ -77,8 +77,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     break;
 
                 case BX_DOL_AI_AUTOMATOR_SCHEDULER:
-                    if(($sResponse = $oAIModel->getResponse($sType, $sMessage, true)) !== false) {
-                        $aValsToAdd['params'] = json_encode(['scheduler_time' => $sResponse]);
+                    if(($aResponseInit = $oAIModel->getResponseInit($sType, $sMessage)) !== false) {
+                        $oAIModel->setParams($aResponseInit['params']);
+
+                        $aValsToAdd = array_merge($aValsToAdd, $aResponseInit);
+                        if(!empty($aValsToAdd['params']) && is_array($aValsToAdd['params']))
+                            $aValsToAdd['params'] = json_encode($aValsToAdd['params']);
                     }
                     else {
                         $oForm->aInputs['message']['error'] = _t('_sys_agents_automators_err_event_not_found');
@@ -88,7 +92,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             }
 
             if($bIsValid) {
-                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sMessageAdd)) !== false) {
+                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sMessageAdd, $oAIModel->getParams())) !== false) {
                     $sMessageResponse = $sResponse;
                 }
                 else {
@@ -348,7 +352,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     'name' => 'model_id',
                     'caption' => _t('_sys_agents_automators_field_model_id'),
                     'info' => '',
-                    'value' => isset($aAutomator['model_id']) ? $aAutomator['model_id'] : 0,
+                    'value' => isset($aAutomator['model_id']) ? $aAutomator['model_id'] : BxDolAI::getInstance()->getDefaultModel(),
                     'values' => $this->_oDb->getModelsBy(['sample' => 'all_pairs']),
                     'required' => '1',
                     'db' => [

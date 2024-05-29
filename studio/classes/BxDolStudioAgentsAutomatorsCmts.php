@@ -193,8 +193,8 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
                 'content' => $aComment['cmt_text']
             ];
 
-        $oAIModel = $this->_oAI->getModel($aAutomator['model_id']);
-        if(($sResponse = $oAIModel->getResponse($aAutomator['type'], $aMessages)) !== false) {
+        $oAIModel = $this->_oAI->getModelObject($aAutomator['model_id']);
+        if(($sResponse = $oAIModel->getResponse($aAutomator['type'], $aMessages, $aAutomator['params'])) !== false) {
             $mixedResultAuto = $this->addAuto([
                 'cmt_author_id' => $this->_iProfileIdAi,
                 'cmt_parent_id' => 0,

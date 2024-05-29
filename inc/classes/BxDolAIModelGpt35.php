@@ -24,18 +24,49 @@ class BxDolAIModelGpt35 extends BxDolAIModel
         $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
     }
 
-    public function getResponse($sType, $mixedMessage, $bInit = false)
+    public function getResponseInit($sType, $sMessage, $aParams = [])
     {
-        $aMessages = [];
+        $aMessages = [
+            ['role' => 'system', 'content' => $this->_getInstructions($sType . '_init')],
+            ['role' => 'user', 'content' => $sMessage]
+        ];
 
-        if($bInit)
-            $aMessages = [
-                ['role' => 'system', 'content' => $this->_getInstructions($sType . '_init')]
-            ];
-        else
-            $aMessages = [
-                ['role' => 'system', 'content' => $this->_getInstructions($sType, true)]
-            ];
+        $sResponse = $this->call($aMessages);
+        if($sResponse == 'false')
+            return false;
+
+        $mixedResult = [];
+        switch($sType) {
+            case BX_DOL_AI_AUTOMATOR_EVENT:
+                $aResponse = json_decode($sResponse, true);
+
+                $mixedResult = [
+                    'alert_unit' => $aResponse['alert_unit'],
+                    'alert_action' => $aResponse['alert_action'],
+                    'params' => [
+                        'trigger' => $aResponse['trigger']
+                    ]
+                ];
+                break;
+
+            case BX_DOL_AI_AUTOMATOR_SCHEDULER:
+                $mixedResult = [
+                    'params' => [
+                        'scheduler_time' => $sResponse
+                    ]
+                ];
+                break;
+        }
+        
+
+        return $mixedResult;
+    }
+
+    public function getResponse($sType, $mixedMessage, $aParams = [])
+    {
+        $aMessages = [
+            ['role' => 'system', 'content' => $this->_getInstructions($sType, true)]
+        ];
         
         if(is_array($mixedMessage)) {
             foreach($mixedMessage as $aMessage)
@@ -61,7 +92,8 @@ class BxDolAIModelGpt35 extends BxDolAIModel
             'messages' => $aMessages
         ];
 
-        $aData = array_merge($aData, $this->_sParams);
+        if(!empty($this->_aParams['call']) && is_array($this->_aParams['call']))
+            $aData = array_merge($aData, $this->_aParams['call']);
         if(!empty($aParams) && is_array($aParams))
             $aData = array_merge($aData, $aParams);
 

@@ -62,12 +62,17 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_iProfileId;
     }
+    
+    public function getDefaultModel()
+    {
+        return (int)getParam('sys_agents_model');
+    }
 
     public function getModels()
     {
         return $aModel = $this->_oDb->getModelsBy(['sample' => 'all_pairs']);
     }
-    
+
     public function getModel($iId)
     {
         $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $iId]);
@@ -76,11 +81,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $aModel;
     }
-    
+
     public function getModelObject($iId = 0)
     {
         if(!$iId)
-            $iId = (int)getParam('sys_agents_model');
+            $iId = $this->getDefaultModel();
         if(!$iId)
             return false;
 

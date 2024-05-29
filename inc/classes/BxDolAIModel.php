@@ -14,7 +14,7 @@ class BxDolAIModel extends BxDol
     protected $_sName;
     protected $_sCaption;
     protected $_sKey;
-    protected $_sParams;
+    protected $_aParams;
 
     public function __construct($aModel)
     {
@@ -29,7 +29,7 @@ class BxDolAIModel extends BxDol
         $this->_sName = $aModel['name'];
         $this->_sCaption = _t($aModel['title']);
         $this->_sKey = $aModel['key'];
-        $this->_sParams = !empty($aModel['params']) ? json_decode($aModel['params'], true) : [];
+        $this->_aParams = !empty($aModel['params']) ? json_decode($aModel['params'], true) : [];
     }
 
     /**
@@ -58,15 +58,28 @@ class BxDolAIModel extends BxDol
         $o = new $sClass($aModel);
         return ($GLOBALS['bxDolClasses'][$sPrefix . $iId] = $o);
     }
-
-    public function getResponse($sType, $aMessage, $bInit = false)
+    
+    public function getParams()
     {
-        // Should be overwritten to get call response.
+        return $this->_aParams;
     }
 
-    public function call($aMessages, $aParams = [])
+    public function setParams($aParams)
     {
-        // Should be overwritten to process a call.
+        if(empty($aParams) || !is_array($aParams))
+            return;
+
+        $this->_aParams = array_merge($this->_aParams, $aParams);
+    }
+
+    public function getResponseInit($sType, $aMessage, $aParams = [])
+    {
+        // Should be overwritten to get init call response.
+    }
+
+    public function getResponse($sType, $aMessage, $aParams = [])
+    {
+        // Should be overwritten to get call response.
     }
 
     /**
