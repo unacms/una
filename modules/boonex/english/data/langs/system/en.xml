@@ -1758,7 +1758,7 @@
     <string name="_adm_stg_cpt_option_sys_api_conn_in_prof_units"><![CDATA[Use connections lists in profiles/groups units]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_email"><![CDATA[Site main URL in email notifications]]></string>
     <string name="_adm_stg_cpt_option_sys_api_url_root_push"><![CDATA[Site main URL in push notifications]]></string>
-    <string name="_adm_stg_cpt_option_sys_agents_ai_inst_path"><![CDATA[Path to a folder with AI instructions files]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_model"><![CDATA[Default model]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_url"><![CDATA[Endpoint URL]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Profile]]></string>   
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Viewport meta tag]]></string>

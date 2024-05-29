@@ -14,6 +14,17 @@ class BxDolAIQuery extends BxDolDb
         parent::__construct();
     }
 
+    static public function getModelObject($iId)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $aModel = $oDb->getRow("SELECT * FROM `sys_agents_models` WHERE `id` = :id", ['id' => $iId]);
+        if(!$aModel || !is_array($aModel))
+            return false;
+
+        return $aModel;
+    }
+
     static public function getProviderObject($iId)
     {
         $oDb = BxDolDb::getInstance();
@@ -59,19 +70,10 @@ class BxDolAIQuery extends BxDolDb
                 $sWhereClause .= " AND `id`=:id";
                 break;
 
-            case 'name':
-            	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = [
-                    'name' => $aParams['name']
-                ];
-
-                $sWhereClause .= " AND `name`=:name";
-                break;
-
             case 'all_pairs':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
-                $aMethod['params'][2] = 'name';
+                $aMethod['params'][2] = 'title';
                 break;
         }
 

@@ -824,7 +824,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_agents_ai_inst_path', '_adm_stg_cpt_option_sys_agents_ai_inst_path', 'ai/instructions/', 'digit', '', '', '', 0),
+(@iCategoryId, 'sys_agents_model', '_adm_stg_cpt_option_sys_agents_model', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:24:"get_options_agents_model";s:5:"class";s:13:"TemplServices";}', '', '', 0);
 (@iCategoryId, 'sys_agents_url', '_adm_stg_cpt_option_sys_agents_url', '', 'digit', '', '', '', 10),
 (@iCategoryId, 'sys_agents_profile', '_adm_stg_cpt_option_sys_agents_profile', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:26:"get_options_agents_profile";s:5:"class";s:13:"TemplServices";}', '', '', 20);
 
@@ -6290,16 +6290,19 @@ CREATE TABLE `sys_api_origins` (
 
 CREATE TABLE IF NOT EXISTS `sys_agents_models` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL default '',
-  `url` varchar(255) NOT NULL default '',
+  `name` varchar(32) NOT NULL default '',
+  `title` varchar(64) NOT NULL default '',
   `key` varchar(64) NOT NULL default '',
-  `model` varchar(32) NOT NULL default '',
   `params` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `class_name` varchar(128) NOT NULL default '',
+  `class_file` varchar(255) NOT NULL  default '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name`(`name`)
 );
 
-INSERT INTO `sys_agents_models`(`name`, `url`, `key`, `model`, `params`) VALUES
-('default', '', '', '', '');
+INSERT INTO `sys_agents_models`(`name`, `title`, `key`, `params`, `class_name`, `class_file`) VALUES
+('gpt-3.5-turbo', 'GPT-3.5-TURBO', '', '{"temperature":0.1}', 'BxDolAIModelGpt35', ''),
+('gpt-4o', 'GPT-4.O', '', '{"temperature":0.1}', 'BxDolAIModelGpt40', '');
 
 CREATE TABLE IF NOT EXISTS `sys_agents_automators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

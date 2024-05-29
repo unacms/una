@@ -18,6 +18,7 @@ define('BX_DOL_AI_AUTOMATOR_STATUS_READY', 'ready');
 class BxDolAI extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oDb;
+    protected $_sPathInst;
     protected $_iProfileId;
     
     protected $_aExcludeAlertUnits;
@@ -30,7 +31,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         parent::__construct();
 
         $this->_oDb = new BxDolAIQuery();
-
+        $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
         $this->_iProfileId = (int)getParam('sys_profile_bot'); 
 
         $this->_aExcludeAlertUnits = [
@@ -63,9 +64,13 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return $this->_iProfileId;
     }
 
-    public function getModels()
+    public function getAutomatorInstructions($sType, $bIncludeCommon = false)
     {
-        return $aModel = $this->_oDb->getModelsBy(['sample' => 'all_pairs']);
+        $sResult = file_get_contents($this->_sPathInst . $sType . '.html');
+        if($bIncludeCommon)
+            $sResult .= file_get_contents($this->_sPathInst. 'common.html');
+
+        return $sResult;
     }
     
     public function getModel($iId)
@@ -76,16 +81,6 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $aModel;
     }
-    
-    public function getModelObject($iId = 0)
-    {
-        if(!$iId)
-            $iId = (int)getParam('sys_agents_model');
-        if(!$iId)
-            return false;
-
-        return BxDolAIModel::getObjectInstance($iId);
-    }   
 
     public function getAutomator($iId, $bFullInfo = false)
     {
@@ -130,7 +125,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         if(!empty($aParams) && is_array($aParams))
             $aData = array_merge($aData, $aParams);
 
-        $sRv = bx_file_get_contents($sEndpoint, $aData, "post-json", ["Authorization: Bearer ".$sApiKey, 'Content-Type: application/json', 'OpenAI-Beta: assistants=v1']);
+        $sRv = bx_file_get_contents($sEndpoint, $aData, "post-json", ["Authorization: Bearer ".$sApiKey, 'Content-Type: application/json', 'OpenAI-Beta: assistants=v2']);
         $aRv = json_decode($sRv, true);
 
         if(isset($aRv['error'])) {

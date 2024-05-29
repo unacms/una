@@ -55,21 +55,14 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $sMessageAdd = '';
             $sMessageResponse = '';
 
-            $oAI = BxDolAI::getInstance();
-
-            $aMessages = [
-                ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($sType . '_init')],
-                ['role' => 'user', 'content' => $sMessage]
-            ];
-
-            $aModel = $oAI->getModel($iModel);
+            $oAIModel = BxDolAI::getInstance()->getModelObject($iModel);
 
             $bIsValid = true;
             switch($sType) {
                 case BX_DOL_AI_AUTOMATOR_EVENT:
-                    $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
-                    if($sResponse != 'false') {
+                    if(($sResponse = $oAIModel->getResponse($sType, $sMessage, true)) !== false) {
                         $aResponse = json_decode($sResponse, true);
+
                         $aValsToAdd = array_merge($aValsToAdd, [
                             'alert_unit' => $aResponse['alert_unit'],
                             'alert_action' => $aResponse['alert_action'],
@@ -84,8 +77,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     break;
 
                 case BX_DOL_AI_AUTOMATOR_SCHEDULER:
-                    $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
-                    if($sResponse != 'false') {
+                    if(($sResponse = $oAIModel->getResponse($sType, $sMessage, true)) !== false) {
                         $aValsToAdd['params'] = json_encode(['scheduler_time' => $sResponse]);
                     }
                     else {
@@ -96,13 +88,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             }
 
             if($bIsValid) {
-                $aMessages = [
-                    ['role' => 'system', 'content' => $oAI->getAutomatorInstructions($sType, true)],
-                    ['role' => 'user', 'content' => $sMessage . $sMessageAdd]
-                ];
-
-                $sResponse = $oAI->chat($aModel['url'], $aModel['model'], $aModel['key'], $aModel['params'], $aMessages);
-                if($sResponse != 'false') {
+                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sMessageAdd)) !== false) {
                     $sMessageResponse = $sResponse;
                 }
                 else {
@@ -249,7 +235,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     {
         $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $mixedValue]);
         if(!empty($aModel) && is_array($aModel))
-            $mixedValue = $aModel['name'];
+            $mixedValue = $aModel['title'];
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
