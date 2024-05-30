@@ -970,7 +970,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 }
 
                 if(isset($aParams['params']['validate']) && !is_array($aParams['params']['validate']))
-                    $aParams['params']['validate'] = explode(',', $aParams['params']['validate']);
+                    $aParams['params']['validate'] = !empty($aParams['params']['validate']) ? explode(',', $aParams['params']['validate']) : [];
             }
         }
 

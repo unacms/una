@@ -5648,7 +5648,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams = $this->_prepareParams($aBrowseParams);
         $this->_iOwnerId = $aParams['owner_id'];
 
-        if(!empty($aParams['validate']) && is_array($aParams['validate'])) {
+        if(isset($aParams['validate']) && is_array($aParams['validate'])) {
             $iSlice = count($aParams['validate']);
 
             $aEventsIds = $this->_oDb->getEvents(array_merge($aParams, [
@@ -6176,8 +6176,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['viewer_id']) || (int)$aParams['viewer_id'] != $iViewerId)
             $aParams['viewer_id'] = $iViewerId;
 
-        if(!empty($aParams['validate']) && is_string($aParams['validate']))
-            $aParams['validate'] = explode(',', $aParams['validate']);
+        if(isset($aParams['validate']) && !is_array($aParams['validate']))
+            $aParams['validate'] = !empty($aParams['validate']) ? explode(',', $aParams['validate']) : [];
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
@@ -6225,8 +6225,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$aParams['viewer_id'] || $aParams['viewer_id'] != $iViewerId)
             $aParams['viewer_id'] = $iViewerId;
 
-        if(!empty($aParams['validate']) && is_string($aParams['validate']))
-            $aParams['validate'] = explode(',', $aParams['validate']);
+        if(isset($aParams['validate']) && !is_array($aParams['validate']))
+            $aParams['validate'] = !empty($aParams['validate']) ? explode(',', $aParams['validate']) : [];
 
         $aParams = array_merge($aParams, [
             'browse' => 'list',

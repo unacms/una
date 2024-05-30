@@ -767,7 +767,9 @@ class BxDolSearchResult implements iBxDolReplaceable
                 return $aItem['id'];
             }, $aData);
 
-            $aData = sort($aIds) == sort($this->_aParams['validate']) ? 'valid' : 'invalid';
+            sort($aIds);
+            sort($this->_aParams['validate']);
+            $aData = $aIds == $this->_aParams['validate'] ? 'valid' : 'invalid';
         }
 
         /**
