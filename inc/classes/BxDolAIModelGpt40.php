@@ -35,16 +35,8 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         $sThreadId = $aResponse['id'];
 
-        $aResponse = $this->callRuns($sThreadId, [
-            'assistant_id' => $this->_getAssistantId($sType . '_init')
-        ]);
-
-        $sRunId = $aResponse['id'];
-        while($aResponse['status'] != 'completed') {
-            sleep(2);
-
-            $aResponse = $this->callRunsCheck($sThreadId, $sRunId);
-        }
+        if(!$this->callRuns($sThreadId, ['assistant_id' => $this->_getAssistantId($sType . '_init')]))
+            return false;
 
         $sResponse = $this->getMessages($sThreadId);
 
@@ -87,16 +79,8 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if(!$this->callMessages($sThreadId, ['role' => 'user', 'content' => $sMessage]))
             return false;
 
-        $aResponse = $this->callRuns($sThreadId, [
-            'assistant_id' => $this->_getAssistantId($sType)
-        ]);
-
-        $sRunId = $aResponse['id'];
-        while($aResponse['status'] != 'completed') {
-            sleep(2);
-
-            $aResponse = $this->callRunsCheck($sThreadId, $sRunId);
-        }
+        if(!$this->callRuns($sThreadId, ['assistant_id' => $this->_getAssistantId($sType)]))
+            return false;
 
         return $this->getMessages($sThreadId);
     }
@@ -121,14 +105,20 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if(!empty($aParams) && is_array($aParams))
             $aData = array_merge($aData, $aParams);
 
-        return $this->_call(sprintf($this->_sEndpointRuns, $sThreadId), $aData);
+        $aResponse = $this->_call(sprintf($this->_sEndpointRuns, $sThreadId), $aData);
+        if($aResponse !== false && isset($aResponse['id'])) {
+            $sRunId = $aResponse['id'];
+
+            while($aResponse['status'] != 'completed') {
+                sleep(2);
+
+                $aResponse = $this->_call(sprintf($this->_sEndpointRunsCheck, $sThreadId, $sRunId), [], 'get');
+            }
+        }
+
+        return $aResponse;
     }
-    
-    public function callRunsCheck($sThreadId, $sRunId)
-    {
-        return $this->_call(sprintf($this->_sEndpointRunsCheck, $sThreadId, $sRunId), [], 'get');
-    }
-    
+
     public function callMessages($sThreadId, $aParams = [])
     {
         $aData = [];
