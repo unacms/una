@@ -110,16 +110,16 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $aAutomator;
     }
-    
+
     public function getAutomatorInstruction($sType, $aParams = [])
     {
         $mixedResult = '';
 
-        switch($sType){
+        switch($sType) {
             case 'providers':
                 $aProviders = $this->_oDb->getProviderBy(['sample' => 'ids', 'ids' => $aParams]);
                 if(!empty($aProviders) && is_array($aProviders)) {
-                    $mixedResult = "avaliable proividers list:";
+                    $mixedResult = "\n avaliable proividers list:";
                     foreach($aProviders as $aProvider)
                         $mixedResult .= "\n- " . $aProvider['provider_name'] . ", \$iProviderId=" . $aProvider['id'];
                 }
@@ -128,7 +128,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $mixedResult;
     }
-    
+
     public function getAutomatorsEvent($sUnit, $sAction)
     {
         if(in_array($sUnit, $this->_aExcludeAlertUnits))

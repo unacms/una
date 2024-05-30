@@ -237,7 +237,7 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
                     'value' => isset($aProvider['type_id']) ? $aProvider['type_id'] : 0,
                     'values' => array_map(function($sTitle) {
                         return _t($sTitle);
-                    }, ['' => '_sys_please_select'] + $this->_oDb->getProviderTypesBy(['sample' => 'all_pairs'])),
+                    }, ['' => '_sys_please_select'] + $this->_oDb->getProviderTypesBy(['sample' => 'all_pairs', 'active' => 1])),
                     'required' => '1',
                     'db' => [
                         'pass' => 'Int',

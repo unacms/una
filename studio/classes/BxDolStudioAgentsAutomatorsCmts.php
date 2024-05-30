@@ -246,6 +246,11 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $aResult->aInputs['cmt_text']['db']['pass'] = 'xss';
         return $aResult;
     }
+    
+    protected function _prepareTextForOutput($s, $iCmtId = 0)
+    {
+        return nl2br(parent::_prepareTextForOutput($s, $iCmtId));
+    }
 }
 
 /** @} */

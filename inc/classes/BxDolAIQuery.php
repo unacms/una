@@ -230,6 +230,14 @@ class BxDolAIQuery extends BxDolDb
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'title';
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][3] = [
+                        'active' => $aParams['active']
+                    ];
+
+                    $sWhereClause = " AND `active`=:active";
+                }
                 break;
         }
 
