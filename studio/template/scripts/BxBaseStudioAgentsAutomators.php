@@ -48,14 +48,19 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             if(!empty($sSchedulerTime))
                 $aValsToAdd['params'] = json_encode(['scheduler_time' => $sSchedulerTime]);
 
+            $oAI = BxDolAI::getInstance();
+  
             $iModel = $oForm->getCleanValue('model_id');
             $sType = $oForm->getCleanValue('type');
+            $aProviders = $oForm->getCleanValue('providers');
             $sMessage = $oForm->getCleanValue('message');
+            if(!empty($aProviders) && is_array($aProviders))
+                $sMessage .= $oAI->getAutomatorInstruction('providers', $aProviders);
             $bMessage = !empty($sMessage);
             $sMessageAdd = '';
             $sMessageResponse = '';
 
-            $oAIModel = BxDolAI::getInstance()->getModelObject($iModel);
+            $oAIModel = $oAI->getModelObject($iModel);
 
             $bIsValid = true;
             $aResponseInit = [];
@@ -77,6 +82,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     break;
 
                 case BX_DOL_AI_AUTOMATOR_SCHEDULER:
+                case BX_DOL_AI_AUTOMATOR_WEBHOOK:
                     if(($aResponseInit = $oAIModel->getResponseInit($sType, $sMessage)) !== false) {
                         $oAIModel->setParams($aResponseInit['params']);
 

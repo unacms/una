@@ -2163,6 +2163,10 @@
         <string name="_sys_agents_pvd_opt_dsc_shop_domain"><![CDATA[]]></string>
         <string name="_sys_agents_pvd_opt_cpt_access_token"><![CDATA[Токен доступа]]></string>
         <string name="_sys_agents_pvd_opt_dsc_access_token"><![CDATA[]]></string>
+        <string name="_sys_agents_pvd_opt_cpt_secret_key"><![CDATA[Секретный ключ]]></string>
+        <string name="_sys_agents_pvd_opt_dsc_secret_key"><![CDATA[]]></string>
+        <string name="_sys_agents_pvd_opt_cpt_webhook_url"><![CDATA[URL вебхука]]></string>
+        <string name="_sys_agents_pvd_opt_dsc_webhook_url"><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>

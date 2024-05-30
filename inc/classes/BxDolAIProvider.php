@@ -67,8 +67,29 @@ class BxDolAIProvider extends BxDol
     	$this->_aOptions = $aOptions;
     }
 
+    public function getInfo()
+    {
+        $aInfo = $this->_oDb->getProviderBy(['sample' => 'id', 'id' => $this->_iId]);
+        $aInfo['options'] = $this->getOptions();
+
+        return $aInfo;
+    }
+
+    public function getOptions()
+    {
+        $aOptions = $this->_oDb->getProviderBy(['sample' => 'options_by_id', 'id' => $this->_iId]);
+        foreach($aOptions as &$aOption)
+            $aOption['value'] = $this->getOption($aOption['name']);
+
+        return $aOptions;
+    }
+
     public function getOption($sName)
     {
+        $sCustomMethod = 'getOption' . bx_gen_method_name(str_replace($this->_sPrefix, '', $sName));
+        if(method_exists($this, $sCustomMethod))
+             return $this->$sCustomMethod();
+        
     	if(substr($sName, 0, strlen($this->_sPrefix)) != $this->_sPrefix)
             $sName = $this->_sPrefix . $sName;
 

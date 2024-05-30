@@ -43,7 +43,8 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         $mixedResult = [];
         switch($sType) {
             case BX_DOL_AI_AUTOMATOR_EVENT:
-                //TODO: previously we had an array here with 'alert_unit', 'alert_action' and 'trigger';
+                $aResponse = json_decode($sResponse, true);
+
                 $mixedResult = [
                     'alert_unit' => $aResponse['alert_unit'],
                     'alert_action' => $aResponse['alert_action'],
@@ -59,6 +60,14 @@ class BxDolAIModelGpt40 extends BxDolAIModel
                     'params' => [
                         'thread_id' => $sThreadId,
                         'scheduler_time' => $sResponse
+                    ]
+                ];
+                break;
+
+            case BX_DOL_AI_AUTOMATOR_WEBHOOK:
+                $mixedResult = [
+                    'params' => [
+                        'thread_id' => $sThreadId,
                     ]
                 ];
                 break;

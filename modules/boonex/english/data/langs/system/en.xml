@@ -2187,7 +2187,10 @@
         <string name="_sys_agents_pvd_opt_dsc_shop_domain"><![CDATA[]]></string>
         <string name="_sys_agents_pvd_opt_cpt_access_token"><![CDATA[Access token]]></string>
         <string name="_sys_agents_pvd_opt_dsc_access_token"><![CDATA[]]></string>
-        <string name=""><![CDATA[]]></string>
+        <string name="_sys_agents_pvd_opt_cpt_secret_key"><![CDATA[Secret key]]></string>
+        <string name="_sys_agents_pvd_opt_dsc_secret_key"><![CDATA[]]></string>
+        <string name="_sys_agents_pvd_opt_cpt_webhook_url"><![CDATA[Webhook URL]]></string>
+        <string name="_sys_agents_pvd_opt_dsc_webhook_url"><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>
         <string name=""><![CDATA[]]></string>

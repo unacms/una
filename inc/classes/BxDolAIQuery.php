@@ -287,13 +287,20 @@ class BxDolAIQuery extends BxDolDb
                 $sWhereClause = " AND `tp`.`id`=:id";
                 break;
 
+            case 'ids':
+                $sSelectClause .= ", `tpt`.`name` AS `provider_name`";
+                $sJoinClause = "INNER JOIN `sys_agents_provider_types` AS `tpt` ON `tp`.`type_id`=`tpt`.`id`";
+                $sWhereClause = " AND `tp`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
+                
+                break;
+                 
             case 'options_by_id':
                 $aMethod['params'][1] = [
                     'id' => $aParams['id']
                 ];
 
                 $sSelectClause = "`tpo`.`id`, `tpo`.`name`, `tpo`.`type`, `tpo`.`title`, `tpo`.`description`, `tpv`.`value`";
-                $sJoinClause = "INNER JOIN `sys_agents_providers_values` AS `tpv` ON `tp`.`id`=`tpv`.`provider_id` INNER JOIN `sys_agents_provider_options` AS `tpo` ON `tpv`.`option_id`=`tpo`.`id`";
+                $sJoinClause = "LEFT JOIN `sys_agents_provider_options` AS `tpo` ON `tp`.`type_id`=`tpo`.`provider_type_id` LEFT JOIN `sys_agents_providers_values` AS `tpv` ON `tp`.`id`=`tpv`.`provider_id` AND `tpo`.`id`=`tpv`.`option_id`";
                 $sWhereClause = " AND `tp`.`id`=:id";
                 break;
             

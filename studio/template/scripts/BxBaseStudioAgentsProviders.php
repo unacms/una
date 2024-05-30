@@ -77,13 +77,13 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
 
         $iId = $this->_getId();
 
-        $aProvider = $this->_oDb->getProviderBy(['sample' => 'id', 'id' => $iId]);
-        if(empty($aProvider) || !is_array($aProvider))
+        $oAIProvider = BxDolAI::getInstance()->getProviderObject($iId);
+        if(!$oAIProvider)
             return echoJson([]);
 
-        $aProvider['options'] = $this->_oDb->getProviderBy(['sample' => 'options_by_id', 'id' => $iId]);
+        $aProviderInfo = $oAIProvider->getInfo();
 
-        $aForm = $this->_getFormEdit($sAction, $aProvider);
+        $aForm = $this->_getFormEdit($sAction, $aProviderInfo);
         $oForm = new BxTemplFormView($aForm);
         $oForm->initChecker();
 
@@ -91,8 +91,8 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
             if($oForm->update($iId) === false)
                 return echoJson(['msg' => _t('_sys_txt_error_occured')]);
 
-            if(!empty($aProvider['options']) && is_array($aProvider['options']))
-                foreach($aProvider['options'] as $aOption)
+            if(!empty($aProviderInfo['options']) && is_array($aProviderInfo['options']))
+                foreach($aProviderInfo['options'] as $aOption)
                     $this->_oDb->updateProviderValue([
                         'value' => $oForm->getCleanValue($aOption['name'])
                     ], [
@@ -120,15 +120,15 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
 
         $iId = $this->_getId();
 
-        $aProvider = $this->_oDb->getProviderBy(['sample' => 'id', 'id' => $iId]);
-        if(empty($aProvider) || !is_array($aProvider))
+        $oAIProvider = BxDolAI::getInstance()->getProviderObject($iId);
+        if(!$oAIProvider)
             return echoJson([]);
 
-        $aProvider['options'] = $this->_oDb->getProviderBy(['sample' => 'options_by_id', 'id' => $iId]);
+        $aProviderInfo = $oAIProvider->getInfo();
 
-        $aForm = $this->_getFormView($sAction, $aProvider);
+        $aForm = $this->_getFormView($sAction, $aProviderInfo);
         $oForm = new BxTemplFormView($aForm);
-        $oForm->initChecker($aProvider);
+        $oForm->initChecker($aProviderInfo);
 
         $sFormId = $oForm->getId();
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($sFormId . '_popup_' . $sAction, _t('_sys_agents_providers_popup_view'), $this->_oTemplate->parseHtmlByName('agents_provider_form.html', [
@@ -272,7 +272,10 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
             ];
 
             if(!empty($aProvider['options']) && is_array($aProvider['options']))
-                foreach($aProvider['options'] as $aOption)
+                foreach($aProvider['options'] as $aOption) {
+                    if($aOption['type'] == 'value' && empty($aOption['value']))
+                        continue;
+
                     $aInputsAdd[$aOption['name']] = [
                         'type' => $aOption['type'],
                         'name' => $aOption['name'],
@@ -285,6 +288,7 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
                             'error' => _t($aOption['check_error']),
                         ] : null,
                     ];
+                }
 
             $aForm['inputs'] = bx_array_insert_before($aInputsAdd, $aForm['inputs'], 'controls');
         }

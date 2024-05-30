@@ -82,7 +82,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return $aModel;
     }
 
-    public function getModelObject($iId = 0)
+    public function getModelObject($iId)
     {
         if(!$iId)
             $iId = $this->getDefaultModel();
@@ -90,6 +90,14 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
             return false;
 
         return BxDolAIModel::getObjectInstance($iId);
+    }
+    
+    public function getProviderObject($iId)
+    {
+        if(!$iId)
+            return false;
+
+        return BxDolAIProvider::getObjectInstance($iId);
     }   
 
     public function getAutomator($iId, $bFullInfo = false)
@@ -101,6 +109,24 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
             $aAutomator['model_params'] = json_decode($aAutomator['model_params'], true);
 
         return $aAutomator;
+    }
+    
+    public function getAutomatorInstruction($sType, $aParams = [])
+    {
+        $mixedResult = '';
+
+        switch($sType){
+            case 'providers':
+                $aProviders = $this->_oDb->getProviderBy(['sample' => 'ids', 'ids' => $aParams]);
+                if(!empty($aProviders) && is_array($aProviders)) {
+                    $mixedResult = "avaliable proividers list:";
+                    foreach($aProviders as $aProvider)
+                        $mixedResult .= "\n- " . $aProvider['provider_name'] . ", \$iProviderId=" . $aProvider['id'];
+                }
+                break;
+        }
+
+        return $mixedResult;
     }
     
     public function getAutomatorsEvent($sUnit, $sAction)
@@ -123,27 +149,6 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
                 $aAutomator['params'] = json_decode($aAutomator['params'], true);
 
         return $aAutomators;
-    }
-
-    public function chat($sEndpoint, $sModel, $sApiKey, $aParams, $aMessages)
-    {
-        $aData = [
-            'model' => $sModel,
-            'messages' => $aMessages
-        ];
-
-        if(!empty($aParams) && is_array($aParams))
-            $aData = array_merge($aData, $aParams);
-
-        $sRv = bx_file_get_contents($sEndpoint, $aData, "post-json", ["Authorization: Bearer ".$sApiKey, 'Content-Type: application/json', 'OpenAI-Beta: assistants=v1']);
-        $aRv = json_decode($sRv, true);
-
-        if(isset($aRv['error'])) {
-            //TODO: log error in AI related log file.
-            return 'false';
-        }
-
-        return trim(str_replace(['```json', '```php', '```'], '', $aRv['choices'][0]['message']['content']));
     }
 
     public function callAutomator($sType, $aParams = [])

@@ -56,6 +56,9 @@ class BxDolAIModelGpt35 extends BxDolAIModel
                     ]
                 ];
                 break;
+
+            case BX_DOL_AI_AUTOMATOR_WEBHOOK:
+                break;
         }
         
 

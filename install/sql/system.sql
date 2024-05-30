@@ -6302,7 +6302,7 @@ CREATE TABLE IF NOT EXISTS `sys_agents_models` (
 
 INSERT INTO `sys_agents_models`(`name`, `title`, `key`, `params`, `class_name`, `class_file`) VALUES
 ('gpt-3.5-turbo', 'GPT-3.5-TURBO', '', '{"call":{"temperature":0.1}}', 'BxDolAIModelGpt35', ''),
-('gpt-4o', 'GPT-4.O', '', '{"call":{},"assistants":{"event_init":"asst_HcEyaghqWZefkAyoEML40joY","event":"asst_wqaXtKjcsBKceMtJ2NxID2LT","scheduler_init":"asst_kEbDH1hUy2Y45nOKk9jaSTB8","scheduler":"asst_M6zOv4osQwZmRItaiYptjjOS"}}', 'BxDolAIModelGpt40', '');
+('gpt-4o', 'GPT-4.O', '', '{"call":{},"assistants":{"event_init":"asst_HcEyaghqWZefkAyoEML40joY","event":"asst_wqaXtKjcsBKceMtJ2NxID2LT","scheduler_init":"asst_kEbDH1hUy2Y45nOKk9jaSTB8","scheduler":"asst_M6zOv4osQwZmRItaiYptjjOS","webhook_init":"asst_sSkOblPyXmYovS5IiEiVW17n","webhook":"asst_w7F3RiylJfdDEb9Eaa4RvO1q"}}', 'BxDolAIModelGpt40', '');
 
 CREATE TABLE IF NOT EXISTS `sys_agents_automators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -6383,7 +6383,9 @@ SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `sys_agents_provider_options`(`provider_type_id`, `name`, `type`, `title`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
 (@iProviderId, 'shf_adm_shop_domain', 'text', '_sys_agents_pvd_opt_cpt_shop_domain', '_sys_agents_pvd_opt_dsc_shop_domain', '', '', '', '', 1),
-(@iProviderId, 'shf_adm_access_token', 'text', '_sys_agents_pvd_opt_cpt_access_token', '_sys_agents_pvd_opt_dsc_access_token', '', '', '', '', 2);
+(@iProviderId, 'shf_adm_access_token', 'text', '_sys_agents_pvd_opt_cpt_access_token', '_sys_agents_pvd_opt_dsc_access_token', '', '', '', '', 2),
+(@iProviderId, 'shf_adm_secret_key', 'text', '_sys_agents_pvd_opt_cpt_secret_key', '_sys_agents_pvd_opt_dsc_secret_key', '', '', '', '', 3),
+(@iProviderId, 'shf_adm_webhook_url', 'value', '_sys_agents_pvd_opt_cpt_webhook_url', '_sys_agents_pvd_opt_dsc_webhook_url', '', '', '', '', 4);
 
 CREATE TABLE IF NOT EXISTS `sys_agents_providers` (
   `id` int(11) NOT NULL auto_increment,

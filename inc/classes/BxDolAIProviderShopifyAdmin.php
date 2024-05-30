@@ -67,8 +67,22 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
         return $aProduct['product'];
     }
 
+    public function getOptionWebhookUrl()
+    {
+        return bx_append_url_params(BX_DOL_URL_ROOT . 'agents.php', [
+            'p' => $this->_iId,
+            'a' => 'webhook'
+        ]);
+    }
+
     public function processActionWebhook()
     {
+        /**
+         * TODO: 
+         * 1. Verify Webhook
+         * 2. Call automators which use this provider.
+         */
+
         echo 'TODO: Webhook processing here';
     }
 
