@@ -109,13 +109,19 @@ class BxDolAIProvider extends BxDol
     /**
      * Internal methods.
      */
-    protected function _log($sMessage, $bUseLog = false)
+    protected function _log($mixedError, $bUseLog = true)
     {
-        if($bUseLog) {
-            //TODO: Use bx_log here.
+        if(!$bUseLog) {
+            $sMessage = 'Error occurred';
+            if(is_string($mixedError))
+                $sMessage = $mixedError;
+            else if(is_array($mixedError) && isset($mixedError['message']))
+                $sMessage = $mixedError['message'];
+
+            throw new Exception($sMessage);
         }
         else
-            throw new Exception($sMessage);
+            BxDolAI::getInstance()->log($mixedError, 'Providers');
 
         return false;
     }    

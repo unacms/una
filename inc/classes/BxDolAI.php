@@ -141,9 +141,20 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
             'active' => true
         ]);
     }
+
     public function getAutomatorsScheduler()
     {
         $aAutomators = $this->_oDb->getAutomatorsBy(['sample' => 'schedulers', 'active' => true]);
+        foreach($aAutomators as &$aAutomator)
+            if(!empty($aAutomator['params']))
+                $aAutomator['params'] = json_decode($aAutomator['params'], true);
+
+        return $aAutomators;
+    }
+
+    public function getAutomatorsWebhook($iProviderId)
+    {
+        $aAutomators = $this->_oDb->getAutomatorsBy(['sample' => 'webhooks', 'provider_id' => $iProviderId, 'active' => true]);
         foreach($aAutomators as &$aAutomator)
             if(!empty($aAutomator['params']))
                 $aAutomator['params'] = json_decode($aAutomator['params'], true);
@@ -177,43 +188,66 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         
         $this->evalCode($aParams['automator'], true);
     }
-    
-    
+
+    protected function _callAutomatorWebhook($aParams = [])
+    {
+        if(!isset($aParams['automator']))
+            return false;
+
+        $this->evalCode($aParams['automator'], true);
+    }
+
     public function evalCode($aAutomator, $isWriteLog = true, $aParams = null)
     {
         ob_start();
         set_error_handler("evalErrorHandler");
-        try{
-             $sCode = '';
-             if ($aAutomator['type'] == 'scheduler'){
-                 $sCode = $aAutomator['code'] . '; onCron();';
-             }
-             
-             if ($aAutomator['type'] == 'event'){
-                 $sCode = $aAutomator['code']. '; onAlert($aParams["alert"]->iObject , $aParams["alert"]->iSender , $aParams["alert"]->aExtras);';  
-             }
-             
-             
-             eval($sCode);
-            
+        try {
+            $sCode = '';
+            switch($aAutomator['type']) {
+                case BX_DOL_AI_AUTOMATOR_EVENT:
+                    $sCode = $aAutomator['code']. '; onAlert($aParams["alert"]->iObject , $aParams["alert"]->iSender , $aParams["alert"]->aExtras);';
+                    break;
+                
+                case BX_DOL_AI_AUTOMATOR_SCHEDULER:
+                    $sCode = $aAutomator['code'] . '; onCron();';
+                    break;
+
+                case BX_DOL_AI_AUTOMATOR_WEBHOOK:
+                    $sCode = $aAutomator['code'] . '; onHook();';
+                    break;
+            }
+
+            eval($sCode);
         }
         catch (Exception $oException) {
             if ($isWriteLog){
-                $this->writeLog($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
+                $this->log($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
             }
             return $oException->getMessage();
-        } finally {
-             $sOutput = ob_get_clean();
-             if ($sOutput != '')
+        } 
+        finally {
+            $sOutput = ob_get_clean();
+            if($sOutput != '')
                 return "Eval error: " . $sOutput;
+
             restore_error_handler();
         }
     }
-    
-    private function writeLog($sString)
-	{
-        bx_log('sys_agents', $sString);
-	}
+
+    public function log($mixedContents, $sSection = '')
+    {
+        if(is_array($mixedContents))
+            $mixedContents = var_export($mixedContents, true);	
+        else if(is_object($mixedContents))
+            $mixedContents = json_encode($mixedContents);
+
+        if(empty($sSection))
+            $sSection = "Core";
+
+        $sTitle .= "\n";
+
+        bx_log('sys_agents', ":\n[" . $sSection . "] " . $mixedContents);
+    }
 }
 
 class EvalException extends Exception {}

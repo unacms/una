@@ -13,6 +13,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
     protected $_sEndpoint;
     protected $_sEndpointRuns;
+    protected $_sEndpointRunsCheck;
     protected $_sEndpointMessages;
 
     public function __construct($aModel)

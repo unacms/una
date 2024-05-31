@@ -77,13 +77,22 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
 
     public function processActionWebhook()
     {
-        /**
-         * TODO: 
-         * 1. Verify Webhook
-         * 2. Call automators which use this provider.
-         */
+        $sHmacHeader = isset($_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256']) ? $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] : '';
+        $sData = @file_get_contents('php://input');
+        if(!$this->_verifyWebhook($sData, $sHmacHeader)) {
+            http_response_code(401);
+            return;
+        }
 
-        echo 'TODO: Webhook processing here';
+        $oAi = BxDolAI::getInstance();
+
+        $aAutomators = $oAi->getAutomatorsWebhook($this->_iId);
+        foreach($aAutomators as $aAutomator)
+            $oAi->callAutomator(BX_DOL_AI_AUTOMATOR_WEBHOOK, [
+                'automator' => $aAutomator
+            ]);
+
+        http_response_code(200);
     }
 
     public function call($sRequest, $aParams, $sMethod = 'post-json', $aHeaders = [])
@@ -111,5 +120,11 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
     protected function _dateI2S($iTimestamp)
     {
         return date("Y-m-d", $iTimestamp);
+    }
+
+    protected function _verifyWebhook($sData, $sHmacHeader)
+    {
+        $sHmacCalc = base64_encode(hash_hmac('sha256', $sData, $this->getOption('secret_key'), true));
+        return hash_equals($sHmacCalc, $sHmacHeader);
     }
 }

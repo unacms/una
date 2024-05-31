@@ -85,11 +85,9 @@ class BxDolAIModel extends BxDol
     /**
      * Internal methods.
      */
-    protected function _log($mixedError, $bUseLog = false)
+    protected function _log($mixedError, $bUseLog = true)
     {
-        if($bUseLog)
-            bx_log('sys_agents', $mixedError);
-        else {
+        if(!$bUseLog) {
             $sMessage = 'Error occurred';
             if(is_string($mixedError))
                 $sMessage = $mixedError;
@@ -98,6 +96,8 @@ class BxDolAIModel extends BxDol
 
             throw new Exception($sMessage);
         }
+        else
+            BxDolAI::getInstance()->log($mixedError, 'Models');
 
         return false;
     }    

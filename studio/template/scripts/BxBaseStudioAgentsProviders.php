@@ -93,11 +93,10 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
 
             if(!empty($aProviderInfo['options']) && is_array($aProviderInfo['options']))
                 foreach($aProviderInfo['options'] as $aOption)
-                    $this->_oDb->updateProviderValue([
-                        'value' => $oForm->getCleanValue($aOption['name'])
-                    ], [
+                    $this->_oDb->insertProviderValue([
                         'provider_id' => $iId, 
                         'option_id' => $aOption['id'],
+                        'value' => $oForm->getCleanValue($aOption['name'])
                     ]);
 
             return echoJson(['grid' => $this->getCode(false), 'blink' => $iId]);

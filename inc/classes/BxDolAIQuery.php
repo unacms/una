@@ -141,6 +141,27 @@ class BxDolAIQuery extends BxDolDb
                 }
                 break;
 
+            case 'webhooks':
+                $aMethod['params'][1] = [
+                    'type' => BX_DOL_AI_AUTOMATOR_WEBHOOK,
+                ];
+
+                $sWhereClause .= " AND `taa`.`type`=:type";
+
+                if(isset($aParams['provider_id'])) {
+                    $aMethod['params'][1]['provider_id'] = (int)$aParams['provider_id'];
+
+                    $sJoinClause = "INNER JOIN `sys_agents_automators_providers` AS `tap` ON `taa`.`id`=`tap`.`automator_id`";
+                    $sWhereClause .= " AND `tap`.`provider_id`=:provider_id";
+                }
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][1]['active'] = (int)$aParams['active'];
+
+                    $sWhereClause .= " AND `taa`.`active`=:active";
+                }
+                break;
+
             case 'providers_by_id_pairs':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
@@ -340,10 +361,12 @@ class BxDolAIQuery extends BxDolDb
 
     public function insertProviderValue($aParamsSet)
     {
-        if(empty($aParamsSet))
+        if(empty($aParamsSet) || !is_array($aParamsSet) || !isset($aParamsSet['value']))
             return false;
 
-        return (int)$this->query("INSERT INTO `sys_agents_providers_values` SET " . $this->arrayToSQL($aParamsSet)) > 0 ? (int)$this->lastId() : false;
+        return (int)$this->query("INSERT INTO `sys_agents_providers_values` SET " . $this->arrayToSQL($aParamsSet) . " ON DUPLICATE KEY UPDATE `value`=:value", [
+            'value' => $aParamsSet['value']
+        ]) > 0 ? (int)$this->lastId() : false;
     }
 
     public function updateProviderValue($aParamsSet, $aParamsWhere)
