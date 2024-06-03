@@ -76,7 +76,7 @@
     <string name="_bx_events_form_profile_input_sys_date_end"><![CDATA[Date end]]></string>
     <string name="_bx_events_form_profile_input_date_end"><![CDATA[Date end]]></string>    
     <string name="_bx_events_form_profile_input_date_end_err"><![CDATA[End date is mandatory]]></string>
-    <string name="_bx_events_form_profile_input_date_end_invalid_err"><![CDATA[End date must be must be greater than start date]]></string>
+    <string name="_bx_events_form_profile_input_date_end_invalid_err"><![CDATA[End date must be greater than start date]]></string>
     <string name="_bx_events_form_profile_input_sys_timezone"><![CDATA[Timezone]]></string>
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Timezone]]></string>
     <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Time]]></string>

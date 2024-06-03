@@ -882,7 +882,41 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return bx_srv('system', 'browse_members', [$oGroupProfile->id(), $CNF['OBJECT_CONNECTIONS'], $aParams], 'TemplServiceProfiles');
     }
-    
+
+    public function serviceEntityEditQuestionnaire($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return '';
+
+        $aProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iProfileId);
+        if(empty($aProfileInfo) || !is_array($aProfileInfo))
+            return '';
+        
+        $aContentInfo = $this->_oDb->getContentInfoById($aProfileInfo['content_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return '';
+
+        if($this->checkAllowedEdit($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox(_t('_Access denied'));
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_QUESTIONS_MANAGE']);
+        if(!$oGrid)
+            return '';
+        
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+            
+        }
+
+        return $oGrid->getCode();
+    }
+
     public function serviceEntityPricing($iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;

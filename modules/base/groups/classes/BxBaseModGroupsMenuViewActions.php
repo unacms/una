@@ -36,13 +36,13 @@ class BxBaseModGroupsMenuViewActions extends BxBaseModProfileMenuViewActions
             $aTitles = $this->_oModule->getMenuItemTitleByConnection($CNF['OBJECT_CONNECTIONS'], '', $iGroupProfileId, $iProfileId);
             $aMarkers = [
                 'title_add_fan' => $aTitles['add'],
-                'onclick_add_fan' => "bx_conn_action(this, 'bx_events_fans', 'add', '" . $iGroupProfileId . "')",
+                'onclick_add_fan' => "bx_conn_action(this, '" . $CNF['OBJECT_CONNECTIONS'] . "', 'add', '" . $iGroupProfileId . "')",
                 'title_remove_fan' => $aTitles['remove'],
             ];
             if(!$oConn->isConnectedNotMutual($iProfileId, $iGroupProfileId) && $oConn->hasQuestionnaire($iGroupProfileId))
-                $aMarkers['onclick_add_fan'] = $this->_oModule->_oConfig->getJsObject('entry') . ".connAction(this, 'bx_events_fans', 'add', '" . $iGroupProfileId . "')";
+                $aMarkers['onclick_add_fan'] = $this->_oModule->_oConfig->getJsObject('entry') . ".connAction(this, '" . $CNF['OBJECT_CONNECTIONS'] . "', 'add', '" . $iGroupProfileId . "')";
 
-            if ($this->_oModule->isFan($this->_aContentInfo[$CNF['FIELD_ID']])) {
+            if($this->_oModule->isFan($this->_aContentInfo[$CNF['FIELD_ID']])) {
                 $a = $oConn->getConnectedInitiators($iGroupProfileId);
                 $aMarkers['recipients'] = implode(',', $a);
             }
