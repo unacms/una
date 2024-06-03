@@ -124,8 +124,8 @@
     <string name="_bx_jobs_page_title_edit_profile"><![CDATA[Edit Job]]></string>
     <string name="_bx_jobs_page_title_sys_edit_profile_cover"><![CDATA[Edit Job Cover]]></string>
     <string name="_bx_jobs_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
-    <string name="_bx_jobs_page_title_sys_questionnaire"><![CDATA[Questionnaire]]></string>
-    <string name="_bx_jobs_page_title_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_jobs_page_title_sys_questionnaire"><![CDATA[Application Questions]]></string>
+    <string name="_bx_jobs_page_title_questionnaire"><![CDATA[Application Questions]]></string>
     <string name="_bx_jobs_page_title_manage_profile"><![CDATA[Manage]]></string>
     <string name="_bx_jobs_page_title_sys_manage_profile"><![CDATA[Manage]]></string>
     <string name="_bx_jobs_page_title_sys_delete_profile"><![CDATA[Delete Job]]></string>
@@ -161,9 +161,9 @@
     <string name="_bx_jobs_page_title_manage"><![CDATA[Manage Jobs]]></string>
     <string name="_bx_jobs_page_title_sys_top"><![CDATA[Top Jobs]]></string>
     <string name="_bx_jobs_page_title_top"><![CDATA[Top Jobs]]></string>
-    <string name="_bx_jobs_page_title_sys_joined"><![CDATA[Joined Jobs]]></string>
+    <string name="_bx_jobs_page_title_sys_joined"><![CDATA[Assigned Jobs]]></string>
     <string name="_bx_jobs_page_title_sys_followed"><![CDATA[Jobs I follow]]></string>
-    <string name="_bx_jobs_page_title_joined"><![CDATA[Joined Jobs]]></string>
+    <string name="_bx_jobs_page_title_joined"><![CDATA[Assigned Jobs]]></string>
     <string name="_bx_jobs_page_title_followed"><![CDATA[Jobs I follow]]></string>
     <string name="_bx_jobs_page_title_sys_invite_to_job"><![CDATA[Invite Performers to the Job]]></string>
     <string name="_bx_jobs_page_title_invite_to_job"><![CDATA[Invite Performers to the Job]]></string>
@@ -192,7 +192,7 @@
     <string name="_bx_jobs_page_block_title_create_profile"><![CDATA[Create Job]]></string>
     <string name="_bx_jobs_page_block_title_edit_profile"><![CDATA[Edit Job]]></string>
     <string name="_bx_jobs_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
-    <string name="_bx_jobs_page_block_title_edit_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_jobs_page_block_title_edit_questionnaire"><![CDATA[Application Questions]]></string>
     <string name="_bx_jobs_page_block_title_delete_profile"><![CDATA[Delete Job]]></string>
     <string name="_bx_jobs_page_block_title_join_profile"><![CDATA[Join Job]]></string>
     <string name="_bx_jobs_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
@@ -274,8 +274,8 @@
     <string name="_bx_jobs_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_jobs_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_jobs_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
-    <string name="_bx_jobs_menu_item_title_system_edit_questionnaire"><![CDATA[Questionnaire]]></string>
-    <string name="_bx_jobs_menu_item_title_edit_questionnaire"><![CDATA[Questionnaire]]></string>
+    <string name="_bx_jobs_menu_item_title_system_edit_questionnaire"><![CDATA[Application Questions]]></string>
+    <string name="_bx_jobs_menu_item_title_edit_questionnaire"><![CDATA[Application Questions]]></string>
     <string name="_bx_jobs_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_jobs_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_jobs_menu_item_title_system_edit_profile"><![CDATA[Edit Job]]></string>
