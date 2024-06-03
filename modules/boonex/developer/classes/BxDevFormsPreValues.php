@@ -11,6 +11,8 @@
 
 class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
 {
+    protected $oModule;
+
     function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
