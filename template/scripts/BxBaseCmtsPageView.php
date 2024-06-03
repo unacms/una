@@ -43,6 +43,14 @@ class BxBaseCmtsPageView extends BxTemplPage
             'comment_id' => $iCommentId
         ));
     }
+    
+    protected function _isAvailablePage ($a)
+    {
+        if (!$this->_iCmtId)
+            return false;
+
+        return parent::_isAvailablePage($a);
+    }
 
     public function getCode()
     {
