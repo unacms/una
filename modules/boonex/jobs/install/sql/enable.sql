@@ -292,7 +292,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_jobs_view_actions_more', 'bx_jobs', '_bx_jobs_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
-('bx_jobs_view_actions_more', 'bx_jobs', 'job-manage', '_bx_jobs_menu_item_title_system_view_manage', '_bx_jobs_menu_item_title_view_manage', 'page.php?i=job-manage&profile_id={profile_id}', '', '', 'handshake', '', 2147483647, '', 1, 0, 10),
+('bx_jobs_view_actions_more', 'bx_jobs', 'job-manage', '_bx_jobs_menu_item_title_system_view_manage', '_bx_jobs_menu_item_title_view_manage', 'page.php?i=job-manage&profile_id={profile_id}', '', '', 'users', '', 2147483647, '', 1, 0, 10),
 ('bx_jobs_view_actions_more', 'bx_jobs', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', 192, '', 1, 0, 20),
 ('bx_jobs_view_actions_more', 'bx_jobs', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_jobs&content_id={content_id}', '', '', 'history', '', 192, '', 1, 0, 30),
 ('bx_jobs_view_actions_more', 'bx_jobs', 'edit-job-profile', '_bx_jobs_menu_item_title_system_edit_profile', '_bx_jobs_menu_item_title_edit_profile', 'page.php?i=edit-job-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
@@ -397,7 +397,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_jobs_snippet_meta', 'bx_jobs', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 1),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'date-start', '_bx_jobs_menu_item_title_system_sm_date_start', '_bx_jobs_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 2),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'date-end', '_bx_jobs_menu_item_title_system_sm_date_end', '_bx_jobs_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 3),
-('bx_jobs_snippet_meta', 'bx_jobs', 'budget', '_bx_jobs_menu_item_title_system_sm_budget', '_bx_jobs_menu_item_title_sm_budget', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 4),
+('bx_jobs_snippet_meta', 'bx_jobs', 'budget', '_bx_jobs_menu_item_title_system_sm_budget', '_bx_jobs_menu_item_title_sm_budget', '', '', '', '', '', 2147483647, '', '', 1, 0, 1, 4),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 5),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 10),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 15),
