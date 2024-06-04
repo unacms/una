@@ -15,6 +15,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
     protected $_sEndpointRuns;
     protected $_sEndpointRunsCheck;
     protected $_sEndpointMessages;
+    protected $_sEndpointChat;
 
     public function __construct($aModel)
     {
@@ -26,6 +27,22 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         $this->_sEndpointRuns = $this->_sEndpoint . '/%s/runs';
         $this->_sEndpointRunsCheck = $this->_sEndpoint . '/%s/runs/%s';
         $this->_sEndpointMessages = $this->_sEndpoint . '/%s/messages';
+        
+        $this->_sEndpointChat = "https://api.openai.com/v1/chat/completions";
+    }
+    
+    public function getResponseText($sPrompt, $sMessage)
+    {
+        $aMessages = [
+            ['role' => 'system', 'content' => $sPrompt],
+            ['role' => 'user', 'content' => $sMessage]
+        ];
+
+        $sResponse = $this->callChat($aMessages);
+        if($sResponse == 'false')
+            return false;
+        
+        return $sResponse;
     }
 
     public function getResponseInit($sType, $sMessage, $aParams = [])
@@ -142,6 +159,35 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             $mixedResponse = $mixedResponse['content'][0]['text']['value'];
 
         return $mixedResponse;
+    }
+    
+    public function callChat($aMessages, $aParams = [])
+    {
+        $aData = [
+            'model' => $this->_sName,
+            'messages' => $aMessages
+        ];
+
+        if(!empty($this->_aParams['call']) && is_array($this->_aParams['call']))
+            $aData = array_merge($aData, $this->_aParams['call']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $sResponse = bx_file_get_contents($this->_sEndpointChat, $aData, "post-json", [
+            "Authorization: Bearer " . $this->_sKey, 
+            'Content-Type: application/json', 
+            'OpenAI-Beta: assistants=v1'
+        ]);
+        
+        print_r($aResponse);
+
+        $aResponse = json_decode($sResponse, true);
+        if(isset($aResponse['error'])) {
+            $this->_log($aResponse['error']);
+            return 'false';
+        }
+
+        return trim(str_replace(['```json', '```php', '```'], '', $aResponse['choices'][0]['message']['content']));
     }
 
     public function getMessages($sThreadId, $aParams = [])

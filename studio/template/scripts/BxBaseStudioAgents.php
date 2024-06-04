@@ -35,11 +35,13 @@ class BxBaseStudioAgents extends BxDolStudioAgents
             BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'mi-cog.svg', 'icon_bg' => true],
             BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'mi-agt-providers.svg', 'icon_bg' => true],
             BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
+            BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
         ];
 
         $this->aGridObjects = [
             BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => 'sys_studio_agents_automators',
             BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => 'sys_studio_agents_providers',
+            BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => 'sys_studio_agents_helpers',
         ];
     }
 
@@ -98,6 +100,19 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         }
 
         return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS]);
+    }
+    
+    protected function getHelpers()
+    {
+        $oTemplate = BxDolStudioTemplate::getInstance();
+        
+        $this->aPageJsOptions['sPageUrl'] .= 'helpers';
+
+        if(($iId = bx_get('id')) !== false) {
+            return 'todo';//$sText = BxDolAI::callHelper(1, 'when is the end of the world?');
+        }
+
+        return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_HELPERS]);
     }
 
     protected function getProviders()

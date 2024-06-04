@@ -57,6 +57,14 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
+    
+    public static function callHelper($iHelperId, $sMessage)
+    {
+        $oAI = BxDolAI::getInstance();
+        $aHelper = $oAI->_oDb->getHelpersBy(['sample' => 'id', 'id' => $iHelperId]);
+        $oAIModel = $oAI->getModelObject($aHelper['model_id']);
+        return $oAIModel->getResponseText($aHelper['prompt'], $sMessage);
+    }
 
     public function getProfileId()
     {
