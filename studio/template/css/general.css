@@ -125,7 +125,7 @@ div.bx-std-pcap-mp-right div.bx-std-pcap-action {
  */
 div.bx-std-pmen-item {
     position: relative;
-    height: 3.0rem;
+    height: 3.5rem;
     margin-top: 0.125rem;
 
     border-radius: 0.75rem;
@@ -160,8 +160,8 @@ div.bx-std-pmen-item .bx-std-pmen-ic-icon {
     display: none;
     flex: 0 0 auto;
 
-    width: 2.0rem;
-    height: 2.0rem;
+    width: 2.5rem;
+    height: 2.5rem;
     box-sizing: border-box;
 
     margin-right: 1rem;

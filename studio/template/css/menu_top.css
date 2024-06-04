@@ -143,8 +143,13 @@ div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-active .bx-mi-bg {
 }
 div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item .bx-mi-icon,
 div.bx-std-menu-top .bx-menu-top-center li .bx-mi-icon {
-    border-radius: 0.5rem;
     overflow: hidden;
+}
+div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item .bx-mi-icon {
+    border-radius: 1.5rem;
+}
+div.bx-std-menu-top .bx-menu-top-center li .bx-mi-icon {
+    border-radius: 0.5rem;
 }
 div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item .bx-mi-title {    
     text-align: center;
