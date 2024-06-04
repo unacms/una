@@ -37,7 +37,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
         $this->CNF = array_merge($this->CNF, array (
 
             // module icon
-            'ICON' => 'briefcase col-red2',
+            'ICON' => 'building col-red2',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
