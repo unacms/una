@@ -182,6 +182,42 @@ class BxDolAIQuery extends BxDolDb
 
         return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
+    
+    public function getHelpersBy($aParams = [])
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+        $sSelectClause = "`taa`.*";
+    	$sJoinClause = $sWhereClause = "";
+
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause .= " AND `taa`.`id`=:id";
+                break;
+
+            case 'id_full':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sSelectClause .= ", `tam`.`name` AS `model_name`, `tam`.`title` AS `model_title`, `tam`.`key` AS `model_key`, `tam`.`params` AS `model_params`";
+                $sJoinClause .= " LEFT JOIN `sys_agents_models` AS `tam` ON `taa`.`model_id`=`tam`.`id`";
+                $sWhereClause .= " AND `taa`.`id`=:id";
+                break;
+            
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `sys_agents_helpers` AS `taa` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
 
     public function updateAutomators($aSetClause, $aWhereClause)
     {

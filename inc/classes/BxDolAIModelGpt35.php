@@ -24,6 +24,20 @@ class BxDolAIModelGpt35 extends BxDolAIModel
         $this->_sPathInst = BX_DIRECTORY_PATH_ROOT . 'ai/instructions/';
     }
 
+    public function getResponseText($sPrompt, $sMessage)
+    {
+        $aMessages = [
+            ['role' => 'system', 'content' => $sPrompt],
+            ['role' => 'user', 'content' => $sMessage]
+        ];
+
+        $sResponse = $this->call($aMessages);
+        if($sResponse == 'false')
+            return false;
+        
+        return $sResponse;
+    }
+    
     public function getResponseInit($sType, $sMessage, $aParams = [])
     {
         $aMessages = [
