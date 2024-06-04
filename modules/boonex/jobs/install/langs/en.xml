@@ -8,7 +8,7 @@
     <string name="_bx_jobs_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_jobs_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_jobs_option_searchable_fields"><![CDATA[Searchable fields]]></string>
-    <string name="_bx_jobs_option_members_mode"><![CDATA[Special mode for job performers]]></string>
+    <string name="_bx_jobs_option_members_mode"><![CDATA[Special mode for job assignees]]></string>
     <string name="_bx_jobs_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_jobs_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
     <string name="_bx_jobs_option_enable_subscribe_wo_join"><![CDATA[Allow to follow without join]]></string>
@@ -29,11 +29,11 @@
     <string name="_bx_jobs_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_jobs_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_jobs_form_profile_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
-    <string name="_bx_jobs_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the job and see who's in it, only performers can see posts. Secret - only performers can find the job and see posts.]]></string>
+    <string name="_bx_jobs_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the job and see who's in it, only assignees can see posts. Secret - only assignees can find the job and see posts.]]></string>
     <string name="_bx_jobs_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
     <string name="_bx_jobs_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>
-    <string name="_bx_jobs_form_profile_input_sys_initial_members"><![CDATA[Invite Performers]]></string>
-    <string name="_bx_jobs_form_profile_input_initial_members"><![CDATA[Invite Performers]]></string>
+    <string name="_bx_jobs_form_profile_input_sys_initial_members"><![CDATA[Invite Assignees]]></string>
+    <string name="_bx_jobs_form_profile_input_initial_members"><![CDATA[Invite Assignees]]></string>
     <string name="_bx_jobs_form_profile_input_sys_name"><![CDATA[Job Name]]></string>
     <string name="_bx_jobs_form_profile_input_name"><![CDATA[Job Name]]></string>
     <string name="_bx_jobs_form_profile_input_name_err"><![CDATA[Field must contain 1 - 80 characters.]]></string>
@@ -145,8 +145,8 @@
     <string name="_bx_jobs_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
     <string name="_bx_jobs_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_jobs_page_title_profile_friends"><![CDATA[Friends]]></string>
-    <string name="_bx_jobs_page_title_sys_job_fans"><![CDATA[Performers]]></string>
-    <string name="_bx_jobs_page_title_job_fans"><![CDATA[Performers]]></string>
+    <string name="_bx_jobs_page_title_sys_job_fans"><![CDATA[Assignees]]></string>
+    <string name="_bx_jobs_page_title_job_fans"><![CDATA[Assignees]]></string>
     <string name="_bx_jobs_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_jobs_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_jobs_page_title_profile_comments"><![CDATA[Comments]]></string>
@@ -165,8 +165,8 @@
     <string name="_bx_jobs_page_title_sys_followed"><![CDATA[Jobs I follow]]></string>
     <string name="_bx_jobs_page_title_joined"><![CDATA[Assigned Jobs]]></string>
     <string name="_bx_jobs_page_title_followed"><![CDATA[Jobs I follow]]></string>
-    <string name="_bx_jobs_page_title_sys_invite_to_job"><![CDATA[Invite Performers to the Job]]></string>
-    <string name="_bx_jobs_page_title_invite_to_job"><![CDATA[Invite Performers to the Job]]></string>
+    <string name="_bx_jobs_page_title_sys_invite_to_job"><![CDATA[Invite Assignees to the Job]]></string>
+    <string name="_bx_jobs_page_title_invite_to_job"><![CDATA[Invite Assignees to the Job]]></string>
     <string name="_bx_jobs_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_jobs_page_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_jobs_page_title_sys_entries_favorites"><![CDATA[Favorites Jobs]]></string>
@@ -207,10 +207,11 @@
     <string name="_bx_jobs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_jobs_page_block_title_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_jobs_page_block_title_admins"><![CDATA[Administrators]]></string>
-    <string name="_bx_jobs_page_block_title_fans_link"><![CDATA[Performers of <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_jobs_page_block_title_fans"><![CDATA[Performers]]></string>
-    <string name="_bx_jobs_page_block_title_system_fans"><![CDATA[Performers]]></string>
-    <string name="_bx_jobs_page_block_title_system_fans_manage"><![CDATA[Manage performers]]></string>
+    <string name="_bx_jobs_page_block_title_applicants"><![CDATA[Applicants]]></string>
+    <string name="_bx_jobs_page_block_title_fans_link"><![CDATA[Assignees of <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_jobs_page_block_title_fans"><![CDATA[Assignees]]></string>
+    <string name="_bx_jobs_page_block_title_system_fans"><![CDATA[Assignees]]></string>
+    <string name="_bx_jobs_page_block_title_system_fans_manage"><![CDATA[Manage assignees]]></string>
     <string name="_bx_jobs_page_block_title_invites"><![CDATA[Invites]]></string>
     <string name="_bx_jobs_page_block_title_system_invites_manage"><![CDATA[Invites]]></string>
     <string name="_bx_jobs_page_block_title_bans"><![CDATA[Bans]]></string>
@@ -229,7 +230,7 @@
     <string name="_bx_jobs_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_jobs_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_jobs_page_block_title_categories"><![CDATA[Jobs Categories]]></string>
-    <string name="_bx_jobs_page_block_title_invite_to_job"><![CDATA[Invite Performers to the Job]]></string>
+    <string name="_bx_jobs_page_block_title_invite_to_job"><![CDATA[Invite Assignees to the Job]]></string>
     <string name="_bx_jobs_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_jobs_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_jobs_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
@@ -258,8 +259,8 @@
     <string name="_bx_jobs_menu_title_view_profile_actions_more"><![CDATA[Job More Actions]]></string>
     <string name="_bx_jobs_menu_title_view_profile_meta"><![CDATA[Job Meta]]></string>
     <string name="_bx_jobs_menu_set_title_view_profile_meta"><![CDATA[Job Meta]]></string>
-    <string name="_bx_jobs_menu_item_title_system_sm_members"><![CDATA[Performers]]></string>
-    <string name="_bx_jobs_menu_item_title_sm_members"><![CDATA[{0} performers]]></string>
+    <string name="_bx_jobs_menu_item_title_system_sm_members"><![CDATA[Assignees]]></string>
+    <string name="_bx_jobs_menu_item_title_sm_members"><![CDATA[{0} assignees]]></string>
     <string name="_bx_jobs_menu_set_title_view_profile_submenu"><![CDATA[View Job Submenu]]></string>
     <string name="_bx_jobs_menu_title_view_profile_submenu"><![CDATA[View Job Submenu]]></string>
     <string name="_bx_jobs_menu_title_entries_my"><![CDATA[Profile Jobs Action Menu]]></string>
@@ -294,8 +295,8 @@
     <string name="_bx_jobs_menu_item_title_view_entries_in_context"><![CDATA[Jobs]]></string>
     <string name="_bx_jobs_menu_item_title_system_view_joined_jobs"><![CDATA[Jobs]]></string>
     <string name="_bx_jobs_menu_item_title_view_joined_jobs"><![CDATA[Jobs]]></string>
-    <string name="_bx_jobs_menu_item_title_system_view_fans"><![CDATA[Performers]]></string>
-    <string name="_bx_jobs_menu_item_title_view_fans"><![CDATA[Performers]]></string>
+    <string name="_bx_jobs_menu_item_title_system_view_fans"><![CDATA[Assignees]]></string>
+    <string name="_bx_jobs_menu_item_title_view_fans"><![CDATA[Assignees]]></string>
     <string name="_bx_jobs_menu_item_title_system_view_manage"><![CDATA[Manage]]></string>
     <string name="_bx_jobs_menu_item_title_view_manage"><![CDATA[Manage]]></string>
     <string name="_bx_jobs_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
@@ -424,7 +425,7 @@
     <string name="_bx_jobs_txt_account_pending"><![CDATA[This job is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_jobs_txt_account_suspended"><![CDATA[This job is suspended.]]></string>
     <string name="_bx_jobs_txt_status_hidden"><![CDATA[This job was hidden.]]></string>
-    <string name="_bx_jobs_txt_N_fans"><![CDATA[{0} performers]]></string>
+    <string name="_bx_jobs_txt_N_fans"><![CDATA[{0} assignees]]></string>
     <string name="_bx_jobs_txt_ban_added"><![CDATA[Banned]]></string>
     <string name="_bx_jobs_txt_role"><![CDATA[Role]]></string>
     <string name="_bx_jobs_txt_role_added"><![CDATA[Added]]></string>
@@ -455,8 +456,8 @@
     <string name="_bx_jobs_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>
     <string name="_bx_jobs_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
 
-    <string name="_bx_jobs_alert_action_fan_added"><![CDATA[performer joined]]></string>
-    <string name="_bx_jobs_txt_ntfs_fan_added"><![CDATA[Job <b class="bx-ntfs-content-profile">{owner_name}</b> has got a performer <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_jobs_alert_action_fan_added"><![CDATA[assignee joined]]></string>
+    <string name="_bx_jobs_txt_ntfs_fan_added"><![CDATA[Job <b class="bx-ntfs-content-profile">{owner_name}</b> has got an assignee <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_jobs_alert_action_join_invitation_notif"><![CDATA[join invitation]]></string>
     <string name="_bx_jobs_alert_action_join_request"><![CDATA[join request]]></string>
     <string name="_bx_jobs_txt_ntfs_join_invitation"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> job's representative invites <b class="bx-ntfs-content-entry">{subentry_sample}</b> to join job]]></string>
@@ -515,7 +516,7 @@
 <p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> job.</p>
 {email_footer}]]></string>
 
-    <string name="_bx_jobs_email_set_role"><![CDATA[Job performer status was changed]]></string>
+    <string name="_bx_jobs_email_set_role"><![CDATA[Job assignee status was changed]]></string>
     <string name="_bx_jobs_email_set_role_subject"><![CDATA[Your job status was changed]]></string>
     <string name="_bx_jobs_email_set_role_body"><![CDATA[{email_header}
 <p>Your status in <a href="{EntryUrl}">{EntryTitle}</a> job was changed to <b>{Role}</b>.</p>

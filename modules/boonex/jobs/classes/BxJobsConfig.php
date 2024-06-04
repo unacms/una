@@ -27,7 +27,7 @@ class BxJobsConfig extends BxBaseModGroupsConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'handshake col-green2',
+            'ICON' => 'briefcase col-green2',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',

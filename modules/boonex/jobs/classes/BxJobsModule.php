@@ -34,6 +34,39 @@ class BxJobsModule extends BxBaseModGroupsModule
             'BrowseRecommendationsFans' => '',
         ]);
     }
+
+    public function serviceApplicants ($iContentId = 0, $bAsArray = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$iContentId)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return false;
+
+        if(!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
+            return false;
+
+        $iGroupProfileId = $oGroupProfile->id();
+        if(!$this->serviceIsAdmin($iGroupProfileId))
+            return false;
+
+        if(!$bAsArray) {
+            bx_import('BxDolConnection');
+            $mixedResult = $this->serviceBrowseConnectionsQuick ($iGroupProfileId, $CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 0);
+            if(!$mixedResult)
+                return MsgBox(_t('_sys_txt_empty'));
+        }
+        else
+            $mixedResult = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->getConnectedInitiators($iGroupProfileId, 0);
+
+        return $mixedResult;
+    }
 }
 
 /** @} */

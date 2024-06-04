@@ -44,9 +44,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 0),
 ('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
 ('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 1),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:4:"fans";}', 0, 0, 1, 2),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:6:"admins";}', 0, 0, 1, 3),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:7:"bx_jobs";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 4),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_applicants', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:10:"applicants";}', 0, 0, 1, 2),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:4:"fans";}', 0, 0, 1, 3),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:6:"admins";}', 0, 0, 1, 4),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:7:"bx_jobs";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 5),
 ('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
 ('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_comments";}', 0, 0, 0, 0),
 ('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_reports";}', 0, 0, 1, 6);
@@ -252,19 +253,19 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 AND `order` < 9999 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_site', 'bx_jobs', 'jobs-home', '_bx_jobs_menu_item_title_system_entries_home', '_bx_jobs_menu_item_title_entries_home', 'page.php?i=jobs-home', '', '', 'handshake col-green2', 'bx_jobs_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+('sys_site', 'bx_jobs', 'jobs-home', '_bx_jobs_menu_item_title_system_entries_home', '_bx_jobs_menu_item_title_entries_home', 'page.php?i=jobs-home', '', '', 'briefcase col-green2', 'bx_jobs_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to homepage menu
 
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_homepage', 'bx_jobs', 'jobs-home', '_bx_jobs_menu_item_title_system_entries_home', '_bx_jobs_menu_item_title_entries_home', 'page.php?i=jobs-home', '', '', 'handshake col-green2', 'bx_jobs_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+('sys_homepage', 'bx_jobs', 'jobs-home', '_bx_jobs_menu_item_title_system_entries_home', '_bx_jobs_menu_item_title_entries_home', 'page.php?i=jobs-home', '', '', 'briefcase col-green2', 'bx_jobs_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
 -- MENU: add to "add content" menu
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_jobs', 'create-job-profile', '_bx_jobs_menu_item_title_system_create_profile', '_bx_jobs_menu_item_title_create_profile', 'page.php?i=create-job-profile', '', '', 'handshake col-green2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', 'bx_jobs', 'create-job-profile', '_bx_jobs_menu_item_title_system_create_profile', '_bx_jobs_menu_item_title_create_profile', 'page.php?i=create-job-profile', '', '', 'briefcase col-green2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 -- MENU: view actions
 
@@ -379,10 +380,10 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_jobs_view_submenu', 'bx_jobs', '_bx_jobs_menu_set_title_view_profile_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_jobs_view_submenu', 'bx_jobs', 'view-job-profile', '_bx_jobs_menu_item_title_system_view_profile_view', '_bx_jobs_menu_item_title_view_profile_view', 'page.php?i=view-job-profile&id={content_id}', '', '', 'handshake col-green2', '', '', 0, 2147483647, 1, 0, 1),
+('bx_jobs_view_submenu', 'bx_jobs', 'view-job-profile', '_bx_jobs_menu_item_title_system_view_profile_view', '_bx_jobs_menu_item_title_view_profile_view', 'page.php?i=view-job-profile&id={content_id}', '', '', 'briefcase col-green2', '', '', 0, 2147483647, 1, 0, 1),
 ('bx_jobs_view_submenu', 'bx_jobs', 'job-profile-info', '_bx_jobs_menu_item_title_system_view_profile_info', '_bx_jobs_menu_item_title_view_profile_info', 'page.php?i=job-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', '', 0, 2147483647, 1, 0, 2),
 ('bx_jobs_view_submenu', 'bx_jobs', 'job-profile-comments', '_bx_jobs_menu_item_title_system_view_profile_comments', '_bx_jobs_menu_item_title_view_profile_comments', 'page.php?i=job-profile-comments&id={content_id}', '', '', '', '', '', 0, 2147483647, 0, 0, 3),
-('bx_jobs_view_submenu', 'bx_jobs', 'job-fans', '_bx_jobs_menu_item_title_system_view_fans', '_bx_jobs_menu_item_title_view_fans', 'page.php?i=job-fans&profile_id={profile_id}', '', '', 'handshake col-green2', '', '', 0, 2147483647, 1, 0, 4),
+('bx_jobs_view_submenu', 'bx_jobs', 'job-fans', '_bx_jobs_menu_item_title_system_view_fans', '_bx_jobs_menu_item_title_view_fans', 'page.php?i=job-fans&profile_id={profile_id}', '', '', 'briefcase col-green2', '', '', 0, 2147483647, 1, 0, 4),
 ('bx_jobs_view_submenu', 'bx_jobs', 'more-auto', '_bx_jobs_menu_item_title_system_view_profile_more_auto', '_bx_jobs_menu_item_title_view_profile_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
 -- MENU: custom menu for snippet meta info
@@ -415,12 +416,12 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', 'bx_jobs', 'profile-stats-my-jobs', '_bx_jobs_menu_item_title_system_manage_my_jobs', '_bx_jobs_menu_item_title_manage_my_jobs', 'page.php?i=joined-jobs&profile_id={member_id}', '', '_self', 'handshake col-green2', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 2);
+('sys_profile_stats', 'bx_jobs', 'profile-stats-my-jobs', '_bx_jobs_menu_item_title_system_manage_my_jobs', '_bx_jobs_menu_item_title_manage_my_jobs', 'page.php?i=joined-jobs&profile_id={member_id}', '', '_self', 'briefcase col-green2', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 2);
 
 -- MENU: profile followings
 SET @iFollowingsMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_profile_followings' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `collapsed`, `active`, `copyable`, `order`) VALUES 
-('sys_profile_followings', 'bx_jobs', 'jobs', '_bx_jobs_menu_item_title_system_followings', '_bx_jobs_menu_item_title_followings', 'javascript:void(0)', '', '_self', 'handshake col-green2', '', '', 2147483647, 0, 1, 0, @iFollowingsMenuOrder + 1);
+('sys_profile_followings', 'bx_jobs', 'jobs', '_bx_jobs_menu_item_title_system_followings', '_bx_jobs_menu_item_title_followings', 'javascript:void(0)', '', '_self', 'briefcase col-green2', '', '', 2147483647, 0, 1, 0, @iFollowingsMenuOrder + 1);
 
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -437,12 +438,12 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_jobs', 'jobs-administration', '_bx_jobs_menu_item_title_system_admt_jobs', '_bx_jobs_menu_item_title_admt_jobs', 'page.php?i=jobs-administration', '', '_self', 'handshake', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_jobs', 'jobs-administration', '_bx_jobs_menu_item_title_system_admt_jobs', '_bx_jobs_menu_item_title_admt_jobs', 'page.php?i=jobs-administration', '', '_self', 'briefcase', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_jobs', 'joined-jobs', '_bx_jobs_menu_item_title_system_view_joined_jobs', '_bx_jobs_menu_item_title_view_joined_jobs', 'page.php?i=joined-jobs&profile_id={profile_id}', '', '', 'handshake col-green2', '', 2147483647, '', 1, 0, 0),
-('trigger_group_view_submenu', 'bx_jobs', 'jobs-context', '_bx_jobs_menu_item_title_system_view_entries_in_context', '_bx_jobs_menu_item_title_view_entries_in_context', 'page.php?i=jobs-context&profile_id={profile_id}', '', '', 'handshake col-green2', '', 2147483647, 'a:3:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:21:"is_enable_for_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 0);
+('trigger_profile_view_submenu', 'bx_jobs', 'joined-jobs', '_bx_jobs_menu_item_title_system_view_joined_jobs', '_bx_jobs_menu_item_title_view_joined_jobs', 'page.php?i=joined-jobs&profile_id={profile_id}', '', '', 'briefcase col-green2', '', 2147483647, '', 1, 0, 0),
+('trigger_group_view_submenu', 'bx_jobs', 'jobs-context', '_bx_jobs_menu_item_title_system_view_entries_in_context', '_bx_jobs_menu_item_title_view_entries_in_context', 'page.php?i=jobs-context&profile_id={profile_id}', '', '', 'briefcase col-green2', '', 2147483647, 'a:3:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:21:"is_enable_for_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 0);
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -562,7 +563,7 @@ INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
 INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
-('bx_jobs', 'bx_jobs', '_bx_jobs', 'page.php?i=jobs-home', 'handshake col-green2', 'SELECT COUNT(*) FROM `bx_jobs_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id` = `tp`.`content_id` AND `tp`.`type`=''bx_jobs'' WHERE 1 AND `tp`.`status`=''active''', @iMaxOrderStats + 1);
+('bx_jobs', 'bx_jobs', '_bx_jobs', 'page.php?i=jobs-home', 'briefcase col-green2', 'SELECT COUNT(*) FROM `bx_jobs_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id` = `tp`.`content_id` AND `tp`.`type`=''bx_jobs'' WHERE 1 AND `tp`.`status`=''active''', @iMaxOrderStats + 1);
 
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);

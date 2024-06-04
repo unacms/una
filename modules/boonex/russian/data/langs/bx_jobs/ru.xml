@@ -207,6 +207,7 @@
     <string name="_bx_jobs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_jobs_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_jobs_page_block_title_admins"><![CDATA[Администраторы]]></string>
+    <string name="_bx_jobs_page_block_title_applicants"><![CDATA[Кандидаты]]></string>
     <string name="_bx_jobs_page_block_title_fans_link"><![CDATA[Исполнители задания: <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_jobs_page_block_title_fans"><![CDATA[Исполнители]]></string>
     <string name="_bx_jobs_page_block_title_system_fans"><![CDATA[Исполнители]]></string>
