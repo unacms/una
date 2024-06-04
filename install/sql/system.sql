@@ -6355,7 +6355,7 @@ CREATE TABLE `sys_agents_helpers` (
   `added` int(11) NOT NULL DEFAULT 0,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE IF NOT EXISTS `sys_agents_automators_providers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
