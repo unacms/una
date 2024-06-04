@@ -1785,9 +1785,10 @@
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_soketi"><![CDATA[Soketi]]></string>
     
     <string name="_adm_stg_cpt_option_sys_std_show_header_left"><![CDATA[Studio: Show header left area]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_left_search"><![CDATA[Studio: Show search in header left]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_center"><![CDATA[Studio: Show header center area]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right"><![CDATA[Studio: Show header right area]]></string>
-    <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Studio: Show search in header]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Studio: Show search in header right]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Studio: Show 'site' link in header]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Studio: Show left area with menu in Launcher]]></string>       
 

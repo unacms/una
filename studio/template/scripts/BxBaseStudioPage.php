@@ -101,6 +101,7 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageBreadcrumb()
     {
+        $bPageHome = $this->aPage['name'] == 'home';
         $bWidgetType = !empty($this->aPage['wid_type']);
 
         $aMarkers = array('js_object_launcher' => BxTemplStudioLauncher::getInstance()->getPageJsObject());
@@ -110,14 +111,13 @@ class BxBaseStudioPage extends BxDolStudioPage
         $this->addMarkers($aMarkers);
 
         $aMenuItems = [];
-        if($this->aPage['name'] != 'home')
-            $aMenuItems['home'] = [
-                'name' => 'home',
-                'icon' => 'bc-home.svg',
-                'link' => BX_DOL_URL_STUDIO,
-                //'onclick' => bx_replace_markers('return {js_object_launcher}.browser(this)', $this->aMarkers),
-                'title' => ''
-            ];
+        $aMenuItems['home'] = [
+            'name' => 'home',
+            'icon' => 'bc-home.svg',
+            'link' => BX_DOL_URL_STUDIO,
+            //'onclick' => bx_replace_markers('return {js_object_launcher}.browser(this)', $this->aMarkers),
+            'title' => ''
+        ];
 
         /**
          * Hidden for now.
@@ -131,19 +131,26 @@ class BxBaseStudioPage extends BxDolStudioPage
                 'title' => ''
             ];
 
-        $aMenuItems['page'] = [
-            'name' => 'page',
-            'icon' => '', //$this->aPage['icon'],
-            'link' => $this->getPageUrl(),
-            'title' => _t($this->aPage['caption'])
-        ];
+        if(!$bPageHome)
+            $aMenuItems['page'] = [
+                'name' => 'page',
+                'icon' => '', //$this->aPage['icon'],
+                'link' => $this->getPageUrl(),
+                'title' => _t($this->aPage['caption'])
+            ];
 
         $oMenu = new BxTemplStudioMenu([
             'template' => 'page_breadcrumb.html',
             'menu_items' => $aMenuItems
         ]);
+        $sMenu = $oMenu->getCode();
 
-        return $oMenu->getCode();
+        return BxDolStudioTemplate::getInstance()->parseHtmlByContent($sMenu, [
+            'bx_if:show_search' => [
+                'condition' => $bPageHome && getParam('sys_std_show_header_left_search') == 'on',
+                'content' => [true]
+            ]
+        ]); 
     }
 
     public function getPageCaption()

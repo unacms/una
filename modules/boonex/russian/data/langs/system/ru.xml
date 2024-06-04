@@ -1761,9 +1761,10 @@
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_soketi"><![CDATA[Soketi]]></string>
 
     <string name="_adm_stg_cpt_option_sys_std_show_header_left"><![CDATA[Студия: Показать левую область заголовка]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_left_search"><![CDATA[Студия: Показать поиск в заголовке слева]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_center"><![CDATA[Студия: Показать центральную область заголовка]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right"><![CDATA[Студия: Показать правую область заголовка]]></string>
-    <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Студия: Показать поиск в заголовке]]></string>
+    <string name="_adm_stg_cpt_option_sys_std_show_header_right_search"><![CDATA[Студия: Показать поиск в заголовке справа]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_header_right_site"><![CDATA[Студия: Показывать ссылку 'сайт' в заголовке]]></string>
     <string name="_adm_stg_cpt_option_sys_std_show_launcher_left"><![CDATA[Студия: Показать левую область с меню в лаунчере]]></string>
     

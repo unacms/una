@@ -27,9 +27,11 @@ div.bx-std-menu-top.bx-std-menu-top-right {
 }
 div.bx-std-menu-top.bx-std-menu-top-left,
 div.bx-std-menu-top.bx-std-menu-top-right {    
+    z-index: 2;
     min-width: 10%;
 }
 div.bx-std-menu-top.bx-std-menu-top-center {    
+    z-index: 1;
     -webkit-flex-grow: 1;
     flex-grow: 1;
 }
@@ -90,6 +92,10 @@ div.bx-std-menu-top .bx-menu-top-center li {
 
     width: 3.5rem;
     height: 3.5rem;
+}
+
+div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-div img {
+    height: 2.0rem;
 }
 
 div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item.bx-menu-bc-page {
@@ -161,7 +167,7 @@ div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item .bx-mi-title {
     color: rgb(243, 244, 246);
 }
 div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item img,
-div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item svg,
+div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item:not(.bx-menu-tab-search) svg,
 div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item .sys-icon,
 div.bx-std-menu-top .bx-menu-top-center li img,
 div.bx-std-menu-top .bx-menu-top-center li .sys-icon {
@@ -193,12 +199,12 @@ div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-divider {
     width: 0.25rem;
     height: 1.75rem;
 }
-div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-search,
-div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search {
+
+/*--- Search box (Top Left\Center\Right) ---*/
+div.bx-std-menu-top ul li.bx-menu-tab-search {
     overflow: visible;
 }
-div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-search > div,
-div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search > div {
+div.bx-std-menu-top ul li.bx-menu-tab-search > div {
     position: absolute;
     display: -webkit-flex;
     display: flex;
@@ -213,12 +219,14 @@ div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search > div {
 
     border-radius: 1.5rem;
 }
-div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-search.bx-mt-active > div,
-div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search.bx-mt-active > div {
-    width: 18.0rem;
+div.bx-std-menu-top ul.bx-menu-breadcrumb li.bx-menu-tab-search > div {
+    left: 0.5rem;
+    right: auto;
 }
-div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-search .bx-form-input-text,
-div.bx-std-menu-top .bx-menu-toolbar li.bx-menu-tab-search .bx-form-input-text {
+div.bx-std-menu-top ul li.bx-menu-tab-search.bx-mt-active > div {
+    width: 13.75rem;
+}
+div.bx-std-menu-top ul li.bx-menu-tab-search .bx-form-input-text {
     height: 2.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
