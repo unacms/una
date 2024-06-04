@@ -251,6 +251,7 @@ class BxJobsConfig extends BxBaseModGroupsConfig
                 'menu_item_title_sm_join_requested' => '_bx_jobs_menu_item_title_become_fan_sent',
                 'menu_item_title_sm_leave' => '_bx_jobs_menu_item_title_leave_job',
                 'menu_item_title_sm_leave_cancel' => '_bx_jobs_menu_item_title_leave_job_cancel_request',
+                'menu_item_title_sm_members' => '_bx_jobs_menu_item_title_sm_members',
                 'txt_all_entries_in' => '_bx_jobs_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_jobs_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_jobs_page_title_browse_by_context',

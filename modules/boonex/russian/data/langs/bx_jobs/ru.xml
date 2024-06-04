@@ -371,6 +371,8 @@
     <string name="_bx_jobs_menu_item_title_sm_budget_total"><![CDATA[{0}]]></string>
     <string name="_bx_jobs_menu_item_title_sm_budget_hourly"><![CDATA[{0}/час]]></string>
     <string name="_bx_jobs_menu_item_title_sm_budget_open"><![CDATA[Открытый бюджет]]></string>
+    <string name="_bx_jobs_menu_item_title_system_sm_members"><![CDATA[Исполнители]]></string>
+    <string name="_bx_jobs_menu_item_title_sm_members"><![CDATA[{0} исполнители]]></string>
 
     <string name="_bx_jobs_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
     <string name="_bx_jobs_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>

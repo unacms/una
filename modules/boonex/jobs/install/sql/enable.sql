@@ -403,7 +403,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_jobs_snippet_meta', 'bx_jobs', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 10),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 15),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 20),
-('bx_jobs_snippet_meta', 'bx_jobs', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', '', 1, 0, 1, 25),
+('bx_jobs_snippet_meta', 'bx_jobs', 'members', '_bx_jobs_menu_item_title_system_sm_members', '_bx_jobs_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', '', 1, 0, 1, 25),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 30),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', '', 1, 0, 1, 35),
 ('bx_jobs_snippet_meta', 'bx_jobs', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', '', 1, 0, 1, 40),
