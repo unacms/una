@@ -16,9 +16,7 @@ div.bx-std-menu-top-wrp .bx-std-menu-top.bx-std-menu-top-center:first-child {
     padding-left: 0.75rem;
 }
 
-div.bx-std-menu-top {
-    position: relative;
-}
+div.bx-std-menu-top {}
 div.bx-std-menu-top.bx-std-menu-top-left,
 div.bx-std-menu-top.bx-std-menu-top-center,
 div.bx-std-menu-top.bx-std-menu-top-right {
@@ -26,7 +24,8 @@ div.bx-std-menu-top.bx-std-menu-top-right {
     flex: 0 1 auto;
 }
 div.bx-std-menu-top.bx-std-menu-top-left,
-div.bx-std-menu-top.bx-std-menu-top-right {    
+div.bx-std-menu-top.bx-std-menu-top-right {
+    position: relative;
     z-index: 2;
     min-width: 10%;
 }
@@ -34,6 +33,12 @@ div.bx-std-menu-top.bx-std-menu-top-center {
     z-index: 1;
     -webkit-flex-grow: 1;
     flex-grow: 1;
+    height: 3.5rem;
+}
+div.bx-std-menu-top.bx-std-menu-top-center .bx-std-menu-top-center-cnt {
+    position: absolute;
+    left: 0;
+    width: 100vw;
 }
 div.bx-std-menu-top-center ul {
     position: relative;

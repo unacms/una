@@ -12,8 +12,9 @@ div.bx-dbd-block-content {
 
 /*--- Versions block ---*/
 div.bx-dbd-version-image img {
-    width: 110px;
-    height: 110px;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
 }
 .bx-dbd-version-info .bx-dbd-vii-row {
     display: -webkit-flex;
