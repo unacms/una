@@ -1568,6 +1568,7 @@ CREATE TABLE `sys_objects_score` (
   `table_track` varchar(50) NOT NULL default '',
   `post_timeout` int(11) NOT NULL default '0',
   `pruning` int(11) NOT NULL default '31536000',
+  `is_undo` tinyint(1) NOT NULL default '0',
   `is_on` tinyint(1) NOT NULL default '1',
   `trigger_table` varchar(32) NOT NULL default '',
   `trigger_field_id` varchar(32) NOT NULL default '',

@@ -339,10 +339,11 @@ class BxBaseScore extends BxDolScore
 
     protected function _getDoVote($sType, $aParams = [], $isAllowedVote = true)
     {
+        $bUndo = $this->isUndo();
     	$bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true;
-        $bDisabled = !$isAllowedVote || $bVoted;
+        $bDisabled = !$isAllowedVote || ($bVoted && !$bUndo);
 
         $sClass = '';
         if($bShowDoVoteAsButton)
@@ -355,6 +356,7 @@ class BxBaseScore extends BxDolScore
 
         if($this->_bApi)
             return [
+                'is_undo' => $bUndo,
                 'is_voted' => $bVoted,
                 'is_disabled' => $bDisabled,
                 'title' => _t($this->_getTitleDo($sType)),

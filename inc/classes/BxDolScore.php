@@ -135,6 +135,7 @@ class BxDolScore extends BxDolObject
                     `table_track` AS `table_track`,
                     `post_timeout` AS `post_timeout`,
                     `pruning` AS `pruning`,
+                    `is_undo` AS `is_undo`,
                     `is_on` AS `is_on`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,
@@ -175,6 +176,11 @@ class BxDolScore extends BxDolObject
     /**
      * Interface functions for outer usage
      */
+    public function isUndo()
+    {
+        return (int)$this->_aSystem['is_undo'] == 1;
+    }
+
     public function getStatCounterUp()
     {
         $aScore = $this->_getVote();
@@ -243,13 +249,28 @@ class BxDolScore extends BxDolObject
         $iAuthorId = $this->_getAuthorId();
         $iAuthorIp = $this->_getAuthorIp();
 
+        $bUndo = $this->isUndo();
         $bVoted = $this->isPerformed($iObjectId, $iAuthorId, $iAuthorIp);
-        if($bVoted)
+        $bPerformUndo = $bVoted && $bUndo;
+
+        if(!$bPerformUndo && !$this->isAllowedVote())
+            return ['code' => BX_DOL_OBJECT_ERR_ACCESS_DENIED, 'message' => $this->msgErrAllowedVote()];
+
+        if($bVoted && !$bUndo)
             return ['code' => BX_DOL_OBJECT_ERR_DUPLICATE, 'message' => _t('_sys_score_err_duplicate_vote')];
 
-        $iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $sType);
+        if($bPerformUndo) {
+            $aTrack = $this->_getTrack($iObjectId, $iAuthorId);
+            if(!empty($aTrack) && is_array($aTrack))
+                $aVoteData = array_intersect_key($aTrack, $aVoteData);
+        }
+
+        $iId = $this->_putVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, $bPerformUndo);
         if($iId === false)
             return ['code' => BX_DOL_OBJECT_ERR_CANNOT_PERFORM];
+
+        if(!$bPerformUndo)
+            $this->isAllowedVote(true);
 
         $this->_trigger();
 
@@ -273,7 +294,19 @@ class BxDolScore extends BxDolObject
          * It's equivalent to @ref hook-bx_dol_score-doVoteUp
          * @hook @ref hook-bx_dol_score-doVoteDown
          */
-        bx_alert($this->_sSystem, 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, [
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_score-undoVoteUp '{object_name}', 'undoVoteUp' - hook after undo score vote 
+         * It's equivalent to @ref hook-bx_dol_score-doVoteUp
+         * @hook @ref hook-bx_dol_score-undoVoteUp
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_dol_score-undoVoteDown '{object_name}', 'undoVoteDown' - hook after undo score vote 
+         * It's equivalent to @ref hook-bx_dol_score-doVoteUp
+         * @hook @ref hook-bx_dol_score-undoVoteDown
+         */
+        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, [
             'score_id' => $iId, 
             'score_author_id' => $iAuthorId, 
             'object_author_id' => $iObjectAuthorId
@@ -281,7 +314,7 @@ class BxDolScore extends BxDolObject
 
         /**
          * @hooks
-         * @hookdef hook-score-doVoteUp 'score', 'doUp' - hook after score vote 
+         * @hookdef hook-score-doUp 'score', 'doUp' - hook after score vote 
          * - $unit_name - equals `score`
          * - $action - equals `doUp`
          * - $object_id - score vote id
@@ -294,11 +327,23 @@ class BxDolScore extends BxDolObject
          */
         /**
          * @hooks
-         * @hookdef hook-score-doVoteDown 'score', 'doVoteDown' - hook after score vote 
+         * @hookdef hook-score-doDown 'score', 'doDown' - hook after score vote 
          * It's equivalent to @ref hook-score-doUp
-         * @hook @ref hook-score-doVoteDown
+         * @hook @ref hook-score-doDown
          */
-        bx_alert('score', 'do' . $sTypeUc, $iId, $iAuthorId, [
+        /**
+         * @hooks
+         * @hookdef hook-score-undoUp 'score', 'undoUp' - hook after undo score vote 
+         * It's equivalent to @ref hook-score-doUp
+         * @hook @ref hook-score-undoUp
+         */
+        /**
+         * @hooks
+         * @hookdef hook-score-undoDown 'score', 'undoDown' - hook after undo score vote 
+         * It's equivalent to @ref hook-score-doUp
+         * @hook @ref hook-score-undoDown
+         */
+        bx_alert('score', ($bPerformUndo ? 'un' : '') . 'do' . $sTypeUc, $iId, $iAuthorId, [
             'object_system' => $this->_sSystem, 
             'object_id' => $iObjectId, 
             'object_author_id' => $iObjectAuthorId
@@ -306,10 +351,11 @@ class BxDolScore extends BxDolObject
 
         $aRequestParamsData['show_script'] = false;
 
+        $bVoted = !$bVoted;
         $aScore = $this->_getVote($iObjectId, true);
         $iCup = (int)$aScore['count_up'];
         $iCdown = (int)$aScore['count_down'];
-        
+
         $aResult = [
             'code' => 0,
             'type' => $sType,
@@ -320,8 +366,8 @@ class BxDolScore extends BxDolObject
             'counter' => $this->getCounter($aRequestParamsData),
             'label_icon' => $this->_getIconDo($sType),
             'label_title' => _t($this->_getTitleDo($sType)),
-            'voted' => !$bVoted,
-            'disabled' => !$bVoted,
+            'voted' => $bVoted,
+            'disabled' => $bVoted && !$bUndo,
         ];
 
         $aResult['api'] = [
@@ -402,6 +448,11 @@ class BxDolScore extends BxDolObject
     protected function _isAllowedVoteByObject($aObject)
     {
         return bx_srv($this->_aSystem['module'], 'check_allowed_view_for_profile', [$aObject]) === CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    protected function _putVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo)
+    {
+        return $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo);
     }
 
     protected function _returnVoteDataForSocket($aData, $aMask = [])
