@@ -537,49 +537,6 @@ class BxForumModule extends BxBaseModTextModule
      * @page service Service Calls
      * @section bx_forum Discussions
      * @subsection bx_forum-page_blocks Page Blocks
-     * @subsubsection bx_forum-browse_favorite browse_favorite
-     * 
-     * @code bx_srv('bx_forum', 'browse_favorite', [...]); @endcode
-     * 
-     * Get page block with a list of favorited items by some profile and represented as table.
-     * 
-     * @param $iProfileId (optional) integer value with profile ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
-     * @param $aParams (optional) an array of additional params. It's not used for now.
-     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
-     * 
-     * @see BxForumModule::serviceBrowseFavorite
-     */
-    /** 
-     * @ref bx_forum-browse_favorite "browse_favorite"
-     */
-    public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $bEmptyMessage = false;
-        if(isset($aParams['empty_message'])) {
-            $bEmptyMessage = (bool)$aParams['empty_message'];
-            unset($aParams['empty_message']);
-        }
-
-        $bAjaxPaginate = true;
-        if(isset($aParams['ajax_paginate'])) {
-            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
-            unset($aParams['ajax_paginate']);
-        }
-
-        return $this->_serviceBrowseTable(array(
-            'type' => 'favorite', 
-            'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
-            'empty_message' => $bEmptyMessage,
-            'ajax_paginate' => $bAjaxPaginate
-        ), false);
-    }
-
-    /**
-     * @page service Service Calls
-     * @section bx_forum Discussions
-     * @subsection bx_forum-page_blocks Page Blocks
      * @subsubsection bx_forum-browse_category browse_category
      * 
      * @code bx_srv('bx_forum', 'browse_category', [...]); @endcode

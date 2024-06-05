@@ -1324,24 +1324,24 @@
     .bx-artificer .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:max-w-none;
     }
     
     .bx-artificer .bx-layout-column-wide .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-layout-column-wide .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:max-w-none;
     }
     
     .bx-artificer .bx-layout-column-half .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-layout-column-half .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:max-w-none;
     }
     .bx-artificer .bx-layout-column-thin .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-layout-column-thin .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-1 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-1 gap-4 md:max-w-none;
     }
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper.flickity-enabled
     { 
