@@ -867,6 +867,12 @@ class BxBasePage extends BxDolPage
             if(is_array($mixedContent) && !empty($mixedContent['content'])) {
                 $iDesignboxId = isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'];
 
+                if(!empty($mixedContent['markers']) && is_array($mixedContent['markers'])) {
+                    $this->addMarkers($mixedContent['markers']);
+
+                    $sTitle = $this->getBlockTitle($aBlock);
+                }
+
                 $sHelpTitle = $sHelpContent = '';
                 if(!in_array($iDesignboxId, $aDbNoTitle))
                     $sHelpTitle = $sHelp;

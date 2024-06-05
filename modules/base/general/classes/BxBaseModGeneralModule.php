@@ -1039,6 +1039,8 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $oProfile = null;
         if((int)$iProfileId)
             $oProfile = BxDolProfile::getInstance($iProfileId);
@@ -1056,9 +1058,22 @@ class BxBaseModGeneralModule extends BxDolModule
         }
         
         if(bx_get('list_id') !== false && !isset($aParams['list_id']))
-            $aParams['list_id'] = (int) bx_get('list_id');
+            $aParams['list_id'] = (int) bx_get('list_id');        
 
-        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
+        $aBlock = $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
+        if(!$aBlock)
+            return $aBlock;
+
+        $sTitle = _t('_sys_txt_default_favorite_list');
+        if(!empty($aParams['list_id']) && ($oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true))) {
+            $aList = $oFavorite->getQueryObject()->getList(['type' => 'id', 'list_id' => $aParams['list_id']]);
+            if(!empty($aList) && is_array($aList))
+                $sTitle = $aList['title'];
+        }
+
+        return array_merge($aBlock, ['markers' => [
+            'title' => $sTitle
+        ]]);
     }
     
     /**
