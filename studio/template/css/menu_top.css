@@ -154,14 +154,11 @@ div.bx-std-menu-top .bx-menu-top-center li .bx-mi-icon {
 div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item .bx-mi-icon {
     border-radius: 1.5rem;
 }
-div.bx-std-menu-top .bx-menu-top-center li .bx-mi-icon {
-    border-radius: 0.5rem;
-}
 div.bx-std-menu-top .bx-menu-breadcrumb li.bx-menu-bc-item .bx-mi-title {    
     text-align: center;
-    letter-spacing: -1.2px; 
+    letter-spacing: -0.02em;
 
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 500;   
 
     color: rgb(243, 244, 246);
@@ -178,6 +175,11 @@ div.bx-std-menu-top .bx-menu-top-center li .sys-icon {
     height: 2.5rem;
 
     margin: 0;
+}
+
+div.bx-std-menu-top .bx-menu-top-center li img {
+    position: relative;
+    z-index: -1;
 }
 
 div.bx-std-menu-top .bx-menu-top-center li .sys-icon {
@@ -234,10 +236,8 @@ div.bx-std-menu-top ul li.bx-menu-tab-search .bx-form-input-text {
     border-width: 0;
     background-color: transparent;
 
-    font-size: 1.25rem;
     font-style: normal;
     font-weight: 500;
-    letter-spacing: -1.2px; 
 }
 
 

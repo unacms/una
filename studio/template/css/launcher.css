@@ -127,15 +127,15 @@ div.bx-std-widget-empty {
 }
 
 .bx-std-widget-link > img {
-    position:relative;
-    z-index:2;
+    position: relative;
+    z-index: -1;
 
     width: 5.0rem;
     height: 5.0rem;
 
     background-color: transparent;
-    background-position:0px 0px;
-    background-repeat:no-repeat;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
 }
 
 div.bx-std-widget-icon-jitter {
