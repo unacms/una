@@ -69,7 +69,7 @@ class BxDolAIProvider extends BxDol
 
     public function getInfo()
     {
-        $aInfo = $this->_oDb->getProviderBy(['sample' => 'id', 'id' => $this->_iId]);
+        $aInfo = $this->_oDb->getProvidersBy(['sample' => 'id', 'id' => $this->_iId]);
         $aInfo['options'] = $this->getOptions();
 
         return $aInfo;
@@ -77,7 +77,7 @@ class BxDolAIProvider extends BxDol
 
     public function getOptions()
     {
-        $aOptions = $this->_oDb->getProviderBy(['sample' => 'options_by_id', 'id' => $this->_iId]);
+        $aOptions = $this->_oDb->getProvidersBy(['sample' => 'options_by_id', 'id' => $this->_iId]);
         foreach($aOptions as &$aOption)
             $aOption['value'] = $this->getOption($aOption['name']);
 

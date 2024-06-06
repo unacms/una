@@ -130,7 +130,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         switch($sType) {
             case 'providers':
-                $aProviders = $this->_oDb->getProviderBy(['sample' => 'ids', 'ids' => $aParams]);
+                $aProviders = $this->_oDb->getProvidersBy(['sample' => 'ids', 'ids' => $aParams]);
                 if(!empty($aProviders) && is_array($aProviders)) {
                     $mixedResult = "\n avaliable proividers list:";
                     foreach($aProviders as $aProvider)
@@ -139,7 +139,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
                 break;
 
             case 'helpers':
-                $aHelpers = $this->_oDb->getHelperBy(['sample' => 'ids', 'ids' => $aParams]);
+                $aHelpers = $this->_oDb->getHelpersBy(['sample' => 'ids', 'ids' => $aParams]);
                 if(!empty($aHelpers) && is_array($aHelpers)) {
                     $mixedResult = "\n avaliable helpers list:";
                     foreach($aHelpers as $aHelper)

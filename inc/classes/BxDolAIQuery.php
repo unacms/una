@@ -387,7 +387,7 @@ class BxDolAIQuery extends BxDolDb
         return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
 
-    public function getProviderBy($aParams = [])
+    public function getProvidersBy($aParams = [])
     {
     	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
 
