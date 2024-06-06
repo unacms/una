@@ -125,7 +125,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                         foreach($aHelpers as $iHelperId)
                             $this->_oDb->insertAutomatorHelper([
                                 'automator_id' => $iId, 
-                                'provider_id' => $iHelperId
+                                'helper_id' => $iHelperId
                             ]);
 
                     if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
@@ -520,7 +520,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $sProviders = 'providers';
             $aProviders = array_map(function($sTitle) {
                 return _t($sTitle);
-            }, ['' => '_sys_please_select'] + $this->_oDb->getProviderBy(['sample' => 'all_pairs', 'active' => 1]));
+            }, ['' => '_sys_please_select'] + $this->_oDb->getProvidersBy(['sample' => 'all_pairs', 'active' => 1]));
 
             $aTmplVarsProviders = [];
             if(!empty($aAutomator[$sProviders]) && is_array($aAutomator[$sProviders])) {
