@@ -53,9 +53,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $iModel = $oForm->getCleanValue('model_id');
             $sType = $oForm->getCleanValue('type');
             $aProviders = $oForm->getCleanValue('providers');
+            $aHelpers = $oForm->getCleanValue('helpers');
             $sMessage = $oForm->getCleanValue('message');
             if(!empty($aProviders) && is_array($aProviders))
                 $sMessage .= $oAI->getAutomatorInstruction('providers', $aProviders);
+            if(!empty($aHelpers) && is_array($aHelpers))
+                $sMessage .= $oAI->getAutomatorInstruction('helpers', $aHelpers);
             $bMessage = !empty($sMessage);
             $sMessageAdd = '';
             $sMessageResponse = '';
@@ -117,6 +120,14 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                                 'provider_id' => $iProviderId
                             ]);
 
+                    $aHelpers = $oForm->getCleanValue('helpers');
+                    if(!empty($aHelpers) && is_array($aHelpers))
+                        foreach($aHelpers as $iHelperId)
+                            $this->_oDb->insertAutomatorHelper([
+                                'automator_id' => $iId, 
+                                'provider_id' => $iHelperId
+                            ]);
+
                     if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
                         if($bMessage) {
                             $aResult = $oCmts->addAuto([
@@ -167,6 +178,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
         $iId = $this->_getId();
         $aAutomator = $this->_oDb->getAutomatorsBy(['sample' => 'id', 'id' => $iId]);
         $aAutomator['providers'] = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
+        $aAutomator['helpers'] = $this->_oDb->getAutomatorsBy(['sample' => 'helpers_by_id_pairs', 'id' => $iId]);
 
         $aForm = $this->_getFormEdit($sAction, $aAutomator);
         $oForm = new BxTemplFormView($aForm);
@@ -175,21 +187,24 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
         if($oForm->isSubmittedAndValid()) {
             $aValsToAdd = [];
 
+            /**
+             * Process Providers
+             */
             $aProvidersIds = $oForm->getCleanValue('providers_ids');
             $bProvidersIds = !empty($aProvidersIds) && is_array($aProvidersIds);
             $aProvidersValues = $oForm->getCleanValue('providers');
             $bProvidersValues = !empty($aProvidersValues) && is_array($aProvidersValues);
 
-            //--- Remove deleted
+            //--- Providers: Remove deleted
             if(!empty($aAutomator['providers']) && is_array($aAutomator['providers']))
-                $this->_oDb->deleteAutomatorProvidersById(array_diff(array_keys($aAutomator['providers']), $aProvidersIds));
+                $this->_oDb->deleteAutomatorProvidersById(array_diff(array_keys($aAutomator['providers']), $bProvidersIds ? $aProvidersIds : []));
 
-            //--- Update existed
+            //--- Providers: Update existed
             if($bProvidersIds)
                 foreach($aProvidersIds as $iIndex => $iApId)
                     $this->_oDb->updateAutomatorProvider(['provider_id' => (int)$aProvidersValues[$iIndex]], ['id' => (int)$iApId]);
 
-            //--- Add new
+            //--- Providers: Add new
             $iProvidersIds = $bProvidersIds ? count($aProvidersIds) : 0;
             $iProvidersValues = $bProvidersValues ? count($aProvidersValues) : 0;
             if($iProvidersValues > $iProvidersIds) {
@@ -198,6 +213,35 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     $this->_oDb->insertAutomatorProvider([
                         'automator_id' => $iId,
                         'provider_id' => (int)$iProvidersValue,
+                    ]);
+            }
+
+            /**
+             * Process Helpers
+             */
+            $aHelpersIds = $oForm->getCleanValue('helpers_ids');
+            $bHelpersIds = !empty($aHelpersIds) && is_array($aHelpersIds);
+            $aHelpersValues = $oForm->getCleanValue('helpers');
+            $bHelpersValues = !empty($aHelpersValues) && is_array($aHelpersValues);
+
+            //--- Helpers: Remove deleted
+            if(!empty($aAutomator['helpers']) && is_array($aAutomator['helpers']))
+                $this->_oDb->deleteAutomatorHelpersById(array_diff(array_keys($aAutomator['helpers']), $bHelpersIds ? $aHelpersIds : []));
+
+            //--- Helpers: Update existed
+            if($bHelpersIds)
+                foreach($aHelpersIds as $iIndex => $iAhId)
+                    $this->_oDb->updateAutomatorHelper(['helper_id' => (int)$aHelpersValues[$iIndex]], ['id' => (int)$iAhId]);
+
+            //--- Helpers: Add new
+            $iHelpersIds = $bHelpersIds ? count($aHelpersIds) : 0;
+            $iHelpersValues = $bHelpersValues ? count($aHelpersValues) : 0;
+            if($iHelpersValues > $iHelpersIds) {
+                $aHelpersValues = array_slice($aHelpersValues, $iHelpersIds);
+                foreach($aHelpersValues as $iHelpersValue)
+                    $this->_oDb->insertAutomatorHelper([
+                        'automator_id' => $iId,
+                        'helper_id' => (int)$iHelpersValue,
                     ]);
             }
 
@@ -435,10 +479,22 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     'caption' => _t('_sys_agents_automators_field_providers'),
                     'value' => '',
                 ],
+                'helpers' => [
+                    'type' => 'custom',
+                    'name' => 'helpers',
+                    'caption' => _t('_sys_agents_automators_field_helpers'),
+                    'value' => '',
+                ],
                 'message' => [
                     'type' => 'textarea',
                     'name' => 'message',
                     'caption' => _t('_sys_agents_automators_field_message'),
+                    'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_automators_field_message_err'),
+                    ],
                 ],
                 'submit' => array(
                     'type' => 'input_set',
@@ -458,7 +514,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             ),
         );
         
-        if($aForm['inputs']['providers']) {
+        if(isset($aForm['inputs']['providers'])) {
             $oForm = new BxTemplFormView([]);
 
             $sProviders = 'providers';
@@ -466,12 +522,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 return _t($sTitle);
             }, ['' => '_sys_please_select'] + $this->_oDb->getProviderBy(['sample' => 'all_pairs', 'active' => 1]));
 
-            $aTmplVarsProviders = array();
-            if(!empty($aAutomator['providers']) && is_array($aAutomator['providers'])) {
-                foreach($aAutomator['providers'] as $iApId => $iProviderId) {
+            $aTmplVarsProviders = [];
+            if(!empty($aAutomator[$sProviders]) && is_array($aAutomator[$sProviders])) {
+                foreach($aAutomator[$sProviders] as $iApId => $iProviderId) {
                     $aInputSelect = [
                         'type' => 'select',
-                        'name' => 'providers[]',
+                        'name' => $sProviders . '[]',
                         'values' => $aProviders,
                         'value' => (int)$iProviderId,
                         'attrs' => [
@@ -482,7 +538,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
                     $aInputHidden = [
                         'type' => 'hidden',
-                        'name' => 'providers_ids[]',
+                        'name' => $sProviders . '_ids[]',
                         'value' => (int)$iApId,
                     ];
                     $sInput .= $oForm->genInput($aInputHidden);
@@ -493,7 +549,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             else  {
                 $aInputSelect = [
                     'type' => 'select',
-                    'name' => 'providers[]',
+                    'name' => $sProviders . '[]',
                     'values' => $aProviders,
                     'value' => '',
                     'attrs' => [
@@ -508,7 +564,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
         
             $aInputButton = [
                 'type' => 'button',
-                'name' => 'providers_add',
+                'name' => $sProviders . '_add',
                 'value' => _t('_sys_agents_automators_field_providers_add'),
                 'attrs' => [
                     'class' => 'bx-def-margin-sec-top',
@@ -516,8 +572,72 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 ]
             ];
 
-            $aForm['inputs']['providers']['content'] = $this->_oTemplate->parseHtmlByName('agents_automator_form_providers.html', [
+            $aForm['inputs'][$sProviders]['content'] = $this->_oTemplate->parseHtmlByName('agents_automator_form_providers.html', [
                 'bx_repeat:providers' => $aTmplVarsProviders,
+                'btn_add' => $oForm->genInputButton($aInputButton)
+            ]);
+        }
+
+        if(isset($aForm['inputs']['helpers'])) {
+            $oForm = new BxTemplFormView([]);
+
+            $sHelpers = 'helpers';
+            $aHelpers = array_map(function($sTitle) {
+                return _t($sTitle);
+            }, ['' => '_sys_please_select'] + $this->_oDb->getHelpersBy(['sample' => 'all_pairs', 'active' => 1]));
+
+            $aTmplVarsHelpers = [];
+            if(!empty($aAutomator[$sHelpers]) && is_array($aAutomator[$sHelpers])) {
+                foreach($aAutomator[$sHelpers] as $iAhId => $iHelperId) {
+                    $aInputSelect = [
+                        'type' => 'select',
+                        'name' => $sHelpers . '[]',
+                        'values' => $aHelpers,
+                        'value' => (int)$iHelperId,
+                        'attrs' => [
+                            'class' => 'bx-def-margin-sec-top-auto'
+                        ]
+                    ];
+                    $sInput = $oForm->genInput($aInputSelect);
+
+                    $aInputHidden = [
+                        'type' => 'hidden',
+                        'name' => $sHelpers . '_ids[]',
+                        'value' => (int)$iAhId,
+                    ];
+                    $sInput .= $oForm->genInput($aInputHidden);
+
+                    $aTmplVarsHelpers[] = ['js_object' => $sJsObject, 'input_select' => $sInput];
+                }
+            }
+            else  {
+                $aInputSelect = [
+                    'type' => 'select',
+                    'name' => $sHelpers . '[]',
+                    'values' => $aHelpers,
+                    'value' => '',
+                    'attrs' => [
+                        'class' => 'bx-def-margin-sec-top-auto'
+                    ]
+                ];
+
+                $aTmplVarsHelpers = [
+                    ['js_object' => $sJsObject, 'input_select' => $oForm->genInput($aInputSelect)],
+                ];
+            }
+        
+            $aInputButton = [
+                'type' => 'button',
+                'name' => $sHelpers . '_add',
+                'value' => _t('_sys_agents_automators_field_helpers_add'),
+                'attrs' => [
+                    'class' => 'bx-def-margin-sec-top',
+                    'onclick' => $sJsObject . ".helperAdd(this, '" . $sHelpers . "');"
+                ]
+            ];
+
+            $aForm['inputs'][$sHelpers]['content'] = $this->_oTemplate->parseHtmlByName('agents_automator_form_helpers.html', [
+                'bx_repeat:helpers' => $aTmplVarsHelpers,
                 'btn_add' => $oForm->genInputButton($aInputButton)
             ]);
         }

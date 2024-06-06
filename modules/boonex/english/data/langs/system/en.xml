@@ -2132,22 +2132,6 @@
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
     <string name="_sys_acl_state"><![CDATA[State: ]]></string>
     <string name="_sys_acl_state_trial"><![CDATA[Trial]]></string>
-    
-    <string name="_sys_agents_helpers_txt_active"><![CDATA[Active]]></string>
-    <string name="_sys_agents_helpers_txt_name"><![CDATA[Name]]></string>
-    <string name="_sys_agents_helpers_txt_model_id"><![CDATA[Model]]></string>
-    <string name="_sys_agents_helpers_txt_profile_id"><![CDATA[Profile]]></string>
-    <string name="_sys_agents_helpers_txt_prompt"><![CDATA[Prompt]]></string>
-    <string name="_sys_agents_helpers_txt_added"><![CDATA[Added]]></string>
-    <string name="_sys_agents_helpers_btn_add"><![CDATA[Add]]></string>
-    <string name="_sys_agents_helpers_popup_add"><![CDATA[Add helper]]></string>
-    <string name="_sys_agents_helpers_field_name"><![CDATA[Name]]></string>
-    <string name="_sys_agents_helpers_field_model_id"><![CDATA[Model]]></string>
-    <string name="_sys_agents_helpers_field_profile_id"><![CDATA[Profile]]></string>
-    <string name="_sys_agents_helpers_field_prompt"><![CDATA[Prompt]]></string>
-    <string name="_sys_agents_helpers_field_profile_id_inf"><![CDATA[Leave empty to use default.]]></string>
-    <string name="_sys_agents_helpers_popup_edit"><![CDATA[Edit helper]]></string>
-    <string name="_sys_agents_automators_btn_check"><![CDATA[Check]]></string>
 
     <string name="_sys_agents_automators_txt_active"><![CDATA[Active]]></string>
     <string name="_sys_agents_automators_txt_type"><![CDATA[Type]]></string>
@@ -2178,7 +2162,10 @@
     <string name="_sys_agents_automators_field_scheduler_time"><![CDATA[Scheduler Time]]></string>
     <string name="_sys_agents_automators_field_providers"><![CDATA[Providers]]></string>
     <string name="_sys_agents_automators_field_providers_add"><![CDATA[Add]]></string>
+    <string name="_sys_agents_automators_field_helpers"><![CDATA[Helpers]]></string>
+    <string name="_sys_agents_automators_field_helpers_add"><![CDATA[Add]]></string>
     <string name="_sys_agents_automators_field_message"><![CDATA[Prompt]]></string>
+    <string name="_sys_agents_automators_field_message_err"><![CDATA[Prompt is essential. Please type something here.]]></string>
     <string name="_sys_agents_automators_field_status_auto"><![CDATA[Auto]]></string>
     <string name="_sys_agents_automators_field_status_manual"><![CDATA[Manual]]></string>
     <string name="_sys_agents_automators_field_status_ready"><![CDATA[Ready]]></string>
@@ -2209,9 +2196,25 @@
     <string name="_sys_agents_pvd_opt_dsc_secret_key"><![CDATA[]]></string>
     <string name="_sys_agents_pvd_opt_cpt_webhook_url"><![CDATA[Webhook URL]]></string>
     <string name="_sys_agents_pvd_opt_dsc_webhook_url"><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
+    <string name="_sys_agents_helpers_txt_active"><![CDATA[Active]]></string>
+    <string name="_sys_agents_helpers_txt_title"><![CDATA[Title]]></string>
+    <string name="_sys_agents_helpers_txt_model_id"><![CDATA[Model]]></string>
+    <string name="_sys_agents_helpers_txt_profile_id"><![CDATA[Profile]]></string>
+    <string name="_sys_agents_helpers_txt_prompt"><![CDATA[Prompt]]></string>
+    <string name="_sys_agents_helpers_txt_added"><![CDATA[Added]]></string>
+    <string name="_sys_agents_helpers_btn_add"><![CDATA[Add Helper]]></string>
+    <string name="_sys_agents_helpers_btn_tune"><![CDATA[Tune]]></string>
+    <string name="_sys_agents_helpers_field_title"><![CDATA[Title]]></string>
+    <string name="_sys_agents_helpers_field_model_id"><![CDATA[Model]]></string>
+    <string name="_sys_agents_helpers_field_profile_id"><![CDATA[Profile]]></string>
+    <string name="_sys_agents_helpers_field_profile_id_inf"><![CDATA[Leave empty to use default.]]></string>
+    <string name="_sys_agents_helpers_field_prompt"><![CDATA[Prompt]]></string>
+    <string name="_sys_agents_helpers_field_prompt_err"><![CDATA[Prompt is essential. Please type something here.]]></string>
+    <string name="_sys_agents_helpers_field_message"><![CDATA[Message]]></string>
+    <string name="_sys_agents_helpers_field_message_err"><![CDATA[Message is essential. Please type something here.]]></string>
+    <string name="_sys_agents_helpers_field_result"><![CDATA[Result]]></string>
+    <string name="_sys_agents_helpers_popup_add"><![CDATA[Add helper]]></string>
+    <string name="_sys_agents_helpers_popup_edit"><![CDATA[Edit helper]]></string>
     <string name=""><![CDATA[]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>

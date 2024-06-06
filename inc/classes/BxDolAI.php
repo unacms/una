@@ -61,7 +61,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     public static function callHelper($iHelperId, $sMessage)
     {
         $oAI = BxDolAI::getInstance();
-        $aHelper = $oAI->_oDb->getHelpersBy(['sample' => 'id', 'id' => $iHelperId]);
+        $aHelper = $oAI->getHelper($iHelperId);
         $oAIModel = $oAI->getModelObject($aHelper['model_id']);
         return $oAIModel->getResponseText($aHelper['prompt'], $sMessage);
     }
@@ -108,6 +108,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return BxDolAIProvider::getObjectInstance($iId);
     }   
 
+    public function getHelper($iId)
+    {
+        return $this->_oDb->getHelpersBy(['sample' => 'id', 'id' => $iId]);
+    }
+
     public function getAutomator($iId, $bFullInfo = false)
     {
         $aAutomator = $this->_oDb->getAutomatorsBy(['sample' => 'id' . ($bFullInfo ? '_full' : ''), 'id' => $iId]);
@@ -130,6 +135,15 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
                     $mixedResult = "\n avaliable proividers list:";
                     foreach($aProviders as $aProvider)
                         $mixedResult .= "\n- " . $aProvider['provider_name'] . ", \$iProviderId=" . $aProvider['id'];
+                }
+                break;
+
+            case 'helpers':
+                $aHelpers = $this->_oDb->getHelperBy(['sample' => 'ids', 'ids' => $aParams]);
+                if(!empty($aHelpers) && is_array($aHelpers)) {
+                    $mixedResult = "\n avaliable helpers list:";
+                    foreach($aHelpers as $aHelper)
+                        $mixedResult .= "\n- " . $aHelper['title'] . ", \$iHelperId=" . $aHelper['id'];
                 }
                 break;
         }
@@ -251,8 +265,6 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         if(empty($sSection))
             $sSection = "Core";
-
-        $sTitle .= "\n";
 
         bx_log('sys_agents', ":\n[" . $sSection . "] " . $mixedContents);
     }

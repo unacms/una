@@ -174,6 +174,19 @@ class BxDolAIQuery extends BxDolDb
                 $sJoinClause = "INNER JOIN `sys_agents_automators_providers` AS `tap` ON `taa`.`id`=`tap`.`automator_id`";
                 $sWhereClause = " AND `taa`.`id`=:id";
                 break;
+            
+            case 'helpers_by_id_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'helper_id';
+                $aMethod['params'][3] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sSelectClause = "`tah`.`id`, `tah`.`helper_id`";
+                $sJoinClause = "INNER JOIN `sys_agents_automators_helpers` AS `tah` ON `taa`.`id`=`tah`.`automator_id`";
+                $sWhereClause = " AND `taa`.`id`=:id";
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . "
@@ -186,7 +199,7 @@ class BxDolAIQuery extends BxDolDb
     public function getHelpersBy($aParams = [])
     {
         $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
-        $sSelectClause = "`taa`.*";
+        $sSelectClause = "`th`.*";
     	$sJoinClause = $sWhereClause = "";
 
         switch($aParams['sample']) {
@@ -196,24 +209,30 @@ class BxDolAIQuery extends BxDolDb
                     'id' => $aParams['id']
                 ];
 
-                $sWhereClause .= " AND `taa`.`id`=:id";
+                $sWhereClause .= " AND `th`.`id`=:id";
                 break;
 
-            case 'id_full':
-            	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = [
-                    'id' => $aParams['id']
-                ];
-
-                $sSelectClause .= ", `tam`.`name` AS `model_name`, `tam`.`title` AS `model_title`, `tam`.`key` AS `model_key`, `tam`.`params` AS `model_params`";
-                $sJoinClause .= " LEFT JOIN `sys_agents_models` AS `tam` ON `taa`.`model_id`=`tam`.`id`";
-                $sWhereClause .= " AND `taa`.`id`=:id";
+            case 'ids':
+                $sWhereClause = " AND `th`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
                 break;
-            
+
+            case 'all_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'title';
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][3] = [
+                        'active' => $aParams['active']
+                    ];
+
+                    $sWhereClause = " AND `th`.`active`=:active";
+                }
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . "
-            FROM `sys_agents_helpers` AS `taa` " . $sJoinClause . "
+            FROM `sys_agents_helpers` AS `th` " . $sJoinClause . "
             WHERE 1" . $sWhereClause;
 
         return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
@@ -257,6 +276,38 @@ class BxDolAIQuery extends BxDolDb
             $mixedId = [$mixedId];
 
         return (int)$this->query("DELETE FROM `sys_agents_automators_providers` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
+    }
+
+    public function insertAutomatorHelper($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `sys_agents_automators_helpers` SET " . $this->arrayToSQL($aParamsSet)) > 0 ? (int)$this->lastId() : false;
+    }
+
+    public function updateAutomatorHelper($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        return $this->query("UPDATE `sys_agents_automators_helpers` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function deleteAutomatorHelpers($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `sys_agents_automators_helpers` WHERE " . $this->arrayToSQL($aParamsWhere)) > 0;
+    }
+
+    public function deleteAutomatorHelpersById($mixedId)
+    {
+        if(!is_array($mixedId))
+            $mixedId = [$mixedId];
+
+        return (int)$this->query("DELETE FROM `sys_agents_automators_helpers` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }
 
     public function getProviderTypesBy($aParams = [])
@@ -356,7 +407,6 @@ class BxDolAIQuery extends BxDolDb
                 $sSelectClause .= ", `tpt`.`name` AS `provider_name`";
                 $sJoinClause = "INNER JOIN `sys_agents_provider_types` AS `tpt` ON `tp`.`type_id`=`tpt`.`id`";
                 $sWhereClause = " AND `tp`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
-                
                 break;
                  
             case 'options_by_id':

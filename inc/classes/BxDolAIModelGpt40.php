@@ -178,8 +178,6 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             'Content-Type: application/json', 
             'OpenAI-Beta: assistants=v1'
         ]);
-        
-        print_r($aResponse);
 
         $aResponse = json_decode($sResponse, true);
         if(isset($aResponse['error'])) {

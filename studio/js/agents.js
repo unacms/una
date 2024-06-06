@@ -94,6 +94,19 @@ BxDolStudioPageAgents.prototype.providerDelete = function(oButton) {
     $(oButton).parents('.bx-form-input-provider:first').remove();
 };
 
+BxDolStudioPageAgents.prototype.helperAdd = function(oButton, sName) {
+    var oButton = $(oButton);
+
+    var oSubentry = oButton.parents('#bx-form-element-' + sName).find('.bx-form-input-helper:first').clone();
+    oSubentry.find("select").val('');
+    oSubentry.find("input[type = 'hidden']").remove();
+
+    oButton.parents('.bx-form-input-helper-add:first').before(oSubentry);
+};
+
+BxDolStudioPageAgents.prototype.helperDelete = function(oButton) {
+    $(oButton).parents('.bx-form-input-helper:first').remove();
+};
 
 BxDolStudioPageAgents.prototype._getDefaultData = function() {
     var oDate = new Date();

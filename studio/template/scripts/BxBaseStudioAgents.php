@@ -34,8 +34,8 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         $this->aMenuItems = [
             BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'mi-cog.svg', 'icon_bg' => true],
             BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'mi-agt-providers.svg', 'icon_bg' => true],
-            BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
             BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
+            BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
         ];
 
         $this->aGridObjects = [
@@ -109,7 +109,24 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         $this->aPageJsOptions['sPageUrl'] .= 'helpers';
 
         if(($iId = bx_get('id')) !== false) {
-            return 'todo';//$sText = BxDolAI::callHelper(1, 'when is the end of the world?');
+            $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
+                'sPageUrl' => $this->sSubpageUrl . 'helpers&id=' . $iId,
+            ]);
+            
+            $aHelper = BxDolAI::getInstance()->getHelper($iId);
+
+            $aForm = $this->_getHelpersForm('tune', $aHelper);
+            $oForm = new BxTemplFormView($aForm);
+            $oForm->initChecker();
+
+            if($oForm->isSubmittedAndValid()) {
+                if($oForm->update($iId) !== false) {
+                    $sMessage = $oForm->getCleanValue('message');
+                    $oForm->aInputs['result']['value'] = BxDolAI::callHelper($iId, $sMessage);
+                }
+            }
+
+            return $oForm->getCode();
         }
 
         return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_HELPERS]);
@@ -134,6 +151,69 @@ class BxBaseStudioAgents extends BxDolStudioAgents
             return '';
 
         return $oGrid->getCode();
+    }
+    
+    protected function _getHelpersForm($sAction, $aHelper = [])
+    {
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => 'bx_std_agents_helpers_' . $sAction,
+                'action' => $this->aPageJsOptions['sPageUrl'],
+                'method' => 'post',
+            ),
+            'params' => array (
+                'db' => array(
+                    'table' => 'sys_agents_helpers',
+                    'key' => 'id',
+                    'submit_name' => 'do_submit',
+                ),
+            ),
+            'inputs' => [
+                'prompt' => [
+                    'type' => 'textarea',
+                    'name' => 'prompt',
+                    'caption' => _t('_sys_agents_helpers_field_prompt'),
+                    'value' => isset($aHelper['prompt']) ? $aHelper['prompt'] : '',
+                    'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_helpers_field_prompt_err'),
+                    ],
+                    'db' => [
+                        'pass' => 'Xss',
+                    ]
+                ],
+                'message' => [
+                    'type' => 'textarea',
+                    'name' => 'message',
+                    'caption' => _t('_sys_agents_helpers_field_message'),
+                    'value' => '',
+                    'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_helpers_field_message_err'),
+                    ],
+                ],
+                'result' => [
+                    'type' => 'textarea',
+                    'name' => 'result',
+                    'caption' => _t('_sys_agents_helpers_field_result'),
+                    'value' => '',
+                    'attrs' => [
+                        'disabled' => 'disabled'
+                    ]
+                ],
+                'submit' => [
+                    'type' => 'submit',
+                    'name' => 'do_submit',
+                    'value' => _t('_sys_submit'),
+                ],
+            ],
+        );
+
+        return $aForm;
     }
 }
 
