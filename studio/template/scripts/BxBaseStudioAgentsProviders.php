@@ -11,12 +11,15 @@
 class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
 {
     protected $_sUrlPage;
+    protected $_sFieldName;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_sUrlPage = BX_DOL_URL_STUDIO . 'agents.php?page=providers';
+
+        $this->_sFieldName = 'name';
     }
 
     public function getPageJsObject()
@@ -41,7 +44,15 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $aValsToAdd = ['profile_id' => bx_get_logged_profile_id(), 'added' => time(), 'active' => 1];
+            $aValsToAdd = [
+                'profile_id' => bx_get_logged_profile_id(), 
+                'added' => time(), 
+                'active' => 1
+            ];
+
+            $sName = $oForm->getCleanValue($this->_sFieldName);
+            $sName = $this->_getProviderName($sName);
+            BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
 
             if(($iId = $oForm->insert($aValsToAdd)) !== false) {
                 if(!empty($aProvider['options']) && is_array($aProvider['options']))
@@ -88,6 +99,12 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
+            $sName = $oForm->getCleanValue($this->_sFieldName);
+            if($aProviderInfo[$this->_sFieldName] != $sName) {
+                $sName = $this->_getProviderName($sName);
+                BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
+            }
+
             if($oForm->update($iId) === false)
                 return echoJson(['msg' => _t('_sys_txt_error_occured')]);
 
@@ -259,11 +276,17 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
                         'pass' => 'Int',
                     ]
                 ],
-                'title' => [
+                'name' => [
                     'type' => 'text',
-                    'name' => 'title',
-                    'caption' => _t('_sys_agents_providers_field_title'),
-                    'value' => isset($aProvider['title']) ? $aProvider['title'] : '',
+                    'name' => 'name',
+                    'caption' => _t('_sys_agents_providers_field_name'),
+                    'value' => isset($aProvider['name']) ? $aProvider['name'] : '',
+                    'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_form_field_err_enter'),
+                    ],
                     'db' => [
                         'pass' => 'Xss',
                     ],
@@ -306,6 +329,11 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
             return false;
 
         return $iId;
+    }
+
+    protected function _getProviderName($sName)
+    {
+        return uriGenerate($sName, 'sys_agents_providers', 'name', ['lowercase' => false]);
     }
 }
 

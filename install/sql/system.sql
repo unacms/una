@@ -5423,14 +5423,15 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `hidden_on`, `order`) VALUES
 ('sys_studio_agents_automators', 'checkbox', '', '2%', 0, 0, '', '', 1),
 ('sys_studio_agents_automators', 'switcher', '_sys_agents_automators_txt_active', '8%', 0, 0, '', '', 2),
-('sys_studio_agents_automators', 'type', '_sys_agents_automators_txt_type', '10%', 0, 0, '', '', 3),
-('sys_studio_agents_automators', 'model_id', '_sys_agents_automators_txt_model_id', '10%', 0, 0, '', '', 4),
-('sys_studio_agents_automators', 'profile_id', '_sys_agents_automators_txt_profile_id', '10%', 0, 0, '', '', 5),
-('sys_studio_agents_automators', 'message_id', '_sys_agents_automators_txt_message_id', '20%', 0, 32, '', '', 6),
-('sys_studio_agents_automators', 'messages', '_sys_agents_automators_txt_messages', '10%', 0, 0, '', '', 7),
-('sys_studio_agents_automators', 'added', '_sys_agents_automators_txt_added', '5%', 0, 0, '', '', 8),
-('sys_studio_agents_automators', 'status', '_sys_agents_automators_txt_status', '5%', 0, 0, '', '', 9),
-('sys_studio_agents_automators', 'actions', '', '20%', 0, 0, '', '', 10);
+('sys_studio_agents_automators', 'name', '_sys_agents_automators_txt_name', '10%', 0, 0, '', '', 3),
+('sys_studio_agents_automators', 'type', '_sys_agents_automators_txt_type', '8%', 0, 0, '', '', 4),
+('sys_studio_agents_automators', 'model_id', '_sys_agents_automators_txt_model_id', '8%', 0, 0, '', '', 5),
+('sys_studio_agents_automators', 'profile_id', '_sys_agents_automators_txt_profile_id', '10%', 0, 0, '', '', 6),
+('sys_studio_agents_automators', 'message_id', '_sys_agents_automators_txt_message_id', '14%', 0, 32, '', '', 7),
+('sys_studio_agents_automators', 'messages', '_sys_agents_automators_txt_messages', '10%', 0, 0, '', '', 8),
+('sys_studio_agents_automators', 'added', '_sys_agents_automators_txt_added', '5%', 0, 0, '', '', 9),
+('sys_studio_agents_automators', 'status', '_sys_agents_automators_txt_status', '5%', 0, 0, '', '', 10),
+('sys_studio_agents_automators', 'actions', '', '20%', 0, 0, '', '', 11);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_studio_agents_automators', 'bulk', 'delete', '_Delete', '', 0, 1, 1),
@@ -5447,10 +5448,10 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `hidden_on`, `order`) VALUES
 ('sys_studio_agents_helpers', 'checkbox', '', '2%', 0, 0, '', '', 1),
 ('sys_studio_agents_helpers', 'switcher', '_sys_agents_helpers_txt_active', '8%', 0, 0, '', '', 2),
-('sys_studio_agents_helpers', 'title', '_sys_agents_helpers_txt_title', '15%', 0, 0, '', '', 3),
+('sys_studio_agents_helpers', 'name', '_sys_agents_helpers_txt_name', '15%', 0, 0, '', '', 3),
 ('sys_studio_agents_helpers', 'model_id', '_sys_agents_helpers_txt_model_id', '10%', 0, 0, '', '', 5),
 ('sys_studio_agents_helpers', 'profile_id', '_sys_agents_helpers_txt_profile_id', '10%', 0, 0, '', '', 6),
-('sys_studio_agents_helpers', 'prompt', '_sys_agents_helpers_txt_prompt', '25%', 0, 0, '', '', 7),
+('sys_studio_agents_helpers', 'prompt', '_sys_agents_helpers_txt_prompt', '25%', 0, 32, '', '', 7),
 ('sys_studio_agents_helpers', 'added', '_sys_agents_helpers_txt_added', '10%', 0, 0, '', '', 8),
 ('sys_studio_agents_helpers', 'actions', '', '20%', 0, 0, '', '', 9);
 
@@ -5469,7 +5470,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('sys_studio_agents_providers', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('sys_studio_agents_providers', 'switcher', '_sys_agents_providers_txt_active', '8%', 0, '', '', 2),
-('sys_studio_agents_providers', 'title', '_sys_agents_providers_txt_provider_title', '30%', 0, 32, '', 3),
+('sys_studio_agents_providers', 'name', '_sys_agents_providers_txt_provider_name', '30%', 0, 32, '', 3),
 ('sys_studio_agents_providers', 'provider_type', '_sys_agents_providers_txt_provider_type', '20%', 1, 16, '', 4),
 ('sys_studio_agents_providers', 'added', '_sys_agents_providers_txt_added', '20%', 0, '', '', 5),
 ('sys_studio_agents_providers', 'actions', '', '20%', 0, '', '', 6);
@@ -6331,6 +6332,7 @@ INSERT INTO `sys_agents_models`(`name`, `title`, `key`, `params`, `class_name`, 
 
 CREATE TABLE IF NOT EXISTS `sys_agents_automators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL default '',
   `model_id` int(11) NOT NULL default '0',
   `profile_id` int(11) NOT NULL default '0',
   `type` enum('event','scheduler','webhook') NOT NULL DEFAULT 'event',
@@ -6421,12 +6423,13 @@ INSERT INTO `sys_agents_provider_options`(`provider_type_id`, `name`, `type`, `t
 
 CREATE TABLE IF NOT EXISTS `sys_agents_providers` (
   `id` int(11) NOT NULL auto_increment,
+  `name` varchar(128) NOT NULL default '',
+  `type_id` int(11) NOT NULL default '0',
   `profile_id` int(11) NOT NULL default '0',
-  `provider_type_id` int(11) NOT NULL default '0',
-  `title` varchar(128) NOT NULL default '',
   `added` int(11) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
-  PRIMARY KEY(`id`)
+  PRIMARY KEY(`id`),
+  UNIQUE KEY `name`(`name`)
 );
 
 CREATE TABLE IF NOT EXISTS `sys_agents_providers_values` (
@@ -6440,13 +6443,15 @@ CREATE TABLE IF NOT EXISTS `sys_agents_providers_values` (
 
 CREATE TABLE IF NOT EXISTS `sys_agents_helpers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
   `model_id` int(11) NOT NULL DEFAULT 0,
   `profile_id` int(11) NOT NULL DEFAULT 0,
+  `description` text NOT NULL,
   `prompt` text DEFAULT NULL,
   `added` int(11) NOT NULL DEFAULT 0,
   `active` tinyint(4) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name`(`name`)
 );
 
 -- --------------------------------------------------------

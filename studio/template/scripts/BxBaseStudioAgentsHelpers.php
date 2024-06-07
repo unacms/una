@@ -11,18 +11,21 @@
 class BxBaseStudioAgentsHelpers extends BxDolStudioAgentsHelpers
 {
     protected $_sUrlPage;
+    protected $_sFieldName;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_sUrlPage = BX_DOL_URL_STUDIO . 'agents.php?page=helpers';
+
+        $this->_sFieldName = 'name';
     }
 
     public function getPageJsObject()
     {
         return 'oBxDolStudioPageAgents';
-    }  
+    }
 
     public function performActionAdd()
     {
@@ -34,6 +37,10 @@ class BxBaseStudioAgentsHelpers extends BxDolStudioAgentsHelpers
 
         if($oForm->isSubmittedAndValid()) {
             $aValsToAdd = ['added' => time()];
+
+            $sName = $oForm->getCleanValue($this->_sFieldName);
+            $sName = $this->_getHelperName($sName);
+            BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
 
             $iProfileId = $oForm->getCleanValue('profile_id');
             if(empty($iProfileId)) {
@@ -80,7 +87,13 @@ class BxBaseStudioAgentsHelpers extends BxDolStudioAgentsHelpers
 
         if($oForm->isSubmittedAndValid()) {
             $aValsToAdd = [];
-            
+
+            $sName = $oForm->getCleanValue($this->_sFieldName);
+            if($aHelper[$this->_sFieldName] != $sName) {
+                $sName = $this->_getHelperName($sName);
+                BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
+            }
+
             $iProfileId = $oForm->getCleanValue('profile_id');
             if(empty($iProfileId)) {
                 $iProfileId = (int)getParam('sys_agents_profile');
@@ -183,12 +196,18 @@ class BxBaseStudioAgentsHelpers extends BxDolStudioAgentsHelpers
                 ),
             ),
             'inputs' => array(
-                'title' => [
+                'name' => [
                     'type' => 'text',
-                    'name' => 'title',
+                    'name' => 'name',
                     'required' => '1',
-                    'caption' => _t('_sys_agents_helpers_field_title'),
-                    'value' => isset($aHelper['title']) ? $aHelper['title'] : '',
+                    'caption' => _t('_sys_agents_helpers_field_name'),
+                    'value' => isset($aHelper['name']) ? $aHelper['name'] : '',
+                    'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_form_field_err_enter'),
+                    ],
                     'db' => [
                         'pass' => 'Xss',
                     ]
@@ -264,6 +283,11 @@ class BxBaseStudioAgentsHelpers extends BxDolStudioAgentsHelpers
             return false;
 
         return $iId;
+    }
+
+    protected function _getHelperName($sName)
+    {
+        return uriGenerate($sName, 'sys_agents_helpers', 'name', ['lowercase' => false]);
     }
 }
 

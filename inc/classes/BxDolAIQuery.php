@@ -55,6 +55,13 @@ class BxDolAIQuery extends BxDolDb
         return $aProvider;
     }
 
+    static public function getProviderIdByName($sName)
+    {
+        return (int)BxDolDb::getInstance()->getOne("SELECT `id` FROM `sys_agents_providers` WHERE `name`=:name LIMIT 1", [
+            'name' => $sName
+        ]);
+    }
+
     public function getModelsBy($aParams = [])
     {
         $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
@@ -219,7 +226,7 @@ class BxDolAIQuery extends BxDolDb
             case 'all_pairs':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
-                $aMethod['params'][2] = 'title';
+                $aMethod['params'][2] = 'name';
 
                 if(isset($aParams['active'])) {
                     $aMethod['params'][3] = [
@@ -404,7 +411,7 @@ class BxDolAIQuery extends BxDolDb
                 break;
 
             case 'ids':
-                $sSelectClause .= ", `tpt`.`name` AS `provider_name`";
+                $sSelectClause .= ", `tpt`.`name` AS `type_name`";
                 $sJoinClause = "INNER JOIN `sys_agents_provider_types` AS `tpt` ON `tp`.`type_id`=`tpt`.`id`";
                 $sWhereClause = " AND `tp`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
                 break;
@@ -422,7 +429,7 @@ class BxDolAIQuery extends BxDolDb
             case 'all_pairs':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
-                $aMethod['params'][2] = 'title';
+                $aMethod['params'][2] = 'name';
 
                 if(isset($aParams['active'])) {
                     $aMethod['params'][3] = [

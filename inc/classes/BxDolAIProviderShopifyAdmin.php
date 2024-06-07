@@ -30,7 +30,7 @@
  */
 class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
 {
-    public static $NAME = 'shopify_admin';
+    public static $PROVIDER_NAME = 'shopify_admin';
 
     protected $_sShopDomain;
     protected $_sAccessToken;
@@ -40,7 +40,7 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
 
     public function __construct($aProvider)
     {
-        $this->_sName = self::$NAME;
+        $this->_sProviderName = self::$PROVIDER_NAME;
 
         parent::__construct($aProvider);
 

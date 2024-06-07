@@ -124,26 +124,30 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return $aAutomator;
     }
 
-    public function getAutomatorInstruction($sType, $aParams = [])
+    public function getAutomatorInstruction($sType, $mixedParams = false)
     {
         $mixedResult = '';
 
         switch($sType) {
+            case 'profile':
+                $mixedResult = "\n Profile ID for system actions: " . $mixedParams;
+                break;
+
             case 'providers':
-                $aProviders = $this->_oDb->getProvidersBy(['sample' => 'ids', 'ids' => $aParams]);
+                $aProviders = $this->_oDb->getProvidersBy(['sample' => 'ids', 'ids' => $mixedParams]);
                 if(!empty($aProviders) && is_array($aProviders)) {
-                    $mixedResult = "\n avaliable proividers list:";
+                    $mixedResult = "\n Avaliable proividers list:";
                     foreach($aProviders as $aProvider)
-                        $mixedResult .= "\n- " . $aProvider['provider_name'] . ", \$iProviderId=" . $aProvider['id'];
+                        $mixedResult .= "\n- " . $aProvider['name'] . " - " . $aProvider['type_name'];
                 }
                 break;
 
             case 'helpers':
-                $aHelpers = $this->_oDb->getHelpersBy(['sample' => 'ids', 'ids' => $aParams]);
+                $aHelpers = $this->_oDb->getHelpersBy(['sample' => 'ids', 'ids' => $mixedParams]);
                 if(!empty($aHelpers) && is_array($aHelpers)) {
-                    $mixedResult = "\n avaliable helpers list:";
+                    $mixedResult = "\n Avaliable helpers list:";
                     foreach($aHelpers as $aHelper)
-                        $mixedResult .= "\n- " . $aHelper['title'] . ", \$iHelperId=" . $aHelper['id'];
+                        $mixedResult .= "\n- " . $aHelper['name'] . " - " . $aHelper['description'];
                 }
                 break;
         }

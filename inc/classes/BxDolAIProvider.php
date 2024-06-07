@@ -11,8 +11,8 @@ class BxDolAIProvider extends BxDol
 {
     protected $_oDb;
     protected $_iId;
+    protected $_sProviderName;
     protected $_sName;
-    protected $_sCaption;
     protected $_sPrefix;
     protected $_aOptions;
 
@@ -20,14 +20,14 @@ class BxDolAIProvider extends BxDol
     {
         parent::__construct();
 
-        if(empty($aProvider) || !is_array($aProvider) || strcmp($aProvider['type']['name'], $this->_sName) != 0)
+        if(empty($aProvider) || !is_array($aProvider) || strcmp($aProvider['type']['name'], $this->_sProviderName) != 0)
             $this->_log("Unexpected value provided for the credentials");
 
         $this->_oDb = new BxDolAIQuery();
 
         $this->_iId = (int)$aProvider['id'];
-        $this->_sName = $aProvider['type']['name'];
-        $this->_sCaption = _t($aProvider['title']);
+        $this->_sProviderName = $aProvider['type']['name'];
+        $this->_sName = _t($aProvider['name']);
         $this->_sPrefix = $aProvider['type']['option_prefix'];
 
         $this->_aOptions = [];
@@ -36,8 +36,22 @@ class BxDolAIProvider extends BxDol
     }
 
     /**
+     * Get provider object instance by provider unique name
+     * @param $sName provider unique name
+     * @return object instance or false on error
+     */
+    public static function getObjectInstanceByName($sName)
+    {
+        $iId = BxDolAIQuery::getProviderIdByName($sName);
+        if(!$iId)
+            return false;
+
+        return self::getObjectInstance($iId);
+    }
+
+    /**
      * Get provider object instance by provider ID
-     * @param $sProvider provider name
+     * @param $iId provider ID
      * @return object instance or false on error
      */
     public static function getObjectInstance($iId)

@@ -2133,7 +2133,10 @@
     <string name="_sys_acl_state"><![CDATA[State: ]]></string>
     <string name="_sys_acl_state_trial"><![CDATA[Trial]]></string>
 
+    <string name="_sys_agents_form_field_err_enter"><![CDATA[This field is essential. Please enter something here.]]></string>
+    <string name="_sys_agents_form_field_err_select"><![CDATA[This field is essential. Please select something here.]]></string>
     <string name="_sys_agents_automators_txt_active"><![CDATA[Active]]></string>
+    <string name="_sys_agents_automators_txt_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_automators_txt_type"><![CDATA[Type]]></string>
     <string name="_sys_agents_automators_txt_alert_unit"><![CDATA[Unit]]></string>
     <string name="_sys_agents_automators_txt_alert_action"><![CDATA[Action]]></string>
@@ -2150,6 +2153,7 @@
     <string name="_sys_agents_automators_btn_approve"><![CDATA[Approve]]></string>
     <string name="_sys_agents_automators_popup_add"><![CDATA[Add automator]]></string>
     <string name="_sys_agents_automators_popup_edit"><![CDATA[Edit automator]]></string>
+    <string name="_sys_agents_automators_field_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_automators_field_model_id"><![CDATA[Model]]></string>
     <string name="_sys_agents_automators_field_profile_id"><![CDATA[Profile]]></string>
     <string name="_sys_agents_automators_field_profile_id_inf"><![CDATA[Leave empty to use default.]]></string>
@@ -2172,7 +2176,7 @@
     <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Event isn't found, please rephrase your prompt.]]></string>
     <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Can't generate code, please rephrase your prompt.]]></string>
     <string name="_sys_agents_providers_txt_active"><![CDATA[Active]]></string>
-    <string name="_sys_agents_providers_txt_provider_title"><![CDATA[Title]]></string>
+    <string name="_sys_agents_providers_txt_provider_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_providers_txt_provider_type"><![CDATA[Type]]></string>
     <string name="_sys_agents_providers_txt_added"><![CDATA[Added]]></string>
     <string name="_sys_agents_providers_btn_add"><![CDATA[Add Provider]]></string>
@@ -2184,7 +2188,7 @@
     <string name="_sys_agents_providers_popup_view"><![CDATA[View provider]]></string>
     <string name="_sys_agents_providers_field_type_id"><![CDATA[Type]]></string>
     <string name="_sys_agents_providers_field_type_id_err"><![CDATA[Type is essential. Please select a value.]]></string>
-    <string name="_sys_agents_providers_field_title"><![CDATA[Title]]></string>        
+    <string name="_sys_agents_providers_field_name"><![CDATA[Name]]></string>        
     <string name="_sys_agents_pvd_cpt_shopify_admin"><![CDATA[Shopify (Admin API)]]></string>
     <string name="_sys_agents_pvd_opt_cpt_active"><![CDATA[Active]]></string>
     <string name="_sys_agents_pvd_opt_dsc_active"><![CDATA[Activate(Deactivate) source]]></string>
@@ -2197,14 +2201,14 @@
     <string name="_sys_agents_pvd_opt_cpt_webhook_url"><![CDATA[Webhook URL]]></string>
     <string name="_sys_agents_pvd_opt_dsc_webhook_url"><![CDATA[]]></string>
     <string name="_sys_agents_helpers_txt_active"><![CDATA[Active]]></string>
-    <string name="_sys_agents_helpers_txt_title"><![CDATA[Title]]></string>
+    <string name="_sys_agents_helpers_txt_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_helpers_txt_model_id"><![CDATA[Model]]></string>
     <string name="_sys_agents_helpers_txt_profile_id"><![CDATA[Profile]]></string>
     <string name="_sys_agents_helpers_txt_prompt"><![CDATA[Prompt]]></string>
     <string name="_sys_agents_helpers_txt_added"><![CDATA[Added]]></string>
     <string name="_sys_agents_helpers_btn_add"><![CDATA[Add Helper]]></string>
     <string name="_sys_agents_helpers_btn_tune"><![CDATA[Tune]]></string>
-    <string name="_sys_agents_helpers_field_title"><![CDATA[Title]]></string>
+    <string name="_sys_agents_helpers_field_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_helpers_field_model_id"><![CDATA[Model]]></string>
     <string name="_sys_agents_helpers_field_profile_id"><![CDATA[Profile]]></string>
     <string name="_sys_agents_helpers_field_profile_id_inf"><![CDATA[Leave empty to use default.]]></string>

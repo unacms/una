@@ -11,12 +11,15 @@
 class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 {
     protected $_sUrlPage;
+    protected $_sFieldName;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_sUrlPage = BX_DOL_URL_STUDIO . 'agents.php?page=automators';
+
+        $this->_sFieldName = 'name';
     }
 
     public function getPageJsObject()
@@ -33,7 +36,13 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $aValsToAdd = ['added' => time()];
+            $aValsToAdd = [
+                'added' => time()
+            ];
+
+            $sName = $oForm->getCleanValue($this->_sFieldName);
+            $sName = $this->_getAutomatorName($sName);
+            BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
 
             $iProfileId = $oForm->getCleanValue('profile_id');
             if(empty($iProfileId)) {
@@ -55,15 +64,17 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $aProviders = $oForm->getCleanValue('providers');
             $aHelpers = $oForm->getCleanValue('helpers');
             $sMessage = $oForm->getCleanValue('message');
-            if(!empty($aProviders) && is_array($aProviders))
-                $sMessage .= $oAI->getAutomatorInstruction('providers', $aProviders);
-            if(!empty($aHelpers) && is_array($aHelpers))
-                $sMessage .= $oAI->getAutomatorInstruction('helpers', $aHelpers);
             $bMessage = !empty($sMessage);
             $sMessageAdd = '';
             $sMessageResponse = '';
 
             $oAIModel = $oAI->getModelObject($iModel);
+
+            $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
+            if(!empty($aProviders) && is_array($aProviders))
+                $sInstructions .= $oAI->getAutomatorInstruction('providers', $aProviders);
+            if(!empty($aHelpers) && is_array($aHelpers))
+                $sInstructions .= $oAI->getAutomatorInstruction('helpers', $aHelpers);
 
             $bIsValid = true;
             $aResponseInit = [];
@@ -101,7 +112,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             }
 
             if($bIsValid) {
-                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sMessageAdd, $oAIModel->getParams())) !== false) {
+                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sInstructions . $sMessageAdd, $oAIModel->getParams())) !== false) {
                     $sMessageResponse = $sResponse;
                 }
                 else {
@@ -130,19 +141,27 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
                     if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
                         if($bMessage) {
+                            $iProfileId = bx_get_logged_profile_id();
+
                             $aResult = $oCmts->addAuto([
-                                'cmt_author_id' => bx_get_logged_profile_id(),
+                                'cmt_author_id' => $iProfileId,
                                 'cmt_parent_id' => 0,
                                 'cmt_text' => $sMessage
                             ]);
 
                             if(!empty($aResult['id']))
                                 $this->_oDb->updateAutomators(['message_id' => $aResult['id']], ['id' => $iId]);
+
+                            sleep(1);
+                            $oCmts->addAuto([
+                                'cmt_author_id' => $iProfileId,
+                                'cmt_parent_id' => 0,
+                                'cmt_text' => $sInstructions
+                            ]);
                         }
 
                         if($sMessageResponse) {
                             sleep(1);
-
                             $oCmts->addAuto([
                                 'cmt_author_id' => $this->_iProfileIdAi,
                                 'cmt_parent_id' => 0,
@@ -186,6 +205,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
         if($oForm->isSubmittedAndValid()) {
             $aValsToAdd = [];
+
+            $sName = $oForm->getCleanValue($this->_sFieldName);
+            if($aAutomator[$this->_sFieldName] != $sName) {
+                $sName = $this->_getAutomatorName($sName);
+                BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
+            }
 
             /**
              * Process Providers
@@ -258,8 +283,38 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             if(!empty($sSchedulerTime))
                 $aValsToAdd['params'] = json_encode(['scheduler_time' => $sSchedulerTime]);
 
-            if($oForm->update($iId, $aValsToAdd) !== false)
+            if($oForm->update($iId, $aValsToAdd) !== false) {
+                if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
+                    $oAI = BxDolAI::getInstance();
+
+                    $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
+
+                    $aProviders = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
+                    if(!empty($aProviders) && is_array($aProviders))
+                        $sInstructions .= $oAI->getAutomatorInstruction('providers', array_values($aProviders));
+
+                    $aHelpers = $this->_oDb->getAutomatorsBy(['sample' => 'helpers_by_id_pairs', 'id' => $iId]);
+                    if(!empty($aHelpers) && is_array($aHelpers))
+                        $sInstructions .= $oAI->getAutomatorInstruction('helpers', array_values($aHelpers));
+
+                    $oCmts->addAuto([
+                        'cmt_author_id' => $iProfileId,
+                        'cmt_parent_id' => 0,
+                        'cmt_text' => $sInstructions
+                    ]);
+
+                    if(($sResponse = $oAI->getModelObject($aAutomator['model_id'])->getResponse($aAutomator['type'], $sInstructions, $oAIModel->getParams())) !== false) {
+                        sleep(1);
+                        $oCmts->addAuto([
+                            'cmt_author_id' => $this->_iProfileIdAi,
+                            'cmt_parent_id' => 0,
+                            'cmt_text' => $sResponse
+                        ]);
+                    }
+                }
+
                 $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
+            }
             else
                 $aRes = ['msg' => _t('_sys_txt_error_occured')];
 
@@ -397,6 +452,21 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 ),
             ),
             'inputs' => array(
+                'name' => [
+                    'type' => 'text',
+                    'name' => 'name',
+                    'caption' => _t('_sys_agents_automators_field_name'),
+                    'value' => isset($aAutomator['name']) ? $aAutomator['name'] : '',
+                    'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_form_field_err_enter'),
+                    ],
+                    'db' => [
+                        'pass' => 'Xss',
+                    ],
+                ],
                 'model_id' => [
                     'type' => 'select',
                     'name' => 'model_id',
@@ -405,9 +475,14 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     'value' => isset($aAutomator['model_id']) ? $aAutomator['model_id'] : BxDolAI::getInstance()->getDefaultModel(),
                     'values' => $this->_oDb->getModelsBy(['sample' => 'all_pairs']),
                     'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_form_field_err_select'),
+                    ],
                     'db' => [
                         'pass' => 'Int',
-                    ]
+                    ],
                 ],
                 'profile_id' => [
                     'type' => 'select',
@@ -656,6 +731,11 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             return false;
 
         return $iId;
+    }
+
+    protected function _getAutomatorName($sName)
+    {
+        return uriGenerate($sName, 'sys_agents_automators', 'name', ['lowercase' => false]);
     }
 }
 

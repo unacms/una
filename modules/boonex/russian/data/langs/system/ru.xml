@@ -2107,8 +2107,11 @@
 	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>
         <string name="_sys_acl_state"><![CDATA[Состояние: ]]></string>
         <string name="_sys_acl_state_trial"><![CDATA[Пробный]]></string>
-    
+
+        <string name="_sys_agents_form_field_err_enter"><![CDATA[Это поле имеет важное значение. Пожалуйста, напишите что-нибудь здесь.]]></string>
+        <string name="_sys_agents_form_field_err_select"><![CDATA[Это поле имеет важное значение. Пожалуйста, выберите что-нибудь здесь.]]></string>
         <string name="_sys_agents_automators_txt_active"><![CDATA[Активный]]></string>
+        <string name="_sys_agents_automators_txt_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_automators_txt_type"><![CDATA[Тип]]></string>
         <string name="_sys_agents_automators_txt_alert_unit"><![CDATA[Тип события]]></string>
         <string name="_sys_agents_automators_txt_alert_action"><![CDATA[Действие события]]></string>
@@ -2125,6 +2128,7 @@
         <string name="_sys_agents_automators_btn_approve"><![CDATA[Одобрить]]></string>
         <string name="_sys_agents_automators_popup_add"><![CDATA[Добавить автоматизатор]]></string>
         <string name="_sys_agents_automators_popup_edit"><![CDATA[Редактировать автоматизатор]]></string>
+        <string name="_sys_agents_automators_field_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_automators_field_model_id"><![CDATA[Модель]]></string>
         <string name="_sys_agents_automators_field_profile_id"><![CDATA[Профиль]]></string>
         <string name="_sys_agents_automators_field_profile_id_inf"><![CDATA[Оставьте пустым, чтобы использовать значение по умолчанию.]]></string>
@@ -2147,7 +2151,7 @@
         <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Событие не найдено. Перефразируйте запрос.]]></string>
         <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Невозможно сгенерировать код. Перефразируйте запрос.]]></string>
         <string name="_sys_agents_providers_txt_active"><![CDATA[Активный]]></string>
-        <string name="_sys_agents_providers_txt_provider_title"><![CDATA[Название]]></string>
+        <string name="_sys_agents_providers_txt_provider_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_providers_txt_provider_type"><![CDATA[Тип]]></string>
         <string name="_sys_agents_providers_txt_added"><![CDATA[Добавлено]]></string>
         <string name="_sys_agents_providers_btn_add"><![CDATA[Добавить]]></string>
@@ -2159,7 +2163,7 @@
         <string name="_sys_agents_providers_popup_view"><![CDATA[Посмотреть поставщика]]></string>
         <string name="_sys_agents_providers_field_type_id"><![CDATA[Тип]]></string>
         <string name="_sys_agents_providers_field_type_id_err"><![CDATA[Тип имеет важное значение. Пожалуйста, выберите значение.]]></string>
-        <string name="_sys_agents_providers_field_title"><![CDATA[Название]]></string>
+        <string name="_sys_agents_providers_field_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_pvd_cpt_shopify_admin"><![CDATA[Shopify (Admin API)]]></string>
         <string name="_sys_agents_pvd_opt_cpt_active"><![CDATA[Активировать]]></string>
         <string name="_sys_agents_pvd_opt_dsc_active"><![CDATA[Активировать(деактивировать) источник.]]></string>
@@ -2172,14 +2176,14 @@
         <string name="_sys_agents_pvd_opt_cpt_webhook_url"><![CDATA[URL вебхука]]></string>
         <string name="_sys_agents_pvd_opt_dsc_webhook_url"><![CDATA[]]></string>
         <string name="_sys_agents_helpers_txt_active"><![CDATA[Активный]]></string>
-        <string name="_sys_agents_helpers_txt_title"><![CDATA[Название]]></string>
+        <string name="_sys_agents_helpers_txt_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_helpers_txt_model_id"><![CDATA[Модель]]></string>
         <string name="_sys_agents_helpers_txt_profile_id"><![CDATA[Профиль]]></string>
         <string name="_sys_agents_helpers_txt_prompt"><![CDATA[Инструкции]]></string>
         <string name="_sys_agents_helpers_txt_added"><![CDATA[Добавлено]]></string>
         <string name="_sys_agents_helpers_btn_add"><![CDATA[Добавить помощника]]></string>
         <string name="_sys_agents_helpers_btn_tune"><![CDATA[Настройка]]></string>
-        <string name="_sys_agents_helpers_field_title"><![CDATA[Название]]></string>
+        <string name="_sys_agents_helpers_field_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_helpers_field_model_id"><![CDATA[Модель]]></string>
         <string name="_sys_agents_helpers_field_profile_id"><![CDATA[Профиль]]></string>
         <string name="_sys_agents_helpers_field_profile_id_inf"><![CDATA[Оставьте пустым, чтобы использовать значение по умолчанию.]]></string>
