@@ -918,6 +918,33 @@ class BxBaseServiceProfiles extends BxDol
 
         return $sCode;
     }
+    
+    public function serviceSetMembership($mixedProfileId, $iAclLevelId, $iAclLevelDuration = 0)
+    {
+        if(!is_array($mixedProfileId))
+            $mixedProfileId = array($mixedProfileId);
+
+        $iPerformerId = bx_get_logged_profile_id();
+        $aCheck = checkActionModule($iPerformerId, 'set acl level', 'system', false);
+        if(!isAdmin() && $aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return true;//array('code' => 1, 'msg' => $aCheck[CHECK_ACTION_MESSAGE]);
+
+        $iSet = 0;
+        $oAcl = BxDolAcl::getInstance();
+        foreach($mixedProfileId as $iProfileId) {
+            if(!$oAcl->setMembership($iProfileId, $iAclLevelId, $iAclLevelDuration, true))
+                continue;
+
+            $iSet += 1;
+
+            checkActionModule($iPerformerId, 'set acl level', 'system', true); // perform action
+        }
+
+        if(count($mixedProfileId) != $iSet)
+            return true;//array('code' => 2, 'msg' => _t('_error occured'));
+
+        return true;//$aResult;
+    }
 
     public function serviceBrowseRecommendationsSubscriptions ($iProfileId = 0, $aParams = [])
     {
