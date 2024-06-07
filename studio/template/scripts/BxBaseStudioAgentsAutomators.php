@@ -31,6 +31,8 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     {
         $sAction = 'add';
 
+        $oAI = BxDolAI::getInstance();
+
         $aForm = $this->_getForm($sAction);
         $oForm = new BxTemplFormView($aForm);
         $oForm->initChecker();
@@ -56,8 +58,6 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $sSchedulerTime = $oForm->getCleanValue('scheduler_time');
             if(!empty($sSchedulerTime))
                 $aValsToAdd['params'] = json_encode(['scheduler_time' => $sSchedulerTime]);
-
-            $oAI = BxDolAI::getInstance();
   
             $iModel = $oForm->getCleanValue('model_id');
             $sType = $oForm->getCleanValue('type');
@@ -194,8 +194,10 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     {
         $sAction = 'edit';
 
+        $oAI = BxDolAI::getInstance();
+
         $iId = $this->_getId();
-        $aAutomator = $this->_oDb->getAutomatorsBy(['sample' => 'id', 'id' => $iId]);
+        $aAutomator = $oAI->getAutomator($iId);
         $aAutomator['providers'] = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
         $aAutomator['helpers'] = $this->_oDb->getAutomatorsBy(['sample' => 'helpers_by_id_pairs', 'id' => $iId]);
 
@@ -285,8 +287,6 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             if($oForm->update($iId, $aValsToAdd) !== false) {
                 if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
-                    $oAI = BxDolAI::getInstance();
-
                     $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
 
                     $aProviders = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
@@ -303,7 +303,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                         'cmt_text' => $sInstructions
                     ]);
 
-                    if(($sResponse = $oAI->getModelObject($aAutomator['model_id'])->getResponse($aAutomator['type'], $sInstructions, $oAIModel->getParams())) !== false) {
+                    if(($sResponse = $oAI->getModelObject($aAutomator['model_id'])->getResponse($aAutomator['type'], $sInstructions, $aAutomator['params'])) !== false) {
                         sleep(1);
                         $oCmts->addAuto([
                             'cmt_author_id' => $this->_iProfileIdAi,
@@ -435,7 +435,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
         $sType = isset($aAutomator['type']) ? $aAutomator['type'] : 'event';
 
-        if(!empty($aAutomator['params']))
+        if(!empty($aAutomator['params']) && is_string($aAutomator['params']))
             $aAutomator['params'] = json_decode($aAutomator['params'], true);
 
         $aForm = array(
