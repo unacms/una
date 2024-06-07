@@ -2212,6 +2212,7 @@
     <string name="_sys_agents_helpers_field_model_id"><![CDATA[Model]]></string>
     <string name="_sys_agents_helpers_field_profile_id"><![CDATA[Profile]]></string>
     <string name="_sys_agents_helpers_field_profile_id_inf"><![CDATA[Leave empty to use default.]]></string>
+    <string name="_sys_agents_helpers_field_description"><![CDATA[Description]]></string>
     <string name="_sys_agents_helpers_field_prompt"><![CDATA[Prompt]]></string>
     <string name="_sys_agents_helpers_field_prompt_err"><![CDATA[Prompt is essential. Please type something here.]]></string>
     <string name="_sys_agents_helpers_field_message"><![CDATA[Message]]></string>
@@ -2219,6 +2220,8 @@
     <string name="_sys_agents_helpers_field_result"><![CDATA[Result]]></string>
     <string name="_sys_agents_helpers_popup_add"><![CDATA[Add helper]]></string>
     <string name="_sys_agents_helpers_popup_edit"><![CDATA[Edit helper]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
     <string name=""><![CDATA[]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>

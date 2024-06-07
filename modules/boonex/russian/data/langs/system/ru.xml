@@ -2187,6 +2187,7 @@
         <string name="_sys_agents_helpers_field_model_id"><![CDATA[Модель]]></string>
         <string name="_sys_agents_helpers_field_profile_id"><![CDATA[Профиль]]></string>
         <string name="_sys_agents_helpers_field_profile_id_inf"><![CDATA[Оставьте пустым, чтобы использовать значение по умолчанию.]]></string>
+        <string name="_sys_agents_helpers_field_description"><![CDATA[Описание]]></string>
         <string name="_sys_agents_helpers_field_prompt"><![CDATA[Инструкции]]></string>
         <string name="_sys_agents_helpers_field_prompt_err"><![CDATA[Инструкции имеют важное значение. Пожалуйста, напишите что-нибудь здесь.]]></string>
         <string name="_sys_agents_helpers_field_message"><![CDATA[Cообщение]]></string>

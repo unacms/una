@@ -236,6 +236,21 @@ class BxBaseStudioAgentsHelpers extends BxDolStudioAgentsHelpers
                         'pass' => 'Int',
                     ]
                 ],
+                'description' => [
+                    'type' => 'textarea',
+                    'name' => 'description',
+                    'caption' => _t('_sys_agents_helpers_field_description'),
+                    'value' => isset($aHelper['description']) ? $aHelper['description'] : '',
+                    'required' => '1',
+                    'checker' => [
+                        'func' => 'Avail',
+                        'params' => [],
+                        'error' => _t('_sys_agents_form_field_err_enter'),
+                    ],
+                    'db' => [
+                        'pass' => 'Xss',
+                    ]
+                ],
                 'prompt' => [
                     'type' => 'textarea',
                     'name' => 'prompt',
