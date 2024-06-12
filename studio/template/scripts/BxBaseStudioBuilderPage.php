@@ -1520,6 +1520,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             case BX_DOL_STUDIO_BP_BLOCK_CREATIVE:
             	$sResult = 'object-group';
             	break;
+            
+            case BX_DOL_STUDIO_BP_BLOCK_BENTO_GRID:
+                $sResult = 'fa-grip-horizontal';
+                break;
 
             case BX_DOL_STUDIO_BP_BLOCK_RSS:
             	$sResult = 'rss';
@@ -1570,6 +1574,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         switch($aBlock['type']) {
             case BX_DOL_STUDIO_BP_BLOCK_CUSTOM:
             case BX_DOL_STUDIO_BP_BLOCK_RAW:
+            case BX_DOL_STUDIO_BP_BLOCK_BENTO_GRID:
                 $aFields = [
                     'content' => [
                         'type' => 'textarea',

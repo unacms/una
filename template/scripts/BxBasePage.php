@@ -1084,6 +1084,46 @@ class BxBasePage extends BxDolPage
     }
 
     /**
+     * Get content for 'bento_grid' block type.
+     * @return string
+     */
+    protected function _getBlockBentoGrid ($aBlock)
+    {
+        if(bx_is_api()) {
+            $iBlockId = (int)$aBlock['id'];
+
+            $iContentId = 0;
+            if(($mContentId = bx_get('id')) !== false) 
+                $iContentId = (int)$mContentId;
+
+            $sContentModule = '';
+            if(!empty($this->_aObject['module']) && !in_array($this->_aObject['module'], ['system', 'custom']))
+                $sContentModule = $this->_aObject['module'];
+
+            $bIsAllowedEdit = false;
+            if(!empty($sContentModule) && bx_is_srv($sContentModule, 'check_allowed_with_content'))
+                $bIsAllowedEdit = bx_srv($sContentModule, 'check_allowed_with_content', ['edit', $iContentId]);
+            else
+                $bIsAllowedEdit = isAdmin();
+
+            return [bx_api_get_block('bento_grid', [
+                'title' => _t($aBlock['title']), 
+                'content' => $this->_oQuery->getPageBlockData($iBlockId, $iContentId, $sContentModule)
+            ], ['ext' => [
+                'block_id' => $iBlockId,
+                'content_id' => $iContentId,
+                'content_module' => $sContentModule,
+                'is_allowed_edit' => $bIsAllowedEdit
+            ]])];
+        }
+
+        /**
+         * Isn't supported for now.
+         */
+        return '';
+    }
+
+    /**
      * Get content for 'wiki' block type.
      * @return string
      */

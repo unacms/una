@@ -49,6 +49,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'Cmts' => 'BxBaseServices',
             'GetFooter' => 'BxBaseServices',
 
+            'SetPageBlockData' => 'BxBaseServicePages',
+
             'CreateAccountForm' => 'BxBaseServiceAccount',
             'AccountSettingsEmail' => 'BxBaseServiceAccount',
             'AccountSettingsPassword' => 'BxBaseServiceAccount',

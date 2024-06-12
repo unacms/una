@@ -105,6 +105,11 @@ class BxBaseServicePages extends BxDol
         }
         return $aRes;
     }
+
+    public function serviceSetPageBlockData($iBlockId, $aData, $iContentId = 0, $sContentModule = '')
+    {
+        
+    }
 }
 
 /** @} */

@@ -2304,6 +2304,7 @@
 	<string name="_sys_block_type_image"><![CDATA[изображение]]></string>
 	<string name="_sys_block_type_lang"><![CDATA[язык]]></string>
         <string name="_sys_block_type_creative"><![CDATA[креативный]]></string>
+        <string name="_sys_block_type_bento_grid"><![CDATA[сетка бенто]]></string>
 	<string name="_sys_block_type_menu"><![CDATA[меню]]></string>
 	<string name="_sys_block_type_raw"><![CDATA[без обработки]]></string>
 	<string name="_sys_block_type_rss"><![CDATA[rss]]></string>
