@@ -106,6 +106,14 @@ class BxBaseServicePages extends BxDol
         return $aRes;
     }
 
+    public function serviceGetPageBlockData($iBlockId, $iContentId = 0, $sContentModule = '')
+    {
+        $oDb = new BxDolPageQuery([]);
+
+        $sData = $oDb->getPageBlockData($iBlockId, $iContentId, $sContentModule);
+        return !empty($sData) ? json_decode($sData, true) : [];
+    }
+
     public function serviceSetPageBlockData($iBlockId, $iContentId = 0, $sContentModule = '')
     {
         $oDb = new BxDolPageQuery([]);

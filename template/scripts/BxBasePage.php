@@ -1106,12 +1106,9 @@ class BxBasePage extends BxDolPage
             else
                 $bIsAllowedEdit = isAdmin();
 
-            $sData = $this->_oQuery->getPageBlockData($iBlockId, $iContentId, $sContentModule);
-            $aData = !empty($sData) ? json_decode($sData, true) : [];
-
             return [bx_api_get_block('bento_grid', [
                 'title' => _t($aBlock['title']), 
-                'content' => $aData
+                'content' => []
             ], ['ext' => [
                 'block_id' => $iBlockId,
                 'content_id' => $iContentId,
