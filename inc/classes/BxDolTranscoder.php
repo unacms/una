@@ -492,17 +492,17 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
             /**
              * @hooks
-             * @hookdef hook-system-transcode 'system', 'transcode' - hook on cancel vote 
+             * @hookdef hook-system-transcode 'system', 'transcode' - hook before file is transcoded
              * - $unit_name - equals `system`
              * - $action - equals `transcode` 
              * - $object_id - file handler
-             * - $sender_id - profile_id for vote's author
+             * - $sender_id - equals `false`
              * - $extra_params - array of additional params with the following array keys:
              *      - `transcoder_object` - [array] transcoder object properties
              *      - `object` - [object] transcoder object
              *      - `db` - [object] database object
              *      - `file_path` - [string] file path
-             *      - `ret` - [bool] return 
+             *      - `ret` - [bool] by ref, not used
              * @hook @ref hook-system-transcode
              */
             bx_alert('system', 'transcode', $mixedHandler, false, array(
@@ -540,19 +540,19 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
         /**
          * @hooks
-         * @hookdef hook-system-transcoded 'system', 'transcoded' - hook on cancel vote 
+         * @hookdef hook-system-transcoded 'system', 'transcoded' - hook after file is transcoded
          * - $unit_name - equals `system`
          * - $action - equals `transcoded` 
          * - $object_id - file handler
-         * - $sender_id - profile_id for vote's author
+         * - $sender_id - equals `false`
          * - $extra_params - array of additional params with the following array keys:
          *      - `object` - [object] transcoder object
-         *      - `ret` - [bool] reported object id 
+         *      - `ret` - [bool] by ref, override return value
          * @hook @ref hook-system-transcoded
          */
         bx_alert($this->_aObject['object'], 'transcoded', $mixedHandler, false, array(
             'object' => $this,
-            'ret' => $bRet,
+            'ret' => &$bRet,
         ));
 
         return $bRet;
