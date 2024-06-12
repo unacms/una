@@ -147,7 +147,27 @@ class BxDolPageQuery extends BxDolDb
             $sWhereClause .= " AND `content_id` = :content_id AND `content_module` = :content_module";
         }
 
-        return $this->getOne("SELECT `data` FROM `sys_pages_blocks_data` WHERE `block_id` = :block_id", $aBindings);
+        return $this->getOne("SELECT `data` FROM `sys_pages_blocks_data` WHERE `block_id` = :block_id" . $sWhereClause, $aBindings);
+    }
+    
+    public function setPageBlockData($iBlockId, $mixedData, $iContentId = 0, $sContentModule = '')
+    {
+        $aBindings = [
+            'block_id' => $iBlockId,
+            'data' => is_array($mixedData) ? json_encode($mixedData) : $mixedData
+        ];
+
+        $sWhereClause = "";
+        if(!empty($iContentId) && !empty($sContentModule)) {
+            $aBindings = array_merge($aBindings, [
+                'content_id' => $iContentId,
+                'content_module' => $sContentModule
+            ]);
+
+            $sWhereClause .= " AND `content_id` = :content_id AND `content_module` = :content_module";
+        }
+
+        return $this->query("UPDATE `sys_pages_blocks_data` SET `data` = :data WHERE `block_id` = :block_id" . $sWhereClause, $aBindings);
     }
 
     public function getPageBlockContent($iId)

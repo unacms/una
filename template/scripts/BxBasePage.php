@@ -681,7 +681,7 @@ class BxBasePage extends BxDolPage
                     continue;
                 }
 
-                $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+                $sFunc = '_getBlock' . bx_gen_method_name($aBlock['type']);
                 $mBlock = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
 
                 $aCells[$sKey][$i] = array_merge($aCells[$sKey][$i], [
@@ -1102,13 +1102,16 @@ class BxBasePage extends BxDolPage
 
             $bIsAllowedEdit = false;
             if(!empty($sContentModule) && bx_is_srv($sContentModule, 'check_allowed_with_content'))
-                $bIsAllowedEdit = bx_srv($sContentModule, 'check_allowed_with_content', ['edit', $iContentId]);
+                $bIsAllowedEdit = bx_srv($sContentModule, 'check_allowed_with_content', ['edit', $iContentId]) === CHECK_ACTION_RESULT_ALLOWED;
             else
                 $bIsAllowedEdit = isAdmin();
 
+            $sData = $this->_oQuery->getPageBlockData($iBlockId, $iContentId, $sContentModule);
+            $aData = !empty($sData) ? json_decode($sData, true) : [];
+
             return [bx_api_get_block('bento_grid', [
                 'title' => _t($aBlock['title']), 
-                'content' => $this->_oQuery->getPageBlockData($iBlockId, $iContentId, $sContentModule)
+                'content' => $aData
             ], ['ext' => [
                 'block_id' => $iBlockId,
                 'content_id' => $iContentId,
