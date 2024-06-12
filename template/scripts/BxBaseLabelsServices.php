@@ -17,12 +17,14 @@ class BxBaseLabelsServices extends BxDol
         parent::__construct();
     }
 
-    public function serviceGetLabels()
+    public function serviceGetLabels($aParams = [])
     {
         $oLabel = BxDolLabel::getInstance();
 
+        $iParentId = isset($aParams['parent_id']) ? (int)$aParams['parent_id'] : 0;
+
         return [
-            'system' => $oLabel->getLabelsSystem(),
+            'system' => $oLabel->getLabelsSystem($iParentId),
             'context' => $oLabel->getLabelsContext()
         ];
     }

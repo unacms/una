@@ -474,6 +474,15 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
             $sRootUrl .= '/';
 
         $sMailBody = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sMailBody);
+
+        // restore URLs in images
+        $sMailBody = str_replace([
+            'src="' . $sRootUrl, 
+            "src='" . $sRootUrl
+        ], [
+            'src="' . BX_DOL_URL_ROOT, 
+            "src='" . BX_DOL_URL_ROOT
+        ], $sMailBody);
     }
 
     // email message headers

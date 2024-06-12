@@ -71,9 +71,9 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
         return $this->_oDb->getLabels($aParams);
     }
     
-    public function getLabelsSystem()
+    public function getLabelsSystem($iParentId = 0)
     {
-        $iParentId = $iLevel = 0;
+        $iLevel = 0;
         return $this->_getLabelsSystem($iParentId, $iLevel);
     }
     
