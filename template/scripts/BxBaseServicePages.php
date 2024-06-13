@@ -124,6 +124,12 @@ class BxBaseServicePages extends BxDol
         $oDb = new BxDolPageQuery([]);
         return $oDb->setPageBlockData($iBlockId, $iContentId, $sContentModule, $sData);
     }
+    
+    public function serviceGetUrlInfo($sUrl)
+    {
+        $oEmbed = BxDolEmbed::getObjectInstance('sys_system');
+        return $oEmbed->getData($sUrl, '');
+    }
 }
 
 /** @} */
