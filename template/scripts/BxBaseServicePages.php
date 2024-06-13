@@ -116,18 +116,13 @@ class BxBaseServicePages extends BxDol
 
     public function serviceSetPageBlockData($iBlockId, $iContentId = 0, $sContentModule = '')
     {
-        $oDb = new BxDolPageQuery([]);
-
         $sData = @file_get_contents("php://input");
         $aData = json_decode($sData, true);
         if($aData === null)
             return false;
 
-        $aParams = [$iBlockId, $sData];
-        if(!empty($iContentId) && !empty($sContentModule))
-            $aParams += [$iContentId, $sContentModule];
-
-        return call_user_func_array([$oDb, 'setPageBlockData'], $aParams);
+        $oDb = new BxDolPageQuery([]);
+        return $oDb->setPageBlockData($iBlockId, $iContentId, $sContentModule, $sData);
     }
 }
 
