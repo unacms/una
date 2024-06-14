@@ -108,10 +108,7 @@ class BxBaseServicePages extends BxDol
 
     public function serviceGetPageBlockData($iBlockId, $iContentId = 0, $sContentModule = '')
     {
-        $oDb = new BxDolPageQuery([]);
-
-        $sData = $oDb->getPageBlockData($iBlockId, $iContentId, $sContentModule);
-        return !empty($sData) ? json_decode($sData, true) : [];
+        return BxDolPage::getPageBlockData($iBlockId, $iContentId, $sContentModule);
     }
 
     public function serviceSetPageBlockData($iBlockId, $iContentId = 0, $sContentModule = '')
@@ -121,10 +118,9 @@ class BxBaseServicePages extends BxDol
         if($aData === null)
             return false;
 
-        $oDb = new BxDolPageQuery([]);
-        return $oDb->setPageBlockData($iBlockId, $iContentId, $sContentModule, $sData);
+        return BxDolPage::setPageBlockData($iBlockId, $iContentId, $sContentModule, $sData);
     }
-    
+
     public function serviceGetUrlInfo($sUrl)
     {
         $oEmbed = BxDolEmbed::getObjectInstance('sys_system');
