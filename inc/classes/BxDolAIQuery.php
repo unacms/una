@@ -218,7 +218,14 @@ class BxDolAIQuery extends BxDolDb
 
                 $sWhereClause .= " AND `th`.`id`=:id";
                 break;
+            case 'name':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'name' => $aParams['name']
+                ];
 
+                $sWhereClause .= " AND `th`.`name`=:name";
+                break;
             case 'ids':
                 $sWhereClause = " AND `th`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
                 break;

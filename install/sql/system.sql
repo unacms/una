@@ -6047,7 +6047,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks_data` (
   `data` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `block` (`block_id`, `content_id`, `content_module`)
-)
+);
 
 -- --------------------------------------------------------
 

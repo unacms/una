@@ -58,10 +58,13 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
     
-    public static function callHelper($iHelperId, $sMessage)
+    public static function callHelper($mixedHelper, $sMessage)
     {
         $oAI = BxDolAI::getInstance();
-        $aHelper = $oAI->getHelper($iHelperId);
+        if (is_numeric($mixedHelper))
+            $aHelper = $oAI->getHelperById($mixedHelper);
+        else
+             $aHelper = $oAI->getHelperByName($mixedHelper);
         $oAIModel = $oAI->getModelObject($aHelper['model_id']);
         return $oAIModel->getResponseText($aHelper['prompt'], $sMessage);
     }
@@ -108,9 +111,14 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return BxDolAIProvider::getObjectInstance($iId);
     }   
 
-    public function getHelper($iId)
+    public function getHelperById($iId)
     {
         return $this->_oDb->getHelpersBy(['sample' => 'id', 'id' => $iId]);
+    }
+    
+    public function getHelperByName($sName)
+    {
+        return $this->_oDb->getHelpersBy(['sample' => 'name', 'name' => $sName]);
     }
 
     public function getAutomator($iId, $bFullInfo = false)
@@ -130,24 +138,26 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         switch($sType) {
             case 'profile':
-                $mixedResult = "\n Profile ID for system actions: " . $mixedParams;
+                $mixedResult = "\n ProfileId for system actions = " . $mixedParams;
                 break;
 
             case 'providers':
                 $aProviders = $this->_oDb->getProvidersBy(['sample' => 'ids', 'ids' => $mixedParams]);
                 if(!empty($aProviders) && is_array($aProviders)) {
-                    $mixedResult = "\n Avaliable proividers list:";
+                    $mixedResult = "\n Proividers list = [";
                     foreach($aProviders as $aProvider)
-                        $mixedResult .= "\n- " . $aProvider['name'] . " - " . $aProvider['type_name'];
+                        $mixedResult .= "\n {'ProviderName' => '" . $aProvider['name'] . "',  'ProviderType' => '" . $aProvider['type_name'] . "'}";
+                    $mixedResult .= "\n ]";
                 }
                 break;
 
             case 'helpers':
                 $aHelpers = $this->_oDb->getHelpersBy(['sample' => 'ids', 'ids' => $mixedParams]);
                 if(!empty($aHelpers) && is_array($aHelpers)) {
-                    $mixedResult = "\n Avaliable helpers list:";
+                    $mixedResult = "\n Helpers list = [";
                     foreach($aHelpers as $aHelper)
-                        $mixedResult .= "\n- " . $aHelper['name'] . " - " . $aHelper['description'];
+                        $mixedResult .= "\n {'" . $aHelper['name'] . "', 'HelperDescription' => '" . $aHelper['description'] . "'}";
+                    $mixedResult .= "\n ]";
                 }
                 break;
         }

@@ -70,7 +70,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             $oAIModel = $oAI->getModelObject($iModel);
 
-            $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
+            $sInstructions = "\nAvailable data for code creation:\n".$oAI->getAutomatorInstruction('profile', $iProfileId);
             if(!empty($aProviders) && is_array($aProviders))
                 $sInstructions .= $oAI->getAutomatorInstruction('providers', $aProviders);
             if(!empty($aHelpers) && is_array($aHelpers))
@@ -112,7 +112,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             }
 
             if($bIsValid) {
-                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sInstructions . $sMessageAdd, $oAIModel->getParams())) !== false) {
+                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sInstructions . "\n Use data from alert accoding documentation:" . $sMessageAdd, $oAIModel->getParams())) !== false) {
                     $sMessageResponse = $sResponse;
                 }
                 else {
@@ -287,7 +287,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             if($oForm->update($iId, $aValsToAdd) !== false) {
                 if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
-                    $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
+                    $sInstructions = "\nAvailable data for code creation:\n".$oAI->getAutomatorInstruction('profile', $iProfileId);
 
                     $aProviders = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
                     if(!empty($aProviders) && is_array($aProviders))
