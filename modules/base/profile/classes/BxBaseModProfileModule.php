@@ -1095,25 +1095,27 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             return false;
 
         list($iContentId, $aContentInfo) = $mixedContent;
-        if(bx_is_api()){
+
+        if(bx_is_api()) {
+            $CNF = &$this->_oConfig->CNF;
+
             $aContentInfo['cover'] = $this->serviceGetCover($iContentId);
-            $aContentInfo['image'] = $this->serviceGetThumb($iContentId);
-            
-            $CNF = $this->_oConfig->CNF;
-            if(!empty($CNF['OBJECT_MENU_VIEW_ENTRY_META'])){
-                $oMetaMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_VIEW_ENTRY_META']);
-                $aContentInfo['meta_menu'] =  $oMetaMenu->getCodeAPI();
-            }
-            if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])){
-                $oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
-                 $aContentInfo['actions_menu'] = $oActionMenu->getCodeAPI();
-            }  
-            $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
-            $aContentInfo['profile'] = BxDolProfile::getData($this->_aProfileInfo['id'], [
-                'get_avatar' => 'getAvatarBig',
-                'with_info' => false
-            ]);
-            
+            $aContentInfo['image'] = $this->serviceGetThumb($iContentId);            
+
+            $sKey = 'OBJECT_MENU_VIEW_ENTRY_META';
+            if(!empty($CNF[$sKey]) && ($oMetaMenu = BxTemplMenu::getObjectInstance($CNF[$sKey])) !== false)
+                $aContentInfo['meta_menu'] = $oMetaMenu->getCodeAPI();
+
+            $sKey = 'OBJECT_MENU_ACTIONS_VIEW_ENTRY';
+            if(!empty($CNF[$sKey]) && ($oActionMenu = BxTemplMenu::getObjectInstance($CNF[$sKey])) !== false)
+                $aContentInfo['actions_menu'] = $oActionMenu->getCodeAPI();
+
+            if(($oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())) !== false);
+                $aContentInfo['profile'] = BxDolProfile::getData($oProfile, [
+                    'get_avatar' => 'getAvatarBig',
+                    'with_info' => false
+                ]);
+
             return [bx_api_get_block('entity_cover', $aContentInfo)];
         }
         
