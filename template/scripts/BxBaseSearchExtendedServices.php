@@ -37,11 +37,12 @@ class BxBaseSearchExtendedServices extends BxDol
 
         $mForm = $oSearch->getForm($aParams);
         if (bx_is_api()){
-            $aRes =$this->serviceGetResults($aParams);
+            /*$aRes =$this->serviceGetResults($aParams);
             if ($aRes)
                 return [$mForm, $aRes];
             else
-                return [$mForm];
+                return [$mForm];*/
+return [$mForm];
         }
         return $mForm;
     }
@@ -50,11 +51,13 @@ class BxBaseSearchExtendedServices extends BxDol
     {
         $aParams = [];
         if (is_string($mParams)){
-            $aPa = json_decode($mParams, true);           
-            $aParams['object'] = $aPa['params']["moduleName"];
-            $aParams['search_params'] = $aPa['params']['search_params'];
-            unset($aPa['params']['search_params']);
+           $aPa = json_decode($mParams, true);    
+            $aParams['object'] = $aPa['params']["object"];
             $aParams['params'] = $aPa['params'];
+            
+            foreach($aParams['params']['filters'] as $sKey => $aParam){
+               $_POST[$sKey] = $aParam;
+            }
         }
         else
             $aParams = $mParams;
