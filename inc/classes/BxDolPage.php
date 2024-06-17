@@ -637,7 +637,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     {
         return base_convert(substr(md5($s), -8), 16, 36);
     }
-    
+
     /**
      * Static method to Get embed code
      * @return string.
@@ -679,6 +679,35 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             ]);
         }
         return ['url' => $sUrl, 'title' => $sTitle, 'author_name' => $sAuthorName, 'author_url' => $sAuthorUrl, 'thumbnail_url' => $sThumb, 'html' => $sHtml];
+    }
+
+    static public function getPageBlockData($iBlockId, $iContentId = 0, $sContentModule = '')
+    {
+        $oDb = new BxDolPageQuery([]);
+
+        $sData = $oDb->getPageBlockData($iBlockId, $iContentId, $sContentModule);
+        $aData = !empty($sData) ? json_decode($sData, true) : [];
+
+        $oEmbed = BxDolEmbed::getObjectInstance('sys_system');
+
+        foreach($aData as &$j) {
+            foreach($j as &$k) {
+                if($k['type'] == 'link') {
+                    $k['content_data'] = $oEmbed->getData($k['content'], '');
+                }
+            }
+        }
+
+        return $aData;
+    }
+
+    static public function setPageBlockData($iBlockId, $iContentId = 0, $sContentModule = '', $mixedData = '')
+    {
+        $oDb = new BxDolPageQuery([]);
+
+        $sData = is_array($mixedData) ? json_encode($mixedData) : $mixedData;
+
+        return $oDb->setPageBlockData($iBlockId, $iContentId, $sContentModule, $sData);
     }
 
     /**

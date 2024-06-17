@@ -161,13 +161,6 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         return parent::genInputLocation($aInput);
     }
 
-	protected function genCustomInputAuthor($aInput)
-    {
-        $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . 'searchExtended.php?action=get_authors';
-
-        return $this->genCustomInputUsernamesSuggestions($aInput);
-    }
-    
     public function genInputLocationRadius(&$aInput)
     {
         $aInput['manual_input'] = true;
@@ -182,6 +175,22 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
             'location_input' => parent::genInputLocation($aInput),
             'radius_input' => parent::genInputStandard($aInputRadius),
         ));
+    }
+
+    protected function genCustomInputAuthor($aInput)
+    {
+        $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . 'searchExtended.php?action=get_authors';
+
+        return $this->genCustomInputUsernamesSuggestions($aInput);
+    }
+
+    protected function genCustomInputLabels (&$aInput)
+    {
+        $aLabels = BxDolLabel::getInstance()->getLabels(['type' => 'values']);
+        if(!empty($aLabels) && is_array($aLabels))
+            $aInput['values'] = array_combine($aLabels, $aLabels);       
+
+        return $this->genInputCheckboxSet($aInput);
     }
 
     function addCssJsCore ()

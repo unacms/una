@@ -65,7 +65,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             'unit' => 'general-content-list',
             'request_url' => '/api.php?r=system/get_results/TemplSearchExtendedServices&params[]=',
             'data' =>  $aData,
-            'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'search_params' => $aParamsSearch],
+            'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'object' => $this->_aObject['module'], 'search_params' => $aParamsSearch],
         ]);
     }
     
@@ -120,7 +120,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return '';
 
         $aParamsSearch = [];
-        if(!$this->_bIsApi || !isset($aParams['search_params'])) {
+        if(!isset($aParams['search_params'])) {
             foreach($this->_aObject['fields'] as $aField) {
                 $mixedValue = $oForm->getCleanValue($aField['name']);
                 if(empty($mixedValue) || (is_array($mixedValue) && bx_is_empty_array($mixedValue)))
@@ -233,9 +233,9 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         if($this->_bIsApi) {
             if(isset($aParams['search_params']))
-                return [$this->getResultsAPI($aRes, $iPerPage, $iStart, $aParamsSearch)];
+                return [$this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch)];
             else
-                return $this->getResultsAPI([], $iPerPage, $iStart, $aParamsSearch);
+                return $this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch);
         }
 
         $aTxtDirection = [

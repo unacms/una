@@ -149,8 +149,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'url_avatar' => $oProfile->{isset($aParams['get_avatar']) && method_exists($oProfile, $aParams['get_avatar']) ? $aParams['get_avatar'] : 'getAvatar'}(),
             'module' => $oProfile->getModule(),
         ];
-        
-        if(isset($aParams['with_info']))
+
+        if(isset($aParams['with_info']) && (bool)$aParams['with_info'])
             $aRv['info'] = bx_srv($oProfile->getModule(), 'get_info', [$oProfile->getContentId(), false]);
         
         return $aRv;
