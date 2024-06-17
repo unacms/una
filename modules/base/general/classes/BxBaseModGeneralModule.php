@@ -760,6 +760,18 @@ class BxBaseModGeneralModule extends BxDolModule
                 'pass' => ''
             );
 
+        if(!empty($CNF['FIELD_LABELS']) && !in_array($CNF['FIELD_LABELS'], $this->_aSearchableNamesExcept))
+            $aResult[$CNF['FIELD_LABELS']] = array(
+                'type' => 'checkbox_set', 
+                'caption' => isset($CNF['T']['form_field_labels']) ? $CNF['T']['form_field_author'] : '_sys_form_input_labels',
+                'info' => '',
+            	'value' => '',
+                'values' => '',
+                'pass' => '',
+                'search_operator' => 'like'
+            );
+        
+
         $aInputs = array();
         if(!empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])) {
             $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
@@ -796,6 +808,23 @@ class BxBaseModGeneralModule extends BxDolModule
                 $aResult[$aInput['name']] = $aField;
             }
         }
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-get_searchable_fields '{module_name}', 'get_searchable_fields' - hook to override a list of searchable fields
+         * - $unit_name - module name
+         * - $action - equals `get_searchable_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [array] a list of searchable fields, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-get_searchable_fields
+         */
+        bx_alert($this->getName(), 'get_searchable_fields', 0, 0, [
+            'extended' => true, 
+            'override_result' => &$aResult
+        ]);
+
         return $aResult;
     }
 
