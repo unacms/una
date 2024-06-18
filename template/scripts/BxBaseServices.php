@@ -103,6 +103,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'Do' => 'BxBaseVoteServices',
             'GetPerformedBy' => 'BxBaseVoteServices',
 
+            'Perform' => 'BxBaseFeatureServices',
+
             'Perform' => 'BxBaseServiceConnections',
             'Perform' => 'BxBaseServiceRecommendations',
             'GetDataApi' => 'BxBaseCmtsServices',

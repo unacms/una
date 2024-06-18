@@ -20,8 +20,6 @@ class BxBaseFeature extends BxDolFeature
 
     protected $_aHtmlIds;
 
-    protected $_aElementDefaults;
-
     public function __construct($sSystem, $iId, $iInit = 1, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
@@ -44,6 +42,10 @@ class BxBaseFeature extends BxDolFeature
             'show_do_feature_icon' => true,
             'show_do_feature_label' => false
         );
+        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+            'show_do_feature_as_button' => true,
+        ]);
+        $this->_aElementParamsApi = ['is_featured'];
 
         $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('feature_element_block.html');
         $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('feature_element_inline.html');
@@ -98,8 +100,8 @@ class BxBaseFeature extends BxDolFeature
         $bShowDoFeatureAsButtonSmall = isset($aParams['show_do_feature_as_button_small']) && $aParams['show_do_feature_as_button_small'] == true;
         $bShowDoFeatureAsButton = !$bShowDoFeatureAsButtonSmall && isset($aParams['show_do_feature_as_button']) && $aParams['show_do_feature_as_button'] == true;
 
-		$iObjectId = $this->getId();
-		$iAuthorId = $this->_getAuthorId();
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
         $aFeature = $this->_oQuery->getFeature($iObjectId);
         $bCount = (int)$aFeature['count'] != 0;
 
@@ -120,6 +122,41 @@ class BxBaseFeature extends BxDolFeature
         ));
     }
 
+    public function getElementAPI($aParams = [])
+    {
+        if(!($this->_bApi = bx_is_api()))
+            return;
+
+        if(!$this->isEnabled())
+            return bx_api_get_msg('_vote_err_not_enabled');
+
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+
+        $aFeature = $this->_oQuery->getFeature($iObjectId);
+
+        $bCount = (int)$aFeature['count'] != 0;
+        $isAllowedFeature = $this->isAllowedFeature();
+        $aParams['is_featured'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
+
+        //--- Do Feature
+        $bDoFeature = $this->_isShowDoFeature($aParams, $isAllowedFeature, $bCount);
+        $aDoFeature = $bDoFeature ? $this->_getDoFeature($aParams, $isAllowedFeature) : [];
+
+        if(!$bDoFeature)
+            return bx_api_get_msg('');
+
+        return [
+            'type' => $this->_sType,
+            'system' => $this->_sSystem,
+            'object_id' => $this->_iId,
+            'params' => array_intersect_key($aParams, array_flip($this->_aElementParamsApi)),
+            'action' => $aDoFeature
+        ];
+    }
+
     protected function _getDoFeature($aParams = array(), $bAllowedFeature = true)
     {
     	$bFeatured = isset($aParams['is_featured']) && $aParams['is_featured'] === true;
@@ -135,6 +172,14 @@ class BxBaseFeature extends BxDolFeature
 
         if($bDisabled)
             $sClass .= $bShowDoFeatureAsButton || $bShowDoFeatureAsButtonSmall ? ' bx-btn-disabled' : 'bx-feature-disabled';
+
+        if($this->_bApi)
+            return [
+                'is_undo' => $this->isUndo(),
+                'is_featured' => $bFeatured,
+                'is_disabled' => $bDisabled,
+                'title' => _t($this->_getTitleDoFeature($bFeatured)),
+            ];
 
         return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDoFeature($aParams), array(
             'id' => $this->_aHtmlIds['do_link'],
@@ -164,6 +209,11 @@ class BxBaseFeature extends BxDolFeature
                 )
             )
         ));
+    }
+
+    protected function _isShowDoFeature($aParams, $isAllowedFeature, $bCount)
+    {
+        return (!isset($aParams['show_do_feature']) || (bool)$aParams['show_do_feature'] === true) && $isAllowedFeature;
     }
 }
 

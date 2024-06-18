@@ -36,7 +36,12 @@ define('BX_DOL_FEATURED_USAGE_DEFAULT', BX_DOL_FEATURED_USAGE_BLOCK);
  */
 class BxDolFeature extends BxDolObject
 {
+    protected $_sType;
     protected $_sBaseUrl;
+
+    protected $_aElementDefaults;
+    protected $_aElementDefaultsApi;
+    protected $_aElementParamsApi; //--- Params from DefaultsApi array to be passed to Api
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -46,6 +51,7 @@ class BxDolFeature extends BxDolObject
 
         $this->_oQuery = new BxDolFeatureQuery($this);
 
+        $this->_sType = 'features';
         $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
@@ -108,7 +114,7 @@ class BxDolFeature extends BxDolObject
      */
     public function actionFeature()
     {
-        return echoJson($this->_doFeature());
+        return echoJson($this->doFeature());
     }
 
     public function actionGetFeatureBy()
@@ -140,13 +146,13 @@ class BxDolFeature extends BxDolObject
         return (int)$this->_aSystem['is_undo'] == 1;
     }
 
-	/**
+    /**
      * Internal functions
      */
-	protected function _doFeature()
+    public function doFeature()
     {
-        if (!$this->isEnabled())
-           return array('code' => 1, 'message' => _t('_feature_err_not_enabled'));
+        if(!$this->isEnabled())
+            return array('code' => 1, 'message' => _t('_feature_err_not_enabled'));
 
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
@@ -160,7 +166,7 @@ class BxDolFeature extends BxDolObject
             return array('code' => 2, 'message' => $this->msgErrAllowedFeature());
 
         if($bPerformed && !$bUndo)
-        	return array('code' => 3, 'message' => _t('_feature_err_duplicate_feature'));
+            return array('code' => 3, 'message' => _t('_feature_err_duplicate_feature'));
 
         if(!$this->_triggerValue($bPerformUndo ? 0 : time()))
             return array('code' => 4, 'message' => _t('_feature_err_cannot_perform_action'));
@@ -204,13 +210,23 @@ class BxDolFeature extends BxDolObject
          */
         bx_alert('feature', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
-        return array(
-        	'eval' => $this->getJsObjectName() . '.onFeature(oData, oElement)',
-        	'code' => 0, 
-        	'label_icon' => $this->_getIconDoFeature(!$bPerformed),
+        $aResult = [
+            'eval' => $this->getJsObjectName() . '.onFeature(oData, oElement)',
+            'code' => 0, 
+            'label_icon' => $this->_getIconDoFeature(!$bPerformed),
             'label_title' => _t($this->_getTitleDoFeature(!$bPerformed)),
+            'featured' => !$bPerformed,
             'disabled' => !$bPerformed && !$bUndo
-        );
+        ];
+
+        $aResult['api'] = [
+            'is_featured' => $aResult['featured'],
+            'is_disabled' => $aResult['disabled'],
+            'icon' => $aResult['label_icon'],
+            'title' => $aResult['label_title'],
+        ];
+        
+        return $aResult;
     }
 
     protected function _getIconDoFeature($bPerformed)
