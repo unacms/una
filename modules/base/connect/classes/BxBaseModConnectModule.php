@@ -215,7 +215,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
             return $sErrorMsg;
 
         // check if user with the same email already exists
-        $oExistingAccount = BxDolAccount::getInstance($aFieldsAccount['email']);
+        $oExistingAccount = $this->_getExistingAccount($aProfileInfo, $aFieldsAccount, $aFieldsProfile);
 
         // check redirect page
         if ('join' == $this->_oConfig->sRedirectPage && !$oExistingAccount)
@@ -234,11 +234,11 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         else {
 
             // create account
-            $aFieldsAccount['password'] = genRndPwd();
+            $aFieldsAccount['password'] = $this->_genPwd($aProfileInfo, $aFieldsAccount, $aFieldsProfile);
             if (!($iAccountId = $oFormAccount->insert($aFieldsAccount)))
                 return _t('_sys_txt_error_account_creation');
 
-            $isSetPendingApproval = $this->_oConfig->isAlwaysAutoApprove ? false : !(bool)getParam('sys_account_autoapproval');
+            $isSetPendingApproval = $this->_isSetPendingApprovalAccount($aProfileInfo, $aFieldsAccount, $aFieldsProfile);
             $iAccountProfileId = $oFormHelperAccount->onAccountCreated ($iAccountId, $isSetPendingApproval, BX_PROFILE_ACTION_EXTERNAL);
 
             // create profile
@@ -252,7 +252,8 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
                 if (!($iContentId = $oFormProfile->insert($aFieldsProfile)))
                     return _t('_sys_txt_error_account_creation');
 
-                $oFormHelperProfile->setAutoApproval($oFormHelperProfile->isAutoApproval() ? true : $this->_oConfig->isAlwaysAutoApprove);
+                $isSetPendingApprovalProfile = $this->_isSetPendingApprovalProfile($aProfileInfo, $oFormHelperProfile, $aFieldsAccount, $aFieldsProfile);
+                $oFormHelperProfile->setAutoApproval($isSetPendingApprovalProfile);
                 if ($sErrorMsg = $oFormHelperProfile->onDataAddAfter ($iAccountId, $iContentId))
                     return $sErrorMsg;
                 
@@ -375,6 +376,26 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
     {
         $oSession = BxDolSession::getInstance();
         return $oSession->getValue($this->getName() . '_token');
+    }
+
+    protected function _getExistingAccount($aProfileInfo, &$aFieldsAccount, &$aFieldsProfile)
+    {
+        return BxDolAccount::getInstance($aFieldsAccount['email']);
+    }
+
+    protected function _genPwd($aProfileInfo, &$aFieldsAccount, &$aFieldsProfile)
+    {
+        return genRndPwd();
+    }
+
+    protected function _isSetPendingApprovalAccount($aProfileInfo, &$aFieldsAccount, &$aFieldsProfile)
+    {
+        return $this->_oConfig->isAlwaysAutoApprove ? false : !(bool)getParam('sys_account_autoapproval');
+    }
+
+    protected function _isSetPendingApprovalProfile($aProfileInfo, $oFormHelperProfile, &$aFieldsAccount, &$aFieldsProfile)
+    {
+        return $oFormHelperProfile->isAutoApproval() ? true : $this->_oConfig->isAlwaysAutoApprove
     }
 }
 
