@@ -567,7 +567,7 @@ class BxBasePage extends BxDolPage
                     if(!empty($CNF['OBJECT_CONNECTIONS']) && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])) !== false)
                         $a['cover_block']['members_list'] = $oConnection->getConnectedListAPI($this->_aProfileInfo['id'], false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 10);
 
-                    if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']) && ($oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) !== false)
+                    if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']) && ($oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) !== false)
                         $a['cover_block']['actions_menu'] = $oActionMenu->getCodeAPI();
                 }
                 
@@ -591,7 +591,7 @@ class BxBasePage extends BxDolPage
                         if(isset($a['cover_block'], $a['cover_block']['actions_menu']) && is_array($a['cover_block']['actions_menu']))
                             $a['cover_block']['actions_menu']['items'] = array_merge($a['cover_block']['actions_menu']['items'], $aMenuManage['items']);
                         else
-                            $a['menu'] = $aMenuManage;
+                            $a['cover_block']['actions_menu'] = $aMenuManage;
                     }
                 }
             }

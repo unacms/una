@@ -1096,7 +1096,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         list($iContentId, $aContentInfo) = $mixedContent;
 
-        if(bx_is_api()) {
+        if($this->_bIsApi) {
             $CNF = &$this->_oConfig->CNF;
 
             $aContentInfo['cover'] = $this->serviceGetCover($iContentId);
@@ -1106,9 +1106,30 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             if(!empty($CNF[$sKey]) && ($oMetaMenu = BxTemplMenu::getObjectInstance($CNF[$sKey])) !== false)
                 $aContentInfo['meta_menu'] = $oMetaMenu->getCodeAPI();
 
-            $sKey = 'OBJECT_MENU_ACTIONS_VIEW_ENTRY';
+            $sKey = 'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL';
             if(!empty($CNF[$sKey]) && ($oActionMenu = BxTemplMenu::getObjectInstance($CNF[$sKey])) !== false)
                 $aContentInfo['actions_menu'] = $oActionMenu->getCodeAPI();
+
+            if(($oMenuManage = BxDolMenu::getObjectInstance('sys_site_manage')) !== false) {
+                if(!empty($CNF['FIELD_ID']))
+                    $oMenuManage->setContentId($aContentInfo[$CNF['FIELD_ID']]);
+
+                $aObjectManage = [];
+                if(!empty($CNF['OBJECT_MENU_MANAGE_VIEW_ENTRY']))
+                    $aObjectManage = [$CNF['OBJECT_MENU_MANAGE_VIEW_ENTRY']];
+                else if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']))
+                    $aObjectManage = [$CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE'], true];
+
+                call_user_func_array([$oMenuManage, 'setObjectManage'], $aObjectManage);
+
+                $aMenuManage = $oMenuManage->getCodeAPI();
+                if(!empty($aMenuManage) && is_array($aMenuManage)) {
+                    if(isset($aContentInfo['actions_menu']) && is_array($aContentInfo['actions_menu']))
+                        $aContentInfo['actions_menu']['items'] = array_merge($aContentInfo['actions_menu']['items'], $aMenuManage['items']);
+                    else
+                       $aContentInfo['actions_menu'] = $aMenuManage;
+                }   
+            }
 
             if(($oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())) !== false);
                 $aContentInfo['profile'] = BxDolProfile::getData($oProfile, [
@@ -2463,6 +2484,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
         if(!$oCmts || !$oCmts->isEnabled())
             return false;
+
+        if (bx_is_api())
+            return [bx_srv('system', 'get_data_api', [['module' => $sObject, 'object_id' => $iId]], 'TemplCmtsServices')];
 
         return $oCmts->getCommentsBlock(array(), array('in_designbox' => false));
     }
