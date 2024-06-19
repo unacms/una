@@ -481,6 +481,11 @@ class BxDolVote extends BxDolObject
     	return '';
     }
 
+    protected function _getImageDo($bVoted)
+    {
+        return '';
+    }
+
     protected function _getEmojiDo($bVoted)
     {
     	return '';

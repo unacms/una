@@ -21,6 +21,21 @@ class BxDolVoteStars extends BxTemplVote
     }
 
     /**
+     * Interface functions for outer usage
+     */
+    public function getValue($bVoted)
+    {
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+
+        $iValue = 0;
+        if($bVoted && ($aTrack = $this->_getTrack($iObjectId, $iAuthorId)) && is_array($aTrack))
+            $iValue = (int)$aTrack['value'];
+
+        return $iValue;
+    }
+
+    /**
      * Internal functions
      */
     protected function _isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted)

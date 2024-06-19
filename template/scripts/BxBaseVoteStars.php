@@ -26,13 +26,16 @@ class BxBaseVoteStars extends BxDolVoteStars
             'legend_stars' => 'bx-vote-stars-legend-' . $sHtmlId,
         ));
 
-        $this->_aElementDefaults = array(
+        $this->_aElementDefaults = [
             'show_do_vote_legend' => false,
             'show_counter' => true,
             'show_counter_empty' => false,
             'show_legend' => false,
             'show_script' => true
-        );
+        ];
+        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+            'show_counter' => true,
+        ]);
 
         $this->_sTmplNameDoVoteStars = 'vote_do_vote_stars.html';
     }
@@ -77,6 +80,13 @@ class BxBaseVoteStars extends BxDolVoteStars
         ));
     }
 
+    public function getCounterAPI($aParams = [])
+    {
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        return $this->_getVote();
+    }
+
     /**
      * Internal methods.
      */
@@ -101,6 +111,19 @@ class BxBaseVoteStars extends BxDolVoteStars
         $sJsObject = $this->getJsObjectName();
         $iMinValue = $this->getMinValue();
         $iMaxValue = $this->getMaxValue();
+
+        $bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
+        $bDisabled = !$isAllowedVote || ($bVoted && !$this->isUndo());
+
+        if($this->_bApi)
+            return [
+                'is_undo' => $this->isUndo(),
+                'is_voted' => $bVoted,
+                'is_disabled' => $bDisabled,
+                'value_min' => $iMinValue,
+                'value_max' => $iMaxValue,
+                'value' => $this->getValue($bVoted),
+            ];
 
         $aTmplVarsStars = $aTmplVarsLegend = $aTmplVarsSlider = $aTmplVarsButtons = array();
         for($i = $iMinValue; $i <= $iMaxValue; $i++) {
