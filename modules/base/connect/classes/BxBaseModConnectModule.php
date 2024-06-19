@@ -395,7 +395,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
 
     protected function _isSetPendingApprovalProfile($aProfileInfo, $oFormHelperProfile, &$aFieldsAccount, &$aFieldsProfile)
     {
-        return $oFormHelperProfile->isAutoApproval() ? true : $this->_oConfig->isAlwaysAutoApprove
+        return $oFormHelperProfile->isAutoApproval() ? true : $this->_oConfig->isAlwaysAutoApprove;
     }
 }
 
