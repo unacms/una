@@ -20,7 +20,7 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
     {
         return $this->getJsCode() . parent::getCode($isDisplayHeader);
     }
-    
+
     public function getJsCode()
     {
         $aParams = array(
@@ -31,7 +31,7 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
         );
         return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->sJsObject . " = new BxDolCmtsManageTools(" . json_encode($aParams) . ");");
     }
-    
+
     public function performActionDelete($aParams = array())
     {
         $iAffected = 0;
@@ -60,7 +60,7 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
         }
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_sys_grid_delete_failed')));
     }
-    
+
     protected function _getFilterControls()
     {
         parent::_getFilterControls();
@@ -105,30 +105,52 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputSearch);
     }
-    
+
+    protected function _getCellHeaderCmtModule($sKey, $aField)
+    {
+        if(!$this->_bShowModule)
+            return;
+
+        return parent::_getCellHeaderDefault($sKey, $aField);
+    }
+
     protected function _getCellCmtTime($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
-    
+
+    protected function _getCellCmtModule($mixedValue, $sKey, $aField, $aRow)
+    {
+        if(!$this->_bShowModule)
+            return;
+
+        $sKey = '_' . $mixedValue;
+        $sTitle = _t($sKey);
+        if(strcmp($sKey, $sTitle) != 0)
+            $mixedValue = $sTitle;
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
     protected function _getCellCmtText($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = strmaxtextlen($aRow['cmt_text']);
 
-        if($this->_oCmts && $this->_oCmts->isEnabled()) {
-            $this->_oCmts->setId($aRow['cmt_object_id']);
+        if(!empty($this->_aCmts[$aRow['cmt_system_id']]) && ($oCmts = $this->_aCmts[$aRow['cmt_system_id']]) instanceof BxDolCmts && $oCmts->isEnabled()) {
+            $oCmts->setId($aRow['cmt_object_id']);
 
-            $mixedValue = $this->_oTemplate->parseLink($this->_oCmts->getViewUrl($aRow['cmt_id']), $mixedValue, ['target' => '_blank']);
+            $mixedValue = $this->_oTemplate->parseLink($oCmts->getViewUrl($aRow['cmt_id']), $mixedValue, ['target' => '_blank']);
         }
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
-    
+
     protected function _getCellCmtAuthorId($mixedValue, $sKey, $aField, $aRow)
     {
+        $oProfile = null;
         if((int)$aRow['cmt_author_id'] != 0)
             $oProfile = BxDolProfile::getInstance($aRow['cmt_author_id']);
-        else
+        if(!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
 
         $sProfile = $oProfile->getDisplayName();

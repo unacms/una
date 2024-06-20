@@ -2341,6 +2341,7 @@ If it is not enabled then please consider implement this optimization, since it 
 
     <string name="_sys_cmts"><![CDATA[Comments]]></string>
     <string name="_sys_cmts_administration_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_sys_cmts_administration_grid_column_title_adm_cmt_module"><![CDATA[Module]]></string>
     <string name="_sys_cmts_administration_grid_column_title_adm_cmt_text"><![CDATA[Text]]></string>
     <string name="_sys_cmts_administration_grid_column_title_adm_cmt_time"><![CDATA[Added]]></string>
     <string name="_sys_cmts_administration_grid_column_title_adm_cmt_author_id"><![CDATA[Author]]></string>

@@ -5269,10 +5269,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_cmts_administration', 'checkbox', '_sys_select', '2%', 0, '0', '', 1),
 ('sys_cmts_administration', 'switcher', '_sys_cmts_administration_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('sys_cmts_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '0', '', 3),
-('sys_cmts_administration', 'cmt_text', '_sys_cmts_administration_grid_column_title_adm_cmt_text', '30%', 0, '25', '', 4),
-('sys_cmts_administration', 'cmt_time', '_sys_cmts_administration_grid_column_title_adm_cmt_time', '15%', 1, '25', '', 5),
-('sys_cmts_administration', 'cmt_author_id', '_sys_cmts_administration_grid_column_title_adm_cmt_author_id', '20%', 0, '25', '', 6),
-('sys_cmts_administration', 'actions', '', '20%', 0, '', '', 7);
+('sys_cmts_administration', 'cmt_module', '_sys_cmts_administration_grid_column_title_adm_cmt_module', '10%', 0, '25', '', 4),
+('sys_cmts_administration', 'cmt_text', '_sys_cmts_administration_grid_column_title_adm_cmt_text', '30%', 0, '25', '', 5),
+('sys_cmts_administration', 'cmt_time', '_sys_cmts_administration_grid_column_title_adm_cmt_time', '10%', 1, '25', '', 6),
+('sys_cmts_administration', 'cmt_author_id', '_sys_cmts_administration_grid_column_title_adm_cmt_author_id', '15%', 0, '25', '', 7),
+('sys_cmts_administration', 'actions', '', '20%', 0, '', '', 8);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_cmts_administration', 'bulk', 'delete', '_sys_cmts_administration_grid_action_title_adm_delete', '', 0, 1, 1),
