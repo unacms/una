@@ -428,6 +428,7 @@ class BxDolVote extends BxDolObject
             'performer_id' => $iAuthorId,
             'is_voted' => $aResult['voted'],
             'is_disabled' => $aResult['disabled'],
+            'value' => $aResult['voted'] ? $aData['value'] : 0,
             'icon' => $aResult['label_emoji'],
             'title' => $aResult['label_title'],
             'counter' => $this->getVote()

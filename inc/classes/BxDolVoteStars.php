@@ -40,7 +40,19 @@ class BxDolVoteStars extends BxTemplVote
      */
     protected function _isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted)
     {
+        if($bVoted && $this->isUndo())
+            return false;
+
         return !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorId, $iAuthorIp);
+    }
+
+    protected function _getVote($iObjectId = 0, $bForceGet = false)
+    {
+        $aVote = parent::_getVote($iObjectId, $bForceGet);
+        if(isset($aVote['rate']))
+            $aVote['rate'] = (float)$aVote['rate'];
+
+        return $aVote;
     }
 }
 
