@@ -116,10 +116,10 @@ class BxOAuthAPI extends BxDol
         if (!($oProfile = $this->_getProfileWithAccessChecking($iProfileId)))
             return;
 
-        if (!($oProfile = BxDolProfile::getInstance($aToken['user_id'])))
+        if (!(BxDolProfile::getInstance($aToken['user_id'])))
             return;
 
-        $this->output($this->_prepareProfileArray($oProfile, !isAdmin($oProfile->getAccountId())));
+        $this->output($this->_prepareProfileArray($oProfile, !isAdmin()));
     }
 
     /**
