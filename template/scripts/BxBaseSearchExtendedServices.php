@@ -50,6 +50,17 @@ return [$mForm];
     public function serviceGetResults($mParams)
     {
         $aParams = [];
+        
+        $mDefValues = bx_get('filters');
+       
+        if ($mDefValues){
+            $mDefValues = json_decode($mDefValues, true);
+        }
+        
+        foreach($mDefValues as $sKey => $aParam){
+            $_POST[$sKey] = $aParam;
+        }
+        
         if (is_string($mParams)){
            $aPa = json_decode($mParams, true);    
             $aParams['object'] = $aPa['params']["object"];
