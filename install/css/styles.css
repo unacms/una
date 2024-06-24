@@ -75,3 +75,15 @@ html, body {
 .bx-header.bx-def-color-bg-header {
     background-color: #3b8686;
 }
+
+fieldset.bx-form-section {
+    background-color:transparent !important;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;
+    border-radius:0 !important;
+}
+
+fieldset.bx-form-section .bx-form-section-content {
+    background-color:transparent !important;
+}
