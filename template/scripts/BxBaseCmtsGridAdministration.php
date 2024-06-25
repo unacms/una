@@ -10,12 +10,14 @@
 class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
 {
     protected $sJsObject = 'oBxDolCmtsManageTools';
-    
+
     public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
+
+        $this->_aQueryReset = [$this->_aOptions['filter_get'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']];
     }
-    
+
     public function getCode($isDisplayHeader = true)
     {
         return $this->getJsCode() . parent::getCode($isDisplayHeader);
