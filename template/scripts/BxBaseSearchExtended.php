@@ -312,6 +312,12 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $sFormSubmit = 'search' . $this->_sObject;
 
         list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+        
+        $mDefValues = bx_get('filters');
+       
+        if ($mDefValues){
+            $mDefValues = json_decode($mDefValues, true);
+        }
 
         $aForm = array(
             'form_attrs' => array(
@@ -366,7 +372,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 'caption' => _t($aField['caption']),
             	'info' => _t($aField['info']),
                 'values' => $aField['values'],
-                'value' => $aField['search_value'],
+                'value' => $aField['search_value'] == '' && isset($mDefValues) && isset($mDefValues[$aField['name']]) ? $mDefValues[$aField['name']] : $aField['search_value'],
                 'attrs' => $aAttrs,
                 'db' => array(
                     'pass' => 'datepicker_range_age' === $aField['search_type'] ? 'AgeRange' : (!empty($aField['pass']) ? $aField['pass'] : 'Xss')
