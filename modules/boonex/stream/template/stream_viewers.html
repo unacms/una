@@ -1,7 +1,7 @@
 <div id="bx-stream-viewers-__suffix__" class="bx-stream-viewers">__viewers__</div>
 <script>
     var fFunc = function () {
-        let playerInstance = OvenPlayer.getPlayerByContainerId("bx-stream-player-__suffix__");
+        let playerInstance = typeof(OvenPlayer) === 'undefined' ? false : OvenPlayer.getPlayerByContainerId("bx-stream-player-__suffix__");
         if ((!playerInstance || 'playing' == playerInstance.getState()) && ('undefined' !== typeof(document.hidden) && !document.hidden)) {
             $.getJSON('__url__', function (oData) {
                 if ('undefined' !== typeof(oData.viewers)) {
