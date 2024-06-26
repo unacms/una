@@ -739,7 +739,23 @@ class BxBaseModGeneralModule extends BxDolModule
                 'direction' => 'desc'
             ];
         }
-        
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-get_sortable_fields '{module_name}', 'get_sortable_fields' - hook to override a list of sortable fields
+         * - $unit_name - module name
+         * - $action - equals `get_sortable_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [array] a list of searchable fields, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-get_sortable_fields
+         */
+        bx_alert($this->getName(), 'get_sortable_fields', 0, 0, [
+            'extended' => true, 
+            'override_result' => &$aResult
+        ]);
+
         return $aResult;
     }
     
