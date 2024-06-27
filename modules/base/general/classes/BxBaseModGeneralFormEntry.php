@@ -223,55 +223,84 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $sResult = '';
         $aGhostTemplateParams = is_object($aInput['ghost_template']) ? $aInput['ghost_template']->aParams : $aInput['ghost_template']['params'];
 
-        $aNestedValues = $this->_oModule->_oDb->getNestedBy(array(
+        $aNestedValues = $this->_oModule->_oDb->getNestedBy([
             'type' => 'content_id', 
             'id' => $this->_iContentId, 
             'key_name' => $aGhostTemplateParams['db']['key']
-        ), $aGhostTemplateParams['db']['table']);
+        ], $aGhostTemplateParams['db']['table']);
 
         foreach($aNestedValues as $aNestedValue) {
-            $sValue = '';
-			$aNestedValuesRv = array();
             $oForm = $this->getNestedFormObject($aInput, true);
-            
+
+            $aNestedValuesRv = [];
             foreach($aNestedValue as $aNestedKey => $aNestedItem) {
                 if ($oForm->aParams['db']['key'] == $aNestedKey)
                     $aNestedValuesRv[$aNestedKey . '[]'] = $aNestedItem;
                 else
                     $aNestedValuesRv[$aNestedKey] = $aNestedItem;
             }
-              
+
             $oForm->initChecker($aNestedValuesRv);
-            
-            if ($aInput['rateable']){
-                $sVote = '';
-				$sVoteBtn = '';
+
+            $sValue = '';
+            if($aInput['rateable']) {
                 $iId = BxDolFormQuery::getFormField($this->id, $aInput['name'], $this->_iContentId,  $aNestedValuesRv[$oForm->aParams['db']['key'] . '[]']);
-                $oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
-                if ($oVote){
-					$sVote = $oVote->getCounter(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
-					$sVoteBtn = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
-				}
-				$sValue = $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', array(
-					'value' =>  $oForm->getCode(),
-					'rate' => $sVote,
-					'rate_btn' => $sVoteBtn
-				));
+
+                $sVoteElement = '';
+                $sVoteCounter = '';
+                if(($oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId)) !== null) {
+                    $sVoteElement = $oVote->getElementInline(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode]);
+                    $sVoteCounter = $oVote->getCounter(['show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode]);
+                }
+
+                $sValue = $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', [
+                    'value' => $oForm->getCode(),
+                    'rate_btn' => $sVoteElement,
+                    'rate' => $sVoteCounter,
+                ]);
             }
-			else{
-				$sValue =  $oForm->getCode();
-			}
-			$sResult .= $this->oTemplate->parseHtmlByName('form_view_nested_row.html', array(
-				'value' =>  $sValue
-			));
+            else
+                $sValue =  $oForm->getCode();
+
+            $sResult .= $this->oTemplate->parseHtmlByName('form_view_nested_row.html', [
+                'value' =>  $sValue
+            ]);
         }
-        if ($sResult != ''){
-            return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
-                'type' => $aInput['type'], 
-                'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
-                'value' => $sResult
-            ));
+
+        if(!$sResult) 
+            return '';
+
+        $aTmplVarsIcon = [];
+        if(!empty($aInput['icon'])) {
+            list($sIcon, $sIconUrl, $sIconA, $sIconHtml) = BxTemplFunctions::getInstanceWithTemplate($this->oTemplate)->getIcon($aInput['icon']);
+
+            $aTmplVarsIcon = [
+                'bx_if:icon' => [
+                    'condition' => (bool)$sIcon,
+                    'content' => ['icon' => $sIcon],
+                ],
+                'bx_if:icon-html' => [
+                    'condition' => (bool)$sIconHtml,
+                    'content' => ['icon' => $sIconHtml],
+                ],
+                'bx_if:image_inline' => [
+                    'condition' => false,
+                    'content' => ['image' => ''],
+                ]
+            ];
         }
+
+        return $this->oTemplate->parseHtmlByName('form_view_row.html', [
+            'type' => $aInput['type'],
+            'class' => '',
+            'bx_if:show_icon' => [
+                'condition' => !empty($aTmplVarsIcon),
+                'content' => $aTmplVarsIcon
+            ],
+            'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
+            'class_value' => '',
+            'value' => $sResult
+        ]);
     }
     
     protected function genGhostTemplateForInputNestedForm (&$aInput)
@@ -793,29 +822,28 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     
     function genViewRowWrapped(&$aInput)
     {
-        $sResult =  parent::genViewRowWrapped($aInput);
-        if (!$aInput['rateable']){
+        $sResult = parent::genViewRowWrapped($aInput);
+        if(!$aInput['rateable'])
             return $sResult;
-        }
-        
+
         $sValue = $this->genViewRowValue($aInput);
-        if (null === $sValue)
+        if(null === $sValue)
             return '';
-        
+
         // process rateable fields
         $iId = BxDolFormQuery::getFormField($this->id, $aInput['name'], $this->_iContentId);
-        $sVote = '';
-        $oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
-        if ($oVote){
-            $sVote = $oVote->getCounter(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
-			$sVoteBtn = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
-			return $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', array(
-				'value' => $sResult,
-				'rate' => $sVote,
-				'rate_btn' => $sVoteBtn
-			));
+        if(($oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId)) !== null) {
+            $sVoteElement = $oVote->getElementInline(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode]);
+            $sVoteCounter = $oVote->getCounter(['show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode]);
+
+            return $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', [
+                'value' => $sResult,
+                'rate_btn' => $sVoteElement,
+                'rate' => $sVoteCounter,
+            ]);
         }
-		return $sResult;
+
+        return $sResult;
     }
 
     function setMetatagsKeywordsData($iId, $a, $o)
