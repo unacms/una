@@ -10,6 +10,9 @@ CREATE TABLE IF NOT EXISTS `bx_cnl_data` (
   `cover` int(11) NOT NULL,
   `cover_data` varchar(50) NOT NULL,
   `channel_name` varchar(191) NOT NULL,
+  `lc_id` int(11) NOT NULL default '0',
+  `lc_date` int(11) NOT NULL default '0',
+  `contents` int(11) NOT NULL default '0',
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
@@ -36,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `bx_cnl_content` (
   `cnl_id` int(11) NOT NULL,
   `author_id` int(11) NOT NULL,
   `module_name` varchar(19) NOT NULL,
+  `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`)
 );
 

@@ -506,7 +506,17 @@ class BxCnlModule extends BxBaseModGroupsModule
 
         return '';
     }
-    
+
+    public function serviceBrowseActive ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
+    {
+        return $this->_serviceBrowse ('active', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
+    public function serviceBrowseTrending ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
+    {
+        return $this->_serviceBrowse ('trending', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
     public function serviceBrowseByLevel ($iLevelId = 0, $bDisplayEmptyMsg = false)
     {
         return $this->_serviceBrowse ('level', array('level' => $iLevelId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);

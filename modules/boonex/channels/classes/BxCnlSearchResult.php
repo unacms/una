@@ -158,7 +158,61 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['sorting'] = 'top';
                 $this->sBrowseUrl = 'page.php?i=channels-top';
                 break;
-           
+            
+            case 'active':
+                $this->aCurrent['join']['contents'] = [
+                    'type' => 'INNER',
+                    'table' => $CNF['TABLE_CONTENT'],
+                    'mainTable' => 'bx_cnl_data',
+                    'mainField' => 'id',
+                    'onField' => 'cnl_id',
+                    'joinFields' => [],
+                    'groupTable' => 'bx_cnl_data',
+                    'groupField' => 'id',
+                    'groupHaving' => 'COUNT(`' . $CNF['TABLE_CONTENT'] . '`.`cnl_id`) >= ' . (int)getParam($CNF['PARAM_BROWSE_ACTIVE_N_POSTS'])
+                ];
+                $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], [
+                    'contents_period' => [
+                        'value' => time() - 3600 * (int)getParam($CNF['PARAM_BROWSE_ACTIVE_X_HOURS']), 
+                        'field' => 'date', 
+                        'operator' => '>=',
+                        'table' => $CNF['TABLE_CONTENT']
+                    ]
+                ]);
+
+                $this->aCurrent['rss']['link'] = 'modules/?r=channels/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_channels_page_title_browse_active');
+                $this->aCurrent['sorting'] = 'active';
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                break;
+
+            case 'trending':
+                $this->aCurrent['join']['contents'] = [
+                    'type' => 'INNER',
+                    'table' => $CNF['TABLE_CONTENT'],
+                    'mainTable' => 'bx_cnl_data',
+                    'mainField' => 'id',
+                    'onField' => 'cnl_id',
+                    'joinFields' => ['cnl_id'],
+                    'operator' => 'COUNT', 
+                    'groupTable' => 'bx_cnl_data',
+                    'groupField' => 'id',
+                    'groupHaving' => 'COUNT(`' . $CNF['TABLE_CONTENT'] . '`.`cnl_id`) > 0'
+                ];
+                $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], [
+                    'contents_period' => [
+                        'value' => time() - 3600 * (int)getParam($CNF['PARAM_BROWSE_TRENDING_X_HOURS']), 
+                        'field' => 'date', 
+                        'operator' => '>=',
+                        'table' => $CNF['TABLE_CONTENT']
+                    ]
+                ]);
+                $this->aCurrent['rss']['link'] = 'modules/?r=channels/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_channels_page_title_browse_trending');
+                $this->aCurrent['sorting'] = 'trending';
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                break;
+
             case 'level':
                 $this->aCurrent['join']['level'] = array(
                     'type' => 'INNER',
@@ -194,32 +248,55 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
 
     function getAlterOrder()
     {
+        $aResult = [];
+
         switch ($this->aCurrent['sorting']) {
-        case 'featured':
-            return array('order' => ' ORDER BY `bx_cnl_data`.`featured` DESC ');
-        case 'recommended':
-            return array('order' => ' ORDER BY RAND() ');
-        case 'none':
-            return array();
-        case 'top':
-            return array('order' => ' ORDER BY `bx_cnl_data`.`views` DESC ');
-        case 'level':
-            return array('order' => ' ORDER BY `bx_cnl_data`.`channel_name` DESC ');
-        case 'last':
-        default:
-            return array('order' => ' ORDER BY `bx_cnl_data`.`added` DESC ');
+            case 'none':
+                break;
+
+            case 'featured':
+                $aResult = ['order' => ' ORDER BY `bx_cnl_data`.`featured` DESC'];
+                break;
+
+            case 'recommended':
+                $aResult = ['order' => ' ORDER BY RAND()'];
+                break;
+
+            case 'top':
+                $aResult = ['order' => ' ORDER BY `bx_cnl_data`.`views` DESC'];
+                break;
+
+            case 'active':
+                $aResult = ['order' => ' ORDER BY `bx_cnl_data`.`lc_date` DESC'];
+                break;
+
+            case 'trending':
+                $aResult = ['order' => ' ORDER BY `contents_new` DESC'];
+                break;
+
+            case 'level':
+                $aResult = ['order' => ' ORDER BY `bx_cnl_data`.`channel_name` DESC'];
+                break;
+
+            case 'last':
+            default:
+                $aResult = ['order' => ' ORDER BY `bx_cnl_data`.`added` DESC'];
         }
+
+        return $aResult;
     }
 
     function _getPseud ()
     {
-        return array(
+        return [
             'id' => 'id',
             'channel_name' => 'channel_name',
             'added' => 'added',
             'author' => 'author',
             'picture' => 'picture',
-        );
+
+            'contents_new' => 'cnl_id_count'
+        ];
     }
 }
 
