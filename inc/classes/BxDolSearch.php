@@ -691,18 +691,17 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setFieldUnit ($sFieldName, $sTableName, $sOperator = '', $bRenameMode = true)
     {
-        if (!empty($sOperator))
-            $sqlUnit  = "$sOperator(`$sTableName`.`$sFieldName`)";
-        else
-            $sqlUnit  = "`$sTableName`.`$sFieldName`";
+        $bOperator = !empty($sOperator);
 
-        if (isset($this->aPseud) && $bRenameMode !== false) {
-            $sKey = array_search($sFieldName, $this->aPseud);
-            if ($sKey !== false) {
-                $sqlUnit .= " as `$sKey`";
-                unset($this->aPseud[$sKey]);
-            }
+        $sqlUnit  = "`$sTableName`.`$sFieldName`";
+        if($bOperator)
+            $sqlUnit = $sOperator . '(' . $sqlUnit . ')';
+
+        if(!empty($this->aPseud) && $bRenameMode !== false && ($sKey = array_search($sFieldName . ($bOperator ? '_' . strtolower($sOperator) : ''), $this->aPseud)) !== false) {
+            $sqlUnit .= " as `$sKey`";
+            unset($this->aPseud[$sKey]);
         }
+
         return $sqlUnit . ', ';
     }
 
@@ -847,7 +846,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         $aSql = array();
         // joinFields & join
         if (isset($this->aCurrent['join']) && is_array($this->aCurrent['join'])) {
-            $aSql = array('join'=>'', 'ownFields'=>'', 'joinFields'=>'', 'groupBy'=>'');
+            $aSql = array('join' => '', 'ownFields' => '', 'joinFields' => '', 'groupBy' => '', 'groupHaving' => '');
             foreach ($this->aCurrent['join'] as $sKey => $aValue) {
                 $sAlias = isset($aValue['table_alias']) ? $aValue['table_alias'] : $aValue['table'];
                 $sTableAlias = isset($aValue['table_alias']) ? " AS {$aValue['table_alias']} " : '';
@@ -857,15 +856,27 @@ class BxDolSearchResult implements iBxDolReplaceable
                         $aSql['joinFields'] .= $this->setFieldUnit($sValue, $sAlias, isset($aValue['operator']) ? $aValue['operator'] : null, $bRenameMode);
                     }
                 }
+
                 // group by
-                if (isset($aValue['groupTable']))
-                    $aSql['groupBy'] =  "GROUP BY `{$aValue['groupTable']}`.`{$aValue['groupField']}`, ";
+                if(isset($aValue['groupTable']))
+                    $aSql['groupBy'] .= "`{$aValue['groupTable']}`.`{$aValue['groupField']}`, ";
+
+                // having
+                if(isset($aValue['groupHaving']))
+                    $aSql['groupHaving'] .= $aValue['groupHaving'];
+                    
                 $sOn = isset($aValue['mainTable']) ? $aValue['mainTable'] : $this->aCurrent['table'];
                 $aSql['join'] .= " {$aValue['type']} JOIN `{$aValue['table']}` $sTableAlias ON " . (!empty($aValue['on_sql']) ? $aValue['on_sql'] : "`{$sAlias}`.`{$aValue['onField']}`=" . trim($this->setFieldUnit($aValue['mainField'], $sOn, isset($aValue['mainFieldFunc']) ? $aValue['mainFieldFunc'] : '', false), ", "));
                 $aSql['ownFields'] .= $this->setFieldUnit($aValue['mainField'], $sOn, '', $bRenameMode);
             }
+
             $aSql['joinFields'] = trim($aSql['joinFields'], ', ');
-            $aSql['groupBy'] = trim($aSql['groupBy'], ', ');
+
+            if(!empty($aSql['groupBy']))
+                $aSql['groupBy'] = trim('GROUP BY ' . $aSql['groupBy'], ', ');
+
+            if(!empty($aSql['groupHaving']))
+                $aSql['groupHaving'] = 'HAVING ' . $aSql['groupHaving'];
         }
         return $aSql;
     }
@@ -903,6 +914,7 @@ class BxDolSearchResult implements iBxDolReplaceable
 
             $aSql['join'] = $aJoins['join'];
             $aSql['groupBy'] = $aJoins['groupBy'];
+            $aSql['groupHaving'] = $aJoins['groupHaving'];
         } 
 
         $aSql['ownFields'] = trim($aSql['ownFields'], ', ');
@@ -942,6 +954,9 @@ class BxDolSearchResult implements iBxDolReplaceable
         if (isset($aSql['groupBy']))
             $sqlQuery .= ' ' . $aSql['groupBy'];
 
+        if (isset($aSql['groupHaving']))
+            $sqlQuery .= ' ' . $aSql['groupHaving'];
+
         if($bForUnion)
             return [
                 'query' => $sqlQuery, 
@@ -954,7 +969,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         if (isset($aSql['limit']))
             $sqlQuery .= ' ' . $aSql['limit'];
 
-        // echoDbg($sqlQuery);
+        //echoDbg($sqlQuery);
         $aRes = BxDolDb::getInstance()->getAll($sqlQuery);
         return $aRes;
     }
