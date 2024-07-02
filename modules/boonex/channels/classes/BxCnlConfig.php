@@ -61,12 +61,15 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'URL_MANAGE_COMMON' => 'page.php?i=channels-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=channels-administration',
 
+            // some params
             'PARAM_DEFAULT_AUTHOR' => 'bx_channels_default_author',
             'PARAM_NUM_RSS' => 'bx_channels_num_rss',
-          
             'PARAM_SEARCHABLE_FIELDS' => 'bx_channels_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_channels_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_channels_per_page_browse_recommended',
+            'PARAM_BROWSE_ACTIVE_N_POSTS' => 'bx_channels_browse_active_n_posts',
+            'PARAM_BROWSE_ACTIVE_X_HOURS' => 'bx_channels_browse_active_x_hours',
+            'PARAM_BROWSE_TRENDING_X_HOURS' => 'bx_channels_browse_trending_x_hours',
 
             // objects
             'OBJECT_STORAGE' => 'bx_channels_pics',

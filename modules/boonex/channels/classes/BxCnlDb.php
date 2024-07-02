@@ -41,14 +41,27 @@ class BxCnlDb extends BxBaseModGroupsDb
     public function addContentToChannel($iContentId, $iCnlId, $sModuleName, $iAuthorId)
     {
         $CNF = &$this->_oConfig->CNF;
-        $aBindings = array(
+
+        $iNow = time();
+        if(!$this->query("INSERT INTO `" . $CNF['TABLE_CONTENT'] . "` (`content_id`, `cnl_id`, `author_id`, `module_name`, `date`) VALUES (:content_id, :cnl_id, :author_id, :module_name, :date)", [
             'content_id' => $iContentId,
             'cnl_id' => $iCnlId,
             'module_name' => $sModuleName,
             'author_id' => $iAuthorId,
-        );
-        $this->query("INSERT INTO `" . $CNF['TABLE_CONTENT'] . "` (`content_id`, `cnl_id`, `module_name`, `author_id`) VALUES (:content_id, :cnl_id, :module_name, :author_id)", $aBindings);
-        return $this->lastId();
+            'date' => $iNow
+        ]))
+            return 0;
+
+        $iCnlContentId = $this->lastId();
+
+        $this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET `lc_id`=:lc_id, `lc_date`=:lc_date, `contents`=:contents WHERE `" . $CNF['FIELD_ID'] . "`=:id", [
+            'lc_id' => $iCnlContentId,
+            'lc_date' => $iNow,
+            'contents' => (int)$this->getOne("SELECT COUNT(*) FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `cnl_id`=:cnl_id LIMIT 1", ['cnl_id' => $iCnlId]),
+            'id' => $iCnlId
+        ]);
+
+        return $iCnlContentId;
     }
     
     public function checkContentInChannel($iContentId, $iCnlId, $sModuleName, $iAuthorId)
@@ -85,20 +98,47 @@ class BxCnlDb extends BxBaseModGroupsDb
     public function removeContentFromChannel($iContentId, $sModuleName)
     {
         $CNF = &$this->_oConfig->CNF;
-        $aBindings = array(
+
+        $aBindings = [
             'content_id' => $iContentId,
             'module_name' => $sModuleName
-        );
+        ];
+
+        $aContents = $this->getAll("SELECT * FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `content_id` = :content_id AND `module_name` = :module_name", $aBindings);
+        if(empty($aContents) || !is_array($aContents))
+            return;
+
         $this->query("DELETE FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `content_id` = :content_id AND `module_name` = :module_name", $aBindings);
+
+        foreach($aContents as $aContent) {
+            $iCnlId = (int)$aContent['cnl_id'];
+
+            $aLatest = $this->getRow("SELECT * FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `cnl_id`=:cnl_id ORDER BY `date` DESC LIMIT 1", [
+                'cnl_id' => $iCnlId
+            ]);
+
+            $iLcId = $iLcDate = 0;
+            if(!empty($aLatest) && is_array($aLatest)) {
+                $iLcId = (int)$aLatest['id'];
+                $iLcDate = (int)$aLatest['date'];
+            }
+
+            $this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET `lc_id`=:lc_id, `lc_date`=:lc_date, `contents`=:contents WHERE `" . $CNF['FIELD_ID'] . "`=:id", [
+                'lc_id' => $iLcId,
+                'lc_date' => $iLcDate,
+                'contents' => (int)$this->getOne("SELECT COUNT(*) FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `cnl_id`=:cnl_id LIMIT 1", ['cnl_id' => $iCnlId]),
+                'id' => $iCnlId
+            ]);
+        }
     }
 	
-	public function removeChannelContent($iChannelId)
+    public function removeChannelContent($iChannelId)
     {
         $CNF = &$this->_oConfig->CNF;
-        $aBindings = array(
+
+        $this->query("DELETE FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `cnl_id` = :channel_id", [
             'channel_id' => $iChannelId
-        );
-        $this->query("DELETE FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `cnl_id` = :channel_id", $aBindings);
+        ]);
     }
 }
 

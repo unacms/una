@@ -17,6 +17,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_channels_num_rss', '10', @iCategId, '_bx_channels_option_num_rss', 'digit', '', '', '', '', 12),
 ('bx_channels_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', '', 15),
 ('bx_channels_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', '', 16),
+('bx_channels_browse_active_n_posts', '1', @iCategId, '_sys_option_browse_active_n_posts', 'digit', '', '', '', '', 20),
+('bx_channels_browse_active_x_hours', '24', @iCategId, '_sys_option_browse_active_x_hours', 'digit', '', '', '', '', 21),
+('bx_channels_browse_trending_x_hours', '24', @iCategId, '_sys_option_browse_trending_x_hours', 'digit', '', '', '', '', 23),
 ('bx_channels_searchable_fields', 'channel_name', @iCategId, '_bx_channels_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:21:"get_searchable_fields";}', '', '', '', 30),
 ('bx_channels_labels_autofollow', 'on', @iCategId, '_bx_channels_option_labels_autofollow', 'checkbox', '', '', '', '', 40);
 
@@ -133,7 +136,9 @@ SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' A
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_featured_entries_view_showcase', '_bx_channels_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 1),
 ('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_recommended_entries_view_showcase', '_bx_channels_page_block_title_recommended_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:18:\"browse_recommended\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 2),
-('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_cover_block', '_bx_channels_page_block_title_cover_block', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 3);
+('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_active_entries', '_bx_channels_page_block_title_active_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:13:\"browse_active\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 3),
+('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_trending_entries', '_bx_channels_page_block_title_trending_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"browse_trending\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 4),
+('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_cover_block', '_bx_channels_page_block_title_cover_block', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 5);
 
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 SET @iPBCellProfile = 3;
