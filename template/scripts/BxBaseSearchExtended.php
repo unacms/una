@@ -235,7 +235,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             if(isset($aParams['search_params']))
                 return [$this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch)];
             else
-                return $this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch);
+                return [$this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch)];
         }
 
         $aTxtDirection = [
