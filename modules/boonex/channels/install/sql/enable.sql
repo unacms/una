@@ -17,9 +17,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_channels_num_rss', '10', @iCategId, '_bx_channels_option_num_rss', 'digit', '', '', '', '', 12),
 ('bx_channels_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', '', 15),
 ('bx_channels_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', '', 16),
-('bx_channels_browse_active_n_posts', '1', @iCategId, '_sys_option_browse_active_n_posts', 'digit', '', '', '', '', 20),
-('bx_channels_browse_active_x_hours', '24', @iCategId, '_sys_option_browse_active_x_hours', 'digit', '', '', '', '', 21),
-('bx_channels_browse_trending_x_hours', '24', @iCategId, '_sys_option_browse_trending_x_hours', 'digit', '', '', '', '', 23),
+('bx_channels_browse_active_n_posts', '1', @iCategId, '_bx_channels_option_browse_active_n_posts', 'digit', '', '', '', '', 20),
+('bx_channels_browse_active_x_hours', '24', @iCategId, '_bx_channels_option_browse_active_x_hours', 'digit', '', '', '', '', 21),
+('bx_channels_browse_trending_x_hours', '24', @iCategId, '_bx_channels_option_browse_trending_x_hours', 'digit', '', '', '', '', 23),
 ('bx_channels_searchable_fields', 'channel_name', @iCategId, '_bx_channels_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:21:"get_searchable_fields";}', '', '', '', 30),
 ('bx_channels_labels_autofollow', 'on', @iCategId, '_bx_channels_option_labels_autofollow', 'checkbox', '', '', '', '', 40);
 
