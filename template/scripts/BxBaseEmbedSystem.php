@@ -71,12 +71,6 @@ class BxBaseEmbedSystem extends BxDolEmbed
 
         unset($a['OGImage'], $a['thumbnailUrl'], $a['icon'], $a['icon2'], $a['icon3']);
 
-        if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
-            $iMediaId = $oStorage->storeFileFromUrl($a['image'], false);
-            if($iMediaId)
-                $a['image'] =  $oStorage->getFileUrlById($iMediaId);
-        }
-
         if($a['image'] == '') {
             $b = json_decode(bx_file_get_contents("https://api.microlink.io/?url=" . $sUrl), true);
             $a = [
@@ -86,6 +80,18 @@ class BxBaseEmbedSystem extends BxDolEmbed
                 'logo' => $b['data']['logo']['url'],
                 'url' => $sUrl,
             ];
+        }
+        
+        if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
+            $iMediaId = $oStorage->storeFileFromUrl($a['image'], false);
+            if($iMediaId)
+                $a['image'] =  $oStorage->getFileUrlById($iMediaId);
+        }
+        
+        if($a['logo'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
+            $iMediaId = $oStorage->storeFileFromUrl($a['logo'], false);
+            if($iMediaId)
+                $a['logo'] =  $oStorage->getFileUrlById($iMediaId);
         }
 
         $aUrl = parse_url($sUrl);
