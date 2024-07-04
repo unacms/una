@@ -801,9 +801,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /** 
      * @ref bx_base_profile-browse_recent_profiles "browse_recent_profiles"
      */
-    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sUnitView = false)
     {
-        return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+        return $this->_serviceBrowse ('recent', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
     /**
