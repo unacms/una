@@ -456,19 +456,23 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         return $this->_serviceBrowse ('upcoming_connected', array_merge($aDefaults, $aParams), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
-    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sUnitView = false)
     {
         $sMode = 'recent';
 
         $sFilterSelector = '#' . $this->_oConfig->getHtmlIds('popup_bfilters_recent');
         $aFilterParams = ['mode' => $sMode];
 
-        return $this->_serviceBrowse ($sMode, [
+        $aParams = [
             'filters' => [
                 'values' => [],
                 'onclick' => $this->_oConfig->getJsObject('main') . ".changeBrowsingFilters(this, '" . $sFilterSelector . "', " . json_encode($aFilterParams) . ")"
             ]
-        ], BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+        ];
+        if ($sUnitView) {
+            $aParams['unit_view'] = $sUnitView;
+        }
+        return $this->_serviceBrowse ($sMode, $aParams, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
     /**
