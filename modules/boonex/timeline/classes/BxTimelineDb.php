@@ -425,29 +425,42 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->query("TRUNCATE TABLE `" . $this->_sTableHotTrack . "`");
     }
 
-    public function getHotTrackByDate($iInterval = 24)
+    public function getHotTrackByDate($iInterval = 0)
     {
         $aBindings = [
-            'interval' => $iInterval
+            'mux' => $this->_oConfig->getHotContentAgeMux()
         ];
+        $sQueryWhere = "";
+
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+
+            $sQueryWhere .= " AND `te`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         $sQuery = "SELECT 
                 `te`.`id` AS `event_id`,
-                `te`.`date` AS `value`
+                `te`.`date` * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
-            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `te`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0)" . $sQueryWhere;
 
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+            
+            $sQueryWhere .= " AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -464,7 +477,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`cmt_time`) AS `value`
+                MAX(`tt`.`cmt_time`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`cmt_object_id` AND `te`.`object_owner_id`<>`tt`.`cmt_author_id` AND `te`.`type`=:module 
             WHERE 1 " . $sQueryWhere . " 
@@ -473,14 +486,19 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+            
+            $sQueryWhere .= " AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -497,7 +515,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`cmt_time`) AS `value`
+                MAX(`tt`.`cmt_time`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`cmt_object_id` AND `te`.`object_owner_id`<>`tt`.`cmt_author_id` AND `te`.`type`=:module
             WHERE 1 " . $sQueryWhere . " 
@@ -506,14 +524,19 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+
+            $sQueryWhere .= " AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -530,7 +553,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`date`) AS `value`
+                MAX(`tt`.`date`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`object_owner_id`<>`tt`.`author_id` AND `te`.`type`=:module 
             WHERE 1 " . $sQueryWhere . " 
@@ -539,14 +562,19 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+
+            $sQueryWhere .= " AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -563,7 +591,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`date`) AS `value`
+                MAX(`tt`.`date`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`object_owner_id`<>`tt`.`author_id` AND `te`.`type`=:module 
             WHERE 1 " . $sQueryWhere . " 
@@ -604,9 +632,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getAll($sQuery, array('module' => $sModule, 'interval' => $iInterval));
     }
 
-    public function updateHotTrack($aTrack)
+    public function updateHotTrack($iEventId, $iValue)
     {
-        return (int)$this->query("REPLACE INTO `" . $this->_sTableHotTrack . "` SET " . $this->arrayToSQL($aTrack)) > 0;
+        return (int)$this->query("INSERT INTO `" . $this->_sTableHotTrack . "` (`event_id`, `value`) VALUES (:event_id, :value) ON DUPLICATE KEY UPDATE `value` = :value", [
+            'event_id' => $iEventId,
+            'value' => $iValue
+        ]) > 0;
     }
 
     public function rebuildSlice()

@@ -9,9 +9,9 @@
     <string name="_bx_channels_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_channels_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
     <string name="_bx_channels_option_labels_autofollow"><![CDATA[Автоматически подписывать на каналы указанные в метках профайла]]></string>
-    <string name="_sys_option_browse_active_n_posts"><![CDATA[Просмотр "Активные": Минимальное количество новых сообщений на канале за период времени.]]></string>
-    <string name="_sys_option_browse_active_x_hours"><![CDATA[Просмотр "Активные": Период времени для подсчета новых сообщений на канале.]]></string>
-    <string name="_sys_option_browse_trending_x_hours"><![CDATA[Просмотр "Тенденции": Период времени для подсчета новых сообщений на канале.]]></string>
+    <string name="_bx_channels_option_browse_active_n_posts"><![CDATA[Просмотр "Активные": Минимальное количество новых сообщений на канале за период времени.]]></string>
+    <string name="_bx_channels_option_browse_active_x_hours"><![CDATA[Просмотр "Активные": Период времени для подсчета новых сообщений на канале.]]></string>
+    <string name="_bx_channels_option_browse_trending_x_hours"><![CDATA[Просмотр "Тенденции": Период времени для подсчета новых сообщений на канале.]]></string>
 
     <string name="_bx_channels_form_profile"><![CDATA[Каналы]]></string>
     <string name="_bx_channels_form_profile_display_add"><![CDATA[Добавление канала]]></string>

@@ -9,9 +9,9 @@
     <string name="_bx_channels_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_channels_option_searchable_fields"><![CDATA[Searchable fields]]></string>
     <string name="_bx_channels_option_labels_autofollow"><![CDATA[Auto-follow channels when used as labels in profiles]]></string>
-    <string name="_sys_option_browse_active_n_posts"><![CDATA[Browse Active: Min number of new posts in channel during the period of time]]></string>
-    <string name="_sys_option_browse_active_x_hours"><![CDATA[Browse Active: The period of time to count new posts in channel]]></string>
-    <string name="_sys_option_browse_trending_x_hours"><![CDATA[Browse Trending: The period of time to count new posts in channel]]></string>
+    <string name="_bx_channels_option_browse_active_n_posts"><![CDATA[Browse Active: Min number of new posts in channel during the period of time]]></string>
+    <string name="_bx_channels_option_browse_active_x_hours"><![CDATA[Browse Active: The period of time to count new posts in channel]]></string>
+    <string name="_bx_channels_option_browse_trending_x_hours"><![CDATA[Browse Trending: The period of time to count new posts in channel]]></string>
 
 	<string name="_bx_channels_form_profile"><![CDATA[Channels]]></string>
 	<string name="_bx_channels_form_profile_display_add"><![CDATA[Add Channel]]></string>

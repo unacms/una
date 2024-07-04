@@ -119,8 +119,11 @@ class BxTimelineCronHot extends BxDolCron
         $aTracks = $this->_combineArrays($aTracks, $aTracksByDateComments);
         $aTracks = $this->_combineArrays($aTracks, $aTracksByDateVotes);
 
-        foreach($aTracks as $iId => $iDate)
-            $this->_oModule->_oDb->updateHotTrack(array('event_id' => $iId, 'value' => $iDate));
+        /*
+         * Currently $iValue contains event creation date.
+         */
+        foreach($aTracks as $iEventId => $iValue)
+            $this->_oModule->_oDb->updateHotTrack($iEventId, $iValue);
     }
 
     /**

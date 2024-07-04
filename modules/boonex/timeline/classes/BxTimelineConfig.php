@@ -55,6 +55,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iHotThresholdContent;
     protected $_iHotThresholdComment;
     protected $_iHotThresholdVote;
+    protected $_fHotContentAgeMux;
     protected $_aHotSources;
     protected $_aHotSourcesList;
     protected $_aHotList;
@@ -492,6 +493,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iHotThresholdComment = (int)getParam($sOptionPrefix . 'hot_threshold_comment');
         $this->_iHotThresholdVote = (int)getParam($sOptionPrefix . 'hot_threshold_vote');
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
+        $this->_fHotContentAgeMux = (float)getParam($sOptionPrefix . 'hot_content_age_mux');
         $this->_aHotSources = explode(',', getParam($sOptionPrefix . 'hot_sources'));
         $this->_aHotList = $this->_bHot ? $this->_oDb->getHot() : [];
 
@@ -870,6 +872,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getHotInterval()
     {
         return $this->_iHotInterval;
+    }
+
+    public function getHotContentAgeMux()
+    {
+        return $this->_fHotContentAgeMux;
     }
 
     public function getLimitAttachLinks()

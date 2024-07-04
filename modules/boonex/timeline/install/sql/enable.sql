@@ -389,7 +389,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_hot_threshold_age', '0', @iCategId, '_bx_timeline_option_hot_threshold_age', 'digit', '', '', '', '', 11),
 ('bx_timeline_hot_threshold_comment', '1', @iCategId, '_bx_timeline_option_hot_threshold_comment', 'digit', '', '', '', '', 12),
 ('bx_timeline_hot_threshold_vote', '2', @iCategId, '_bx_timeline_option_hot_threshold_vote', 'digit', '', '', '', '', 13),
-('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 20);
+('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 20),
+('bx_timeline_hot_content_age_mux', '0', @iCategId, '_bx_timeline_option_hot_content_age_mux', 'digit', '', '', '', '', 30);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_timeline_feed_for_you', '_bx_timeline_options_category_feed_for_you', 7);

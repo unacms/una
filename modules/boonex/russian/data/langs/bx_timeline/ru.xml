@@ -57,7 +57,8 @@
     <string name="_bx_timeline_option_hot_threshold_age"><![CDATA[Максимальный возраст поста, получившего комментарии/голоса, который включается в 'горячую' хронику (в днях, 0 - без ограничений)]]></string>
     <string name="_bx_timeline_option_hot_threshold_comment"><![CDATA[Минимальное количество комментариев, необходимое для появления контента в 'горячей' хронике]]></string>
     <string name="_bx_timeline_option_hot_threshold_vote"><![CDATA[Минимальное количество голосов, необходимое для появления контента в 'горячей' хронике]]></string>
-    <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' событий]]></string>
+    <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' событий (0 – без ограничений)]]></string>
+    <string name="_bx_timeline_option_hot_content_age_mux"><![CDATA[Коэффициент корректировки, связанный с возрастом контента (0 – без корректировки)]]></string>
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Включить кэш элемента]]></string>
     <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Механизм кэширования элемента (отличный от FileHtml может потребовать дополнительную настройку сервера)]]></string>
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Время жизни кэша элемента]]></string>
