@@ -2550,6 +2550,7 @@ function bx_api_check_access()
 {
     if (!getParam('sys_api_enable')) {
         header('HTTP/1.0 403 Forbidden');
+        BxDolLanguages::getInstance();
         echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
         exit;
     }
@@ -2567,6 +2568,7 @@ function bx_api_check_access()
     if ($sAuthHeader && getParam('sys_api_access_by_key')) {
         if (!BxDolApiQuery::getInstance()->getKey(str_replace('Bearer ', '', $sAuthHeader))) {
             header('HTTP/1.0 403 Forbidden');
+            BxDolLanguages::getInstance();
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
             exit;
         }
@@ -2580,6 +2582,7 @@ function bx_api_check_access()
 
             if (!BxDolApiQuery::getInstance()->getOrigin($sOriginHeader)) {
                 header('HTTP/1.0 403 Forbidden');
+                BxDolLanguages::getInstance();
                 echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
                 exit;
             }
@@ -2600,6 +2603,7 @@ function bx_api_check_access()
     }
     else {
         header('HTTP/1.0 403 Forbidden');
+        BxDolLanguages::getInstance();
         echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
         exit;
     }

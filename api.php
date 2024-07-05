@@ -32,6 +32,7 @@ foreach ($a as $v) {
     if (!isset($$v)) {
         header('HTTP/1.0 404 Not Found');
         header('Status: 404 Not Found');
+        BxDolLanguages::getInstance();
         echo json_encode(['status' => 404, 'error' => _t("_sys_request_page_not_found_cpt")]);
         exit;
     }
@@ -42,6 +43,7 @@ foreach ($a as $v) {
 if (!BxDolRequest::serviceExists($sModule, $sMethod, $sClass)) {
     header('HTTP/1.0 404 Not Found');
     header('Status: 404 Not Found');
+    BxDolLanguages::getInstance();
     echo json_encode(['status' => 404, 'error' => _t("_sys_request_page_not_found_cpt")]);
     exit;
 }
@@ -70,7 +72,7 @@ if (!getParam('sys_api_access_unsafe_services')) {
 if (!($aParams = bx_get('params')))
     $aParams = array();
 elseif (is_string($aParams) && preg_match('/^\[.*\]$/', $aParams))
-    $aParams = @json_decode($aParams);
+    $aParams = @json_decode($aParams, true);
 
 if (!is_array($aParams))
     $aParams = array($aParams);
