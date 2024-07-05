@@ -619,6 +619,15 @@ class BxBasePage extends BxDolPage
             $oPayments = BxDolPayments::getInstance();
             if($oPayments->isActive())
                 $a['user']['cart'] = $oPayments->getCartItemsCount();
+
+            if($o !== false && BxDolAccount::isAllowedCreateMultiple($o->id())) {
+                $oAccount = BxDolAccount::getInstance();
+                if($oAccount != false && !$oAccount->isProfilesLimitReached()) {
+                    $oMenuProfileAdd = BxDolMenu::getObjectInstance('sys_add_profile');
+                    if($oMenuProfileAdd !== false)
+                        $a['user']['menu'] = $oMenuProfileAdd->getCodeAPI();
+                }
+            }
         }
         
         $aExtras = [
