@@ -77,8 +77,11 @@ class BxDolAIProviderShopifyAdmin extends BxDolAIProvider
 
     public function processActionWebhook()
     {
-        $sHmacHeader = isset($_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256']) ? $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] : '';
         $sData = @file_get_contents('php://input');
+
+        $this->_log(json_decode($sData, true));
+
+        $sHmacHeader = isset($_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256']) ? $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] : '';
         if(!$this->_verifyWebhook($sData, $sHmacHeader)) {
             http_response_code(401);
             return;

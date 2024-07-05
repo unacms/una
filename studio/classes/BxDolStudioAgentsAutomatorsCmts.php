@@ -149,7 +149,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 
     public function getFormBoxPost($aBp = [], $aDp = [])
     {
-        $aComments = $this->_oQuery->getCommentsBy(['type' => 'latest', 'start' => 0, 'per_page' => 1]);
+        $aComments = $this->_oQuery->getCommentsBy(['type' => 'latest', 'object_id' => (int)$this->getId(), 'start' => 0, 'per_page' => 1]);
         if(!empty($aComments) && is_array($aComments)) {
             $aLast = current($aComments);
             if($aLast['cmt_author_id'] != $this->_iProfileIdAi)
