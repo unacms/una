@@ -692,7 +692,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Polyglot -> Grid descriptors
 --
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_developer_pgt_manage', 'Sql', 'SELECT * FROM `sys_modules` WHERE 1 ', 'sys_modules', 'id', 'name', '', '', 100, NULL, '', '', '', '', '', '', '', 2147483647, 'BxDevPolyglotManage', 'modules/boonex/developer/classes/BxDevPolyglotManage.php');
+('bx_developer_pgt_manage', 'Sql', 'SELECT * FROM `sys_modules` WHERE 1 ', 'sys_modules', 'id', 'name', '', '', 100, NULL, 'start', '', '', '', '', '', '', 2147483647, 'BxDevPolyglotManage', 'modules/boonex/developer/classes/BxDevPolyglotManage.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_developer_pgt_manage', 'title', '_bx_dev_pgt_txt_manage_gl_title', '100%', 0, '', '', 1);
