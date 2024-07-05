@@ -661,10 +661,9 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (bx_is_api())
-            return $this->decodeDataAPI($aContentInfo);
-        
-        
+        if($this->_bIsApi)
+            return $this->getDataAPI($aContentInfo);
+
         if(empty($aContentInfo))
             return '';
 
