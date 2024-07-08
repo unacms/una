@@ -28,7 +28,7 @@
     <string name="_bx_timeline_option_events_per_preload"><![CDATA[Infinite Scroll: Number of items per preload]]></string>
     <string name="_bx_timeline_option_auto_preloads"><![CDATA[Infinite Scroll: Number of auto preloads]]></string>
     <string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
-    <string name="_bx_timeline_option_live_updates_length"><![CDATA[The length of Live Updates selection]]></string>
+    <string name="_bx_timeline_option_live_updates_length"><![CDATA[The length of Live Updates sample (leave 0 for automatic value)]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Show events]]></string>
     <string name="_bx_timeline_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Enable brief cards]]></string>

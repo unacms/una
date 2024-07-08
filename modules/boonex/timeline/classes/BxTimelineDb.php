@@ -772,12 +772,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if($bCount)
             return array_sum($aSqlParts);
 
-        /*
-         * TODO: Should be updated when GROUP BY `source` will be used in sub selects.
-         */
         $sSqlMaskUnion = '(' . implode(') UNION (', $aSqlParts) . ')';
         if($bValidate)
             $sSqlMaskUnion = 'SELECT MAX(`tu`.`id`) AS `id` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
+        else
+            $sSqlMaskUnion = 'SELECT *, GROUP_CONCAT(`owner_id`) AS `owner_id_grouped` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
         $sSqlMaskUnion .= ' {order} {limit}';
 
         $sSql = bx_replace_markers($sSqlMaskUnion, [

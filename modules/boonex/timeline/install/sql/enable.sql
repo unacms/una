@@ -324,7 +324,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_events_per_page_home', '24', @iCategId, '_bx_timeline_option_events_per_page_home', 'digit', '', '', '', '', 12),
 ('bx_timeline_events_per_page', '24', @iCategId, '_bx_timeline_option_events_per_page', 'digit', '', '', '', '', 13),
 ('bx_timeline_rss_length', '5', @iCategId, '_bx_timeline_option_rss_length', 'digit', '', '', '', '', 14),
-('bx_timeline_live_updates_length', '5', @iCategId, '_bx_timeline_option_live_updates_length', 'digit', '', '', '', '', 15),
+('bx_timeline_live_updates_length', '0', @iCategId, '_bx_timeline_option_live_updates_length', 'digit', '', '', '', '', 15),
 
 ('bx_timeline_enable_infinite_scroll', '', @iCategId, '_bx_timeline_option_enable_infinite_scroll', 'checkbox', '', '', '', '', 20),
 ('bx_timeline_events_per_preload', '5', @iCategId, '_bx_timeline_option_events_per_preload', 'digit', '', '', '', '', 21),

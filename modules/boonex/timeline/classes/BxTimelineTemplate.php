@@ -838,53 +838,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sContent .= $this->getSizer($aParams);
 
         $iFirst = 0;
+        $iEventIndex = 0;
         $iEvents = count($aEvents);
-        if($iEvents > 0)
-            $iFirst = $this->_getFirst($aEvents, $aParams);
-
-        //--- Check for Visual Grouping
-        $aGroups = array();
-        foreach($aEvents as $iIndex => $aEvent) {
-            $aContent = unserialize($aEvent['content']);
-            if(!isset($aContent['timeline_group']))
-                continue;
-
-            $aGroup = $aContent['timeline_group'];
-            $sGroup = $aGroup['by'];
-            if(!isset($aGroups[$sGroup]))
-               $aGroups[$sGroup] = array('field' => $aGroup['field'], 'indexes' => array(), 'processed' => false);
-
-            $aGroups[$sGroup]['indexes'][] = $iIndex;
-        }
-
-        //--- Perform Visual Grouping
-        foreach($aGroups as $sGroup => $aGroup) {
-            if(empty($aGroup['field']) || empty($aGroup['indexes']))
-                continue;
-
-            switch($aGroup['field']) {
-                case 'owner_id':
-                    $aOwnerIds = array();
-                    foreach($aGroup['indexes'] as $iIndex)
-                        if(!in_array($aEvents[$iIndex]['owner_id'], $aOwnerIds))
-                            $aOwnerIds[] = $aEvents[$iIndex]['owner_id'];
-
-                    $iGroupIndex = (int)array_shift($aGroup['indexes']);
-                    if(is_null($iGroupIndex))
-                        break;
-
-                    foreach($aGroup['indexes'] as $iIndex)
-                        unset($aEvents[$iIndex]);
-
-                    $aEvents[$iGroupIndex]['owner_id_grouped'] = $aOwnerIds;
-                    break;
-            }
-        }
-
         $iExtenalsEvery = $this->_oConfig->getExtenalsEvery($aParams['type']);
 
-        $iEventIndex = 0;
-        $mixedEvents = $bReturnArray ? array() : '';
+        $mixedEvents = $bReturnArray ? [] : '';
         foreach($aEvents as $aEvent) {
             $iEvent = (int)$aEvent['id'];
             $aEvent['index'] = $iEventIndex + 1;
@@ -892,6 +850,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sEvent = $this->getPost($aEvent, $aParams);
             if(empty($sEvent))
                 continue;
+
+            if(!$iFirst)
+                $iFirst = $aEvent['id'];
 
             if($bReturnArray)
                 $mixedEvents[] = $aEvent;
@@ -2347,10 +2308,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oConnection = BxDolConnection::getObjectInstance($sConnection);
         $sConnectionTitle = _t('_sys_menu_item_title_sm_subscribe');
 
+        $aOwnerIds = [];
         $sKeyOwnerId = isset($aEvent['owner_id_grouped']) ? 'owner_id_grouped' : 'owner_id';
-        $aOwnerIds = is_array($aEvent[$sKeyOwnerId]) ? $aEvent[$sKeyOwnerId] : array($aEvent[$sKeyOwnerId]);
+        if(is_string($aEvent[$sKeyOwnerId]) && strpos($aEvent[$sKeyOwnerId], ',') !== false)
+            $aOwnerIds = explode(',', $aEvent[$sKeyOwnerId]);
+        else if(is_array($aEvent[$sKeyOwnerId]))
+            $aOwnerIds = $aEvent[$sKeyOwnerId];
+        else
+            $aOwnerIds = [$aEvent[$sKeyOwnerId]];
 
-        $aTmplVarsOwners = array();
+        $aTmplVarsOwners = [];
         foreach($aOwnerIds as $iOwnerId) {
             $iOwnerId = (int)$iOwnerId;
             $iObjectOwner = (int)$aEvent['object_owner_id'];
