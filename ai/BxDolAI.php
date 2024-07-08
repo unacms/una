@@ -162,13 +162,16 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         
         $this->evalCode($aParams['automator'], true);
     }
-    
-    
+
     public function evalCode($aAutomator, $isWriteLog = true, $aParams = null)
     {
+        /*
+         * TODO: Improve code evaluation.
+         * 
         ob_start();
         set_error_handler("evalErrorHandler");
-        try{
+         */
+        try {
              $sCode = '';
              if ($aAutomator['type'] == 'scheduler'){
                  $sCode = $aAutomator['code'] . '; onCron();';
@@ -187,18 +190,23 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
                 $this->writeLog($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
             }
             return $oException->getMessage();
-        } finally {
-             $sOutput = ob_get_clean();
-             if ($sOutput != '')
+        } 
+        finally {
+            /*
+             * TODO: Improve code evaluation.
+             * 
+            $sOutput = ob_get_clean();
+            if ($sOutput != '')
                 return "Eval error: " . $sOutput;
             restore_error_handler();
+             */
         }
     }
-    
+
     private function writeLog($sString)
-	{
+    {
         bx_log('sys_agents', $sString);
-	}
+    }
 }
 
 class EvalException extends Exception {}
