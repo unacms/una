@@ -113,7 +113,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
                 'sPageUrl' => $this->sSubpageUrl . 'helpers&id=' . $iId,
             ]);
             
-            $aHelper = BxDolAI::getInstance()->getHelper($iId);
+            $aHelper = BxDolAI::getInstance()->getHelperById($iId);
 
             $aForm = $this->_getHelpersForm('tune', $aHelper);
             $oForm = new BxTemplFormView($aForm);
