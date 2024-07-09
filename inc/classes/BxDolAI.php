@@ -21,6 +21,8 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     protected $_iProfileId;
     
     protected $_aExcludeAlertUnits;
+    
+    protected $_bWriteLog;
 
     protected function __construct()
     {
@@ -36,6 +38,8 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         $this->_aExcludeAlertUnits = [
             'system', 'module_template_method_call'
         ];
+
+        $this->_bWriteLog = true;
     }
 
     /**
@@ -214,7 +218,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         
         $oAlert = &$aParams['alert'];
 
-        $this->evalCode($aParams['automator'], true, ['alert' => $oAlert]);
+        $this->evalCode($aParams['automator'], ['alert' => $oAlert]);
     }
 
     protected function _callAutomatorScheduler($aParams = [])
@@ -222,7 +226,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         if(!isset($aParams['automator']))
             return false;
         
-        $this->evalCode($aParams['automator'], true);
+        $this->evalCode($aParams['automator']);
     }
 
     protected function _callAutomatorWebhook($aParams = [])
@@ -230,48 +234,67 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         if(!isset($aParams['automator']))
             return false;
 
-        $this->evalCode($aParams['automator'], true);
+        $this->evalCode($aParams['automator']);
     }
 
-    public function evalCode($aAutomator, $isWriteLog = true, $aParams = null)
+    public function evalCode($aAutomator, $aParams = [])
     {
-        ob_start();
-        set_error_handler("evalErrorHandler");
         try {
-            $sCode = '';
-            switch($aAutomator['type']) {
-                case BX_DOL_AI_AUTOMATOR_EVENT:
-                    $sCode = $aAutomator['code']. '; onAlert($aParams["alert"]->iObject , $aParams["alert"]->iSender , $aParams["alert"]->aExtras);';
-                    break;
-                
-                case BX_DOL_AI_AUTOMATOR_SCHEDULER:
-                    $sCode = $aAutomator['code'] . '; onCron();';
-                    break;
-
-                case BX_DOL_AI_AUTOMATOR_WEBHOOK:
-                    $sCode = $aAutomator['code'] . '; onHook();';
-                    break;
-            }
-
-            eval($sCode);
+            $this->_evalCode($aAutomator, $aParams);
         }
         catch (Exception $oException) {
-            if ($isWriteLog){
-                $this->log($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
-            }
+            $this->log($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
+
             return $oException->getMessage();
-        } 
+        }
+    }
+
+    public function emulCode($aAutomator, $aParams = [])
+    {
+        set_error_handler("evalErrorHandler");
+        ob_start();
+
+        try {
+            $this->_evalCode($aAutomator, $aParams);
+        }
+        catch (ParseError $oException) {
+            return $oException->getMessage();
+        }
         finally {
             $sOutput = ob_get_clean();
-            if($sOutput != '')
-                return "Eval error: " . $sOutput;
-
             restore_error_handler();
+
+            if(!empty($sOutput))
+                return $sOutput;
         }
+    }
+
+    protected function _evalCode($aAutomator, $aParams = [])
+    {
+        $sCode = '';
+
+        switch($aAutomator['type']) {
+            case BX_DOL_AI_AUTOMATOR_EVENT:
+                $sCode = $aAutomator['code']. '; onAlert($aParams["alert"]->iObject , $aParams["alert"]->iSender , $aParams["alert"]->aExtras);';
+                break;
+
+            case BX_DOL_AI_AUTOMATOR_SCHEDULER:
+                $sCode = $aAutomator['code'] . '; onCron();';
+                break;
+
+            case BX_DOL_AI_AUTOMATOR_WEBHOOK:
+                $sCode = $aAutomator['code'] . '; onHook();';
+                break;
+        }
+
+        eval($sCode);
     }
 
     public function log($mixedContents, $sSection = '')
     {
+        if(!$this->_bWriteLog)
+            return;
+
         if(is_array($mixedContents))
             $mixedContents = var_export($mixedContents, true);	
         else if(is_object($mixedContents))
@@ -284,12 +307,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     }
 }
 
-class EvalException extends Exception {}
+class BxEvalException extends Exception {}
 
 function evalErrorHandler($errno, $errstr, $errfile, $errline) {
-    if (!(error_reporting() & $errno)) {
-        // This error code is not included in error_reporting
-        return false;
-    }
-    throw new EvalException($errstr, $errno);
+    if(!(error_reporting() & $errno))
+        return false; // This error code is not included in error_reporting
+
+    throw new BxEvalException($errstr, $errno);
 }

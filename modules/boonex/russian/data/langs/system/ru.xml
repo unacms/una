@@ -2150,6 +2150,7 @@
         <string name="_sys_agents_automators_field_status_ready"><![CDATA[Готовый]]></string>
         <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Событие не найдено. Перефразируйте запрос.]]></string>
         <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Невозможно сгенерировать код. Перефразируйте запрос.]]></string>
+        <string name="_sys_agents_automators_txt_eval_response"><![CDATA[Ответ:<br />]]></string>
         <string name="_sys_agents_providers_txt_active"><![CDATA[Активный]]></string>
         <string name="_sys_agents_providers_txt_provider_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_providers_txt_provider_type"><![CDATA[Тип]]></string>

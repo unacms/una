@@ -2175,6 +2175,7 @@
     <string name="_sys_agents_automators_field_status_ready"><![CDATA[Ready]]></string>
     <string name="_sys_agents_automators_err_event_not_found"><![CDATA[Event isn't found, please rephrase your prompt.]]></string>
     <string name="_sys_agents_automators_err_cannot_get_code"><![CDATA[Can't generate code, please rephrase your prompt.]]></string>
+    <string name="_sys_agents_automators_txt_eval_response"><![CDATA[Response:<br />]]></string>
     <string name="_sys_agents_providers_txt_active"><![CDATA[Active]]></string>
     <string name="_sys_agents_providers_txt_provider_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_providers_txt_provider_type"><![CDATA[Type]]></string>
@@ -2220,9 +2221,6 @@
     <string name="_sys_agents_helpers_field_result"><![CDATA[Result]]></string>
     <string name="_sys_agents_helpers_popup_add"><![CDATA[Add helper]]></string>
     <string name="_sys_agents_helpers_popup_edit"><![CDATA[Edit helper]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>

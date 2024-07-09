@@ -79,15 +79,12 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $aAutomator = $this->_oAI->getAutomator($iObjId, true);
         $aAutomator['code'] = $aCmt['cmt_text'];
 
-/*
- * TODO: Improve code evaluation.
- * 
-        $oAlert = new BxDolAlerts('test', 'test', -1, -1, []);
-        $sRv = $this->_oAI->evalCode($aAutomator, false, ['alert' => $oAlert]);
-        if ($sRv != ''){
-            return echoJson(['msg' => 'Error in code: ' . $sRv]);
-        }
-*/
+        $aParams = [];
+        if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT)
+            $aParams['alert'] = new BxDolAlerts('test', 'test', 0);
+
+        if(($sResult = $this->_oAI->emulCode($aAutomator, $aParams)) != '')
+            return echoJson(['msg' => _t('_sys_agents_automators_txt_eval_response') . $sResult]);
 
         if(!$this->_oQueryAgents->updateAutomators(['code' => $aCmt['cmt_text'], 'status' => 'ready'], ['id' => (int)$this->getId()]))
             return echoJson([]);
