@@ -244,50 +244,31 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         }
         catch (Exception $oException) {
             $this->log($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
-
-            return $oException->getMessage();
+        }
+        catch (Error $oError) {
+            $this->log($oError->getFile() . ':' . $oError->getLine() . ' ' . $oError->getMessage());
         }
     }
 
     public function emulCode($aAutomator, $aParams = [])
     {
-        set_error_handler("evalErrorHandler");
         ob_start();
 
         try {
             $this->_evalCode($aAutomator, $aParams);
         }
-        catch (ParseError $oException) {
+        catch (Exception $oException) {
             return $oException->getMessage();
+        }
+        catch (Error $oError) {
+            return $oError->getMessage();
         }
         finally {
             $sOutput = ob_get_clean();
-            restore_error_handler();
 
             if(!empty($sOutput))
                 return $sOutput;
         }
-    }
-
-    protected function _evalCode($aAutomator, $aParams = [])
-    {
-        $sCode = '';
-
-        switch($aAutomator['type']) {
-            case BX_DOL_AI_AUTOMATOR_EVENT:
-                $sCode = $aAutomator['code']. '; onAlert($aParams["alert"]->iObject , $aParams["alert"]->iSender , $aParams["alert"]->aExtras);';
-                break;
-
-            case BX_DOL_AI_AUTOMATOR_SCHEDULER:
-                $sCode = $aAutomator['code'] . '; onCron();';
-                break;
-
-            case BX_DOL_AI_AUTOMATOR_WEBHOOK:
-                $sCode = $aAutomator['code'] . '; onHook();';
-                break;
-        }
-
-        eval($sCode);
     }
 
     public function log($mixedContents, $sSection = '')
@@ -305,13 +286,24 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         bx_log('sys_agents', ":\n[" . $sSection . "] " . $mixedContents);
     }
-}
 
-class BxEvalException extends Exception {}
+    protected function _evalCode($aAutomator, $aParams = [])
+    {
+        $sCode = '';
+        switch($aAutomator['type']) {
+            case BX_DOL_AI_AUTOMATOR_EVENT:
+                $sCode = $aAutomator['code']. '; onAlert($aParams["alert"]->iObject , $aParams["alert"]->iSender , $aParams["alert"]->aExtras);';
+                break;
 
-function evalErrorHandler($errno, $errstr, $errfile, $errline) {
-    if(!(error_reporting() & $errno))
-        return false; // This error code is not included in error_reporting
+            case BX_DOL_AI_AUTOMATOR_SCHEDULER:
+                $sCode = $aAutomator['code'] . '; onCron();';
+                break;
 
-    throw new BxEvalException($errstr, $errno);
+            case BX_DOL_AI_AUTOMATOR_WEBHOOK:
+                $sCode = $aAutomator['code'] . '; onHook();';
+                break;
+        }
+
+        eval($sCode);
+    }
 }
