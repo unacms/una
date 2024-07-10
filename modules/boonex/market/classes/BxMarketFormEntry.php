@@ -61,15 +61,17 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         }
 
         $oPayment = BxDolPayments::getInstance();
+        $bNoPayments = $this->_oModule->_oDb->getParam($CNF['PARAM_NO_PAYMENTS']) == 'on';
+
         if(isset($this->aInputs[$CNF['FIELD_WARNING_SINGLE']])) {
-            if(!$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_SINGLE)) 
+            if(!$bNoPayments && !$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_SINGLE)) 
                 $this->aInputs[$CNF['FIELD_WARNING_SINGLE']]['value'] = MsgBox(_t($this->aInputs[$CNF['FIELD_WARNING_SINGLE']]['value'], $oPayment->getDetailsUrl()));
             else 
                 unset($this->aInputs[$CNF['FIELD_WARNING_SINGLE']]);
         }
 
         if(isset($this->aInputs[$CNF['FIELD_WARNING_RECURRING']])) {
-            if($bRecurring && !$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_RECURRING))
+            if(!$bNoPayments && $bRecurring && !$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_RECURRING))
                 $this->aInputs[$CNF['FIELD_WARNING_RECURRING']]['value'] = MsgBox(_t($this->aInputs[$CNF['FIELD_WARNING_RECURRING']]['value'], $oPayment->getDetailsUrl()));
             else 
                 unset($this->aInputs[$CNF['FIELD_WARNING_RECURRING']]);

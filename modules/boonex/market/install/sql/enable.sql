@@ -11,8 +11,9 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_market_enable_auto_approve', 'on', @iCategId, '_bx_market_option_enable_auto_approve', 'checkbox', '', '', '', 0),
-('bx_market_enable_recurring', 'on', @iCategId, '_bx_market_option_enable_recurring', 'checkbox', '', '', '', 1),
-('bx_market_recurring_reserve', '4', @iCategId, '_bx_market_option_recurring_reserve', 'digit', '', '', '', 2),
+('bx_market_enable_no_payments', '', @iCategId, '_bx_market_option_enable_no_payments', 'checkbox', '', '', '', 1),
+('bx_market_enable_recurring', 'on', @iCategId, '_bx_market_option_enable_recurring', 'checkbox', '', '', '', 2),
+('bx_market_recurring_reserve', '4', @iCategId, '_bx_market_option_recurring_reserve', 'digit', '', '', '', 3),
 ('bx_market_summary_chars', '700', @iCategId, '_bx_market_option_summary_chars', 'digit', '', '', '', 10),
 ('bx_market_plain_summary_chars', '240', @iCategId, '_bx_market_option_plain_summary_chars', 'digit', '', '', '', 11),
 ('bx_market_per_page_browse', '12', @iCategId, '_bx_market_option_per_page_browse', 'digit', '', '', '', 20),

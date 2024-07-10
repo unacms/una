@@ -173,12 +173,16 @@ class BxMarketModule extends BxBaseModTextModule
      */
     public function serviceEntityCreate ($sDisplay = false)
     {
-    	$oPayments = BxDolPayments::getInstance();
-    	if(!$oPayments->isActive())
-    		return MsgBox(_t('_bx_market_err_no_payments'));
+        $CNF = &$this->_oConfig->CNF;
 
-    	if(!$oPayments->isAcceptingPayments($this->_iProfileId))
-    		return MsgBox(_t('_bx_market_err_not_accept_payments', $oPayments->getDetailsUrl()));
+        if(getParam($CNF['PARAM_NO_PAYMENTS']) != 'on') {
+            $oPayments = BxDolPayments::getInstance();
+            if(!$oPayments->isActive())
+                return MsgBox(_t('_bx_market_err_no_payments'));
+
+            if(!$oPayments->isAcceptingPayments($this->_iProfileId))
+                return MsgBox(_t('_bx_market_err_not_accept_payments', $oPayments->getDetailsUrl()));
+        }
 
     	return parent::serviceEntityCreate($sDisplay);
     }
