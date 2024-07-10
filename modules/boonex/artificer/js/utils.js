@@ -140,6 +140,12 @@ BxArtificerUtils.prototype.submenuClickBl = function(oElement) {
 
 BxArtificerUtils.prototype.submenuClickAl = function(oElement) {
     var sClass = 'bx-menu-tab-active';
+    var oItem = $(oElement).parent().addClass(sClass);
 
-    $(oElement).parent().addClass(sClass).siblings().removeClass(sClass);
+    oItem.siblings().removeClass(sClass);
+    oItem.siblings('.bx-menu-item-more-auto').find('li').removeClass(sClass);
+
+    oItem.parents('li:first').siblings().removeClass(sClass);
+    if(oItem.parents('.bx-popup-applied.bx-popup-menu'))
+        $('.bx-popup-applied:visible').dolPopupHide();
 };

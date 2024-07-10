@@ -1176,6 +1176,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         return $bDynamic ? $this->_processJsTranslations() : '';
     }
+
+    /**
+     * get added js translations
+     */ 
+    function getJsTranslation($bDynamic = false)
+    {
+        return $bDynamic ? $this->_processJsTranslations() : $this->aPage['js_translations'];
+    }
+
     /**
      * Add image in JS output.
      *

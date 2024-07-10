@@ -198,6 +198,9 @@ class BxBasePage extends BxDolPage
             $sResult .= $oTemplate->addCss($a['url'], true);
         foreach ($aJs as $a)
             $sResult .= $oTemplate->addJs($a['url'], true);
+        
+        // add js translations
+        $sResult .= $oTemplate->getJsTranslation(true);
 
         return $sResult;
     }
