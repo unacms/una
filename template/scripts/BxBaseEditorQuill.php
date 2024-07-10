@@ -136,10 +136,13 @@ class BxBaseEditorQuill extends BxDolEditor
             'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS)
         ));
+        $sInitEditor = "
+            if(!Quill.imports['modules/imageUploader'])
+                Quill.register('modules/imageUploader', ImageUploader);
+        " . $sInitEditor;
 
         $sInitCallBack = "
             bQuillEditorInited = true;
-            Quill.register('modules/imageUploader', ImageUploader);
         " . $sInitEditor;
 
         if ($bDynamicMode) {
