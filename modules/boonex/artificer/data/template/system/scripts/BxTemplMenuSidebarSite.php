@@ -12,12 +12,16 @@
  */
 class BxTemplMenuSidebarSite extends BxTemplMenu
 {
+    protected $_sPageUri;
     protected $_aHideFromMenu;
 
     public function __construct ($aObject, $oTemplate = false)
     {
         parent::__construct ($aObject, $oTemplate);
-        
+
+        list($sPageUrl, $aPageParams) = bx_get_base_url_inline();
+        $this->_sPageUri = !empty($aPageParams['i']) ? $aPageParams['i'] : '';
+
         $this->_aHideFromMenu = ['search', 'more-auto'];
     }
 
@@ -30,7 +34,7 @@ class BxTemplMenuSidebarSite extends BxTemplMenu
         if(empty($aResult) || !is_array($aResult))
             return $aResult;
 
-        $aTmplVarsSubmenu = array();
+        $aTmplVarsSubmenu = [];
         $bTmplVarsSubmenu = !empty($aResult['submenu_object']);
         if($bTmplVarsSubmenu) {
             $aResult['bx_if:onclick'] = [
@@ -40,24 +44,29 @@ class BxTemplMenuSidebarSite extends BxTemplMenu
             ]];
             $aResult['class_add'] .= ' bx-si-dropdown-has';
 
-            if(($oSubmenu = BxDolMenu::getObjectInstance($aResult['submenu_object'])) !== false)
+            if(($oSubmenu = BxDolMenu::getObjectInstance($aResult['submenu_object'])) !== false) {
+                $aSubmenuItems = $oSubmenu->getMenuItemsRaw();
+                if($oSubmenu->isHtmx() && !$this->_isSelected($a) && !array_key_exists($this->_sPageUri, $aSubmenuItems))
+                    $oSubmenu->setHtmx(false);
+
                 $aTmplVarsSubmenu['bx_repeat:submenu_items'] = $oSubmenu->getMenuItems();
+            }
         }
 
-        $aResult['bx_if:show_arrow'] = array (
+        $aResult['bx_if:show_arrow'] = [
             'condition' => false && $bTmplVarsSubmenu,
-            'content' => array(),
-        );
+            'content' => [true],
+        ];
 
-        $aResult['bx_if:show_line'] = array (
+        $aResult['bx_if:show_line'] = [
             'condition' => true,
-            'content' => array(),
-        );
+            'content' => [true],
+        ];
 
-        $aResult['bx_if:show_submenu'] = array (
+        $aResult['bx_if:show_submenu'] = [
             'condition' => $bTmplVarsSubmenu,
             'content' => $aTmplVarsSubmenu,
-        );
+        ];
 
         return $aResult;
     }

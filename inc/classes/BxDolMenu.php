@@ -253,6 +253,11 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return true;
     }
 
+    public function isHtmx()
+    {
+        return $this->_bHx;
+    }
+
     /**
      * Check if the menu is visible. The menu is visible if at least one menu item is visible.
      * @return boolean
@@ -318,6 +323,11 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     public function setDynamicMode ($bDynamicMode)
     {
         $this->_bDynamicMode = $bDynamicMode;
+    }
+
+    public function setHtmx($bHx)
+    {
+        $this->_bHx = $bHx;
     }
 
     /**

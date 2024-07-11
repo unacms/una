@@ -148,4 +148,8 @@ BxArtificerUtils.prototype.submenuClickAl = function(oElement) {
     oItem.parents('li:first').siblings().removeClass(sClass);
     if(oItem.parents('.bx-popup-applied.bx-popup-menu'))
         $('.bx-popup-applied:visible').dolPopupHide();
+
+    var sSidebar = 'site';
+    if(bx_sidebar_active(sSidebar))
+        bx_sidebar_toggle(sSidebar);
 };
