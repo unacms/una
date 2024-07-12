@@ -1688,6 +1688,7 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_endpoint"><![CDATA[Endpoint (specify if other than Amazon, such as storage.googleapis.com, s3.wasabisys.com)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_sig_ver"><![CDATA[Signature version (only S3v4alt storage supports both v2 and v4)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_region"><![CDATA[Region (for signature v4 only)]]></string>
+    <string name="_adm_stg_cpt_option_sys_storage_s3_amz_iam_role"><![CDATA[Authenticate using Amazon  IAM Role (S3v4alt storage only)]]></string>
 
     <string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Enable cache for images]]></string>
     <string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Cached image max size (in Kb)]]></string>
