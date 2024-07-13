@@ -38,7 +38,7 @@ To install and run UNA platform, you'll need to a web-hosting server or you can 
 
 
 - [UNACMS.COM - Official Website](https://unacms.com)
-- [Documentation](https://unacms.com/wiki/Introduction))
+- [Documentation](https://unacms.com/wiki/Introduction)
 - [Discussions](https://unacms.com/page/discussions-home)
 - [Contact Team](https://unacms.com/page/contact)
 - [Installation](https://unacms.com/wiki/Installation)
@@ -58,9 +58,7 @@ You can [download](https://github.com/unaio/una/archive/refs/heads/master.zip) t
 UNA is managed by [Yasko.Studio](https://yasko.studio) team and developed with the help of [UNA Community](https://una.io).
 
 * Free community support - [Discussions](https://uunacms.com/page/discussions-home)
-* Direct email support - [UNA Pro](https://unacms.com/start)
-* Professional services - [Yasko.Studio](https://yasko.studio)
-
+* Direct support and professional services - [UNA Pro](https://unacms.com/start)
 
 
 ## License
