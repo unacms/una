@@ -1,12 +1,12 @@
-<a href="https://una.io"><img width="300" alt="UNA Platform" src="https://user-images.githubusercontent.com/22210428/186068817-62b90f4b-deed-4661-b015-8409c3720b5e.png"></a>
+<a href="https://unacms.com"><img width="300" alt="UNA Platform" src="https://user-images.githubusercontent.com/22210428/186068817-62b90f4b-deed-4661-b015-8409c3720b5e.png"></a>
 
 ## Unified Networking Applications
 
-[![UNA Official Website](https://img.shields.io/badge/website-una.io-blue.svg?style=for-the-badge)](https://una.io)
-[![GitHub license](https://img.shields.io/github/license/unaio/una?style=for-the-badge)](https://github.com/unaio/una/blob/master/license.txt)
-[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg?style=for-the-badge)](https://github.com/unaio/una)
+[![UNA Official Website](https://img.shields.io/badge/website-una.io-blue.svg?style=for-the-badge)](https://unacms.com)
+[![GitHub license](https://img.shields.io/github/license/unaio/una?style=for-the-badge)](https://github.com/unacms/una/blob/master/license.txt)
+[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg?style=for-the-badge)](https://github.com/unacms/una)
 [![Follow UNA Team](https://img.shields.io/twitter/follow/unaplatform.svg?style=for-the-badge&label=Follow)](https://twitter.com/unaplatform)
-[![GitHub forks](https://img.shields.io/github/forks/unaio/una?style=for-the-badge)](https://github.com/unaio/una/network)
+[![GitHub forks](https://img.shields.io/github/forks/unaio/una?style=for-the-badge)](https://github.com/unacms/una/network)
 
 UNA is a **Community** Management System. The core platform is a full-stack framework for independent community websites and apps. With UNA content management, collaboration, e-commerce, learning and communication modules - aka **UNA Apps** - you can create communities of all types—from small interest groups to global social media networks.
 
@@ -57,8 +57,8 @@ You can [download](https://github.com/unaio/una/archive/refs/heads/master.zip) t
 
 UNA is managed by [Yasko.Studio](https://yasko.studio) team and developed with the help of [UNA Community](https://una.io).
 
-* Free community support - [UNA.IO Discussions](https://uunacms.com/page/discussions-home)
-* Direct email support - [UNA.IO Pro](https://unacms.com/start)
+* Free community support - [Discussions](https://uunacms.com/page/discussions-home)
+* Direct email support - [UNA Pro](https://unacms.com/start)
 * Professional services - [Yasko.Studio](https://yasko.studio)
 
 
