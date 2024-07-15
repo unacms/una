@@ -24,14 +24,28 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
 {
     protected function init ($aObject)
     {
+        $sAccessKey = getParam('sys_storage_s3_access_key'),
+        $sSecretKey = getParam('sys_storage_s3_secret_key'),
+        $aCredentials = [];
+        if (getParam('sys_storage_s3_amz_iam_role')) {
+            $sRole = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/');
+            $sCredentials = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/' . $role);
+            if ($sCredentials && ($aCredentials = @json_decode($sCredentials, true))) {
+                $sAccessKey = $aCredentials['AccessKeyId'];
+            	$sSecretKey = $aCredentials['SecretAccessKey'];
+            }
+        }
+
         $oConfiguration = new Akeeba\Engine\Postproc\Connector\S3v4\Configuration(
-            getParam('sys_storage_s3_access_key'),
-            getParam('sys_storage_s3_secret_key'),
+            $sAccessKey,
+            $sSecretKey,
             getParam('sys_storage_s3_sig_ver'),
             getParam('sys_storage_s3_region')
         );
         if ($this->_sEndpoint)
             $oConfiguration->setEndpoint($this->_sEndpoint);
+        if ($aCredentials && isset($aCredentials['Token']))
+            $oConfiguration->setToken($aCredentials['Token']);
 
         $this->_s3 = new Akeeba\Engine\Postproc\Connector\S3v4\Connector($oConfiguration);
     }
