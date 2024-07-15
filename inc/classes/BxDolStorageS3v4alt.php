@@ -13,7 +13,7 @@ if (!defined('CURL_SSLVERSION_TLSv1'))
 if (!defined('BX_DOL_STORAGE_S3V4_MULTIPART_UPLOAD'))
     define('BX_DOL_STORAGE_S3V4_MULTIPART_UPLOAD', 5*1024*1024);
 
-define('AKEEBAENGINE', 1);
+defined('AKEEBAENGINE') or define('AKEEBAENGINE', 1);
 
 /**
  * Alternatove file storage implementation for Amazon S3 
@@ -24,17 +24,21 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
 {
     protected function init ($aObject)
     {
-        $sAccessKey = getParam('sys_storage_s3_access_key'),
-        $sSecretKey = getParam('sys_storage_s3_secret_key'),
+        $sAccessKey = getParam('sys_storage_s3_access_key');
+        $sSecretKey = getParam('sys_storage_s3_secret_key');
         $aCredentials = [];
         if (getParam('sys_storage_s3_amz_iam_role')) {
-            $sRole = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/');
-            $sCredentials = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/' . $role);
+            $sToken = bx_file_get_contents('http://169.254.169.254/latest/api/token', [], 'PUT', ['X-aws-ec2-metadata-token-ttl-seconds: 600']);
+            $sRole = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/', [], 'GET', ["X-aws-ec2-metadata-token: $sToken"]);
+            $sCredentials = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/' . $sRole, [], 'GET', ["X-aws-ec2-metadata-token: $sToken"]);
             if ($sCredentials && ($aCredentials = @json_decode($sCredentials, true))) {
                 $sAccessKey = $aCredentials['AccessKeyId'];
-            	$sSecretKey = $aCredentials['SecretAccessKey'];
+                $sSecretKey = $aCredentials['SecretAccessKey'];
             }
         }
+
+        if (!$sAccessKey)
+            return;
 
         $oConfiguration = new Akeeba\Engine\Postproc\Connector\S3v4\Configuration(
             $sAccessKey,
@@ -42,10 +46,10 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
             getParam('sys_storage_s3_sig_ver'),
             getParam('sys_storage_s3_region')
         );
-        if ($this->_sEndpoint)
-            $oConfiguration->setEndpoint($this->_sEndpoint);
         if ($aCredentials && isset($aCredentials['Token']))
             $oConfiguration->setToken($aCredentials['Token']);
+        if ($this->_sEndpoint)
+            $oConfiguration->setEndpoint($this->_sEndpoint);
 
         $this->_s3 = new Akeeba\Engine\Postproc\Connector\S3v4\Connector($oConfiguration);
     }

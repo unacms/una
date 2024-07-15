@@ -1113,6 +1113,9 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, json_encode($aParams, JSON_FORCE_OBJECT));
             $aHeaders[] = 'Content-Type: application/json';
         }
+        elseif ($sMethod != 'get') {
+            curl_setopt($rConnect, CURLOPT_CUSTOMREQUEST, $sMethod);
+        }
 
         if ($aHeaders)
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
