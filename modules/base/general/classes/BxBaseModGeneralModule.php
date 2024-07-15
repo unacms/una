@@ -1320,11 +1320,27 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $sParamVal), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
+    public function getFormsHelper ()
+    {
+        $sClass = 'FormsEntryHelper';
+        $oObject = null;
+
+        bx_alert('system', 'get_forms_helper', 0, 0, [
+            'class' => &$sClass,
+            'object' => &$oObject
+        ]);
+
+        if($oObject !== null) 
+            return $oObject;
+
+        bx_import($sClass, $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . $sClass;
+        return new $sClass($this);
+    }
+
     public function serviceFormsHelper ()
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        return new $sClass($this);
+        return $this->getFormsHelper();
     }
 
 	/**
@@ -1333,9 +1349,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityAdd ($iProfile, $aValues, $sDisplay = false)
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         return $oFormsHelper->addData($iProfile, $aValues, $sDisplay);
     }
 
@@ -1345,9 +1359,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */    
     public function serviceRedirectAfterAdd($aContentInfo)
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         $oFormsHelper->redirectAfterAdd($aContentInfo);
     }
 
@@ -1376,10 +1388,7 @@ class BxBaseModGeneralModule extends BxDolModule
         }
 
         $CNF = &$this->_oConfig->CNF;
-
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
 
         $sParamsKey = 'ajax_mode';
         if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true)
@@ -1493,9 +1502,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if($bParamsArray && !empty($sParams['display']))
             $sDisplay = $sParams['display'];
 
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         if($bParamsArray && isset($sParams['dynamic_mode']))
             $oFormsHelper->setDynamicMode($sParams['dynamic_mode']);
 
@@ -1721,8 +1728,21 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityLocation ($iContentId = 0)
     {
-        $iContentId = $this->_getContent($iContentId, false);
-        if($iContentId === false)
+        $CNF = &$this->_oConfig->CNF;
+
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        $oFormsHelper = $this->getFormsHelper();
+        $oFormView = $oFormsHelper->getObjectFormView();
+        if(!$oFormView)
+            return false;
+        
+        $oFormView->initChecker($aContentInfo);
+        if(empty($CNF['FIELD_LOCATION']) || !$oFormView->isInputVisible($CNF['FIELD_LOCATION']))
             return false;
 
         return $this->_oTemplate->entryLocation ($iContentId);
@@ -1781,9 +1801,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceDeleteEntity ($iContentId, $sFuncDelete = 'deleteData')
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_oConfig->getClassPrefix() . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         return $oFormsHelper->$sFuncDelete($iContentId);
     }
 
@@ -3733,9 +3751,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if($iContentId === false)
             return false;
 
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         return $oFormsHelper->$sFormMethod((int)$iContentId, $sDisplay, $sCheckFunction, $bErrorMsg);
     }
 
