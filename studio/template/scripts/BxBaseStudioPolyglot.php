@@ -13,6 +13,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
     protected $sSubpageUrl;
     protected $aMenuItems;
     protected $aGridObjects;
+    protected $aHtmlIds;
 
     public function __construct($sPage = '')
     {
@@ -29,13 +30,23 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
             BX_DOL_STUDIO_PGT_TYPE_SETTINGS => array('icon' => 'cogs'),
             BX_DOL_STUDIO_PGT_TYPE_KEYS => array('icon' => 'key'),
             BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES => array('icon' => 'far envelope'),
-            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF => array('icon' => 'far sticky-note')
+            /*
+             * Isn't used for now.
+             * 
+            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF => array('icon' => 'far sticky-note'),
+             * 
+             */
+            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_CREATIVE => array('icon' => 'far object-group')
         );
 
         $this->aGridObjects = array(
             'keys' => 'sys_studio_lang_keys',
             'etemplates' => 'sys_studio_lang_etemplates',
         );
+
+        $this->aHtmlIds = [
+            'etc_builder_id' => 'adm-pgt-etc-builder',
+        ];
     }
 
     public function getPageJsCode($aOptions = array(), $bWrap = true)
@@ -168,6 +179,94 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
                 'sCodeMirror' => 'textarea[name=et_hf_header],textarea[name=et_hf_footer]'
             ))
         ));
+    }
+
+    protected function getEtemplatesCreative()
+    {
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $sFormId = 'adm-dsg-et-creative-form';
+        $sIFrameId = 'adm-dsg-et-creative-iframe';
+
+        $sContent = '';
+        $sContent .= getParam('site_email_html_template_header');
+        $sContent .= $this->sEtcContent;
+        $sContent .= getParam('site_email_html_template_footer');
+
+        $aForm = [
+            'form_attrs' => [
+                'id' => $sFormId,
+                'name' => $sFormId,
+                'action' => BX_DOL_URL_STUDIO . 'polyglot.php',
+                'method' => 'post',
+                'enctype' => 'multipart/form-data',
+                'target' => $sIFrameId
+            ],
+            'params' => [
+                'db' => [
+                    'table' => '',
+                    'key' => '',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'save'
+                ],
+            ],
+            'inputs' => [
+                'page' => [
+                    'type' => 'hidden',
+                    'name' => 'page',
+                    'value' => $this->sPage
+                ],
+                'content' => [
+                    'type' => 'custom',
+                    'name' => 'content',
+                    'caption' => '',
+                    'content' => $oTemplate->parseHtmlByName('pgt_etemplates_creative_fld.html', [
+                        'html_id' => $this->aHtmlIds['etc_builder_id'],
+                        'content_html' => $sContent,
+                        'content_data' => json_encode([
+                            'pages' => [
+                                ['component' => $sContent]
+                            ]
+                        ])
+                    ]),
+                    'required' => '0',
+                    'db' => [
+                        'pass' => 'XssHtml',
+                    ],
+                ],
+                'save' => [
+                    'type' => 'submit',
+                    'name' => 'save',
+                    'value' => _t('_adm_pgt_btn_et_hf_submit'),
+                ]
+            ]
+        ];
+
+        $oForm = new BxTemplStudioFormView($aForm, $oTemplate);
+        $oForm->initChecker();
+
+        if($oForm->isSubmittedAndValid()) {
+            echo $this->submitEtemplatesCreative($oForm);
+            exit;
+        }
+
+        $oTemplate->addJs([
+            'grapesjs/grapes.min.js',
+            'grapesjs/grapesjs-preset-newsletter.min.js'
+        ]);
+        $oTemplate->addCss([
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'grapesjs/|grapes.min.css'
+        ]);
+
+        return $oTemplate->parseHtmlByName('polyglot.html', [
+            'content' => $oTemplate->parseHtmlByName('pgt_etemplates_creative_frm.html', [
+                'warning' => '',
+                'iframe_id' => $sIFrameId, 
+                'form' => $oForm->getCode()
+            ]),
+            'js_content' => $this->getPageJsCode()
+        ]);
     }
 
     protected function getGrid($sObjectName)

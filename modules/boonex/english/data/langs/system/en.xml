@@ -1120,6 +1120,7 @@
     <string name="_adm_lmi_cpt_downloaded"><![CDATA[Downloaded]]></string>
     <string name="_adm_lmi_cpt_etemplates"><![CDATA[Emails]]></string>
     <string name="_adm_lmi_cpt_etemplates_hf"><![CDATA[Email Template]]></string>
+    <string name="_adm_lmi_cpt_etemplates_creative"><![CDATA[Email Template]]></string>
     <string name="_adm_lmi_cpt_featured"><![CDATA[Featured]]></string>
     <string name="_adm_lmi_cpt_fields"><![CDATA[Fields]]></string>
     <string name="_adm_lmi_cpt_files"><![CDATA[Files]]></string>
@@ -1360,6 +1361,7 @@
 	<string name="_adm_pgt_txt_nkp_key_name"><![CDATA[Key Name]]></string>
 	<string name="_adm_pgt_txt_nkp_module"><![CDATA[Module]]></string>
 	<string name="_adm_pgt_txt_text"><![CDATA[Text]]></string>
+        <string name="_adm_pgt_txt_et_c_content"><![CDATA[Message itself will be here.]]></string>
 	<string name="_adm_pgt_txt_et_hf_inf"><![CDATA[Note, that improper use of HTML may break the email message's layout. Also make sure that {unsubscribe} marker presents in at least one of the templates (header and/or footer).]]></string>
 	<string name="_adm_pgt_btn_et_hf_submit"><![CDATA[Submit]]></string>
 	<string name="_adm_pgt_scs_et_hf_save"><![CDATA[The changes were successfully saved.]]></string>

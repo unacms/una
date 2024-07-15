@@ -1103,6 +1103,7 @@
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>
 	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Email-ы]]></string>
 	<string name="_adm_lmi_cpt_etemplates_hf"><![CDATA[Email-шаблон]]></string>
+        <string name="_adm_lmi_cpt_etemplates_creative"><![CDATA[Email-шаблон]]></string>
 	<string name="_adm_lmi_cpt_featured"><![CDATA[Продвинутые]]></string>
 	<string name="_adm_lmi_cpt_fields"><![CDATA[Поля]]></string>
 	<string name="_adm_lmi_cpt_files"><![CDATA[Файлы]]></string>
@@ -1342,11 +1343,12 @@
 	<string name="_adm_pgt_txt_nkp_key_name"><![CDATA[Имя ключа]]></string>
 	<string name="_adm_pgt_txt_nkp_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_pgt_txt_text"><![CDATA[Текст]]></string>
-    <string name="_adm_pgt_txt_et_hf_inf"><![CDATA[Внимание. Неправильное применение HTML может повредить дизайн email сообщения. Также убедитесь в том, что маркер {unsubscribe} присутствует хотя бы в одном из темплейтов (заголовок и/или основание).]]></string>
-    <string name="_adm_pgt_btn_et_hf_submit"><![CDATA[Выполнить]]></string>
-    <string name="_adm_pgt_scs_et_hf_save"><![CDATA[Изменения сохранены.]]></string>
-    <string name="_adm_pgt_err_et_hf_save"><![CDATA[Невозможно сохранить изменения.]]></string>
-    <string name="_adm_pgt_err_et_hf_save_unsubscribe"><![CDATA[Невозможно сохранить изменения, так как маркер {unsubscribe} был удален из темплейтов заголовка и основания одновременно.]]></string>
+        <string name="_adm_pgt_txt_et_c_content"><![CDATA[Само сообщение будет здесь.]]></string>
+        <string name="_adm_pgt_txt_et_hf_inf"><![CDATA[Внимание. Неправильное применение HTML может повредить дизайн email сообщения. Также убедитесь в том, что маркер {unsubscribe} присутствует хотя бы в одном из темплейтов (заголовок и/или основание).]]></string>
+        <string name="_adm_pgt_btn_et_hf_submit"><![CDATA[Выполнить]]></string>
+        <string name="_adm_pgt_scs_et_hf_save"><![CDATA[Изменения сохранены.]]></string>
+        <string name="_adm_pgt_err_et_hf_save"><![CDATA[Невозможно сохранить изменения.]]></string>
+        <string name="_adm_pgt_err_et_hf_save_unsubscribe"><![CDATA[Невозможно сохранить изменения, так как маркер {unsubscribe} был удален из темплейтов заголовка и основания одновременно.]]></string>
 	<string name="_adm_prm_btn_actions_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_prm_btn_actions_options"><![CDATA[Редактировать опции]]></string>
 	<string name="_adm_prm_btn_actions_save"><![CDATA[Сохранить]]></string>
