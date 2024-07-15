@@ -564,7 +564,8 @@
     .bx-icon.bx-icon-small svg {
         @apply w-4 h-4;
     }
-    .bx-icon.bx-icon-close svg {
+    .bx-icon.bx-icon-close svg,
+    .bx-icon.bx-icon-hamburger svg {
         @apply w-7 h-7;
     }
 
