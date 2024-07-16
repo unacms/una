@@ -87,6 +87,9 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
         if (!$aFile)
             return false;
 
+        if (!getParam('sys_storage_s3_acl_enable'))
+            return parent::setFilePrivate($iFileId, 0);
+
         $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
         
         $sTmpFile = tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
@@ -104,7 +107,10 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
             return false;
         }
 
-        $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
+        if (getParam('sys_storage_s3_acl_enable'))
+            $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
+        else
+            $sACL = '';
         $aRequestHeaders = $this->generateHeaders('', $isPrivate, $aFile['mime_type']);
         if (!$this->_upload($sTmpFile, $sFileLocation, $sACL, $aRequestHeaders))
             return false;
@@ -120,8 +126,10 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
         $sPath = $this->genPath($sLocalId, $this->_aObject['levels']);
         $sRemoteNamePath = $sPath . $sLocalId . ($sExt ? '.' . $sExt : '');
         $aRequestHeaders = $this->generateHeaders($sName, $isPrivate);
-        $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
-
+        if (getParam('sys_storage_s3_acl_enable'))
+            $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
+        else
+            $sACL = '';
         return $this->_upload($sTmpFile, $this->getObjectBaseDir($isPrivate) . $sRemoteNamePath, $sACL, $aRequestHeaders);
     }
 
