@@ -698,7 +698,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     protected function initImages()
     {
         self::$_iImagesCacheTTL = 86400;
-        self::$_sImagesCacheKey = 'db_layout_images_' . $this->_sCode .  '_' . bx_site_hash('images') . '.php';
+        self::$_sImagesCacheKey = 'sys_layout_images_' . $this->_sCode .  '_' . bx_site_hash('images') . '.php';
         self::$_aImages = BxDolDb::getInstance()->getDbCacheObject()->getData(self::$_sImagesCacheKey);
         if(!self::$_aImages)
             self::$_aImages = [];
