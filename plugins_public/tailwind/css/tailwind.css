@@ -508,21 +508,21 @@
     /* Typography in combination with 'bx-def-vanilla-html' class */
     .bx-def-vanilla-html h1,
     .bx-def-vanilla-html .bx-def-font-h1 {
-        @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+        @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
     }
 
     .bx-def-vanilla-html h2,
     .bx-def-vanilla-html .bx-def-font-h2 {
-        @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+        @apply scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0;
     }
 
     .bx-def-vanilla-html h3,
     .bx-def-vanilla-html .bx-def-font-h3 {
-        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-xl font-semibold tracking-tight;
     }
 
     .bx-def-vanilla-html h4 {
-        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+        @apply scroll-m-20 font-semibold tracking-tight;
     }
 
     .bx-def-vanilla-html p {
