@@ -17,21 +17,21 @@ INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `e
 
 -- PAGE: create campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_massmailer_create_campaign', '_bx_massmailer_page_title_sys_create_campaign', '_bx_massmailer_page_title_create_campaign', 'bx_massmailer', 7, 128, 1, 'create-campaign', 'page.php?i=create-campaign', '', '', '', 0, 1, 0, 'BxMassMailerPageEntry', 'modules/boonex/massmailer/classes/BxMassMailerPageEntry.php');
+('bx_massmailer_create_campaign', '_bx_massmailer_page_title_sys_create_campaign', '_bx_massmailer_page_title_create_campaign', 'bx_massmailer', 5, 128, 1, 'create-campaign', 'page.php?i=create-campaign', '', '', '', 0, 1, 0, 'BxMassMailerPageEntry', 'modules/boonex/massmailer/classes/BxMassMailerPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_massmailer_create_campaign', 1, @sName, '_bx_massmailer_page_block_title_entry_breadcrumb', 13, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 0),
-('bx_massmailer_create_campaign', 2, @sName, '_bx_massmailer_page_block_title_create_campaign', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:13:"entity_create";}', 0, 1, 1),
-('bx_massmailer_create_campaign', 3, @sName, '_bx_massmailer_page_block_title_attributes', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:10:"attributes";}', 0, 0, 1);
+('bx_massmailer_create_campaign', 1, @sName, '_bx_massmailer_page_block_title_create_campaign', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:13:"entity_create";}', 0, 1, 1),
+('bx_massmailer_create_campaign', 0, @sName, '_bx_massmailer_page_block_title_attributes', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:10:"attributes";}', 0, 0, 1);
 
 -- PAGE: edit campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_massmailer_edit_campaign', '_bx_massmailer_page_title_sys_edit_campaign', '_bx_massmailer_page_title_edit_campaign', 'bx_massmailer', 7, 128, 1, 'edit-campaign', '', '', '', '', 0, 1, 0, 'BxMassMailerPageEntry', 'modules/boonex/massmailer/classes/BxMassMailerPageEntry.php');
+('bx_massmailer_edit_campaign', '_bx_massmailer_page_title_sys_edit_campaign', '_bx_massmailer_page_title_edit_campaign', 'bx_massmailer', 5, 128, 1, 'edit-campaign', '', '', '', '', 0, 1, 0, 'BxMassMailerPageEntry', 'modules/boonex/massmailer/classes/BxMassMailerPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_massmailer_edit_campaign', 1, @sName, '_bx_massmailer_page_block_title_entry_breadcrumb', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 0),
-('bx_massmailer_edit_campaign', 2, @sName, '_bx_massmailer_page_block_title_edit_campaign', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:11:"entity_edit";}', 0, 0, 1),
-('bx_massmailer_edit_campaign', 3, @sName, '_bx_massmailer_page_block_title_attributes', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:10:"attributes";}', 0, 0, 1);
+('bx_massmailer_edit_campaign', 1, @sName, '_bx_massmailer_page_block_title_edit_campaign', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:11:"entity_edit";}', 0, 0, 1),
+('bx_massmailer_edit_campaign', 0, @sName, '_bx_massmailer_page_block_title_attributes', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:10:"attributes";}', 0, 0, 1);
 
 -- PAGE: view campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
