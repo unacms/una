@@ -127,12 +127,18 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 break;
 
             case 'modules_subtypes':
+                $sPostfix .= '_modules_subtypes_' . implode('_', $aParams['value']);
+
                 if(isset($aParams['id_as_key']) && $aParams['id_as_key'] === true) {
+                    $sPostfix .= 'id_as_key';
+                            
                     $aMethod['name'] = 'getAllWithKey';
                     $aMethod['params'][1] = 'id';
                 }
 
                 if(isset($aParams['name_as_key']) && $aParams['name_as_key'] === true) {
+                    $sPostfix .= 'name_as_key';
+
                     $aMethod['name'] = 'getAllWithKey';
                     $aMethod['params'][1] = 'name';
                 }
@@ -140,7 +146,6 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 if(!is_array($aParams['value']))
                     $aParams['value'] = [$aParams['value']];
 
-                $sPostfix .= '_modules_subtypes_' . implode('_', $aParams['value']);
                 $aBindings['type'] = BX_DOL_MODULE_TYPE_MODULE;
 
                 $iSubtypes = 0;
