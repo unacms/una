@@ -43,7 +43,7 @@ class BxOktaConConfig extends BxBaseModConnectConfig
         $this -> sPageStart = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'start';
         $this -> sPageHandle = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'handle';
 
-        bx_import('Custom', $this->_aModule);
+        bx_import('Custom', $aModule);
         $oCustom = new BxOktaConCustom($aModule);
         $oCustom->onConfig($aModule);
     }
