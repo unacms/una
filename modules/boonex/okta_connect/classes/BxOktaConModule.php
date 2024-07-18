@@ -111,16 +111,21 @@ echoDbgLog($s);
 */
         if ($aRemoteProfileInfo) {
 
+            bx_import('Custom', $this->_aModule);
+            $oCustom = new BxOktaConCustom($this->_aModule);
+
             // check if user logged in before
             $iLocalProfileId = $this->_oDb->getProfileId($aRemoteProfileInfo['id']);
             
             if ($iLocalProfileId && $oProfile = BxDolProfile::getInstance($iLocalProfileId)) {
                 // user already exists
-                $this->setLogged($oProfile ->id(), '', true, true); // remember user
+                $this->setLogged($oProfile->id(), '', true, getParam('bx_oktacon_remember_session')); // remember user
+                $oCustom->onLogin($oProfile);
             }             
             else {  
                 // register new user
                 $this->_createProfile($aRemoteProfileInfo);
+                $oCustom->onRegister($aRemoteProfileInfo);
             }
         } 
         else {
@@ -143,6 +148,10 @@ echoDbgLog($s);
         $aProfileFields['email'] = isset($aProfileInfo['email']) ? $aProfileInfo['email'] : '';
         $aProfileFields['picture'] = '';
         $aProfileFields['allow_view_to'] = getParam('bx_oktacon_privacy');
+
+        bx_import('Custom', $this->_aModule);
+        $oCustom = new BxOktaConCustom($this->_aModule);
+        $oCustom->onConvertRemoteFields($aProfileInfo, $aProfileFields);
 
         return $aProfileFields;
     }

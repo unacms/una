@@ -35,9 +35,11 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_oktacon_domain', '', @iCategId, '_bx_oktacon_option_domain', 'digit', '', '', 20, ''),
 ('bx_oktacon_client_id', '', @iCategId, '_bx_oktacon_option_client_id', 'digit', '', '', 22, ''),
 ('bx_oktacon_secret', '', @iCategId, '_bx_oktacon_option_secret', 'digit', '', '', 24, ''),
+('bx_oktacon_scope', 'openid profile email', @iCategId, '_bx_oktacon_option_scope', 'digit', '', '', 26, ''),
 ('bx_oktacon_redirect_page', 'index', @iCategId, '_sys_connect_option_redirect', 'select', '', '', 40, 'join,settings,dashboard,index'),
 ('bx_oktacon_module', 'bx_persons', @iCategId, '_sys_connect_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:10:"bx_oktacon";s:6:"method";s:20:"get_profiles_modules";}'),
 ('bx_oktacon_privacy', '3', @iCategId, '_sys_connect_option_privacy', 'select', '', '', 54, 'a:2:{s:6:"module";s:10:"bx_oktacon";s:6:"method";s:18:"get_privacy_groups";}'),
 ('bx_oktacon_confirm_email', 'on', @iCategId, '_sys_connect_option_confirm_email', 'checkbox', '', '', 70, ''),
-('bx_oktacon_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, '');
+('bx_oktacon_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, ''),
+('bx_oktacon_remember_session', 'on', @iCategId, '_sys_connect_option_remember_session', 'checkbox', '', '', 100, '');
 

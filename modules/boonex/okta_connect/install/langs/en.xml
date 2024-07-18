@@ -13,6 +13,8 @@
     <string name="_bx_oktacon_option_domain"><![CDATA[Okta Domain]]></string>
     <string name="_bx_oktacon_option_client_id"><![CDATA[Application (Client) ID]]></string>
     <string name="_bx_oktacon_option_secret"><![CDATA[Client Secret Value]]></string>
+    <string name="_bx_oktacon_option_scope"><![CDATA[Scope]]></string>
+    <string name="_sys_connect_option_remember_session"><![CDATA[Remember user session]]></string>
 
 	<string name="_bx_oktacon_et_password_generated"><![CDATA[Okta connect temporary password]]></string>
 	<string name="_bx_oktacon_et_password_generated_subject"><![CDATA[Temporary password]]></string>
