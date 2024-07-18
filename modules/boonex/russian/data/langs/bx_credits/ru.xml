@@ -46,7 +46,6 @@
     <string name="_bx_credits_form_credit_display_grant"><![CDATA[Дарить]]></string>
     <string name="_bx_credits_form_credit_display_send"><![CDATA[Отправить]]></string>
     <string name="_bx_credits_form_credit_display_withdraw_request"><![CDATA[Запросить снятие]]></string>
-    <string name="_bx_credits_form_credit_display_withdraw_confirm"><![CDATA[Подтвердить снятие]]></string>
     <string name="_bx_credits_form_credit_input_sys_balance"><![CDATA[Баланс]]></string>
     <string name="_bx_credits_form_credit_input_balance"><![CDATA[Баланс]]></string>
     <string name="_bx_credits_form_credit_input_sys_cleared"><![CDATA[Очищенный баланс]]></string>
@@ -116,6 +115,14 @@
     <string name="_bx_credits_page_title_orders_administration"><![CDATA[Ордеры]]></string>
     <string name="_bx_credits_page_block_title_sys_orders_administration"><![CDATA[Все ордеры]]></string>
     <string name="_bx_credits_page_block_title_orders_administration"><![CDATA[Ордеры]]></string>
+    <string name="_bx_credits_page_title_sys_withdrawals_common"><![CDATA[Мои снятия]]></string>
+    <string name="_bx_credits_page_title_withdrawals_common"><![CDATA[Снятия]]></string>
+    <string name="_bx_credits_page_block_title_sys_withdrawals_common"><![CDATA[Мои снятия]]></string>
+    <string name="_bx_credits_page_block_title_withdrawals_common"><![CDATA[Снятия]]></string>    
+    <string name="_bx_credits_page_title_sys_withdrawals_administration"><![CDATA[Все снятия]]></string>
+    <string name="_bx_credits_page_title_withdrawals_administration"><![CDATA[Снятия]]></string>
+    <string name="_bx_credits_page_block_title_sys_withdrawals_administration"><![CDATA[Все снятия]]></string>
+    <string name="_bx_credits_page_block_title_withdrawals_administration"><![CDATA[Снятия]]></string>
     <string name="_bx_credits_page_title_sys_profiles_administration"><![CDATA[Все профили]]></string>
     <string name="_bx_credits_page_title_profiles_administration"><![CDATA[Профили]]></string>
     <string name="_bx_credits_page_block_title_sys_profiles_administration"><![CDATA[Все профили]]></string>
@@ -148,6 +155,10 @@
     <string name="_bx_credits_menu_item_title_history_administration"><![CDATA[Вся история]]></string>
     <string name="_bx_credits_menu_item_title_system_history_common"><![CDATA[Моя история]]></string>
     <string name="_bx_credits_menu_item_title_history_common"><![CDATA[Моя история]]></string>
+    <string name="_bx_credits_menu_item_title_system_withdrawals_administration"><![CDATA[Все снятия]]></string>
+    <string name="_bx_credits_menu_item_title_withdrawals_administration"><![CDATA[Все снятия]]></string>
+    <string name="_bx_credits_menu_item_title_system_withdrawals_common"><![CDATA[Мои снятия]]></string>
+    <string name="_bx_credits_menu_item_title_withdrawals_common"><![CDATA[Мои снятия]]></string>
     <string name="_bx_credits_menu_item_title_system_profiles_administration"><![CDATA[Все профили]]></string>
     <string name="_bx_credits_menu_item_title_profiles_administration"><![CDATA[Все профили]]></string>
 
@@ -175,12 +186,8 @@
     <string name="_bx_credits_grid_column_title_htr_cleared"><![CDATA[Очищение]]></string>
     <string name="_bx_credits_grid_action_title_htr_grant"><![CDATA[Подарить]]></string>
     <string name="_bx_credits_grid_action_title_htr_send"><![CDATA[Отправить]]></string>
-    <string name="_bx_credits_grid_action_title_htr_withdraw_confirm"><![CDATA[Подтвердить снятие]]></string>
-    <string name="_bx_credits_grid_action_title_htr_withdraw_request"><![CDATA[Запросить снятие]]></string>
     <string name="_bx_credits_grid_popup_title_htr_grant"><![CDATA[Подарить]]></string>
     <string name="_bx_credits_grid_popup_title_htr_send"><![CDATA[Отправить]]></string>
-    <string name="_bx_credits_grid_popup_title_htr_withdraw_confirm"><![CDATA[Подтвердить снятие]]></string>
-    <string name="_bx_credits_grid_popup_title_htr_withdraw_request"><![CDATA[Запросить снятие]]></string>
 
     <string name="_bx_credits_grid_column_title_ord_profile_id"><![CDATA[Профиль]]></string>
     <string name="_bx_credits_grid_column_title_ord_bundle"><![CDATA[Пакет]]></string>
@@ -190,6 +197,20 @@
     <string name="_bx_credits_grid_column_value_ord_type_recurring"><![CDATA[Повторяющийся]]></string>
     <string name="_bx_credits_grid_column_title_ord_added"><![CDATA[Добавлено]]></string>
     <string name="_bx_credits_grid_column_title_ord_expired"><![CDATA[Закончится]]></string>
+
+    <string name="_bx_credits_grid_column_title_wdw_profile_id"><![CDATA[Профиль]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_performer_id"><![CDATA[Исполнитель]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_amount"><![CDATA[Количество]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_rate"><![CDATA[Ставка]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_message"><![CDATA[Сообщение]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_order"><![CDATA[Ордер]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_added"><![CDATA[Добавлен]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_confirmed"><![CDATA[Подтверждён]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_status"><![CDATA[Статус]]></string>
+    <string name="_bx_credits_grid_action_title_wdw_withdraw_confirm"><![CDATA[Подтвердить вывод средств]]></string>
+    <string name="_bx_credits_grid_action_title_wdw_withdraw_cancel"><![CDATA[Отменить запрос на вывод средств]]></string>
+    <string name="_bx_credits_grid_action_title_wdw_withdraw_request"><![CDATA[Запросить снятие]]></string>
+    <string name="_bx_credits_grid_popup_title_wdw_withdraw_request"><![CDATA[Запросить снятие]]></string>
 
     <string name="_bx_credits_grid_column_title_pfl_id"><![CDATA[Профиль]]></string>
     <string name="_bx_credits_grid_column_title_pfl_wdw_clearing"><![CDATA[Клиринговый период (в днях)]]></string>
@@ -242,12 +263,17 @@
 <p>Подтвердить вывод можно перейдя по <a href="{confirm_url}">ссылке</a>.</p>
 <p>Примечания от <b>{profile_name}</b>:<br />{message}</p>
 {email_footer}]]></string>
+    <string name="_bx_credits_et_txt_name_withdraw_canceled"><![CDATA[Запрос на вывод средств отменен.]]></string>
+    <string name="_bx_credits_et_txt_subject_withdraw_canceled"><![CDATA[Запрос на вывод средств отменен.]]></string>
+    <string name="_bx_credits_et_txt_body_withdraw_canceled"><![CDATA[{email_header}
+<p><a href="{profile_link}">{profile_name}</a> отменил заявку на вывод средств на сумму <b>{amount}</b> кредитов.</p>
+<p>Отмененный запрос на вывод средств можно увидеть <a href="{manage_url}">здесь</a>.</p>
+{email_footer}]]></string>
     <string name="_bx_credits_et_txt_name_withdraw_sent"><![CDATA[Снятие было выполнено.]]></string>
     <string name="_bx_credits_et_txt_subject_withdraw_sent"><![CDATA[Снятие было выполнено.]]></string>
     <string name="_bx_credits_et_txt_body_withdraw_sent"><![CDATA[{email_header}
 <p>Здравствуйте, {profile_name}.</p>
 <p>Запрашиваемая сумма кредитов (<b>{amount}</b>) была отправлена.</p>
-<p>{message}</p>
 {email_footer}]]></string>
 
 
@@ -269,16 +295,22 @@
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Искусственно инициированный перевод]]></string>
     <string name="_bx_credits_txt_history_info_refund"><![CDATA[Возврат средств]]></string>
     <string name="_bx_credits_txt_history_info_cancellation"><![CDATA[Отмена]]></string>
+    <string name="_bx_credits_txt_withdrawal_status_requested"><![CDATA[Запрошено]]></string>
+    <string name="_bx_credits_txt_withdrawal_status_canceled"><![CDATA[Отменено]]></string>
+    <string name="_bx_credits_txt_withdrawal_status_confirmed"><![CDATA[Подтверждено]]></string>
 
     <string name="_bx_credits_msg_empty_author"><![CDATA['Главный продавец' не задан. Вам необходимо пометить какой-либо профайл как 'Главный продавец' в настройках активного на данный момент платежного модуля.]]></string>
     <string name="_bx_credits_msg_action_performed"><![CDATA[Действие было успешно выполнено.]]></string>
+    <string name="_bx_credits_msg_action_withdrawals_disabled"><![CDATA[Вывод средств отключен.]]></string>
     <string name="_bx_credits_err_profile_not_found"><![CDATA[Профиль не был найден.]]></string>
     <string name="_bx_credits_err_login_required"><![CDATA[Необходимо войти.]]></string>
     <string name="_bx_credits_err_low_balance"><![CDATA[Недостаточно средств на балансе.]]></string>
+    <string name="_bx_credits_err_withdrawal_not_found"><![CDATA[Запрос на вывод средств не найден.]]></string>
     <string name="_bx_credits_err_withdraw_minimum"><![CDATA[Вывод менее {0} кредитов недоступен.]]></string>
     <string name="_bx_credits_err_withdraw_remaining"><![CDATA[Минимальный остаток на счете после вывода должен быть более {0} кредитов.]]></string>
     <string name="_bx_credits_err_cannot_update_balance"><![CDATA[Невозможно обновить баланс.]]></string>
     <string name="_bx_credits_err_cannot_send"><![CDATA[Невозможно отправить сообщение. Пожалуйста, оповестите нас об этой проблеме.]]></string>
+    <string name="_bx_credits_err_cannot_cancel_withdrawal"><![CDATA[Невозможно отменить запрос на вывод средств. Пожалуйста, оповестите нас об этой проблеме.]]></string>
     <string name="_bx_credits_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 
 

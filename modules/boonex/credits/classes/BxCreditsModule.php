@@ -23,6 +23,9 @@ define('BX_CREDITS_DIRECTION_OUT', 'out');
 define('BX_CREDITS_ORDER_TYPE_SINGLE', 'single'); //--- one-time payment
 define('BX_CREDITS_ORDER_TYPE_RECURRING', 'recurring'); //--- recurring payment (subscription)
 
+define('BX_CREDITS_WITHDRAWAL_STATUS_REQUESTED', 'requested');
+define('BX_CREDITS_WITHDRAWAL_STATUS_CANCELED', 'canceled');
+define('BX_CREDITS_WITHDRAWAL_STATUS_CONFIRMED', 'confirmed');
 
 class BxCreditsModule extends BxBaseModGeneralModule
 {
@@ -426,6 +429,31 @@ class BxCreditsModule extends BxBaseModGeneralModule
     public function serviceGetBlockHistory($sType = 'common') 
     {
         return $this->_getBlockHistory($sType);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_credits Credits
+     * @subsection bx_credits-page_blocks Page Blocks
+     * @subsubsection bx_credits-get_block_withdrawals get_block_withdrawals
+     * 
+     * @code bx_srv('bx_credits', 'get_block_withdrawals', [...]); @endcode
+     * 
+     * Get page block with a list of all credits withdrawals.
+     *
+     * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxCreditsModule::serviceGetBlockHistory
+     */
+    /** 
+     * @ref bx_credits-get_block_withdrawals "get_block_withdrawals"
+     */
+    public function serviceGetBlockWithdrawals($sType = 'common') 
+    {
+        if(!$this->_oConfig->isWithdraw())
+            return MsgBox (_t('_bx_credits_msg_action_withdrawals_disabled'));
+
+        return $this->_getBlockWithdrawals($sType);
     }
 
     /**
@@ -1066,6 +1094,17 @@ class BxCreditsModule extends BxBaseModGeneralModule
 
         $fRate = $this->_oConfig->getConversionRateWithdraw();
 
+        $iId = $this->_oDb->insertWithdrawal([
+            'profile_id' => $iProfileId, 
+            'amount' => $fAmount,
+            'rate' => $fRate,
+            'message' => $sMessage,
+            'added' => time()
+        ]);
+
+        if(!$iId)
+            return $aResult;
+
         $aTemplateVars = [
             'profile_link' => $oProfile->getUrl(),
             'profile_name' => $oProfile->getDisplayName(),
@@ -1079,7 +1118,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             return $aResult;
 
         $sEmail = $this->_oConfig->getWithdrawEmail();
-        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM, 'html', false, [], true))
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM))
             return $aResult;
 
         /**
@@ -1101,30 +1140,93 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'rate' => $fRate
         ]);
 
-        return ['code' => 0];
+        return ['code' => 0, 'id' => $iId];
     }
 
-    public function processWithdrawConfirm($iUserId, $iProfileId, $fAmount, $sMessage = '')
+    public function processWithdrawCancel($iId)
     {
         $CNF = &$this->_oConfig->CNF;
-        
+
+        $aWithdrawal = $this->_oDb->getWithdrawal(['type' => 'id', 'id' => $iId]);
+        if(empty($aWithdrawal) || !is_array($aWithdrawal))
+            return ['code' => 1, 'msg' => '_bx_credits_err_withdrawal_not_found'];
+
+        $iProfileId = (int)$aWithdrawal['profile_id'];
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile)
-            return ['code' => 1, 'msg' => '_bx_credits_err_profile_not_found'];
+            return ['code' => 2, 'msg' => '_bx_credits_err_profile_not_found'];
 
+        $aResult = ['code' => 3, 'msg' => '_bx_credits_err_cannot_cancel_withdrawal'];       
+
+        $aTemplateVars = [
+            'profile_link' => $oProfile->getUrl(),
+            'profile_name' => $oProfile->getDisplayName(),
+            'amount' => $aWithdrawal['amount'],
+            'manage_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_WITHDRAWALS_ADMINISTRATION']))
+        ];
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($CNF['ETEMPLATE_WITHDRAW_CANCELED'], $aTemplateVars);
+        if(!$aTemplate)
+            return $aResult;
+
+        $sEmail = $this->_oConfig->getWithdrawEmail();
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM))
+            return $aResult;
+
+        if(!$this->_oDb->updateWithdrawal(['status' => BX_CREDITS_WITHDRAWAL_STATUS_CANCELED], ['id' => $iId]))
+            return $aResult;
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-withdraw_canceled 'bx_credits', 'withdraw_canceled' - hook after a profile canceled his withdrawal request
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `withdraw_canceled`
+         * - $object_id - not used
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile` - [int] performer profile id
+         *      - `amount` - [float] amount to withdraw
+         *      - `rate` - [float] withdraw conversion rate
+         * @hook @ref hook-bx_credits-withdraw_canceled
+         */
+        bx_alert($this->getName(), 'withdraw_canceled', $iId, $iProfileId, [
+            'profile' => $iProfileId,
+            'amount' => $aWithdrawal['amount'],
+        ]);
+
+        return ['code' => 0, 'id' => $iId];
+    }
+
+    public function processWithdrawConfirm($iUserId, $iWithdrawalId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aWithdrawal = $this->_oDb->getWithdrawal(['type' => 'id', 'id' => $iWithdrawalId]);
+        if(empty($aWithdrawal) || !is_array($aWithdrawal))
+            return ['code' => 1, 'msg' => '_bx_credits_err_withdrawal_not_found'];
+
+        $iProfileId = (int)$aWithdrawal['profile_id'];
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return ['code' => 2, 'msg' => '_bx_credits_err_profile_not_found'];
+
+        $fAmount = (float)$aWithdrawal['amount'];
         $fBalance = $this->getProfileBalance($iProfileId);
         if($fAmount > $fBalance)
-            return ['code' => 2, 'msg' => '_bx_credits_err_low_balance'];
+            return ['code' => 3, 'msg' => '_bx_credits_err_low_balance'];
 
         $sInfo = '_bx_credits_txt_history_info_withdraw';
         $iHistoryId = $this->updateProfileBalance($iProfileId, 0, -$fAmount, BX_CREDITS_TRANSFER_TYPE_WITHDRAW, '', $sInfo);
         if(!$iHistoryId)
-            return ['code' => 3, 'msg' => '_bx_credits_err_cannot_update_balance'];
+            return ['code' => 4, 'msg' => '_bx_credits_err_cannot_update_balance'];
+
+        $aHistory = $this->_oDb->getHistory(['type' => 'id', 'id' => $iHistoryId]);
+        
+        if(!$this->_oDb->updateWithdrawal(['performer_id' => $iUserId, 'order' => $aHistory['order'], 'confirmed' => time(), 'status' => BX_CREDITS_WITHDRAWAL_STATUS_CONFIRMED], ['id' => $iWithdrawalId]))
+            return $aResult;
 
         sendMailTemplate($CNF['ETEMPLATE_WITHDRAW_SENT'], 0, $iProfileId, [
-            'amount' => $fAmount,
-            'message' => $sMessage
-        ]);
+            'amount' => $fAmount
+        ], BX_EMAIL_SYSTEM);
 
         /**
          * @hooks
@@ -1139,13 +1241,13 @@ class BxCreditsModule extends BxBaseModGeneralModule
          *      - `rate` - [float] withdraw conversion rate
          * @hook @ref hook-bx_credits-withdraw_sent
          */
-        bx_alert($this->getName(), 'withdraw_sent', 0, $iUserId, [
+        bx_alert($this->getName(), 'withdraw_sent', $iWithdrawalId, $iUserId, [
             'performer' => $iUserId,
             'profile' => $iProfileId,
             'amount' => $fAmount,
         ]);
 
-        return ['code' => 0, 'id' => $iHistoryId];
+        return ['code' => 0, 'id' => $iWithdrawalId];
     }
 
     public function processClearing()
@@ -1321,6 +1423,21 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $CNF = &$this->_oConfig->CNF;
 
         $sGrid = $CNF['OBJECT_GRID_HISTORY_' . strtoupper($sType)];
+        $oGrid = BxDolGrid::getObjectInstance($sGrid);
+        if(!$oGrid)
+            return '';
+
+        return [
+            'content' => $oGrid->getCode(),
+            'menu' => $CNF['OBJECT_MENU_MANAGE_SUBMENU']
+        ];
+    }
+
+    protected function _getBlockWithdrawals($sType) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sGrid = $CNF['OBJECT_GRID_WITHDRAWALS_' . strtoupper($sType)];
         $oGrid = BxDolGrid::getObjectInstance($sGrid);
         if(!$oGrid)
             return '';

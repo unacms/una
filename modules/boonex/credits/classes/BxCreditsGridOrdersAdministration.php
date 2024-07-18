@@ -9,30 +9,16 @@
  * @{
  */
 
-class BxCreditsGridOrdersAdministration extends BxTemplGrid
+require_once('BxCreditsGrid.php');
+
+class BxCreditsGridOrdersAdministration extends BxCreditsGrid
 {
-    protected $_sModule;
-    protected $_oModule;
-
-    protected $_iUserId;
-
     public function __construct ($aOptions, $oTemplate = false)
     {
-    	$this->_sModule = 'bx_credits';
-    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
-    	if(!$oTemplate)
-            $oTemplate = $this->_oModule->_oTemplate;
-
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_sDefaultSortingOrder = 'DESC';
         $this->_aQueryReset = array($this->_aOptions['order_get_field'], $this->_aOptions['order_get_dir'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
-
-        $iUserId = bx_get_logged_profile_id();
-        if($iUserId !== false) {
-            $this->_iUserId = (int)$iUserId;
-            $this->_aQueryAppend['user_id'] = $this->_iUserId;
-        }
     }
 
     protected function _getCellProfileId($mixedValue, $sKey, $aField, $aRow)

@@ -46,7 +46,6 @@
     <string name="_bx_credits_form_credit_display_grant"><![CDATA[Grant]]></string>
     <string name="_bx_credits_form_credit_display_send"><![CDATA[Send]]></string>
     <string name="_bx_credits_form_credit_display_withdraw_request"><![CDATA[Request Withdrawal]]></string>
-    <string name="_bx_credits_form_credit_display_withdraw_confirm"><![CDATA[Confirm Withdrawal]]></string>
     <string name="_bx_credits_form_credit_input_sys_balance"><![CDATA[Balance]]></string>
     <string name="_bx_credits_form_credit_input_balance"><![CDATA[Balance]]></string>
     <string name="_bx_credits_form_credit_input_sys_cleared"><![CDATA[Cleared Balance]]></string>
@@ -117,6 +116,14 @@
     <string name="_bx_credits_page_title_orders_administration"><![CDATA[Orders]]></string>
     <string name="_bx_credits_page_block_title_sys_orders_administration"><![CDATA[All Orders]]></string>
     <string name="_bx_credits_page_block_title_orders_administration"><![CDATA[Orders]]></string>
+    <string name="_bx_credits_page_title_sys_withdrawals_common"><![CDATA[My Withdrawals]]></string>
+    <string name="_bx_credits_page_title_withdrawals_common"><![CDATA[Withdrawals]]></string>
+    <string name="_bx_credits_page_block_title_sys_withdrawals_common"><![CDATA[My Withdrawals]]></string>
+    <string name="_bx_credits_page_block_title_withdrawals_common"><![CDATA[Withdrawals]]></string>    
+    <string name="_bx_credits_page_title_sys_withdrawals_administration"><![CDATA[All Withdrawals]]></string>
+    <string name="_bx_credits_page_title_withdrawals_administration"><![CDATA[Withdrawals]]></string>
+    <string name="_bx_credits_page_block_title_sys_withdrawals_administration"><![CDATA[All Withdrawals]]></string>
+    <string name="_bx_credits_page_block_title_withdrawals_administration"><![CDATA[Withdrawals]]></string>
     <string name="_bx_credits_page_title_sys_profiles_administration"><![CDATA[All Profiles]]></string>
     <string name="_bx_credits_page_title_profiles_administration"><![CDATA[Profiles]]></string>
     <string name="_bx_credits_page_block_title_sys_profiles_administration"><![CDATA[All Profiles]]></string>
@@ -149,6 +156,10 @@
     <string name="_bx_credits_menu_item_title_history_administration"><![CDATA[All History]]></string>
     <string name="_bx_credits_menu_item_title_system_history_common"><![CDATA[My History]]></string>
     <string name="_bx_credits_menu_item_title_history_common"><![CDATA[My History]]></string>
+    <string name="_bx_credits_menu_item_title_system_withdrawals_administration"><![CDATA[All Withdrawals]]></string>
+    <string name="_bx_credits_menu_item_title_withdrawals_administration"><![CDATA[All Withdrawals]]></string>
+    <string name="_bx_credits_menu_item_title_system_withdrawals_common"><![CDATA[My Withdrawals]]></string>
+    <string name="_bx_credits_menu_item_title_withdrawals_common"><![CDATA[My Withdrawals]]></string>
     <string name="_bx_credits_menu_item_title_system_profiles_administration"><![CDATA[All Profiles]]></string>
     <string name="_bx_credits_menu_item_title_profiles_administration"><![CDATA[All Profiles]]></string>
 
@@ -176,12 +187,8 @@
     <string name="_bx_credits_grid_column_title_htr_cleared"><![CDATA[Clearing]]></string>
     <string name="_bx_credits_grid_action_title_htr_grant"><![CDATA[Grant]]></string>
     <string name="_bx_credits_grid_action_title_htr_send"><![CDATA[Send]]></string>
-    <string name="_bx_credits_grid_action_title_htr_withdraw_confirm"><![CDATA[Confirm withdrawal]]></string>
-    <string name="_bx_credits_grid_action_title_htr_withdraw_request"><![CDATA[Request withdrawal]]></string>
     <string name="_bx_credits_grid_popup_title_htr_grant"><![CDATA[Grant]]></string>
     <string name="_bx_credits_grid_popup_title_htr_send"><![CDATA[Send]]></string>
-    <string name="_bx_credits_grid_popup_title_htr_withdraw_confirm"><![CDATA[Confirm withdrawal]]></string>
-    <string name="_bx_credits_grid_popup_title_htr_withdraw_request"><![CDATA[Request withdrawal]]></string>
 
     <string name="_bx_credits_grid_column_title_ord_profile_id"><![CDATA[Profile]]></string>
     <string name="_bx_credits_grid_column_title_ord_bundle"><![CDATA[Bundle]]></string>
@@ -191,6 +198,20 @@
     <string name="_bx_credits_grid_column_value_ord_type_recurring"><![CDATA[Recurring]]></string>
     <string name="_bx_credits_grid_column_title_ord_added"><![CDATA[Added]]></string>
     <string name="_bx_credits_grid_column_title_ord_expired"><![CDATA[Expires]]></string>
+
+    <string name="_bx_credits_grid_column_title_wdw_profile_id"><![CDATA[Profile]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_performer_id"><![CDATA[Performer]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_rate"><![CDATA[Rate]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_message"><![CDATA[Message]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_order"><![CDATA[Order]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_added"><![CDATA[Added]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_confirmed"><![CDATA[Confirmed]]></string>
+    <string name="_bx_credits_grid_column_title_wdw_status"><![CDATA[Status]]></string>
+    <string name="_bx_credits_grid_action_title_wdw_withdraw_confirm"><![CDATA[Confirm withdrawal]]></string>
+    <string name="_bx_credits_grid_action_title_wdw_withdraw_cancel"><![CDATA[Cancel withdrawal request]]></string>
+    <string name="_bx_credits_grid_action_title_wdw_withdraw_request"><![CDATA[Request withdrawal]]></string>
+    <string name="_bx_credits_grid_popup_title_wdw_withdraw_request"><![CDATA[Request withdrawal]]></string>
 
     <string name="_bx_credits_grid_column_title_pfl_id"><![CDATA[Profile]]></string>
     <string name="_bx_credits_grid_column_title_pfl_wdw_clearing"><![CDATA[Clearing period (in days)]]></string>
@@ -235,20 +256,25 @@
 <p>Hello, {profile_name}.</p>
 <p>You've sent <b>{amount}</b> credits to {second_profile_name}.</p>
 {email_footer}]]></string>
-    <string name="_bx_credits_et_txt_name_withdraw_requested"><![CDATA[Withdraw request.]]></string>
-    <string name="_bx_credits_et_txt_subject_withdraw_requested"><![CDATA[Withdraw request.]]></string>
+    <string name="_bx_credits_et_txt_name_withdraw_requested"><![CDATA[Withdrawal request.]]></string>
+    <string name="_bx_credits_et_txt_subject_withdraw_requested"><![CDATA[Withdrawal request.]]></string>
     <string name="_bx_credits_et_txt_body_withdraw_requested"><![CDATA[{email_header}
 <p><a href="{profile_link}">{profile_name}</a> requested to withdraw <b>{amount}</b> credits from his/her balance.</p>
-<p>Current withdraw conversion rate is <b>{rate}</b></p>
+<p>Current withdrawal conversion rate is <b>{rate}</b></p>
 <p>Withdrawal can be confirmed <a href="{confirm_url}">here</a>.</p>
 <p>Notes from <b>{profile_name}</b>:<br />{message}</p>
+{email_footer}]]></string>
+    <string name="_bx_credits_et_txt_name_withdraw_canceled"><![CDATA[Withdrawal request canceled.]]></string>
+    <string name="_bx_credits_et_txt_subject_withdraw_canceled"><![CDATA[Withdrawal request canceled.]]></string>
+    <string name="_bx_credits_et_txt_body_withdraw_canceled"><![CDATA[{email_header}
+<p><a href="{profile_link}">{profile_name}</a> canceled his/her withdrawal request for <b>{amount}</b> credits.</p>
+<p>The canceled withdrawal request can be seen <a href="{manage_url}">here</a>.</p>
 {email_footer}]]></string>
     <string name="_bx_credits_et_txt_name_withdraw_sent"><![CDATA[Withdraw was sent.]]></string>
     <string name="_bx_credits_et_txt_subject_withdraw_sent"><![CDATA[Withdraw was sent.]]></string>
     <string name="_bx_credits_et_txt_body_withdraw_sent"><![CDATA[{email_header}
 <p>Hello, {profile_name}.</p>
 <p>The requested amount of credits (<b>{amount}</b>) was withdrawn to you.</p>
-<p>{message}</p>
 {email_footer}]]></string>
 
 
@@ -270,17 +296,23 @@
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Artificially initiated transfer]]></string>
     <string name="_bx_credits_txt_history_info_refund"><![CDATA[Refund]]></string>
     <string name="_bx_credits_txt_history_info_cancellation"><![CDATA[Cancellation]]></string>
+    <string name="_bx_credits_txt_withdrawal_status_requested"><![CDATA[Requested]]></string>
+    <string name="_bx_credits_txt_withdrawal_status_canceled"><![CDATA[Canceled]]></string>
+    <string name="_bx_credits_txt_withdrawal_status_confirmed"><![CDATA[Confirmed]]></string>
 
 
     <string name="_bx_credits_msg_empty_author"><![CDATA['Main seller' is empty. You need to mark some profile as 'Main seller' in Settings of currently active Payment app.]]></string>
     <string name="_bx_credits_msg_action_performed"><![CDATA[The action was performed successfully.]]></string>
+    <string name="_bx_credits_msg_action_withdrawals_disabled"><![CDATA[Withdrawals are disabled.]]></string>
     <string name="_bx_credits_err_profile_not_found"><![CDATA[Profile wasn't found.]]></string>
     <string name="_bx_credits_err_login_required"><![CDATA[Login required.]]></string>
     <string name="_bx_credits_err_low_balance"><![CDATA[Low balance.]]></string>
+    <string name="_bx_credits_err_withdrawal_not_found"><![CDATA[Withdrawal request wasn't found.]]></string>
     <string name="_bx_credits_err_withdraw_minimum"><![CDATA[Withdrawal less then {0} credits isn't available.]]></string>
     <string name="_bx_credits_err_withdraw_remaining"><![CDATA[Minimum remaining balance after withdrawal should be more then {0} credits.]]></string>
     <string name="_bx_credits_err_cannot_update_balance"><![CDATA[Cannot update balance.]]></string>
     <string name="_bx_credits_err_cannot_send"><![CDATA[Cannot send message. Please report.]]></string>
+    <string name="_bx_credits_err_cannot_cancel_withdrawal"><![CDATA[Cannot cancel withdrawal request. Please report.]]></string>
     <string name="_bx_credits_err_cannot_perform_action"><![CDATA[Cannot perform the action. Please report.]]></string>
 
 
