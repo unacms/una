@@ -117,8 +117,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
                 'txt_sample_single' => '_bx_credits_txt_sample_single',
                 'grant_popup' => '_bx_credits_grid_popup_title_htr_grant',
                 'send_popup' => '_bx_credits_grid_popup_title_htr_send',
-                'withdraw_request_popup' => '_bx_credits_grid_popup_title_wdw_request',
-                'withdraw_confirm_popup' => '_bx_credits_grid_popup_title_wdw_confirm',
+                'withdraw_request_popup' => '_bx_credits_grid_popup_title_wdw_withdraw_request',
             ),
         );
 
