@@ -45,7 +45,7 @@ class BxOktaConConfig extends BxBaseModConnectConfig
 
         bx_import('Custom', $aModule);
         $oCustom = new BxOktaConCustom($aModule);
-        $oCustom->onConfig($aModule);
+        $oCustom->onConfig($this);
     }
 }
 

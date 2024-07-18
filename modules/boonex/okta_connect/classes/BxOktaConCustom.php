@@ -17,17 +17,16 @@ class BxOktaConCustom
 
     function onConfig ($oConfig)
     {
-
     }
 
     function onRegister ($aRemoteProfileInfo)
     {
-
+        bx_log('bx_oktacon', $aRemoteProfileInfo);
     }
 
-    function onLogin ($oProfile)
+    function onLogin ($oProfile, $aRemoteProfileInfo)
     {
-
+        bx_log('bx_oktacon', $aRemoteProfileInfo);
     }
 
     function onConvertRemoteFields($aProfileInfo, &$aProfileFields)

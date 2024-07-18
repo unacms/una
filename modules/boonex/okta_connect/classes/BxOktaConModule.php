@@ -120,7 +120,7 @@ echoDbgLog($s);
             if ($iLocalProfileId && $oProfile = BxDolProfile::getInstance($iLocalProfileId)) {
                 // user already exists
                 $this->setLogged($oProfile->id(), '', true, getParam('bx_oktacon_remember_session')); // remember user
-                $oCustom->onLogin($oProfile);
+                $oCustom->onLogin($oProfile, $aRemoteProfileInfo);
             }             
             else {  
                 // register new user
