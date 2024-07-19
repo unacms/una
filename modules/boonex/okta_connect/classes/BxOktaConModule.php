@@ -104,7 +104,7 @@ class BxOktaConModule extends BxBaseModConnectModule
             $aRemoteProfileInfo = $this->_decodeResponseAndHandleError($s);
         }
 
-	    $aRemoteProfileInfo['id'] = $aRemoteProfileInfo['accountId'];
+	    $aRemoteProfileInfo['id'] = $aRemoteProfileInfo[$this->_oConfig->sUserIdField];
 /*
         // request profile photo
         $s = bx_file_get_contents("https://graph.microsoft.com/v1.0/me/photo/", array(), 'get', array(
@@ -147,7 +147,7 @@ class BxOktaConModule extends BxBaseModConnectModule
     protected function _convertRemoteFields($aProfileInfo, $sAlternativeName = '')
     {
         $aProfileFields = $aProfileInfo;
-	    $sName =  !empty($aProfileInfo['name']) ? $aProfileInfo['name'] : $aProfileInfo['accountId'];
+	    $sName =  !empty($aProfileInfo['name']) ? $aProfileInfo['name'] : $aProfileInfo[$this->_oConfig->sUserIdField];
         $aProfileFields['name'] = !empty($aProfileInfo['preferred_username']) ? $aProfileInfo['preferred_username'] : $sName;
         $aProfileFields['fullname'] = $sName; // !empty($aProfileInfo['given_name']) ? $aProfileInfo['given_name'] : $aProfileFields['name'];
         $aProfileFields['last_name'] = !empty($aProfileInfo['family_name']) ? ' ' . $aProfileInfo['family_name'] : '';
