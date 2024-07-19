@@ -85,19 +85,25 @@ class BxOktaConModule extends BxBaseModConnectModule
         ], 'post', array ('Content-Type: application/x-www-form-urlencoded'));
         $aAuthData = $this->_decodeResponseAndHandleError($s);
 
-        // get the data, especially access_token
-        $sAccessToken = $aAuthData['access_token'];
-        $sExpiresIn = $aAuthData['expires_in'];
-        $sExpiresAt = new \DateTime('+' . $sExpiresIn . ' seconds');
+        $aRemoteProfileInfo = [];
 
-        // request info about profile
-        $s = bx_file_get_contents("https://{$this->_oConfig->sDomain}/oauth2/default/v1/userinfo", array(), 'get', array(
-            'Accept: application/json',
-            'Authorization: Bearer ' . $sAccessToken,
-        ));
-echoDbgLog($s);
-        $aUserData = $this->_decodeResponseAndHandleError($s);
-	    $aRemoteProfileInfo = $aUserData;
+        if ($this->_oConfig->bGetUserInfoFromIdToken) {
+            $aRemoteProfileInfo = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $aAuthData['id_token'])[1]))), true);
+        }
+        else {
+            // get the data, especially access_token
+            $sAccessToken = $aAuthData['access_token'];
+            $sExpiresIn = $aAuthData['expires_in'];
+            $sExpiresAt = new \DateTime('+' . $sExpiresIn . ' seconds');
+
+            // request info about profile
+            $s = bx_file_get_contents("https://{$this->_oConfig->sDomain}/oauth2/default/v1/userinfo", array(), 'get', array(
+                'Accept: application/json',
+                'Authorization: Bearer ' . $sAccessToken,
+            ));
+            $aRemoteProfileInfo = $this->_decodeResponseAndHandleError($s);
+        }
+
 	    $aRemoteProfileInfo['id'] = $aRemoteProfileInfo['accountId'];
 /*
         // request profile photo

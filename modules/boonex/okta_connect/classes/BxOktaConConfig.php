@@ -20,6 +20,7 @@ class BxOktaConConfig extends BxBaseModConnectConfig
     public $sPageHandle;
 
     public $bAddExtensionsForDuplicateEmails = true;
+    public $bGetUserInfoFromIdToken = true;
 
     function __construct($aModule)
     {
