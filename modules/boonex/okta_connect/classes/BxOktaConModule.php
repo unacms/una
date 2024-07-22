@@ -85,20 +85,26 @@ class BxOktaConModule extends BxBaseModConnectModule
         ], 'post', array ('Content-Type: application/x-www-form-urlencoded'));
         $aAuthData = $this->_decodeResponseAndHandleError($s);
 
-        // get the data, especially access_token
-        $sAccessToken = $aAuthData['access_token'];
-        $sExpiresIn = $aAuthData['expires_in'];
-        $sExpiresAt = new \DateTime('+' . $sExpiresIn . ' seconds');
+        $aRemoteProfileInfo = [];
 
-        // request info about profile
-        $s = bx_file_get_contents("https://{$this->_oConfig->sDomain}/oauth2/default/v1/userinfo", array(), 'get', array(
-            'Accept: application/json',
-            'Authorization: Bearer ' . $sAccessToken,
-        ));
-echoDbgLog($s);
-        $aUserData = $this->_decodeResponseAndHandleError($s);
-	    $aRemoteProfileInfo = $aUserData;
-	    $aRemoteProfileInfo['id'] = $aRemoteProfileInfo['accountId'];
+        if ($this->_oConfig->bGetUserInfoFromIdToken) {
+            $aRemoteProfileInfo = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $aAuthData['id_token'])[1]))), true);
+        }
+        else {
+            // get the data, especially access_token
+            $sAccessToken = $aAuthData['access_token'];
+            $sExpiresIn = $aAuthData['expires_in'];
+            $sExpiresAt = new \DateTime('+' . $sExpiresIn . ' seconds');
+
+            // request info about profile
+            $s = bx_file_get_contents("https://{$this->_oConfig->sDomain}/oauth2/default/v1/userinfo", array(), 'get', array(
+                'Accept: application/json',
+                'Authorization: Bearer ' . $sAccessToken,
+            ));
+            $aRemoteProfileInfo = $this->_decodeResponseAndHandleError($s);
+        }
+
+	    $aRemoteProfileInfo['id'] = $aRemoteProfileInfo[$this->_oConfig->sUserIdField];
 /*
         // request profile photo
         $s = bx_file_get_contents("https://graph.microsoft.com/v1.0/me/photo/", array(), 'get', array(
@@ -111,16 +117,21 @@ echoDbgLog($s);
 */
         if ($aRemoteProfileInfo) {
 
+            bx_import('Custom', $this->_aModule);
+            $oCustom = new BxOktaConCustom($this->_aModule);
+
             // check if user logged in before
             $iLocalProfileId = $this->_oDb->getProfileId($aRemoteProfileInfo['id']);
             
             if ($iLocalProfileId && $oProfile = BxDolProfile::getInstance($iLocalProfileId)) {
                 // user already exists
-                $this->setLogged($oProfile ->id(), '', true, true); // remember user
+                $this->setLogged($oProfile->id(), '', true, getParam('bx_oktacon_remember_session')); // remember user
+                $oCustom->onLogin($oProfile, $aRemoteProfileInfo);
             }             
             else {  
                 // register new user
                 $this->_createProfile($aRemoteProfileInfo);
+                $oCustom->onRegister($aRemoteProfileInfo);
             }
         } 
         else {
@@ -136,13 +147,17 @@ echoDbgLog($s);
     protected function _convertRemoteFields($aProfileInfo, $sAlternativeName = '')
     {
         $aProfileFields = $aProfileInfo;
-	    $sName =  !empty($aProfileInfo['name']) ? $aProfileInfo['name'] : $aProfileInfo['accountId'];
+	    $sName =  !empty($aProfileInfo['name']) ? $aProfileInfo['name'] : $aProfileInfo[$this->_oConfig->sUserIdField];
         $aProfileFields['name'] = !empty($aProfileInfo['preferred_username']) ? $aProfileInfo['preferred_username'] : $sName;
         $aProfileFields['fullname'] = $sName; // !empty($aProfileInfo['given_name']) ? $aProfileInfo['given_name'] : $aProfileFields['name'];
         $aProfileFields['last_name'] = !empty($aProfileInfo['family_name']) ? ' ' . $aProfileInfo['family_name'] : '';
         $aProfileFields['email'] = isset($aProfileInfo['email']) ? $aProfileInfo['email'] : '';
         $aProfileFields['picture'] = '';
         $aProfileFields['allow_view_to'] = getParam('bx_oktacon_privacy');
+
+        bx_import('Custom', $this->_aModule);
+        $oCustom = new BxOktaConCustom($this->_aModule);
+        $oCustom->onConvertRemoteFields($aProfileInfo, $aProfileFields);
 
         return $aProfileFields;
     }

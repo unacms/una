@@ -14,13 +14,14 @@ class BxOktaConConfig extends BxBaseModConnectConfig
     public $sDomain;
     public $sClientID;
     public $sSecret;
-
     public $sScope = 'openid profile email'; // 'okta.users.read'; 
 
     public $sPageStart;
     public $sPageHandle;
 
     public $bAddExtensionsForDuplicateEmails = true;
+    public $bGetUserInfoFromIdToken = true;
+    public $sUserIdField = 'identityId';
 
     function __construct($aModule)
     {
@@ -31,6 +32,7 @@ class BxOktaConConfig extends BxBaseModConnectConfig
         $this -> sDomain = getParam('bx_oktacon_domain');
         $this -> sClientID = getParam('bx_oktacon_client_id');
         $this -> sSecret = getParam('bx_oktacon_secret');
+        $this -> sScope = getParam('bx_oktacon_scope');
 
         $this -> sEmailTemplatePasswordGenerated = 'bx_oktacon_password_generated';
         $this -> sDefaultTitleLangKey = '_bx_oktacon';
@@ -42,6 +44,10 @@ class BxOktaConConfig extends BxBaseModConnectConfig
 
         $this -> sPageStart = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'start';
         $this -> sPageHandle = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'handle';
+
+        bx_import('Custom', $aModule);
+        $oCustom = new BxOktaConCustom($aModule);
+        $oCustom->onConfig($this);
     }
 }
 
