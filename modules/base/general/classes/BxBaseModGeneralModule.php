@@ -3966,12 +3966,15 @@ class BxBaseModGeneralModule extends BxDolModule
             else if(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]))
                 $sTitle = strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
+            $sAbstract = isset($CNF['FIELD_ABSTRACT']) && isset($aContentInfo[$CNF['FIELD_ABSTRACT']]) ? $aContentInfo[$CNF['FIELD_ABSTRACT']] : '';
+
             $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
             $sText = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sText), 240);
 
             return [
                 'url' => $sUrl,
                 'title' => $sTitle,
+                'abstract' => $sAbstract,
                 'text' => $sText,
                 'images' => $aImages
             ];
@@ -3993,7 +3996,12 @@ class BxBaseModGeneralModule extends BxDolModule
             $sTitle = strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         //--- Text
-        $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
+        $sText = '';
+        if(isset($CNF['FIELD_ABSTRACT']) && isset($aContentInfo[$CNF['FIELD_ABSTRACT']]))
+            $sText = $aContentInfo[$CNF['FIELD_ABSTRACT']];
+        if(empty($sText) && isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]))
+            $sText = $aContentInfo[$CNF['FIELD_TEXT']];
+
         if(!empty($CNF['OBJECT_METATAGS']) && is_string($sText)) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);

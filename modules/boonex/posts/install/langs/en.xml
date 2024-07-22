@@ -34,6 +34,8 @@
     <string name="_bx_posts_form_entry_input_sys_multicat"><![CDATA[Categories]]></string>
     <string name="_bx_posts_form_entry_input_multicat"><![CDATA[Categories]]></string>
     <string name="_bx_posts_form_entry_input_multicat_err"><![CDATA[Please select category]]></string>
+    <string name="_bx_posts_form_entry_input_sys_abstract"><![CDATA[Summary]]></string>
+    <string name="_bx_posts_form_entry_input_abstract"><![CDATA[Summary]]></string>
     <string name="_bx_posts_form_entry_input_sys_text"><![CDATA[Text]]></string>
     <string name="_bx_posts_form_entry_input_text"><![CDATA[Text]]></string>
     <string name="_bx_posts_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>

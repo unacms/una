@@ -37,6 +37,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_CHANGED' => 'changed',
             'FIELD_PUBLISHED' => 'published',
             'FIELD_TITLE' => 'title',
+            'FIELD_ABSTRACT' => 'abstract',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'post-text',
             'FIELD_CATEGORY' => 'cat',
