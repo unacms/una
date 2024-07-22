@@ -28,21 +28,23 @@ class BxBaseEmbedSystem extends BxDolEmbed
     public function getLinkHTML ($sLink, $sTitle = '', $sMaxWidth = '')
     {
         $aData = $this->getData($sLink, '');
-        
-        if (bx_get('mode') == 'alt')
-             return json_encode($aData);
-        
-        return $aData;
-        
+
+        if(bx_is_api()) {
+            if(bx_get('mode') == 'alt')
+                return json_encode($aData);
+
+            return $aData;
+        }
+
         $aAttrs = [
             'title' => bx_html_attribute($sTitle),
         ];
 
         // check for external link
-        if (strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) !== 0) {
+        if(strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) !== 0) {
             $aAttrs['target'] = '_blank';
 
-            if (getParam('sys_add_nofollow') == 'on')
+            if(getParam('sys_add_nofollow') == 'on')
                 $aAttrs['rel'] = 'nofollow';
         }
 
