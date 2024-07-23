@@ -601,36 +601,8 @@ class BxBasePage extends BxDolPage
         }
 
         if (isLogged()) {
-            /* temporatery commented
-                if(($oMenuAddContent = BxDolMenu::getObjectInstance('sys_add_content')) !== false)
-                $a['menu_add'] = $oMenuAddContent->getCodeAPI();
-            */
-
             $o = BxDolProfile::getInstance();
             $a['user'] = BxDolProfile::getDataForPage($o);
-
-            $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
-            $sRet = $oInformer ? $oInformer->display() : '';
-            if ($sRet){
-                $a['user']['informer'] = $sRet;
-            }
-            
-            $sModuleNotifications = 'bx_notifications';
-            if(BxDolRequest::serviceExists($sModuleNotifications, 'get_unread_notifications_num'))
-                $a['user']['notifications'] = bx_srv($sModuleNotifications, 'get_unread_notifications_num', [$o->id()]);
-
-            $oPayments = BxDolPayments::getInstance();
-            if($oPayments->isActive())
-                $a['user']['cart'] = $oPayments->getCartItemsCount();
-
-            if($o !== false && BxDolAccount::isAllowedCreateMultiple($o->id())) {
-                $oAccount = BxDolAccount::getInstance();
-                if($oAccount != false && !$oAccount->isProfilesLimitReached()) {
-                    $oMenuProfileAdd = BxDolMenu::getObjectInstance('sys_add_profile');
-                    if($oMenuProfileAdd !== false)
-                        $a['user']['menu'] = $oMenuProfileAdd->getCodeAPI();
-                }
-            }
         }
         
         $aExtras = [
