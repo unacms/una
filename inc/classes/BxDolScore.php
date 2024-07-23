@@ -78,6 +78,9 @@ define('BX_DOL_SCORE_DO_DOWN', 'down');
 
 class BxDolScore extends BxDolObject
 {
+    protected static $_sCounterStyleSimple = 'simple'; // total counter only.
+    protected static $_sCounterStyleDivided = 'divided'; // counters [icon + counter] divided by action (up/down).
+
     protected $_aScore;
 
     protected $_aElementDefaults;
@@ -235,6 +238,14 @@ class BxDolScore extends BxDolObject
            return '';
 
         $aParams = $this->_getRequestParamsData();
+
+        if(($sType = bx_get('type')) !== false) {
+            $sType = bx_process_input($sType);
+
+            if(in_array($sType, [BX_DOL_SCORE_DO_UP, BX_DOL_SCORE_DO_DOWN]))
+                $aParams['type'] = $sType;
+        }
+
         return $this->_getVotedBy($aParams);
     }
 
@@ -479,7 +490,7 @@ class BxDolScore extends BxDolObject
     {
         $aScore = $this->_getVote($iObjectId, $bForceGet);
 
-        return (int)$aScore['count'] > 0;
+        return $this->_isCount($aScore);
     }
 
     protected function _isCount($aScore = [])

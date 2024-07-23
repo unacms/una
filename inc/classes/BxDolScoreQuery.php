@@ -32,22 +32,30 @@ class BxDolScoreQuery extends BxDolObjectQuery
         $this->_sMethodGetEntry = 'getScore';
     }
 
-    public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
+    public function getPerformedBy($iObjectId, $aParams = [], $iStart = 0, $iPerPage = 0)
     {
+        $aBindings = [
+            'object_id' => $iObjectId
+        ];
+        $sWhereClause = " AND `object_id`=:object_id";
+
+        if(!empty($aParams['type'])) {
+            $sWhereClause .= " AND `type`=:type";
+            $aBindings['type'] = $aParams['type'];
+        }
+
         $sLimitClause = "";
-        if(!empty($iPerPage))
-            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
+        if(!empty($aParams['per_page']))
+            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $aParams['start'], $aParams['per_page']);
 
         $sQuery = "SELECT 
             	`author_id` AS `id`, 
             	`type` AS `vote_type`, 
             	`date` AS `vote_date` 
             FROM `{$this->_sTableTrack}` 
-            WHERE `object_id`=:object_id" . $sLimitClause;
+            WHERE 1" . $sWhereClause . $sLimitClause;
 
-        return $this->getAll($sQuery, array(
-            'object_id' => $iObjectId
-        ));
+        return $this->getAll($sQuery, $aBindings);
     }
 
     public function isPostTimeoutEnded($iObjectId, $iAuthorId, $sAuthorIp)
