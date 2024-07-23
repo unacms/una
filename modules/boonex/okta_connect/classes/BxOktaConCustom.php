@@ -32,7 +32,7 @@ class BxOktaConCustom
         bx_log('bx_oktacon', $aRemoteProfileInfo);
 
         if (!empty($aRemoteProfileInfo['communities']))
-           $this->syncCommunities(bx_get_logged_profile_id(), explode(',', $aRemoteProfileInfo['communities']));
+           $this->syncCommunities($oProfile ? $oProfile->id() : bx_get_logged_profile_id(), explode(',', $aRemoteProfileInfo['communities']));
     }
 
     function onConvertRemoteFields($aProfileInfo, &$aProfileFields)
@@ -42,6 +42,9 @@ class BxOktaConCustom
 
     function syncCommunities($iProfileId, $aCommunities, $sModule = 'bx_groups', $sObjConn = 'bx_groups_fans')
     {
+	    if (!$iProfileId)
+	        return;
+
         // convers content ids to profile ids + validate
         $aCommunitiesNew = [];
         foreach ($aCommunities as $iId) {
@@ -71,7 +74,7 @@ class BxOktaConCustom
                 $oConnections->addConnection($iProfileId, $i);
                 $oConnections->addConnection($i, $iProfileId);
             }
-        }
+	    }
     }
 }
 
