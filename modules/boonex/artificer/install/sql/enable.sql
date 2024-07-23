@@ -29,6 +29,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'change_mark_dark', @iHandler),
 ('system', 'get_object', @iHandler),
 ('system', 'get_layout_images', @iHandler),
+('system', 'save_setting', @iHandler),
 ('profile', 'unit', @iHandler);
 
 

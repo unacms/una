@@ -79,7 +79,9 @@ class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
 
     protected function _processSystemGetLayoutImages($oAlert)
     {
-        $sImages = getParam($this->_oModule->_oConfig->getPrefix('option') . 'images_custom');
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sImages = getParam($CNF['PARAM_IMAGES_CUSTOM']);
         if(!$sImages)
             return;
         
@@ -134,6 +136,14 @@ class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
 
             $oAlert->aExtras['override_result'][$sCacheItemKey] = array_merge($oAlert->aExtras['override_result'][$sCacheItemKey], $aCacheItem);
         }
+    }
+
+    protected function _processSystemSaveSetting($oAlert)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($oAlert->aExtras['option'] == $CNF['PARAM_IMAGES_CUSTOM'])
+            BxDolTemplate::getInstance()->clearImagesCache($this->_oModule->_oConfig->getUri());
     }
 
     protected function _processProfileUnit($oAlert)

@@ -2217,6 +2217,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $sContent;
     }
 
+    public function clearTemplatesCache($sType = '')
+    {
+        if(!$sType)
+            $sType = 'template';
+
+        $this->getTemplatesCacheObject()->removeAllByPrefix($this->getCacheFilePrefix($sType));
+    }
+
+    public function clearImagesCache($sCode = '')
+    {
+        if(!$sCode)
+            $sCode = $this->_sCode;
+
+        BxDolDb::getInstance()->getDbCacheObject()->removeAllByPrefix('sys_layout_images_' . $sCode .  '_');
+    }
+
     /**
      * Add JS file(s) to global output.
      *
