@@ -64,7 +64,14 @@ class BxDolStudioOptions extends BxDol
             if(is_array($mixedCategory))
                 $this->sCategory = $mixedCategory;
             else if(is_string($mixedCategory)) {
-                $this->sCategory = json_decode($mixedCategory);
+                //--- Serialized array
+                if(preg_match('/^a:[\d+]:\{/', $mixedCategory))
+                    $this->sCategory = json_decode($mixedCategory, true);
+
+                //--- Comma separated list
+                if(empty($this->sCategory) && strpos($mixedCategory, ',') !== false)
+                    $this->sCategory = explode(',', $mixedCategory);
+
                 if(empty($this->sCategory))
                     $this->sCategory = $mixedCategory;
             }
