@@ -21,7 +21,10 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     protected $_iProfileId;
     
     protected $_aExcludeAlertUnits;
-    
+
+    protected $_sCmtsAutomators;
+    protected $_sCmtsAssistantsChats;
+
     protected $_bWriteLog;
 
     protected function __construct()
@@ -38,6 +41,9 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         $this->_aExcludeAlertUnits = [
             'system', 'module_template_method_call'
         ];
+
+        $this->_sCmtsAutomators = 'sys_agents_automators';
+        $this->_sCmtsAssistantsChats = 'sys_agents_assistants_chats';
 
         $this->_bWriteLog = true;
     }
@@ -115,6 +121,30 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return BxDolAIProvider::getObjectInstance($iId);
     }   
 
+    public function getAssistantById($iId)
+    {
+        return $this->_oDb->getAssistantsBy(['sample' => 'id', 'id' => $iId]);
+    }
+
+    public function getAssistantByName($sName)
+    {
+        return $this->_oDb->getAssistantsBy(['sample' => 'name', 'name' => $sName]);
+    }
+    
+    public function getAssistantChatCmtsObject()
+    {
+        return $this->_sCmtsAssistantsChats;
+    }
+
+    public function getAssistantChatCmts($iId, $oTemplate = false)
+    {
+        $oCmts = BxDolCmts::getObjectInstance($this->_sCmtsAssistantsChats, (int)$iId, true, $oTemplate);
+        if(!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+        return $oCmts;
+    }
+
     public function getHelperById($iId)
     {
         return $this->_oDb->getHelpersBy(['sample' => 'id', 'id' => $iId]);
@@ -167,6 +197,20 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         }
 
         return $mixedResult;
+    }
+
+    public function getAutomatorCmtsObject()
+    {
+        return $this->_sCmtsAutomators;
+    }
+
+    public function getAutomatorCmts($iId, $oTemplate = false)
+    {
+        $oCmts = BxDolCmts::getObjectInstance($this->_sCmtsAutomators, (int)$iId, true, $oTemplate);
+        if(!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+        return $oCmts;
     }
 
     public function getAutomatorsEvent($sUnit, $sAction)

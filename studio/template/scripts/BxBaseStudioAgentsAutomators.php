@@ -70,7 +70,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             $oAIModel = $oAI->getModelObject($iModel);
 
-            $sInstructions = "\nAvailable data for code creation:\n".$oAI->getAutomatorInstruction('profile', $iProfileId);
+            $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
             if(!empty($aProviders) && is_array($aProviders))
                 $sInstructions .= $oAI->getAutomatorInstruction('providers', $aProviders);
             if(!empty($aHelpers) && is_array($aHelpers))
@@ -112,7 +112,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             }
 
             if($bIsValid) {
-                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sInstructions . "\n Use data from alert accoding documentation:" . $sMessageAdd, $oAIModel->getParams())) !== false) {
+                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sInstructions . $sMessageAdd, $oAIModel->getParams())) !== false) {
                     $sMessageResponse = $sResponse;
                 }
                 else {
@@ -287,7 +287,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             if($oForm->update($iId, $aValsToAdd) !== false) {
                 if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
-                    $sInstructions = "\nAvailable data for code creation:\n".$oAI->getAutomatorInstruction('profile', $iProfileId);
+                    $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
 
                     $aProviders = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
                     if(!empty($aProviders) && is_array($aProviders))
@@ -361,7 +361,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
     protected function _getCellData($sKey, $aField, $aRow)
     {
-        if($sKey == 'message_id' && ($iCmtId = (int)$aRow[$sKey]) != 0 && ($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $aRow['id'])) !== null) {
+        if($sKey == 'message_id' && ($iCmtId = (int)$aRow[$sKey]) != 0 && ($oCmts = BxDolAI::getInstance()->getAutomatorCmts($aRow['id'])) !== false) {
             $aCmt = $oCmts->getCommentSimple($iCmtId);
             if(!empty($aCmt) && is_array($aCmt))
                 $aRow[$sKey] = $aCmt['cmt_text'];
@@ -393,7 +393,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     {
         parent::_addJsCss();
 
-        $this->_oTemplate->addJs(['jquery.form.min.js', 'agents_automators.js']);
+        $this->_oTemplate->addJs(['jquery.form.min.js']);
 
         $oForm = new BxTemplStudioFormView([]);
         $oForm->addCssJs();
@@ -412,8 +412,14 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     protected function _delete ($mixedId)
     {
         $mixedResult = parent::_delete($mixedId);
-        if($mixedResult)
+        if($mixedResult) {
             $this->_oDb->deleteAutomatorProviders(['automator_id' => (int)$mixedId]);
+            $this->_oDb->deleteAutomatorHelpers(['automator_id' => (int)$mixedId]);
+            $this->_oDb->deleteAutomatorAssistants(['automator_id' => (int)$mixedId]);
+
+            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmts($mixedId)) !== false)
+                $oCmts->onObjectDelete();
+        }
 
         return $mixedResult;
     }

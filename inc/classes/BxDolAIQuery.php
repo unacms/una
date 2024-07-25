@@ -81,6 +81,22 @@ class BxDolAIQuery extends BxDolDb
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'title';
+
+                if(isset($aParams['for_asst'])) {
+                    $aMethod['params'][3] = [
+                        'for_asst' => $aParams['for_asst']
+                    ];
+
+                    $sWhereClause = " AND `for_asst`=:for_asst";
+                }
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][3] = [
+                        'active' => $aParams['active']
+                    ];
+
+                    $sWhereClause = " AND `active`=:active";
+                }
                 break;
         }
 
@@ -202,55 +218,6 @@ class BxDolAIQuery extends BxDolDb
 
         return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
-    
-    public function getHelpersBy($aParams = [])
-    {
-        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
-        $sSelectClause = "`th`.*";
-    	$sJoinClause = $sWhereClause = "";
-
-        switch($aParams['sample']) {
-            case 'id':
-            	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = [
-                    'id' => $aParams['id']
-                ];
-
-                $sWhereClause .= " AND `th`.`id`=:id";
-                break;
-            case 'name':
-            	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = [
-                    'name' => $aParams['name']
-                ];
-
-                $sWhereClause .= " AND `th`.`name`=:name";
-                break;
-            case 'ids':
-                $sWhereClause = " AND `th`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
-                break;
-
-            case 'all_pairs':
-                $aMethod['name'] = 'getPairs';
-                $aMethod['params'][1] = 'id';
-                $aMethod['params'][2] = 'name';
-
-                if(isset($aParams['active'])) {
-                    $aMethod['params'][3] = [
-                        'active' => $aParams['active']
-                    ];
-
-                    $sWhereClause = " AND `th`.`active`=:active";
-                }
-                break;
-        }
-
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
-            FROM `sys_agents_helpers` AS `th` " . $sJoinClause . "
-            WHERE 1" . $sWhereClause;
-
-        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
-    }
 
     public function updateAutomators($aSetClause, $aWhereClause)
     {
@@ -322,6 +289,38 @@ class BxDolAIQuery extends BxDolDb
             $mixedId = [$mixedId];
 
         return (int)$this->query("DELETE FROM `sys_agents_automators_helpers` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
+    }
+
+    public function insertAutomatorAssistant($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `sys_agents_automators_assistants` SET " . $this->arrayToSQL($aParamsSet)) > 0 ? (int)$this->lastId() : false;
+    }
+
+    public function updateAutomatorAssistant($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        return $this->query("UPDATE `sys_agents_automators_assistants` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function deleteAutomatorAssistants($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `sys_agents_automators_assistants` WHERE " . $this->arrayToSQL($aParamsWhere)) > 0;
+    }
+    
+    public function deleteAutomatorAssistantsById($mixedId)
+    {
+        if(!is_array($mixedId))
+            $mixedId = [$mixedId];
+
+        return (int)$this->query("DELETE FROM `sys_agents_automators_assistants` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }
 
     public function getProviderTypesBy($aParams = [])
@@ -487,6 +486,172 @@ class BxDolAIQuery extends BxDolDb
             return false;
 
         return (int)$this->query("DELETE FROM `sys_agents_providers_values` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
+    }
+    
+    public function getHelpersBy($aParams = [])
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+        $sSelectClause = "`th`.*";
+    	$sJoinClause = $sWhereClause = "";
+
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause .= " AND `th`.`id`=:id";
+                break;
+            case 'name':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'name' => $aParams['name']
+                ];
+
+                $sWhereClause .= " AND `th`.`name`=:name";
+                break;
+            case 'ids':
+                $sWhereClause = " AND `th`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
+                break;
+
+            case 'all_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'name';
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][3] = [
+                        'active' => $aParams['active']
+                    ];
+
+                    $sWhereClause = " AND `th`.`active`=:active";
+                }
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `sys_agents_helpers` AS `th` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function getAssistantsBy($aParams = [])
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+        $sSelectClause = "`ta`.*";
+    	$sJoinClause = $sWhereClause = "";
+
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause .= " AND `ta`.`id`=:id";
+                break;
+
+            case 'name':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'name' => $aParams['name']
+                ];
+
+                $sWhereClause .= " AND `ta`.`name`=:name";
+                break;
+
+            case 'ids':
+                $sWhereClause = " AND `ta`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
+                break;
+
+            case 'all_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'name';
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][3] = [
+                        'active' => $aParams['active']
+                    ];
+
+                    $sWhereClause = " AND `ta`.`active`=:active";
+                }
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `sys_agents_assistants` AS `ta` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+    
+    public function updateAssistants($aSetClause, $aWhereClause)
+    {
+        if(empty($aSetClause) || empty($aWhereClause))
+            return false;
+
+        return (int)$this->query("UPDATE `sys_agents_assistants` SET " . $this->arrayToSQL($aSetClause) . " WHERE " . $this->arrayToSQL($aWhereClause)) > 0;
+    }
+
+    public function getChatsBy($aParams = [])
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+        $sSelectClause = "`tac`.*";
+    	$sJoinClause = $sWhereClause = "";
+
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause .= " AND `tac`.`id`=:id";
+                break;
+
+            case 'name':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'name' => $aParams['name']
+                ];
+
+                $sWhereClause .= " AND `tac`.`name`=:name";
+                break;
+
+            case 'assistant_id':
+                $aMethod['params'][1] = [
+                    'assistant_id' => $aParams['assistant_id']
+                ];
+
+                $sWhereClause .= " AND `tac`.`assistant_id`=:assistant_id";
+                break;
+                
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `sys_agents_assistants_chats` AS `tac` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+    
+    public function updateChats($aSetClause, $aWhereClause)
+    {
+        if(empty($aSetClause) || empty($aWhereClause))
+            return false;
+
+        return (int)$this->query("UPDATE `sys_agents_assistants_chats` SET " . $this->arrayToSQL($aSetClause) . " WHERE " . $this->arrayToSQL($aWhereClause)) > 0;
+    }
+    
+    public function deleteChats($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `sys_agents_assistants_chats` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
     }
 }
 

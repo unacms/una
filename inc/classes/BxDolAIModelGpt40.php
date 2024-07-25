@@ -15,6 +15,14 @@ class BxDolAIModelGpt40 extends BxDolAIModel
     protected $_sEndpointRuns;
     protected $_sEndpointRunsCheck;
     protected $_sEndpointMessages;
+
+    protected $_sEndpointFiles;
+            
+    protected $_sEndpointVectorStores;
+    protected $_sEndpointVectorStoresFiles;
+
+    protected $_sEndpointAssistants;
+
     protected $_sEndpointChat;
 
     public function __construct($aModel)
@@ -23,12 +31,19 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         parent::__construct($aModel);
 
-        $this->_sEndpoint = "https://api.openai.com/v1/threads";
+        $this->_sEndpoint = 'https://api.openai.com/v1/threads';
         $this->_sEndpointRuns = $this->_sEndpoint . '/%s/runs';
         $this->_sEndpointRunsCheck = $this->_sEndpoint . '/%s/runs/%s';
         $this->_sEndpointMessages = $this->_sEndpoint . '/%s/messages';
-        
-        $this->_sEndpointChat = "https://api.openai.com/v1/chat/completions";
+
+        $this->_sEndpointFiles = 'https://api.openai.com/v1/files';
+            
+        $this->_sEndpointVectorStores = 'https://api.openai.com/v1/vector_stores';
+        $this->_sEndpointVectorStoresFiles = $this->_sEndpointVectorStores . '/%s/files';
+
+        $this->_sEndpointAssistants = 'https://api.openai.com/v1/assistants';
+
+        $this->_sEndpointChat = 'https://api.openai.com/v1/chat/completions';
     }
     
     public function getResponseText($sPrompt, $sMessage)
@@ -46,7 +61,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
     }
 
     public function getResponseInit($sType, $sMessage, $aParams = [])
-    {        
+    {
         $aResponse = $this->call(['messages' => [['role' => 'user', 'content' => $sMessage]]]);
         if(!isset($aResponse['id'], $aResponse['object']) || $aResponse['object'] != 'thread')
             return false;
@@ -112,6 +127,13 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         return $this->getMessages($sThreadId);
     }
 
+    public function getAssistant($sMessage, $aParams = [])
+    {
+        $aResponse = $this->callVectorStores(['name' => $aParams['name']]);
+        if(!isset($aResponse['id'], $aResponse['object']) || $aResponse['object'] != 'vector_store')
+            return false;
+    }
+
     public function call($aParams = [])
     {
         $aData = [];
@@ -155,6 +177,21 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             $aData = array_merge($aData, $aParams);
 
         $mixedResponse = $this->_call(sprintf($this->_sEndpointMessages, $sThreadId), $aData);
+        if($mixedResponse !== false)
+            $mixedResponse = $mixedResponse['content'][0]['text']['value'];
+
+        return $mixedResponse;
+    }
+    
+    public function callVectorStores($aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_vs']) && is_array($this->_aParams['call_vs']))
+            $aData = array_merge($aData, $this->_aParams['call_vs']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $mixedResponse = $this->_call($this->_sEndpointVectorStores, $aData);
         if($mixedResponse !== false)
             $mixedResponse = $mixedResponse['content'][0]['text']['value'];
 
@@ -210,7 +247,8 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             'Content-Type: application/json', 
             'OpenAI-Beta: assistants=v2'
         ]);
-
+//TODO: Remove at the end
+//var_dump($sResponse); exit;
         $aResponse = json_decode($sResponse, true);
         if(isset($aResponse['error'])) {
             $this->_log($aResponse['error']);
