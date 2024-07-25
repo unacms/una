@@ -65,7 +65,7 @@ class BxDolStorageS3 extends BxDolStorage
         if (!$aFile)
             return false;
 
-        if ($aFile['private']) {
+        if ($this->isAuthUrl($aFile)) {
             $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
 
             if ($this->_sDomain)

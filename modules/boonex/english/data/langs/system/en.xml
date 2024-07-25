@@ -1692,6 +1692,7 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_region"><![CDATA[Region (for signature v4 only)]]></string>
     <string name="_adm_stg_cpt_option_sys_storage_s3_amz_iam_role"><![CDATA[Authenticate using Amazon  IAM Role (S3v4alt storage only)]]></string>
     <string name="_adm_stg_cpt_option_sys_storage_s3_acl_enable"><![CDATA[Enable ACLs (S3v4alt storage only)]]></string>
+    <string name="_adm_stg_cpt_option_sys_storage_s3_force_auth_urls"><![CDATA[Force authenticated URLs for specific storages]]></string>
 
     <string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Enable cache for images]]></string>
     <string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Cached image max size (in Kb)]]></string>

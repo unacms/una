@@ -64,11 +64,11 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
         $aFile = $this->_oDb->getFileById($iFileId);
         if (!$aFile)
             return false;
-
-        if ($aFile['private']) {
+    
+        if ($this->isAuthUrl($aFile)) {
             $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
             $sRet = $this->_s3->getAuthenticatedURL($this->_sBucket, $sFileLocation, $this->_aObject['token_life'], $this->_bSSL);
-        } 
+        }
         else {
             $sRet = $this->getObjectBaseUrl($aFile['private']) . $aFile['path'];
         }
