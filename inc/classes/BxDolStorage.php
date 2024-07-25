@@ -1306,6 +1306,18 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         }
         return '';
     }
+
+    protected function isAuthUrl ($aFile)
+    {
+        $s = trim(getParam('sys_storage_s3_force_auth_urls'));
+        if ('*' == $s) 
+            return true;
+
+        if ($s && ($aStorages = explode(',', $s)))
+            return in_array($this->getObject(), $aStorages);
+
+        return $aFile['private'];
+    }
 }
 
 

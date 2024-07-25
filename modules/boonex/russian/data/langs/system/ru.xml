@@ -1669,6 +1669,7 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_region"><![CDATA[Регион (только для подписи v4)]]></string>
     <string name="_adm_stg_cpt_option_sys_storage_s3_amz_iam_role"><![CDATA[Аутентификация с использованием Amazon IAM Role (только для S3v4alt)]]></string>
     <string name="_adm_stg_cpt_option_sys_storage_s3_acl_enable"><![CDATA[Включить ACLs (только для S3v4alt)]]></string>
+    <string name="_adm_stg_cpt_option_sys_storage_s3_force_auth_urls"><![CDATA[Применять аутентифицированные URL-адреса для определенных хранилищ]]></string>
 
     <string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Задействовать кэш для изображений]]></string>
     <string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Максимальный размер кэшируемого изображения (в Кб)]]></string>

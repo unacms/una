@@ -188,6 +188,32 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'active' => $oProfile->isActive(),
             'status' => $oProfile->getStatus(),
         ];
+        
+        if ($iId == bx_get_logged_profile_id()){
+            $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
+            $sRet = $oInformer ? $oInformer->display() : '';
+            if ($sRet){
+                $aRv['informer'] = $sRet;
+            }
+
+            $oPayments = BxDolPayments::getInstance();
+            if($oPayments->isActive())
+                $aRv['cart'] = $oPayments->getCartItemsCount();
+            
+            $sModuleNotifications = 'bx_notifications';
+            if(BxDolRequest::serviceExists($sModuleNotifications, 'get_unread_notifications_num'))
+                $aRv['notifications'] = bx_srv($sModuleNotifications, 'get_unread_notifications_num', [$iId]);
+
+            if($o !== false && BxDolAccount::isAllowedCreateMultiple($iId)) {
+                $oAccount = BxDolAccount::getInstance();
+                if($oAccount != false && !$oAccount->isProfilesLimitReached()) {
+                    $oMenuProfileAdd = BxDolMenu::getObjectInstance('sys_add_profile');
+                    if($oMenuProfileAdd !== false)
+                        $aRv['menu'] = $oMenuProfileAdd->getCodeAPI();
+                }
+            }
+        }
+
 
         return $aRv;
     }
