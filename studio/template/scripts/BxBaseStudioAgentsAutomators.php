@@ -361,7 +361,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
     protected function _getCellData($sKey, $aField, $aRow)
     {
-        if($sKey == 'message_id' && ($iCmtId = (int)$aRow[$sKey]) != 0 && ($oCmts = BxDolAI::getInstance()->getAutomatorCmts($aRow['id'])) !== false) {
+        if($sKey == 'message_id' && ($iCmtId = (int)$aRow[$sKey]) != 0 && ($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($aRow['id'])) !== false) {
             $aCmt = $oCmts->getCommentSimple($iCmtId);
             if(!empty($aCmt) && is_array($aCmt))
                 $aRow[$sKey] = $aCmt['cmt_text'];
@@ -417,7 +417,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $this->_oDb->deleteAutomatorHelpers(['automator_id' => (int)$mixedId]);
             $this->_oDb->deleteAutomatorAssistants(['automator_id' => (int)$mixedId]);
 
-            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmts($mixedId)) !== false)
+            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($mixedId)) !== false)
                 $oCmts->onObjectDelete();
         }
 

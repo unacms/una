@@ -53,24 +53,19 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
                 $aValsToAdd['profile_id'] = $iProfileId;
             }
 
-            $iAIModel = $oForm->getCleanValue('model_id');
-            $oAIModel = $oAI->getModelObject($iAIModel);
+            $oAIModel = $oAI->getModelObject($oForm->getCleanValue('model_id'));
+            if(($aAssistant = $oAIModel->getAssistant(['name' => $sName, 'prompt' => $oForm->getCleanValue('prompt')])) !== false)
+                $aValsToAdd = array_merge($aValsToAdd, [
+                    'ai_vs_id' => $aAssistant['vector_store_id'],
+                    'ai_asst_id' => $aAssistant['assistant_id']
+                ]);
 
-            $sMessage = $oForm->getCleanValue('message');
-            $oAIModel->getAssistant($sMessage, ['name' => $sName]);
+            if(($iId = $oForm->insert($aValsToAdd)) !== false)
+                $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
+            else
+                $aRes = ['msg' => _t('_sys_txt_error_occured')];
 
-            //TODO: Make calls to create Storage and Assistante
-
-            $bIsValid = true;
-            if($bIsValid) {
-                if(($iId = $oForm->insert($aValsToAdd)) !== false) {
-                    $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
-                }
-                else
-                    $aRes = ['msg' => _t('_sys_txt_error_occured')];
-
-                return echoJson($aRes);
-            }
+            return echoJson($aRes);
         }
 
         $sFormId = $oForm->getId();
@@ -189,7 +184,7 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
 
             $aChats = $this->_oDb->getChatsBy(['sample' => 'assistant_id', 'assistant_id' => $iAssistantId]);
             foreach($aChats as $aChat)
-                if(($oCmts = $oAi->getAssistantChatCmts($aChat['id'])) !== false)
+                if(($oCmts = $oAi->getAssistantChatCmtsObject($aChat['id'])) !== false)
                     $oCmts->onObjectDelete();
 
             $this->_oDb->deleteChats(['assistant_id' => $iAssistantId]);

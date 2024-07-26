@@ -6544,6 +6544,7 @@ CREATE TABLE IF NOT EXISTS `sys_agents_assistants_chats` (
   `message_id` int(11) NOT NULL DEFAULT 0,
   `messages` int(11) NOT NULL DEFAULT 0,
   `added` int(11) NOT NULL DEFAULT 0,
+  `ai_thread_id` varchar(64) NOT NULL DEFAULT '',
   `ai_file_id` varchar(64) NOT NULL DEFAULT '',
   `stored` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)

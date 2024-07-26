@@ -143,21 +143,35 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
             return $mixedResult;
 
         $iObjId = (int)$this->getId();
-        $aAutomator = $this->_oAI->getAutomator($iObjId, true);
+        $aChat = $this->_oAI->getAssistantChatById($iObjId);
+        if(empty($aChat) || !is_array($aChat))
+            return $mixedResult;
 
-        $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
-        if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
-            $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
+        $aAssistant = $this->_oAI->getAssistantById($aChat['assistant_id']);
+        if(empty($aAssistant) || !is_array($aAssistant))
+            return $mixedResult;
 
-        $aMessages = [];
-        foreach($aComments as $aComment)
-            $aMessages[] = [
-                'ai' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi,
-                'content' => $aComment['cmt_text']
-            ];
+        $aComment = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
+        if(empty($aComment) || !is_array($aComment))
+            return $mixedResult;
+        
+        $sMessage = $aComment['cmt_text'];
+        $sAssistantId = $aAssistant['ai_asst_id'];
+        $sThreadId = $aChat['ai_thread_id'];
+        
 
-        $oAIModel = $this->_oAI->getModelObject($aAutomator['model_id']);
-        if(($sResponse = $oAIModel->getResponse($aAutomator['type'], $aMessages, $aAutomator['params'])) !== false) {
+        $oAIModel = $this->_oAI->getModelObject($aAssistant['model_id']);
+        if(empty($sThreadId) && ($aResponseInit = $oAIModel->getResponseInit(BX_DOL_AI_ASSISTANT, $sMessage, ['assistant_id' => $sAssistantId])) !== false) {
+            $sThreadId = $aResponseInit['params']['thread_id'];
+
+            $this->_oAI->updateAssistantChatById($iObjId, [
+                'ai_thread_id' => $sThreadId
+            ]);
+        }
+        if(empty($sThreadId))
+            return $mixedResult;
+
+        if(($sResponse = $oAIModel->getResponse(BX_DOL_AI_ASSISTANT, $sMessage, ['thread_id' => $sThreadId, 'assistant_id' => $sAssistantId])) !== false) {
             $mixedResultAuto = $this->addAuto([
                 'cmt_author_id' => $this->_iProfileIdAi,
                 'cmt_parent_id' => 0,

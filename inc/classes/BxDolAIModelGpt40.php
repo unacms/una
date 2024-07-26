@@ -67,8 +67,9 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             return false;
 
         $sThreadId = $aResponse['id'];
+        $sAssistantId = isset($aParams['assistant_id']) ? $aParams['assistant_id'] : $this->_getAssistantId($sType . '_init');
 
-        if(!$this->callRuns($sThreadId, ['assistant_id' => $this->_getAssistantId($sType . '_init')]))
+        if(!$this->callRuns($sThreadId, ['assistant_id' => $sAssistantId]))
             return false;
 
         $sResponse = $this->getMessages($sThreadId);
@@ -98,6 +99,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
                 break;
 
             case BX_DOL_AI_AUTOMATOR_WEBHOOK:
+            case BX_DOL_AI_ASSISTANT:
                 $mixedResult = [
                     'params' => [
                         'thread_id' => $sThreadId,
@@ -121,17 +123,43 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if(!$this->callMessages($sThreadId, ['role' => 'user', 'content' => $sMessage]))
             return false;
 
-        if(!$this->callRuns($sThreadId, ['assistant_id' => $this->_getAssistantId($sType)]))
+        $sAssistantId = isset($aParams['assistant_id']) ? $aParams['assistant_id'] : $this->_getAssistantId($sType);
+        if(!$this->callRuns($sThreadId, ['assistant_id' => $sAssistantId]))
             return false;
 
         return $this->getMessages($sThreadId);
     }
 
-    public function getAssistant($sMessage, $aParams = [])
+    public function getAssistant($aParams = [])
     {
-        $aResponse = $this->callVectorStores(['name' => $aParams['name']]);
-        if(!isset($aResponse['id'], $aResponse['object']) || $aResponse['object'] != 'vector_store')
+        $aResponseVs = $this->callVectorStores(['name' => $aParams['name']]);
+        if($aResponseVs === false)
             return false;
+        
+        $sVectorStoreId = $aResponseVs['id'];
+
+        $aResponseAsst = $this->callAssistants([
+            'model' => $this->_sName, 
+            'name' => $aParams['name'], 
+            'instructions' => $aParams['prompt'], 
+            'tools' => [
+                ['type' => 'file_search']
+            ],
+            'tool_resources' => [
+                'file_search' => [
+                    'vector_store_ids' => [$sVectorStoreId]
+                ]
+            ]
+        ]);
+        if($aResponseAsst === false)
+            return false;
+        
+        $sAssistantId = $aResponseAsst['id'];
+
+        return [
+            'vector_store_id' => $sVectorStoreId,
+            'assistant_id' => $sAssistantId
+        ];
     }
 
     public function call($aParams = [])
@@ -182,7 +210,13 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         return $mixedResponse;
     }
-    
+
+    /**
+     * Create a vector store.
+     * 
+     * @param type $aParams - should have 'name'
+     * @return boolean
+     */
     public function callVectorStores($aParams = [])
     {
         $aData = [];
@@ -192,12 +226,49 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             $aData = array_merge($aData, $aParams);
 
         $mixedResponse = $this->_call($this->_sEndpointVectorStores, $aData);
-        if($mixedResponse !== false)
-            $mixedResponse = $mixedResponse['content'][0]['text']['value'];
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'vector_store')
+            return false;
+
+        return $mixedResponse;
+    }
+
+    /**
+     * Create a vector store file by attaching a File to a vector store.
+     * 
+     * @param type $sVectorStoreId
+     * @param type $aParams - should have 'file_id'
+     * @return boolean
+     */
+    public function callVectorStoresFiles($sVectorStoreId, $aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_vs_files']) && is_array($this->_aParams['call_vs_files']))
+            $aData = array_merge($aData, $this->_aParams['call_vs_files']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $mixedResponse = $this->_call(sprintf($this->_sEndpointVectorStoresFiles, $sVectorStoreId), $aData);
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'vector_store.file')
+            return false;
 
         return $mixedResponse;
     }
     
+    public function callAssistants($aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_asst']) && is_array($this->_aParams['call_asst']))
+            $aData = array_merge($aData, $this->_aParams['call_asst']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $mixedResponse = $this->_call($this->_sEndpointAssistants, $aData);
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'assistant')
+            return false;
+
+        return $mixedResponse;
+    }
+
     public function callChat($aMessages, $aParams = [])
     {
         $aData = [
@@ -260,6 +331,6 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
     protected function _getAssistantId($sType)
     {
-        return $this->_aParams['assistants'][$sType];
+        return isset($this->_aParams['assistants'][$sType]) ? $this->_aParams['assistants'][$sType] : '';
     }
 }

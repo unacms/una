@@ -96,7 +96,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
                 ])
             ]);
 
-            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmts($iId, $oTemplate)) !== false)
+            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($iId, $oTemplate)) !== false)
                 return $oCmts->getCommentsBlock();
             else
                 return MsgBox(_t('_error occured'));
@@ -161,7 +161,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
                 ])
             ]);
 
-            if(($oCmts = $oAi->getAssistantChatCmts($iChatId, $oTemplate)) !== false)
+            if(($oCmts = $oAi->getAssistantChatCmtsObject($iChatId, $oTemplate)) !== false)
                 return $oCmts->getCommentsBlock();
             else
                 return MsgBox(_t('_error occured'));
@@ -176,7 +176,10 @@ class BxBaseStudioAgents extends BxDolStudioAgents
                     'assistant_info' => $aAssistant['description'],
                     'bx_if:show_chat' => [
                         'condition' => false,
-                        'content' => [true]
+                        'content' => [
+                            'chat_name' => '',
+                            'chat_info' => '',
+                        ]
                     ],
                     'url_back' => $this->aPageJsOptions['sPageUrl']
                 ]);
