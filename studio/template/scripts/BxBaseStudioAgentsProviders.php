@@ -166,7 +166,7 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
     {
         parent::_addJsCss();
 
-        $this->_oTemplate->addJs(['jquery.form.min.js', 'agents_automators.js']);
+        $this->_oTemplate->addJs(['jquery.form.min.js']);
 
         $oForm = new BxTemplStudioFormView([]);
         $oForm->addCssJs();
@@ -185,8 +185,11 @@ class BxBaseStudioAgentsProviders extends BxDolStudioAgentsProviders
     protected function _delete ($mixedId)
     {
         $mixedResult = parent::_delete($mixedId);
-        if($mixedResult)
+        if($mixedResult) {
             $this->_oDb->deleteProviderValues(['provider_id' => (int)$mixedId]);
+
+            $this->_oDb->deleteAutomatorProviders(['provider_id' => (int)$mixedId]);
+        }
 
         return $mixedResult;
     }

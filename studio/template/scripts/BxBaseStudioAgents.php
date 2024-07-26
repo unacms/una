@@ -35,12 +35,15 @@ class BxBaseStudioAgents extends BxDolStudioAgents
             BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'mi-cog.svg', 'icon_bg' => true],
             BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'mi-agt-providers.svg', 'icon_bg' => true],
             BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => ['icon' => 'mi-agt-helpers.svg', 'icon_bg' => true],
+            BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS => ['icon' => 'mi-agt-assistants.svg', 'icon_bg' => true],
             BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
         ];
 
         $this->aGridObjects = [
             BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => 'sys_studio_agents_automators',
             BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => 'sys_studio_agents_providers',
+            BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS => 'sys_studio_agents_assistants',
+            BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats' => 'sys_studio_agents_assistants_chats',
             BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => 'sys_studio_agents_helpers',
         ];
     }
@@ -81,12 +84,10 @@ class BxBaseStudioAgents extends BxDolStudioAgents
     protected function getAutomators()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
-        
+
         $this->aPageJsOptions['sPageUrl'] .= 'automators';
 
         if(($iId = bx_get('id')) !== false) {
-            $sCmts = 'sys_agents_automators';
-
             $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
                 'sPageUrl' => $this->sSubpageUrl . 'automators&id=' . $iId,
                 'sActionUrlCmts' => bx_append_url_params(BX_DOL_URL_ROOT . 'cmts.php', [
@@ -95,8 +96,10 @@ class BxBaseStudioAgents extends BxDolStudioAgents
                 ])
             ]);
 
-            $oCmts = BxDolCmts::getObjectInstance($sCmts, (int)$iId, true, $oTemplate);
-            return $oCmts->getCommentsBlock();
+            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($iId, $oTemplate)) !== false)
+                return $oCmts->getCommentsBlock();
+            else
+                return MsgBox(_t('_error occured'));
         }
 
         return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS]);
@@ -132,6 +135,63 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_HELPERS]);
     }
 
+    protected function getAssistants()
+    {
+        $oAi = BxDolAI::getInstance();
+        $oTemplate = BxDolStudioTemplate::getInstance();
+        
+        $this->aPageJsOptions['sPageUrl'] .= 'assistants';
+
+        $iAssistantId = 0;
+        if(($iAssistantId = bx_get('aid')) !== false)
+            $iAssistantId = bx_process_input($iAssistantId, BX_DATA_INT);
+
+        $iChatId = 0;
+        if(($iChatId = bx_get('cid')) !== false)
+            $iChatId = bx_process_input($iChatId, BX_DATA_INT);
+
+        if($iAssistantId && $iChatId) {
+            $sCmts = 'sys_agents_assistants_chats';
+
+            $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
+                'sPageUrl' => $this->sSubpageUrl . 'assistants&aid=' . $iAssistantId . '&cid=' . $iChatId,
+                'sActionUrlCmts' => bx_append_url_params(BX_DOL_URL_ROOT . 'cmts.php', [
+                    'sys' => $sCmts,
+                    'id' => $iChatId
+                ])
+            ]);
+
+            if(($oCmts = $oAi->getAssistantChatCmtsObject($iChatId, $oTemplate)) !== false)
+                return $oCmts->getCommentsBlock();
+            else
+                return MsgBox(_t('_error occured'));
+        }
+        else if($iAssistantId) {
+            $aResult = [];
+
+            $aAssistant = $oAi->getAssistantById($iAssistantId);
+            if(!empty($aAssistant) && is_array($aAssistant))
+                $aResult[] = $oTemplate->parseHtmlByName('agents_assistant_info.html', [
+                    'assistant_name' => $aAssistant['name'],
+                    'assistant_info' => $aAssistant['description'],
+                    'bx_if:show_chat' => [
+                        'condition' => false,
+                        'content' => [
+                            'chat_name' => '',
+                            'chat_info' => '',
+                        ]
+                    ],
+                    'url_back' => $this->aPageJsOptions['sPageUrl']
+                ]);
+            
+            $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats']);
+
+            return $aResult;
+        }
+
+        return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS]);
+    }
+
     protected function getProviders()
     {
         $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
@@ -144,13 +204,13 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         return $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS]);
     }
 
-    protected function getGrid($sObjectName)
+    protected function getGrid($sObjectName, $bObject = false)
     {
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
             return '';
 
-        return $oGrid->getCode();
+        return $bObject ? $oGrid : $oGrid->getCode();
     }
     
     protected function _getHelpersForm($sAction, $aHelper = [])
