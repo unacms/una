@@ -32,7 +32,7 @@ if(method_exists($oGrid, 'init'))
 
 $sAction = 'performAction' . bx_gen_method_name(bx_process_input(bx_get('a')));
 if (method_exists($oGrid, $sAction)) {
-    if (BxDolForm::isCsrfTokenValid(bx_get('csrf_token'), false)) {
+    if ($oGrid->isActionCsrfCheckingDisabled() || BxDolForm::isCsrfTokenValid(bx_get('csrf_token'), false)) {
         $oGrid->$sAction();
     }
     else {
