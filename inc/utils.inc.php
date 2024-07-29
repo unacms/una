@@ -1071,7 +1071,7 @@ function bx_php_string_quot ($mixedInput)
  */
 function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array(), $iTimeout = 0, $aCustomCurlParams = array())
 {
-    if ('post' != $sMethod && 'post-json' != $sMethod && 'post-json-object' != $sMethod)
+    if(!in_array($sMethod, ['post', 'post-raw', 'post-json', 'post-json-object']))
     	$sFileUrl = bx_append_url_params($sFileUrl, $aParams);
 
     $sResult = '';
@@ -1102,6 +1102,10 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         if ('post' == $sMethod) {
             curl_setopt($rConnect, CURLOPT_POST, true);
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, http_build_query($aParams));
+        }
+        elseif ('post-raw' == $sMethod) {
+            curl_setopt($rConnect, CURLOPT_POST, true);
+            curl_setopt($rConnect, CURLOPT_POSTFIELDS, $aParams);
         }
         elseif ('post-json' == $sMethod) {
             curl_setopt($rConnect, CURLOPT_POST, true);

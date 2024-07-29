@@ -2230,7 +2230,8 @@
         <string name="_sys_agents_assistants_chats_txt_chat"><![CDATA[Чат]]></string>
         <string name="_sys_agents_assistants_chats_btn_add"><![CDATA[Добавить чат]]></string>
         <string name="_sys_agents_assistants_chats_btn_chat"><![CDATA[Беседовать]]></string>
-        <string name="_sys_agents_assistants_chats_btn_store"><![CDATA[Сохранить]]></string>
+        <string name="_sys_agents_assistants_chats_btn_store"><![CDATA[Сохранить для будущего использования]]></string>
+        <string name="_sys_agents_assistants_chats_btn_unstore"><![CDATA[Удалить из хранилища]]></string>
         <string name="_sys_agents_assistants_chats_field_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_assistants_chats_field_description"><![CDATA[Описание]]></string>
         <string name="_sys_agents_assistants_chats_popup_add"><![CDATA[Добавить чат]]></string>

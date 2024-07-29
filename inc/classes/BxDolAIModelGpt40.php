@@ -17,9 +17,12 @@ class BxDolAIModelGpt40 extends BxDolAIModel
     protected $_sEndpointMessages;
 
     protected $_sEndpointFiles;
+    protected $_sEndpointFilesDelete;
             
     protected $_sEndpointVectorStores;
     protected $_sEndpointVectorStoresFiles;
+    protected $_sEndpointVectorStoresFilesRetrieve;
+    protected $_sEndpointVectorStoresFilesDelete;
 
     protected $_sEndpointAssistants;
 
@@ -37,9 +40,12 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         $this->_sEndpointMessages = $this->_sEndpoint . '/%s/messages';
 
         $this->_sEndpointFiles = 'https://api.openai.com/v1/files';
+        $this->_sEndpointFilesDelete = 'https://api.openai.com/v1/files/%s';
             
         $this->_sEndpointVectorStores = 'https://api.openai.com/v1/vector_stores';
         $this->_sEndpointVectorStoresFiles = $this->_sEndpointVectorStores . '/%s/files';
+        $this->_sEndpointVectorStoresFilesRetrieve = $this->_sEndpointVectorStoresFiles . '/%s';
+        $this->_sEndpointVectorStoresFilesDelete = $this->_sEndpointVectorStoresFiles . '/%s';
 
         $this->_sEndpointAssistants = 'https://api.openai.com/v1/assistants';
 
@@ -253,17 +259,76 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         return $mixedResponse;
     }
+
+    public function callVectorStoresFilesRetrieve($sVectorStoreId, $sFileId, $aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_vs_files_retrieve']) && is_array($this->_aParams['call_vs_files_retrieve']))
+            $aData = array_merge($aData, $this->_aParams['call_vs_files_retrieve']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        return $this->_call(sprintf($this->_sEndpointVectorStoresFilesRetrieve, $sVectorStoreId, $sFileId), [], 'get');
+    }
     
+    public function callVectorStoresFilesDelete($sVectorStoreId, $sFileId, $aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_vs_files_retrieve']) && is_array($this->_aParams['call_vs_files_retrieve']))
+            $aData = array_merge($aData, $this->_aParams['call_vs_files_retrieve']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        return $this->_call(sprintf($this->_sEndpointVectorStoresFilesDelete, $sVectorStoreId, $sFileId), [], 'DELETE');
+    }
+
     public function callAssistants($aParams = [])
     {
         $aData = [];
-        if(!empty($this->_aParams['call_asst']) && is_array($this->_aParams['call_asst']))
-            $aData = array_merge($aData, $this->_aParams['call_asst']);
+        if(!empty($this->_aParams['call_assts']) && is_array($this->_aParams['call_assts']))
+            $aData = array_merge($aData, $this->_aParams['call_assts']);
         if(!empty($aParams) && is_array($aParams))
             $aData = array_merge($aData, $aParams);
 
         $mixedResponse = $this->_call($this->_sEndpointAssistants, $aData);
         if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'assistant')
+            return false;
+
+        return $mixedResponse;
+    }
+
+    public function callFiles($aFile, $aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_files']) && is_array($this->_aParams['call_files']))
+            $aData = array_merge($aData, $this->_aParams['call_files']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        if(empty($aData['purpose']))
+            $aData['purpose'] = 'assistants';
+
+        $sName = !empty($aFile['name']) ? $aFile['name'] : 'file_' . time() . '.txt';
+        $sMime = !empty($aFile['mime']) ? $aFile['mime'] : 'text/plain';
+        $aData['file'] = new CURLStringFile($aFile['content'], $sName, $sMime);
+
+        $mixedResponse = $this->_callFiles($this->_sEndpointFiles, $aData);
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'file')
+            return false;
+
+        return $mixedResponse;
+    }
+    
+    public function callFilesDelete($sFileId, $aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_files_delete']) && is_array($this->_aParams['call_files_delete']))
+            $aData = array_merge($aData, $this->_aParams['call_files_delete']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $mixedResponse = $this->_callFiles(sprintf($this->_sEndpointFilesDelete, $sFileId), $aData, 'DELETE');
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'file')
             return false;
 
         return $mixedResponse;
@@ -304,7 +369,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if(!empty($aParams) && is_array($aParams))
             $aData = array_merge($aData, $aParams);
 
-        $mixedResponse = $this->_call(sprintf($this->_sEndpointMessages, $sThreadId), $aData, "get-json");
+        $mixedResponse = $this->_call(sprintf($this->_sEndpointMessages, $sThreadId), $aData, "get");
         if($mixedResponse !== false)
             $mixedResponse = trim(str_replace(['```json', '```php', '```'], '', $mixedResponse['data'][0]['content'][0]['text']['value']));
 
@@ -318,8 +383,22 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             'Content-Type: application/json', 
             'OpenAI-Beta: assistants=v2'
         ]);
-//TODO: Remove at the end
-//var_dump($sResponse); exit;
+
+        $aResponse = json_decode($sResponse, true);
+        if(isset($aResponse['error'])) {
+            $this->_log($aResponse['error']);
+            return false;
+        }
+
+        return $aResponse;
+    }
+
+    protected function _callFiles($sEndpoint, $aData, $sMethod = "post-raw")
+    {
+        $sResponse = bx_file_get_contents($sEndpoint, $aData, $sMethod, [
+            "Authorization: Bearer " . $this->_sKey
+        ]);
+
         $aResponse = json_decode($sResponse, true);
         if(isset($aResponse['error'])) {
             $this->_log($aResponse['error']);

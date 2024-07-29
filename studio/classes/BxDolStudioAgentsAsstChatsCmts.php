@@ -158,7 +158,6 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         $sMessage = $aComment['cmt_text'];
         $sAssistantId = $aAssistant['ai_asst_id'];
         $sThreadId = $aChat['ai_thread_id'];
-        
 
         $oAIModel = $this->_oAI->getModelObject($aAssistant['model_id']);
         if(empty($sThreadId) && ($aResponseInit = $oAIModel->getResponseInit(BX_DOL_AI_ASSISTANT, $sMessage, ['assistant_id' => $sAssistantId])) !== false) {
@@ -187,13 +186,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 
     protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
-        if((int)$aCmt['cmt_author_id'] != $this->_iProfileIdAi)
-            return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
-
-        return $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_agents_automators_btn_approve'), [
-            'class' => 'bx-btn bx-btn-small bx-btn-primary',
-            'onclick' => $this->getPageJsObject() . '.approveCode(this, ' . $aCmt['cmt_id'] . ')',
-        ]);
+        return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
     }
 
     protected function _getCountersBox(&$aCmt, $aBp = [], $aDp = [])

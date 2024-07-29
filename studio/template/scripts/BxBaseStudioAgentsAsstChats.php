@@ -99,6 +99,76 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
 
         return echoJson(['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]]);
     }
+    
+    public function performActionStore()
+    {
+        $sAction = 'store';
+
+        $oAI = BxDolAI::getInstance();
+                
+        $iId = $this->_getId();
+        $aChat = $this->_oDb->getChatsBy(['sample' => 'id', 'id' => $iId]);
+        $aAssistant = $this->_oDb->getAssistantsBy(['sample' => 'id', 'id' => $aChat['assistant_id']]);
+
+        $aComments = $oAI->getAssistantChatCmtsObject($iId)->getCommentsBy(['type' => 'object_id', 'object_id' => $iId]);
+
+        $aMessages = [];
+        foreach($aComments as $aComment)
+            $aMessages[] = [
+                'role' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi ? "assistant" : "user",
+                'content' => $aComment['cmt_text']
+            ];
+        
+        $oAIModel = $oAI->getModelObject($aAssistant['model_id']);
+
+        if(!empty($aChat['ai_file_id'])) {
+            $aResponse = $oAIModel->callVectorStoresFilesDelete($aAssistant['ai_vs_id'], $aChat['ai_file_id']);
+            if(!$aResponse)
+                return echoJson([]);
+
+            $aResponse = $oAIModel->callFilesDelete($aChat['ai_file_id']);
+            if(!$aResponse)
+                return echoJson([]);
+
+            $this->_oDb->updateChats(['ai_file_id' => '', 'stored' => 0], ['id' => $iId]);
+        }
+
+        $aRes = [];
+        if(($aFile = $oAIModel->callFiles(['content' => json_encode($aMessages), 'name' => $aChat['name'] . '.json', 'mime' => 'application/json'])) !== false) {
+            if(($aResponse = $oAIModel->callVectorStoresFiles($aAssistant['ai_vs_id'], ['file_id' => $aFile['id']])) !== false) {
+                $this->_oDb->updateChats(['ai_file_id' => $aFile['id'], 'stored' => time()], ['id' => $iId]);
+                
+                $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
+            }
+        }
+
+        return echoJson($aRes);
+    }
+
+    public function performActionUnstore()
+    {
+        $sAction = 'unstore';
+
+        $oAI = BxDolAI::getInstance();
+                
+        $iId = $this->_getId();
+        $aChat = $this->_oDb->getChatsBy(['sample' => 'id', 'id' => $iId]);
+        if(empty($aChat['ai_file_id'])) 
+            return echoJson([]);
+
+        $aAssistant = $this->_oDb->getAssistantsBy(['sample' => 'id', 'id' => $aChat['assistant_id']]);
+
+        $oAIModel = $oAI->getModelObject($aAssistant['model_id']);
+        if(!$oAIModel->callVectorStoresFilesDelete($aAssistant['ai_vs_id'], $aChat['ai_file_id']))
+            return echoJson([]);
+
+        if(!$oAIModel->callFilesDelete($aChat['ai_file_id']))
+            return echoJson([]);
+
+        $this->_oDb->updateChats(['ai_file_id' => '', 'stored' => 0], ['id' => $iId]);
+
+        echoJson(['grid' => $this->getCode(false), 'blink' => $iId]);
+    }
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
@@ -117,6 +187,24 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
     	]);
 
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+    
+    protected function _getActionStore($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
+    {
+        $aChat = $this->_oDb->getChatsBy(['sample' => 'id', 'id' => $aRow['id']]);
+        if(!empty($aChat['ai_file_id'])) 
+            return '';
+
+        return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+    
+    protected function _getActionUnstore($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
+    {
+        $aChat = $this->_oDb->getChatsBy(['sample' => 'id', 'id' => $aRow['id']]);
+        if(empty($aChat['ai_file_id'])) 
+            return '';
+
+        return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _addJsCss()
