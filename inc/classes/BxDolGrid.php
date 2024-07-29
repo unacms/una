@@ -252,6 +252,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected $_sDefaultSortingOrder = 'ASC';
     protected $_iTotalCount = 0;
 
+    protected $_bActionCsrfChecking;
+
     /**
      * Constructor
      * @param $aOptions array of grid options
@@ -261,6 +263,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         parent::__construct();
 
         $this->_bIsApi = bx_is_api();
+
+        $this->_bActionCsrfChecking = true;
 
         $this->_sObject = $aOptions['object'];
         $this->_aOptions = $aOptions;
@@ -646,6 +650,15 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected function _getOrderValue()
     {
         return bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
+    }
+
+    public function setActionCsrfChecking($bCsrfChecking)
+    {
+        $this->_bActionCsrfChecking = $bCsrfChecking;
+    }
+
+    public function isActionCsrfCheckingDisabled() {
+        return !$this->_bActionCsrfChecking;
     }
 }
 
