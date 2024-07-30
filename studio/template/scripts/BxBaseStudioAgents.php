@@ -44,6 +44,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
             BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => 'sys_studio_agents_providers',
             BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS => 'sys_studio_agents_assistants',
             BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats' => 'sys_studio_agents_assistants_chats',
+            BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_files' => 'sys_studio_agents_assistants_files',
             BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => 'sys_studio_agents_helpers',
         ];
     }
@@ -142,6 +143,10 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         
         $this->aPageJsOptions['sPageUrl'] .= 'assistants';
 
+        $sSubPage = '';
+        if(($sSubPage = bx_get('spage')) !== false)
+            $sSubPage = bx_process_input($sSubPage, BX_DATA_TEXT);
+
         $iAssistantId = 0;
         if(($iAssistantId = bx_get('aid')) !== false)
             $iAssistantId = bx_process_input($iAssistantId, BX_DATA_INT);
@@ -184,7 +189,15 @@ class BxBaseStudioAgents extends BxDolStudioAgents
                     'url_back' => $this->aPageJsOptions['sPageUrl']
                 ]);
             
-            $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats']);
+            switch($sSubPage) {
+                case 'chats':
+                    $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats']);
+                    break;
+
+                case 'files':
+                    $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_files']);
+                    break;
+            }
 
             return $aResult;
         }

@@ -2211,7 +2211,8 @@
         <string name="_sys_agents_assistants_txt_added"><![CDATA[Добавлено]]></string>
         <string name="_sys_agents_assistants_txt_assistant"><![CDATA[Ассистент]]></string>
         <string name="_sys_agents_assistants_btn_add"><![CDATA[Добавить ассистента]]></string>
-        <string name="_sys_agents_assistants_btn_tune"><![CDATA[Настройка]]></string>
+        <string name="_sys_agents_assistants_btn_chats"><![CDATA[Чаты]]></string>
+        <string name="_sys_agents_assistants_btn_files"><![CDATA[Файлы]]></string>
         <string name="_sys_agents_assistants_field_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_assistants_field_model_id"><![CDATA[Модель]]></string>
         <string name="_sys_agents_assistants_field_profile_id"><![CDATA[Профиль]]></string>
@@ -2236,6 +2237,19 @@
         <string name="_sys_agents_assistants_chats_field_description"><![CDATA[Описание]]></string>
         <string name="_sys_agents_assistants_chats_popup_add"><![CDATA[Добавить чат]]></string>
         <string name="_sys_agents_assistants_chats_popup_edit"><![CDATA[Редактировать чат]]></string>
+        <string name="_sys_agents_assistants_files_txt_name"><![CDATA[Название]]></string>
+        <string name="_sys_agents_assistants_files_txt_size"><![CDATA[Размер]]></string>
+        <string name="_sys_agents_assistants_files_txt_status"><![CDATA[Статус]]></string>
+        <string name="_sys_agents_assistants_files_txt_status_in_progress"><![CDATA[В ходе выполнения]]></string>
+        <string name="_sys_agents_assistants_files_txt_status_completed"><![CDATA[Завершенный]]></string>
+        <string name="_sys_agents_assistants_files_txt_status_failed"><![CDATA[Неудавшийся]]></string>
+        <string name="_sys_agents_assistants_files_txt_status_cancelled"><![CDATA[Отменённый]]></string>
+        <string name="_sys_agents_assistants_files_txt_added"><![CDATA[Добавлен]]></string>
+        <string name="_sys_agents_assistants_files_btn_add"><![CDATA[Добавить файл]]></string>
+        <string name="_sys_agents_assistants_files_btn_sync"><![CDATA[Cинхронизировать]]></string>
+        <string name="_sys_agents_assistants_files_btn_delete"><![CDATA[Удалить файл]]></string>
+        <string name="_sys_agents_assistants_files_field_file"><![CDATA[Файл]]></string>
+        <string name="_sys_agents_assistants_files_popup_add"><![CDATA[Добавить файл]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Информация]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Контент изменен]]></string>

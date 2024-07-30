@@ -17,7 +17,7 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
     {
         parent::__construct ($aOptions, $oTemplate);
 
-        $this->_sUrlPage = BX_DOL_URL_STUDIO . 'agents.php?page=assistants&aid=' . $this->_iAssistantId;
+        $this->_sUrlPage = BX_DOL_URL_STUDIO . 'agents.php?page=assistants&spage=chats&aid=' . $this->_iAssistantId;
 
         $this->_sFieldName = 'name';
     }
@@ -134,10 +134,12 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
         }
 
         $aRes = [];
-        if(($aFile = $oAIModel->callFiles(['content' => json_encode($aMessages), 'name' => $aChat['name'] . '.json', 'mime' => 'application/json'])) !== false) {
+        if(($sFile = $aChat['name'] . '.json') && ($aFile = $oAIModel->callFiles(['content' => json_encode($aMessages), 'name' => $sFile, 'mime' => 'application/json'])) !== false) {
             if(($aResponse = $oAIModel->callVectorStoresFiles($aAssistant['ai_vs_id'], ['file_id' => $aFile['id']])) !== false) {
-                $this->_oDb->updateChats(['ai_file_id' => $aFile['id'], 'stored' => time()], ['id' => $iId]);
-                
+                $iNow = time();
+                $this->_oDb->insertFile(['name' => $sFile, 'assistant_id' => $aAssistant['id'], 'added' => $iNow, 'ai_file_id' => $aFile['id'], 'locked' => 1]);
+                $this->_oDb->updateChats(['ai_file_id' => $aFile['id'], 'stored' => $iNow], ['id' => $iId]);
+
                 $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
             }
         }
@@ -165,6 +167,7 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
         if(!$oAIModel->callFilesDelete($aChat['ai_file_id']))
             return echoJson([]);
 
+        $this->_oDb->deleteFiles(['ai_file_id' => $aChat['ai_file_id']]);
         $this->_oDb->updateChats(['ai_file_id' => '', 'stored' => 0], ['id' => $iId]);
 
         echoJson(['grid' => $this->getCode(false), 'blink' => $iId]);
@@ -227,6 +230,28 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
         return false;
     }
 
+    protected function _delete ($mixedId)
+    {
+        $iChatId = (int)$mixedId;
+        $aChat = $this->_oDb->getChatsBy(['sample' => 'id', 'id' => $iChatId]);
+        $aAssistant = $this->_oDb->getAssistantsBy(['sample' => 'id', 'id' => $aChat['assistant_id']]);
+
+        $mixedResult = parent::_delete($mixedId);
+        if($mixedResult) {
+            $oAi = BxDolAI::getInstance();
+            $oAIModel = $oAi->getModelObject($aAssistant['model_id']);
+
+            if(($oCmts = $oAi->getAssistantChatCmtsObject($iChatId)) !== false)
+                $oCmts->onObjectDelete();
+
+            if(!empty($aChat['ai_file_id'])) {
+                $oAIModel->callVectorStoresFilesDelete($aAssistant['ai_vs_id'], $aChat['ai_file_id']);
+                $oAIModel->callFilesDelete($aChat['ai_file_id']);
+            }
+        }
+
+        return $mixedResult;
+    }
     protected function _getFormEdit($sAction, $aChat = [])
     {
         $aForm = $this->_getForm($sAction, $aChat);

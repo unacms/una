@@ -16,15 +16,19 @@ class BxDolAIModelGpt40 extends BxDolAIModel
     protected $_sEndpointRunsCheck;
     protected $_sEndpointMessages;
 
+    protected $_sEndpointAssistants;
+    protected $_sEndpointAssistantsDelete;
+
     protected $_sEndpointFiles;
+    protected $_sEndpointFilesRetrieve;
     protected $_sEndpointFilesDelete;
-            
+
     protected $_sEndpointVectorStores;
+    protected $_sEndpointVectorStoresDelete;
+
     protected $_sEndpointVectorStoresFiles;
     protected $_sEndpointVectorStoresFilesRetrieve;
-    protected $_sEndpointVectorStoresFilesDelete;
-
-    protected $_sEndpointAssistants;
+    protected $_sEndpointVectorStoresFilesDelete;   
 
     protected $_sEndpointChat;
 
@@ -39,15 +43,19 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         $this->_sEndpointRunsCheck = $this->_sEndpoint . '/%s/runs/%s';
         $this->_sEndpointMessages = $this->_sEndpoint . '/%s/messages';
 
+        $this->_sEndpointAssistants = 'https://api.openai.com/v1/assistants';
+        $this->_sEndpointAssistantsDelete = $this->_sEndpointAssistants . '/%s';
+
         $this->_sEndpointFiles = 'https://api.openai.com/v1/files';
-        $this->_sEndpointFilesDelete = 'https://api.openai.com/v1/files/%s';
-            
+        $this->_sEndpointFilesRetrieve = $this->_sEndpointFiles . '/%s';
+        $this->_sEndpointFilesDelete = $this->_sEndpointFilesRetrieve;
+
         $this->_sEndpointVectorStores = 'https://api.openai.com/v1/vector_stores';
+        $this->_sEndpointVectorStoresDelete = $this->_sEndpointVectorStores . '/%s';
+
         $this->_sEndpointVectorStoresFiles = $this->_sEndpointVectorStores . '/%s/files';
         $this->_sEndpointVectorStoresFilesRetrieve = $this->_sEndpointVectorStoresFiles . '/%s';
         $this->_sEndpointVectorStoresFilesDelete = $this->_sEndpointVectorStoresFiles . '/%s';
-
-        $this->_sEndpointAssistants = 'https://api.openai.com/v1/assistants';
 
         $this->_sEndpointChat = 'https://api.openai.com/v1/chat/completions';
     }
@@ -237,6 +245,21 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         return $mixedResponse;
     }
+    
+    public function callVectorStoresDelete($sVectorStoreId, $aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_vs_delete']) && is_array($this->_aParams['call_vs_delete']))
+            $aData = array_merge($aData, $this->_aParams['call_vs_delete']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $mixedResponse = $this->_call(sprintf($this->_sEndpointVectorStoresDelete, $sVectorStoreId), [], 'DELETE');
+        if(empty($mixedResponse) || !is_array($mixedResponse) || !$mixedResponse['deleted'])
+            return false;
+
+        return $mixedResponse;
+    }
 
     /**
      * Create a vector store file by attaching a File to a vector store.
@@ -259,15 +282,24 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         return $mixedResponse;
     }
-
-    public function callVectorStoresFilesRetrieve($sVectorStoreId, $sFileId, $aParams = [])
+    
+    public function callVectorStoresFilesList($sVectorStoreId, $aParams = [])
     {
         $aData = [];
-        if(!empty($this->_aParams['call_vs_files_retrieve']) && is_array($this->_aParams['call_vs_files_retrieve']))
-            $aData = array_merge($aData, $this->_aParams['call_vs_files_retrieve']);
+        if(!empty($this->_aParams['call_vs_flist']) && is_array($this->_aParams['call_vs_flist']))
+            $aData = array_merge($aData, $this->_aParams['call_vs_flist']);
         if(!empty($aParams) && is_array($aParams))
             $aData = array_merge($aData, $aParams);
 
+        $mixedResponse = $this->_call(sprintf($this->_sEndpointVectorStoresFiles, $sVectorStoreId), $aData, 'get');
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'list')
+            return false;
+
+        return $mixedResponse['data'];
+    }
+
+    public function callVectorStoresFilesRetrieveFile($sVectorStoreId, $sFileId)
+    {
         return $this->_call(sprintf($this->_sEndpointVectorStoresFilesRetrieve, $sVectorStoreId, $sFileId), [], 'get');
     }
     
@@ -296,6 +328,21 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         return $mixedResponse;
     }
+    
+    public function callAssistantsDelete($sAsstId, $aParams = [])
+    {
+        $aData = [];
+        if(!empty($this->_aParams['call_assts_delete']) && is_array($this->_aParams['call_assts_delete']))
+            $aData = array_merge($aData, $this->_aParams['call_assts_delete']);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $mixedResponse = $this->_call(sprintf($this->_sEndpointAssistantsDelete, $sAsstId), $aData, 'DELETE');
+        if(empty($mixedResponse) || !is_array($mixedResponse) || !$mixedResponse['deleted'])
+            return false;
+
+        return $mixedResponse;
+    }
 
     public function callFiles($aFile, $aParams = [])
     {
@@ -318,7 +365,16 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         return $mixedResponse;
     }
-    
+
+    public function callFilesRetrieve($sFileId)
+    {
+        $mixedResponse = $this->_callFiles(sprintf($this->_sEndpointFilesRetrieve, $sFileId), [], 'get');
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'file')
+            return false;
+
+        return $mixedResponse;
+    }
+
     public function callFilesDelete($sFileId, $aParams = [])
     {
         $aData = [];

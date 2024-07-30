@@ -2236,6 +2236,7 @@
     <string name="_sys_agents_assistants_txt_assistant"><![CDATA[Assistant]]></string>
     <string name="_sys_agents_assistants_btn_add"><![CDATA[Add Assistant]]></string>
     <string name="_sys_agents_assistants_btn_chats"><![CDATA[Chats]]></string>
+    <string name="_sys_agents_assistants_btn_files"><![CDATA[Files]]></string>
     <string name="_sys_agents_assistants_field_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_assistants_field_model_id"><![CDATA[Model]]></string>
     <string name="_sys_agents_assistants_field_profile_id"><![CDATA[Profile]]></string>
@@ -2260,6 +2261,19 @@
     <string name="_sys_agents_assistants_chats_field_description"><![CDATA[Description]]></string>
     <string name="_sys_agents_assistants_chats_popup_add"><![CDATA[Add chat]]></string>
     <string name="_sys_agents_assistants_chats_popup_edit"><![CDATA[Edit chat]]></string>
+    <string name="_sys_agents_assistants_files_txt_name"><![CDATA[Name]]></string>
+    <string name="_sys_agents_assistants_files_txt_size"><![CDATA[Size]]></string>
+    <string name="_sys_agents_assistants_files_txt_status"><![CDATA[Status]]></string>
+    <string name="_sys_agents_assistants_files_txt_status_in_progress"><![CDATA[In progress]]></string>
+    <string name="_sys_agents_assistants_files_txt_status_completed"><![CDATA[Completed]]></string>
+    <string name="_sys_agents_assistants_files_txt_status_failed"><![CDATA[Failed]]></string>
+    <string name="_sys_agents_assistants_files_txt_status_cancelled"><![CDATA[Cancelled]]></string>
+    <string name="_sys_agents_assistants_files_txt_added"><![CDATA[Added]]></string>
+    <string name="_sys_agents_assistants_files_btn_add"><![CDATA[Add File]]></string>
+    <string name="_sys_agents_assistants_files_btn_sync"><![CDATA[Sync]]></string>
+    <string name="_sys_agents_assistants_files_btn_delete"><![CDATA[Delete file]]></string>
+    <string name="_sys_agents_assistants_files_field_file"><![CDATA[File]]></string>
+    <string name="_sys_agents_assistants_files_popup_add"><![CDATA[Add File]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>

@@ -149,7 +149,16 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
     protected function _getActionChats($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
     	$a['attr'] = array_merge($a['attr'], [
-            "onclick" => "window.open('" . $this->_sUrlPage . '&aid=' . $aRow['id'] . "', '_self');"
+            "onclick" => "window.open('" . $this->_sUrlPage . '&spage=chats&aid=' . $aRow['id'] . "', '_self');"
+    	]);
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _getActionFiles($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
+    {
+    	$a['attr'] = array_merge($a['attr'], [
+            "onclick" => "window.open('" . $this->_sUrlPage . '&spage=files&aid=' . $aRow['id'] . "', '_self');"
     	]);
 
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -177,19 +186,31 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
 
     protected function _delete ($mixedId)
     {
+        $iAssistantId = (int)$mixedId;
+        $aAssistant = $this->_oDb->getAssistantsBy(['sample' => 'id', 'id' => $iAssistantId]);
+
         $mixedResult = parent::_delete($mixedId);
         if($mixedResult) {
             $oAi = BxDolAI::getInstance();
-            $iAssistantId = (int)$mixedId;
+            $oAIModel = $oAi->getModelObject($aAssistant['model_id']);
 
             $aChats = $this->_oDb->getChatsBy(['sample' => 'assistant_id', 'assistant_id' => $iAssistantId]);
-            foreach($aChats as $aChat)
+            foreach($aChats as $aChat) {
                 if(($oCmts = $oAi->getAssistantChatCmtsObject($aChat['id'])) !== false)
                     $oCmts->onObjectDelete();
+
+                if(!empty($aChat['ai_file_id'])) {
+                    $oAIModel->callVectorStoresFilesDelete($aAssistant['ai_vs_id'], $aChat['ai_file_id']);
+                    $oAIModel->callFilesDelete($aChat['ai_file_id']);
+                }
+            }
 
             $this->_oDb->deleteChats(['assistant_id' => $iAssistantId]);
 
             $this->_oDb->deleteAutomatorAssistants(['assistant_id' => $iAssistantId]);
+
+            $oAIModel->callVectorStoresDelete($aAssistant['ai_vs_id']);
+            $oAIModel->callAssistantsDelete($aAssistant['ai_asst_id']);
         }
 
         return $mixedResult;

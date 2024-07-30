@@ -653,6 +653,63 @@ class BxDolAIQuery extends BxDolDb
 
         return (int)$this->query("DELETE FROM `sys_agents_assistants_chats` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
     }
+    
+    public function getFilesBy($aParams = [])
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+        $sSelectClause = "`taf`.*";
+    	$sJoinClause = $sWhereClause = "";
+
+        switch($aParams['sample']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause .= " AND `taf`.`id`=:id";
+                break;
+
+            case 'assistant_id':
+                $aMethod['params'][1] = [
+                    'assistant_id' => $aParams['assistant_id']
+                ];
+
+                $sWhereClause .= " AND `taf`.`assistant_id`=:assistant_id";
+                break;
+                
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `sys_agents_assistants_files` AS `taf` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function insertFile($aParamsSet)
+    {
+        if(empty($aParamsSet) || !is_array($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `sys_agents_assistants_files` SET " . $this->arrayToSQL($aParamsSet)) > 0 ? (int)$this->lastId() : false;
+    }
+
+    public function updateFiles($aSetClause, $aWhereClause)
+    {
+        if(empty($aSetClause) || empty($aWhereClause))
+            return false;
+
+        return (int)$this->query("UPDATE `sys_agents_assistants_files` SET " . $this->arrayToSQL($aSetClause) . " WHERE " . $this->arrayToSQL($aWhereClause)) > 0;
+    }
+
+    public function deleteFiles($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `sys_agents_assistants_files` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
+    }
 }
 
 /** @} */

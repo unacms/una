@@ -41,7 +41,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
             $this->_iAssistantId = bx_process_input($iAssistantId, BX_DATA_INT);
             $this->_aMarkers['assistant_id'] = $this->_iAssistantId;
         }
-        $this->_sAssistantUrl = BX_DOL_URL_STUDIO . bx_append_url_params('agents.php', ['page' => 'assistants', 'aid' => $this->_iAssistantId]);
+        $this->_sAssistantUrl = BX_DOL_URL_STUDIO . bx_append_url_params('agents.php', ['page' => 'assistants', 'spage' => 'chats', 'aid' => $this->_iAssistantId]);
 
         $this->_bAuto = false;
     }
