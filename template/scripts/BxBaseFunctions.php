@@ -188,24 +188,31 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$sCode) : false;
             } 
             else {
-                //--- Process Inline SVG
-                if (strpos($sCode, '&lt;svg') !== false || strpos($sCode, '<svg') !== false) {
-                    if(strpos($sCode, '&lt;svg') !== false)
+
+                if (strpos($sCode, '&lt;img') !== false || strpos($sCode, '<img') !== false) {
+                    if(strpos($sCode, '&lt;img') !== false)
                         $sIconHtml = htmlspecialchars_decode($sCode);
                     else
-                        $sIconHtml = $sCode;    
+                        $sIconHtml = $sCode;
 
-                    $sClass .= 'sys-icon sys-icon-svg ';
-                    
-                    
-                    $sIconHtmlClear = strip_tags($sIconHtml, '<svg>');
-                    if ($sClass != '' && strpos($sIconHtmlClear, 'class="') !== false)
-                        $sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
-                    else
-                        $sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
+                    //--- Process Inline SVG
+                } else if (strpos($sCode, '&lt;svg') !== false || strpos($sCode, '<svg') !== false) {
+                        if(strpos($sCode, '&lt;svg') !== false)
+                            $sIconHtml = htmlspecialchars_decode($sCode);
+                        else
+                            $sIconHtml = $sCode;
 
-                    if ($sAttrs != '')
-                        $sIconHtml = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sIconHtml);
+                        $sClass .= 'sys-icon sys-icon-svg ';
+
+
+                        $sIconHtmlClear = strip_tags($sIconHtml, '<svg>');
+                        if ($sClass != '' && strpos($sIconHtmlClear, 'class="') !== false)
+                            $sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
+                        else
+                            $sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
+
+                        if ($sAttrs != '')
+                            $sIconHtml = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sIconHtml);
                 }
                 else {
                     $sEmojIsRegex =
