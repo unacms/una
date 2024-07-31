@@ -62,7 +62,11 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $iModel = $oForm->getCleanValue('model_id');
             $sType = $oForm->getCleanValue('type');
             $aProviders = $oForm->getCleanValue('providers');
+            $bProviders = !empty($aProviders) && is_array($aProviders);
             $aHelpers = $oForm->getCleanValue('helpers');
+            $bHelpers = !empty($aHelpers) && is_array($aHelpers);
+            $aAssistants = $oForm->getCleanValue('assistants');
+            $bAssistants = !empty($aAssistants) && is_array($aAssistants);
             $sMessage = $oForm->getCleanValue('message');
             $bMessage = !empty($sMessage);
             $sMessageAdd = '';
@@ -71,10 +75,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $oAIModel = $oAI->getModelObject($iModel);
 
             $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
-            if(!empty($aProviders) && is_array($aProviders))
+            if($bProviders)
                 $sInstructions .= $oAI->getAutomatorInstruction('providers', $aProviders);
-            if(!empty($aHelpers) && is_array($aHelpers))
+            if($bHelpers)
                 $sInstructions .= $oAI->getAutomatorInstruction('helpers', $aHelpers);
+            if($bAssistants)
+                $sInstructions .= $oAI->getAutomatorInstruction('assistants', $aAssistants);
 
             $bIsValid = true;
             $aResponseInit = [];
@@ -123,20 +129,25 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             if($bIsValid) {
                 if(($iId = $oForm->insert($aValsToAdd)) !== false) {
-                    $aProviders = $oForm->getCleanValue('providers');
-                    if(!empty($aProviders) && is_array($aProviders))
+                    if($bProviders)
                         foreach($aProviders as $iProviderId)
                             $this->_oDb->insertAutomatorProvider([
                                 'automator_id' => $iId, 
                                 'provider_id' => $iProviderId
                             ]);
 
-                    $aHelpers = $oForm->getCleanValue('helpers');
-                    if(!empty($aHelpers) && is_array($aHelpers))
+                    if($bHelpers)
                         foreach($aHelpers as $iHelperId)
                             $this->_oDb->insertAutomatorHelper([
                                 'automator_id' => $iId, 
                                 'helper_id' => $iHelperId
+                            ]);
+
+                    if($bAssistants)
+                        foreach($aAssistants as $iAssistantId)
+                            $this->_oDb->insertAutomatorAssistant([
+                                'automator_id' => $iId, 
+                                'assistant_id' => $iAssistantId
                             ]);
 
                     if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
@@ -272,6 +283,35 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     ]);
             }
 
+            /**
+             * Process Assistants
+             */
+            $aAssistantsIds = $oForm->getCleanValue('assistants_ids');
+            $bAssistantsIds = !empty($aAssistantsIds) && is_array($aAssistantsIds);
+            $aAssistantsValues = $oForm->getCleanValue('assistants');
+            $bAssistantsValues = !empty($aAssistantsValues) && is_array($aAssistantsValues);
+
+            //--- Assistants: Remove deleted
+            if(!empty($aAutomator['assistants']) && is_array($aAutomator['assistants']))
+                $this->_oDb->deleteAutomatorAssistantsById(array_diff(array_keys($aAutomator['assistants']), $bAssistantsIds ? $aAssistantsIds : []));
+
+            //--- Assistants: Update existed
+            if($bAssistantsIds)
+                foreach($aAssistantsIds as $iIndex => $iAhId)
+                    $this->_oDb->updateAutomatorAssistant(['assistant_id' => (int)$aAssistantsValues[$iIndex]], ['id' => (int)$iAhId]);
+
+            //--- Assistants: Add new
+            $iAssistantsIds = $bAssistantsIds ? count($aAssistantsIds) : 0;
+            $iAssistantsValues = $bAssistantsValues ? count($aAssistantsValues) : 0;
+            if($iAssistantsValues > $iAssistantsIds) {
+                $aAssistantsValues = array_slice($aAssistantsValues, $iAssistantsIds);
+                foreach($aAssistantsValues as $iAssistantsValue)
+                    $this->_oDb->insertAutomatorAssistant([
+                        'automator_id' => $iId,
+                        'helper_id' => (int)$iAssistantsValue,
+                    ]);
+            }
+
             $iProfileId = $oForm->getCleanValue('profile_id');
             if(empty($iProfileId)) {
                 $iProfileId = (int)getParam('sys_agents_profile');
@@ -296,6 +336,10 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     $aHelpers = $this->_oDb->getAutomatorsBy(['sample' => 'helpers_by_id_pairs', 'id' => $iId]);
                     if(!empty($aHelpers) && is_array($aHelpers))
                         $sInstructions .= $oAI->getAutomatorInstruction('helpers', array_values($aHelpers));
+
+                    $aAssistants = $this->_oDb->getAutomatorsBy(['sample' => 'assistants_by_id_pairs', 'id' => $iId]);
+                    if(!empty($aAssistants) && is_array($aAssistants))
+                        $sInstructions .= $oAI->getAutomatorInstruction('assistants', array_values($aAssistants));
 
                     $oCmts->addAuto([
                         'cmt_author_id' => $iProfileId,
@@ -566,6 +610,12 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     'caption' => _t('_sys_agents_automators_field_helpers'),
                     'value' => '',
                 ],
+                'assistants' => [
+                    'type' => 'custom',
+                    'name' => 'assistants',
+                    'caption' => _t('_sys_agents_automators_field_assistants'),
+                    'value' => '',
+                ],
                 'message' => [
                     'type' => 'textarea',
                     'name' => 'message',
@@ -719,6 +769,70 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
             $aForm['inputs'][$sHelpers]['content'] = $this->_oTemplate->parseHtmlByName('agents_automator_form_helpers.html', [
                 'bx_repeat:helpers' => $aTmplVarsHelpers,
+                'btn_add' => $oForm->genInputButton($aInputButton)
+            ]);
+        }
+
+        if(isset($aForm['inputs']['assistants'])) {
+            $oForm = new BxTemplFormView([]);
+
+            $sAssistants = 'assistants';
+            $aAssistants = array_map(function($sTitle) {
+                return _t($sTitle);
+            }, ['' => '_sys_please_select'] + $this->_oDb->getAssistantsBy(['sample' => 'all_pairs', 'active' => 1]));
+
+            $aTmplVarsAssistants = [];
+            if(!empty($aAutomator[$sAssistants]) && is_array($aAutomator[$sAssistants])) {
+                foreach($aAutomator[$sAssistants] as $iAhId => $iAssistantId) {
+                    $aInputSelect = [
+                        'type' => 'select',
+                        'name' => $sAssistants . '[]',
+                        'values' => $aAssistants,
+                        'value' => (int)$iAssistantId,
+                        'attrs' => [
+                            'class' => 'bx-def-margin-sec-top-auto'
+                        ]
+                    ];
+                    $sInput = $oForm->genInput($aInputSelect);
+
+                    $aInputHidden = [
+                        'type' => 'hidden',
+                        'name' => $sAssistants . '_ids[]',
+                        'value' => (int)$iAhId,
+                    ];
+                    $sInput .= $oForm->genInput($aInputHidden);
+
+                    $aTmplVarsAssistants[] = ['js_object' => $sJsObject, 'input_select' => $sInput];
+                }
+            }
+            else  {
+                $aInputSelect = [
+                    'type' => 'select',
+                    'name' => $sAssistants . '[]',
+                    'values' => $aAssistants,
+                    'value' => '',
+                    'attrs' => [
+                        'class' => 'bx-def-margin-sec-top-auto'
+                    ]
+                ];
+
+                $aTmplVarsAssistants = [
+                    ['js_object' => $sJsObject, 'input_select' => $oForm->genInput($aInputSelect)],
+                ];
+            }
+        
+            $aInputButton = [
+                'type' => 'button',
+                'name' => $sAssistants . '_add',
+                'value' => _t('_sys_agents_automators_field_assistants_add'),
+                'attrs' => [
+                    'class' => 'bx-def-margin-sec-top',
+                    'onclick' => $sJsObject . ".assistantAdd(this, '" . $sAssistants . "');"
+                ]
+            ];
+
+            $aForm['inputs'][$sAssistants]['content'] = $this->_oTemplate->parseHtmlByName('agents_automator_form_assistants.html', [
+                'bx_repeat:assistants' => $aTmplVarsAssistants,
                 'btn_add' => $oForm->genInputButton($aInputButton)
             ]);
         }

@@ -205,6 +205,16 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
                     $mixedResult .= "\n ]";
                 }
                 break;
+
+            case 'assistants':
+                $aAssistants = $this->_oDb->getAssistantsBy(['sample' => 'ids', 'ids' => $mixedParams]);
+                if(!empty($aAssistants) && is_array($aAssistants)) {
+                    $mixedResult = "\n Assistants list = [";
+                    foreach($aAssistants as $aAssistant)
+                        $mixedResult .= "\n {'" . $aAssistant['name'] . "', 'AssistantDescription' => '" . $aAssistant['description'] . "'}";
+                    $mixedResult .= "\n ]";
+                }
+                break;
         }
 
         return $mixedResult;

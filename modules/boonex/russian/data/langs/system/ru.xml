@@ -2150,6 +2150,8 @@
         <string name="_sys_agents_automators_field_providers_add"><![CDATA[Добавить]]></string>
         <string name="_sys_agents_automators_field_helpers"><![CDATA[Помощники]]></string>
         <string name="_sys_agents_automators_field_helpers_add"><![CDATA[Добавить]]></string>
+        <string name="_sys_agents_automators_field_assistants"><![CDATA[Ассистенты]]></string>
+        <string name="_sys_agents_automators_field_assistants_add"><![CDATA[Добавить]]></string>
         <string name="_sys_agents_automators_field_message"><![CDATA[Инструкции]]></string>
         <string name="_sys_agents_automators_field_message_err"><![CDATA[Инструкции имеют важное значение. Пожалуйста, напишите что-нибудь здесь.]]></string>
         <string name="_sys_agents_automators_field_status_auto"><![CDATA[Авто]]></string>

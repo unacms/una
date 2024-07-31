@@ -193,8 +193,8 @@ class BxDolAIQuery extends BxDolDb
                     'id' => $aParams['id']
                 ];
 
-                $sSelectClause = "`tap`.`id`, `tap`.`provider_id`";
-                $sJoinClause = "INNER JOIN `sys_agents_automators_providers` AS `tap` ON `taa`.`id`=`tap`.`automator_id`";
+                $sSelectClause = "`taap`.`id`, `taap`.`provider_id`";
+                $sJoinClause = "INNER JOIN `sys_agents_automators_providers` AS `taap` ON `taa`.`id`=`taap`.`automator_id`";
                 $sWhereClause = " AND `taa`.`id`=:id";
                 break;
             
@@ -206,8 +206,21 @@ class BxDolAIQuery extends BxDolDb
                     'id' => $aParams['id']
                 ];
 
-                $sSelectClause = "`tah`.`id`, `tah`.`helper_id`";
-                $sJoinClause = "INNER JOIN `sys_agents_automators_helpers` AS `tah` ON `taa`.`id`=`tah`.`automator_id`";
+                $sSelectClause = "`taah`.`id`, `taah`.`helper_id`";
+                $sJoinClause = "INNER JOIN `sys_agents_automators_helpers` AS `taah` ON `taa`.`id`=`taah`.`automator_id`";
+                $sWhereClause = " AND `taa`.`id`=:id";
+                break;
+            
+            case 'assistants_by_id_pairs':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'assistant_id';
+                $aMethod['params'][3] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sSelectClause = "`taaa`.`id`, `taaa`.`assistant_id`";
+                $sJoinClause = "INNER JOIN `sys_agents_automators_assistants` AS `taaa` ON `taa`.`id`=`taaa`.`automator_id`";
                 $sWhereClause = " AND `taa`.`id`=:id";
                 break;
         }

@@ -2174,6 +2174,8 @@
     <string name="_sys_agents_automators_field_providers_add"><![CDATA[Add]]></string>
     <string name="_sys_agents_automators_field_helpers"><![CDATA[Helpers]]></string>
     <string name="_sys_agents_automators_field_helpers_add"><![CDATA[Add]]></string>
+    <string name="_sys_agents_automators_field_assistants"><![CDATA[Assistants]]></string>
+    <string name="_sys_agents_automators_field_assistants_add"><![CDATA[Add]]></string>
     <string name="_sys_agents_automators_field_message"><![CDATA[Prompt]]></string>
     <string name="_sys_agents_automators_field_message_err"><![CDATA[Prompt is essential. Please type something here.]]></string>
     <string name="_sys_agents_automators_field_status_auto"><![CDATA[Auto]]></string>
