@@ -21,6 +21,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
     protected $_sEndpointFiles;
     protected $_sEndpointFilesRetrieve;
+    protected $_sEndpointFilesRetrieveContent;
     protected $_sEndpointFilesDelete;
 
     protected $_sEndpointVectorStores;
@@ -48,6 +49,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         $this->_sEndpointFiles = 'https://api.openai.com/v1/files';
         $this->_sEndpointFilesRetrieve = $this->_sEndpointFiles . '/%s';
+        $this->_sEndpointFilesRetrieveContent = $this->_sEndpointFiles . '/%s/content';
         $this->_sEndpointFilesDelete = $this->_sEndpointFilesRetrieve;
 
         $this->_sEndpointVectorStores = 'https://api.openai.com/v1/vector_stores';
@@ -373,6 +375,13 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             return false;
 
         return $mixedResponse;
+    }
+
+    public function callFilesRetrieveContent($sFileId)
+    {
+        return bx_file_get_contents(sprintf($this->_sEndpointFilesRetrieveContent, $sFileId), [], 'get', [
+            "Authorization: Bearer " . $this->_sKey
+        ]);
     }
 
     public function callFilesDelete($sFileId, $aParams = [])

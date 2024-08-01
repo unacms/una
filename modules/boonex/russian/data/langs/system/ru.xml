@@ -2212,9 +2212,13 @@
         <string name="_sys_agents_assistants_txt_prompt"><![CDATA[Инструкции]]></string>
         <string name="_sys_agents_assistants_txt_added"><![CDATA[Добавлено]]></string>
         <string name="_sys_agents_assistants_txt_assistant"><![CDATA[Ассистент]]></string>
+        <string name="_sys_agents_assistants_txt_codes_onclick"><![CDATA[onClick код для ссылки]]></string>
+        <string name="_sys_agents_assistants_txt_codes_button"><![CDATA[HTML-код кнопки]]></string>
+        <string name="_sys_agents_assistants_txt_add_knowledge"><![CDATA[Добавить знания]]></string>
         <string name="_sys_agents_assistants_btn_add"><![CDATA[Добавить ассистента]]></string>
         <string name="_sys_agents_assistants_btn_chats"><![CDATA[Чаты]]></string>
         <string name="_sys_agents_assistants_btn_files"><![CDATA[Файлы]]></string>
+        <string name="_sys_agents_assistants_btn_codes"><![CDATA[Получить коды]]></string>
         <string name="_sys_agents_assistants_field_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_assistants_field_model_id"><![CDATA[Модель]]></string>
         <string name="_sys_agents_assistants_field_profile_id"><![CDATA[Профиль]]></string>
@@ -2252,6 +2256,14 @@
         <string name="_sys_agents_assistants_files_btn_delete"><![CDATA[Удалить файл]]></string>
         <string name="_sys_agents_assistants_files_field_file"><![CDATA[Файл]]></string>
         <string name="_sys_agents_assistants_files_popup_add"><![CDATA[Добавить файл]]></string>
+        <string name="_sys_agents_assistants_field_kwg_type"><![CDATA[Тип]]></string>
+        <string name="_sys_agents_assistants_field_kwg_type_text"><![CDATA[Текст]]></string>
+        <string name="_sys_agents_assistants_field_kwg_type_faq"><![CDATA[Вопрос с ответом]]></string>
+        <string name="_sys_agents_assistants_field_kwg_text"><![CDATA[Текст]]></string>
+        <string name="_sys_agents_assistants_field_kwg_faq_q"><![CDATA[Вопрос]]></string>
+        <string name="_sys_agents_assistants_field_kwg_faq_a"><![CDATA[Ответ]]></string>
+        <string name="_sys_agents_assistants_popup_add_knowledge"><![CDATA[Добавить знания]]></string>
+        <string name="_sys_agents_assistants_msg_knowledge_added"><![CDATA[Знания были добавлены.]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Информация]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Контент изменен]]></string>

@@ -61,6 +61,17 @@ class BxDolAIQuery extends BxDolDb
             'name' => $sName
         ]);
     }
+    
+    static public function getAssistantObject($iId)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $aAssistant = $oDb->getRow("SELECT * FROM `sys_agents_assistants` WHERE `id` = :id", ['id' => $iId]);
+        if(!$aAssistant || !is_array($aAssistant))
+            return false;
+
+        return $aAssistant;
+    }
 
     public function getModelsBy($aParams = [])
     {
@@ -689,8 +700,14 @@ class BxDolAIQuery extends BxDolDb
                 ];
 
                 $sWhereClause .= " AND `taf`.`assistant_id`=:assistant_id";
-                break;
-                
+
+                if(!empty($aParams['name'])) {
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1]['name'] = $aParams['name'];
+
+                    $sWhereClause .= " AND `taf`.`name`=:name";
+                }
+                break;                
         }
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . "

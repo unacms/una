@@ -2236,9 +2236,13 @@
     <string name="_sys_agents_assistants_txt_prompt"><![CDATA[Prompt]]></string>
     <string name="_sys_agents_assistants_txt_added"><![CDATA[Added]]></string>
     <string name="_sys_agents_assistants_txt_assistant"><![CDATA[Assistant]]></string>
+    <string name="_sys_agents_assistants_txt_codes_onclick"><![CDATA[onClick code for a link]]></string>
+    <string name="_sys_agents_assistants_txt_codes_button"><![CDATA[Button HTML code]]></string>
+    <string name="_sys_agents_assistants_txt_add_knowledge"><![CDATA[Add knowledge]]></string>
     <string name="_sys_agents_assistants_btn_add"><![CDATA[Add Assistant]]></string>
     <string name="_sys_agents_assistants_btn_chats"><![CDATA[Chats]]></string>
     <string name="_sys_agents_assistants_btn_files"><![CDATA[Files]]></string>
+    <string name="_sys_agents_assistants_btn_codes"><![CDATA[Get codes]]></string>
     <string name="_sys_agents_assistants_field_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_assistants_field_model_id"><![CDATA[Model]]></string>
     <string name="_sys_agents_assistants_field_profile_id"><![CDATA[Profile]]></string>
@@ -2276,6 +2280,14 @@
     <string name="_sys_agents_assistants_files_btn_delete"><![CDATA[Delete file]]></string>
     <string name="_sys_agents_assistants_files_field_file"><![CDATA[File]]></string>
     <string name="_sys_agents_assistants_files_popup_add"><![CDATA[Add File]]></string>
+    <string name="_sys_agents_assistants_field_kwg_type"><![CDATA[Type]]></string>
+    <string name="_sys_agents_assistants_field_kwg_type_text"><![CDATA[Text]]></string>
+    <string name="_sys_agents_assistants_field_kwg_type_faq"><![CDATA[Question with answer]]></string>
+    <string name="_sys_agents_assistants_field_kwg_text"><![CDATA[Text]]></string>
+    <string name="_sys_agents_assistants_field_kwg_faq_q"><![CDATA[Question]]></string>
+    <string name="_sys_agents_assistants_field_kwg_faq_a"><![CDATA[Answer]]></string>
+    <string name="_sys_agents_assistants_popup_add_knowledge"><![CDATA[Add Knowledge]]></string>
+    <string name="_sys_agents_assistants_msg_knowledge_added"><![CDATA[Knowledge was added.]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>

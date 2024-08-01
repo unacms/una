@@ -127,6 +127,25 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
         return echoJson(['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]]);
     }
 
+    public function performActionCodes()
+    {
+        $sAction = 'codes';
+
+        $iId = $this->_getId();
+
+        $sContent = BxTemplStudioFunctions::getInstance()->transBox('bx_std_agents_assistants_codes', $this->_oTemplate->parseHtmlByName('agents_assistant_codes.html', [
+            'code_onclick' => '{onclick}',
+            'code_button' => htmlspecialchars($this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_agents_assistants_txt_add_knowledge'), [
+                'class' => 'bx-btn', 
+                'onclick' => '{onclick}'
+            ]), ENT_NOQUOTES)
+        ]));        
+        $sContent = bx_replace_markers($sContent, ['onclick' => "javascript:bx_agents_action(this, 'asst', 'add_knowledge', {id: " . $iId . "})"]);
+                
+
+        return echoJson(['popup' => ['html' => $sContent, 'options' => []]]);
+    }
+
     protected function _getCellModelId($mixedValue, $sKey, $aField, $aRow)
     {
         $aModel = $this->_oDb->getModelsBy(['sample' => 'id', 'id' => $mixedValue]);

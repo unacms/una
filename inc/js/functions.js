@@ -1591,4 +1591,19 @@ function bx_redirect_for_external_links_open (sHref)
     window.open(sUrlRoot + 'page.php?i=redirect&url=' + encodeURIComponent(sHref), '_blank').focus();
 }
 
+function bx_agents_action(oElement, sTool, sAction, aParams)
+{
+    var oDate = new Date();
+    var sQueryUrl = sUrlRoot + 'agents.php';
+    var oQueryParams = jQuery.extend({}, {t: sTool, a: sAction, _t:oDate.getTime()}, aParams != undefined ? aParams : {});
+
+    jQuery.post (
+        sQueryUrl,
+        oQueryParams,
+        function(oData) {
+            processJsonData(oData);
+        },
+        'json'
+    );
+}
 /** @} */

@@ -186,7 +186,10 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 
     protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
-        return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
+        return $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_menu_item_title_cmts_item_delete'), [
+            'class' => 'bx-btn bx-btn-small',
+            'onclick' => $this->_sJsObjName . '.cmtRemove(this, ' . $aCmt['cmt_id'] . ')',
+        ]);
     }
 
     protected function _getCountersBox(&$aCmt, $aBp = [], $aDp = [])

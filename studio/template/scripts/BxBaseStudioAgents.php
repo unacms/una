@@ -191,7 +191,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
             
             switch($sSubPage) {
                 case 'chats':
-                    $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats']);
+                    $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats']);//['caption' => '123', 'content' => $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats'])];
                     break;
 
                 case 'files':

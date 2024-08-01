@@ -5482,10 +5482,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `active`, `order`) VALUES
 ('sys_studio_agents_assistants', 'independent', 'add', '_sys_agents_assistants_btn_add', '', 0, 0, 1, 1),
-('sys_studio_agents_assistants', 'single', 'chats', '_sys_agents_assistants_btn_chats', '', 0, 0, 1, 1),
-('sys_studio_agents_assistants', 'single', 'files', '_sys_agents_assistants_btn_files', '', 0, 0, 1, 2),
-('sys_studio_agents_assistants', 'single', 'edit', '_Edit', 'pencil-alt', 1, 0, 1, 3),
-('sys_studio_agents_assistants', 'single', 'delete', '_Delete', 'remove', 1, 1, 1, 4),
+('sys_studio_agents_assistants', 'single', 'chats', '_sys_agents_assistants_btn_chats', 'comments', 1, 0, 1, 1),
+('sys_studio_agents_assistants', 'single', 'files', '_sys_agents_assistants_btn_files', 'folder', 1, 0, 1, 2),
+('sys_studio_agents_assistants', 'single', 'codes', '_sys_agents_assistants_btn_codes', 'code', 1, 0, 1, 3),
+('sys_studio_agents_assistants', 'single', 'edit', '_Edit', 'pencil-alt', 1, 0, 1, 4),
+('sys_studio_agents_assistants', 'single', 'delete', '_Delete', 'remove', 1, 1, 1, 5),
 ('sys_studio_agents_assistants', 'bulk', 'delete', '_Delete', '', 0, 1, 1, 1);
 
 -- GRID: Agents Assistants Chats
