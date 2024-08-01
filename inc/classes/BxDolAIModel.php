@@ -28,7 +28,7 @@ class BxDolAIModel extends BxDol
         $this->_iId = (int)$aModel['id'];
         $this->_sName = $aModel['name'];
         $this->_sCaption = _t($aModel['title']);
-        $this->_sKey = $aModel['key'];
+        $this->_sKey = !empty($aModel['key']) ? $aModel['key'] : BxDolAI::getInstance()->getDefaultApiKey();
         $this->_aParams = !empty($aModel['params']) ? json_decode($aModel['params'], true) : [];
     }
 

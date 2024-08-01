@@ -84,7 +84,12 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_iProfileId;
     }
-    
+
+    public function getDefaultApiKey()
+    {
+        return getParam('sys_agents_api_key');
+    }
+
     public function getDefaultModel()
     {
         return (int)getParam('sys_agents_model');
