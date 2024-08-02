@@ -87,7 +87,15 @@ class BxDolSearch extends BxDol
      */
     public function response ()
     {
-        $sCode = $this->_bDataProcessing ? array() : '';
+        $sCode = $this->_bDataProcessing ? [] : '';
+
+        if($this->_bLiveSearch && ($iAssistant = (int)getParam('sys_agents_live_search_assistant')) != 0) {
+            $sKeyword = '';
+            if(($sKeyword = bx_get('keyword')) !== false)
+                $sKeyword = bx_process_input($sKeyword);
+
+            $sCode .= BxDolAIAssistant::getObjectInstance($iAssistant)->getAskButton($sKeyword);
+        }
 
         $bSingle = count($this->aChoice) == 1;
         foreach($this->aChoice as $sKey => $aValue) {

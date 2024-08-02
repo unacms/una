@@ -1233,13 +1233,21 @@ function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults,
             return;
 
         if (bSortResults) {
+            var sAsk = $(data).filter(".bx-btn.sys-agents-ask");
+
             var aSortedUnits = $(data).find(".bx-def-unit-live-search").toArray().sort(function (a, b) {
                 return b.getAttribute('data-ts') - a.getAttribute('data-ts');
             });
+
             data = '';
+            if(sAsk.length)
+                data += sAsk.get(0).outerHTML;
+
             $.each(aSortedUnits.slice(0, n), function (i, e) {
                 data += e.outerHTML;
             });
+            
+            
         } 
 
         var oContainer = $(sResultsContSel);
@@ -1606,4 +1614,5 @@ function bx_agents_action(oElement, sTool, sAction, aParams)
         'json'
     );
 }
+
 /** @} */

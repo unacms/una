@@ -176,6 +176,17 @@ blockquote {
     margin-left:auto;
     margin-right:auto;
 }
+.bx-search-site .sys-search-results-quick {
+    padding-top: 0.5rem
+}
+.bx-search-site .sys-search-results-quick .bx-btn.sys-agents-ask {
+    display: flex;
+    float: none;
+    
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
 .bx-acl-err-msg {
     padding: 0 10%;
 }

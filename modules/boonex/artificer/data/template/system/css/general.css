@@ -52,6 +52,12 @@ import url(../../../../../../../template/css/general.css);
     position: absolute;
     z-index: 10;
 }
+.bx-toolbar-item.bx-ti-search .sys-search-results-quick .bx-btn.sys-agents-ask {
+    margin-bottom: 0.5rem;
+}
+.bx-toolbar-item.bx-ti-search .sys-search-results-quick .bx-btn.sys-agents-ask:last-child {
+    margin-bottom: 0;
+}
 
 
 /*--- Page Content with Cover ---*/
