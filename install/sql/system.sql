@@ -834,6 +834,16 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_agents_profile', '_adm_stg_cpt_option_sys_agents_profile', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:26:"get_options_agents_profile";s:5:"class";s:13:"TemplServices";}', '', '', 20);
 
 --
+-- CATEGORY (HIDDEN): Agents (usage)
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'agents_usage', '_adm_stg_cpt_category_agents_usage', 1, 2);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_agents_asst_chats_trans_del', '_adm_stg_cpt_option_sys_agents_asst_chats_trans_del', 'on', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'sys_agents_live_search_assistant', '_adm_stg_cpt_option_sys_agents_lsa', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:33:"get_options_live_search_assistant";s:5:"class";s:13:"TemplServices";}', '', '', 10);
+
+--
 -- Table structure for table `sys_options_mixes`
 --
 CREATE TABLE `sys_options_mixes` (
@@ -5497,11 +5507,12 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `hidden_on`, `order`) VALUES
 ('sys_studio_agents_assistants_chats', 'checkbox', '', '2%', 0, 0, '', '', 1),
 ('sys_studio_agents_assistants_chats', 'name', '_sys_agents_assistants_chats_txt_name', '18%', 0, 0, '', '', 2),
-('sys_studio_agents_assistants_chats', 'description', '_sys_agents_assistants_chats_txt_description', '30%', 0, 16, '', '', 3),
-('sys_studio_agents_assistants_chats', 'messages', '_sys_agents_assistants_chats_txt_messages', '10%', 0, 0, '', '', 4),
-('sys_studio_agents_assistants_chats', 'added', '_sys_agents_assistants_chats_txt_added', '15%', 0, 0, '', '', 5),
-('sys_studio_agents_assistants_chats', 'stored', '_sys_agents_assistants_chats_txt_stored', '15%', 0, 0, '', '', 6),
-('sys_studio_agents_assistants_chats', 'actions', '', '20%', 0, 0, '', '', 7);
+('sys_studio_agents_assistants_chats', 'type', '_sys_agents_assistants_chats_txt_type', '5%', 0, 0, '', '', 3),
+('sys_studio_agents_assistants_chats', 'description', '_sys_agents_assistants_chats_txt_description', '25%', 0, 16, '', '', 4),
+('sys_studio_agents_assistants_chats', 'messages', '_sys_agents_assistants_chats_txt_messages', '10%', 0, 0, '', '', 5),
+('sys_studio_agents_assistants_chats', 'added', '_sys_agents_assistants_chats_txt_added', '15%', 0, 0, '', '', 6),
+('sys_studio_agents_assistants_chats', 'stored', '_sys_agents_assistants_chats_txt_stored', '15%', 0, 0, '', '', 7),
+('sys_studio_agents_assistants_chats', 'actions', '', '20%', 0, 0, '', '', 8);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `active`, `order`) VALUES
 ('sys_studio_agents_assistants_chats', 'independent', 'add', '_sys_agents_assistants_chats_btn_add', '', 0, 0, 1, 1),
@@ -6570,6 +6581,7 @@ CREATE TABLE IF NOT EXISTS `sys_agents_assistants_files` (
 CREATE TABLE IF NOT EXISTS `sys_agents_assistants_chats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL DEFAULT '',
+  `type` tinyint(4) NOT NULL DEFAULT 1,
   `assistant_id` int(11) NOT NULL DEFAULT 0,
   `description` text NOT NULL,
   `message_id` int(11) NOT NULL DEFAULT 0,

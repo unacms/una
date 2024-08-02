@@ -91,23 +91,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         if(empty($aAssistant) || !is_array($aAssistant))
             return MsgBox(_t('_error occured'));
 
-        $sAssistant = $this->_oTemplate->parseHtmlByName('agents_assistant_info.html', [
-            'assistant_name' => $aAssistant['name'],
-            'assistant_info' => $aAssistant['description'],
-            'bx_if:show_chat' => [
-                'condition' => true,
-                'content' => [
-                    'chat_name' => $aChat['name'],
-                    'chat_info' => $aChat['description'],
-                ]
-            ],
-            'url_back' => $this->_sAssistantUrl
-        ]);
-
-        return [
-            $sAssistant,
-            $aComments['content']
-        ];
+        return $aComments['content'];
     }
 
     public function getFormBoxPost($aBp = [], $aDp = [])

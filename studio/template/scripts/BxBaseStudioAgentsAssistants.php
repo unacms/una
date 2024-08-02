@@ -41,7 +41,7 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
             $aValsToAdd = ['added' => time()];
 
             $sName = $oForm->getCleanValue($this->_sFieldName);
-            $sName = $this->_getAssistantName($sName);
+            $sName = BxDolAIAssistant::getName($sName);
             BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
 
             $iProfileId = $oForm->getCleanValue('profile_id');
@@ -95,7 +95,7 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
 
             $sName = $oForm->getCleanValue($this->_sFieldName);
             if($aHelper[$this->_sFieldName] != $sName) {
-                $sName = $this->_getAssistantName($sName);
+                $sName = BxDolAIAssistant::getName($sName);
                 BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
             }
 
@@ -362,11 +362,6 @@ class BxBaseStudioAgentsAssistants extends BxDolStudioAgentsAssistants
             return false;
 
         return $iId;
-    }
-
-    protected function _getAssistantName($sName)
-    {
-        return uriGenerate($sName, 'sys_agents_assistants', 'name', ['lowercase' => false]);
     }
 }
 

@@ -68,7 +68,7 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
-    
+
     public static function callHelper($mixedHelper, $sMessage)
     {
         $oAI = BxDolAI::getInstance();
@@ -78,6 +78,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
              $aHelper = $oAI->getHelperByName($mixedHelper);
         $oAIModel = $oAI->getModelObject($aHelper['model_id']);
         return $oAIModel->getResponseText($aHelper['prompt'], $sMessage);
+    }
+
+    public static function pruning()
+    {
+        BxDolAIAssistant::pruning();
     }
 
     public function getProfileId()
@@ -127,6 +132,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return BxDolAIProvider::getObjectInstance($iId);
     }   
 
+    public function getAssistants()
+    {
+        return $aModel = $this->_oDb->getAssistantsBy(['sample' => 'all_pairs', 'active' => 1]);
+    }
+
     public function getAssistantById($iId)
     {
         return $this->_oDb->getAssistantsBy(['sample' => 'id', 'id' => $iId]);
@@ -140,6 +150,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
     public function getAssistantChatById($iId)
     {
         return $this->_oDb->getChatsBy(['sample' => 'id', 'id' => $iId]);
+    }
+
+    public function getAssistantChatsTransient($iLifetime = 0)
+    {
+        return $this->_oDb->getChatsBy(['sample' => 'type', 'type' => BX_DOL_AI_ASST_TYPE_TRANSIENT, 'lifetime' => $iLifetime]);
     }
 
     public function updateAssistantChatById($iId, $aSet)

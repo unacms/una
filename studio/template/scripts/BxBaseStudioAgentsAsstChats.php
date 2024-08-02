@@ -39,7 +39,7 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
             $aValsToAdd = ['assistant_id' => $this->_iAssistantId, 'added' => time()];
 
             $sName = $oForm->getCleanValue($this->_sFieldName);
-            $sName = $this->_getChatName($sName);
+            $sName = BxDolAIAssistant::getChatName($sName);
             BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
 
             if(($iId = $oForm->insert($aValsToAdd)) !== false)
@@ -77,7 +77,7 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
 
             $sName = $oForm->getCleanValue($this->_sFieldName);
             if($aChat[$this->_sFieldName] != $sName) {
-                $sName = $this->_getChatName($sName);
+                $sName = BxDolAIAssistant::getChatName($sName);
                 BxDolForm::setSubmittedValue($this->_sFieldName, $sName, $oForm->aFormAttrs['method']);
             }
 
@@ -173,6 +173,11 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
         echoJson(['grid' => $this->getCode(false), 'blink' => $iId]);
     }
 
+    protected function _getCellType($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(_t('_sys_agents_assistants_chats_txt_type_' . $mixedValue), $sKey, $aField, $aRow);
+    }
+
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
@@ -232,26 +237,15 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
 
     protected function _delete ($mixedId)
     {
-        $iChatId = (int)$mixedId;
-        $aChat = $this->_oDb->getChatsBy(['sample' => 'id', 'id' => $iChatId]);
-        $aAssistant = $this->_oDb->getAssistantsBy(['sample' => 'id', 'id' => $aChat['assistant_id']]);
+        $aChat = $this->_oDb->getChatsBy(['sample' => 'id', 'id' => (int)$mixedId]);
 
         $mixedResult = parent::_delete($mixedId);
-        if($mixedResult) {
-            $oAi = BxDolAI::getInstance();
-            $oAIModel = $oAi->getModelObject($aAssistant['model_id']);
-
-            if(($oCmts = $oAi->getAssistantChatCmtsObject($iChatId)) !== false)
-                $oCmts->onObjectDelete();
-
-            if(!empty($aChat['ai_file_id'])) {
-                $oAIModel->callVectorStoresFilesDelete($aAssistant['ai_vs_id'], $aChat['ai_file_id']);
-                $oAIModel->callFilesDelete($aChat['ai_file_id']);
-            }
-        }
+        if($mixedResult)
+            BxDolAIAssistant::getObjectInstance($aChat['assistant_id'])->deleteChat($aChat);
 
         return $mixedResult;
     }
+
     protected function _getFormEdit($sAction, $aChat = [])
     {
         $aForm = $this->_getForm($sAction, $aChat);
@@ -341,11 +335,6 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
             return false;
 
         return $iId;
-    }
-
-    protected function _getChatName($sName)
-    {
-        return uriGenerate($sName, 'sys_agents_assistants_chats', 'name', ['lowercase' => false]);
     }
 }
 

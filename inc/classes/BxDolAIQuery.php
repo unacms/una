@@ -652,7 +652,20 @@ class BxDolAIQuery extends BxDolDb
 
                 $sWhereClause .= " AND `tac`.`assistant_id`=:assistant_id";
                 break;
+
+            case 'type':
+                $aMethod['params'][1] = [
+                    'type' => $aParams['type']
+                ];
+
+                $sWhereClause .= " AND `tac`.`type`=:type";
                 
+                if(isset($aParams['lifetime']) && (int)$aParams['lifetime'] > 0) {
+                    $aMethod['params'][1]['lifetime'] = (int)$aParams['lifetime'];
+
+                    $sWhereClause .= " AND (UNIX_TIMESTAMP() - `tac`.`added`) >= :lifetime";
+                }
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . "
@@ -662,6 +675,14 @@ class BxDolAIQuery extends BxDolDb
         return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
     
+    public function insertChat($aParamsSet)
+    {
+        if(empty($aParamsSet) || !is_array($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `sys_agents_assistants_chats` SET " . $this->arrayToSQL($aParamsSet)) > 0 ? (int)$this->lastId() : false;
+    }
+
     public function updateChats($aSetClause, $aWhereClause)
     {
         if(empty($aSetClause) || empty($aWhereClause))

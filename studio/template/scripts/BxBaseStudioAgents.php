@@ -74,6 +74,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
     {
         $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_DEFAULT, [
             'agents_general',
+            'agents_usage',
         ]);
 
         $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
@@ -89,16 +90,17 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         $this->aPageJsOptions['sPageUrl'] .= 'automators';
 
         if(($iId = bx_get('id')) !== false) {
-            $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
-                'sPageUrl' => $this->sSubpageUrl . 'automators&id=' . $iId,
-                'sActionUrlCmts' => bx_append_url_params(BX_DOL_URL_ROOT . 'cmts.php', [
-                    'sys' => $sCmts,
-                    'id' => $iId
-                ])
-            ]);
+            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($iId, $oTemplate)) !== false) {
+                $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
+                    'sPageUrl' => $this->sSubpageUrl . 'automators&id=' . $iId,
+                    'sActionUrlCmts' => bx_append_url_params(BX_DOL_URL_ROOT . 'cmts.php', [
+                        'sys' => $oCmts->getSystemName(),
+                        'id' => $iId
+                    ])
+                ]);
 
-            if(($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($iId, $oTemplate)) !== false)
                 return $oCmts->getCommentsBlock();
+            }
             else
                 return MsgBox(_t('_error occured'));
         }
@@ -156,20 +158,42 @@ class BxBaseStudioAgents extends BxDolStudioAgents
             $iChatId = bx_process_input($iChatId, BX_DATA_INT);
 
         if($iAssistantId && $iChatId) {
-            $sCmts = 'sys_agents_assistants_chats';
+            $aResult = [];
 
-            $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
-                'sPageUrl' => $this->sSubpageUrl . 'assistants&aid=' . $iAssistantId . '&cid=' . $iChatId,
-                'sActionUrlCmts' => bx_append_url_params(BX_DOL_URL_ROOT . 'cmts.php', [
-                    'sys' => $sCmts,
-                    'id' => $iChatId
-                ])
-            ]);
+            $sAssistantUrl = $this->sSubpageUrl . 'assistants&spage=chats&aid=' . $iAssistantId;
+            $aAssistant = $oAi->getAssistantById($iAssistantId);
+            if(!empty($aAssistant) && is_array($aAssistant)) {
+                $aChat = $oAi->getAssistantChatById($iChatId);
+                if(!empty($aChat) && is_array($aChat))
+                    $aResult[] = $oTemplate->parseHtmlByName('agents_assistant_info.html', [
+                        'assistant_name' => $aAssistant['name'],
+                        'assistant_info' => $aAssistant['description'],
+                        'bx_if:show_chat' => [
+                            'condition' => true,
+                            'content' => [
+                                'chat_name' => $aChat['name'],
+                                'chat_info' => $aChat['description'],
+                            ]
+                        ],
+                        'url_back' => $sAssistantUrl
+                    ]);
+            }
 
-            if(($oCmts = $oAi->getAssistantChatCmtsObject($iChatId, $oTemplate)) !== false)
-                return $oCmts->getCommentsBlock();
+            if(($oCmts = $oAi->getAssistantChatCmtsObject($iChatId, $oTemplate)) !== false) {
+                $this->aPageJsOptions = array_merge($this->aPageJsOptions, [
+                    'sPageUrl' => $sAssistantUrl . '&cid=' . $iChatId,
+                    'sActionUrlCmts' => bx_append_url_params(BX_DOL_URL_ROOT . 'cmts.php', [
+                        'sys' => $oCmts->getSystemName(),
+                        'id' => $iChatId
+                    ])
+                ]);
+
+                $aResult[] = $oCmts->getCommentsBlock();
+            }
             else
-                return MsgBox(_t('_error occured'));
+                $aResult[] = MsgBox(_t('_error occured'));
+
+            return $aResult;
         }
         else if($iAssistantId) {
             $aResult = [];
@@ -191,7 +215,7 @@ class BxBaseStudioAgents extends BxDolStudioAgents
             
             switch($sSubPage) {
                 case 'chats':
-                    $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats']);//['caption' => '123', 'content' => $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats'])];
+                    $aResult[] = $this->getGrid($this->aGridObjects[BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS . '_chats']);
                     break;
 
                 case 'files':
