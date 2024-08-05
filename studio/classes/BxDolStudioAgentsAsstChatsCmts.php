@@ -111,12 +111,15 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         return false;
     }
 
-    public function addAuto($aValues)
+    public function addAuto($aValues, $bUnsetForm = false)
     {
         $this->_bAuto = true;
         $mixedResult = $this->add($aValues);
-
         $this->_bAuto = false;
+
+        if($bUnsetForm)
+            $this->_unsetFormObject();
+
         return $mixedResult;
     }
 
@@ -159,7 +162,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
                 'cmt_author_id' => $this->_iProfileIdAi,
                 'cmt_parent_id' => 0,
                 'cmt_text' => $sResponse
-            ]);
+            ], true);
 
             if($mixedResultAuto !== false)
                 $mixedResult['id'] .= ',' . $mixedResultAuto['id'];

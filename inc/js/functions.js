@@ -1605,10 +1605,14 @@ function bx_agents_action(oElement, sTool, sAction, aParams)
     var sQueryUrl = sUrlRoot + 'agents.php';
     var oQueryParams = jQuery.extend({}, {t: sTool, a: sAction, _t:oDate.getTime()}, aParams != undefined ? aParams : {});
 
+    bx_loading_btn(oElement, true);
+
     jQuery.post (
         sQueryUrl,
         oQueryParams,
         function(oData) {
+            bx_loading_btn(oElement, false);
+
             processJsonData(oData);
         },
         'json'
