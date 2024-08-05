@@ -829,8 +829,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_agents_api_key', '_adm_stg_cpt_option_sys_agents_api_key', '', 'digit', '', '', '', 0),
-(@iCategoryId, 'sys_agents_model', '_adm_stg_cpt_option_sys_agents_model', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:24:"get_options_agents_model";s:5:"class";s:13:"TemplServices";}', '', '', 5),
-(@iCategoryId, 'sys_agents_url', '_adm_stg_cpt_option_sys_agents_url', '', 'digit', '', '', '', 10),
+(@iCategoryId, 'sys_agents_model', '_adm_stg_cpt_option_sys_agents_model', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:24:"get_options_agents_model";s:5:"class";s:13:"TemplServices";}', '', '', 10),
 (@iCategoryId, 'sys_agents_profile', '_adm_stg_cpt_option_sys_agents_profile', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:26:"get_options_agents_profile";s:5:"class";s:13:"TemplServices";}', '', '', 20);
 
 --

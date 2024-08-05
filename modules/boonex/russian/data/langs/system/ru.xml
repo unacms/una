@@ -1745,7 +1745,6 @@
     <string name="_adm_stg_cpt_option_sys_api_url_root_push"><![CDATA[Основной URL-адрес сайта в push-уведомлениях]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_api_key"><![CDATA[API-ключ по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_model"><![CDATA[Модель по умолчанию]]></string>
-    <string name="_adm_stg_cpt_option_sys_agents_url"><![CDATA[URL конечной точки]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Профиль]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_asst_chats_trans_del"><![CDATA[Автоматическое удаление временных чатов каждый день]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_lsa"><![CDATA[Помощник для интерактивного поиска]]></string>
