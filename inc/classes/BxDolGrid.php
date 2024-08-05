@@ -271,7 +271,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         $sBrowseParams = bx_get('bp');
         if(!empty($sBrowseParams)) {
-        	$aBrowseParams = bx_process_input(unserialize(urldecode($sBrowseParams)));
+        	$aBrowseParams = bx_process_input(json_decode(urldecode($sBrowseParams), true));
         	if(!empty($aBrowseParams) && is_array($aBrowseParams))
             	$this->setBrowseParams($aBrowseParams);
         }
@@ -327,7 +327,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     public function setBrowseParams($aBrowseParams)
     {
     	$this->_aBrowseParams = $aBrowseParams;
-    	$this->_aQueryAppend['bp'] = urlencode(serialize($this->_aBrowseParams));
+    	$this->_aQueryAppend['bp'] = urlencode(json_encode($this->_aBrowseParams));
     }
 
     /**
