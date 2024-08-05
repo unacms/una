@@ -435,7 +435,7 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
 
         try {
             if(empty($oSubscription))
-                $oSubscription = $this->_oCustomer->subscriptions->create($aSubscription);
+                $oSubscription = \Stripe\Subscription::create(['customer' => $this->_oCustomer->id, 'items' => [['price' => $aItem['name']]], 'metadata' => $aSubscription['metadata']]);				
         }
         catch (Exception $oException) {
             return $this->_processException('Create Subscription Error: ', $oException);
