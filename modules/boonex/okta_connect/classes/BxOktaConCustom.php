@@ -19,12 +19,14 @@ class BxOktaConCustom
     {
     }
 
-    function onRegister ($aRemoteProfileInfo)
+    function onRegister ($iProfileId, $aRemoteProfileInfo)
     {
         bx_log('bx_oktacon', $aRemoteProfileInfo);
         
         if (!empty($aRemoteProfileInfo['communities']))
-           $this->syncCommunities(bx_get_logged_profile_id(), explode(',', $aRemoteProfileInfo['communities']));
+           $this->syncCommunities($iProfileId, explode(',', $aRemoteProfileInfo['communities']));
+
+        $this->syncLocation($iProfileId, $aRemoteProfileInfo);
     }
 
     function onLogin ($oProfile, $aRemoteProfileInfo)
@@ -33,11 +35,51 @@ class BxOktaConCustom
 
         if (!empty($aRemoteProfileInfo['communities']))
            $this->syncCommunities($oProfile ? $oProfile->id() : bx_get_logged_profile_id(), explode(',', $aRemoteProfileInfo['communities']));
+
+        $this->syncLocation($oProfile->id(), $aRemoteProfileInfo);
     }
 
     function onConvertRemoteFields($aProfileInfo, &$aProfileFields)
     {
+        if (empty($aProfileInfo['grade']))
+            return;
 
+        $a = explode(',', $aProfileInfo['grade']);
+
+        $v = 0;
+        foreach ($a as $i) {
+            $v += pow(2, (int)$i - 1);
+        }
+
+        $aProfileFields['grades'] = $v;
+    }
+
+    function syncLocation($iProfileId, $aRemoteProfileInfo)
+    {
+        if (empty($aRemoteProfileInfo['state']) || empty($aRemoteProfileInfo['city']))
+            return;
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if (!$oProfile)
+            return;
+
+        $oMetatags = BxDolMetatags::getObjectInstance('bx_persons');
+        if (!$oMetatags || !$oMetatags->locationsIsEnabled())
+            return;
+
+        $sEndpoint = bx_append_url_params('https://nominatim.openstreetmap.org', [
+            'format' => 'json',
+            'limit' => 1,
+            'country' => empty($aRemoteProfileInfo['country']) ? 'US' : $aRemoteProfileInfo['country'], 
+            'state' => $aRemoteProfileInfo['state'], 
+            'city' => $aRemoteProfileInfo['city'],
+        ]);
+        $sResults = bx_file_get_contents($sEndpoint);        
+        if (!($a = @json_decode($sResults, true)))
+            return;
+        $a = array_shift($a);
+    
+        $oMetatags->locationsAdd($oProfile->getContentId(), $a['lat'], $a['lon'], 'US', $aRemoteProfileInfo['state'], $aRemoteProfileInfo['city']);
     }
 
     function syncCommunities($iProfileId, $aCommunities, $sModule = 'bx_groups', $sObjConn = 'bx_groups_fans')
