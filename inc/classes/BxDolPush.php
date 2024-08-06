@@ -183,7 +183,8 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         curl_setopt($oChannel, CURLOPT_HEADER, false);
         curl_setopt($oChannel, CURLOPT_POST, true);
         curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
-        curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
+        if (getParam('sys_curl_ssl_allow_untrusted') == 'on')
+            curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
 
         $sResult = curl_exec($oChannel);
         curl_close($oChannel);
