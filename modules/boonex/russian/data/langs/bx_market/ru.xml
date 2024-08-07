@@ -15,6 +15,7 @@
     <string name="_bx_market_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_market_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_market_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_market_option_enable_icon"><![CDATA[Включить значок продукта]]></string>
 
     <string name="_bx_market_form_entry"><![CDATA[Продукт]]></string>
     <string name="_bx_market_form_entry_display_add"><![CDATA[Добавление продукта]]></string>

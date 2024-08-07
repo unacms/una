@@ -1,7 +1,27 @@
 /*--- Entry Cover ---*/
 .bx-cover-wrapper .bx-cover .bx-cover-image img {
-	border-width: 0px;
-	background-position: center center;
+    border-width: 0px;
+    background-position: center center;
+}
+
+/*--- Entry Icon ---*/
+.bx-market-ect-icon .bx-image-edit-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  left: 0px;
+  top: auto;
+  bottom: -0.75rem;
+}
+.bx-market-ect-icon .bx-btn.bx-btn-small i, 
+.bx-market-ect-icon .bx-btn.bx-btn-small img, 
+.bx-market-ect-icon .bx-btn.bx-btn-small svg {
+    height: 0.5rem;
+    width: 0.5rem;
+    line-height: 0.5rem;
+}
+.bx-market-ect-icon .bx-btn.bx-btn-small i {
+    font-size: 0.5rem;
 }
 
 /*--- Entry Content ---*/

@@ -45,7 +45,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
         $aVars = parent::getTmplVarsText($aData);
 
-        //--- Process Cover
+        //--- Process RAW Cover
         $bCoverRaw = !empty($CNF['FIELD_COVER_RAW']) && !empty($aData[$CNF['FIELD_COVER_RAW']]);
 
         $aVars['bx_if:show_image_raw'] = [
@@ -55,27 +55,66 @@ class BxMarketTemplate extends BxBaseModTextTemplate
             ]
         ];
 
-        $aVars['bx_if:show_image']['condition'] = !$bCoverRaw && $aVars['bx_if:show_image']['condition'];
+        //--- Process Cover
+        $bIsAllowEditCover = $oModule->checkAllowedEdit($aData) === CHECK_ACTION_RESULT_ALLOWED;
+        $bShowImage = $aVars['bx_if:show_image']['condition'];
 
-        //--- Process Thumb
+        $aVars['bx_if:show_entry_cover'] = [
+            'condition' => !$bCoverRaw && ($bShowImage || $bIsAllowEditCover),
+            'content' => array_merge([
+                'bx_if:show_image' => [
+                    'condition' => $bShowImage,
+                    'content' => [true]
+                ],
+                'bx_if:show_image_empty' => [
+                    'condition' => !$bShowImage,
+                    'content' => [true]
+                ]
+            ], $aVars['bx_if:show_image']['content'])
+        ];
+
+        //--- Process Icon (Thumb)
+        $bIsAllowEditIcon = $bIsAllowEditCover;
+
         $sIcon = '';
-        $mixedIcon = $oModule->getEntryImageData($aData, 'FIELD_THUMB', array('OBJECT_IMAGES_TRANSCODER_THUMB', 'OBJECT_IMAGES_TRANSCODER_GALLERY'));
-        if($mixedIcon !== false) {
-            if(!empty($mixedIcon['object']))
-                $o = BxDolStorage::getObjectInstance($mixedIcon['object']);
-            else if(!empty($mixedIcon['transcoder']))
-                $o = BxDolTranscoder::getObjectInstance($mixedIcon['transcoder']);
+        $bIcon = getParam($CNF['PARAM_USE_ICON']) == 'on';
+        if($bIcon) {
+            $mixedIcon = $oModule->getEntryImageData($aData, 'FIELD_THUMB', ['OBJECT_IMAGES_TRANSCODER_THUMB', 'OBJECT_IMAGES_TRANSCODER_GALLERY']);
+            if($mixedIcon !== false) {
+                if(!empty($mixedIcon['object']))
+                    $o = BxDolStorage::getObjectInstance($mixedIcon['object']);
+                else if(!empty($mixedIcon['transcoder']))
+                    $o = BxDolTranscoder::getObjectInstance($mixedIcon['transcoder']);
 
-            if($o)
-                $sIcon = $o->getFileUrlById($mixedIcon['id']);
+                if($o)
+                    $sIcon = $o->getFileUrlById($mixedIcon['id']);
+            }
         }
 
-        $aVars['bx_if:show_icon'] = array(
-            'condition' => !empty($sIcon),
-            'content' => array(
-                'entry_icon' => $sIcon
-            )
-        );
+        $sIconUniqId = genRndPwd(8, false);
+        $sIconTweak = '';
+        if($bIsAllowEditIcon)
+            $sIconTweak = $this->_prepareImage($aData, $sIconUniqId, $CNF['OBJECT_UPLOADERS'], $CNF['OBJECT_STORAGE'], $CNF['FIELD_THUMB'], false);
+
+        $aVars = array_merge($aVars, [
+            'bx_if:show_entry_icon' => [
+                'condition' => $bIcon,
+                'content' => [
+                    'bx_if:show_icon' => [
+                        'condition' => !empty($sIcon),
+                        'content' => [true]
+                    ],
+                    'bx_if:show_icon_empty' => [
+                        'condition' => empty($sIcon),
+                        'content' => [true]
+                    ],
+                    'unique_id' => $sIconUniqId,
+                    'entry_icon' => $sIcon,
+                    'icon' => $CNF['ICON'],
+                    'icon_tweak' => $sIconTweak
+                ]
+            ]
+        ]);
 
         //--- Process Screenshots
         $sScreenshots = $this->getScreenshots($aData);
@@ -210,24 +249,21 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
         //--- Icon Info
         $sIconUrl = '';
-        if(!empty($CNF['FIELD_THUMB']) && $aData[$CNF['FIELD_THUMB']]) {
+        $bIcon = getParam($CNF['PARAM_USE_ICON']) == 'on';
+        if($bIcon && !empty($CNF['FIELD_THUMB']) && $aData[$CNF['FIELD_THUMB']]) {
             $iThumb = (int)$aData[$CNF['FIELD_THUMB']];
 
             $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
             $aThumb = $oStorage->getFile($iThumb);
 
-            if(strpos($aThumb['mime_type'], 'svg') !== false)
-                $sIconUrl = $oStorage->getFileUrlById($iThumb);
+            if(!empty($aThumb) && is_array($aThumb)) {
+                if(strpos($aThumb['mime_type'], 'svg') !== false)
+                    $sIconUrl = $oStorage->getFileUrlById($iThumb);
 
-            if(empty($sIconUrl)) {
-                $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_ICON']);
-                if($oImagesTranscoder)
+                if(empty($sIconUrl) && ($oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_ICON'])) !== false)
                     $sIconUrl = $oImagesTranscoder->getFileUrl($iThumb);
-            }
 
-            if(empty($sIconUrl)) {
-                $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']);
-                if($oImagesTranscoder)
+                if(empty($sIconUrl) && ($oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])) !== false)
                     $sIconUrl = $oImagesTranscoder->getFileUrl($iThumb);
             }
         }
@@ -337,12 +373,14 @@ class BxMarketTemplate extends BxBaseModTextTemplate
             'bx_if:show_icon' => array (
                 'condition' => $sIconUrl,
                 'content' => array(
-                	'icon_url' => $sIconUrl,
+                    'content_url' => $sUrl,
+                    'icon_url' => $sIconUrl,
                 ),
             ),
             'bx_if:show_icon_empty' => array (
-                'condition' => !$sIconUrl,
+                'condition' => $bIcon && !$sIconUrl,
                 'content' => array(
+                    'content_url' => $sUrl,
                     'icon' => $CNF['ICON']
                 ),
             ),
@@ -458,9 +496,29 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         return array($oTranscoder, $oTranscoderPreview);
     }
 
+    protected function _getHeaderImageParams()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return array_merge(parent::_getHeaderImageParams(), [
+            'field' => isset($CNF['FIELD_COVER']) ? $CNF['FIELD_COVER'] : false,
+            'field_position' => isset($CNF['FIELD_COVER_POSITION']) ? $CNF['FIELD_COVER_POSITION'] : false,
+        ]);
+    }
+
     protected function _getHeaderImage($aData)
     {
         return $this->getModule()->getEntryImageData($aData, 'FIELD_COVER');
+    }
+    
+    function _prepareImage($aData, $sUniqId, $sUploader, $sStorage, $sField, $bAllowTweak, $bAllowMultiple = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(in_array($sField, [$CNF['FIELD_THUMB'], $CNF['FIELD_COVER']]))
+            $bAllowMultiple = true;
+
+        return parent::_prepareImage($aData, $sUniqId, $sUploader, $sStorage, $sField, $bAllowTweak, $bAllowMultiple);
     }
 }
 

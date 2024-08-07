@@ -11,18 +11,20 @@
     </bx_if:show_cover>
     <div class="bx-base-text-unit-text p-3 md:p-4 lg:p-6 pt-2 md:pt-3 lg:pt-5 box-border">
         <div class="bx-market-unit-info flex items-center">
-            <div class="bx-market-unit-icon bx-def-thumb-size bx-def-round-corners">
-                <a href="__content_url__"> 
-                    <bx_if:show_icon>
+            <bx_if:show_icon>
+                <div class="bx-market-unit-icon bx-def-thumb-size bx-def-round-corners">
+                    <a href="__content_url__">
                         <img class="bx-market-unit-icon bx-def-thumb-size bx-def-round-corners" src="__icon_url__" />
-                    </bx_if:show_icon>
-                    <bx_if:show_icon_empty>
-                        <div class="bx-market-unit-icon-empty bx-def-thumb-size flex justify-center items-center bg-gray-100 dark:bg-gray-700 rounded-md">
-                            <i class="sys-icon __icon__"></i>
-                        </div>
-                    </bx_if:show_icon_empty>
-                </a>
-            </div>
+                    </a>
+                </div>
+            </bx_if:show_icon>
+            <bx_if:show_icon_empty>
+                <div class="bx-market-unit-icon-empty bx-def-thumb-size flex justify-center items-center bg-gray-100 dark:bg-gray-700 rounded-md">
+                    <a href="__content_url__">
+                        <i class="sys-icon __icon__"></i>
+                    </a>
+                </div>
+            </bx_if:show_icon_empty>
             <div class="bx-market-unit-title ml-4 first:ml-0">
                 <div class="bx-base-text-unit-info flex space-x-1 text-sm text-gray-500 dark:text-gray-400">
                     <bx_if:meta><div class="bx-base-general-unit-meta">__meta__</div></bx_if:meta>

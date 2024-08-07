@@ -36,6 +36,24 @@ class BxMarketModule extends BxBaseModTextModule
         ));
     }
 
+    public function actionUpdateImage($sFiledName, $iContentId, $sValue)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aData = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aData) || !is_array($aData))
+            return;
+
+        $mixedResult = parent::actionUpdateImage($sFiledName, $iContentId, $sValue);
+        if($mixedResult === false)
+            return;
+        
+        if(!empty($aData[$sFiledName]) && ($oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])) !== false)
+            $oStorage->deleteFile($aData[$sFiledName]);
+
+        echo $mixedResult;
+    }
+
     public function actionPerform()
     {
         $CNF = &$this->_oConfig->CNF;
