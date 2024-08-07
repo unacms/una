@@ -46,7 +46,7 @@ class BxDolProfileAnonymous extends BxDolProfileUndefined
      */
     public static function getInstance($mixedProfileId = false, $bClearCache = false)
     {
-        $oProfile = BxDolProfile::getInstance(abs($mixedProfileId));
+        $oProfile = $mixedProfileId ? BxDolProfile::getInstance(abs($mixedProfileId)) : null;
         if (!$oProfile)
             return BxDolProfileUndefined::getInstance();
 

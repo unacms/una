@@ -430,7 +430,7 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
     {
         try {
             $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
-            $oSubscription = $oCustomer->subscriptions->retrieve($sSubscriptionId);
+            $oSubscription = \Stripe\Subscription::retrieve($sSubscriptionId);
         }
         catch (Exception $oException) {
             return $this->_processException('Retrieve Subscription Error: ', $oException);

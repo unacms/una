@@ -67,7 +67,7 @@ class BxBaseAuditGrid extends BxDolAuditGrid
             $sLinkExtras = $this->_oTemplate->parseLink('javascript:void(0)',' <i class="sys-icon info-circle"></i>' , array(
                 'title' => '',
                 'bx_grid_action_single' => 'show_stat',
-                'bx_grid_action_data' => $aRow['extras']
+                'bx_grid_action_data' => json_encode($aExtras)
             ));
         }
         
@@ -225,7 +225,7 @@ class BxBaseAuditGrid extends BxDolAuditGrid
     {
 		$aTmp2 = bx_get('ids');
 		$sData = $aTmp2[0];
-        $aData = unserialize($sData);
+        $aData = json_decode($sData, true);
         $sContentInfo = '';
         if (isset($aData['display_info'])){
             foreach($aData['display_info'] as $sKey => $sValue)

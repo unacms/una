@@ -88,6 +88,10 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
      */
     public static function getNotificationsCount($iProfileId = 0, &$aBubbles = null)
     {    
+        if ('' != trim(getParam('sys_api_url_root_push'))) {
+             return bx_srv('bx_notifications', 'get_unread_notifications_num', [$iProfileId]);
+        }   
+        
         $iMemberIdCookie = null;
         $bLoggedMemberGlobals = null;
         if ($iProfileId && $iProfileId != bx_get_logged_profile_id()) {
@@ -183,7 +187,8 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         curl_setopt($oChannel, CURLOPT_HEADER, false);
         curl_setopt($oChannel, CURLOPT_POST, true);
         curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
-        curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
+        if (getParam('sys_curl_ssl_allow_untrusted') == 'on')
+            curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
 
         $sResult = curl_exec($oChannel);
         curl_close($oChannel);

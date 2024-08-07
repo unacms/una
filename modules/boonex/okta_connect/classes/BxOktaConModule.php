@@ -117,26 +117,37 @@ class BxOktaConModule extends BxBaseModConnectModule
 */
         if ($aRemoteProfileInfo) {
 
-            bx_import('Custom', $this->_aModule);
-            $oCustom = new BxOktaConCustom($this->_aModule);
-
             // check if user logged in before
             $iLocalProfileId = $this->_oDb->getProfileId($aRemoteProfileInfo['id']);
             
             if ($iLocalProfileId && $oProfile = BxDolProfile::getInstance($iLocalProfileId)) {
                 // user already exists
                 $this->setLogged($oProfile->id(), '', true, getParam('bx_oktacon_remember_session')); // remember user
+                bx_import('Custom', $this->_aModule);
+                $oCustom = new BxOktaConCustom($this->_aModule);
                 $oCustom->onLogin($oProfile, $aRemoteProfileInfo);
             }             
             else {  
                 // register new user
                 $this->_createProfile($aRemoteProfileInfo);
-                $oCustom->onRegister($aRemoteProfileInfo);
+                
             }
         } 
         else {
             $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_sys_connect_profile_error_info')));
         }
+    }
+
+    function _createProfileRaw($aProfileInfo, $sAlternativeName = '', $isAutoFriends = true, $isSetLoggedIn = true) 
+    {
+        $mixed = parent::_createProfileRaw($aProfileInfo, $sAlternativeName, $isAutoFriends, $isSetLoggedIn);
+        if (is_array($mixed) && isset($mixed['profile_id']) && (!isset($mixed['join_page_redirect']) || !$mixed['join_page_redirect'])) {
+            bx_import('Custom', $this->_aModule);
+            $oCustom = new BxOktaConCustom($this->_aModule);
+            $oCustom->onRegister($mixed['profile_id'], $aProfileInfo);
+        }
+
+        return $mixed;
     }
 
     /**
