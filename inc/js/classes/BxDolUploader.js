@@ -43,6 +43,7 @@ BxDolUploaderBase.prototype.init = function (sUploaderObject, sStorageObject, sU
     this._sTemplateErrorGhosts = options.template_error_ghosts ? options.template_error_ghosts : this._sTemplateError;
 
     this._isMultiple = undefined == options.multiple || !options.multiple ? false : true;
+    this._isLatest = undefined == options.latest || !options.latest ? false : true;
     this._isReordering = undefined == options.reordering || !options.reordering ? false : true;
 
     this._iContentId = undefined == options.content_id || '' == options.content_id ? '' : parseInt(options.content_id);
@@ -148,7 +149,7 @@ BxDolUploaderBase.prototype.cancelAll = function () {
 }
 
 BxDolUploaderBase.prototype.restoreGhosts = function (bInitReordering, onComplete) {
-    var sUrl = this._getUrlWithStandardParams() + '&img_trans=' + this._sImagesTranscoder + '&a=restore_ghosts&f=json' + '&c=' + this._iContentId + '&_t=' + escape(new Date());
+    var sUrl = this._getUrlWithStandardParams() + '&img_trans=' + this._sImagesTranscoder + '&a=restore_ghosts&f=json' + '&c=' + this._iContentId + '&l=' + (this._isLatest ? 1 : 0) + '&_t=' + escape(new Date());
     var $this = this;
 
     bInitReordering = bInitReordering !== undefined ? bInitReordering : this._isReordering;
@@ -1080,13 +1081,24 @@ BxDolImageTweak.prototype.uploadComplete = function(obj){
     
     $this._oContainerButtons.removeClass('bx-image-edit-buttons-no-image');
     $.post(sUrl, function (aData) {
+        var sSelImage = ".bx-image-edit-source-" + $this._sUniqueId;
+        var sSelPlaceholder = ".bx-image-edit-placeholder-" + $this._sUniqueId;
+
         if ($this._bAllowTweak){
-            $(".bx-image-edit-source-" + $this._sUniqueId).css("background-image", "url(" + aData + ")").css('background-position', '');
-            $(".bx-image-edit-source-" + $this._sUniqueId).parents('.bx-base-pofile-cover-image.bx-bpci-holder').removeClass('bx-bpci-holder h-32 lg:h-32').addClass('h-64 lg:h-80')
+            $(sSelImage).css("background-image", "url(" + aData + ")").css('background-position', '').show();
+
+            if($(sSelPlaceholder).length > 0)
+                $(sSelPlaceholder).hide();
+            else
+                $(sSelImage).parents('.bx-base-pofile-cover-image.bx-bpci-holder').removeClass('bx-bpci-holder h-32 lg:h-32').addClass('h-64 lg:h-80')
         }
         else{
-            $(".bx-image-edit-source-" + $this._sUniqueId).attr("src", aData).show();
-            $(".bx-image-edit-source-" + $this._sUniqueId).parents('.bx-base-pofile-cover-thumb').find('p.bx-base-pofile-unit-thumb').hide();
+            $(sSelImage).attr("src", aData).show();
+
+            if($(sSelPlaceholder).length > 0)
+                $(sSelPlaceholder).hide();
+            else
+                $(sSelImage).parents('.bx-base-pofile-cover-thumb').find('p.bx-base-pofile-unit-thumb').hide();
         }
     });
 }

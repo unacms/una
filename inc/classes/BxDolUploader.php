@@ -291,6 +291,7 @@ abstract class BxDolUploader extends BxDolFactory
             'uniq_id' => $this->_sUniqId,
             'template_ghost' => $sJsValue,
             'multiple' => $isMultiple ? 1 : 0,
+            'latest' => 0, //--- Return the latest one uploaded ghost only.
             'storage_private' => isset($aParams['storage_private']) ? $aParams['storage_private'] : 1,
             'is_init_reordering' => isset($aParams['is_init_reordering']) ? $aParams['is_init_reordering'] : 0,
             'bx_if:restore_ghosts' => [
@@ -420,9 +421,12 @@ abstract class BxDolUploader extends BxDolFactory
         }
     }
 
-    public function getGhostsWithOrder($iProfileId, $sFormat, $sImagesTranscoder = false, $iContentId = false)
+    public function getGhostsWithOrder($iProfileId, $sFormat, $sImagesTranscoder = false, $iContentId = false, $isLatestOnly = false)
     {
         $a = $this->getGhosts($iProfileId, 'array', $sImagesTranscoder, $iContentId);
+        if($isLatestOnly)
+            $a = array_slice($a, 0, 1, true);
+
         if(!empty($a) && is_array($a))
             $a = ['g' => $a, 'o' => array_keys($a)];
 

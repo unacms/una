@@ -791,43 +791,27 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $sCoverSettings;
     }
 
-    function _prepareImage($aData, $sUniqId, $sUploader, $sStorage, $sField, $bAllowTweak)
+    function _prepareImage($aData, $sUniqId, $aUploaders, $sStorage, $sField, $bAllowTweak, $bAllowMultiple = false)
     {
-        $CNF = &$this->_oConfig->CNF;
-        
         $oUploader = null;
-        $sUploadersButtons = $sUploadersJs = '';
-
-        $aUploaders = $sUploader;
-        $sUploadersJs = '';
-        $sJsName = '';
+        $sJsName = $sJsCode = '';
         foreach ($aUploaders as $sUploaderObject) {
             $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorage, $sUniqId, $this);
             $sGhostTemplate = '{file_id}';
 
-            $aParamsJs = array_merge($oUploader->getUploaderJsParams(), 
-                [
-                    'content_id' => $aData['id'],
-                    'storage_private' => '0',
-                    'is_init_ghosts' => 0,
-                    'is_init_reordering' => 0
-                ]
-            );
-            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, false, $aParamsJs);
+            $sJsCode .= $oUploader->getUploaderJs($sGhostTemplate, $bAllowMultiple, array_merge($oUploader->getUploaderJsParams(), [
+                'latest' => 1,
+                'content_id' => $aData['id'],
+                'storage_private' => '0',
+                'is_init_ghosts' => 0,
+                'is_init_reordering' => 0
+            ]));
             $sJsName = $oUploader->getNameJsInstanceUploader();
         }
 
-        $aParamsButtons = [
-            'content_id' => $aData['id'],
-            'storage_private' => '0',
-            'btn_class' => '',
-            'button_title' => '',
-            'attrs' => "class='hidden'"
-        ];
-        
         $this->addJs(['BxDolUploader.js']);
-
-        $sAddCode = $this->parseHtmlByName('image_tweak.html', [
+        $this->addJsTranslation(['_sys_uploader_image_reposition_info']);        
+        return $this->parseHtmlByName('image_tweak.html', [
             'id' => $aData['id'],
             'js_object' => $sJsName,
             'unique_id' => $sUniqId,
@@ -836,11 +820,15 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'image_exists' => $aData[$sField] == 0 ? 'bx-image-edit-buttons-no-image' : '',
             'field' => $sField,
             'action_url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri(),
-            'uploader' => $oUploader->getUploaderButton($aParamsButtons),
-            'uploader_js' => $sUploadersJs,
-        ]); 
-        $this->addJsTranslation(['_sys_uploader_image_reposition_info']);        
-        return $sAddCode;
+            'uploader' => $oUploader->getUploaderButton([
+                'content_id' => $aData['id'],
+                'storage_private' => '0',
+                'btn_class' => '',
+                'button_title' => '',
+                'attrs' => "class='hidden'"
+            ]),
+            'uploader_js' => $sJsCode,
+        ]);
     }
 
     public function addCssJs()

@@ -541,7 +541,7 @@ class BxBasePage extends BxDolPage
          * Profile/Context view page.
          */
         if(isset($this->_aProfileInfo)) {
-            $oProfileModule = BxDolModule::getInstance($this->getModule());
+            $oProfileModule = BxDolModule::getInstance($this->_aProfileInfo['type']);
             if($oProfileModule !== null)
                 $aProfileContentInfo = $oProfileModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
 

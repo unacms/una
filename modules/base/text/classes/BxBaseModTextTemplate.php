@@ -648,8 +648,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $aVars = parent::getTmplVarsText($aData);
 
-        $sImage = '';
+        $aImageParams = $this->_getHeaderImageParams();
         $mixedImage = $this->_getHeaderImage($aData);
+
+        $sImage = '';
         if($mixedImage !== false) {
             if(!empty($mixedImage['object']))
                 $o = BxDolStorage::getObjectInstance($mixedImage['object']);
@@ -659,20 +661,20 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             if($o)
                 $sImage = $o->getFileUrlById($mixedImage['id']);
         }
-        
-        if(bx_is_api() ){
-            if($sImage){
-                $aVars['image'] = bx_api_get_image($CNF['OBJECT_STORAGE'], $mixedImage['id']);
-            }
+
+        if($this->_bIsApi) {
+            if($sImage)
+                $aVars['image'] = bx_api_get_image($aImageParams['storage'], $mixedImage['id']);
+
             return $aVars;
         }
-        
+
         $sAddClassPicture = "";
         $sAddCode = "";
         $oModule = $this->getModule();
-        $bIsAllowEditPicture =  CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData);
+        $bIsAllowEditPicture = CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData);
 
-        if(isset($CNF['FIELD_THUMB']) && isset($CNF['OBJECT_UPLOADERS']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'])){
+        if($aImageParams['field'] && $aImageParams['uploaders'] && $aImageParams['storage'] && $aImageParams['transcoder_cover']) {
             /**
              * @hooks
              * @hookdef hook-system-image_editor 'system', 'image_editor' - hook to override content header image editor
@@ -701,10 +703,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'is_allow_edit' => $bIsAllowEditPicture,
                 'image_type' => 'header_image',
                 'image_url' => $sImage,
-                'uploader' => !empty($CNF['OBJECT_UPLOADERS']) && is_array($CNF['OBJECT_UPLOADERS']) ? $CNF['OBJECT_UPLOADERS'][0] : '',
-                'storage' => isset($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
-                'transcoder' => isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER']) ? $CNF['OBJECT_IMAGES_TRANSCODER_COVER'] : '',
-                'field' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
+                'uploader' => $aImageParams['uploaders'] && is_array($aImageParams['uploaders']) ? $aImageParams['uploaders'][0] : '',
+                'storage' => $aImageParams['storage'],
+                'transcoder' => $aImageParams['transcoder_cover'],
+                'field' => $aImageParams['field'],
                 'is_background' => false,
                 'add_class' => &$sAddClassPicture,
                 'add_code' => &$sAddCode
@@ -713,8 +715,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $sImageTweak = '';
         $sUniqIdImage = genRndPwd (8, false);
-        if ($bIsAllowEditPicture && empty($sAddCode) && isset($CNF['FIELD_THUMB_POSITION'])){
-            $sImageTweak = $this->_prepareImage($aData, $sUniqIdImage, $CNF['OBJECT_UPLOADERS'], $CNF['OBJECT_STORAGE'], $CNF['FIELD_THUMB'], true);
+        if ($bIsAllowEditPicture && empty($sAddCode) && $aImageParams['field_position']){
+            $sImageTweak = $this->_prepareImage($aData, $sUniqIdImage, $aImageParams['uploaders'], $aImageParams['storage'], $aImageParams['field'], true);
         }
 
         
@@ -724,7 +726,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'condition' => !empty($sImage),
             'content' => array(
                 'entry_image' => $sImage,
-                'image_settings' => isset($CNF['FIELD_THUMB_POSITION']) ? $this->_getImageSettings($aData[$CNF['FIELD_THUMB_POSITION']]) : '',
+                'image_settings' => $aImageParams['field_position'] ? $this->_getImageSettings($aData[$aImageParams['field_position']]) : '',
                 'add_class' => $sAddClassPicture,
                 'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
                 'additional_code' => $sAddCode,
@@ -1095,6 +1097,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $CNF = &$this->_oConfig->CNF;
 
         return str_replace('_', '-', $this->MODULE . '_unit_' . $aData[$CNF['FIELD_ID']]);
+    }
+
+    protected function _getHeaderImageParams()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return [
+            'field' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : false,
+            'field_position' => isset($CNF['FIELD_THUMB_POSITION']) ? $CNF['FIELD_THUMB_POSITION'] : false,
+            'storage' => isset($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : false,
+            'uploaders' => isset($CNF['OBJECT_UPLOADERS']) ? $CNF['OBJECT_UPLOADERS'] : false,
+            'transcoder_cover' => isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER']) ? $CNF['OBJECT_IMAGES_TRANSCODER_COVER'] : false,
+        ];
     }
 
     protected function _getHeaderImage($aData)
