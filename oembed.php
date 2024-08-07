@@ -10,6 +10,9 @@
 require_once('./inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
+if (getParam('sys_embed_default') != 'sys_oembed')
+    exit;
+
 $aLinks = bx_get('l');
 
 bx_import('BxDolEmbed');
