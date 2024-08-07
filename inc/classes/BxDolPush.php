@@ -88,6 +88,10 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
      */
     public static function getNotificationsCount($iProfileId = 0, &$aBubbles = null)
     {    
+        if ('' != trim(getParam('sys_api_url_root_push'))) {
+             return bx_srv('bx_notifications', 'get_unread_notifications_num', [$iProfileId]);
+        }   
+        
         $iMemberIdCookie = null;
         $bLoggedMemberGlobals = null;
         if ($iProfileId && $iProfileId != bx_get_logged_profile_id()) {
