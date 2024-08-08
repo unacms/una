@@ -14,12 +14,19 @@
  */
 class BxMarketFormEntry extends BxBaseModTextFormEntry
 {
+    protected $_bPhotoGhostCheckboxes;
+
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_market';
         parent::__construct($aInfo, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        /*
+         * Disabled since Header Image and Icon uploaders were moved on view product page.
+         */
+        $this->_bPhotoGhostCheckboxes = false;
 
         $iProfileId = bx_get_logged_profile_id();
 
@@ -160,10 +167,9 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         return $iContentId;
     }
 
-	function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        
 
         $sNameKey = $CNF['FIELD_NAME'];
         if(isset($this->aInputs[$sNameKey])) {
@@ -176,18 +182,19 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
             }
         }
 
-	    if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
-            $aCover = bx_process_input (bx_get($CNF['FIELD_COVER']), BX_DATA_INT);
+        //TODO: Continue from here. Do the same for Thumb.
+        if(($aCover = bx_get($CNF['FIELD_COVER'])) !== false && $this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
+            $aCover = bx_process_input($aCover, BX_DATA_INT);
 
             $aValsToAdd[$CNF['FIELD_COVER']] = 0;
-            if (!empty($aCover) && is_array($aCover) && ($iFileCover = array_pop($aCover)))
+            if(!empty($aCover) && is_array($aCover) && ($iFileCover = array_pop($aCover)))
                 $aValsToAdd[$CNF['FIELD_COVER']] = $iFileCover;
         }
 
-		$aPackage = bx_process_input(bx_get($CNF['FIELD_PACKAGE']), BX_DATA_INT);
-		$aValsToAdd[$CNF['FIELD_PACKAGE']] = 0;
-		if(!empty($aPackage) && is_array($aPackage) && ($iFilePackage = array_pop($aPackage)))
-			$aValsToAdd[$CNF['FIELD_PACKAGE']] = $iFilePackage;
+        $aPackage = bx_process_input(bx_get($CNF['FIELD_PACKAGE']), BX_DATA_INT);
+        $aValsToAdd[$CNF['FIELD_PACKAGE']] = 0;
+        if(!empty($aPackage) && is_array($aPackage) && ($iFilePackage = array_pop($aPackage)))
+            $aValsToAdd[$CNF['FIELD_PACKAGE']] = $iFilePackage;
 
         $iResult = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
 
@@ -253,22 +260,24 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         }
     }
 
-    protected function _getPhotoGhostTmplVars($aContentInfo = array())
+    protected function _getPhotoGhostTmplVars($aContentInfo = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aResult = parent::_getPhotoGhostTmplVars($aContentInfo);
-        $aResult = array_merge($aResult, array(
-            'cover_id' => isset($aContentInfo[$CNF['FIELD_COVER']]) ? $aContentInfo[$CNF['FIELD_COVER']] : 0,
-            'bx_if:set_cover' => array (
-                'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetCover(),
-                'content' => array (
-                    'name_cover' => $CNF['FIELD_COVER'],
-                ),
-            ),
-        ));
 
-        return $aResult;
+        if(!empty($aResult['bx_if:set_thumb']))
+            $aResult['bx_if:set_thumb']['condition'] = $this->_bPhotoGhostCheckboxes && $aResult['bx_if:set_thumb']['condition'];
+
+        return array_merge($aResult, [
+            'cover_id' => isset($aContentInfo[$CNF['FIELD_COVER']]) ? $aContentInfo[$CNF['FIELD_COVER']] : 0,
+            'bx_if:set_cover' => [
+                'condition' => $this->_bPhotoGhostCheckboxes && $this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED,
+                'content' => [
+                    'name_cover' => $CNF['FIELD_COVER'],
+                ]
+            ]
+        ]);
     }
 
     protected function _getFileGhostTmplVars($aContentInfo = array())

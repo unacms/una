@@ -567,10 +567,11 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if(isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]) && empty($this->getCleanValue($CNF['FIELD_CHANGED'])))
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
-        if(CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($iContentId) && isset($CNF['FIELD_THUMB'])) {
-            $aThumb = bx_process_input (bx_get($CNF['FIELD_THUMB']), BX_DATA_INT);
+        if(CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($iContentId) && isset($CNF['FIELD_THUMB']) && ($aThumb = bx_get($CNF['FIELD_THUMB'])) !== false) {
+            $aThumb = bx_process_input($aThumb, BX_DATA_INT);
+
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
-            if (!empty($aThumb)){
+            if(!empty($aThumb)) {
                 if(is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
                    $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
                else
