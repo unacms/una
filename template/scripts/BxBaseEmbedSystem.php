@@ -84,7 +84,15 @@ class BxBaseEmbedSystem extends BxDolEmbed
         
 
         if($a['image'] == '') {
-            $b = json_decode(bx_file_get_contents("https://api.microlink.io/?url=" . $sUrl), true);
+            $c = [];
+            if (getParam('sys_embed_microlink_key') != ''){
+                $c = bx_file_get_contents("https://pro.microlink.io/?url=" . $sUrl, [], 'get', ['x-api-key: ' . getParam('sys_embed_microlink_key')]);
+            }
+            else{
+                $c = bx_file_get_contents("https://api.microlink.io/?url=" . $sUrl);
+            }
+                
+            $b = json_decode($c, true);
             $a = [
                 'title' => $b['data']['title'],
                 'description' => $b['data']['description'],
