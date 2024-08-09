@@ -69,7 +69,7 @@ BxPollsEntry.prototype.changeBlock = function(oLink, sBlock, mixedContent, onCom
 
             oContent.bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                 $(this).replaceWith(oData.content);
-                if(this._bEmbed)
+                if(this._bEmbed || sBlock === 'results')
                     $this.resizeEmbed();
             });
         };
