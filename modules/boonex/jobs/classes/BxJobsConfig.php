@@ -18,6 +18,8 @@ class BxJobsConfig extends BxBaseModGroupsConfig
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-job-profile' => 'checkAllowedView',
             'edit-job-profile' => 'checkAllowedEdit',
+            'job-manage' => 'checkAllowedEdit',
+            'job-questionnaire' => 'checkAllowedEdit',
             'edit-job-cover' => 'checkAllowedChangeCover',
             'invite-to-job' => 'checkAllowedInvite',
             'delete-job-profile' => 'checkAllowedDelete',

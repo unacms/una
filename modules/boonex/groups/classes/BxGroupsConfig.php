@@ -18,6 +18,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-group-profile' => 'checkAllowedView',
             'edit-group-profile' => 'checkAllowedEdit',
+            'group-manage' => 'checkAllowedEdit',
             'edit-group-cover' => 'checkAllowedChangeCover',
             'invite-to-group' => 'checkAllowedInvite',
             'delete-group-profile' => 'checkAllowedDelete',
