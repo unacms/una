@@ -1028,6 +1028,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewAccountOutline' => '',
             'GetBlockItem' => '',
             'GetPosts' => '',
+            'Get' => '',
             'Repost' => '',
             'Delete' => '',
             'GetEditForm' => '',
@@ -3604,11 +3605,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGet($aParams)
     {
+        if($this->_bIsApi && is_string($aParams))
+            $aParams = bx_api_get_browse_params($aParams, true);
+
         $aParams = $this->_prepareParams($aParams);
-
         $aParams['return_data_type'] = 'array';
-        return $this->_oTemplate->getPosts($aParams);
 
+        return $this->_oTemplate->getPosts($aParams);
     }
 
     public function serviceAdd($aValues)
@@ -6135,6 +6138,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['name']))
             $aParams['name'] = '';
         
+        if(empty($aParams['browse']))
+            $aParams['browse'] = 'list';
+            
         if(empty($aParams['view']))
             $aParams['view'] = BX_TIMELINE_VIEW_DEFAULT;
 
@@ -6178,12 +6184,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(isset($aParams['validate']) && !is_array($aParams['validate']))
             $aParams['validate'] = !empty($aParams['validate']) ? explode(',', $aParams['validate']) : [];
 
-        $aParams = array_merge($aParams, array(
-            'browse' => 'list',
-            'status' => BX_TIMELINE_STATUS_ACTIVE,
-            'moderator' => $this->isModeratorForProfile($aParams['viewer_id']),
-            'dynamic_mode' => false,
-        ));
+        if(empty($aParams['status']))
+            $aParams['status'] = BX_TIMELINE_STATUS_ACTIVE;
+
+        if(empty($aParams['moderator']))
+            $aParams['moderator'] = $this->isModeratorForProfile($aParams['viewer_id']);
+
+        if(empty($aParams['dynamic_mode']))
+            $aParams['dynamic_mode'] = false;
 
         return $aParams;
     }

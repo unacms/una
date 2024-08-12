@@ -1495,7 +1495,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     protected function _isList($aParams)
     {
-        return in_array($aParams['browse'], ['list', 'ids']) && (!isset($aParams['newest']) || $aParams['newest'] === false);
+        return $this->_oConfig->isBrowseList($aParams) && (!isset($aParams['newest']) || $aParams['newest'] === false);
     }
 
     public function getMenuItemMaxOrder($sSetName)

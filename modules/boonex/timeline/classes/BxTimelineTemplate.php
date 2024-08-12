@@ -827,6 +827,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         else
             $aEvents = $this->_oDb->getEvents($aParamsDb);
 
+        if($this->_oConfig->isBrowseItem($aParams))
+            return $bReturnArray ? $aEvents : $this->getPost($aEvents, $aParams);
+
         //--- After: Check for Next
         $bNext = false;
         if(count($aEvents) > $iPerPage) {

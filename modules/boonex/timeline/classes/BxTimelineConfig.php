@@ -1014,6 +1014,16 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     {
         return json_decode(base64_decode(urldecode($sValue)), true);
     }
+    
+    public function isBrowseItem($aParams)
+    {
+        return isset($aParams['browse']) && in_array($aParams['browse'], ['id', 'descriptor', 'first', 'last']);
+    }
+
+    public function isBrowseList($aParams)
+    {
+        return isset($aParams['browse']) && in_array($aParams['browse'], ['list', 'ids']);
+    }
 
     public function setUserChoice($aChoices = array())
     {
