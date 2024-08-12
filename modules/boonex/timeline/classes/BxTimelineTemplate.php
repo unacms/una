@@ -1978,19 +1978,20 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['author_data'] = BxDolProfile::getData($aEvent['object_owner_id']);
         $aEvent['author_actions'] = [];
 
-        $iInitiatorProfile = (int)bx_get_logged_profile_id();
-        $iContentProfile = (int)$aEvent['object_owner_id'];
+        if(($iInitiatorProfile = (int)bx_get_logged_profile_id()) != 0) {
+            $iContentProfile = (int)$aEvent['object_owner_id'];
 
-        $sConnection = 'sys_profiles_subscriptions';      
-        if(($oConnection = BxDolConnection::getObjectInstance($sConnection)) !== false && $iInitiatorProfile != $iContentProfile && !$oConnection->isConnected($iInitiatorProfile, $iContentProfile)) {
-            $aEvent['author_actions'][] = [
-                'type' => 'connections',
-                'o' => $sConnection,
-                'a' => 'add',
-                'iid' => $iInitiatorProfile,
-                'cid' => $iContentProfile,
-                'title' => _t('_sys_menu_item_title_sm_subscribe'),
-            ];
+            $sConnection = 'sys_profiles_subscriptions';      
+            if(($oConnection = BxDolConnection::getObjectInstance($sConnection)) !== false && $iInitiatorProfile != $iContentProfile && !$oConnection->isConnected($iInitiatorProfile, $iContentProfile)) {
+                $aEvent['author_actions'][] = [
+                    'type' => 'connections',
+                    'o' => $sConnection,
+                    'a' => 'add',
+                    'iid' => $iInitiatorProfile,
+                    'cid' => $iContentProfile,
+                    'title' => _t('_sys_menu_item_title_sm_subscribe'),
+                ];
+            }
         }
 
         if ($aEvent['content']['url'])
@@ -2050,8 +2051,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $aEvent['cmts'] = $aCmts;
             $aEvent['cmts']['count'] = $aEvent['comments']['count'];
-            
-           
         }
 
         return $aEvent;
