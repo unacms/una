@@ -143,6 +143,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_groups_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_groups_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_groups_view_profile_closed',
+            'OBJECT_PAGE_JOINED_ENTRY' => 'bx_groups_join_profile',
             'OBJECT_PRIVACY_VIEW' => 'bx_groups_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_groups_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_groups_allow_view_notification_to',

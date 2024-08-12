@@ -128,12 +128,14 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
             $bPartiallyVisible = false;
             if(!empty($CNF['OBJECT_PRIVACY_VIEW']) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
                 $bPartiallyVisible = $oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
             /*
              * If partially visible, replace current page with different set of blocks.
              */
-            if($bPartiallyVisible && $this->_sObject == $CNF['OBJECT_PAGE_VIEW_ENTRY']) {
-                $aObject = BxDolPageQuery::getPageObject($CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED']);
+
+            $bJoinPage = isset($CNF['OBJECT_PAGE_JOINED_ENTRY']) && $this->_sObject === $CNF['OBJECT_PAGE_JOINED_ENTRY'];
+            if($bPartiallyVisible && ($this->_sObject === $CNF['OBJECT_PAGE_VIEW_ENTRY'] || $bJoinPage)) {
+                $sPage = $bJoinPage ? $CNF['OBJECT_PAGE_JOINED_ENTRY'] : $CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED'];
+                $aObject = BxDolPageQuery::getPageObject($sPage);
                 $this->_sObject = $aObject['object'];
                 $this->_aObject = $aObject;
                 $this->_oQuery = new BxDolPageQuery($this->_aObject);

@@ -164,6 +164,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_organizations_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_organizations_view_profile_closed',
+            'OBJECT_PAGE_JOINED_ENTRY' => 'bx_organizations_join_profile',
             'OBJECT_PRIVACY_VIEW' => 'bx_organizations_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_organizations_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_organizations_allow_view_notification_to',

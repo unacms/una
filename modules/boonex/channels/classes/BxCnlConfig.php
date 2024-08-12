@@ -110,6 +110,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_channels_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_channels_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_channels_view_profile_closed',
+            'OBJECT_PAGE_JOINED_ENTRY' => 'bx_channels_join_profile',
             'OBJECT_PRIVACY_VIEW' => 'bx_channels_allow_view_to',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_channels_allow_view_notification_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_channels_administration',

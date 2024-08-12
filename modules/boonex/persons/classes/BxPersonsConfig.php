@@ -130,6 +130,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_persons_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_persons_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_persons_view_profile_closed',
+            'OBJECT_PAGE_JOINED_ENTRY' => 'bx_persons_join_profile',
             'OBJECT_PRIVACY_VIEW' => 'bx_persons_allow_view_to',
             'OBJECT_PRIVACY_POST' => 'bx_persons_allow_post_to',
             'OBJECT_PRIVACY_CONTACT' => 'bx_persons_allow_contact_to',
