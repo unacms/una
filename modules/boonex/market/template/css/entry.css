@@ -9,9 +9,9 @@
   display: flex;
   width: 100%;
   justify-content: center;
-  left: 0px;
+  left: 0;
   top: auto;
-  bottom: -0.75rem;
+  bottom: -0.5rem;
 }
 .bx-market-ect-icon .bx-btn.bx-btn-small i, 
 .bx-market-ect-icon .bx-btn.bx-btn-small img, 
@@ -28,6 +28,10 @@
 div.bx-market-entity-content {}
 
 div.bx-market-ec-title {}
+
+div.bx-market-ect-title h1 {
+    margin-bottom: 0;
+}
 div.bx-market-ec-description p:first-child {
     margin-top: 0;
 }

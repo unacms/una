@@ -12,11 +12,11 @@
         __additional_code__
     </bx_if:show_entry_cover>
     <div class="bx-base-text-entity-content bx-market-entity-content bx-def-constraint-list bx-def-constraint-pre bx-def-constraint-object bx-def-constraint-iframe bx-def-constraint-img bx-def-vanilla-html">
-        <div class="bx-market-ec-title flex">
+        <div class="bx-market-ec-title flex items-center">
             <bx_if:show_entry_icon>
-                <div class="bx-market-ect-icon bx-def-thumb-size relative flex-none mr-4 not-prose">
-                    <img class="bx-def-thumb-size bx-def-round-corners bx-image-edit-source-__unique_id__" <bx_if:show_icon_empty> style="display:none"</bx_if:show_icon_empty> src="__entry_icon__"/>
-                    <div class="bx-def-thumb-size bx-image-edit-placeholder-__unique_id__ flex justify-center items-center bg-gray-100 dark:bg-gray-700 rounded-md" <bx_if:show_icon> style="display:none"</bx_if:show_icon>>
+                <div class="bx-market-ect-icon bx-def-ava-size relative flex-none mr-4 not-prose">
+                    <img class="bx-def-ava-size bx-def-round-corners bx-image-edit-source-__unique_id__" <bx_if:show_icon_empty> style="display:none"</bx_if:show_icon_empty> src="__entry_icon__"/>
+                    <div class="bx-def-ava-size bx-image-edit-placeholder-__unique_id__ flex justify-center items-center bg-gray-100 dark:bg-gray-700 rounded-md text-2xl" <bx_if:show_icon> style="display:none"</bx_if:show_icon>>
                         <i class="sys-icon __icon__"></i>
                     </div>
                     __icon_tweak__
@@ -24,10 +24,10 @@
             </bx_if:show_entry_icon>
             <div class="bx-market-ect-title bx-base-text-title-bages flex-1">
                 <h1>__entry_title__</h1>
-                <div class="bx-base-bages-container absolute flex -translate-y-5/4">__badges__</div>
+                <div class="bx-base-bages-container flex">__badges__</div>
             </div>
         </div>
-        <div class="bx-market-ec-description">__entry_text__</div>
+        <div class="bx-market-ec-description mt-4">__entry_text__</div>
     </div>
     <bx_if:show_screenshots>
         <div class="bx-market-ec-slideshow bx-def-margin-top">__screenshots__</div>
