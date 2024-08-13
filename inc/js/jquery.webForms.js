@@ -386,12 +386,16 @@
                                 oStylesheet = document.head.querySelector("link[href*='" + sNameD + "']");
                                 if(oStylesheet)
                                     oStylesheet.href = oStylesheet.href.replace(sNameD, sNameL);
+                                else
+                                    bx_get_style(sUrlRoot + 'plugins_public/flatpickr/dist/' + sNameL);
                                 break;
 
                             case 2: //--- dark
                                 oStylesheet = document.head.querySelector("link[href*='" + sNameL + "']");
                                 if(oStylesheet)
                                     oStylesheet.href = oStylesheet.href.replace(sNameL, sNameD);
+                                else
+                                    bx_get_style(sUrlRoot + 'plugins_public/flatpickr/dist/' + sNameD);
                                 break;
                         }
                     });
