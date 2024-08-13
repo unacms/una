@@ -613,11 +613,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     
     protected function _getCellLastActive($mixedValue, $sKey, $aField, $aRow)
     {
-        $iSessionDate = (new BxDolSessionQuery())->getLastActivityAccount($aRow['id']);
-        $iTs = max($iSessionDate, $aRow['active']);
-        $mixedValue = $iTs ? bx_time_js($iTs) : _t('_sys_not_available');
-
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+        $iTs = max((int)$mixedValue, (int)$aRow['active']);
+        return parent::_getCellDefault($iTs ? bx_time_js($iTs) : _t('_sys_not_available'), $sKey, $aField, $aRow);
     } 
     
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
