@@ -827,8 +827,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         else
             $aEvents = $this->_oDb->getEvents($aParamsDb);
 
-        if($this->_oConfig->isBrowseItem($aParams))
-            return $bReturnArray ? $aEvents : $this->getPost($aEvents, $aParams);
+        if($this->_oConfig->isBrowseItem($aParams)) {
+            $sEvent = $this->getPost($aEvents, $aParams);
+            if(empty($sEvent))
+                return $bReturnArray ? [] : '';
+
+            if($this->_bIsApi)
+                return $this->_getPostApi($aEvents);
+
+            return $bReturnArray ? $aEvents : $sEvent;
+        }
 
         //--- After: Check for Next
         $bNext = false;
