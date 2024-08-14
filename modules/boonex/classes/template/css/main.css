@@ -10,6 +10,14 @@
     min-height:1rem;
 }
 
+.bx-course-classes .bx-form-section-title .bx-form-section-toggler {
+    display: none;
+}
+
+.bx-course-classes .bx-form-section-title .bx-classes-module-action:last-child {
+    margin-right: 1.5rem;
+}
+
 .bx-course-classes .bx-classes-placeholder:not(:first-child),
 .bx-course-classes .bx-classes-class:not(:first-child) {
     margin-top:1rem;

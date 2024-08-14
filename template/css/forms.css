@@ -16,12 +16,8 @@
     padding-top:0; 
 }
 
-.bx-form-advanced-wrapper .bx-form-section-wrapper:last-child .bx-form-section-content {
+.bx-form-advanced-wrapper .bx-form-section-divider:last-child .bx-form-section-content {
     padding-bottom:0;
-}
-
-.bx-form-advanced-wrapper .bx-form-section-wrapper:first-child .bx-form-row-view-wrapper:first-child {
-    padding-top:0;
 }
 
 .bx-form-section-wrapper {
