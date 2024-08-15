@@ -645,6 +645,7 @@ class BxBaseCmtsServices extends BxDol
         }
         $aCmtsRv = [];
         foreach ($aCmts as $aCmt) {
+            $aBp['order_way'] = 'asc';
             $oCmt = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
             if($oCmt === false)
                 continue;
