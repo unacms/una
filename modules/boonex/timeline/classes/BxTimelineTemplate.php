@@ -2055,6 +2055,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if (getParam('bx_timeline_preload_comments') > 0){
                 $aCmtsParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0,'is_form' => false, 'per_view' => getParam('bx_timeline_preload_comments')];
                 $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, $aCmtsParams], 'TemplCmtsServices');
+                $aCmts['data'] = array_reverse($aCmts['data']);
             }
 
             $aEvent['cmts'] = $aCmts;
