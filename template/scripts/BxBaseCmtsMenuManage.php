@@ -26,6 +26,31 @@ class BxBaseCmtsMenuManage extends BxTemplCmtsMenuActions
         $this->_bDynamicMode = true;
         $this->_bShowTitles = true;
     }
+
+    public function initContentParams()
+    {
+        parent::initContentParams();
+
+        $this->_aContentParams = array_merge($this->_aContentParams, [
+            'cmt_system' => $this->_oCmts->getSystemName(),
+            'cmt_object_id' => $this->_oCmts->getId(),
+            'cmt_id' => (int)$this->_aCmt['cmt_id']
+        ]);
+    }
+
+    public function setContentParams($aParams)
+    {   
+        if(!isset($aParams['cmt_system'], $aParams['cmt_object_id'], $aParams['cmt_id']))
+            return false;
+
+        $oCmts = BxTemplCmts::getObjectInstance($aParams['cmt_system'], (int)$aParams['cmt_object_id']);
+        if(!$oCmts)
+            return false;
+
+        $this->setCmtsData($oCmts, (int)$aParams['cmt_id']);
+
+        return parent::setContentParams($aParams);
+    }
 }
 
 /** @} */

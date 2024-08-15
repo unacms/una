@@ -86,6 +86,7 @@ class BxBaseMenu extends BxDolMenu
         return [
             'object' => $this->_sObject, 
             'persistent' => $this->_aObject['persistent'],
+            'params' => $this->getContentParams(),
             'items' => $aItems
         ];
     }

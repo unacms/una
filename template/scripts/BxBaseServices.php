@@ -42,6 +42,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceGetSafeServices()
     {
         return array(
+            'GetMenu' => 'BxBaseServices',
             'GetCreatePostForm' => 'BxBaseServices',
             'GetProductsNames' => 'BxBaseServices',
             'KeywordSearch' => 'BxBaseServices',
@@ -791,6 +792,26 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'use_as_author' => true,
             'show_text' => false
         ]]);
+    }
+
+    public function serviceGetMenu($aParams)
+    {
+        $mixedResulEmpty = $this->_bIsApi ? [] : '';
+
+        if($this->_bIsApi && is_string($aParams))
+            $aParams = bx_api_get_browse_params($aParams);
+
+        if(!isset($aParams['object']))
+            return $mixedResulEmpty;
+
+        $oMenu = BxDolMenu::getObjectInstance($aParams['object']);
+        if(!$oMenu)
+            return $mixedResulEmpty;
+
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $oMenu->setContentParams($aParams['params']);
+
+        return $this->_bIsApi ? $oMenu->getCodeAPI() : $oMenu->getCode();
     }
 
     /**

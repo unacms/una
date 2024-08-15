@@ -104,6 +104,8 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     protected $_sSessionKeyCollapsed;
 
+    protected $_aContentParams;
+
     /**
      * Constructor
      * @param $aObject array of menu options
@@ -130,6 +132,8 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $this->_bMultilevel = !empty($this->_aObject['set_name']) && $this->_oQuery->isSetMultilevel($this->_aObject['set_name']);
 
         $this->_sSessionKeyCollapsed = 'bx_menu_collapsed_';
+
+        $this->_aContentParams = [];
 
         $this->addMarkers([
             'object' => $this->_sObject
@@ -359,6 +363,26 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     public function removeMarker ($s) 
     {
         unset($this->_aMarkers[$s]);
+    }
+
+    public function initContentParams()
+    {
+        $this->_aContentParams = [];
+    }
+
+    public function setContentParams($aParams)
+    {
+        $this->_aContentParams = $aParams;
+
+        return true;
+    }
+
+    public function getContentParams()
+    {
+        if(!$this->_aContentParams)
+            $this->initContentParams();
+
+        return $this->_aContentParams;
     }
 
     public function performActionSetCollapsed($mixedValue)
