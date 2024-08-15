@@ -69,6 +69,8 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
 
+        $sResult = parent::getPageCaption();
+
         //--- Menu Right ---//
         $aItemsRight = array(
             'template' => 'menu_top_toolbar.html',
@@ -79,6 +81,13 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
                     'link' => 'javascript:void(0);',
                     'onclick' => 'glTour.start()',
                     'title' => '_adm_tmi_cpt_tour'
+                ),
+                'assistant' => array(
+                    'name' => 'assistant',
+                    'icon' => 'tmi-assistant.svg',
+                    'link' => 'javascript:void(0);',
+                    'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('assistant', this)",
+                    'title' => '_adm_tmi_cpt_assistant'
                 ),
                 'site' => array(
                     'name' => 'site',
@@ -98,6 +107,9 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
 
         if(!$this->_bShowHeaderRightSite)
             unset($aItemsRight['menu_items']['site']);
+        
+        if(!$this->_bShowHeaderRightAssistant)
+            unset($aItemsRight['menu_items']['assistant']);
 
         if($this->_sType != BX_DOL_STUDIO_WTYPE_DEFAULT || getParam('site_tour_studio') != 'on')
             unset($aItemsRight['menu_items']['tour']);
@@ -107,7 +119,7 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         $oTopMenu->setContent(BX_DOL_STUDIO_MT_LEFT, $this->getPageBreadcrumb());
         $oTopMenu->setContent(BX_DOL_STUDIO_MT_RIGHT, $aItemsRight);
 
-        return '';
+        return $sResult;
     }
 
     protected function wrapWidgets($sName, $sContent, $bHidden = false)

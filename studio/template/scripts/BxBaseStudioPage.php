@@ -155,6 +155,12 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageCaption()
     {
+        if(($sAssistant = $this->getPageCaptionAssistant()) != '') {
+            $sAssistant = BxTemplStudioFunctions::getInstance()->popupBox('bx-std-pcap-menu-popup-assistant', _t('_adm_txt_assistant_popup_title'), $sAssistant, true);
+
+            BxDolStudioTemplate::getInstance()->addInjection('injection_header', 'text', $sAssistant);
+        }
+
         return '';
     }
 
@@ -196,6 +202,26 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $oTemplate->parseHtmlByName('page_caption_help.html', array(
             'content' => $sContent
         ));
+    }
+    
+    protected function getPageCaptionAssistant()
+    {
+        if(!$this->_bShowHeaderRightAssistant)
+            return '';
+
+        $oAssistant = BxDolAIAssistant::getObjectInstance($this->iPageAssistantId);
+        if(!$oAssistant)
+            return '';
+
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $sContent = $oAssistant->getAskChat($this->iPageAssistantChatName, '', $oTemplate);
+        if(!$sContent)
+            return '';
+
+        return $oTemplate->parseHtmlByName('page_caption_assistant.html', [
+            'content' => $sContent
+        ]);
     }
 
     protected function getJsResult($sMessage, $bTranslate = true, $bRedirect = false, $sRedirect = '', $sOnResult = '')

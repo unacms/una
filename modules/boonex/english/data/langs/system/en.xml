@@ -1771,6 +1771,7 @@
     <string name="_adm_stg_cpt_option_sys_agents_model"><![CDATA[Default model]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Profile]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_asst_chats_trans_del"><![CDATA[Auto delete transient chats everyday]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_sa"><![CDATA[Assistant for Studio]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_lsa"><![CDATA[Assistant for Live search]]></string>
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Viewport meta tag]]></string>
 
@@ -1893,11 +1894,13 @@
 	<string name="_adm_strg_txt_height"><![CDATA[Height]]></string>
 	<string name="_adm_strg_err_height"><![CDATA[Height is essential. Please, fill in this field.]]></string>
         <string name="_adm_tmi_cpt_account"><![CDATA[Menu]]></string>
+        <string name="_adm_tmi_cpt_assistant"><![CDATA[Assistant]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
         <string name="_adm_tmi_cpt_search"><![CDATA[Search...]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Launcher]]></string>
         <string name="_adm_txt_active_api"><![CDATA[Available in App]]></string>
+        <string name="_adm_txt_assistant_popup_title"><![CDATA[How can I help?]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Forgot password?]]></string>

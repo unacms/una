@@ -38,6 +38,8 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
 
+        $sResult = parent::getPageCaption();
+
         $this->updateHistory();
 
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -59,20 +61,29 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         $aItemsRight = [];
 
         if($bHelp)
-            $aItemsRight['help'] = array(
+            $aItemsRight['help'] = [
                 'name' => 'help',
                 'icon' => 'tmi-help.svg',
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('help', this)",
                 'title' => '_adm_txt_show_help'
-            );
+            ];
+        
+        if($this->_bShowHeaderRightAssistant)
+            $aItemsRight['assistant'] = [
+                'name' => 'assistant',
+                'icon' => 'tmi-assistant.svg',
+                'link' => 'javascript:void(0);',
+                'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('assistant', this)",
+                'title' => '_adm_tmi_cpt_assistant'
+            ];
 
         if($bActions)
-            $aItemsRight['actions'] = array(
+            $aItemsRight['actions'] = [
                 'name' => 'actions',
                 'icon' => 'tmi-actions.svg',
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
                 'title' => '_adm_txt_show_actions'
-            );
+            ];
 
         if($this->_bShowHeaderRightSite)
             $aItemsRight['site'] = [
@@ -82,13 +93,13 @@ class BxBaseStudioWidget extends BxDolStudioWidget
                 'title' => '_adm_tmi_cpt_site'
             ];
 
-        $aItemsRight['account'] = array(
+        $aItemsRight['account'] = [
             'name' => 'account',
             'icon' => 'tmi-account.svg',
             'link' => 'javascript:void(0);',
             'onclick' => 'bx_menu_popup_inline(\'#bx-std-pcap-menu-popup-account\', this);',
             'title' => '_adm_tmi_cpt_account'
-        );
+        ];
 
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
         $oTopMenu->setPageName($this->aPage['name']);
@@ -99,7 +110,7 @@ class BxBaseStudioWidget extends BxDolStudioWidget
             'menu_items' => $aItemsRight
         ));
 
-        return '';
+        return $sResult;
     }
 
     public function getPageCode($sPage = '', $bWrap = true)

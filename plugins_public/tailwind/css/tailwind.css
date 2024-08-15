@@ -1245,6 +1245,7 @@
     }
 
     .bx-std #bx-std-pcap-menu-popup-help .bx-popup,
+    .bx-std #bx-std-pcap-menu-popup-assistant .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-actions .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-account .bx-popup,
     .bx-std .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {

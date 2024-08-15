@@ -313,18 +313,22 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
 /*--- Account, Actions, Help and Settings popups ---*/
 body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-help,
+#bx-std-pcap-menu-popup-assistant,
 #bx-std-pcap-menu-popup-actions,
 #bx-std-pcap-menu-popup-account {
     overflow: visible;
 }
 .bx-std-mod-popup-settings-wrapper .bx-popup-gap,
 #bx-std-pcap-menu-popup-help .bx-popup-gap,
+#bx-std-pcap-menu-popup-assistant .bx-popup-gap,
 #bx-std-pcap-menu-popup-actions .bx-popup-gap,
 #bx-std-pcap-menu-popup-account .bx-popup-gap {
     margin-left: 0;
     margin-right: 0;
 }
 #bx-std-pcap-menu-popup-help .bx-popup,
+#bx-std-pcap-menu-popup-assistant .bx-popup,
+#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header-color-bg,
 #bx-std-pcap-menu-popup-actions .bx-popup,
 #bx-std-pcap-menu-popup-account .bx-popup,
 .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
@@ -364,6 +368,10 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-help .bx-popup,
 #bx-std-pcap-menu-popup-help .bx-popup a,
 #bx-std-pcap-menu-popup-help .bx-popup .sys-icon,
+#bx-std-pcap-menu-popup-assistant .bx-popup,
+#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header h2,
+#bx-std-pcap-menu-popup-assistant .bx-popup a,
+#bx-std-pcap-menu-popup-assistant .bx-popup .sys-icon,
 #bx-std-pcap-menu-popup-actions .bx-popup,
 #bx-std-pcap-menu-popup-account .bx-popup li a,
 #bx-std-pcap-menu-popup-account .bx-popup li .sys-icon {
@@ -373,6 +381,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     opacity: 0.7;
 }
 #bx-std-pcap-menu-popup-help .bx-popup a:hover,
+#bx-std-pcap-menu-popup-assistant .bx-popup a:hover,
 #bx-std-pcap-menu-popup-account .bx-popup li:hover a,
 #bx-std-pcap-menu-popup-account .bx-popup li:hover a .sys-icon {
     color: rgba(255, 255, 255, 0.85);
@@ -389,4 +398,16 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 .bx-std-mod-popup-settings-wrapper .bx-form-input-select {
     border-color: rgb(55, 65, 81, 1.0);
     background-color: rgb(17, 24, 39, 1.0);
+}
+
+/*--- Assistant ---*/
+#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header {
+    border-bottom: 1px solid rgb(75 85 99);
+}
+.bx-std-pcap-assistant .cmt-reply.cmt-reply-bottom {
+    margin-bottom: 0;
+}
+.bx-std-pcap-assistant .bx-form-value .bx-form-input-textarea {
+    height: 5.0rem;
+    background-color: rgb(31 41 55);
 }

@@ -95,6 +95,48 @@ class BxDolAIAssistant extends BxDol
             'onclick' => "javascrip:bx_agents_action(this, 'asst', 'ask', {id: " . $this->_iId . ", text: '" . $sText . "'})"
         ]);
     }
+    
+    public function getAskChat($sName = '', $sText = '', $oTemplate = false)
+    {
+        if(!$oTemplate)
+            $oTemplate = BxDolTemplate::getInstance();
+
+        $bName = !empty($sName);
+        $bText = !empty($sText);
+
+        $iChatId = 0;
+        if($bName) {
+            $aChat = $this->_oDb->getChatsBy(['sample' => 'name', 'name' => $sName]);
+            if(!empty($aChat) && is_array($aChat))
+                $iChatId = (int)$aChat['id'];
+        }
+
+        if(empty($iChatId)) {
+            if(!$bName)
+                $sName = self::getChatName($bText ? strmaxtextlen($sText, 8) : genRndPwd());
+
+            $iChatId = $this->_oDb->insertChat([
+                'name' => $sName,
+                'type' => BX_DOL_AI_ASST_TYPE_TRANSIENT,
+                'assistant_id' => $this->_iId, 
+                'added' => time(),
+            ]);
+        }
+
+        $sResult = '';
+        if($iChatId !== false && ($oCmts = BxDolAI::getInstance()->getAssistantChatCmtsObject($iChatId, $oTemplate)) !== false) {
+            if(!empty($sText))
+                $oCmts->add([
+                    'cmt_author_id' => bx_get_logged_profile_id(),
+                    'cmt_parent_id' => 0,
+                    'cmt_text' => $sText
+                ]);
+
+            $sResult = $oCmts->getCommentsBlock();
+        }
+
+        return $sResult;
+    }
 
     public function deleteChat($mixedChat)
     {

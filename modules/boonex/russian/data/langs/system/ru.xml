@@ -1747,6 +1747,7 @@
     <string name="_adm_stg_cpt_option_sys_agents_model"><![CDATA[Модель по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_profile"><![CDATA[Профиль]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_asst_chats_trans_del"><![CDATA[Автоматическое удаление временных чатов каждый день]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_sa"><![CDATA[Помощник по студии]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_lsa"><![CDATA[Помощник для интерактивного поиска]]></string>
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Метатег области просмотра]]></string>
 
@@ -1869,11 +1870,13 @@
 	<string name="_adm_strg_txt_height"><![CDATA[Высота]]></string>
 	<string name="_adm_strg_err_height"><![CDATA[Нужно указать высоту. Пожалуйста, заполните это поле.]]></string>
         <string name="_adm_tmi_cpt_account"><![CDATA[Меню]]></string>
+        <string name="_adm_tmi_cpt_assistant"><![CDATA[Ассистент]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
         <string name="_adm_tmi_cpt_search"><![CDATA[Искать...]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Загрузчик]]></string>
         <string name="_adm_txt_active_api"><![CDATA[Доступно в приложении]]></string>
+        <string name="_adm_txt_assistant_popup_title"><![CDATA[Как я могу помочь?]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Забыли пароль?]]></string>

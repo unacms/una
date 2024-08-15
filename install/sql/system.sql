@@ -842,7 +842,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_agents_asst_chats_trans_del', '_adm_stg_cpt_option_sys_agents_asst_chats_trans_del', 'on', 'checkbox', '', '', '', 1),
-(@iCategoryId, 'sys_agents_live_search_assistant', '_adm_stg_cpt_option_sys_agents_lsa', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:33:"get_options_live_search_assistant";s:5:"class";s:13:"TemplServices";}', '', '', 10);
+(@iCategoryId, 'sys_agents_studio_assistant', '_adm_stg_cpt_option_sys_agents_sa', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:28:"get_options_studio_assistant";s:5:"class";s:13:"TemplServices";}', '', '', 10),
+(@iCategoryId, 'sys_agents_live_search_assistant', '_adm_stg_cpt_option_sys_agents_lsa', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:33:"get_options_live_search_assistant";s:5:"class";s:13:"TemplServices";}', '', '', 15);
 
 --
 -- Table structure for table `sys_options_mixes`

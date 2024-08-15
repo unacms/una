@@ -1321,6 +1321,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResult;
     }
 
+    public function serviceGetOptionsStudioAssistant()
+    {
+        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants();
+    }
+
     public function serviceGetOptionsLiveSearchAssistant()
     {
         return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants();
