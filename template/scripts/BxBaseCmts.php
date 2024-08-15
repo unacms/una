@@ -134,6 +134,9 @@ class BxBaseCmts extends BxDolCmts
             'aHtmlIds' => $this->_aHtmlIds,
         ];
 
+        if($this->_aParams)
+            $aParams['aParams'] = $this->_aParams;
+
         $this->addCssJs();
         return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
     }
@@ -1453,6 +1456,13 @@ class BxBaseCmts extends BxDolCmts
         $oForm->aInputs['sys']['value'] = $this->_sSystem;
         $oForm->aInputs['id']['value'] = $this->_iId;
         $oForm->aInputs['action']['value'] = 'Submit' . ucfirst($sAction) . 'Form';
+
+        if($this->_aParams)
+            $oForm->aInputs = ['params' => [
+                'name' => 'params',
+                'type' => 'hidden',
+                'value' => json_encode($this->_aParams)
+            ]] + $oForm->aInputs;
 
         if(!$this->isAttachImageEnabled())
             unset($oForm->aInputs['cmt_image']);

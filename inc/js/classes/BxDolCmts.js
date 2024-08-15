@@ -25,6 +25,7 @@ function BxDolCmts (options) {
     this._sBrowseFilter = undefined == options.sBrowseFilter ? 'all' : options.sBrowseFilter;
 
     this._sSP = options.sStylePrefix === undefined ? 'cmt' : options.sStylePrefix;
+    this._aParams = options.aParams === undefined ? false : options.aParams;
     this._aHtmlIds = options.aHtmlIds;
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
@@ -1097,11 +1098,15 @@ BxDolCmts.prototype._getCounter = function(oElement, bText)
 
 BxDolCmts.prototype._getDefaultActions = function() {
     var oDate = new Date();
-    return {
+    var oResult = {
         sys: this._sSystem,
         id: this._iObjId,
         _t: oDate.getTime()
     };
+    if(this._aParams)
+        oResult['params'] = this._aParams;
+
+    return oResult;
 };
 
 BxDolCmts.prototype._loading = function(e, bShow) {

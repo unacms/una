@@ -9,6 +9,8 @@
 
 class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 {
+    protected static $_sParamAllowDelete = 'allow_delete';
+
     protected $_oQueryAgents;
     
     protected $_oAI;
@@ -16,8 +18,6 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
     
     protected $_iAssistantId;
     protected $_sAssistantUrl;
-
-    protected $_bAllowDelete;
 
     protected $_bAuto;
 
@@ -45,7 +45,8 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         }
         $this->_sAssistantUrl = BX_DOL_URL_STUDIO . bx_append_url_params('agents.php', ['page' => 'assistants', 'spage' => 'chats', 'aid' => $this->_iAssistantId]);
 
-        $this->_bAllowDelete = true;
+        if(!$this->isParam(self::$_sParamAllowDelete))
+            $this->setAllowDelete(true);
 
         $this->_bAuto = false;
     }
@@ -115,9 +116,14 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         return false;
     }
 
+    public function isAllowDelete()
+    {
+        return !$this->isParam(self::$_sParamAllowDelete) || (int)$this->getParam(self::$_sParamAllowDelete) != 0;
+    }
+
     public function setAllowDelete($bAllow)
     {
-        $this->_bAllowDelete = $bAllow;
+        $this->setParam(self::$_sParamAllowDelete, $bAllow ? 1 : 0);
     }
 
     public function addAuto($aValues, $bUnsetForm = false)
@@ -182,7 +188,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 
     protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
-        if(!$this->_bAllowDelete)
+        if(!$this->isAllowDelete())
             return '';
 
         return $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_menu_item_title_cmts_item_delete'), [
@@ -213,12 +219,13 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
     
     protected function _getForm($sAction, $iId)
     {
-        $aResult = parent::_getForm($sAction, $iId);
+        $oForm = parent::_getForm($sAction, $iId);
 
-        $aResult->aInputs['cmt_text']['db']['pass'] = 'xss';
-        return $aResult;
+        $oForm->aInputs['cmt_text']['db']['pass'] = 'xss';
+
+        return $oForm;
     }
-    
+
     protected function _prepareTextForOutput($s, $iCmtId = 0)
     {
         return nl2br(parent::_prepareTextForOutput($s, $iCmtId));
