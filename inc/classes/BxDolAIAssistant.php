@@ -125,6 +125,8 @@ class BxDolAIAssistant extends BxDol
 
         $sResult = '';
         if($iChatId !== false && ($oCmts = BxDolAI::getInstance()->getAssistantChatCmtsObject($iChatId, $oTemplate)) !== false) {
+            $oCmts->setAllowDelete(false);
+
             if(!empty($sText))
                 $oCmts->add([
                     'cmt_author_id' => bx_get_logged_profile_id(),
@@ -246,6 +248,7 @@ class BxDolAIAssistant extends BxDol
 
         $sPopupContent = '';
         if($iChatId !== false && ($oCmts = BxDolAI::getInstance()->getAssistantChatCmtsObject($iChatId, $oTemplate)) !== false) {
+            $oCmts->setAllowDelete(false);
             $oCmts->add([
                 'cmt_author_id' => bx_get_logged_profile_id(),
                 'cmt_parent_id' => 0,

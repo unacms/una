@@ -17,7 +17,9 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
     protected $_iAssistantId;
     protected $_sAssistantUrl;
 
-    protected $_bAuto;   
+    protected $_bAllowDelete;
+
+    protected $_bAuto;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -42,6 +44,8 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
             $this->_aMarkers['assistant_id'] = $this->_iAssistantId;
         }
         $this->_sAssistantUrl = BX_DOL_URL_STUDIO . bx_append_url_params('agents.php', ['page' => 'assistants', 'spage' => 'chats', 'aid' => $this->_iAssistantId]);
+
+        $this->_bAllowDelete = true;
 
         $this->_bAuto = false;
     }
@@ -111,6 +115,11 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         return false;
     }
 
+    public function setAllowDelete($bAllow)
+    {
+        $this->_bAllowDelete = $bAllow;
+    }
+
     public function addAuto($aValues, $bUnsetForm = false)
     {
         $this->_bAuto = true;
@@ -173,6 +182,9 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 
     protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
+        if(!$this->_bAllowDelete)
+            return '';
+
         return $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_menu_item_title_cmts_item_delete'), [
             'class' => 'bx-btn bx-btn-small',
             'onclick' => $this->_sJsObjName . '.cmtRemove(this, ' . $aCmt['cmt_id'] . ')',
