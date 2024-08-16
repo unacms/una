@@ -70,7 +70,8 @@ class BxDolAIAssistant extends BxDol
         if(getParam('sys_agents_asst_chats_trans_del') == 'on') {
             $aChats = $oAi->getAssistantChatsTransient(3600);
             foreach($aChats as $aChat)
-                self::getObjectInstance($aChat['assistant_id'])->deleteChat($aChat);
+                if(!empty($aChat['assistant_id']) && ($oAssistant = self::getObjectInstance($aChat['assistant_id'])) !== false)
+                    $oAssistant->deleteChat($aChat);
         }
     }
 
@@ -144,19 +145,18 @@ class BxDolAIAssistant extends BxDol
     {
         $aChat = is_array($mixedChat) ? $mixedChat : $this->_oDb->getChatsBy(['sample' => 'id', 'id' => (int)$mixedChat]);
         if(empty($aChat) || !is_array($aChat))
-            return false;
-
-        $oAIModel = $this->getModelObject();
+            return false;      
 
         if(($oCmts = $this->getChatCmtsObject($aChat['id'])) !== false)
             $oCmts->onObjectDelete();
 
         if(!empty($aChat['ai_file_id'])) {
+            $oAIModel = $this->getModelObject();
             $oAIModel->callVectorStoresFilesDelete($this->_aData['ai_vs_id'], $aChat['ai_file_id']);
             $oAIModel->callFilesDelete($aChat['ai_file_id']);
         }
 
-        return true;
+        return $this->_oDb->deleteChats(['id' => $aChat['id']]);
     }
 
     public function processActionAddKnowledge()
@@ -255,7 +255,7 @@ class BxDolAIAssistant extends BxDol
                 'cmt_text' => $sText
             ]);
 
-            $sPopupContent = $oCmts->getCommentsBlock();
+            $sPopupContent = $oCmts->getCommentsBlock([], ['dynamic_mode' => true]);
         }
 
         $sPopupId = 'bx_agents_assistants_ask';

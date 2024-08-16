@@ -58,9 +58,33 @@ import url(../../../../../../../template/css/general.css);
 .bx-toolbar-item.bx-ti-search .sys-search-results-quick .bx-btn.sys-agents-ask:last-child {
     margin-bottom: 0;
 }
+#bx_agents_assistants_ask .bx-popup.bx-popup-width {
+    width: 42rem;
+}
 .bx-agents-popup .cmts {
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
+}
+.bx-agents-popup .cmt-reply {
+    margin-bottom: 0;
+}
+.bx-agents-popup .bx-form-section-content {
+    display: flex;
+}
+.bx-agents-popup .bx-form-section-content > .bx-form-element-wrapper:first-child {
+    flex: 1 1 auto;
+}
+.bx-agents-popup .bx-form-section-content > .bx-form-element-wrapper:last-child {
+    flex: 0 0 auto;
+    margin: 0 0 0 1rem;
+}
+.bx-agents-popup .bx-form-value .bx-form-input-textarea {
+    height: 2.5rem;
+    line-height: 1.25rem;
+}
+.bx-agents-popup .bx-form-value .bx-btn i {
+    height: 1.375rem;
+    line-height: 1.375rem;
 }
 
 

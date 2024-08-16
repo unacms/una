@@ -370,6 +370,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-help .bx-popup .sys-icon,
 #bx-std-pcap-menu-popup-assistant .bx-popup,
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header h2,
+#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header .bx-icon,
 #bx-std-pcap-menu-popup-assistant .bx-popup a,
 #bx-std-pcap-menu-popup-assistant .bx-popup .sys-icon,
 #bx-std-pcap-menu-popup-actions .bx-popup,
@@ -402,31 +403,45 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 
 /*--- Assistant ---*/
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header {
-    border-bottom: 1px solid rgb(75 85 99);
+    border-bottom: 1px solid rgb(31 41 55);
+}
+#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-content {
+    padding-top: 0;
 }
 .bx-std-pcap-assistant .cmts {
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
 }
-.bx-std-pcap-assistant .cmt-reply.cmt-reply-bottom {
-    margin-bottom: 0;
+.bx-std-pcap-assistant .cmt {
+    margin-top: 1rem;
 }
-.bx-std-pcap-assistant .cmt-head .cmt-meta {
+.bx-std-pcap-assistant .cmt > .cmts {
+    display: none;
+}
+.bx-std-pcap-assistant .cmt .cmt-head .cmt-meta {
     margin-right: 0;
     color: rgb(156 163 175);
 }
-.bx-std-pcap-assistant .cmt-head ul li:first-child .bx-base-general-unit-meta-div {
+.bx-std-pcap-assistant .cmt .cmt-head ul li:first-child .bx-base-general-unit-meta-div {
   display: none;
 }
-.bx-std-pcap-assistant .cmt-cont .cmt-body,
-.bx-std-pcap-assistant .cmt-cont .cmt-body pre {
+.bx-std-pcap-assistant .cmt .cmt-cont .cmt-body {
     color: rgb(229, 231, 235);
 }
-.bx-std-pcap-assistant .cmt-cont .cmt-body pre {
-    border: 1px solid rgba(107, 114, 128, 0.2);
-    background-color: rgb(31 41 55);
+.bx-std-pcap-assistant .cmt-reply.cmt-reply-bottom {
+    margin-bottom: 0;
+}
+.bx-std-pcap-assistant .bx-form-section-content {
+    display: flex;
+}
+.bx-std-pcap-assistant .bx-form-section-content > .bx-form-element-wrapper:first-child {
+    flex: 1 1 auto;
+}
+.bx-std-pcap-assistant .bx-form-section-content > .bx-form-element-wrapper:last-child {
+    flex: 0 0 auto;
+    margin: 0 0 0 1rem;
 }
 .bx-std-pcap-assistant .bx-form-value .bx-form-input-textarea {
-    height: 5.0rem;
+    height: 2.5rem;
     background-color: rgb(31 41 55);
 }

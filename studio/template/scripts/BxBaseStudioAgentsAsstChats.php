@@ -138,7 +138,7 @@ class BxBaseStudioAgentsAsstChats extends BxDolStudioAgentsAsstChats
             if(($aResponse = $oAIModel->callVectorStoresFiles($aAssistant['ai_vs_id'], ['file_id' => $aFile['id']])) !== false) {
                 $iNow = time();
                 $this->_oDb->insertFile(['name' => $sFile, 'assistant_id' => $aAssistant['id'], 'added' => $iNow, 'ai_file_id' => $aFile['id'], 'locked' => 1]);
-                $this->_oDb->updateChats(['ai_file_id' => $aFile['id'], 'stored' => $iNow], ['id' => $iId]);
+                $this->_oDb->updateChats(['type' => BX_DOL_AI_ASST_TYPE_PERMANENT, 'ai_file_id' => $aFile['id'], 'stored' => $iNow], ['id' => $iId]);
 
                 $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
             }

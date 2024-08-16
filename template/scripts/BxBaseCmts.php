@@ -87,20 +87,24 @@ class BxBaseCmts extends BxDolCmts
     /**
      * Add comments CSS/JS
      */
-    public function addCssJs ()
+    public function addCssJs($aBp = [], $aDp = [])
     {
+        $bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
+
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
         $oForm->addCssJs();
 
-        $this->_oTemplate->addCss(array(
+        $sResult = $this->_oTemplate->addCss([
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/|photoswipe.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/default-skin/|default-skin.css',
-        ));
+        ], $bDynamicMode);
 
-        $this->_oTemplate->addJs(array(
+        $sResult .= $this->_oTemplate->addJs([
             'photo-swipe/photoswipe.min.js',
             'photo-swipe/photoswipe-ui-default.min.js',
-        ));
+        ], $bDynamicMode);
+
+        return $sResult;
     }
 
     public function getJsObjectName()
@@ -115,6 +119,7 @@ class BxBaseCmts extends BxDolCmts
      */
     public function getJsScript($aBp = [], $aDp = [])
     {
+        $bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
         $bMinPostForm = isset($aDp['min_post_form']) ? $aDp['min_post_form'] : $this->_bMinPostForm;
 
         $aParams = [
@@ -137,8 +142,8 @@ class BxBaseCmts extends BxDolCmts
         if($this->_aParams)
             $aParams['aParams'] = $this->_aParams;
 
-        $this->addCssJs();
-        return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
+        $sIncludes = $this->addCssJs($aBp, $aDp);
+        return ($bDynamicMode ? $sIncludes : '') . $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
     }
 
     function getCommentsBlockAPI($aParams, $aBp = [], $aDp = ['in_designbox' => false, 'show_empty' => false])

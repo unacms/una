@@ -84,7 +84,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 
     public function getCommentsBlock($aBp = [], $aDp = [])
     {
-        $aComments = parent::getCommentsBlock($aBp, ['in_designbox' => false]);
+        $aComments = parent::getCommentsBlock($aBp, array_merge($aDp, ['in_designbox' => false]));
         if(empty($aComments['content']))
             return MsgBox(_t('_error occured'));
 
@@ -206,22 +206,15 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
     {
         return parent::_getFormBox($sType, $aBp, array_merge($aDp, ['min_post_form' => false]));
     }
-
-    protected function _getTmplVarsText($aCmt)
-    {
-        $aResult = parent::_getTmplVarsText($aCmt);
-
-        if((int)$aCmt['cmt_author_id'] == $this->_iProfileIdAi)
-            $aResult['text'] = '<pre>' . $aResult['text'] . '</pre>';
-
-        return $aResult;
-    }
     
     protected function _getForm($sAction, $iId)
     {
         $oForm = parent::_getForm($sAction, $iId);
 
+        $oForm->aInputs['cmt_text']['caption'] = '';
         $oForm->aInputs['cmt_text']['db']['pass'] = 'xss';
+
+        $oForm->aInputs['cmt_submit']['value'] = $this->_oTemplate->parseIcon('arrow-right');
 
         return $oForm;
     }
