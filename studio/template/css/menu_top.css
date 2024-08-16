@@ -404,6 +404,10 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header {
     border-bottom: 1px solid rgb(75 85 99);
 }
+.bx-std-pcap-assistant .cmts {
+    max-height: calc(0.5 * 100vh);
+    overflow-y: auto;
+}
 .bx-std-pcap-assistant .cmt-reply.cmt-reply-bottom {
     margin-bottom: 0;
 }

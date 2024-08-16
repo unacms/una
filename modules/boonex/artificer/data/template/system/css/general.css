@@ -58,6 +58,10 @@ import url(../../../../../../../template/css/general.css);
 .bx-toolbar-item.bx-ti-search .sys-search-results-quick .bx-btn.sys-agents-ask:last-child {
     margin-bottom: 0;
 }
+.bx-agents-popup .cmts {
+    max-height: calc(0.5 * 100vh);
+    overflow-y: auto;
+}
 
 
 /*--- Page Content with Cover ---*/

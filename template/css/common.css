@@ -186,7 +186,10 @@ blockquote {
     width: 100%;
     margin-bottom: 0.5rem;
 }
-
+.bx-agents-popup .cmts {
+    max-height: calc(0.5 * 100vh);
+    overflow-y: auto;
+}
 .bx-acl-err-msg {
     padding: 0 10%;
 }
