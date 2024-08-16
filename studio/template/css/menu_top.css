@@ -408,11 +408,11 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-content {
     padding-top: 0;
 }
-.bx-std-pcap-assistant .cmts {
+.bx-std-pcap-assistant div.cmts {
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
 }
-.bx-std-pcap-assistant .cmt {
+.bx-std-pcap-assistant div.cmts > ul.cmts {
     margin-top: 1rem;
 }
 .bx-std-pcap-assistant .cmt > .cmts {

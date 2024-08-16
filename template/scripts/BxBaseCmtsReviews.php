@@ -82,9 +82,9 @@ class BxBaseCmtsReviews extends BxDolCmtsReviews
         );
     }
 
-    protected function _getForm($sAction, $iId)
+    protected function _getForm($sAction, $iId, $aDp = [])
     {
-        $oForm = parent::_getForm($sAction, $iId);
+        $oForm = parent::_getForm($sAction, $iId, $aDp);
         
         switch($sAction) {
             case BX_CMT_ACTION_POST:

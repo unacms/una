@@ -238,9 +238,9 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         return $aResult;
     }
     
-    protected function _getForm($sAction, $iId)
+    protected function _getForm($sAction, $iId, $aDp = [])
     {
-        $aResult = parent::_getForm($sAction, $iId);
+        $aResult = parent::_getForm($sAction, $iId, $aDp);
 
         $aResult->aInputs['cmt_text']['db']['pass'] = 'xss';
         return $aResult;

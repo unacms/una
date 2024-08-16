@@ -135,7 +135,7 @@ class BxDolAIAssistant extends BxDol
                     'cmt_text' => $sText
                 ]);
 
-            $sResult = $oCmts->getCommentsBlock();
+            $sResult = $oCmts->getCommentsBlock([], ['mode' => 'compact']);
         }
 
         return $sResult;

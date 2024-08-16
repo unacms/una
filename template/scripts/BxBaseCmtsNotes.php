@@ -17,9 +17,9 @@ class BxBaseCmtsNotes extends BxDolCmtsNotes
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
     }
 
-    protected function _getForm($sAction, $iId)
+    protected function _getForm($sAction, $iId, $aDp = [])
     {
-        $oForm = parent::_getForm($sAction, $iId);
+        $oForm = parent::_getForm($sAction, $iId, $aDp);
 
         if(isset($oForm->aInputs['cmt_cf']))
             unset($oForm->aInputs['cmt_cf']);

@@ -1310,7 +1310,7 @@ class BxBaseCmts extends BxDolCmts
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
         $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
 
-        $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
+        $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId, $aDp);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
 
         if($bQuote) {
@@ -1412,7 +1412,7 @@ class BxBaseCmts extends BxDolCmts
             return bx_is_api() ? bx_api_get_msg($sMsg) : array('msg' => $sMsg);
         }
 
-        $oForm = $this->_getForm(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
+        $oForm = $this->_getForm(BX_CMT_ACTION_EDIT, $aCmt['cmt_id'], $aDp);
 
         $oForm->initChecker($aCmt);
         if($oForm->isSubmittedAndValid()) {
@@ -1452,7 +1452,7 @@ class BxBaseCmts extends BxDolCmts
         return bx_is_api() ? ['form' => $oForm, 'res' => 0] :  array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
     }
 
-    protected function _getForm($sAction, $iId)
+    protected function _getForm($sAction, $iId, $aDp = [])
     {
         $oForm = $this->_getFormObject($sAction);
         $oForm->setId(sprintf($oForm->getAttributeMask('id'), $sAction, $this->_sSystem, $this->_iId, $iId));

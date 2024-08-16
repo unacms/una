@@ -207,14 +207,15 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         return parent::_getFormBox($sType, $aBp, array_merge($aDp, ['min_post_form' => false]));
     }
     
-    protected function _getForm($sAction, $iId)
+    protected function _getForm($sAction, $iId, $aDp = [])
     {
-        $oForm = parent::_getForm($sAction, $iId);
+        $oForm = parent::_getForm($sAction, $iId, $aDp);
 
         $oForm->aInputs['cmt_text']['caption'] = '';
         $oForm->aInputs['cmt_text']['db']['pass'] = 'xss';
 
-        $oForm->aInputs['cmt_submit']['value'] = $this->_oTemplate->parseIcon('arrow-right');
+        if(isset($aDp['mode']) && $aDp['mode'] == 'compact')
+            $oForm->aInputs['cmt_submit']['value'] = $this->_oTemplate->parseIcon('arrow-right');
 
         return $oForm;
     }
