@@ -349,7 +349,10 @@ BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
 	            	if(oData && oData.id != undefined) {
                             $(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-                            $('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                            var fDelete = function() {
+                                var sCmtSel = '#cmt' + oData.id;
+
+                                $(sCmtSel).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                                     //--- Update counter
                                     if(oData && oData.count != undefined && parseInt(oData.count) >= 0) {
                                         var oSource = $(this);
@@ -369,7 +372,14 @@ BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
                                     }
 
                                     $(this).remove();
-                            });
+
+                                    var oCmt = $(sCmtSel);
+                                    if(oCmt && oCmt.length > 0)
+                                        fDelete();
+                                });
+                            };
+
+                            fDelete();
                         }
 	            };
 
@@ -934,14 +944,21 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
                 //--- Some number of comments already loaded ---//
                 if($(this).children('li.cmt').length) {
                     var oAdded = null;
-                    switch($this._sPostFormPosition) {
-                        case 'top':
-                            oAdded = $(this).children('li.cmt:first').before($(oData.content).hide()).prevAll('li.cmt:hidden');
-                            break;
+                    if($('#cmt' + iCmtId).length) {
+                        $('#cmt' + iCmtId).replaceWith($(oData.content).hide());
 
-                        case 'bottom':
-                            oAdded = $(this).children('li.cmt:last').after($(oData.content).hide()).nextAll('li.cmt:hidden');
-                            break;
+                        oAdded = $('#cmt' + iCmtId);
+                    }
+                    else {
+                        switch($this._sPostFormPosition) {
+                            case 'top':
+                                oAdded = $(this).children('li.cmt:first').before($(oData.content).hide()).prevAll('li.cmt:hidden');
+                                break;
+
+                            case 'bottom':
+                                oAdded = $(this).children('li.cmt:last').after($(oData.content).hide()).nextAll('li.cmt:hidden');
+                                break;
+                        }
                     }
 
                     oAdded.each(function() {

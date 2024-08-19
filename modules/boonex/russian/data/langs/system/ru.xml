@@ -2255,6 +2255,7 @@
         <string name="_sys_agents_assistants_chats_field_description"><![CDATA[Описание]]></string>
         <string name="_sys_agents_assistants_chats_popup_add"><![CDATA[Добавить чат]]></string>
         <string name="_sys_agents_assistants_chats_popup_edit"><![CDATA[Редактировать чат]]></string>
+        <string name="_sys_agents_assistants_chats_err_no_response"><![CDATA[Невозможно получить ответ]]></string>
         <string name="_sys_agents_assistants_files_txt_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_assistants_files_txt_size"><![CDATA[Размер]]></string>
         <string name="_sys_agents_assistants_files_txt_status"><![CDATA[Статус]]></string>

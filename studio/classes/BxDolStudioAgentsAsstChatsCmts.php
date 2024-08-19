@@ -9,6 +9,8 @@
 
 class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 {
+    protected static $_sPrefixLoad = '#-#';
+    protected static $_sPrefixRetrieve = '|-|';
     protected static $_sParamAllowDelete = 'allow_delete';
 
     protected $_oQueryAgents;
@@ -99,6 +101,31 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         return $aComments['content'];
     }
 
+    public function getComment($mixedCmt, $aBp = [], $aDp = [])
+    {
+        $aCmt = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
+        if(!$aCmt)
+            return '';
+
+        $iCmt = (int)$aCmt['cmt_id'];
+        if($this->_isShowAnswerLoad($aCmt))
+            $this->_oQuery->updateComments(['cmt_text' => str_replace(self::$_sPrefixLoad, self::$_sPrefixRetrieve, $aCmt['cmt_text'])], ['cmt_id' => $iCmt]);
+        else if($this->_isShowAnswerRetrieve($aCmt) && ($mixedAiData = $this->_getAiData()) !== false) {
+            $aCmtRequest = $this->getCommentRow((int)str_replace(self::$_sPrefixRetrieve, '', $aCmt['cmt_text']));
+
+            list($iModelId, $sAssistantId, $sThreadId) = $mixedAiData;
+
+            $oAIModel = $this->_oAI->getModelObject($iModelId);
+            if(($sResponse = $oAIModel->getResponse(BX_DOL_AI_ASSISTANT, $aCmtRequest['cmt_text'], ['thread_id' => $sThreadId, 'assistant_id' => $sAssistantId])) !== false) {
+                $this->_oQuery->updateComments(['cmt_text' => $sResponse], ['cmt_id' => $iCmt]);
+
+                $aCmt['cmt_text'] = $sResponse;
+            }
+        }
+
+        return parent::getComment($aCmt, $aBp, $aDp);
+    }
+
     public function getFormBoxPost($aBp = [], $aDp = [])
     {
         $aComments = $this->_oQuery->getCommentsBy(['type' => 'latest', 'object_id' => (int)$this->getId(), 'start' => 0, 'per_page' => 1]);
@@ -145,24 +172,19 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
             return $mixedResult;
 
         $iObjId = (int)$this->getId();
-        $aChat = $this->_oAI->getAssistantChatById($iObjId);
-        if(empty($aChat) || !is_array($aChat))
+
+        $mixedAiData = $this->_getAiData();
+        if($mixedAiData === false)
             return $mixedResult;
 
-        $aAssistant = $this->_oAI->getAssistantById($aChat['assistant_id']);
-        if(empty($aAssistant) || !is_array($aAssistant))
-            return $mixedResult;
+        list($iModelId, $sAssistantId, $sThreadId) = $mixedAiData;
 
         $aComment = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
         if(empty($aComment) || !is_array($aComment))
             return $mixedResult;
-        
-        $sMessage = $aComment['cmt_text'];
-        $sAssistantId = $aAssistant['ai_asst_id'];
-        $sThreadId = $aChat['ai_thread_id'];
 
-        $oAIModel = $this->_oAI->getModelObject($aAssistant['model_id']);
-        if(empty($sThreadId) && ($aResponseInit = $oAIModel->getResponseInit(BX_DOL_AI_ASSISTANT, $sMessage, ['assistant_id' => $sAssistantId])) !== false) {
+        $oAIModel = $this->_oAI->getModelObject($iModelId);
+        if(empty($sThreadId) && ($aResponseInit = $oAIModel->getResponseInit(BX_DOL_AI_ASSISTANT, $aComment['cmt_text'], ['assistant_id' => $sAssistantId])) !== false) {
             $sThreadId = $aResponseInit['params']['thread_id'];
 
             $this->_oAI->updateAssistantChatById($iObjId, [
@@ -172,16 +194,14 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         if(empty($sThreadId))
             return $mixedResult;
 
-        if(($sResponse = $oAIModel->getResponse(BX_DOL_AI_ASSISTANT, $sMessage, ['thread_id' => $sThreadId, 'assistant_id' => $sAssistantId])) !== false) {
-            $mixedResultAuto = $this->addAuto([
-                'cmt_author_id' => $this->_iProfileIdAi,
-                'cmt_parent_id' => 0,
-                'cmt_text' => $sResponse
-            ], true);
+        $mixedResultAuto = $this->addAuto([
+            'cmt_author_id' => $this->_iProfileIdAi,
+            'cmt_parent_id' => 0,
+            'cmt_text' => self::$_sPrefixLoad . $iCmtId
+        ], true);
 
-            if($mixedResultAuto !== false)
-                $mixedResult['id'] .= ',' . $mixedResultAuto['id'];
-        }
+        if($mixedResultAuto !== false)
+            $mixedResult['id'] .= ',' . $mixedResultAuto['id'];
 
         return $mixedResult;
     }
@@ -220,9 +240,49 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         return $oForm;
     }
 
-    protected function _prepareTextForOutput($s, $iCmtId = 0)
+    protected function _getTmplVarsText($aCmt)
     {
-        return nl2br(parent::_prepareTextForOutput($s, $iCmtId));
+        $bLoad = $this->_isShowAnswerLoad($aCmt);
+        $bRetrieve = $this->_isShowAnswerRetrieve($aCmt);
+
+        $iId = (int)$aCmt['cmt_id'];
+        $sText = $aCmt['cmt_text'];
+        if(!$bLoad && !$bRetrieve)
+            $sText = nl2br($this->_prepareTextForOutput($sText, $iId));
+
+        if($bLoad)
+            $sText = _t('_sys_loading') . $this->_oTemplate->_wrapInTagJsCode($this->getJsObjectName() . "._getCmt('#cmt" . $iId . "', " . $iId . ");");
+        
+        if($bRetrieve)
+            $sText = _t('_sys_agents_assistants_chats_err_no_response');
+
+        return [
+            'style_prefix' => $this->_sStylePrefix,
+            'text' => $sText
+        ];
+    }
+
+    protected function _getAiData()
+    {
+        $aChat = $this->_oAI->getAssistantChatById((int)$this->getId());
+        if(empty($aChat) || !is_array($aChat))
+            return false;
+
+        $aAssistant = $this->_oAI->getAssistantById($aChat['assistant_id']);
+        if(empty($aAssistant) || !is_array($aAssistant))
+            return false;
+
+        return [$aAssistant['model_id'], $aAssistant['ai_asst_id'], $aChat['ai_thread_id']];
+    }
+
+    protected function _isShowAnswerLoad($aCmt)
+    {
+        return $aCmt['cmt_author_id'] == $this->_iProfileIdAi && strpos($aCmt['cmt_text'], self::$_sPrefixLoad) !== false;
+    }
+    
+    protected function _isShowAnswerRetrieve($aCmt)
+    {
+        return $aCmt['cmt_author_id'] == $this->_iProfileIdAi && strpos($aCmt['cmt_text'], self::$_sPrefixRetrieve) !== false;
     }
 }
 
