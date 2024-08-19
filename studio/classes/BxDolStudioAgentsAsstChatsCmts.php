@@ -107,19 +107,29 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         if(!$aCmt)
             return '';
 
-        $iCmt = (int)$aCmt['cmt_id'];
+        $iObjId = (int)$this->getId();
+        $iCmtId = (int)$aCmt['cmt_id'];
         if($this->_isShowAnswerLoad($aCmt))
-            $this->_oQuery->updateComments(['cmt_text' => str_replace(self::$_sPrefixLoad, self::$_sPrefixRetrieve, $aCmt['cmt_text'])], ['cmt_id' => $iCmt]);
+            $this->_oQuery->updateComments(['cmt_text' => str_replace(self::$_sPrefixLoad, self::$_sPrefixRetrieve, $aCmt['cmt_text'])], ['cmt_id' => $iCmtId]);
         else if($this->_isShowAnswerRetrieve($aCmt) && ($mixedAiData = $this->_getAiData()) !== false) {
-            $aCmtRequest = $this->getCommentRow((int)str_replace(self::$_sPrefixRetrieve, '', $aCmt['cmt_text']));
-
             list($iModelId, $sAssistantId, $sThreadId) = $mixedAiData;
 
-            $oAIModel = $this->_oAI->getModelObject($iModelId);
-            if(($sResponse = $oAIModel->getResponse(BX_DOL_AI_ASSISTANT, $aCmtRequest['cmt_text'], ['thread_id' => $sThreadId, 'assistant_id' => $sAssistantId])) !== false) {
-                $this->_oQuery->updateComments(['cmt_text' => $sResponse], ['cmt_id' => $iCmt]);
+            $aCmtRequest = $this->getCommentRow((int)str_replace(self::$_sPrefixRetrieve, '', $aCmt['cmt_text']));
 
-                $aCmt['cmt_text'] = $sResponse;
+            if(($oAIModel = $this->_oAI->getModelObject($iModelId)) !== false) {
+                if(empty($sThreadId) && ($aResponseInit = $oAIModel->getResponseInit(BX_DOL_AI_ASSISTANT, $aCmtRequest['cmt_text'], ['assistant_id' => $sAssistantId])) !== false) {
+                    $sThreadId = $aResponseInit['params']['thread_id'];
+
+                    $this->_oAI->updateAssistantChatById($iObjId, [
+                        'ai_thread_id' => $sThreadId
+                    ]);
+                }
+
+                if(!empty($sThreadId) && ($sResponse = $oAIModel->getResponse(BX_DOL_AI_ASSISTANT, $aCmtRequest['cmt_text'], ['thread_id' => $sThreadId, 'assistant_id' => $sAssistantId])) !== false) {
+                    $this->_oQuery->updateComments(['cmt_text' => $sResponse], ['cmt_id' => $iCmtId]);
+
+                    $aCmt['cmt_text'] = $sResponse;
+                }
             }
         }
 
@@ -169,29 +179,6 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
     {
         $mixedResult = parent::onPostAfter($iCmtId, $aDp);
         if($this->_bAuto || $mixedResult === false) 
-            return $mixedResult;
-
-        $iObjId = (int)$this->getId();
-
-        $mixedAiData = $this->_getAiData();
-        if($mixedAiData === false)
-            return $mixedResult;
-
-        list($iModelId, $sAssistantId, $sThreadId) = $mixedAiData;
-
-        $aComment = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
-        if(empty($aComment) || !is_array($aComment))
-            return $mixedResult;
-
-        $oAIModel = $this->_oAI->getModelObject($iModelId);
-        if(empty($sThreadId) && ($aResponseInit = $oAIModel->getResponseInit(BX_DOL_AI_ASSISTANT, $aComment['cmt_text'], ['assistant_id' => $sAssistantId])) !== false) {
-            $sThreadId = $aResponseInit['params']['thread_id'];
-
-            $this->_oAI->updateAssistantChatById($iObjId, [
-                'ai_thread_id' => $sThreadId
-            ]);
-        }
-        if(empty($sThreadId))
             return $mixedResult;
 
         $mixedResultAuto = $this->addAuto([
@@ -251,7 +238,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
             $sText = nl2br($this->_prepareTextForOutput($sText, $iId));
 
         if($bLoad)
-            $sText = _t('_sys_loading') . $this->_oTemplate->_wrapInTagJsCode($this->getJsObjectName() . "._getCmt('#cmt" . $iId . "', " . $iId . ");");
+            $sText = _t('_sys_loading') . $this->_oTemplate->_wrapInTagJsCode("var " . $this->_sJsObjName . "_interval = setInterval(function() {if(window['" . $this->_sJsObjName . "'] == undefined) return; clearInterval(" . $this->_sJsObjName . "_interval); " . $this->getJsObjectName() . "._getCmt('#cmt" . $iId . "', " . $iId . ");}, 200)");
         
         if($bRetrieve)
             $sText = _t('_sys_agents_assistants_chats_err_no_response');
