@@ -1528,14 +1528,19 @@
     <string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Задействовать дружественные ссылки для локального хранилища]]></string>
     <string name="_adm_stg_cpt_option_permalinks_seo_links"><![CDATA[Включить ссылки оптимизированные для поисковых систем]]></string>
     <string name="_adm_stg_cpt_option_permalinks_seo_links_redirects"><![CDATA[Включить перенаправление с обычных ссылок на оптимизированные]]></string>
-    <string name="_adm_stg_cpt_option_site_email"><![CDATA[Email для получения критических уведомлений от сайта]]></string>
-    <string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email, с которого будут посылаться сообщения от сайта]]></string>
+    <string name="_adm_stg_cpt_option_site_email"><![CDATA[Электронная почта оператора]]></string>
+    <string name="_adm_stg_inf_option_site_email"><![CDATA[Адрес электронной почты для получения критических системных уведомлений.]]></string>
+    <string name="_adm_stg_cpt_option_site_email_notify"><![CDATA["От" электронная почта]]></string>
+    <string name="_adm_stg_inf_option_site_email_notify"><![CDATA[Адрес электронной почты, используемый в качестве «отправителя» в транзакционных электронных письмах.]]></string>
     <string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Заголовок HTML шаблона email сообщения]]></string>
     <string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Основание HTML шаблона email сообщения]]></string>
     <string name="_adm_stg_cpt_option_site_login_social_compact"><![CDATA[Задействовать компактный вид входа через соц. сети]]></string>
-    <string name="_adm_stg_cpt_option_site_title"><![CDATA[Название сайта]]></string>
-    <string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Экскурсия по главной странице сайта]]></string>
-    <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по главной странице Студии]]></string>
+    <string name="_adm_stg_cpt_option_site_title"><![CDATA[Имя сообщества]]></string>
+    <string name="_adm_stg_inf_option_site_title"><![CDATA[Имя по умолчанию, используемое для ссылки на ваш сайт в текстах сайта, метатегах, электронных письмах и уведомлениях.]]></string>
+    <string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Пользовательский тур]]></string>
+    <string name="_adm_stg_inf_option_site_tour_home"><![CDATA[<a href="/studio/polyglot.php?page=keys">Здесь</a> вы можете редактировать шаги и содержание пользовательского тура.]]></string>
+    <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по студии]]></string>
+    <string name="_adm_stg_inf_option_site_tour_studio"><![CDATA[<a href="/studio/polyglot.php?page=keys">Здесь</a> вы можете редактировать этапы и содержание тура по студии.]]></string>
     <string name="_adm_stg_cpt_option_smart_app_banner"><![CDATA[Smart App Banner]]></string>
     <string name="_adm_stg_cpt_option_smart_app_banner_ios_app_id"><![CDATA[Идентификатор iOS прилижения для Smart App Banner]]></string>
     <string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Включить сообщение об активации аккаунта]]></string>
@@ -1584,7 +1589,8 @@
     <string name="_adm_stg_cpt_option_sys_audit_days_before_expire"><![CDATA[Удалять записи в логе старше, чем (дней)]]></string>
     <string name="_adm_stg_cpt_option_sys_audit_acl_levels"><![CDATA[Активно для уровней]]></string>
     <string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Инициировать автообновление, даже если какие-то файлы были модифицированы]]></string>
-    <string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Включить автообновление]]></string>
+    <string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Автоматические обновления программного обеспечения]]></string>
+    <string name="_adm_stg_inf_option_sys_autoupdate"><![CDATA[Помогает реже входить в систему, но не так безопасно.]]></string>
     <string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached - адрес сервера]]></string>
     <string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
     <string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[CAPTCHA по умолчанию]]></string>
@@ -1722,10 +1728,12 @@
     <string name="_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt"><![CDATA[Рассматривать контекст, размещенный в контексте, как контент]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Минимальная длина слова в поиске по сайту]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[Профиль системного бота]]></string>
+    <string name="_adm_stg_inf_option_sys_profile_bot"><![CDATA[Выберите профиль, который будет использоваться в качестве автора системных действий.]]></string>
     <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Система логирования по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_vote_reactions_quick_mode"><![CDATA[Включить режим 'Быстрых реакций' - голосовать при клике, используя реакцию по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_cmts_enable_auto_approve"><![CDATA[Автоматически активировать комментарий после создания]]></string>
-    <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Предварительно загружать формы в асинхронном режиме в "Создать пост" блоках]]></string>
+    <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Асинхронная предварительная загрузка форм в блоке "Создать публикацию"]]></string>
+    <string name="_adm_stg_inf_option_sys_create_post_form_preloading_list"><![CDATA[]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Использовать Add2Any код вместо стандартного меню "Поделиться"]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any код]]></string>
     <string name="_adm_stg_cpt_option_sys_api_enable"><![CDATA[Включить API]]></string>

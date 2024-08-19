@@ -1551,14 +1551,19 @@
     <string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Enable friendly permalinks for local Storage]]></string>
     <string name="_adm_stg_cpt_option_permalinks_seo_links"><![CDATA[Enable SEO links]]></string>
     <string name="_adm_stg_cpt_option_permalinks_seo_links_redirects"><![CDATA[Enable redirect from regular to SEO links]]></string>
-    <string name="_adm_stg_cpt_option_site_email"><![CDATA[Email to receive critical site notifications]]></string>
-    <string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email to send site messages from]]></string>
+    <string name="_adm_stg_cpt_option_site_email"><![CDATA[Operator email]]></string>
+    <string name="_adm_stg_inf_option_site_email"><![CDATA[Email address to receive critical system notifications.]]></string>
+    <string name="_adm_stg_cpt_option_site_email_notify"><![CDATA["From" email]]></string>
+    <string name="_adm_stg_inf_option_site_email_notify"><![CDATA[Email address used as "sender" in transactional emails.]]></string>
     <string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Email template header]]></string>
     <string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Email template footer]]></string>
     <string name="_adm_stg_cpt_option_site_login_social_compact"><![CDATA[Enable compact view for social login]]></string>
-    <string name="_adm_stg_cpt_option_site_title"><![CDATA[Site title]]></string>
-    <string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Site home page tour]]></string>
-    <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Studio home page tour]]></string>
+    <string name="_adm_stg_cpt_option_site_title"><![CDATA[Community name]]></string>
+    <string name="_adm_stg_inf_option_site_title"><![CDATA[The default name used to refer to your site in site texts, meta tags, emails and notifications.]]></string>
+    <string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[User Tour]]></string>
+    <string name="_adm_stg_inf_option_site_tour_home"><![CDATA[You can edit steps and content of the User Tour <a href="/studio/polyglot.php?page=keys">here</a>.]]></string>
+    <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Studio Tour]]></string>
+    <string name="_adm_stg_inf_option_site_tour_studio"><![CDATA[You can edit steps and content of the Studio Tour <a href="/studio/polyglot.php?page=keys">here</a>.]]></string>
     <string name="_adm_stg_cpt_option_smart_app_banner"><![CDATA[Smart App Banner]]></string>
     <string name="_adm_stg_cpt_option_smart_app_banner_ios_app_id"><![CDATA[iOS app ID for Smart App Banner]]></string>
     <string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Enable account activation letter]]></string>
@@ -1608,7 +1613,8 @@
     <string name="_adm_stg_cpt_option_sys_audit_days_before_expire"><![CDATA[Delete logs older than (days)]]></string>
     <string name="_adm_stg_cpt_option_sys_audit_acl_levels"><![CDATA[Enable for levels]]></string>
     <string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Force auto-update, even if some files were modified]]></string>
-    <string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Enable auto-update]]></string>
+    <string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Automatic software updates]]></string>
+    <string name="_adm_stg_inf_option_sys_autoupdate"><![CDATA[Helps with logging in less often, but not that safe.]]></string>
     <string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
     <string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
     <string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Default Сaptcha]]></string>
@@ -1745,11 +1751,13 @@
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Hide post to context for modules in Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt"><![CDATA[Treat context posted in context as content]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Keyword min length in site search]]></string>
-    <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[System bot profile]]></string>
+    <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[System Bot profile]]></string>
+    <string name="_adm_stg_inf_option_sys_profile_bot"><![CDATA[Choose profile which will be used as an author of system actions.]]></string>
     <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Default logs storage]]></string>
     <string name="_adm_stg_cpt_option_sys_vote_reactions_quick_mode"><![CDATA[Enable 'Quick Reactions' mode - vote with default reaction when clicked]]></string>
     <string name="_adm_stg_cpt_option_sys_cmts_enable_auto_approve"><![CDATA[Auto approve a comment after creation]]></string>
-    <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Preload forms asynchronously in "Create Post" blocks]]></string>
+    <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Asynchronous forms preload in "Create Post" block]]></string>
+    <string name="_adm_stg_inf_option_sys_create_post_form_preloading_list"><![CDATA[]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Use Add2Any code instead of default sharing menu]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any code]]></string>
     <string name="_adm_stg_cpt_option_sys_api_enable"><![CDATA[Enable API]]></string>

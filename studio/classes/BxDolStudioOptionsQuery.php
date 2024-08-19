@@ -442,6 +442,7 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
                 `to`.`category_id` AS `category_id`,
                 `to`.`name` AS `name`,
                 `to`.`caption` AS `caption`,
+                `to`.`info` AS `info`,
                 `to`.`value` AS `value`,
                 `to`.`type` AS `type`,
                 `to`.`extra` AS `extra`,

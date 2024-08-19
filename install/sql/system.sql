@@ -270,6 +270,7 @@ CREATE TABLE `sys_options` (
   `category_id` int(11) unsigned NOT NULL default '0',
   `name` varchar(64) NOT NULL default '',
   `caption` varchar(255) NOT NULL default '',
+  `info` varchar(255) NOT NULL default '',
   `value` mediumtext NOT NULL,
   `type` enum('value','digit','text','code','checkbox','select','combobox','file','image','list','rlist','rgb','rgba','datetime') NOT NULL default 'digit',
   `extra` text NOT NULL default '',
@@ -471,39 +472,39 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'site_settings','_adm_stg_cpt_category_site_settings', 0, 4);
 SET @iCategoryId = LAST_INSERT_ID();
 
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'site_title', '_adm_stg_cpt_option_site_title', 'Community', 'digit', '', '', '', 1),
-(@iCategoryId, 'site_email', '_adm_stg_cpt_option_site_email', 'admin@example.com', 'digit', '', '', '', 2),
-(@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'admin@example.com', 'digit', '', '', '', 3),
-(@iCategoryId, 'site_tour_home', '_adm_stg_cpt_option_site_tour_home', 'on', 'checkbox', '', '', '', 6),
-(@iCategoryId, 'site_tour_studio', '_adm_stg_cpt_option_site_tour_studio', 'on', 'checkbox', '', '', '', 7),
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `info`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'site_title', '_adm_stg_cpt_option_site_title', '_adm_stg_inf_option_site_title', 'Community', 'digit', '', '', '', 1),
+(@iCategoryId, 'site_email', '_adm_stg_cpt_option_site_email', '_adm_stg_inf_option_site_email', 'admin@example.com', 'digit', '', '', '', 2),
+(@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', '_adm_stg_inf_option_site_email_notify', 'admin@example.com', 'digit', '', '', '', 3),
+(@iCategoryId, 'site_tour_home', '_adm_stg_cpt_option_site_tour_home', '_adm_stg_inf_option_site_tour_home', 'on', 'checkbox', '', '', '', 6),
+(@iCategoryId, 'site_tour_studio', '_adm_stg_cpt_option_site_tour_studio', '_adm_stg_inf_option_site_tour_studio', 'on', 'checkbox', '', '', '', 7),
 
-(@iCategoryId, 'sys_autoupdate', '_adm_stg_cpt_option_sys_autoupdate', 'on', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_autoupdate_force_modified_files', '_adm_stg_cpt_option_sys_autoupdate_force_modified_files', '', 'checkbox', '', '', '', 12),
+(@iCategoryId, 'sys_autoupdate', '_adm_stg_cpt_option_sys_autoupdate', '_adm_stg_inf_option_sys_autoupdate', 'on', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_autoupdate_force_modified_files', '_adm_stg_cpt_option_sys_autoupdate_force_modified_files', '', '', 'checkbox', '', '', '', 12),
 
-(@iCategoryId, 'smart_app_banner', '_adm_stg_cpt_option_smart_app_banner', '', 'checkbox', '', '', '', 14),
-(@iCategoryId, 'smart_app_banner_ios_app_id', '_adm_stg_cpt_option_smart_app_banner_ios_app_id', '', 'digit', '', '', '', 15),
+(@iCategoryId, 'smart_app_banner', '_adm_stg_cpt_option_smart_app_banner', '', '', 'checkbox', '', '', '', 14),
+(@iCategoryId, 'smart_app_banner_ios_app_id', '_adm_stg_cpt_option_smart_app_banner_ios_app_id', '', '', 'digit', '', '', '', 15),
 
-(@iCategoryId, 'sys_per_page_search_keyword_single', '_adm_stg_cpt_option_sys_per_page_search_keyword_single', '24', 'digit', '', '', '', 20),
-(@iCategoryId, 'sys_per_page_search_keyword_plural', '_adm_stg_cpt_option_sys_per_page_search_keyword_plural', '3', 'digit', '', '', '', 21),
-(@iCategoryId, 'sys_live_search_limit', '_adm_stg_cpt_option_sys_live_search_limit', '5', 'digit', '', '', '', 22),
-(@iCategoryId, 'sys_profiles_search_limit', '_adm_stg_cpt_option_sys_profiles_search_limit', '20', 'digit', '', '', '', 23),
+(@iCategoryId, 'sys_per_page_search_keyword_single', '_adm_stg_cpt_option_sys_per_page_search_keyword_single', '', '24', 'digit', '', '', '', 20),
+(@iCategoryId, 'sys_per_page_search_keyword_plural', '_adm_stg_cpt_option_sys_per_page_search_keyword_plural', '', '3', 'digit', '', '', '', 21),
+(@iCategoryId, 'sys_live_search_limit', '_adm_stg_cpt_option_sys_live_search_limit', '', '5', 'digit', '', '', '', 22),
+(@iCategoryId, 'sys_profiles_search_limit', '_adm_stg_cpt_option_sys_profiles_search_limit', '', '20', 'digit', '', '', '', 23),
 
-(@iCategoryId, 'sys_metatags_hashtags_only', '_adm_stg_cpt_option_sys_metatags_hashtags_only', '', 'checkbox', '', '', '', 30),
-(@iCategoryId, 'sys_metatags_hashtags_max', '_adm_stg_cpt_option_sys_metatags_hashtags_max', '9', 'digit', '', '', '', 31),
-(@iCategoryId, 'sys_metatags_mentions_max', '_adm_stg_cpt_option_sys_metatags_mentions_max', '9', 'digit', '', '', '', 32),
-(@iCategoryId, 'sys_attach_links_max', '_adm_stg_cpt_option_sys_attach_links_max', '0', 'digit', '', '', '', 35),
+(@iCategoryId, 'sys_metatags_hashtags_only', '_adm_stg_cpt_option_sys_metatags_hashtags_only', '', '', 'checkbox', '', '', '', 30),
+(@iCategoryId, 'sys_metatags_hashtags_max', '_adm_stg_cpt_option_sys_metatags_hashtags_max', '', '9', 'digit', '', '', '', 31),
+(@iCategoryId, 'sys_metatags_mentions_max', '_adm_stg_cpt_option_sys_metatags_mentions_max', '', '9', 'digit', '', '', '', 32),
+(@iCategoryId, 'sys_attach_links_max', '_adm_stg_cpt_option_sys_attach_links_max', '', '0', 'digit', '', '', '', 35),
 
-(@iCategoryId, 'sys_profile_bot', '_adm_stg_cpt_option_sys_profile_bot', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_options_profile_bot";s:5:"class";s:13:"TemplServices";}', '', '', 40),
+(@iCategoryId, 'sys_profile_bot', '_adm_stg_cpt_option_sys_profile_bot', '_adm_stg_inf_option_sys_profile_bot', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_options_profile_bot";s:5:"class";s:13:"TemplServices";}', '', '', 40),
 
-(@iCategoryId, 'sys_hide_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_module_list_for_privacy_selector";s:5:"class";s:13:"TemplServices";}', '', '', 50),
-(@iCategoryId, 'sys_treat_cxt_in_cxt_as_cnt', '_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt', 'on', 'checkbox', '', '', '', 51),
+(@iCategoryId, 'sys_hide_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy', '', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_module_list_for_privacy_selector";s:5:"class";s:13:"TemplServices";}', '', '', 50),
+(@iCategoryId, 'sys_treat_cxt_in_cxt_as_cnt', '_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt', '', 'on', 'checkbox', '', '', '', 51),
 
-(@iCategoryId, 'sys_vote_reactions_quick_mode', '_adm_stg_cpt_option_sys_vote_reactions_quick_mode', 'on', 'checkbox', '', '', '', 60),
+(@iCategoryId, 'sys_vote_reactions_quick_mode', '_adm_stg_cpt_option_sys_vote_reactions_quick_mode', '', 'on', 'checkbox', '', '', '', 60),
 
-(@iCategoryId, 'sys_cmts_enable_auto_approve', '_adm_stg_cpt_option_sys_cmts_enable_auto_approve', 'on', 'checkbox', '', '', '', 70),
+(@iCategoryId, 'sys_cmts_enable_auto_approve', '_adm_stg_cpt_option_sys_cmts_enable_auto_approve', '', 'on', 'checkbox', '', '', '', 70),
 
-(@iCategoryId, 'sys_create_post_form_preloading_list', '_adm_stg_cpt_option_sys_create_post_form_preloading_list', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_create_post_form_preloading_list";s:5:"class";s:13:"TemplServices";}', '', '', 80);
+(@iCategoryId, 'sys_create_post_form_preloading_list', '_adm_stg_cpt_option_sys_create_post_form_preloading_list', '_adm_stg_inf_option_sys_create_post_form_preloading_list', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_create_post_form_preloading_list";s:5:"class";s:13:"TemplServices";}', '', '', 80);
 
 
 --
