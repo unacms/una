@@ -161,7 +161,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
             $sSrvModule = $this->_oConfig->getContentModule($aEvent);
             $sSrvMethod = 'check_allowed_with_content_for_profile';
-            if($sSrvModule && BxDolRequest::serviceExists($sSrvModule, $sSrvMethod) && BxDolService::call($sSrvModule, $sSrvMethod, array('view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            if($sSrvModule && bx_is_srv($sSrvModule, $sSrvMethod) && bx_srv($sSrvModule, $sSrvMethod, ['view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId]) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';
         }
 
@@ -363,7 +363,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             return false;
 
         $sMessage = is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['push']) ? $aEvent['content_parsed']['push'] : $aEvent['content_parsed'];
-        $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', '"', $sMessage);
+        $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', ($sChar = getParam("bx_ntfs_option_tag_to_char_push")) !== false ? $sChar : '"', $sMessage);
         if($sMessage)
             $sMessage = BxTemplFunctions::getInstance()->getStringWithLimitedLength(html_entity_decode($sMessage), $this->_oConfig->getPushMaxLen());
 

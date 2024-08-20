@@ -428,9 +428,15 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id'], $iViewerId))
                 continue;
 
+            $iContentObjectId = $this->_oConfig->getContentObjectId($aEvent);
+            if($iContentObjectId === false) {
+                $this->_oTemplate->getPost($aEvent, $aBrowseParams);
+                $iContentObjectId = $this->_oConfig->getContentObjectId($aEvent);
+            }
+
             $sSrvModule = $this->_oConfig->getContentModule($aEvent);
             $sSrvMethod = 'check_allowed_with_content_for_profile';
-            if($sSrvModule && BxDolRequest::serviceExists($sSrvModule, $sSrvMethod) && BxDolService::call($sSrvModule, $sSrvMethod, array('view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            if($sSrvModule && bx_is_srv($sSrvModule, $sSrvMethod) && bx_srv($sSrvModule, $sSrvMethod, ['view', $iContentObjectId, $iViewerId]) !== CHECK_ACTION_RESULT_ALLOWED)
                 continue;
 
             $bEventCanceled = false;

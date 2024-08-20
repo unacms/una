@@ -204,7 +204,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         $aComments = $oCmts->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjectId]);
         foreach($aComments as $aComment) {
             $iCmtAuthorId = (int)$aComment['cmt_author_id'];
-            if(in_array($iCmtAuthorId, $aRecipients) || $iCmtAuthorId == $iOwnerId || $iCmtAuthorId == $iObjectOwnerId)
+            if(in_array($iCmtAuthorId, $aRecipients) || $iCmtAuthorId == $iOwnerId)
                 continue;
 
             $aResults[] = [
