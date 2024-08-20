@@ -7,8 +7,6 @@
  * @{
  */
 
-define('BX_DOL_AI_ASST_ID_UNA', 1);
-
 define('BX_DOL_AI_ASST_TYPE_PERMANENT', 1);
 define('BX_DOL_AI_ASST_TYPE_TRANSIENT', 10);
 

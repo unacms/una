@@ -16,6 +16,8 @@ define('BX_DOL_AI_AUTOMATOR_STATUS_AUTO', 'auto');
 define('BX_DOL_AI_AUTOMATOR_STATUS_MANUAL', 'manual');
 define('BX_DOL_AI_AUTOMATOR_STATUS_READY', 'ready');
 
+define('BX_DOL_AI_ASST_ID_UNA', 1);
+
 class BxDolAI extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oDb;
