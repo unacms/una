@@ -89,7 +89,7 @@ class BxDolSearch extends BxDol
     {
         $sCode = $this->_bDataProcessing ? [] : '';
 
-        if($this->_bLiveSearch && ($iAssistant = (int)getParam('sys_agents_live_search_assistant')) != 0) {
+        if($this->_bLiveSearch && ($iAssistant = BxDolAI::getAssistantForLiveSearch()) != 0) {
             $sKeyword = '';
             if(($sKeyword = bx_get('keyword')) !== false)
                 $sKeyword = bx_process_input($sKeyword);

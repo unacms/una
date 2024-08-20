@@ -226,8 +226,8 @@ class BxBaseStudioAgentsHelpers extends BxDolStudioAgentsHelpers
                     'name' => 'model_id',
                     'caption' => _t('_sys_agents_helpers_field_model_id'),
                     'info' => '',
-                    'value' => isset($aHelper['model_id']) ? $aHelper['model_id'] : BxDolAI::getInstance()->getDefaultModel(),
-                    'values' => $this->_oDb->getModelsBy(['sample' => 'all_pairs']),
+                    'value' => isset($aHelper['model_id']) ? $aHelper['model_id'] : BxDolAI::getDefaultModel(),
+                    'values' => $this->_oDb->getModelsBy(['sample' => 'all_pairs', 'active' => 1, 'hidden' => 0]),
                     'required' => '1',
                     'db' => [
                         'pass' => 'Int',

@@ -85,24 +85,40 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         BxDolAIAssistant::pruning();
     }
 
+    public static function getDefaultApiKey()
+    {
+        return getParam('sys_agents_api_key');
+    }
+
+    public static function getDefaultModel()
+    {
+        return (int)getParam('sys_agents_model');
+    }
+
+    public static function getAssistantForStudio()
+    {
+        return ($iId = (int)getParam('sys_agents_studio_assistant')) != 0 ? $iId : BX_DOL_AI_ASST_ID_UNA;
+    }
+
+    public static function getAssistantForLiveSearch()
+    {
+        return ($iId = (int)getParam('sys_agents_live_search_assistant')) != 0 ? $iId : BX_DOL_AI_ASST_ID_UNA;
+    }
+
     public function getProfileId()
     {
         return $this->_iProfileId;
     }
 
-    public function getDefaultApiKey()
+    public function getModels($aParams = [])
     {
-        return getParam('sys_agents_api_key');
-    }
+        $aParamsDb = ['sample' => 'all_pairs'];
+        if(isset($aParams['active']))
+            $aParamsDb['active'] = $aParams['active'] === true ? 1 : 0;
+        if(isset($aParams['hidden']))
+            $aParamsDb['hidden'] = $aParams['hidden'] === true ? 1 : 0;
 
-    public function getDefaultModel()
-    {
-        return (int)getParam('sys_agents_model');
-    }
-
-    public function getModels()
-    {
-        return $aModel = $this->_oDb->getModelsBy(['sample' => 'all_pairs']);
+        return $aModel = $this->_oDb->getModelsBy($aParamsDb);
     }
 
     public function getModel($iId)
@@ -132,9 +148,15 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return BxDolAIProvider::getObjectInstance($iId);
     }   
 
-    public function getAssistants()
+    public function getAssistants($aParams = [])
     {
-        return $aModel = $this->_oDb->getAssistantsBy(['sample' => 'all_pairs', 'active' => 1]);
+        $aParamsDb = ['sample' => 'all_pairs'];
+        if(isset($aParams['active']))
+            $aParamsDb['active'] = $aParams['active'] === true ? 1 : 0;
+        if(isset($aParams['hidden']))
+            $aParamsDb['hidden'] = $aParams['hidden'] === true ? 1 : 0;
+
+        return $aModel = $this->_oDb->getAssistantsBy($aParamsDb);
     }
 
     public function getAssistantById($iId)

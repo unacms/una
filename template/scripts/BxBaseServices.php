@@ -1319,7 +1319,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceGetOptionsAgentsModel()
     {
-        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getModels();
+        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getModels(['active' => true, 'hidden' => false]);
     }
 
     public function serviceGetOptionsAgentsProfile($bSelectOne = true)
@@ -1344,12 +1344,12 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceGetOptionsStudioAssistant()
     {
-        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants();
+        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants(['active' => true, 'hidden' => false]);
     }
 
     public function serviceGetOptionsLiveSearchAssistant()
     {
-        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants();
+        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants(['active' => true, 'hidden' => false]);
     }
 
     public function serviceRedirect($sUrl = false)

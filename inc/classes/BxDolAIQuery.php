@@ -92,21 +92,24 @@ class BxDolAIQuery extends BxDolDb
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'title';
+                $aMethod['params'][3] = [];
 
                 if(isset($aParams['for_asst'])) {
-                    $aMethod['params'][3] = [
-                        'for_asst' => $aParams['for_asst']
-                    ];
+                    $aMethod['params'][3]['for_asst'] = $aParams['for_asst'];
 
-                    $sWhereClause = " AND `for_asst`=:for_asst";
+                    $sWhereClause .= " AND `for_asst`=:for_asst";
                 }
 
                 if(isset($aParams['active'])) {
-                    $aMethod['params'][3] = [
-                        'active' => $aParams['active']
-                    ];
+                    $aMethod['params'][3]['active'] = $aParams['active'];
 
-                    $sWhereClause = " AND `active`=:active";
+                    $sWhereClause .= " AND `active`=:active";
+                }
+
+                if(isset($aParams['hidden'])) {
+                    $aMethod['params'][3]['hidden'] = $aParams['hidden'];
+
+                    $sWhereClause .= " AND `hidden`=:hidden";
                 }
                 break;
         }
@@ -594,13 +597,18 @@ class BxDolAIQuery extends BxDolDb
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'name';
+                $aMethod['params'][3] = [];
 
                 if(isset($aParams['active'])) {
-                    $aMethod['params'][3] = [
-                        'active' => $aParams['active']
-                    ];
+                    $aMethod['params'][3]['active'] = $aParams['active'];
 
-                    $sWhereClause = " AND `ta`.`active`=:active";
+                    $sWhereClause .= " AND `ta`.`active`=:active";
+                }
+
+                if(isset($aParams['hidden'])) {
+                    $aMethod['params'][3]['hidden'] = $aParams['hidden'];
+
+                    $sWhereClause .= " AND `ta`.`hidden`=:hidden";
                 }
                 break;
         }

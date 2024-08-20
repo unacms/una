@@ -54,7 +54,7 @@ class BxDolStudioPage extends BxDol
         $this->sPageRssHelpUrl = 'http://feed.una.io/?section={page_name}';
         $this->iPageRssHelpLength = 5;
 
-        $this->iPageAssistantId = (int)getParam('sys_agents_studio_assistant');
+        $this->iPageAssistantId = BxDolAI::getAssistantForStudio();
         $this->iPageAssistantChatName = 'sys_studio_page_assistant';
 
         $this->_sTypesPreList = 'sys_studio_widget_types';

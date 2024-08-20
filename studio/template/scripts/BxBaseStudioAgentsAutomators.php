@@ -522,8 +522,8 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                     'name' => 'model_id',
                     'caption' => _t('_sys_agents_automators_field_model_id'),
                     'info' => '',
-                    'value' => isset($aAutomator['model_id']) ? $aAutomator['model_id'] : BxDolAI::getInstance()->getDefaultModel(),
-                    'values' => $this->_oDb->getModelsBy(['sample' => 'all_pairs']),
+                    'value' => isset($aAutomator['model_id']) ? $aAutomator['model_id'] : BxDolAI::getDefaultModel(),
+                    'values' => $this->_oDb->getModelsBy(['sample' => 'all_pairs', 'active' => 1, 'hidden' => 0]),
                     'required' => '1',
                     'checker' => [
                         'func' => 'Avail',

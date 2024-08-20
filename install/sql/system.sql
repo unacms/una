@@ -6413,15 +6413,19 @@ CREATE TABLE IF NOT EXISTS `sys_agents_models` (
   `params` text NOT NULL,
   `for_asst` tinyint(4) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
+  `hidden` tinyint(4) NOT NULL DEFAULT '0',
   `class_name` varchar(128) NOT NULL default '',
   `class_file` varchar(255) NOT NULL  default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`)
 );
 
-INSERT INTO `sys_agents_models`(`name`, `title`, `key`, `params`, `for_asst`, `class_name`, `class_file`) VALUES
-('gpt-3.5-turbo', 'GPT-3.5-TURBO', '', '{"call":{"temperature":0.1}}', 0, 'BxDolAIModelGpt35', ''),
-('gpt-4o', 'GPT-4.O', '', '{"call":{},"assistants":{"event_init":"asst_HcEyaghqWZefkAyoEML40joY","event":"asst_wqaXtKjcsBKceMtJ2NxID2LT","scheduler_init":"asst_kEbDH1hUy2Y45nOKk9jaSTB8","scheduler":"asst_M6zOv4osQwZmRItaiYptjjOS","webhook_init":"asst_sSkOblPyXmYovS5IiEiVW17n","webhook":"asst_w7F3RiylJfdDEb9Eaa4RvO1q"}}', 1, 'BxDolAIModelGpt40', '');
+INSERT INTO `sys_agents_models`(`name`, `title`, `key`, `params`, `for_asst`, `active`, `hidden`, `class_name`, `class_file`) VALUES
+('gpt-3.5-turbo', 'GPT-3.5-TURBO', '', '{"call":{"temperature":0.1}}', 0, 1, 0, 'BxDolAIModelGpt35', '');
+
+INSERT INTO `sys_agents_models`(`name`, `title`, `key`, `params`, `for_asst`, `active`, `hidden`, `class_name`, `class_file`) VALUES
+('gpt-4o', 'GPT-4.O', '', '{"call":{},"assistants":{"event_init":"asst_HcEyaghqWZefkAyoEML40joY","event":"asst_wqaXtKjcsBKceMtJ2NxID2LT","scheduler_init":"asst_kEbDH1hUy2Y45nOKk9jaSTB8","scheduler":"asst_M6zOv4osQwZmRItaiYptjjOS","webhook_init":"asst_sSkOblPyXmYovS5IiEiVW17n","webhook":"asst_w7F3RiylJfdDEb9Eaa4RvO1q"}}', 1, 1, 0, 'BxDolAIModelGpt40', '');
+SET @iModelId = LAST_INSERT_ID();
 
 CREATE TABLE IF NOT EXISTS `sys_agents_automators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -6565,9 +6569,13 @@ CREATE TABLE IF NOT EXISTS `sys_agents_assistants` (
   `ai_asst_id` varchar(64) NOT NULL DEFAULT '',
   `added` int(11) NOT NULL DEFAULT 0,
   `active` tinyint(4) NOT NULL DEFAULT 0,
+  `hidden` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`)
 );
+
+INSERT INTO `sys_agents_assistants`(`name`, `model_id`, `profile_id`, `description`, `prompt`, `ai_vs_id`, `ai_asst_id`, `added`, `active`, `hidden`) VALUES
+('UNA-Help', @iModelId, 0, 'UNA Help', '', 'vs_Rp3wwQWAeTIq711tsqkqFft6', 'asst_SbNl1hHkHGUmDdhNPvr8lwQN', 0, 1, 1);
 
 CREATE TABLE IF NOT EXISTS `sys_agents_assistants_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
