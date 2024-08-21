@@ -16,8 +16,6 @@ define('BX_DOL_AI_AUTOMATOR_STATUS_AUTO', 'auto');
 define('BX_DOL_AI_AUTOMATOR_STATUS_MANUAL', 'manual');
 define('BX_DOL_AI_AUTOMATOR_STATUS_READY', 'ready');
 
-define('BX_DOL_AI_ASST_ID_UNA', 1);
-
 class BxDolAI extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oDb;
@@ -99,12 +97,12 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
 
     public static function getAssistantForStudio()
     {
-        return ($iId = (int)getParam('sys_agents_studio_assistant')) != 0 ? $iId : BX_DOL_AI_ASST_ID_UNA;
+        return ($iId = (int)getParam('sys_agents_studio_assistant')) != 0 ? $iId : 0;
     }
 
     public static function getAssistantForLiveSearch()
     {
-        return ($iId = (int)getParam('sys_agents_live_search_assistant')) != 0 ? $iId : BX_DOL_AI_ASST_ID_UNA;
+        return ($iId = (int)getParam('sys_agents_live_search_assistant')) != 0 ? $iId : 0;
     }
 
     public function getProfileId()
