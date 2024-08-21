@@ -371,13 +371,13 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     {
         $this->checkAllowedConnect ($iInitiator, $iContent, true, $iMutual, false);
 
-        /**
-         * Update recommendations.
-         */
         $bMutual = false;
         if($this->_aObject['type'] == BX_CONNECTIONS_TYPE_ONE_WAY || ($bMutual = ($this->_aObject['type'] == BX_CONNECTIONS_TYPE_MUTUAL && $iMutual))) {
             $oProfileQuery = BxDolProfileQuery::getInstance();
 
+            /**
+             * Update recommendations.
+             */
             if($this->_aObject['profile_initiator']) {
                 $aInitiator = $oProfileQuery->getInfoById($iInitiator);
                 if(bx_srv($aInitiator['type'], 'act_as_profile'))
@@ -388,6 +388,19 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
                 $aContent = $oProfileQuery->getInfoById($iContent);
                 if(bx_srv($aContent['type'], 'act_as_profile'))
                     BxDolRecommendation::updateData($iContent);
+            }
+
+            /**
+             * Call socket.
+             */
+            if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
+                $sMessage = json_encode([
+                    'object' => $this->_sObject, 
+                    'action' => 'added'
+                ]);
+
+                $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', $sMessage);
+                $oSockets->sendEvent('sys_connections', $iContent , 'changed', $sMessage);
             }
         }
     }
@@ -432,7 +445,24 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         return true;
     }
 
-    public function onRemoved($iInitiator, $iContent) {}
+    /**
+     * TODO: Improve - add $iMutual like in onAdded
+     */
+    public function onRemoved($iInitiator, $iContent)
+    {
+        /**
+         * Call socket.
+         */
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
+            $sMessage = json_encode([
+                'object' => $this->_sObject, 
+                'action' => 'deleted'
+            ]);
+
+            $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', $sMessage);
+            $oSockets->sendEvent('sys_connections', $iContent , 'changed', $sMessage);
+        }
+    }
 
     /**
      * Compound function, which calls getCommonContent, getConnectedContent or getConnectedInitiators depending on $sContentType
