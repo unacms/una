@@ -689,6 +689,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             'setting' => &$aSettings, 
             'subject' => &$sSubject
         ]);
+        
+        if (!$aContent)
+            return false;
 
         $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
 
