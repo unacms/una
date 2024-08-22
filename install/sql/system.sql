@@ -480,15 +480,15 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `info`, `value`, `ty
 (@iCategoryId, 'site_tour_studio', '_adm_stg_cpt_option_site_tour_studio', '_adm_stg_inf_option_site_tour_studio', 'on', 'checkbox', '', '', '', 7),
 
 (@iCategoryId, 'sys_autoupdate', '_adm_stg_cpt_option_sys_autoupdate', '_adm_stg_inf_option_sys_autoupdate', 'on', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_autoupdate_force_modified_files', '_adm_stg_cpt_option_sys_autoupdate_force_modified_files', '', '', 'checkbox', '', '', '', 12),
+(@iCategoryId, 'sys_autoupdate_force_modified_files', '_adm_stg_cpt_option_sys_autoupdate_force_modified_files', '_adm_stg_inf_option_sys_autoupdate_force_modified_files', '', 'checkbox', '', '', '', 12),
 
-(@iCategoryId, 'smart_app_banner', '_adm_stg_cpt_option_smart_app_banner', '', '', 'checkbox', '', '', '', 14),
-(@iCategoryId, 'smart_app_banner_ios_app_id', '_adm_stg_cpt_option_smart_app_banner_ios_app_id', '', '', 'digit', '', '', '', 15),
+(@iCategoryId, 'smart_app_banner', '_adm_stg_cpt_option_smart_app_banner', '_adm_stg_inf_option_smart_app_banner', '', 'checkbox', '', '', '', 14),
+(@iCategoryId, 'smart_app_banner_ios_app_id', '_adm_stg_cpt_option_smart_app_banner_ios_app_id', '_adm_stg_inf_option_smart_app_banner_ios_app_id', '', 'digit', '', '', '', 15),
 
-(@iCategoryId, 'sys_per_page_search_keyword_single', '_adm_stg_cpt_option_sys_per_page_search_keyword_single', '', '24', 'digit', '', '', '', 20),
-(@iCategoryId, 'sys_per_page_search_keyword_plural', '_adm_stg_cpt_option_sys_per_page_search_keyword_plural', '', '3', 'digit', '', '', '', 21),
-(@iCategoryId, 'sys_live_search_limit', '_adm_stg_cpt_option_sys_live_search_limit', '', '5', 'digit', '', '', '', 22),
-(@iCategoryId, 'sys_profiles_search_limit', '_adm_stg_cpt_option_sys_profiles_search_limit', '', '20', 'digit', '', '', '', 23),
+(@iCategoryId, 'sys_per_page_search_keyword_single', '_adm_stg_cpt_option_sys_per_page_search_keyword_single', '_adm_stg_inf_option_sys_per_page_search_keyword_single', '24', 'digit', '', '', '', 20),
+(@iCategoryId, 'sys_per_page_search_keyword_plural', '_adm_stg_cpt_option_sys_per_page_search_keyword_plural', '_adm_stg_inf_option_sys_per_page_search_keyword_plural', '3', 'digit', '', '', '', 21),
+(@iCategoryId, 'sys_live_search_limit', '_adm_stg_cpt_option_sys_live_search_limit', '_adm_stg_inf_option_sys_live_search_limit', '5', 'digit', '', '', '', 22),
+(@iCategoryId, 'sys_profiles_search_limit', '_adm_stg_cpt_option_sys_profiles_search_limit', '_adm_stg_inf_option_sys_profiles_search_limit', '20', 'digit', '', '', '', 23),
 
 (@iCategoryId, 'sys_metatags_hashtags_only', '_adm_stg_cpt_option_sys_metatags_hashtags_only', '', '', 'checkbox', '', '', '', 30),
 (@iCategoryId, 'sys_metatags_hashtags_max', '_adm_stg_cpt_option_sys_metatags_hashtags_max', '', '9', 'digit', '', '', '', 31),
