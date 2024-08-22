@@ -796,9 +796,10 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceGetMenu($aParams)
     {
-        $mixedResulEmpty = $this->_bIsApi ? [] : '';
+        $bIsApi = bx_is_api();
+        $mixedResulEmpty = $bIsApi ? [] : '';
 
-        if($this->_bIsApi && is_string($aParams))
+        if($bIsApi && is_string($aParams))
             $aParams = bx_api_get_browse_params($aParams);
 
         if(!isset($aParams['object']))
@@ -811,7 +812,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $oMenu->setContentParams($aParams['params']);
 
-        return $this->_bIsApi ? $oMenu->getCodeAPI() : $oMenu->getCode();
+        return $bIsApi ? $oMenu->getCodeAPI() : $oMenu->getCode();
     }
 
     /**
