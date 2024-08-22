@@ -91,6 +91,18 @@ class BxBaseMenu extends BxDolMenu
         ];
     }
 
+    /**
+     * Get menu short code API.
+     * @return array
+     */
+    public function getShortCodeAPI ()
+    {
+        return [
+            'object' => $this->_sObject, 
+            'params' => $this->getContentParams()
+        ];
+    }
+
     protected function _getCode($sTmplName, $aTmplVars)
     {
         return $this->_oTemplate->parseHtmlByName($this->getTemplateName($sTmplName), $aTmplVars);
