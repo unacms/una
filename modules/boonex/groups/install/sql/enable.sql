@@ -116,7 +116,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 -- PAGE: group manage
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_groups_manage_item', 'group-manage', '_bx_groups_page_title_sys_manage_profile', '_bx_groups_page_title_manage_profile', 'bx_groups', 5, 2147483647, 1, 'page.php?i=manage', '', '', '', 0, 1, 0, 'BxGroupsPageEntry', 'modules/boonex/groups/classes/BxGroupsPageEntry.php');
+('bx_groups_manage_item', 'group-manage', '_bx_groups_page_title_sys_manage_profile', '_bx_groups_page_title_manage_profile', 'bx_groups', 5, 2147483647, 1, 'page.php?i=group-manage', '', '', '', 0, 1, 0, 'BxGroupsPageEntry', 'modules/boonex/groups/classes/BxGroupsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_groups_manage_item', 1, 'bx_groups', '_bx_groups_page_block_title_system_fans_manage', '_bx_groups_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1),
