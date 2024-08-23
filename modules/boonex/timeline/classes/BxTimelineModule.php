@@ -5436,9 +5436,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aMediaIds = $this->_oDb->getMedia($CNF['FIELD_VIDEO'], $iEventId);
         if(empty($aMediaIds) || !is_array($aMediaIds))
-            return array();
+            return [];
 
-        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_videos'));
+        $sStorage = $this->_oConfig->getObject('storage_videos');
+        $oStorage = BxDolStorage::getObjectInstance($sStorage);
 
         $oTranscoderPoster = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_poster'));
         $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
@@ -5447,7 +5448,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oTranscoderPhoto = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_videos_photo_view'));
         $oTranscoderPhotoBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_videos_photo_big'));
 
-        $aResult = array();
+        $aResult = [];
         foreach($aMediaIds as $iMediaId) {
             $aMediaFile = $oStorage->getFile($iMediaId);
 
@@ -5457,26 +5458,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 if (!empty($aMediaFile['dimensions']) && $oTranscoderMp4Hd->isProcessHD($aMediaFile['dimensions']))
                     $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iMediaId);
 
-                $aResult[$iMediaId] = array(
+                $aResult[$iMediaId] = [
                     'id' => $iMediaId,
                     'src_poster' => $oTranscoderPoster->getFileUrl($iMediaId),
                     'src_mp4' => $oTranscoderMp4->getFileUrl($iMediaId),
                     'src_mp4_hd' => $sVideoUrlHd,
-                );
+                ];
             }
 
             $bImageFile = strncmp('image/', $aMediaFile['mime_type'], 6) === 0 && $oTranscoderPhoto->isMimeTypeSupported($aMediaFile['mime_type']);
             if($bImageFile) {
+                if($this->_bIsApi) {
+                    $aResult[] = bx_api_get_image($sStorage, $iMediaId);
+                    continue;
+                }
+
                 $sPhotoSrc = $oTranscoderPhoto->getFileUrl($iMediaId);
                 $sPhotoSrcBig = $oTranscoderPhotoBig->getFileUrl($iMediaId);
                 if(empty($sPhotoSrcBig) && !empty($sPhotoSrc))
                     $sPhotoSrcBig = $sPhotoSrc;
 
-                $aResult[$iMediaId] = array(
+                $aResult[$iMediaId] = [
                     'id' => $iMediaId,
                     'src' => $sPhotoSrc,
                     'src_orig' => $sPhotoSrcBig,
-                );
+                ];
             }
         }
 
