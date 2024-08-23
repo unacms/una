@@ -118,9 +118,9 @@ class BxOrgsModule extends BxBaseModGroupsModule
             $sAction = 'accept';
 
         if($aEvent['owner_id'] == $aEvent['object_owner_id'])
-            return $this->_serviceGetNotification($aEvent, $CNF['T']['txt_ntfs_' . $sAction . '_request']);
+            return $this->_serviceGetNotification($aEvent, 'join_request', $CNF['T']['txt_ntfs_' . $sAction . '_request']);
 
-        return $this->_serviceGetNotification($aEvent, $CNF['T']['txt_ntfs_' . $sAction . '_request_for_owner']);
+        return $this->_serviceGetNotification($aEvent, 'join_request', $CNF['T']['txt_ntfs_' . $sAction . '_request_for_owner']);
     }
 
     public function onFanRemovedFromAdmins($iGroupProfileId, $iProfileId)

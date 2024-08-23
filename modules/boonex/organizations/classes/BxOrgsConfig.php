@@ -91,6 +91,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'URL_HOME' => 'page.php?i=organizations-home',
             'URL_CREATE' => 'page.php?i=create-organization-profile',
             'URL_ENTRY_FANS' => 'page.php?i=organization-profile-fans',
+            'URL_ENTRY_MANAGE' => 'page.php?i=organization-manage',
             'URL_MANAGE_COMMON' => 'page.php?i=organizations-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=organizations-administration',
 
