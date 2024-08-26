@@ -201,7 +201,8 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
             'data' => [
                 'request_url' => $sModule . '/get_convo_url/Services&params[]=' . json_encode(['recipient' => $this->_oProfile->id()]),
                 'on_callback' => 'redirect'
-            ]
+            ],
+            'primary' => $aItem['primary'],
         ];
     }
 }
