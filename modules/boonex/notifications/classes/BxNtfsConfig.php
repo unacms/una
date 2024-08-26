@@ -255,9 +255,13 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     public function getContentObjectId(&$aEvent)
     {
         $bContentObjectId = !empty($aEvent['content']['object_id']);
+        if(!$bContentObjectId) {
+            if(in_array($aEvent['action'], ['replyPost']))
+                return false;
 
-        if(in_array($aEvent['action'], ['replyPost']) && !$bContentObjectId)
-            return false;
+            if(strpos($aEvent['type'], '_media') !== false && in_array($aEvent['action'], ['commentPost', 'doVote', 'doVoteUp', 'doVoteDown']))
+                return false;
+        }
 
         return $bContentObjectId ? (int)$aEvent['content']['object_id'] : (int)$aEvent['object_id'];
     }

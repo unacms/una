@@ -672,6 +672,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
         return array(
+            'object_id' => $aMediaInfo['content_id'],
             'entry_sample' => $CNF['T']['txt_media_single'],
             'entry_url' => $sEntryUrl,
             'entry_caption' => $sEntryCaption,
@@ -699,6 +700,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
         return array(
+            'object_id' => $aMediaInfo['content_id'],
             'entry_sample' => $CNF['T']['txt_media_single'],
             'entry_url' => $sEntryUrl,
             'entry_caption' => $sEntryCaption,
@@ -736,6 +738,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
         return array(
+            'object_id' => $aMediaInfo['content_id'],
             'entry_sample' => $CNF['T']['txt_media_single'],
             'entry_url' => $sEntryUrl,
             'entry_caption' => $sEntryCaption,
