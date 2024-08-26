@@ -118,8 +118,16 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
     protected function genCustomInputInitialMembers ($aInput)
     {
         $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . "modules/?r=" . $this->_oModule->_oConfig->getUri() . "/ajax_get_initial_members";
-        if (bx_is_api()){
+        if(bx_is_api()) {
             $aInput['ajax_get_suggestions'] = $this->_oModule->_oConfig->getName() . "/get_initial_members&params[]=";
+
+            $aInput['value_data'] = [];
+            if(!empty($aInput['value']) && is_array($aInput['value']))
+                foreach($aInput['value'] as $iProfileId)
+                    if(($oProfile = BxDolProfile::getInstance($iProfileId)) !== false) {
+                        $aProfile = $oProfile->getUnitAPI();
+                        $aInput['value_data'][] = $aProfile['author_data'];
+                    }
         }
 
         return $this->genCustomInputUsernamesSuggestions($aInput);
