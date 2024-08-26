@@ -64,7 +64,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             'module' => $this->_aObject['module'],
             'unit' => 'general-content-list',
             'request_url' => '/api.php?r=system/get_results/TemplSearchExtendedServices&params[]=',
-            'data' =>  $aData,
+            'data' =>  defined('BX_API_PAGE') ? [] : $aData,
             'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'object' => $this->_aObject['module'], 'search_params' => $aParamsSearch],
         ]);
     }

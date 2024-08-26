@@ -64,10 +64,16 @@ return [$mForm];
             $aPa = json_decode($mParams, true);    
             $aParams['object'] = $aPa['params']["object"];
             $aParams['params'] = $aPa['params'];
-            
-            foreach($aParams['params']['filters'] as $sKey => $aParam){
-               $_POST[$sKey] = $aParam;
-            }
+
+            $aFilters = [];
+            if(!empty($aParams['params']['filters']) && is_array($aParams['params']['filters']))
+                $aFilters = $aParams['params']['filters'];
+            else if(!empty($aParams['params']['search_params']) && is_array($aParams['params']['search_params']))
+                $aFilters = $aParams['params']['search_params'];
+                
+            if($aFilters)
+                foreach($aFilters as $sKey => $aParam)
+                   $_POST[$sKey] = $aParam;
         }
         else
             $aParams = $mParams;
