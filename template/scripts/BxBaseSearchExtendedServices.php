@@ -36,24 +36,12 @@ class BxBaseSearchExtendedServices extends BxDol
             return '';
 
         $mForm = $oSearch->getForm($aParams);
-        if (bx_is_api()){
-            /*$aRes =$this->serviceGetResults($aParams);
-            if ($aRes)
-                return [$mForm, $aRes];
-            else
-                return [$mForm];*/
-return [$mForm];
-        }
+        if(bx_is_api())
+            $mForm = [$mForm];
+
         return $mForm;
     }
 
-
-    
-/*
- * TODO: Continue from here!            
-https://linguria.vercel.app/api/api.php?r=system/get_results/TemplSearchExtendedServices&params[]={%22params%22:{%22per_page%22:10,%22start%22:0,%22object%22:%22bx_persons%22,%22search_params%22:{%22fullname%22:{%22type%22:%22text%22,%22value%22:%22umit%22,%22operator%22:%22like%22}}}}&lang=en
-https://linguria.vercel.app/api/api.php?r=system/get_results/TemplSearchExtendedServices&params[]={%22params%22:{%22per_page%22:10,%22start%22:0,%22object%22:%22bx_persons%22,%22search_params%22:{%22fullname%22:{%22type%22:%22text%22,%22value%22:%22umit%22,%22operator%22:%22like%22}},%22filters%22:{%22fullname%22:%22umit%22,%22labels%22:%22%22,%22expertise%22:%22%22,%22native_language%22:%22%22,%22second_language%22:%22%22,%22third_language%22:%22%22,%22association_memberships%22:%22%22,%22searchbx_persons%22:%22Apply%22}}}&lang=en
-*/
     public function serviceGetResults($mParams)
     {
         $aParams = [];
