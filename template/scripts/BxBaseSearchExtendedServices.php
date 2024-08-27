@@ -47,37 +47,42 @@ return [$mForm];
         return $mForm;
     }
 
+
+    
+/*
+ * TODO: Continue from here!            
+https://linguria.vercel.app/api/api.php?r=system/get_results/TemplSearchExtendedServices&params[]={%22params%22:{%22per_page%22:10,%22start%22:0,%22object%22:%22bx_persons%22,%22search_params%22:{%22fullname%22:{%22type%22:%22text%22,%22value%22:%22umit%22,%22operator%22:%22like%22}}}}&lang=en
+https://linguria.vercel.app/api/api.php?r=system/get_results/TemplSearchExtendedServices&params[]={%22params%22:{%22per_page%22:10,%22start%22:0,%22object%22:%22bx_persons%22,%22search_params%22:{%22fullname%22:{%22type%22:%22text%22,%22value%22:%22umit%22,%22operator%22:%22like%22}},%22filters%22:{%22fullname%22:%22umit%22,%22labels%22:%22%22,%22expertise%22:%22%22,%22native_language%22:%22%22,%22second_language%22:%22%22,%22third_language%22:%22%22,%22association_memberships%22:%22%22,%22searchbx_persons%22:%22Apply%22}}}&lang=en
+*/
     public function serviceGetResults($mParams)
     {
         $aParams = [];
-        
-        $mDefValues = bx_get('filters');
-       
-        if ($mDefValues){
-            $mDefValues = json_decode($mDefValues, true);
-            foreach($mDefValues as $sKey => $aParam){
-                $_POST[$sKey] = $aParam;
-            }
-        }
-        
-        if (is_string($mParams)){
-            $aPa = json_decode($mParams, true);    
-            $aParams['object'] = $aPa['params']["object"];
-            $aParams['params'] = $aPa['params'];
+        $fProcessDefValues = function($aValues) {
+            if(empty($aValues) || !is_array($aValues))
+                return;
 
-            $aFilters = [];
-            if(!empty($aParams['params']['filters']) && is_array($aParams['params']['filters']))
-                $aFilters = $aParams['params']['filters'];
-            else if(!empty($aParams['params']['search_params']) && is_array($aParams['params']['search_params']))
-                $aFilters = $aParams['params']['search_params'];
-                
-            if($aFilters)
-                foreach($aFilters as $sKey => $aParam)
-                   $_POST[$sKey] = $aParam;
+            foreach($aValues as $sKey => $sValue) {
+                if(empty($sValue))
+                    continue;
+
+                $_POST[$sKey] = $sValue;
+            }
+        };
+
+        if(($mDefValues = bx_get('filters')) !== false)
+            $fProcessDefValues(json_decode($mDefValues, true));
+
+        if(is_string($mParams)) {
+            $mParams = json_decode($mParams, true);    
+            if(!empty($mParams['params']) && is_array($mParams['params']))
+                $aParams = $mParams['params'];
+
+            if(isset($aParams['filters']))
+                $fProcessDefValues($aParams['filters']);
         }
         else
             $aParams = $mParams;
-        
+
         $this->prepareParams($aParams);
 
         if(empty($aParams['object']))

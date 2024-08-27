@@ -90,10 +90,6 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         $iStart = !empty($aParams['start']) ? $aParams['start'] : 0;
         $iPerPage = !empty($aParams['per_page']) ? $aParams['per_page'] : 0;
-        if($this->_bIsApi && isset($aParams['params'])){
-            $iPerPage = $aParams['params']['per_page'];
-            $iStart = $aParams['params']['start'];
-        }
         unset($aParams['start'], $aParams['per_page']);
 
         $sUnitTemplate = !empty($aParams['template']) ? $aParams['template'] : '';
@@ -120,7 +116,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return '';
 
         $aParamsSearch = [];
-        if(!isset($aParams['search_params'])) {
+        if(empty($aParams['search_params'])) {
             foreach($this->_aObject['fields'] as $aField) {
                 $mixedValue = $oForm->getCleanValue($aField['name']);
                 if(empty($mixedValue) || (is_array($mixedValue) && bx_is_empty_array($mixedValue)))
