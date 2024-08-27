@@ -170,6 +170,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
         $aRv = [
             'id' => $iId,
+            'account_id' => $oAccount->id(),
             'email' => $oAccount->getEmail(),
             'display_name' => $oProfile->getDisplayName(),
             'url' => bx_api_get_relative_url($oProfile->getUrl()),

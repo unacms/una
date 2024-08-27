@@ -492,6 +492,9 @@ class BxBaseServiceAccount extends BxDol
         if(is_string($mixedAccountId) && !is_numeric($mixedAccountId))
             return $bApi ? [bx_api_get_msg($mixedAccountId)] : MsgBox($mixedAccountId);
 
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
+            $oSockets->sendEvent('sys_account', $mixedAccountId, 'confirmed', '');
+
         // redirect with success message
         $sUrl = getParam('sys_redirect_after_email_confirmation');
         /**
