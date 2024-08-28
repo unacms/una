@@ -91,7 +91,7 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
     {
         $aAnswers = $this->_oModule->_oDb->getQuestions(['sample' => 'answers', 'content_id' => $iContentId, 'profile_id' => $iProfileId]);
         if(empty($aAnswers) || !is_array($aAnswers))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $aTmplVarsAnswers = [];
         foreach($aAnswers as $aAnswer)
@@ -99,10 +99,9 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
                 'question' => $aAnswer['question'],
                 'answer' => $aAnswer['answer'],
             ];
-        
-        if (bx_is_api()){
+
+        if($this->_bIsApi)
             return $aTmplVarsAnswers;
-        }
 
         return $this->parseHtmlByName('popup_qnr_answers.html', ['bx_repeat:answers' => $aTmplVarsAnswers]);
     }
