@@ -289,14 +289,15 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             }
         }
 
-        return $this->_oTemplate->parseHtmlByName('search_extended_results.html', array(
+        return $this->_oTemplate->parseHtmlByName('search_extended_results.html', [
+            'class' => str_replace('_', '-', $this->_sObject),
             'sort' => $sSort,
             'code' => $mixedResults,
-            'bx_if:show_paginate' => array(
+            'bx_if:show_paginate' => [
                 'condition' => $bTmplVarsPaginate,
                 'content' => $aTmplVarsPaginate
-            )
-        ));
+            ]
+        ]);
     }
 
     protected function &prepareForm($aParams = array())
