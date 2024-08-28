@@ -115,6 +115,8 @@
     display: flex;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
+
+    margin: -0.5rem;
 }
 
 .bx-albums-media-thumb {
