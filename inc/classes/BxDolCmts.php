@@ -850,6 +850,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_oQuery->getComment ($this->getId(), $iCmtId);
     }
 
+    public function getCommentParents ($mixedCmt, $iDepthMax = 0)
+    {
+        if(!is_array($mixedCmt))
+            $mixedCmt = $this->_oQuery->getCommentsBy(['type' => 'id', 'id' => (int)$mixedCmt]);
+
+        $iDepth = 0;
+        $aParents = [];
+        $this->_getParents($mixedCmt, $iDepthMax, $iDepth, $aParents);
+
+        return $aParents;
+    }
+
     public function onObjectDelete ($iObjectId = 0)
     {
         // delete comments
@@ -2400,7 +2412,23 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
     	return '_cmt_txt_do';
     }
-    
+
+    protected function _getParents($aCmt, $iDepthMax, &$iDepth, &$aParents)
+    {
+        $iParentId = (int)$aCmt['cmt_parent_id'];
+        if($iParentId == 0)
+            return;
+
+        $aParents[] = $iParentId;
+        $iDepth++;
+
+        if($iDepthMax != 0 && $iDepth == $iDepthMax)
+            return;
+
+        $aCmt = $this->_oQuery->getCommentsBy(['type' => 'id', 'id' => $iParentId]);
+        $this->_getParents($aCmt, $iDepthMax, $iDepth, $aParents);
+    }
+
     public function _getStructure($mixedItem, $aBp, &$iLevel, &$aStructure)
     {
         $bItem = !empty($mixedItem) && is_array($mixedItem);
