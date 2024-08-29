@@ -166,7 +166,7 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             ],
             'contents' => !empty($aMessage['contents']) && is_array($aMessage['contents']) ? $aMessage['contents'] : [],
             'headings' => !empty($aMessage['headings']) && is_array($aMessage['headings']) ? $aMessage['headings'] : [],
-            'web_url' => !empty($aMessage['url']) ? $aMessage['url'] : '',
+            'url' => !empty($aMessage['url']) ? $aMessage['url'] : '',
             'data' => array('url' => !empty($aMessage['url']) ? $aMessage['url'] : ''),
             'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : '',
         ];
