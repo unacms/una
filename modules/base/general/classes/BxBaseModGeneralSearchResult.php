@@ -41,6 +41,31 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
     {
         return BxDolContentInfo::getObjectInstance($this->getContentInfoName());
     }
+    
+    function getFieldsOwn()
+    {
+        $mixedFields = getParam($this->getModuleName() . '_browse_fields_own');
+        if(empty($mixedFields))
+            return false;
+
+        if(($aFields = json_decode($mixedFields, true)) !== null)
+            return $aFields;
+
+        $sDelimiter = ',';
+        if(strpos($mixedFields, $sDelimiter) !== false)
+            return explode($sDelimiter, $mixedFields);
+
+        return false;
+    }
+
+    function getFieldsJoin($sJoin)
+    {
+        $mixedFields = getParam($this->getModuleName() . '_browse_fields_join');
+        if(empty($mixedFields))
+            return false;
+
+        return ($aJoins = json_decode($mixedFields, true)) !== null && !empty($aJoins[$sJoin]) ? $aJoins[$sJoin] : false;
+    }
 
     function getRssUnitLink (&$a)
     {
@@ -267,6 +292,18 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
             $a[$i] = $this->oModule->getDataAPI($r, ['extended' => $bExtendedUnits]);
 
         return $a;
+    }
+
+    function _getPseudFromParam ()
+    {
+        $mixedPseud = getParam($this->getModuleName() . '_browse_pseud');
+        if(empty($mixedPseud))
+            return false;
+
+        if(($aPseud = json_decode($mixedPseud, true)) !== null)
+            return $aPseud;
+
+        return false;
     }
 }
 
