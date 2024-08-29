@@ -1157,14 +1157,16 @@
 
     /* Common elements: All Actions */
     .sys-action-counter.sys-ac-link,
-    .sys-action-counter .sys-ac-link {
+    .sys-action-counter .sys-ac-link,
+    .sys-ac-link .sys-action-counter {
         @apply flex items-center;
         @apply border-none;
         @apply text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300;
         @apply rounded-full;
     }
     .sys-action-counter.sys-ac-only.sys-ac-link,
-    .sys-action-counter.sys-ac-only .sys-ac-link {
+    .sys-action-counter.sys-ac-only .sys-ac-link,
+    .sys-ac-link .sys-action-counter.sys-ac-only {
         @apply hover:bg-gray-100 dark:hover:bg-gray-600;
     }
 
