@@ -274,15 +274,15 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $bClickedIndicator = $this->_oConfig->isClickedIndicator();
         $sJsObject = $this->_oConfig->getJsObject('view');
 
-        if(bx_is_api()) {
+        if($this->_bIsApi) {
             $aLinks = [
                 'owner_link' => $aEvent['content']['owner_link'],
                 'object_owner_link' => $aEvent['content']['object_owner_link']
             ];
-            if(!empty($aEvent['content']['entry_url']))
-                $aLinks['entry_url'] = $this->_getLink($aEvent['content']['entry_url']);
-            if(!empty($aEvent['content']['subentry_url']))
-                $aLinks['subentry_url'] = $this->_getLink($aEvent['content']['subentry_url']);
+
+            foreach(['entry_url', 'entry_url_api', 'subentry_url', 'subentry_url_api'] as $sKey)
+                if(!empty($aEvent['content'][$sKey]))
+                    $aLinks[$sKey] = $this->_getLink($aEvent['content'][$sKey]);
 
             array_walk($aLinks, function(&$sValue, $sKey) {
                 $sValue = bx_api_get_relative_url($sValue);
