@@ -11,8 +11,8 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-define('BX_FORUM_FILTER_STATUS_RESOLVED', 1);
-define('BX_FORUM_FILTER_STATUS_UNRESOLVED', 0);
+define('BX_FORUM_FILTER_STATUS_RESOLVED', 'yes');
+define('BX_FORUM_FILTER_STATUS_UNRESOLVED', 'no');
 
 define('BX_FORUM_FILTER_ORDER_RECENT', 'latest');
 define('BX_FORUM_FILTER_ORDER_NEW', 'new');
@@ -381,10 +381,9 @@ class BxForumGrid extends BxTemplGrid
         $sFilterSql = "";
 
         // filter by resolved status
-        if(isset($this->_sFilter1Value) && $this->_sFilter1Value != '') {
-            $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVABLE'] . "` = 1 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVE'] . "` = " . $this->_sFilter1Value;
-        }
-        
+        if(!empty($this->_sFilter1Value))
+            $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVABLE'] . "` = 1 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVE'] . "` = " . ($this->_sFilter1Value == BX_FORUM_FILTER_STATUS_RESOLVED ? 1 : 0);
+
         // filter out posts of suspended members
         $sJoinClause .= " INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}` AND `p`.`status` = 'active') ";
 

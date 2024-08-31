@@ -474,6 +474,15 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
             $sRootUrl .= '/';
 
         $sMailBody = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sMailBody);
+
+        // restore URLs in images
+        $sMailBody = str_replace([
+            'src="' . $sRootUrl, 
+            "src='" . $sRootUrl
+        ], [
+            'src="' . BX_DOL_URL_ROOT, 
+            "src='" . BX_DOL_URL_ROOT
+        ], $sMailBody);
     }
 
     // email message headers
@@ -1062,7 +1071,7 @@ function bx_php_string_quot ($mixedInput)
  */
 function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array(), $iTimeout = 0, $aCustomCurlParams = array())
 {
-    if ('post' != $sMethod && 'post-json' != $sMethod && 'post-json-object' != $sMethod)
+    if(!in_array($sMethod, ['post', 'post-raw', 'post-json', 'post-json-object']))
     	$sFileUrl = bx_append_url_params($sFileUrl, $aParams);
 
     $sResult = '';
@@ -1094,6 +1103,10 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             curl_setopt($rConnect, CURLOPT_POST, true);
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, http_build_query($aParams));
         }
+        elseif ('post-raw' == $sMethod) {
+            curl_setopt($rConnect, CURLOPT_POST, true);
+            curl_setopt($rConnect, CURLOPT_POSTFIELDS, $aParams);
+        }
         elseif ('post-json' == $sMethod) {
             curl_setopt($rConnect, CURLOPT_POST, true);
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, json_encode($aParams));
@@ -1103,6 +1116,9 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             curl_setopt($rConnect, CURLOPT_POST, true);
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, json_encode($aParams, JSON_FORCE_OBJECT));
             $aHeaders[] = 'Content-Type: application/json';
+        }
+        elseif ($sMethod != 'get') {
+            curl_setopt($rConnect, CURLOPT_CUSTOMREQUEST, $sMethod);
         }
 
         if ($aHeaders)
@@ -2541,6 +2557,7 @@ function bx_api_check_access()
 {
     if (!getParam('sys_api_enable')) {
         header('HTTP/1.0 403 Forbidden');
+        BxDolLanguages::getInstance();
         echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
         exit;
     }
@@ -2558,6 +2575,7 @@ function bx_api_check_access()
     if ($sAuthHeader && getParam('sys_api_access_by_key')) {
         if (!BxDolApiQuery::getInstance()->getKey(str_replace('Bearer ', '', $sAuthHeader))) {
             header('HTTP/1.0 403 Forbidden');
+            BxDolLanguages::getInstance();
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
             exit;
         }
@@ -2571,6 +2589,7 @@ function bx_api_check_access()
 
             if (!BxDolApiQuery::getInstance()->getOrigin($sOriginHeader)) {
                 header('HTTP/1.0 403 Forbidden');
+                BxDolLanguages::getInstance();
                 echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
                 exit;
             }
@@ -2591,6 +2610,7 @@ function bx_api_check_access()
     }
     else {
         header('HTTP/1.0 403 Forbidden');
+        BxDolLanguages::getInstance();
         echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
         exit;
     }
@@ -2659,7 +2679,7 @@ function bx_api_get_browse_params($sParams, $bParamsOnly = false)
 
     $aParams = json_decode($sParams, true);
     if(isset($aParams['params']['validate']) && !is_array($aParams['params']['validate']))
-        $aParams['params']['validate'] = explode(',', $aParams['params']['validate']);
+        $aParams['params']['validate'] = !empty($aParams['params']['validate']) ? explode(',', $aParams['params']['validate']) : [];
 
     if(!$bParamsOnly)
         return $aParams;

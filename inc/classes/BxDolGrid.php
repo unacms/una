@@ -252,6 +252,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected $_sDefaultSortingOrder = 'ASC';
     protected $_iTotalCount = 0;
 
+    protected $_bActionCsrfChecking;
+
     /**
      * Constructor
      * @param $aOptions array of grid options
@@ -262,12 +264,14 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         $this->_bIsApi = bx_is_api();
 
+        $this->_bActionCsrfChecking = true;
+
         $this->_sObject = $aOptions['object'];
         $this->_aOptions = $aOptions;
 
         $sBrowseParams = bx_get('bp');
         if(!empty($sBrowseParams)) {
-        	$aBrowseParams = bx_process_input(unserialize(urldecode($sBrowseParams)));
+        	$aBrowseParams = bx_process_input(json_decode(urldecode($sBrowseParams), true));
         	if(!empty($aBrowseParams) && is_array($aBrowseParams))
             	$this->setBrowseParams($aBrowseParams);
         }
@@ -323,7 +327,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     public function setBrowseParams($aBrowseParams)
     {
     	$this->_aBrowseParams = $aBrowseParams;
-    	$this->_aQueryAppend['bp'] = urlencode(serialize($this->_aBrowseParams));
+    	$this->_aQueryAppend['bp'] = urlencode(json_encode($this->_aBrowseParams));
     }
 
     /**
@@ -646,6 +650,15 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected function _getOrderValue()
     {
         return bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
+    }
+
+    public function setActionCsrfChecking($bCsrfChecking)
+    {
+        $this->_bActionCsrfChecking = $bCsrfChecking;
+    }
+
+    public function isActionCsrfCheckingDisabled() {
+        return !$this->_bActionCsrfChecking;
     }
 }
 

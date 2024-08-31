@@ -42,12 +42,17 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceGetSafeServices()
     {
         return array(
+            'GetMenu' => 'BxBaseServices',
             'GetCreatePostForm' => 'BxBaseServices',
             'GetProductsNames' => 'BxBaseServices',
             'KeywordSearch' => 'BxBaseServices',
             'GetDataSearchApi' => 'BxBaseServices',
             'Cmts' => 'BxBaseServices',
             'GetFooter' => 'BxBaseServices',
+
+            'GetPageBlockData' => 'BxBaseServicePages',
+            'SetPageBlockData' => 'BxBaseServicePages',
+            'GetUrlInfo' => 'BxBaseServicePages',
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
             'AccountSettingsEmail' => 'BxBaseServiceAccount',
@@ -77,6 +82,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'BrowseRecommendationsFriends' => 'BxBaseServiceProfiles',
             'BrowseRecommendationsSubscriptions' => 'BxBaseServiceProfiles',
             'BrowseFriends' => 'BxBaseServiceProfiles',
+            'SetMembership' => 'BxBaseServiceProfiles',
             'BrowseFriendRequests' => 'BxBaseServiceProfiles',
             'BrowseFriendRequested' => 'BxBaseServiceProfiles',
             'BrowseSubscribedMe' => 'BxBaseServiceProfiles',
@@ -97,6 +103,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
             'Do' => 'BxBaseVoteServices',
             'GetPerformedBy' => 'BxBaseVoteServices',
+
+            'Perform' => 'BxBaseFeatureServices',
 
             'Perform' => 'BxBaseServiceConnections',
             'Perform' => 'BxBaseServiceRecommendations',
@@ -786,6 +794,27 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         ]]);
     }
 
+    public function serviceGetMenu($aParams)
+    {
+        $bIsApi = bx_is_api();
+        $mixedResulEmpty = $bIsApi ? [] : '';
+
+        if($bIsApi && is_string($aParams))
+            $aParams = bx_api_get_browse_params($aParams);
+
+        if(!isset($aParams['object']))
+            return $mixedResulEmpty;
+
+        $oMenu = BxDolMenu::getObjectInstance($aParams['object']);
+        if(!$oMenu)
+            return $mixedResulEmpty;
+
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $oMenu->setContentParams($aParams['params']);
+
+        return $bIsApi ? $oMenu->getCodeAPI() : $oMenu->getCode();
+    }
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
@@ -1289,6 +1318,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetOptionsAgentsModel()
+    {
+        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getModels(['active' => true, 'hidden' => false]);
+    }
+
     public function serviceGetOptionsAgentsProfile($bSelectOne = true)
     {
         $aResult = [];
@@ -1307,6 +1341,16 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         }
 
         return $aResult;
+    }
+
+    public function serviceGetOptionsStudioAssistant()
+    {
+        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants(['active' => true, 'hidden' => false]);
+    }
+
+    public function serviceGetOptionsLiveSearchAssistant()
+    {
+        return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getAssistants(['active' => true, 'hidden' => false]);
     }
 
     public function serviceRedirect($sUrl = false)

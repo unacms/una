@@ -356,11 +356,25 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
     protected function _retrieveCustomer($sType, $sId)
     {
         $oCustomer = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_retrieve_customer 'bx_payment', 'stripe_retrieve_customer' - hook to override customer data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_retrieve_customer`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] payment type: single or recurring
+         *      - `customer_id` - [string] by ref, unique customer id, can be overridden in hook processing
+         *      - `customer_object` - [object] by ref, an instance of customer, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_retrieve_customer
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, [
             'type' => $sType,
             'customer_id' => &$sId,
             'customer_object' => &$oCustomer
-        ));
+        ]);
 
         try {
             if(empty($oCustomer))
@@ -376,10 +390,30 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
     protected function _retrieveCharge($sId)
     {
         $oCharge = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_charge', 0, false, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_retrieve_charge 'bx_payment', 'stripe_retrieve_charge' - hook to override charge data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_retrieve_charge`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] payment type: single or recurring
+         *      - `charge_id` - [string] by ref, unique charge id, can be overridden in hook processing
+         *      - `charge_object` - [object] by ref, an instance of charge, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_retrieve_charge
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_charge 'bx_payment', 'stripe_v3_retrieve_charge' - hook to override charge data retrieved from payment provider
+         * It's equivalent to @ref hook-bx_payment-stripe_retrieve_charge
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_charge
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_charge', 0, false, [
             'charge_id' => &$sId,
             'charge_object' => &$oCharge
-        ));
+        ]);
 
         try {
             if(empty($oCharge))
@@ -396,7 +430,7 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
     {
         try {
             $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
-            $oSubscription = $oCustomer->subscriptions->retrieve($sSubscriptionId);
+            $oSubscription = \Stripe\Subscription::retrieve($sSubscriptionId);
         }
         catch (Exception $oException) {
             return $this->_processException('Retrieve Subscription Error: ', $oException);
@@ -415,10 +449,28 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
                 return $this->_processException('Cancel Subscription Error: ', $oException);
         }
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_cancel_subscription 'bx_payment', 'stripe_cancel_subscription' - hook after a subscription was canceled
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_cancel_subscription`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `subscription_id` - [string] unique subscription id
+         *      - `subscription_object` - [object] an instance of subscription, redurned by payment provider
+         * @hook @ref hook-bx_payment-stripe_cancel_subscription
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_cancel_subscription 'bx_payment', 'stripe_v3_cancel_subscription' - hook after a subscription was canceled
+         * It's equivalent to @ref hook-bx_payment-stripe_cancel_subscription
+         * @hook @ref hook-bx_payment-stripe_v3_cancel_subscription
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, [
             'subscription_id' => $sSubscriptionId,
             'subscription_object' => &$oSubscription
-        ));
+        ]);
 
         return $oSubscription;
     }
@@ -431,10 +483,29 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
     protected function _retrieveProduct($sId)
     {
         $oProduct = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_product', 0, false, array(
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_retrieve_product 'bx_payment', 'stripe_retrieve_product' - hook to override product data retrieved from payment provider
+         * - $unit_name - equals `bx_payment`
+         * - $action - equals `stripe_retrieve_product`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `product_id` - [string] by ref, unique product id, can be overridden in hook processing
+         *      - `product_object` - [object] by ref, an instance of product, redurned by payment provider, can be overridden in hook processing
+         * @hook @ref hook-bx_payment-stripe_retrieve_product
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_payment-stripe_v3_retrieve_product 'bx_payment', 'stripe_v3_retrieve_product' - hook to override product data retrieved from payment provider
+         * It's equivalent to @ref hook-bx_payment-stripe_retrieve_product
+         * @hook @ref hook-bx_payment-stripe_v3_retrieve_product
+         */
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_product', 0, false, [
             'product_id' => &$sId,
             'product_object' => &$oProduct
-        ));
+        ]);
 
         if(!empty($oProduct))
             return $oProduct;

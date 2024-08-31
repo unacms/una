@@ -28,7 +28,7 @@
     <string name="_bx_timeline_option_events_per_preload"><![CDATA[Infinite Scroll: Number of items per preload]]></string>
     <string name="_bx_timeline_option_auto_preloads"><![CDATA[Infinite Scroll: Number of auto preloads]]></string>
     <string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
-    <string name="_bx_timeline_option_live_updates_length"><![CDATA[The length of Live Updates selection]]></string>
+    <string name="_bx_timeline_option_live_updates_length"><![CDATA[The length of Live Updates sample (leave 0 for automatic value)]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Show events]]></string>
     <string name="_bx_timeline_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Enable brief cards]]></string>
@@ -57,7 +57,8 @@
     <string name="_bx_timeline_option_hot_threshold_age"><![CDATA[Maximum age of commented/voted post that gets included in Hot feed (in days, 0 - no limit)]]></string>
     <string name="_bx_timeline_option_hot_threshold_comment"><![CDATA[Minimum number of comments for content to appear in Hot feed]]></string>
     <string name="_bx_timeline_option_hot_threshold_vote"><![CDATA[Minimum number of votes for content to appear in Hot feed]]></string>
-    <string name="_bx_timeline_option_hot_interval"><![CDATA[Interval of time (in hours) to get Hot events]]></string>
+    <string name="_bx_timeline_option_hot_interval"><![CDATA[Interval of time (in hours) to get Hot events (0 - no limit)]]></string>
+    <string name="_bx_timeline_option_hot_content_age_mux"><![CDATA[Adjustment coefficient  related  to content age (0 - no adjustment)]]></string>
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Enable item cache]]></string>
     <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Item cache engine (other than File option may require custom server setup)]]></string>
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Item cache lifetime]]></string>

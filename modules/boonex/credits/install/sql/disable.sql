@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_credits';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_credits' OR `object` IN ('bx_credits_home', 'bx_credits_checkout', 'bx_credits_orders_common', 'bx_credits_orders_administration', 'bx_credits_history_common', 'bx_credits_history_administration');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_credits' OR `object` IN ('bx_credits_home', 'bx_credits_checkout', 'bx_credits_orders_common', 'bx_credits_orders_administration', 'bx_credits_history_common', 'bx_credits_history_administration', 'bx_credits_withdrawals_common', 'bx_credits_withdrawals_administration');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_credits';

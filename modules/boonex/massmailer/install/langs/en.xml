@@ -82,6 +82,8 @@
   <string name="_bx_massmailer_form_campaign_input_sys_body"><![CDATA[Body]]></string>
   <string name="_bx_massmailer_form_campaign_input_body"><![CDATA[Body]]></string>
   <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Body can't be empty and {unsubscribe_url} marker must be present]]></string>
+  <string name="_bx_massmailer_form_campaign_input_sys_body_info"><![CDATA[Body Info]]></string>
+  <string name="_bx_massmailer_form_campaign_input_body_info"><![CDATA[]]></string>
   <string name="_bx_massmailer_form_campaign_input_is_one_per_account"><![CDATA[One letter per one account]]></string>
   <string name="_bx_massmailer_form_campaign_input_is_track_links"><![CDATA[Click tracking]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_test_email"><![CDATA[Email]]></string>

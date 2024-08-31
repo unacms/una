@@ -65,3 +65,12 @@ table.dataTable thead .sorting_desc:after{ margin-left:10px; font-family: "sys-u
 table.dataTable.no-footer {border-bottom:none !important}
 table.dataTable thead th{border-bottom:none !important; padding: 10px 10px !important}
 table.dataTable thead .sorting {background-image: none !important}
+
+/* Campaign form */
+.bx-form-element .bx-massmailer-attrs {
+    flex-direction: row;
+}
+.bx-form-element .bx-massmailer-attrs-group {
+    margin-right: 1.0rem;
+}
+    

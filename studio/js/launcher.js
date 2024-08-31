@@ -61,6 +61,14 @@ BxDolStudioLauncher.prototype.init = function() {
     	if($this._isFeatured())
             $('.bx-menu-tab-featured').addClass('bx-menu-tab-active');
     });
+
+    window.addEventListener('keydown', (e) => {
+        if(e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70) || (e.metaKey && e.keyCode === 70)) {
+            e.preventDefault();
+
+            $('.bx-menu-tab-search .bx-form-input-text[name="search"]').focus();
+        }
+    });
 };
 
 BxDolStudioLauncher.prototype.browser = function(oLink, sType) {

@@ -51,6 +51,7 @@ class BxDolStorageS3 extends BxDolStorage
         );
         if ($this->_bSSL && getParam('sys_curl_ssl_allow_untrusted'))
              $this->_s3->setSSL($this->_bSSL, false);
+        $this->_s3->setExceptions(true);
     }
 
     /**
@@ -64,7 +65,7 @@ class BxDolStorageS3 extends BxDolStorage
         if (!$aFile)
             return false;
 
-        if ($aFile['private']) {
+        if ($this->isAuthUrl($aFile)) {
             $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
 
             if ($this->_sDomain)
@@ -121,68 +122,77 @@ class BxDolStorageS3 extends BxDolStorage
     public function setFilePrivate($iFileId, $isPrivate = true)
     {
         $aFile = $this->_oDb->getFileById($iFileId);
-        $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
-        if (($aACP = $this->_s3->getAccessControlPolicy($this->_sBucket, $sFileLocation)) === false) {
-            $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
+        if (!$aFile)
             return false;
-        }
 
-        if (!is_array($aACP['acl']) || !$aACP['acl']) {
-            $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
-            return false;
-        }
-
-        // check current permissions
-        $aNewACP = $aACP;
-        unset($aNewACP['acl']);
-        $aNewACP['acl'] = array();
-        $aGroupPublic = false;
-        $aGroupPrivate = false;
-        foreach ($aACP['acl'] as $r) {
-            if ('Group' == $r['type']) {
-                if (isset($r['uri']) && $r['uri'] == 'http://acs.amazonaws.com/groups/global/AllUsers')
-                    $aGroupPublic = $r;
-                elseif (isset($r['uri']) && $r['uri'] == 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers')
-                    $aGroupPrivate = $r;
-                else
-                    $aNewACP['acl'][] = $r;
-            } else {
-                $aNewACP['acl'][] = $r;
-            }
-        }
-
-        // determine permissions changing
-
-        $aGroupAdd = false;
-
-        if ($isPrivate && (!$aGroupPrivate || $aGroupPublic)) {
-
-            // make private
-            $aGroupAdd = array (
-                    'type' => 'Group',
-                    'uri' => 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers',
-                    'permission' => 'READ',
-                );
-
-        } elseif (!$isPrivate && ($aGroupPrivate || !$aGroupPublic)) {
-
-            // make public
-            $aGroupAdd = array (
-                    'type' => 'Group',
-                    'uri' => 'http://acs.amazonaws.com/groups/global/AllUsers',
-                    'permission' => 'READ',
-                );
-
-        }
-
-        // change permission if necessary
-
-        if ($aGroupAdd) {
-            $aNewACP['acl'][] = $aGroupAdd;
-            if (!$this->_s3->setAccessControlPolicy($this->_sBucket, $sFileLocation, $aNewACP)) {
+        try {
+            $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
+            if (($aACP = $this->_s3->getAccessControlPolicy($this->_sBucket, $sFileLocation)) === false) {
                 $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
                 return false;
             }
+
+            if (!is_array($aACP['acl']) || !$aACP['acl']) {
+                $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
+                return false;
+            }
+
+            // check current permissions
+            $aNewACP = $aACP;
+            unset($aNewACP['acl']);
+            $aNewACP['acl'] = array();
+            $aGroupPublic = false;
+            $aGroupPrivate = false;
+            foreach ($aACP['acl'] as $r) {
+                if ('Group' == $r['type']) {
+                    if (isset($r['uri']) && $r['uri'] == 'http://acs.amazonaws.com/groups/global/AllUsers')
+                        $aGroupPublic = $r;
+                    elseif (isset($r['uri']) && $r['uri'] == 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers')
+                        $aGroupPrivate = $r;
+                    else
+                        $aNewACP['acl'][] = $r;
+                } else {
+                    $aNewACP['acl'][] = $r;
+                }
+            }
+
+            // determine permissions changing
+
+            $aGroupAdd = false;
+
+            if ($isPrivate && (!$aGroupPrivate || $aGroupPublic)) {
+
+                // make private
+                $aGroupAdd = array (
+                        'type' => 'Group',
+                        'uri' => 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers',
+                        'permission' => 'READ',
+                    );
+
+            } elseif (!$isPrivate && ($aGroupPrivate || !$aGroupPublic)) {
+
+                // make public
+                $aGroupAdd = array (
+                        'type' => 'Group',
+                        'uri' => 'http://acs.amazonaws.com/groups/global/AllUsers',
+                        'permission' => 'READ',
+                    );
+
+            }
+
+            // change permission if necessary
+
+            if ($aGroupAdd) {
+                $aNewACP['acl'][] = $aGroupAdd;
+                if (!$this->_s3->setAccessControlPolicy($this->_sBucket, $sFileLocation, $aNewACP)) {
+                    $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
+                    return false;
+                }
+            }
+        } catch (Exception $e) {
+            $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
+            bx_log('sys_storage_s3', $e->getMessage());
+            return false;
         }
 
         return parent::setFilePrivate($iFileId, $isPrivate);
@@ -209,18 +219,24 @@ class BxDolStorageS3 extends BxDolStorage
 
     protected function addFileToEngine($sTmpFile, $sLocalId, $sName, $isPrivate, $iProfileId)
     {
-        $sMimeType = $this->getMimeTypeByFileName($sName);
-        $sExt = $this->getFileExt($sName);
-        $sPath = $this->genPath($sLocalId, $this->_aObject['levels']);
-        $sRemoteNamePath = $sPath . $sLocalId . ($sExt ? '.' . $sExt : '');
-        $aRequestHeaders = $this->generateHeaders($sName, $isPrivate);
-        $aMetaHeaders = array();
+        try {
+            $sMimeType = $this->getMimeTypeByFileName($sName);
+            $sExt = $this->getFileExt($sName);
+            $sPath = $this->genPath($sLocalId, $this->_aObject['levels']);
+            $sRemoteNamePath = $sPath . $sLocalId . ($sExt ? '.' . $sExt : '');
+            $aRequestHeaders = $this->generateHeaders($sName, $isPrivate);
+            $aMetaHeaders = array();
 
-        $sStorageClass = $this->_bReducedRedundancy ? S3::STORAGE_CLASS_RRS : S3::STORAGE_CLASS_STANDARD;
-        $sACL = $isPrivate ? S3::ACL_AUTHENTICATED_READ : S3::ACL_PUBLIC_READ;
-        $aInputFile = $this->_s3->inputFile($sTmpFile);
-        if (!$this->_s3->putObject($aInputFile, $this->_sBucket, $this->getObjectBaseDir($isPrivate) . $sRemoteNamePath, $sACL, $aMetaHeaders, $aRequestHeaders, $sStorageClass)) {
+            $sStorageClass = $this->_bReducedRedundancy ? S3::STORAGE_CLASS_RRS : S3::STORAGE_CLASS_STANDARD;
+            $sACL = $isPrivate ? S3::ACL_AUTHENTICATED_READ : S3::ACL_PUBLIC_READ;
+            $aInputFile = $this->_s3->inputFile($sTmpFile);
+            if (!$this->_s3->putObject($aInputFile, $this->_sBucket, $this->getObjectBaseDir($isPrivate) . $sRemoteNamePath, $sACL, $aMetaHeaders, $aRequestHeaders, $sStorageClass)) {
+                $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_ADD);
+                return false;
+            }
+        } catch (Exception $e) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_ADD);
+            bx_log('sys_storage_s3', $e->getMessage());
             return false;
         }
 
@@ -231,8 +247,14 @@ class BxDolStorageS3 extends BxDolStorage
     {
         $sFileLocation = $this->getObjectBaseDir($isPrivate) . $sFilePath;
 
-        if (!$this->_s3->deleteObject($this->_sBucket, $sFileLocation)) {
+        try {
+            if (!$this->_s3->deleteObject($this->_sBucket, $sFileLocation)) {
+                $this->setErrorCode(BX_DOL_STORAGE_ERR_UNLINK);
+                return false;
+            }
+        } catch (Exception $e) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_UNLINK);
+            bx_log('sys_storage_s3', $e->getMessage());
             return false;
         }
 

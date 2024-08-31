@@ -27,6 +27,7 @@ BxArtificerUtils.prototype.init = function()
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
                 $this.setColorSchemeIcon();
                 $this.setColorSchemeHtml();
+                $this.onColorSchemeChange();
             });
             break;
 
@@ -43,32 +44,39 @@ BxArtificerUtils.prototype.init = function()
 
     $(document).ready(function() {
         $this.setColorSchemeIcon();
+        $this.onColorSchemeChange();
     });
 };
 
 BxArtificerUtils.prototype.setColorScheme = function(iCode)
 {
     switch(iCode) {
-      case 0:
-        localStorage.removeItem('theme');
-        break;
+        case 0:
+            localStorage.removeItem('theme');
+            break;
 
-      case 1:
-        localStorage.theme = 'sun'
-        break;
+        case 1:
+            localStorage.theme = 'sun'
+            break;
 
-      case 2:
-        localStorage.theme = 'dark'
-        break;
+        case 2:
+            localStorage.theme = 'dark'
+            break;
     }
 
     this.setColorSchemeIcon();
     this.setColorSchemeHtml();
+    this.onColorSchemeChange(iCode);
+};
+
+BxArtificerUtils.prototype.isColorSchemeDark = function()
+{
+    return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
 };
 
 BxArtificerUtils.prototype.setColorSchemeHtml = function()
 {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) 
+    if(this.isColorSchemeDark())
         $('html').addClass('dark')
     else
         $('html').removeClass('dark')
@@ -76,13 +84,23 @@ BxArtificerUtils.prototype.setColorSchemeHtml = function()
 
 BxArtificerUtils.prototype.setColorSchemeIcon = function() 
 {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if(this.isColorSchemeDark())
         $('.bx-sb-theme-switcher .sys-icon').addClass('moon').removeClass('sun');
-    }
-
-    if (localStorage.theme === 'sun' || (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    else
         $('.bx-sb-theme-switcher .sys-icon').addClass('sun').removeClass('moon');
-    }
+};
+
+BxArtificerUtils.prototype.onColorSchemeChange = function(iCode) 
+{
+    if(typeof glOnColorSchemeChange === 'undefined' || !(glOnColorSchemeChange instanceof Array)) 
+        return;
+
+    if(typeof iCode === 'undefined' || !iCode)
+        iCode = this.isColorSchemeDark() ? 2 : 1;
+
+    for(var i = 0; i < glOnColorSchemeChange.length; i++)
+        if(typeof glOnColorSchemeChange[i] === "function")
+            glOnColorSchemeChange[i](iCode);
 };
 
 BxArtificerUtils.prototype.getColorSchemeMenu = function() {
@@ -140,6 +158,16 @@ BxArtificerUtils.prototype.submenuClickBl = function(oElement) {
 
 BxArtificerUtils.prototype.submenuClickAl = function(oElement) {
     var sClass = 'bx-menu-tab-active';
+    var oItem = $(oElement).parent().addClass(sClass);
 
-    $(oElement).parent().addClass(sClass).siblings().removeClass(sClass);
+    oItem.siblings().removeClass(sClass);
+    oItem.siblings('.bx-menu-item-more-auto').find('li').removeClass(sClass);
+
+    oItem.parents('li:first').siblings().removeClass(sClass);
+    if(oItem.parents('.bx-popup-applied.bx-popup-menu'))
+        $('.bx-popup-applied:visible').dolPopupHide();
+
+    var sSidebar = 'site';
+    if(bx_sidebar_active(sSidebar))
+        bx_sidebar_toggle(sSidebar);
 };

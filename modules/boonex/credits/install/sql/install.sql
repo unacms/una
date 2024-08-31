@@ -74,6 +74,21 @@ CREATE TABLE IF NOT EXISTS `bx_credits_history` (
   PRIMARY KEY (`id`)
 );
 
+-- TABLE: withdrawals
+CREATE TABLE IF NOT EXISTS `bx_credits_withdrawals` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `performer_id` int(11) unsigned NOT NULL default '0',
+  `profile_id` int(11) unsigned NOT NULL default '0',
+  `amount` float NOT NULL DEFAULT '0',
+  `rate` float NOT NULL DEFAULT '0',
+  `message` text NOT NULL default '',
+  `order` varchar(32) NOT NULL default '',
+  `added` int(11) unsigned NOT NULL default '0',
+  `confirmed` int(11) unsigned NOT NULL default '0',
+  `status` enum('requested', 'canceled', 'confirmed') NOT NULL DEFAULT 'requested',
+  PRIMARY KEY (`id`)
+);
+
 
 -- FORMS: credit
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -82,8 +97,7 @@ INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attr
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_credits_credit', 'bx_credits_credit_send', 'bx_credits', 0, '_bx_credits_form_credit_display_send'),
 ('bx_credits_credit', 'bx_credits_credit_grant', 'bx_credits', 0, '_bx_credits_form_credit_display_grant'),
-('bx_credits_credit', 'bx_credits_credit_withdraw_request', 'bx_credits', 0, '_bx_credits_form_credit_display_withdraw_request'),
-('bx_credits_credit', 'bx_credits_credit_withdraw_confirm', 'bx_credits', 0, '_bx_credits_form_credit_display_withdraw_confirm');
+('bx_credits_credit', 'bx_credits_credit_withdraw_request', 'bx_credits', 0, '_bx_credits_form_credit_display_withdraw_request');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_credits_credit', 'bx_credits', 'balance', '', '', 0, 'text', '_bx_credits_form_credit_input_sys_balance', '_bx_credits_form_credit_input_balance', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', 'Xss', '', 1, 0),
@@ -120,14 +134,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_credits_credit_withdraw_request', 'message', 2147483647, 1, 6),
 ('bx_credits_credit_withdraw_request', 'controls', 2147483647, 1, 7),
 ('bx_credits_credit_withdraw_request', 'do_submit', 2147483647, 1, 8),
-('bx_credits_credit_withdraw_request', 'do_cancel', 2147483647, 1, 9),
-
-('bx_credits_credit_withdraw_confirm', 'profile', 2147483647, 1, 1),
-('bx_credits_credit_withdraw_confirm', 'amount', 2147483647, 1, 2),
-('bx_credits_credit_withdraw_confirm', 'message', 2147483647, 1, 3),
-('bx_credits_credit_withdraw_confirm', 'controls', 2147483647, 1, 4),
-('bx_credits_credit_withdraw_confirm', 'do_submit', 2147483647, 1, 5),
-('bx_credits_credit_withdraw_confirm', 'do_cancel', 2147483647, 1, 6);
+('bx_credits_credit_withdraw_request', 'do_cancel', 2147483647, 1, 9);
 
 -- FORMS: bundle
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

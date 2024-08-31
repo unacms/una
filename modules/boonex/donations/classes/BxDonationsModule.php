@@ -244,14 +244,30 @@ class BxDonationsModule extends BxBaseModGeneralModule
         if(!$this->_oDb->registerEntry($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense))
             return array();
 
-        bx_alert($this->getName(), 'donation_register', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_donations-donation_register 'bx_donations', 'donation_register' - hook after the donation payment was processed with payment processing module
+         * - $unit_name - equals `bx_donations`
+         * - $action - equals `donation_register`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `donation_id` - [int] donation id
+         *      - `profile_id` - [int] donator profile id
+         *      - `order` - [string] order number provided with payment processing module
+         *      - `type` - [string] payment type ('single' or 'recurring')
+         *      - `amount` - [float] donated amount
+         *      - `count` - [int] number of items in order
+         * @hook @ref hook-bx_donations-donation_register
+         */
+        bx_alert($this->getName(), 'donation_register', 0, false, [
             'donation_id' => $iItemId,
             'profile_id' => $iClientId,
             'order' => $sOrder,
             'type' => $sType,
             'amount' => (float)$aItem['price_' . $sType],
             'count' => $iItemCount
-        ));
+        ]);
 
         $oClient = BxDolProfile::getInstanceMagic($iClientId);
         sendMailTemplate($CNF['ETEMPLATE_DONATED'], 0, $iClientId, array(
@@ -266,13 +282,20 @@ class BxDonationsModule extends BxBaseModGeneralModule
     	if(!$this->_oDb->unregisterEntry($iClientId, $iItemId, $sOrder, $sLicense))
             return false;
 
-        bx_alert($this->getName(), 'donation_unregister', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_donations-donation_unregister 'bx_donations', 'donation_unregister' - hook after the donation payment was refunded with payment processing module
+         * It's equivalent to @ref hook-bx_donations-donation_register
+         * except `amount` parameter in $extra_params is missing
+         * @hook @ref hook-bx_donations-donation_unregister
+         */
+        bx_alert($this->getName(), 'donation_unregister', 0, false, [
             'donation_id' => $iItemId,
             'profile_id' => $iClientId,
             'order' => $sOrder,
             'type' => $sType,
             'count' => $iItemCount
-        ));
+        ]);
 
     	return true;
     }

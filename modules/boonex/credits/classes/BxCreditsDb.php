@@ -391,6 +391,58 @@ class BxCreditsDb extends BxBaseModGeneralDb
         $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_HISTORY'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ');
         return (int)$this->query($sQuery) > 0;
     }
+    
+    /**
+     * Withdrawals related methods.
+     */
+    public function getWithdrawal($aParams = [])
+    {
+    	$CNF = &$this->_oConfig->CNF;
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+    	$sSelectClause = "`tw`.*";
+    	$sJoinClause = $sWhereClause = $sLimitClause = "";
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause = " AND `tw`.`id`=:id";
+                break;
+        }
+
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+                " . $sSelectClause . "
+            FROM `" . $CNF['TABLE_WITHDRAWALS'] . "` AS `tw`" . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sLimitClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function insertWithdrawal($aSet)
+    {
+        $sQuery = "INSERT INTO `" . $this->_oConfig->CNF['TABLE_WITHDRAWALS'] . "` SET " . $this->arrayToSQL($aSet);
+        return (int)$this->query($sQuery) > 0 ? $this->lastId() : false;
+    }
+
+    public function updateWithdrawal($aSet, $aWhere)
+    {
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_WITHDRAWALS'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1");
+        return (int)$this->query($sQuery) > 0;
+    }
+
+    public function deleteWithdrawal($aWhere)
+    {
+    	if(empty($aWhere))
+            return false;
+
+        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_WITHDRAWALS'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ');
+        return (int)$this->query($sQuery) > 0;
+    }
 }
 
 /** @} */

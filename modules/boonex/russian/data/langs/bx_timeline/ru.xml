@@ -28,7 +28,7 @@
     <string name="_bx_timeline_option_events_per_preload"><![CDATA[Бесконечная прокрутка: Количество элементов, получаемых при авто-подгрузке]]></string>
     <string name="_bx_timeline_option_auto_preloads"><![CDATA[Бесконечная прокрутка: Количество авто-подгрузок]]></string>
     <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
-    <string name="_bx_timeline_option_live_updates_length"><![CDATA[Количество элементов в выборке авто обновления]]></string>
+    <string name="_bx_timeline_option_live_updates_length"><![CDATA[Длина выборки "Aвто обновления" (оставьте 0 для автоматического значения)]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
     <string name="_bx_timeline_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Включить лаконичные карточки]]></string>
@@ -57,7 +57,8 @@
     <string name="_bx_timeline_option_hot_threshold_age"><![CDATA[Максимальный возраст поста, получившего комментарии/голоса, который включается в 'горячую' хронику (в днях, 0 - без ограничений)]]></string>
     <string name="_bx_timeline_option_hot_threshold_comment"><![CDATA[Минимальное количество комментариев, необходимое для появления контента в 'горячей' хронике]]></string>
     <string name="_bx_timeline_option_hot_threshold_vote"><![CDATA[Минимальное количество голосов, необходимое для появления контента в 'горячей' хронике]]></string>
-    <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' событий]]></string>
+    <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' событий (0 – без ограничений)]]></string>
+    <string name="_bx_timeline_option_hot_content_age_mux"><![CDATA[Коэффициент корректировки, связанный с возрастом контента (0 – без корректировки)]]></string>
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Включить кэш элемента]]></string>
     <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Механизм кэширования элемента (отличный от FileHtml может потребовать дополнительную настройку сервера)]]></string>
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Время жизни кэша элемента]]></string>

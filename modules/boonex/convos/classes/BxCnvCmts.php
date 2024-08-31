@@ -42,9 +42,9 @@ class BxCnvCmts extends BxTemplCmts
         return $sResult;
     }
 
-    public function addCssJs()
+    public function addCssJs($aBp = [], $aDp = [])
     {
-        parent::addCssJs();
+        parent::addCssJs($aBp, $aDp);
 
         $this->_oModule->_oTemplate->addCss(array('cmts.css'));
     }

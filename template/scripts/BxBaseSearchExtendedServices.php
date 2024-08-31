@@ -36,29 +36,41 @@ class BxBaseSearchExtendedServices extends BxDol
             return '';
 
         $mForm = $oSearch->getForm($aParams);
-        if (bx_is_api()){
-            $aRes =$this->serviceGetResults($aParams);
-            if ($aRes)
-                return [$mForm, $aRes];
-            else
-                return [$mForm];
-        }
+        if(bx_is_api())
+            $mForm = [$mForm];
+
         return $mForm;
     }
 
     public function serviceGetResults($mParams)
     {
         $aParams = [];
-        if (is_string($mParams)){
-            $aPa = json_decode($mParams, true);           
-            $aParams['object'] = $aPa['params']["moduleName"];
-            $aParams['search_params'] = $aPa['params']['search_params'];
-            unset($aPa['params']['search_params']);
-            $aParams['params'] = $aPa['params'];
+        $fProcessDefValues = function($aValues) {
+            if(empty($aValues) || !is_array($aValues))
+                return;
+
+            foreach($aValues as $sKey => $sValue) {
+                if(empty($sValue))
+                    continue;
+
+                $_POST[$sKey] = $sValue;
+            }
+        };
+
+        if(($mDefValues = bx_get('filters')) !== false)
+            $fProcessDefValues(json_decode($mDefValues, true));
+
+        if(is_string($mParams)) {
+            $mParams = json_decode($mParams, true);    
+            if(!empty($mParams['params']) && is_array($mParams['params']))
+                $aParams = $mParams['params'];
+
+            if(isset($aParams['filters']))
+                $fProcessDefValues($aParams['filters']);
         }
         else
             $aParams = $mParams;
-        
+
         $this->prepareParams($aParams);
 
         if(empty($aParams['object']))

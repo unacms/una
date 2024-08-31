@@ -161,7 +161,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
             $sSrvModule = $this->_oConfig->getContentModule($aEvent);
             $sSrvMethod = 'check_allowed_with_content_for_profile';
-            if($sSrvModule && BxDolRequest::serviceExists($sSrvModule, $sSrvMethod) && BxDolService::call($sSrvModule, $sSrvMethod, array('view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            if($sSrvModule && bx_is_srv($sSrvModule, $sSrvMethod) && bx_srv($sSrvModule, $sSrvMethod, ['view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId]) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';
         }
 
@@ -220,13 +220,30 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $bEventParsed = false;
         $bEventCanceled = false;
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-get_notification 'bx_notifications', 'get_notification' - hook to override notification or even cancel it
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `get_notification`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `browse_params` - [array] browse params array as key&value pairs
+         *      - `event` - [array] by ref, event data array, can be overridden in hook processing        
+         *      - `event_parsed` - [boolean] by ref, if event was already parsed (ready to display), can be overridden in hook processing
+         *      - `event_canceled` - [boolean] by ref, if event was canceled, can be overridden in hook processing
+         *      - `owner` - [object] by ref, an instance of owner profile, @see BxDolProfile, can be overridden in hook processing
+         *      - `owner_unit` - [string] by ref, profile unit HTML code, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-get_notification
+         */
         bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, [
+            'browse_params' => $aBrowseParams,
             'event' => &$aEvent, 
             'event_parsed' => &$bEventParsed, 
             'event_canceled' => &$bEventCanceled,
             'owner' => &$oOwner, 
-            'owner_unit' => &$sOwnerUnit, 
-            'browse_params' => $aBrowseParams
+            'owner_unit' => &$sOwnerUnit
         ]);
         
         if ($bEventCanceled)
@@ -257,15 +274,15 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $bClickedIndicator = $this->_oConfig->isClickedIndicator();
         $sJsObject = $this->_oConfig->getJsObject('view');
 
-        if(bx_is_api()) {
+        if($this->_bIsApi) {
             $aLinks = [
                 'owner_link' => $aEvent['content']['owner_link'],
                 'object_owner_link' => $aEvent['content']['object_owner_link']
             ];
-            if(!empty($aEvent['content']['entry_url']))
-                $aLinks['entry_url'] = $this->_getLink($aEvent['content']['entry_url']);
-            if(!empty($aEvent['content']['subentry_url']))
-                $aLinks['subentry_url'] = $this->_getLink($aEvent['content']['subentry_url']);
+
+            foreach(['entry_url', 'entry_url_api', 'subentry_url', 'subentry_url_api'] as $sKey)
+                if(!empty($aEvent['content'][$sKey]))
+                    $aLinks[$sKey] = $this->_getLink($aEvent['content'][$sKey]);
 
             array_walk($aLinks, function(&$sValue, $sKey) {
                 $sValue = bx_api_get_relative_url($sValue);
@@ -346,7 +363,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             return false;
 
         $sMessage = is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['push']) ? $aEvent['content_parsed']['push'] : $aEvent['content_parsed'];
-        $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', '"', $sMessage);
+        $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', ($sChar = getParam("bx_ntfs_option_tag_to_char_push")) !== false ? $sChar : '"', $sMessage);
         if($sMessage)
             $sMessage = BxTemplFunctions::getInstance()->getStringWithLimitedLength(html_entity_decode($sMessage), $this->_oConfig->getPushMaxLen());
 
@@ -379,10 +396,22 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($aContent) || !is_array($aContent)) 
             return;
 
-        bx_alert($this->_oConfig->getName(), 'get_content', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-get_content 'bx_notifications', 'get_content' - hook to override notification content
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `get_content`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `event` - [array] by ref, event data array, can be overridden in hook processing        
+         *      - `override_result` - [array] by ref, event content array, can be overridden in hook processing
+         * @hook @ref hook-bx_notifications-get_content
+         */
+        bx_alert($this->_oConfig->getName(), 'get_content', 0, 0, [
             'event' => $aEvent,
             'override_result' => &$aContent
-        ));
+        ]);
 
         $aSet = array();
         if(!empty($aContent['entry_author'])) {

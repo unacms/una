@@ -508,21 +508,21 @@
     /* Typography in combination with 'bx-def-vanilla-html' class */
     .bx-def-vanilla-html h1,
     .bx-def-vanilla-html .bx-def-font-h1 {
-        @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+        @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
     }
 
     .bx-def-vanilla-html h2,
     .bx-def-vanilla-html .bx-def-font-h2 {
-        @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+        @apply scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0;
     }
 
     .bx-def-vanilla-html h3,
     .bx-def-vanilla-html .bx-def-font-h3 {
-        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-xl font-semibold tracking-tight;
     }
 
     .bx-def-vanilla-html h4 {
-        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+        @apply scroll-m-20 font-semibold tracking-tight;
     }
 
     .bx-def-vanilla-html p {
@@ -564,7 +564,8 @@
     .bx-icon.bx-icon-small svg {
         @apply w-4 h-4;
     }
-    .bx-icon.bx-icon-close svg {
+    .bx-icon.bx-icon-close svg,
+    .bx-icon.bx-icon-hamburger svg {
         @apply w-7 h-7;
     }
 
@@ -613,7 +614,7 @@
     .bx-def-border-radius-block,
     .bx-def-box-round-corners,
     .bx-popup-border {
-        @apply rounded-xl;
+        @apply rounded-2xl;
     }
     .bx-content-padding-block {
         @apply p-3 md:p-4;
@@ -913,7 +914,7 @@
     }
 
     .bx-artificer .bx-popup-border {
-        @apply m-px ring-1 ring-gray-300 dark:ring-gray-700 rounded-xl;
+        @apply m-px ring-1 ring-gray-300 dark:ring-gray-700 rounded-2xl;
     }
 
     .bx-artificer .bx-popup-width {
@@ -1156,14 +1157,16 @@
 
     /* Common elements: All Actions */
     .sys-action-counter.sys-ac-link,
-    .sys-action-counter .sys-ac-link {
+    .sys-action-counter .sys-ac-link,
+    .sys-ac-link .sys-action-counter {
         @apply flex items-center;
         @apply border-none;
         @apply text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300;
         @apply rounded-full;
     }
     .sys-action-counter.sys-ac-only.sys-ac-link,
-    .sys-action-counter.sys-ac-only .sys-ac-link {
+    .sys-action-counter.sys-ac-only .sys-ac-link,
+    .sys-ac-link .sys-action-counter.sys-ac-only {
         @apply hover:bg-gray-100 dark:hover:bg-gray-600;
     }
 
@@ -1244,10 +1247,11 @@
     }
 
     .bx-std #bx-std-pcap-menu-popup-help .bx-popup,
+    .bx-std #bx-std-pcap-menu-popup-assistant .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-actions .bx-popup,
     .bx-std #bx-std-pcap-menu-popup-account .bx-popup,
     .bx-std .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
-        @apply ring-1 ring-gray-600;
+        @apply ring-1 ring-gray-800;
     }
 
     .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
@@ -1324,24 +1328,24 @@
     .bx-artificer .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:max-w-none;
     }
     
     .bx-artificer .bx-layout-column-wide .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-layout-column-wide .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:max-w-none;
     }
     
     .bx-artificer .bx-layout-column-half .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-layout-column-half .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:max-w-none;
     }
     .bx-artificer .bx-layout-column-thin .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-layout-column-thin .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
-        @apply max-w-full mx-auto grid sm:grid-cols-1 gap-4 md:max-w-none;
+        @apply max-w-full grid sm:grid-cols-1 gap-4 md:max-w-none;
     }
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper.flickity-enabled
     { 

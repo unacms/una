@@ -1233,13 +1233,21 @@ function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults,
             return;
 
         if (bSortResults) {
+            var sAsk = $(data).filter(".bx-btn.sys-agents-ask");
+
             var aSortedUnits = $(data).find(".bx-def-unit-live-search").toArray().sort(function (a, b) {
                 return b.getAttribute('data-ts') - a.getAttribute('data-ts');
             });
+
             data = '';
+            if(sAsk.length)
+                data += sAsk.get(0).outerHTML;
+
             $.each(aSortedUnits.slice(0, n), function (i, e) {
                 data += e.outerHTML;
             });
+            
+            
         } 
 
         var oContainer = $(sResultsContSel);
@@ -1589,6 +1597,26 @@ function bx_redirect_for_external_links_open (sHref)
     //    window.open(sHref, '_blank').focus();
     //});
     window.open(sUrlRoot + 'page.php?i=redirect&url=' + encodeURIComponent(sHref), '_blank').focus();
+}
+
+function bx_agents_action(oElement, sTool, sAction, aParams)
+{
+    var oDate = new Date();
+    var sQueryUrl = sUrlRoot + 'agents.php';
+    var oQueryParams = jQuery.extend({}, {t: sTool, a: sAction, _t:oDate.getTime()}, aParams != undefined ? aParams : {});
+
+    bx_loading_btn(oElement, true);
+
+    jQuery.post (
+        sQueryUrl,
+        oQueryParams,
+        function(oData) {
+            bx_loading_btn(oElement, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
 }
 
 /** @} */

@@ -125,7 +125,23 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
 
     protected function _getMenuItemProfileSetAclLevel($aItem)
     {
-        return $this->_getMenuItemByNameActions($aItem);
+        $aItem = $this->_getMenuItemByNameActions($aItem);
+        if (!$this->_bIsApi)
+            return $aItem;
+        
+        $aItem['display_type'] = 'callback';
+        $oAcl = BxDolAcl::getInstance();
+        $aAclLevels = $oAcl->getMembershipsBy(array('type' => 'all_active_not_automatic_pair'));
+        $aValues = [];
+        
+        $aProfileAclLevel = $oAcl->getMemberMembershipInfo($this->_oProfile->id());
+        
+		foreach ($aAclLevels as $k => $s){
+            $aValues[] = ['value' => $k, 'label' => _t($s)];
+        }
+        $aItem['content_type'] = 'memberships';
+        $aItem['data'] = ['values' => $aValues, 'profile_id' => $this->_oProfile->id(), 'value' => $aProfileAclLevel['id']];
+        return $aItem;
     }
 
     protected function _getMenuItemView($aItem, $aParams = array())
@@ -185,7 +201,8 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
             'data' => [
                 'request_url' => $sModule . '/get_convo_url/Services&params[]=' . json_encode(['recipient' => $this->_oProfile->id()]),
                 'on_callback' => 'redirect'
-            ]
+            ],
+            'primary' => $aItem['primary'],
         ];
     }
 }

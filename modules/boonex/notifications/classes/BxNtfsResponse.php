@@ -25,11 +25,24 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
-        bx_alert($this->_oModule->getName(), 'before_register_alert', 0, 0, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_notifications-before_register_alert 'bx_notifications', 'before_register_alert' - hook to override alert (hook) before processing
+         * - $unit_name - equals `bx_notifications`
+         * - $action - equals `before_register_alert`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `unit` - [string] alert (hook) unit
+         *      - `action` - [string] alert (hook) action
+         *      - `alert` - [array] by ref, an instance of alert (hook), @see BxDolAlerts, can be overridden in hook processing        
+         * @hook @ref hook-bx_notifications-before_register_alert
+         */
+        bx_alert($this->_oModule->getName(), 'before_register_alert', 0, 0, [
             'unit' => $oAlert->sUnit,
             'action' => $oAlert->sAction,
             'alert' => &$oAlert,
-        ));
+        ]);
 
     	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
         if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
@@ -191,7 +204,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         $aComments = $oCmts->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjectId]);
         foreach($aComments as $aComment) {
             $iCmtAuthorId = (int)$aComment['cmt_author_id'];
-            if(in_array($iCmtAuthorId, $aRecipients) || $iCmtAuthorId == $iOwnerId || $iCmtAuthorId == $iObjectOwnerId)
+            if(in_array($iCmtAuthorId, $aRecipients) || $iCmtAuthorId == $iOwnerId)
                 continue;
 
             $aResults[] = [

@@ -53,6 +53,9 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
     };
 
     switch(sName) {
+        case 'assistant':
+            break;
+
         case 'help':
             oPopupOptions = $.extend({}, oPopupOptions, {
                 onBeforeShow: function() {

@@ -78,10 +78,11 @@ class BxTemplFunctions extends BxBaseFunctions
                 $sLogoWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
 
                 $aTmplVarsImages[$sType] = [
+                    'id' => 'bx-' . str_replace('_', '-', $sType),
+                    'src' => $sFileUrl,
+                    'alt' => $sAltAttr,
                     'class' => '',
                     'style' => $sLogoWidth . ' ' . $sLogoHeight,
-                    'src' => $sFileUrl,
-                    'alt' => $sAltAttr
                 ];
 
                 ${'b' . $aParams['uc']} = true;
@@ -141,6 +142,7 @@ class BxTemplFunctions extends BxBaseFunctions
         if(!empty($aParams['attrs']) && is_array($aParams['attrs']))
             $aAttrs = array_merge($aAttrs, $aParams['attrs']);
 
+        $sTmplName = 'logo_main.html';
         $aTmplVars = [
             'attrs' => bx_convert_array2attrs($aAttrs),
             'bx_if:show_title' => [
@@ -180,7 +182,12 @@ class BxTemplFunctions extends BxBaseFunctions
                 ];
         }
 
-        return $this->_oTemplate->parseHtmlByName('logo_main.html', $aTmplVars);
+        bx_alert('system', 'get_logo', 0, 0, [
+            'tmpl_name' => &$sTmplName,
+            'tmpl_vars' => &$aTmplVars
+        ]);
+
+        return $this->_oTemplate->parseHtmlByName($sTmplName, $aTmplVars);
     }
 
     public function TemplPageAddComponent($sKey)

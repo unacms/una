@@ -22,6 +22,11 @@ class BxBaseCmtsReviewsForm extends BxTemplCmtsForm
 
     protected function genCustomInputCmtMood ($aInput)
     {
+        if(bx_is_api()) {
+            $aInput['type'] = 'mood';
+            return $aInput;
+        }
+
         $oSystem = $this->_getSystemObject();
 
         $sStylePrefix = $oSystem->getStylePrefix();

@@ -307,6 +307,7 @@
                     ]).format(sFormat);
                 }
 
+                var bDatePicker = false;
                 if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datepicker") { // Date picker
 
                     flatpickr(this, {
@@ -321,6 +322,8 @@
                         parseDate: parseDateUtc,
                         formatDate: formatDateUtc,
                     });
+
+                    bDatePicker = true;
 
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
 
@@ -355,6 +358,8 @@
                     }
                     flatpickr(this, oPickerOptions);
 
+                    bDatePicker = true;
+
                 } else if(this.getAttribute("type") == "dateselect") { // DateTime selector
                     moment.locale(sLang);
                     $(this).combodate({
@@ -365,6 +370,34 @@
                         firstItem: 'none',
                         'smartDays': true,
                         customClass: 'bx-def-font-inputs bx-form-input-select block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 appearance-none',
+                    });
+                }
+                
+                if(bDatePicker) {
+                    if (typeof window.glOnColorSchemeChange === 'undefined')
+                        window.glOnColorSchemeChange = [];    
+
+                    window.glOnColorSchemeChange.push(function(iCode) {
+                        var sNameL = 'flatpickr.min.css';
+                        var sNameD = 'themes/dark.css';
+                        var oStylesheet = null;
+                        switch(iCode) {
+                            case 1: //--- light
+                                oStylesheet = document.head.querySelector("link[href*='" + sNameD + "']");
+                                if(oStylesheet)
+                                    oStylesheet.href = oStylesheet.href.replace(sNameD, sNameL);
+                                else
+                                    bx_get_style(sUrlRoot + 'plugins_public/flatpickr/dist/' + sNameL);
+                                break;
+
+                            case 2: //--- dark
+                                oStylesheet = document.head.querySelector("link[href*='" + sNameL + "']");
+                                if(oStylesheet)
+                                    oStylesheet.href = oStylesheet.href.replace(sNameL, sNameD);
+                                else
+                                    bx_get_style(sUrlRoot + 'plugins_public/flatpickr/dist/' + sNameD);
+                                break;
+                        }
                     });
                 }
 

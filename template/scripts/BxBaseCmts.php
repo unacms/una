@@ -87,20 +87,24 @@ class BxBaseCmts extends BxDolCmts
     /**
      * Add comments CSS/JS
      */
-    public function addCssJs ()
+    public function addCssJs($aBp = [], $aDp = [])
     {
+        $bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
+
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
         $oForm->addCssJs();
 
-        $this->_oTemplate->addCss(array(
+        $sResult = $this->_oTemplate->addCss([
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/|photoswipe.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/default-skin/|default-skin.css',
-        ));
+        ], $bDynamicMode);
 
-        $this->_oTemplate->addJs(array(
+        $sResult .= $this->_oTemplate->addJs([
             'photo-swipe/photoswipe.min.js',
             'photo-swipe/photoswipe-ui-default.min.js',
-        ));
+        ], $bDynamicMode);
+
+        return $sResult;
     }
 
     public function getJsObjectName()
@@ -115,6 +119,7 @@ class BxBaseCmts extends BxDolCmts
      */
     public function getJsScript($aBp = [], $aDp = [])
     {
+        $bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
         $bMinPostForm = isset($aDp['min_post_form']) ? $aDp['min_post_form'] : $this->_bMinPostForm;
 
         $aParams = [
@@ -134,8 +139,11 @@ class BxBaseCmts extends BxDolCmts
             'aHtmlIds' => $this->_aHtmlIds,
         ];
 
-        $this->addCssJs();
-        return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
+        if($this->_aParams)
+            $aParams['aParams'] = $this->_aParams;
+
+        $sIncludes = $this->addCssJs($aBp, $aDp);
+        return ($bDynamicMode ? $sIncludes : '') . $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
     }
 
     function getCommentsBlockAPI($aParams, $aBp = [], $aDp = ['in_designbox' => false, 'show_empty' => false])
@@ -1302,7 +1310,7 @@ class BxBaseCmts extends BxDolCmts
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
         $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
 
-        $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
+        $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId, $aDp);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
 
         if($bQuote) {
@@ -1404,7 +1412,7 @@ class BxBaseCmts extends BxDolCmts
             return bx_is_api() ? bx_api_get_msg($sMsg) : array('msg' => $sMsg);
         }
 
-        $oForm = $this->_getForm(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
+        $oForm = $this->_getForm(BX_CMT_ACTION_EDIT, $aCmt['cmt_id'], $aDp);
 
         $oForm->initChecker($aCmt);
         if($oForm->isSubmittedAndValid()) {
@@ -1444,7 +1452,7 @@ class BxBaseCmts extends BxDolCmts
         return bx_is_api() ? ['form' => $oForm, 'res' => 0] :  array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
     }
 
-    protected function _getForm($sAction, $iId)
+    protected function _getForm($sAction, $iId, $aDp = [])
     {
         $oForm = $this->_getFormObject($sAction);
         $oForm->setId(sprintf($oForm->getAttributeMask('id'), $sAction, $this->_sSystem, $this->_iId, $iId));
@@ -1453,6 +1461,13 @@ class BxBaseCmts extends BxDolCmts
         $oForm->aInputs['sys']['value'] = $this->_sSystem;
         $oForm->aInputs['id']['value'] = $this->_iId;
         $oForm->aInputs['action']['value'] = 'Submit' . ucfirst($sAction) . 'Form';
+
+        if($this->_aParams)
+            $oForm->aInputs = ['params' => [
+                'name' => 'params',
+                'type' => 'hidden',
+                'value' => json_encode($this->_aParams)
+            ]] + $oForm->aInputs;
 
         if(!$this->isAttachImageEnabled())
             unset($oForm->aInputs['cmt_image']);

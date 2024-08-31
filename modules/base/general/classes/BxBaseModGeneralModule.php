@@ -661,10 +661,9 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (bx_is_api())
-            return $this->decodeDataAPI($aContentInfo);
-        
-        
+        if($this->_bIsApi)
+            return $this->getDataAPI($aContentInfo);
+
         if(empty($aContentInfo))
             return '';
 
@@ -739,7 +738,23 @@ class BxBaseModGeneralModule extends BxDolModule
                 'direction' => 'desc'
             ];
         }
-        
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-get_sortable_fields '{module_name}', 'get_sortable_fields' - hook to override a list of sortable fields
+         * - $unit_name - module name
+         * - $action - equals `get_sortable_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [array] a list of searchable fields, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-get_sortable_fields
+         */
+        bx_alert($this->getName(), 'get_sortable_fields', 0, 0, [
+            'extended' => true, 
+            'override_result' => &$aResult
+        ]);
+
         return $aResult;
     }
     
@@ -759,6 +774,18 @@ class BxBaseModGeneralModule extends BxDolModule
                 'values' => '',
                 'pass' => ''
             );
+
+        if(!empty($CNF['FIELD_LABELS']) && !in_array($CNF['FIELD_LABELS'], $this->_aSearchableNamesExcept))
+            $aResult[$CNF['FIELD_LABELS']] = array(
+                'type' => 'checkbox_set', 
+                'caption' => isset($CNF['T']['form_field_labels']) ? $CNF['T']['form_field_author'] : '_sys_form_input_labels',
+                'info' => '',
+            	'value' => '',
+                'values' => '',
+                'pass' => '',
+                'search_operator' => 'like'
+            );
+        
 
         $aInputs = array();
         if(!empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])) {
@@ -796,6 +823,23 @@ class BxBaseModGeneralModule extends BxDolModule
                 $aResult[$aInput['name']] = $aField;
             }
         }
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_general-get_searchable_fields '{module_name}', 'get_searchable_fields' - hook to override a list of searchable fields
+         * - $unit_name - module name
+         * - $action - equals `get_searchable_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `override_result` - [array] a list of searchable fields, can be overridden in hook processing
+         * @hook @ref hook-bx_base_general-get_searchable_fields
+         */
+        bx_alert($this->getName(), 'get_searchable_fields', 0, 0, [
+            'extended' => true, 
+            'override_result' => &$aResult
+        ]);
+
         return $aResult;
     }
 
@@ -970,7 +1014,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 }
 
                 if(isset($aParams['params']['validate']) && !is_array($aParams['params']['validate']))
-                    $aParams['params']['validate'] = explode(',', $aParams['params']['validate']);
+                    $aParams['params']['validate'] = !empty($aParams['params']['validate']) ? explode(',', $aParams['params']['validate']) : [];
             }
         }
 
@@ -1039,6 +1083,8 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $oProfile = null;
         if((int)$iProfileId)
             $oProfile = BxDolProfile::getInstance($iProfileId);
@@ -1056,9 +1102,22 @@ class BxBaseModGeneralModule extends BxDolModule
         }
         
         if(bx_get('list_id') !== false && !isset($aParams['list_id']))
-            $aParams['list_id'] = (int) bx_get('list_id');
+            $aParams['list_id'] = (int) bx_get('list_id');        
 
-        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
+        $aBlock = $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
+        if(!$aBlock)
+            return $aBlock;
+
+        $sTitle = _t('_sys_txt_default_favorite_list');
+        if(!empty($aParams['list_id']) && ($oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true))) {
+            $aList = $oFavorite->getQueryObject()->getList(['type' => 'id', 'list_id' => $aParams['list_id']]);
+            if(!empty($aList) && is_array($aList))
+                $sTitle = $aList['title'];
+        }
+
+        return array_merge($aBlock, ['markers' => [
+            'title' => $sTitle
+        ]]);
     }
     
     /**
@@ -1261,11 +1320,27 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $sParamVal), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
+    public function getFormsHelper ()
+    {
+        $sClass = 'FormsEntryHelper';
+        $oObject = null;
+
+        bx_alert('system', 'get_forms_helper', 0, 0, [
+            'class' => &$sClass,
+            'object' => &$oObject
+        ]);
+
+        if($oObject !== null) 
+            return $oObject;
+
+        bx_import($sClass, $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . $sClass;
+        return new $sClass($this);
+    }
+
     public function serviceFormsHelper ()
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        return new $sClass($this);
+        return $this->getFormsHelper();
     }
 
 	/**
@@ -1274,9 +1349,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityAdd ($iProfile, $aValues, $sDisplay = false)
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         return $oFormsHelper->addData($iProfile, $aValues, $sDisplay);
     }
 
@@ -1286,9 +1359,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */    
     public function serviceRedirectAfterAdd($aContentInfo)
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         $oFormsHelper->redirectAfterAdd($aContentInfo);
     }
 
@@ -1317,10 +1388,7 @@ class BxBaseModGeneralModule extends BxDolModule
         }
 
         $CNF = &$this->_oConfig->CNF;
-
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
 
         $sParamsKey = 'ajax_mode';
         if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true)
@@ -1434,9 +1502,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if($bParamsArray && !empty($sParams['display']))
             $sDisplay = $sParams['display'];
 
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         if($bParamsArray && isset($sParams['dynamic_mode']))
             $oFormsHelper->setDynamicMode($sParams['dynamic_mode']);
 
@@ -1662,8 +1728,21 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityLocation ($iContentId = 0)
     {
-        $iContentId = $this->_getContent($iContentId, false);
-        if($iContentId === false)
+        $CNF = &$this->_oConfig->CNF;
+
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        $oFormsHelper = $this->getFormsHelper();
+        $oFormView = $oFormsHelper->getObjectFormView();
+        if(!$oFormView)
+            return false;
+        
+        $oFormView->initChecker($aContentInfo);
+        if(empty($CNF['FIELD_LOCATION']) || !$oFormView->isInputVisible($CNF['FIELD_LOCATION']))
             return false;
 
         return $this->_oTemplate->entryLocation ($iContentId);
@@ -1722,9 +1801,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceDeleteEntity ($iContentId, $sFuncDelete = 'deleteData')
     {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_oConfig->getClassPrefix() . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         return $oFormsHelper->$sFuncDelete($iContentId);
     }
 
@@ -3674,9 +3751,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if($iContentId === false)
             return false;
 
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
+        $oFormsHelper = $this->getFormsHelper();
         return $oFormsHelper->$sFormMethod((int)$iContentId, $sDisplay, $sCheckFunction, $bErrorMsg);
     }
 
@@ -3891,12 +3966,15 @@ class BxBaseModGeneralModule extends BxDolModule
             else if(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]))
                 $sTitle = strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
+            $sAbstract = isset($CNF['FIELD_ABSTRACT']) && isset($aContentInfo[$CNF['FIELD_ABSTRACT']]) ? $aContentInfo[$CNF['FIELD_ABSTRACT']] : '';
+
             $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
             $sText = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sText), 240);
 
             return [
                 'url' => $sUrl,
                 'title' => $sTitle,
+                'abstract' => $sAbstract,
                 'text' => $sText,
                 'images' => $aImages
             ];
@@ -3918,7 +3996,12 @@ class BxBaseModGeneralModule extends BxDolModule
             $sTitle = strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         //--- Text
-        $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
+        $sText = '';
+        if(isset($CNF['FIELD_ABSTRACT']) && isset($aContentInfo[$CNF['FIELD_ABSTRACT']]))
+            $sText = $aContentInfo[$CNF['FIELD_ABSTRACT']];
+        if(empty($sText) && isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]))
+            $sText = $aContentInfo[$CNF['FIELD_TEXT']];
+
         if(!empty($CNF['OBJECT_METATAGS']) && is_string($sText)) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);

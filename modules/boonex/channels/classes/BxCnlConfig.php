@@ -61,12 +61,15 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'URL_MANAGE_COMMON' => 'page.php?i=channels-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=channels-administration',
 
+            // some params
             'PARAM_DEFAULT_AUTHOR' => 'bx_channels_default_author',
             'PARAM_NUM_RSS' => 'bx_channels_num_rss',
-          
             'PARAM_SEARCHABLE_FIELDS' => 'bx_channels_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_channels_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_channels_per_page_browse_recommended',
+            'PARAM_BROWSE_ACTIVE_N_POSTS' => 'bx_channels_browse_active_n_posts',
+            'PARAM_BROWSE_ACTIVE_X_HOURS' => 'bx_channels_browse_active_x_hours',
+            'PARAM_BROWSE_TRENDING_X_HOURS' => 'bx_channels_browse_trending_x_hours',
 
             // objects
             'OBJECT_STORAGE' => 'bx_channels_pics',
@@ -107,6 +110,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_channels_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_channels_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_channels_view_profile_closed',
+            'OBJECT_PAGE_JOINED_ENTRY' => 'bx_channels_join_profile',
             'OBJECT_PRIVACY_VIEW' => 'bx_channels_allow_view_to',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_channels_allow_view_notification_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_channels_administration',

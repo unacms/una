@@ -26,6 +26,7 @@ class BxDolStorageS3v4 extends BxDolStorageS3
         );
         if ($this->_bSSL && getParam('sys_curl_ssl_allow_untrusted'))
              $this->_s3->setSSL($this->_bSSL, false);
+        $this->_s3->setExceptions(true);
     }
 }
 

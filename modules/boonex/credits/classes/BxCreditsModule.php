@@ -23,6 +23,9 @@ define('BX_CREDITS_DIRECTION_OUT', 'out');
 define('BX_CREDITS_ORDER_TYPE_SINGLE', 'single'); //--- one-time payment
 define('BX_CREDITS_ORDER_TYPE_RECURRING', 'recurring'); //--- recurring payment (subscription)
 
+define('BX_CREDITS_WITHDRAWAL_STATUS_REQUESTED', 'requested');
+define('BX_CREDITS_WITHDRAWAL_STATUS_CANCELED', 'canceled');
+define('BX_CREDITS_WITHDRAWAL_STATUS_CONFIRMED', 'confirmed');
 
 class BxCreditsModule extends BxBaseModGeneralModule
 {
@@ -111,6 +114,20 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $this->updateProfileBalance($iBuyerId, $iSellerId, -$fAmount, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sOrder, $sInfo, $sData);
         $this->updateProfileBalance($iSellerId, $iBuyerId, $fAmount, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sOrder, $sInfo, $sData);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-checkout 'bx_credits', 'checkout' - hook after checkout with creadits was performed
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `checkout`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `seller` - [int] seller profile id
+         *      - `buyer` - [int] buyer profile id
+         *      - `amount` - [float] amount was paid
+         *      - `order` - [string] order number for processed checkout action
+         * @hook @ref hook-bx_credits-checkout
+         */
         bx_alert($this->getName(), 'checkout', 0, false, [
             'seller' => $iSellerId,
             'buyer' => $iBuyerId,
@@ -145,24 +162,40 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $sCustomer = 'bx_cus_' . $sUnique;
         $sSubscription = 'bx_sub_' . $sUnique;
 
-        bx_alert($this->getName(), 'subscribe', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-subscribe 'bx_credits', 'subscribe' - hook after subscription was registered
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `subscribe`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `seller` - [int] seller profile id
+         *      - `buyer` - [int] buyer profile id
+         *      - `amount` - [float] amount was paid
+         *      - `trial` - [boolean] if trial period is available or not
+         *      - `customer` - [string] unique customer id for newly registered subscription
+         *      - `subscription` - [string] unique subscription id
+         * @hook @ref hook-bx_credits-subscribe
+         */
+        bx_alert($this->getName(), 'subscribe', 0, false, [
             'seller' => $iSellerId,
             'buyer' => $iBuyerId,
             'amount' => $fAmount, 
             'trial' => $aData['trial'],
             'customer' => $sCustomer,
             'subscription' => $sSubscription
-        ));
+        ]);
 
-        return echoJson(array(
+        return echoJson([
             'code' => 0,
-            'redirect' => bx_append_url_params($aData['return_data_url'], array(
+            'redirect' => bx_append_url_params($aData['return_data_url'], [
                 'cs' => $sCustomer, 
                 'sb' => $sSubscription,
                 'tr' => $aData['trial'],
                 'c' => $aData['custom']
-            ))
-        ));
+            ])
+        ]);
     }
 
     public function serviceGetSafeServices()
@@ -396,6 +429,31 @@ class BxCreditsModule extends BxBaseModGeneralModule
     public function serviceGetBlockHistory($sType = 'common') 
     {
         return $this->_getBlockHistory($sType);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_credits Credits
+     * @subsection bx_credits-page_blocks Page Blocks
+     * @subsubsection bx_credits-get_block_withdrawals get_block_withdrawals
+     * 
+     * @code bx_srv('bx_credits', 'get_block_withdrawals', [...]); @endcode
+     * 
+     * Get page block with a list of all credits withdrawals.
+     *
+     * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxCreditsModule::serviceGetBlockHistory
+     */
+    /** 
+     * @ref bx_credits-get_block_withdrawals "get_block_withdrawals"
+     */
+    public function serviceGetBlockWithdrawals($sType = 'common') 
+    {
+        if(!$this->_oConfig->isWithdraw())
+            return MsgBox (_t('_bx_credits_msg_action_withdrawals_disabled'));
+
+        return $this->_getBlockWithdrawals($sType);
     }
 
     /**
@@ -871,14 +929,30 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$iHistoryId)
             return false;
 
-        bx_alert($this->getName(), 'update_balance', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-update_balance 'bx_credits', 'update_balance' - hook after profile's credits balance was updated (credits were transferred from one profile to another)
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `update_balance`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `first_pid` - [int] first profile id
+         *      - `second_pid` - [int] second profile id
+         *      - `amount` - [float] amount was transferred
+         *      - `type` - [string] transfer type: purchase, checkout, cancellation, grant, send, withdraw, service
+         *      - `direction` - [string] transfer direction: in or out
+         *      - `order` - [string] unique order number associated with the transfer
+         * @hook @ref hook-bx_credits-update_balance
+         */
+        bx_alert($this->getName(), 'update_balance', 0, false, [
             'first_pid' => $iFirstPid,
             'second_pid' => $iSecondPid,
             'amount' => $fAmountAbs,
             'type' => $sType,
             'direction' => $sDirection,
             'order' => $sOrder,
-        ));
+        ]);
 
         $oSecondProfile = BxDolProfile::getInstanceMagic($iSecondPid);
         sendMailTemplate($CNF['ETEMPLATE_' . strtoupper($sDirection)], 0, $iFirstPid, array(
@@ -907,6 +981,18 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'message' => $sMessage
         ]);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-granted 'bx_credits', 'granted' - hook after some amount of credits was granted to a profile
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `granted`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile` - [int] recipient profile id
+         *      - `amount` - [float] amount was granted
+         * @hook @ref hook-bx_credits-granted
+         */
         bx_alert($this->getName(), 'granted', 0, false, [
             'profile' => $iProfileId,
             'amount' => $fAmount,
@@ -951,6 +1037,20 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'message' => $sMessage
         ]);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-sent 'bx_credits', 'sent' - hook after some amount of credits was sent from one profile to another
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `sent`
+         * - $object_id - not used
+         * - $sender_id - sender profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `performer` - [int] sender profile id
+         *      - `profile` - [int] recipient profile id
+         *      - `amount` - [float] amount was sent
+         *      - `order` - [string] unique order number associated with 'sent' action
+         * @hook @ref hook-bx_credits-sent
+         */
         bx_alert($this->getName(), 'sent', 0, $iUserId, [
             'performer' => $iUserId,
             'profile' => $iProfileId,
@@ -994,6 +1094,17 @@ class BxCreditsModule extends BxBaseModGeneralModule
 
         $fRate = $this->_oConfig->getConversionRateWithdraw();
 
+        $iId = $this->_oDb->insertWithdrawal([
+            'profile_id' => $iProfileId, 
+            'amount' => $fAmount,
+            'rate' => $fRate,
+            'message' => $sMessage,
+            'added' => time()
+        ]);
+
+        if(!$iId)
+            return $aResult;
+
         $aTemplateVars = [
             'profile_link' => $oProfile->getUrl(),
             'profile_name' => $oProfile->getDisplayName(),
@@ -1007,47 +1118,136 @@ class BxCreditsModule extends BxBaseModGeneralModule
             return $aResult;
 
         $sEmail = $this->_oConfig->getWithdrawEmail();
-        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM, 'html', false, [], true))
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM))
             return $aResult;
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-withdraw_requested 'bx_credits', 'withdraw_requested' - hook after a profile requested to withdraw some amount of credits from his balance
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `withdraw_requested`
+         * - $object_id - not used
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile` - [int] performer profile id
+         *      - `amount` - [float] amount to withdraw
+         *      - `rate` - [float] withdraw conversion rate
+         * @hook @ref hook-bx_credits-withdraw_requested
+         */
         bx_alert($this->getName(), 'withdraw_requested', 0, $iProfileId, [
             'profile' => $iProfileId,
             'amount' => $fAmount,
             'rate' => $fRate
         ]);
 
-        return ['code' => 0];
+        return ['code' => 0, 'id' => $iId];
     }
 
-    public function processWithdrawConfirm($iUserId, $iProfileId, $fAmount, $sMessage = '')
+    public function processWithdrawCancel($iId)
     {
         $CNF = &$this->_oConfig->CNF;
-        
+
+        $aWithdrawal = $this->_oDb->getWithdrawal(['type' => 'id', 'id' => $iId]);
+        if(empty($aWithdrawal) || !is_array($aWithdrawal))
+            return ['code' => 1, 'msg' => '_bx_credits_err_withdrawal_not_found'];
+
+        $iProfileId = (int)$aWithdrawal['profile_id'];
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile)
-            return ['code' => 1, 'msg' => '_bx_credits_err_profile_not_found'];
+            return ['code' => 2, 'msg' => '_bx_credits_err_profile_not_found'];
 
+        $aResult = ['code' => 3, 'msg' => '_bx_credits_err_cannot_cancel_withdrawal'];       
+
+        $aTemplateVars = [
+            'profile_link' => $oProfile->getUrl(),
+            'profile_name' => $oProfile->getDisplayName(),
+            'amount' => $aWithdrawal['amount'],
+            'manage_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_WITHDRAWALS_ADMINISTRATION']))
+        ];
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($CNF['ETEMPLATE_WITHDRAW_CANCELED'], $aTemplateVars);
+        if(!$aTemplate)
+            return $aResult;
+
+        $sEmail = $this->_oConfig->getWithdrawEmail();
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM))
+            return $aResult;
+
+        if(!$this->_oDb->updateWithdrawal(['status' => BX_CREDITS_WITHDRAWAL_STATUS_CANCELED], ['id' => $iId]))
+            return $aResult;
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-withdraw_canceled 'bx_credits', 'withdraw_canceled' - hook after a profile canceled his withdrawal request
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `withdraw_canceled`
+         * - $object_id - not used
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile` - [int] performer profile id
+         *      - `amount` - [float] amount to withdraw
+         *      - `rate` - [float] withdraw conversion rate
+         * @hook @ref hook-bx_credits-withdraw_canceled
+         */
+        bx_alert($this->getName(), 'withdraw_canceled', $iId, $iProfileId, [
+            'profile' => $iProfileId,
+            'amount' => $aWithdrawal['amount'],
+        ]);
+
+        return ['code' => 0, 'id' => $iId];
+    }
+
+    public function processWithdrawConfirm($iUserId, $iWithdrawalId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aWithdrawal = $this->_oDb->getWithdrawal(['type' => 'id', 'id' => $iWithdrawalId]);
+        if(empty($aWithdrawal) || !is_array($aWithdrawal))
+            return ['code' => 1, 'msg' => '_bx_credits_err_withdrawal_not_found'];
+
+        $iProfileId = (int)$aWithdrawal['profile_id'];
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return ['code' => 2, 'msg' => '_bx_credits_err_profile_not_found'];
+
+        $fAmount = (float)$aWithdrawal['amount'];
         $fBalance = $this->getProfileBalance($iProfileId);
         if($fAmount > $fBalance)
-            return ['code' => 2, 'msg' => '_bx_credits_err_low_balance'];
+            return ['code' => 3, 'msg' => '_bx_credits_err_low_balance'];
 
         $sInfo = '_bx_credits_txt_history_info_withdraw';
         $iHistoryId = $this->updateProfileBalance($iProfileId, 0, -$fAmount, BX_CREDITS_TRANSFER_TYPE_WITHDRAW, '', $sInfo);
         if(!$iHistoryId)
-            return ['code' => 3, 'msg' => '_bx_credits_err_cannot_update_balance'];
+            return ['code' => 4, 'msg' => '_bx_credits_err_cannot_update_balance'];
+
+        $aHistory = $this->_oDb->getHistory(['type' => 'id', 'id' => $iHistoryId]);
+        
+        if(!$this->_oDb->updateWithdrawal(['performer_id' => $iUserId, 'order' => $aHistory['order'], 'confirmed' => time(), 'status' => BX_CREDITS_WITHDRAWAL_STATUS_CONFIRMED], ['id' => $iWithdrawalId]))
+            return $aResult;
 
         sendMailTemplate($CNF['ETEMPLATE_WITHDRAW_SENT'], 0, $iProfileId, [
-            'amount' => $fAmount,
-            'message' => $sMessage
-        ]);
+            'amount' => $fAmount
+        ], BX_EMAIL_SYSTEM);
 
-        bx_alert($this->getName(), 'withdraw_sent', 0, $iUserId, [
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-withdraw_sent 'bx_credits', 'withdraw_sent' - hook after the amount of credits requested to withdraw was sent
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `withdraw_sent`
+         * - $object_id - not used
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile` - [int] performer profile id
+         *      - `amount` - [float] amount to withdraw
+         *      - `rate` - [float] withdraw conversion rate
+         * @hook @ref hook-bx_credits-withdraw_sent
+         */
+        bx_alert($this->getName(), 'withdraw_sent', $iWithdrawalId, $iUserId, [
             'performer' => $iUserId,
             'profile' => $iProfileId,
             'amount' => $fAmount,
         ]);
 
-        return ['code' => 0, 'id' => $iHistoryId];
+        return ['code' => 0, 'id' => $iWithdrawalId];
     }
 
     public function processClearing()
@@ -1100,7 +1300,32 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$this->updateProfileBalance($iClientId, 0, $fAmount, BX_CREDITS_TRANSFER_TYPE_PURCHASE, '', $sInfo))
             return array();
 
-        bx_alert($this->getName(), 'order_' . $sAction, 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-order_register 'bx_credits', 'order_register' - hook after the payment for a bundle of credits was processed with payment processing module
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `order_register`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile_id` - [int] client (buyer) profile id
+         *      - `bundle_id` - [int] bundle id
+         *      - `product_id` - [int] bundle id
+         *      - `count` - [int] number of items in order
+         *      - `order` - [string] order number provided with payment processing module
+         *      - `license` - [string] license number provided with payment processing module
+         *      - `type` - [string] payment type ('single' or 'recurring'), current version supports 'single' type payments for bundles only
+         *      - `duration` - [string] isn't supported
+         *      - `trial` - [string] isn't supported
+         * @hook @ref hook-bx_credits-order_register
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-order_prolong 'bx_credits', 'order_prolong' - hook isn't currently used because 'single' type payments for bundles are only supported
+         * It's equivalent to @ref hook-bx_credits-order_register
+         * @hook @ref hook-bx_credits-order_prolong
+         */
+        bx_alert($this->getName(), 'order_' . $sAction, 0, false, [
             'profile_id' => $iClientId,
             'bundle_id' => $iItemId,
             'product_id' => $iItemId,   //--- Alias for 'bundle_id'
@@ -1110,7 +1335,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'type' => $sType,
             'duration' => $sDuration,
             'trial' => $iTrial
-        ));
+        ]);
 
         $oClient = BxDolProfile::getInstanceMagic($iClientId);
         $oSeller = BxDolProfile::getInstanceMagic($iSellerId);
@@ -1148,7 +1373,24 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!empty($aProfile) && is_array($aProfile))
             $this->_oDb->updateProfile(array('balance' => (float)$aProfile['balance'] - $fAmount), array('id' => $aProfile['id']));
 
-        bx_alert($this->getName(), 'order_unregister', 0, false, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_credits-order_unregister 'bx_credits', 'order_unregister' - hook after the payment for a bundle of credits was refunded with payment processing module
+         * - $unit_name - equals `bx_credits`
+         * - $action - equals `order_unregister`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `profile_id` - [int] client (buyer) profile id
+         *      - `bundle_id` - [int] bundle id
+         *      - `product_id` - [int] bundle id
+         *      - `count` - [int] number of items in order
+         *      - `order` - [string] order number provided with payment processing module
+         *      - `license` - [string] license number provided with payment processing module
+         *      - `type` - [string] payment type ('single' or 'recurring'), current version supports 'single' type payments for bundles only
+         * @hook @ref hook-bx_credits-order_unregister
+         */
+        bx_alert($this->getName(), 'order_unregister', 0, false, [
             'profile_id' => $iClientId,
             'bundle_id' => $iItemId,
             'product_id' => $iItemId,   //--- Alias for 'bundle_id'
@@ -1156,7 +1398,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'order' => $sOrder,
             'license' => $sLicense,
             'type' => $sType,
-        ));
+        ]);
 
         return true;
     }
@@ -1181,6 +1423,21 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $CNF = &$this->_oConfig->CNF;
 
         $sGrid = $CNF['OBJECT_GRID_HISTORY_' . strtoupper($sType)];
+        $oGrid = BxDolGrid::getObjectInstance($sGrid);
+        if(!$oGrid)
+            return '';
+
+        return [
+            'content' => $oGrid->getCode(),
+            'menu' => $CNF['OBJECT_MENU_MANAGE_SUBMENU']
+        ];
+    }
+
+    protected function _getBlockWithdrawals($sType) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sGrid = $CNF['OBJECT_GRID_WITHDRAWALS_' . strtoupper($sType)];
         $oGrid = BxDolGrid::getObjectInstance($sGrid);
         if(!$oGrid)
             return '';

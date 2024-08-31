@@ -31,6 +31,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'TABLE_ORDERS_DELETED' => $aModule['db_prefix'] . 'orders_deleted',
             'TABLE_PROFILES' => $aModule['db_prefix'] . 'profiles',
             'TABLE_HISTORY' => $aModule['db_prefix'] . 'history',
+            'TABLE_WITHDRAWALS' => $aModule['db_prefix'] . 'withdrawals',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -62,6 +63,8 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'URL_ORDERS_ADMINISTRATION' => 'page.php?i=credits-orders-administration',
             'URL_HISTORY_COMMON' => 'page.php?i=credits-history-common',
             'URL_HISTORY_ADMINISTRATION' => 'page.php?i=credits-history-administration',
+            'URL_WITHDRAWALS_COMMON' => 'page.php?i=credits-withdrawals-common',
+            'URL_WITHDRAWALS_ADMINISTRATION' => 'page.php?i=credits-withdrawals-administration',
 
             // some params
             'PARAM_WITHDRAW' => 'bx_credits_enable_withdraw',
@@ -95,6 +98,8 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'OBJECT_GRID_ORDERS_COMMON' => 'bx_credits_orders_common',
             'OBJECT_GRID_HISTORY_ADMINISTRATION' => 'bx_credits_history_administration',
             'OBJECT_GRID_HISTORY_COMMON' => 'bx_credits_history_common',
+            'OBJECT_GRID_WITHDRAWALS_ADMINISTRATION' => 'bx_credits_withdrawals_administration',
+            'OBJECT_GRID_WITHDRAWALS_COMMON' => 'bx_credits_withdrawals_common',
             'OBJECT_GRID_PROFILES_ADMINISTRATION' => 'bx_credits_profiles_administration',
 
             // email templates
@@ -104,6 +109,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'ETEMPLATE_IN' => 'bx_credits_in',
             'ETEMPLATE_OUT' => 'bx_credits_out',
             'ETEMPLATE_WITHDRAW_REQUESTED' => 'bx_credits_withdraw_requested',
+            'ETEMPLATE_WITHDRAW_CANCELED' => 'bx_credits_withdraw_canceled',
             'ETEMPLATE_WITHDRAW_SENT' => 'bx_credits_withdraw_sent',
 
             // some language keys
@@ -111,8 +117,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
                 'txt_sample_single' => '_bx_credits_txt_sample_single',
                 'grant_popup' => '_bx_credits_grid_popup_title_htr_grant',
                 'send_popup' => '_bx_credits_grid_popup_title_htr_send',
-                'withdraw_request_popup' => '_bx_credits_grid_popup_title_htr_withdraw_request',
-                'withdraw_confirm_popup' => '_bx_credits_grid_popup_title_htr_withdraw_confirm',
+                'withdraw_request_popup' => '_bx_credits_grid_popup_title_wdw_withdraw_request',
             ),
         );
 

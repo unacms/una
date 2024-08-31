@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   `changed` int(11) NOT NULL default '0',
   `thumb` int(11) NOT NULL default '0',
   `cover` int(11) NOT NULL default '0',
+  `cover_data` varchar(64) NOT NULL default '',
   `cover_raw` longtext NOT NULL,
   `package` int(11) NOT NULL default '0',
   `name` varchar(255) NOT NULL,

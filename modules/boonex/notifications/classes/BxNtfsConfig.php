@@ -254,7 +254,16 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
     public function getContentObjectId(&$aEvent)
     {
-        return !empty($aEvent['content']['object_id']) ? (int)$aEvent['content']['object_id'] : (int)$aEvent['object_id'];
+        $bContentObjectId = !empty($aEvent['content']['object_id']);
+        if(!$bContentObjectId) {
+            if(in_array($aEvent['action'], ['replyPost']))
+                return false;
+
+            if(strpos($aEvent['type'], '_media') !== false && in_array($aEvent['action'], ['commentPost', 'doVote', 'doVoteUp', 'doVoteDown']))
+                return false;
+        }
+
+        return $bContentObjectId ? (int)$aEvent['content']['object_id'] : (int)$aEvent['object_id'];
     }
 
     public function getProfileBasedModules() 

@@ -25,24 +25,6 @@ class BxCreditsGridHistoryCommon extends BxCreditsGridHistoryAdministration
         $this->_performActionWithProfileAmount($sAction);
     }
 
-    public function performActionWithdrawRequest()
-    {
-        if(!$this->_bWithdraw)
-            return echoJson([]);
-
-        $sAction = 'withdraw_request';
-        
-        $this->_performActionWithProfileAmount($sAction);
-    }
-
-    protected function _getActionWithdrawRequest($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
-    {
-        if(!$this->_bWithdraw)
-            return '';
-
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
-    }
-
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if(empty($this->_iUserId) || $this->_iUserId != bx_get_logged_profile_id())

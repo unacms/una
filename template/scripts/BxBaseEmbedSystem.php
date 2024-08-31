@@ -29,15 +29,22 @@ class BxBaseEmbedSystem extends BxDolEmbed
     {
         $aData = $this->getData($sLink, '');
 
+        if(bx_is_api()) {
+            if(bx_get('mode') == 'alt')
+                return json_encode($aData);
+
+            return $aData;
+        }
+
         $aAttrs = [
             'title' => bx_html_attribute($sTitle),
         ];
 
         // check for external link
-        if (strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) !== 0) {
+        if(strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) !== 0) {
             $aAttrs['target'] = '_blank';
 
-            if (getParam('sys_add_nofollow') == 'on')
+            if(getParam('sys_add_nofollow') == 'on')
                 $aAttrs['rel'] = 'nofollow';
         }
 
@@ -63,6 +70,9 @@ class BxBaseEmbedSystem extends BxDolEmbed
             'icon3' => ['tag' => 'link', 'name_attr' => 'rel', 'name' => 'apple-touch-icon', 'content_attr' => 'href'],
         ]);
 
+
+        
+        
         $a = array_merge($a, [
            'image' => $a['OGImage'] ? $a['OGImage'] : $a['thumbnailUrl'],
            'logo' => $a['icon2'] ? $a['icon2'] : ($a['icon3'] ? $a['icon3'] : $a['icon']),
@@ -71,14 +81,18 @@ class BxBaseEmbedSystem extends BxDolEmbed
 
         unset($a['OGImage'], $a['thumbnailUrl'], $a['icon'], $a['icon2'], $a['icon3']);
 
-        if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
-            $iMediaId = $oStorage->storeFileFromUrl($a['image'], false);
-            if($iMediaId)
-                $a['image'] =  $oStorage->getFileUrlById($iMediaId);
-        }
+        
 
         if($a['image'] == '') {
-            $b = json_decode(bx_file_get_contents("https://api.microlink.io/?url=" . $sUrl), true);
+            $c = [];
+            if (getParam('sys_embed_microlink_key') != ''){
+                $c = bx_file_get_contents("https://pro.microlink.io/?url=" . $sUrl, [], 'get', ['x-api-key: ' . getParam('sys_embed_microlink_key')]);
+            }
+            else{
+                $c = bx_file_get_contents("https://api.microlink.io/?url=" . $sUrl);
+            }
+                
+            $b = json_decode($c, true);
             $a = [
                 'title' => $b['data']['title'],
                 'description' => $b['data']['description'],
@@ -87,7 +101,20 @@ class BxBaseEmbedSystem extends BxDolEmbed
                 'url' => $sUrl,
             ];
         }
+        
+        if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
+            $iMediaId = $oStorage->storeFileFromUrl($a['image'], false);
+            if($iMediaId)
+                $a['image'] =  $oStorage->getFileUrlById($iMediaId);
+        }
+        
+        if($a['logo'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
+            $iMediaId = $oStorage->storeFileFromUrl($a['logo'], false);
+            if($iMediaId)
+                $a['logo'] =  $oStorage->getFileUrlById($iMediaId);
+        }
 
+        
         $aUrl = parse_url($sUrl);
         $a['domain'] = $aUrl['host'];
 

@@ -134,7 +134,11 @@ class BxDolVoteReactions extends BxTemplVote
     {
         $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
 
-    	return $aReaction['image'];
+        list($sIconFont, $sIconUrl, $sIconA, $sIconHtml) = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIcon($aReaction['image']);
+        if ($sIconUrl)
+            return $this->_oTemplate->parseImage($sIconUrl, ['class' => 'sys-icon-image']);
+
+    	return $sIconHtml;
     }
 
     /**

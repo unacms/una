@@ -149,8 +149,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'url_avatar' => $oProfile->{isset($aParams['get_avatar']) && method_exists($oProfile, $aParams['get_avatar']) ? $aParams['get_avatar'] : 'getAvatar'}(),
             'module' => $oProfile->getModule(),
         ];
-        
-        if(isset($aParams['with_info']))
+
+        if(isset($aParams['with_info']) && (bool)$aParams['with_info'])
             $aRv['info'] = bx_srv($oProfile->getModule(), 'get_info', [$oProfile->getContentId(), false]);
         
         return $aRv;
@@ -170,6 +170,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
         $aRv = [
             'id' => $iId,
+            'account_id' => $oAccount->id(),
             'email' => $oAccount->getEmail(),
             'display_name' => $oProfile->getDisplayName(),
             'url' => bx_api_get_relative_url($oProfile->getUrl()),
@@ -184,10 +185,37 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'notifications' => 0,
             'cart' => 0,
             'profiles_count' => $oAccount->getProfilesNumber(true),
+            'hash' => encryptUserId($iId),
             'profiles_limit' => (int)getParam('sys_account_limit_profiles_number'),
             'active' => $oProfile->isActive(),
             'status' => $oProfile->getStatus(),
         ];
+        
+        if ($iId == bx_get_logged_profile_id()){
+            $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
+            $sRet = $oInformer ? $oInformer->display() : '';
+            if ($sRet){
+                $aRv['informer'] = $sRet;
+            }
+
+            $oPayments = BxDolPayments::getInstance();
+            if($oPayments->isActive())
+                $aRv['cart'] = $oPayments->getCartItemsCount();
+            
+            $sModuleNotifications = 'bx_notifications';
+            if(BxDolRequest::serviceExists($sModuleNotifications, 'get_unread_notifications_num'))
+                $aRv['notifications'] = bx_srv($sModuleNotifications, 'get_unread_notifications_num', [$iId]);
+
+            if($o !== false && BxDolAccount::isAllowedCreateMultiple($iId)) {
+                $oAccount = BxDolAccount::getInstance();
+                if($oAccount != false && !$oAccount->isProfilesLimitReached()) {
+                    $oMenuProfileAdd = BxDolMenu::getObjectInstance('sys_add_profile');
+                    if($oMenuProfileAdd !== false)
+                        $aRv['menu'] = $oMenuProfileAdd->getCodeAPI();
+                }
+            }
+        }
+
 
         return $aRv;
     }

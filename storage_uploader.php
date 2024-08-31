@@ -13,6 +13,7 @@ $sUploaderObject = bx_process_input(bx_get('uo'));
 $sStorageObject = bx_process_input(bx_get('so'));
 $sUniqId = preg_match("/^[\d\w]+$/", bx_get('uid')) ? bx_get('uid') : '';
 $isMultiple = bx_get('m') ? true : false;
+$isLatest = bx_get('l') ? true : false;
 
 $sFormat = bx_process_input(bx_get('f'));
 if ($sFormat != 'html' &&  $sFormat != 'json')
@@ -38,7 +39,6 @@ if (!$oUploader) {
 $sAction = bx_process_input(bx_get('a'));
 
 switch ($sAction) {
-
     case 'show_uploader_form':
         header('Content-type: text/html; charset=utf-8');
 
@@ -52,7 +52,7 @@ switch ($sAction) {
     case 'restore_ghosts':
         header('Content-Type: application/json; charset=utf-8');
         $sImagesTranscoder = bx_process_input(bx_get('img_trans'));
-        echo $oUploader->getGhostsWithOrder((int)bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId);
+        echo $oUploader->getGhostsWithOrder((int)bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId, $isLatest);
         break;
     
     case 'reorder_ghosts':
@@ -74,7 +74,6 @@ switch ($sAction) {
 
         $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId, $isPrivate);
         break;
-
 }
 
 /** @} */

@@ -26,30 +26,25 @@ div.bx-payment-pa-item.bx-payment-pai-filter .bx-form-input-text {
 }
 
 div.bx-payment-pa-item-title,
+div.bx-payment-pa-item-price,
 div.bx-payment-pa-item-quantity {
     position: relative;
+    box-sizing: border-box;
 }
 div.bx-payment-pa-item-title {
     width: 50%;
 }
-div.bx-payment-pa-item-title-cnt {
-    TEXT-OVERFLOW: ellipsis;
-    -o-text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
 div.bx-payment-pa-item-title .bx-form-input-checkbox {
+    display: block;
     margin: 0px;
     padding: 0px;
     vertical-align: middle;
 }
 div.bx-payment-pa-item-price {
     width: 20%;
-    box-sizing: border-box;
 }
 div.bx-payment-pa-item-quantity {
     width: 10%;
-    box-sizing: border-box;
 }
 
 /*--- View Order ---*/

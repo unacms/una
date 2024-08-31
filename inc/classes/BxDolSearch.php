@@ -87,7 +87,15 @@ class BxDolSearch extends BxDol
      */
     public function response ()
     {
-        $sCode = $this->_bDataProcessing ? array() : '';
+        $sCode = $this->_bDataProcessing ? [] : '';
+
+        if($this->_bLiveSearch && ($iAssistant = BxDolAI::getAssistantForLiveSearch()) != 0) {
+            $sKeyword = '';
+            if(($sKeyword = bx_get('keyword')) !== false)
+                $sKeyword = bx_process_input($sKeyword);
+
+            $sCode .= BxDolAIAssistant::getObjectInstance($iAssistant)->getAskButton($sKeyword);
+        }
 
         $bSingle = count($this->aChoice) == 1;
         foreach($this->aChoice as $sKey => $aValue) {
@@ -691,18 +699,17 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setFieldUnit ($sFieldName, $sTableName, $sOperator = '', $bRenameMode = true)
     {
-        if (!empty($sOperator))
-            $sqlUnit  = "$sOperator(`$sTableName`.`$sFieldName`)";
-        else
-            $sqlUnit  = "`$sTableName`.`$sFieldName`";
+        $bOperator = !empty($sOperator);
 
-        if (isset($this->aPseud) && $bRenameMode !== false) {
-            $sKey = array_search($sFieldName, $this->aPseud);
-            if ($sKey !== false) {
-                $sqlUnit .= " as `$sKey`";
-                unset($this->aPseud[$sKey]);
-            }
+        $sqlUnit  = "`$sTableName`.`$sFieldName`";
+        if($bOperator)
+            $sqlUnit = $sOperator . '(' . $sqlUnit . ')';
+
+        if(!empty($this->aPseud) && $bRenameMode !== false && ($sKey = array_search($sFieldName . ($bOperator ? '_' . strtolower($sOperator) : ''), $this->aPseud)) !== false) {
+            $sqlUnit .= " as `$sKey`";
+            unset($this->aPseud[$sKey]);
         }
+
         return $sqlUnit . ', ';
     }
 
@@ -758,7 +765,9 @@ class BxDolSearchResult implements iBxDolReplaceable
             'mode' => $this->_sMode
         ]);
 
-        $this->aPseud = $this->_getPseud();
+        if(($this->aPseud = $this->_getPseudFromParam()) === false)
+            $this->aPseud = $this->_getPseud();
+
         $this->setConditionParams();
         $aData = $this->aCurrent['paginate']['num'] > 0 ? $this->getSearchDataByParams() : [];
         
@@ -767,7 +776,9 @@ class BxDolSearchResult implements iBxDolReplaceable
                 return $aItem['id'];
             }, $aData);
 
-            $aData = sort($aIds) == sort($this->_aParams['validate']) ? 'valid' : 'invalid';
+            sort($aIds);
+            sort($this->_aParams['validate']);
+            $aData = $aIds == $this->_aParams['validate'] ? 'valid' : 'invalid';
         }
 
         /**
@@ -835,6 +846,16 @@ class BxDolSearchResult implements iBxDolReplaceable
         return $aQuery;
     }
 
+    function getFieldsOwn()
+    {
+        return false;
+    }
+
+    function getFieldsJoin($sJoin)
+    {
+        return false;
+    }
+
     /**
      * Get array with code for sql elements
      * @param $bRenameMode indicator of renmaing fields
@@ -842,29 +863,55 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function getJoins ($bRenameMode = true)
     {
-        $aSql = array();
-        // joinFields & join
-        if (isset($this->aCurrent['join']) && is_array($this->aCurrent['join'])) {
-            $aSql = array('join'=>'', 'ownFields'=>'', 'joinFields'=>'', 'groupBy'=>'');
-            foreach ($this->aCurrent['join'] as $sKey => $aValue) {
-                $sAlias = isset($aValue['table_alias']) ? $aValue['table_alias'] : $aValue['table'];
-                $sTableAlias = isset($aValue['table_alias']) ? " AS {$aValue['table_alias']} " : '';
+        if(!isset($this->aCurrent['join']) || !is_array($this->aCurrent['join']))
+            return false;
 
-                if (is_array($aValue['joinFields'])) {
-                    foreach ($aValue['joinFields'] as $sValue) {
-                        $aSql['joinFields'] .= $this->setFieldUnit($sValue, $sAlias, isset($aValue['operator']) ? $aValue['operator'] : null, $bRenameMode);
-                    }
+        $aSql = [
+            'join' => '', 
+            'ownFields' => '', 
+            'joinFields' => '', 
+            'groupBy' => '', 
+            'groupHaving' => ''
+        ];
+
+        foreach($this->aCurrent['join'] as $sKey => $aValue) {
+            $sAlias = isset($aValue['table_alias']) ? $aValue['table_alias'] : $aValue['table'];
+            $sTableAlias = isset($aValue['table_alias']) ? " AS {$aValue['table_alias']} " : '';
+            $sOperator = isset($aValue['operator']) ? $aValue['operator'] : null;
+
+            // joinFields
+            $aJoinFields = $this->getFieldsJoin($sKey);
+            if($aJoinFields === false && !empty($aValue['joinFields']) && is_array($aValue['joinFields']))
+                $aJoinFields = $aValue['joinFields'];
+
+            if($aJoinFields)
+                foreach($aJoinFields as $mixedField) {
+                    list($sFldName, $sFldOperator) = is_array($mixedField) ? $mixedField : [$mixedField, $sOperator];
+
+                    $aSql['joinFields'] .= $this->setFieldUnit($sFldName, $sAlias, $sFldOperator, $bRenameMode);
                 }
-                // group by
-                if (isset($aValue['groupTable']))
-                    $aSql['groupBy'] =  "GROUP BY `{$aValue['groupTable']}`.`{$aValue['groupField']}`, ";
-                $sOn = isset($aValue['mainTable']) ? $aValue['mainTable'] : $this->aCurrent['table'];
-                $aSql['join'] .= " {$aValue['type']} JOIN `{$aValue['table']}` $sTableAlias ON " . (!empty($aValue['on_sql']) ? $aValue['on_sql'] : "`{$sAlias}`.`{$aValue['onField']}`=" . trim($this->setFieldUnit($aValue['mainField'], $sOn, isset($aValue['mainFieldFunc']) ? $aValue['mainFieldFunc'] : '', false), ", "));
-                $aSql['ownFields'] .= $this->setFieldUnit($aValue['mainField'], $sOn, '', $bRenameMode);
-            }
-            $aSql['joinFields'] = trim($aSql['joinFields'], ', ');
-            $aSql['groupBy'] = trim($aSql['groupBy'], ', ');
+
+            // group by
+            if(isset($aValue['groupTable']))
+                $aSql['groupBy'] .= "`{$aValue['groupTable']}`.`{$aValue['groupField']}`, ";
+
+            // having
+            if(isset($aValue['groupHaving']))
+                $aSql['groupHaving'] .= $aValue['groupHaving'];
+
+            $sOn = isset($aValue['mainTable']) ? $aValue['mainTable'] : $this->aCurrent['table'];
+            $aSql['join'] .= " {$aValue['type']} JOIN `{$aValue['table']}` $sTableAlias ON " . (!empty($aValue['on_sql']) ? $aValue['on_sql'] : "`{$sAlias}`.`{$aValue['onField']}`=" . trim($this->setFieldUnit($aValue['mainField'], $sOn, isset($aValue['mainFieldFunc']) ? $aValue['mainFieldFunc'] : '', false), ", "));
+            $aSql['ownFields'] .= $this->setFieldUnit($aValue['mainField'], $sOn, '', $bRenameMode);
         }
+
+        $aSql['joinFields'] = trim($aSql['joinFields'], ', ');
+
+        if(!empty($aSql['groupBy']))
+            $aSql['groupBy'] = trim('GROUP BY ' . $aSql['groupBy'], ', ');
+
+        if(!empty($aSql['groupHaving']))
+            $aSql['groupHaving'] = 'HAVING ' . $aSql['groupHaving'];
+
         return $aSql;
     }
 
@@ -877,7 +924,10 @@ class BxDolSearchResult implements iBxDolReplaceable
     {
         $bForUnion = isset($aParams['for_union']) && $aParams['for_union'] === true;
 
-        $aSql = array('ownFields'=>'', 'joinFields'=>'', 'order'=>'');
+        $aSql = [
+            'ownFields' => '', 
+            'order' => ''
+        ];
 
         // searchFields
         if($bForUnion) {
@@ -887,13 +937,20 @@ class BxDolSearchResult implements iBxDolReplaceable
             $aSql['ownFields'] .= $this->setFieldUnit(!empty($this->aCurrent['added']) ? $this->aCurrent['added'] : 'added', $sTable);
             $aSql['ownFields'] .= "'" . $this->getContentInfoName()  . "' AS `content_info`";
         }
-        else
-            foreach ($this->aCurrent['ownFields'] as $sValue)
-                $aSql['ownFields'] .= $this->setFieldUnit($sValue, $this->aCurrent['table']);
+        else {
+            $aOwnFields = $this->getFieldsOwn();
+            if($aOwnFields === false)
+                $aOwnFields = $this->aCurrent['ownFields'];
+
+            foreach($aOwnFields as $mixedField) {
+                list($sFldName, $sFldOperator) = is_array($mixedField) ? $mixedField : [$mixedField, ''];
+
+                $aSql['ownFields'] .= $this->setFieldUnit($sFldName, $this->aCurrent['table'], $sFldOperator);
+            }
+        }
 
         // joinFields & join
-        $aJoins = $this->getJoins();
-        if (!empty($aJoins)) {
+        if(($aJoins = $this->getJoins()) !== false) {
             if(!$bForUnion) {
                 $aSql['ownFields'] .= $aJoins['ownFields'];
                 $aSql['ownFields'] .= $aJoins['joinFields'];
@@ -901,7 +958,8 @@ class BxDolSearchResult implements iBxDolReplaceable
 
             $aSql['join'] = $aJoins['join'];
             $aSql['groupBy'] = $aJoins['groupBy'];
-        } 
+            $aSql['groupHaving'] = $aJoins['groupHaving'];
+        }
 
         $aSql['ownFields'] = trim($aSql['ownFields'], ', ');
 
@@ -940,6 +998,9 @@ class BxDolSearchResult implements iBxDolReplaceable
         if (isset($aSql['groupBy']))
             $sqlQuery .= ' ' . $aSql['groupBy'];
 
+        if (isset($aSql['groupHaving']))
+            $sqlQuery .= ' ' . $aSql['groupHaving'];
+
         if($bForUnion)
             return [
                 'query' => $sqlQuery, 
@@ -952,7 +1013,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         if (isset($aSql['limit']))
             $sqlQuery .= ' ' . $aSql['limit'];
 
-        // echoDbg($sqlQuery);
+        //echoDbg($sqlQuery);
         $aRes = BxDolDb::getInstance()->getAll($sqlQuery);
         return $aRes;
     }
@@ -1318,6 +1379,15 @@ class BxDolSearchResult implements iBxDolReplaceable
     {
         $oDb = BxDolDb::getInstance();
         return $oDb->implode_escape($aValues);
+    }
+
+    /**
+     * System method for filling aPseud array. Fill field aPseud for current class from system option.
+     * It may be useful when Fields are taken from system option too.
+     */
+    function _getPseudFromParam ()
+    {
+        return false;
     }
 
     /**

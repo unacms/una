@@ -279,11 +279,30 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $this->rebuildSlice();
 
-        bx_alert($this->_oConfig->getObject('alert'), $sAction . 'd', $iId, (int)$this->getUserId(), array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-promoted 'bx_timeline', 'promoted' - hook after an event was promoted
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `promoted`
+         * - $object_id - event id
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `owner_id` - [int] owner profile id
+         *      - `object_id` - [int] object id
+         *      - `object_author_id` - [int] object author profile id
+         * @hook @ref hook-bx_timeline-promoted
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-unpromoted 'bx_timeline', 'unpromoted' - hook after an event was unpromoted
+         * It's equivalent to @ref hook-bx_timeline-promoted
+         * @hook @ref hook-bx_timeline-unpromoted
+         */
+        bx_alert($this->_oConfig->getObject('alert'), $sAction . 'd', $iId, (int)$this->getUserId(), [
             'owner_id' => $aEvent['owner_id'],
             'object_id' => $aEvent['object_id'],
             'object_author_id' => $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id']
-        ));
+        ]);
         
         bx_audit(
             $iId, 
@@ -344,11 +363,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$this->getConnectionMuteObject()->addConnection($this->_iProfileId, $iAuthor))
             return echoJson(array('code' => 2));
 
-        bx_alert($this->_oConfig->getObject('alert'), 'muted', $iAuthor, $this->_iProfileId, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-muted 'bx_timeline', 'muted' - hook after an event author was muted
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `muted`
+         * - $object_id - event author profile id
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `owner_id` - [int] owner profile id
+         *      - `object_id` - [int] object id
+         *      - `object_author_id` - [int] object author profile id
+         * @hook @ref hook-bx_timeline-muted
+         */
+        bx_alert($this->_oConfig->getObject('alert'), 'muted', $iAuthor, $this->_iProfileId, [
             'owner_id' => $aEvent['owner_id'],
             'object_id' => $aEvent['object_id'],
             'object_author_id' => $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id']
-        ));
+        ]);
 
         echoJson(array('code' => 0, 'message' => _t('_bx_timeline_txt_msg_performed_action'), 'reload' => 1));
     }
@@ -585,6 +617,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'eval' => $sJsObject . "._onGetPost(oData)"
         ];
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-on_get_post 'bx_timeline', 'on_get_post' - hook to override just created direct post (update)
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `on_get_post`
+         * - $object_id - event author profile id
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `override_result` - [array] by ref, result array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-on_get_post
+         */
         bx_alert($this->getName(), 'on_get_post', 0, 0, [
             'params' => $aParams,
             'override_result' => &$aResult,
@@ -984,6 +1028,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewAccountOutline' => '',
             'GetBlockItem' => '',
             'GetPosts' => '',
+            'Get' => '',
             'Repost' => '',
             'Delete' => '',
             'GetEditForm' => '',
@@ -1269,6 +1314,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $oForm = $this->getFormPostObject($aParams);
 
+        /**
+         * @hooks
+         * @hookdef hook-system-get_object_form 'system', 'get_object_form' - hook to override an object of create content form, @see BxDolForm
+         * - $unit_name - equals `system`
+         * - $action - equals `get_object_form`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `type` - [string] 'add', 'edit', 'view' or 'delete' form display type
+         *      - `params` - [array] form params array as key&value pairs
+         *      - `form` - [object] by ref, an object of create content form, @see BxDolForm, can be overridden in hook processing
+         * @hook @ref hook-system-get_object_form
+         */
         bx_alert('system', 'get_object_form', 0, 0, array(
             'module' => $this->_oConfig->getName(),
             'type' => $sType,
@@ -3389,10 +3448,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         $aParams = $this->_prepareParams($aBrowseParams);
-        $aParams = array_merge($aParams, [
-            'per_page' => $this->_oConfig->getLiveUpdateLength(),
-            'filter' => BX_TIMELINE_FILTER_OTHER_VIEWER
-        ]);
+        $aParams['filter'] = BX_TIMELINE_FILTER_OTHER_VIEWER;
+        if(($iLiveUpdateLength = $this->_oConfig->getLiveUpdateLength()) != 0)
+            $aParams['per_page'] = $iLiveUpdateLength;
+
         $aEvents = $this->_oDb->getEvents($aParams);
         if(empty($aEvents) || !is_array($aEvents))
             return false;
@@ -3413,10 +3472,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($iValueNew == $iValue)
             return false;
 
-        if(bx_is_api()){
+        if($this->_bIsApi)
             return $iValueNew;
-        }
-        
+
         if((int)$iInit != 0)
             return array('count' => $iValueNew);
 
@@ -3547,11 +3605,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGet($aParams)
     {
+        if($this->_bIsApi && is_string($aParams))
+            $aParams = bx_api_get_browse_params($aParams, true);
+
         $aParams = $this->_prepareParams($aParams);
-
         $aParams['return_data_type'] = 'array';
-        return $this->_oTemplate->getPosts($aParams);
 
+        return $this->_oTemplate->getPosts($aParams);
     }
 
     public function serviceAdd($aValues)
@@ -4191,7 +4251,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         // check alert to allow custom checks
         $mixedResult = null;
-        bx_alert('system', 'check_allowed_view', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
+
+        /**
+         * @hooks
+         * @hookdef hook-system-check_allowed_view 'system', 'check_allowed_view' - hook to override the result of checking whether 'view' action is allowed or not to specified profile
+         * - $unit_name - equals `system`
+         * - $action - equals `check_allowed_view`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `module` - [string] module name
+         *      - `content_info` - [array] content info array as key&value pairs
+         *      - `profile_id` - [boolean] or [int] profile id to be checked the availability of the action to
+         *      - `override_result` - [string] or [int] by ref, check action result, can be overridden in hook processing. Return string with an error if action isn't allowed or CHECK_ACTION_RESULT_ALLOWED, @see BxDolAcl
+         * @hook @ref hook-system-check_allowed_view
+         */
+        bx_alert('system', 'check_allowed_view', 0, 0, [
+            'module' => $this->getName(), 
+            'content_info' => $aDataEntry, 
+            'profile_id' => $iProfileId, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
 
@@ -4229,7 +4309,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if($oProfileOwner->checkAllowedPostInProfile($this->_iOwnerId, $this->getName()) !== CHECK_ACTION_RESULT_ALLOWED)
                 return _t('_sys_txt_access_denied');
 
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_post', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_post '{profile_module_name}', 'timeline_post' - hook to override the result of checking whether 'post in profile' action is allowed or not
+             * - $unit_name - profile module name
+             * - $action - equals `timeline_post`
+             * - $object_id - timeline owner profile id
+             * - $sender_id - performer profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `check_result` - [array] by ref, check action result, can be overridden in hook processing.
+             * @hook @ref hook-bx_base_profile-timeline_post
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_post', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
         }
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -4278,7 +4371,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(BxDolService::call($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'edit_any')) === CHECK_ACTION_RESULT_ALLOWED)
                 return true;
 
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_edit', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_edit '{profile_module_name}', 'timeline_edit' - hook to override the result of checking whether 'edit' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_post
+             * @hook @ref hook-bx_base_profile-timeline_edit
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_edit', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
         }
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -4303,7 +4404,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(BxDolService::call($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'delete_any')) === CHECK_ACTION_RESULT_ALLOWED)
                 return true;
 
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_delete '{profile_module_name}', 'timeline_delete' - hook to override the result of checking whether 'delete' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_post
+             * @hook @ref hook-bx_base_profile-timeline_delete
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
         }
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -4339,7 +4448,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view_counter', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_view_counter '{profile_module_name}', 'timeline_view_counter' - hook to override the result of checking whether 'view counter' action is allowed or not
+             * - $unit_name - profile module name
+             * - $action - equals `timeline_view_counter`
+             * - $object_id - timeline owner profile id
+             * - $sender_id - performer profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `result` - [boolean] by ref, check action result, can be overridden in hook processing.
+             * @hook @ref hook-bx_base_profile-timeline_view_counter
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view_counter', $oProfileOwner->id(), (int)$this->getUserId(), [
+                'result' => &$bResult
+            ]);
 
         return $bResult;
     }
@@ -4357,8 +4479,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         $bResult = true;
+        
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_vote '{profile_module_name}', 'timeline_vote' - hook to override the result of checking whether 'vote' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_view_counter
+             * @hook @ref hook-bx_base_profile-timeline_vote
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), [
+                'result' => &$bResult
+            ]);
 
         return $bResult;
     }
@@ -4377,7 +4508,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote_view', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_vote_view '{profile_module_name}', 'timeline_vote_view' - hook to override the result of checking whether 'vote' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_view_counter
+             * @hook @ref hook-bx_base_profile-timeline_vote_view
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote_view', $oProfileOwner->id(), (int)$this->getUserId(), [
+                'result' => &$bResult
+            ]);
 
         return $bResult;
     }
@@ -4396,7 +4535,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_reaction', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_reaction '{profile_module_name}', 'timeline_reaction' - hook to override the result of checking whether 'give reaction vote' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_view_counter
+             * @hook @ref hook-bx_base_profile-timeline_reaction
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_reaction', $oProfileOwner->id(), (int)$this->getUserId(), [
+                'result' => &$bResult
+            ]);
 
         return $bResult;
     }
@@ -4415,7 +4562,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_reaction_view', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_reaction_view '{profile_module_name}', 'timeline_reaction_view' - hook to override the result of checking whether 'view reactions' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_view_counter
+             * @hook @ref hook-bx_base_profile-timeline_reaction_view
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_reaction_view', $oProfileOwner->id(), (int)$this->getUserId(), [
+                'result' => &$bResult
+            ]);
 
         return $bResult;
     }
@@ -4434,7 +4589,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_score', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_score '{profile_module_name}', 'timeline_score' - hook to override the result of checking whether 'give score vote' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_view_counter
+             * @hook @ref hook-bx_base_profile-timeline_score
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_score', $oProfileOwner->id(), (int)$this->getUserId(), [
+                'result' => &$bResult
+            ]);
 
         return $bResult;
     }
@@ -4453,7 +4616,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_report', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_report '{profile_module_name}', 'timeline_report' - hook to override the result of checking whether 'give score vote' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_view_counter
+             * @hook @ref hook-bx_base_profile-timeline_report
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_report', $oProfileOwner->id(), (int)$this->getUserId(), [
+                'result' => &$bResult
+            ]);
 
         return $bResult;
     }
@@ -4462,6 +4633,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $mixedResult = $this->_isAllowedRepost($aEvent, $bPerform);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-is_allowed_repost 'bx_timeline', 'is_allowed_repost' - hook to override the result of checking whether 'repost' action is allowed or not
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `is_allowed_repost`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content_info` - [array] content info array as key&value pairs
+         *      - `override_result` - [string] or [int] by ref, check action result, can be overridden in hook processing. Return string with an error if action isn't allowed or CHECK_ACTION_RESULT_ALLOWED, @see BxDolAcl
+         * @hook @ref hook-bx_timeline-is_allowed_repost
+         */
         bx_alert($this->getName(), 'is_allowed_repost', 0, 0, [
             'content_info' => $aEvent, 
             'override_result' => &$mixedResult
@@ -4484,7 +4667,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aCheckResult = checkActionModule($iUserId, 'send', $this->getName(), $bPerform);
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_send', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_send '{profile_module_name}', 'timeline_send' - hook to override the result of checking whether 'send' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_post
+             * @hook @ref hook-bx_base_profile-timeline_send
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_send', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
@@ -4699,15 +4890,46 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $this->rebuildSlice();
 
-        //--- Event -> Post/Defer for Alerts Engine ---//
         $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'defer' : 'post') . '_' . $sPostType;
-        bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, array(
+        
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-post_system 'bx_timeline', 'post_system' - hook after system post was added and published
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `post_system`
+         * - $object_id - content id
+         * - $sender_id - content author profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `source` - [string] unique source 
+         *      - `owner_id` - [int] owner profile id
+         *      - `object_author_id` - [int] object author profile id
+         *      - `privacy_view` - [int] or [string] privacy for view content action, @see BxDolPrivacy
+         * @hook @ref hook-bx_timeline-post_system
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-post_common 'bx_timeline', 'post_common' - hook after common post was added and published
+         * It's equivalent to @ref hook-bx_timeline-post_system
+         * @hook @ref hook-bx_timeline-post_common
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-defer_system 'bx_timeline', 'defer_system' - hook after system post was added
+         * It's equivalent to @ref hook-bx_timeline-post_system
+         * @hook @ref hook-bx_timeline-defer_system
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-defer_common 'bx_timeline', 'defer_common' - hook after common post was added
+         * It's equivalent to @ref hook-bx_timeline-post_system
+         * @hook @ref hook-bx_timeline-defer_common
+         */
+        bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, [
             'source' => $this->_oConfig->getName() . '_' . $iContentId,
             'owner_id' => $aEvent['owner_id'],
             'object_author_id' => $iObjectAuthorId,
             'privacy_view' => $aEvent['object_privacy_view'],
-        ));
-        //--- Event -> Post for Alerts Engine ---//
+        ]);
     }
 
     public function onPublished($iContentId)
@@ -4737,13 +4959,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iSenderId = $iObjectAuthorId = (int)$aEvent['object_id'];
         }
 
-        //--- Event -> Fail for Alerts Engine ---//
-        bx_alert($this->_oConfig->getObject('alert'), 'fail_' . $sPostType, $iContentId, $iSenderId, array(
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-fail_system 'bx_timeline', 'fail_system' - hook after system post failed to publish
+         * It's equivalent to @ref hook-bx_timeline-post_system
+         * @hook @ref hook-bx_timeline-fail_system
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-fail_common 'bx_timeline', 'fail_common' - hook after common post failed to publish
+         * It's equivalent to @ref hook-bx_timeline-post_system
+         * @hook @ref hook-bx_timeline-fail_common
+         */
+        bx_alert($this->_oConfig->getObject('alert'), 'fail_' . $sPostType, $iContentId, $iSenderId, [
+            'source' => $this->_oConfig->getName() . '_' . $iContentId,
             'owner_id' => $aEvent['owner_id'],
             'object_author_id' => $iObjectAuthorId,
             'privacy_view' => $aEvent['object_privacy_view'],
-        ));
-        //--- Event -> Post for Alerts Engine ---//
+        ]);
     }
 
     public function onRepost($iContentId, $aReposted = array())
@@ -4766,13 +4999,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $this->rebuildSlice();
 
-        //--- Timeline -> Update for Alerts Engine ---//
-        bx_alert($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId, array(
-            'privacy_view' => $aEvent['object_privacy_view'],
-            'object_author_id' => $aReposted['owner_id'],
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-repost 'bx_timeline', 'repost' - hook after repost was added (published)
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `repost`
+         * - $object_id - reposted content id
+         * - $sender_id - performer profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `repost_id` - [int] repost id
+         *      - `object_author_id` - [int] reposted content author profile id
+         *      - `privacy_view` - [int] or [string] privacy for view content action, @see BxDolPrivacy
+         * @hook @ref hook-bx_timeline-repost
+         */
+        bx_alert($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId, [
             'repost_id' => $iContentId,
-        ));
-        //--- Timeline -> Update for Alerts Engine ---//
+            'object_author_id' => $aReposted['owner_id'],
+            'privacy_view' => $aEvent['object_privacy_view'],
+        ]);
     }
 
     public function onHide($aEvent)
@@ -4801,9 +5045,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->_oDb->updateRepostTrack(['active' => 0], ['event_id' => $aRepostEvent[$CNF['FIELD_ID']]]);
 
-            bx_alert($this->_oConfig->getObject('alert'), 'hide_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-hide_repost 'bx_timeline', 'hide_repost' - hook after repost was hidden
+             * - $unit_name - equals `bx_timeline`
+             * - $action - equals `hide_repost`
+             * - $object_id - content id
+             * - $sender_id - performer profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `repost_id` - [int] repost id
+             * @hook @ref hook-bx_timeline-hide_repost
+             */
+            bx_alert($this->_oConfig->getObject('alert'), 'hide_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, [
                 'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
-            ));
+            ]);
         }
 
         //--- Delete associated meta for Common events.
@@ -4820,12 +5075,32 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         //--- Event -> Hide for Alerts Engine ---//
         if($bRepost)
-            bx_alert($this->_oConfig->getObject('alert'), 'hide_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-hide_repost 'bx_timeline', 'hide_repost' - hook after repost was hidden
+             * - $unit_name - equals `bx_timeline`
+             * - $action - equals `hide_repost`
+             * - $object_id - content id
+             * - $sender_id - performer profile id
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `repost_id` - [int] repost id
+             * @hook @ref hook-bx_timeline-hide_repost
+             */
+            bx_alert($this->_oConfig->getObject('alert'), 'hide_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, [
                 'repost_id' => $aEvent[$CNF['FIELD_ID']],
-            ));
+            ]);
         else
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-hide 'bx_timeline', 'hide' - hook after post (event) was hidden
+             * - $unit_name - equals `bx_timeline`
+             * - $action - equals `hide`
+             * - $object_id - content id
+             * - $sender_id - performer profile id
+             * - $extra_params - not used
+             * @hook @ref hook-bx_timeline-hide
+             */
             bx_alert($this->_oConfig->getObject('alert'), 'hide', $aEvent[$CNF['FIELD_ID']], $iUserId);
-        //--- Event -> Hide for Alerts Engine ---//
     }
 
     public function onUnhide($aEvent)
@@ -4854,9 +5129,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->_oDb->updateRepostTrack(['active' => 1], ['event_id' => $aRepostEvent[$CNF['FIELD_ID']]]);
 
-            bx_alert($this->_oConfig->getObject('alert'), 'unhide_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-unhide_repost 'bx_timeline', 'unhide_repost' - hook after repost was unhidden
+             * It's equivalent to @ref hook-bx_timeline-hide_repost
+             * @hook @ref hook-bx_timeline-unhide_repost
+             */
+            bx_alert($this->_oConfig->getObject('alert'), 'unhide_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, [
                 'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
-            ));
+            ]);
         }
 
         //--- Process meta for Common events.
@@ -4869,14 +5150,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         //--- Rebuild cache table.
         $this->rebuildSlice();
 
-        //--- Event -> Unhide for Alerts Engine ---//
         if($bRepost)
-            bx_alert($this->_oConfig->getObject('alert'), 'unhide_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-unhide_repost 'bx_timeline', 'unhide_repost' - hook after repost was unhidden
+             * It's equivalent to @ref hook-bx_timeline-hide_repost
+             * @hook @ref hook-bx_timeline-unhide_repost
+             */
+            bx_alert($this->_oConfig->getObject('alert'), 'unhide_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, [
                 'repost_id' => $aEvent[$CNF['FIELD_ID']],
-            ));
+            ]);
         else
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-unhide 'bx_timeline', 'unhide' - hook after post (event) was unhidden
+             * It's equivalent to @ref hook-bx_timeline-hide
+             * @hook @ref hook-bx_timeline-unhide
+             */
             bx_alert($this->_oConfig->getObject('alert'), 'unhide', $aEvent[$CNF['FIELD_ID']], $iUserId);
-        //--- Event -> Unhide for Alerts Engine ---//
     }
 
     public function onDelete($aEvent)
@@ -4928,9 +5219,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if($oComments !== false)
                 $oComments->onObjectDelete($aRepostEvent[$CNF['FIELD_ID']]);
 
-            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-delete_repost 'bx_timeline', 'delete_repost' - hook after repost was deleted
+             * It's equivalent to @ref hook-bx_timeline-hide_repost
+             * @hook @ref hook-bx_timeline-delete_repost
+             */
+            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, [
                 'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
-            ));
+            ]);
         }
 
         //--- Delete associated meta for Common events.
@@ -4945,12 +5242,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         //--- Rebuild cache table.
         $this->rebuildSlice();
 
-        //--- Event -> Delete for Alerts Engine ---//
         if($bRepost)
-            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, array(
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-delete_repost 'bx_timeline', 'delete_repost' - hook after repost was deleted
+             * It's equivalent to @ref hook-bx_timeline-hide_repost
+             * @hook @ref hook-bx_timeline-delete_repost
+             */
+            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, [
                 'repost_id' => $aEvent[$CNF['FIELD_ID']],
-            ));
+            ]);
         else
+            /**
+             * @hooks
+             * @hookdef hook-bx_timeline-delete 'bx_timeline', 'delete' - hook after post (event) was deleted
+             * It's equivalent to @ref hook-bx_timeline-hide
+             * @hook @ref hook-bx_timeline-delete
+             */
             bx_alert($this->_oConfig->getObject('alert'), 'delete', $aEvent[$CNF['FIELD_ID']], $iUserId);
         //--- Event -> Delete for Alerts Engine ---//
     }
@@ -5128,9 +5436,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aMediaIds = $this->_oDb->getMedia($CNF['FIELD_VIDEO'], $iEventId);
         if(empty($aMediaIds) || !is_array($aMediaIds))
-            return array();
+            return [];
 
-        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_videos'));
+        $sStorage = $this->_oConfig->getObject('storage_videos');
+        $oStorage = BxDolStorage::getObjectInstance($sStorage);
 
         $oTranscoderPoster = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_poster'));
         $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
@@ -5139,7 +5448,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oTranscoderPhoto = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_videos_photo_view'));
         $oTranscoderPhotoBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_videos_photo_big'));
 
-        $aResult = array();
+        $aResult = [];
         foreach($aMediaIds as $iMediaId) {
             $aMediaFile = $oStorage->getFile($iMediaId);
 
@@ -5149,26 +5458,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 if (!empty($aMediaFile['dimensions']) && $oTranscoderMp4Hd->isProcessHD($aMediaFile['dimensions']))
                     $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iMediaId);
 
-                $aResult[$iMediaId] = array(
+                $aResult[$iMediaId] = [
                     'id' => $iMediaId,
                     'src_poster' => $oTranscoderPoster->getFileUrl($iMediaId),
                     'src_mp4' => $oTranscoderMp4->getFileUrl($iMediaId),
                     'src_mp4_hd' => $sVideoUrlHd,
-                );
+                ];
             }
 
             $bImageFile = strncmp('image/', $aMediaFile['mime_type'], 6) === 0 && $oTranscoderPhoto->isMimeTypeSupported($aMediaFile['mime_type']);
             if($bImageFile) {
+                if($this->_bIsApi) {
+                    $aResult[] = bx_api_get_image($sStorage, $iMediaId);
+                    continue;
+                }
+
                 $sPhotoSrc = $oTranscoderPhoto->getFileUrl($iMediaId);
                 $sPhotoSrcBig = $oTranscoderPhotoBig->getFileUrl($iMediaId);
                 if(empty($sPhotoSrcBig) && !empty($sPhotoSrc))
                     $sPhotoSrcBig = $sPhotoSrc;
 
-                $aResult[$iMediaId] = array(
+                $aResult[$iMediaId] = [
                     'id' => $iMediaId,
                     'src' => $sPhotoSrc,
                     'src_orig' => $sPhotoSrcBig,
-                );
+                ];
             }
         }
 
@@ -5342,7 +5656,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams = $this->_prepareParams($aBrowseParams);
         $this->_iOwnerId = $aParams['owner_id'];
 
-        if(!empty($aParams['validate']) && is_array($aParams['validate'])) {
+        if(isset($aParams['validate']) && is_array($aParams['validate'])) {
             $iSlice = count($aParams['validate']);
 
             $aEventsIds = $this->_oDb->getEvents(array_merge($aParams, [
@@ -5437,9 +5751,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         );
 
         $sContent = '';
-        bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $this->_iOwnerId, $this->getUserId(), array('override_content' => &$sContent, 'params' => &$aParams, 'menu' => &$aMenu));
 
-        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $sView . '-view-all', 'menu_items' => $aMenu));
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_profile-timeline_view '{profile_module_name}', 'timeline_view' - hook to override view timeline block
+         * - $unit_name - profile module name
+         * - $action - equals `timeline_view`
+         * - $object_id - timeline owner profile id
+         * - $sender_id - currently logged in profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] browsing params array as key&value pairs
+         *      - `menu` - [array] block submenu items array
+         *      - `override_content` - [string] by ref, block content, can be overridden in hook processing
+         * @hook @ref hook-bx_base_profile-timeline_view
+         */
+        bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $this->_iOwnerId, $this->getUserId(), [
+            'params' => &$aParams,
+            'menu' => &$aMenu,
+            'override_content' => &$sContent,
+        ]);
+
+        $oMenu = new BxTemplMenuInteractive(['template' => 'menu_interactive_vertical.html', 'menu_id'=> $sView . '-view-all', 'menu_items' => $aMenu]);
         $oMenu->setSelected('', $sView . '-view-all');
 
         if (!$sContent)
@@ -5512,7 +5844,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aCheckResult = checkActionModule($iUserId, 'repost', $this->getName(), $bPerform);
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_repost', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_repost '{profile_module_name}', 'timeline_repost' - hook to override the result of checking whether 'repost' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_post
+             * @hook @ref hook-bx_base_profile-timeline_repost
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_repost', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
@@ -5533,17 +5873,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$iUserId = (int)$this->getUserId();
     	if($iUserId == 0)
-    		return false;
+            return false;
 
-		if(isAdmin() || (int)$aEvent['owner_id'] == $iUserId || ((int)$aEvent['owner_id'] == 0 && $this->_oConfig->isCommon($aEvent['type'], $aEvent['action']) && (int)$aEvent['object_id'] == $iUserId))
+        if(isAdmin() || (int)$aEvent['owner_id'] == $iUserId || ((int)$aEvent['owner_id'] == 0 && $this->_oConfig->isCommon($aEvent['type'], $aEvent['action']) && (int)$aEvent['object_id'] == $iUserId))
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'pin', $this->getName(), $bPerform);
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false) {
-            if (BxDolService::call($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'pin')) === CHECK_ACTION_RESULT_ALLOWED) {
+            if(bx_srv($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'pin')) === CHECK_ACTION_RESULT_ALLOWED)
                 return true;
-            }
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_pin', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_pin '{profile_module_name}', 'timeline_pin' - hook to override the result of checking whether 'pin' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_post
+             * @hook @ref hook-bx_base_profile-timeline_pin
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_pin', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
         }
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -5553,14 +5901,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$iUserId = (int)$this->getUserId();
     	if($iUserId == 0)
-    		return false;
+            return false;
 
     	if(isAdmin())
-    		return true;
+            return true;
 
     	$aCheckResult = checkActionModule($iUserId, 'stick', $this->getName(), $bPerform);
     	if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_stick', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_stick '{profile_module_name}', 'timeline_stick' - hook to override the result of checking whether 'stick' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_post
+             * @hook @ref hook-bx_base_profile-timeline_stick
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_stick', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
     
     	return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
@@ -5576,7 +5932,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aCheckResult = checkActionModule($iUserId, 'promote', $this->getName(), $bPerform);
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_promote', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+            /**
+             * @hooks
+             * @hookdef hook-bx_base_profile-timeline_promote '{profile_module_name}', 'timeline_promote' - hook to override the result of checking whether 'promote' action is allowed or not
+             * It's equivalent to @ref hook-bx_base_profile-timeline_post
+             * @hook @ref hook-bx_base_profile-timeline_promote
+             */
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_promote', $oProfileOwner->id(), $iUserId, [
+                'check_result' => &$aCheckResult
+            ]);
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
@@ -5780,6 +6144,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['name']))
             $aParams['name'] = '';
         
+        if(empty($aParams['browse']))
+            $aParams['browse'] = 'list';
+            
         if(empty($aParams['view']))
             $aParams['view'] = BX_TIMELINE_VIEW_DEFAULT;
 
@@ -5820,15 +6187,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['viewer_id']) || (int)$aParams['viewer_id'] != $iViewerId)
             $aParams['viewer_id'] = $iViewerId;
 
-        if(!empty($aParams['validate']) && is_string($aParams['validate']))
-            $aParams['validate'] = explode(',', $aParams['validate']);
+        if(isset($aParams['validate']) && !is_array($aParams['validate']))
+            $aParams['validate'] = !empty($aParams['validate']) ? explode(',', $aParams['validate']) : [];
 
-        $aParams = array_merge($aParams, array(
-            'browse' => 'list',
-            'status' => BX_TIMELINE_STATUS_ACTIVE,
-            'moderator' => $this->isModeratorForProfile($aParams['viewer_id']),
-            'dynamic_mode' => false,
-        ));
+        if(empty($aParams['status']))
+            $aParams['status'] = BX_TIMELINE_STATUS_ACTIVE;
+
+        if(empty($aParams['moderator']))
+            $aParams['moderator'] = $this->isModeratorForProfile($aParams['viewer_id']);
+
+        if(empty($aParams['dynamic_mode']))
+            $aParams['dynamic_mode'] = false;
 
         return $aParams;
     }
@@ -5869,8 +6238,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$aParams['viewer_id'] || $aParams['viewer_id'] != $iViewerId)
             $aParams['viewer_id'] = $iViewerId;
 
-        if(!empty($aParams['validate']) && is_string($aParams['validate']))
-            $aParams['validate'] = explode(',', $aParams['validate']);
+        if(isset($aParams['validate']) && !is_array($aParams['validate']))
+            $aParams['validate'] = !empty($aParams['validate']) ? explode(',', $aParams['validate']) : [];
 
         $aParams = array_merge($aParams, [
             'browse' => 'list',

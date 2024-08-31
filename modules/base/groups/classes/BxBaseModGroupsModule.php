@@ -223,6 +223,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return array_merge(parent::serviceGetSafeServices(), [
             'GetQuestionnaire' => '',
             'GetInitialMembers' => '',
+            'EntityInvite' => '',
         ]);
     }
 
@@ -881,7 +882,41 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return bx_srv('system', 'browse_members', [$oGroupProfile->id(), $CNF['OBJECT_CONNECTIONS'], $aParams], 'TemplServiceProfiles');
     }
-    
+
+    public function serviceEntityEditQuestionnaire($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return '';
+
+        $aProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iProfileId);
+        if(empty($aProfileInfo) || !is_array($aProfileInfo))
+            return '';
+        
+        $aContentInfo = $this->_oDb->getContentInfoById($aProfileInfo['content_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return '';
+
+        if($this->checkAllowedEdit($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox(_t('_Access denied'));
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_QUESTIONS_MANAGE']);
+        if(!$oGrid)
+            return '';
+        
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+            
+        }
+
+        return $oGrid->getCode();
+    }
+
     public function serviceEntityPricing($iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1414,7 +1449,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function serviceGetNotificationsJoinRequest($aEvent)
     {
-        return $this->_serviceGetNotification($aEvent, $this->_oConfig->CNF['T']['txt_ntfs_join_request']);
+        return $this->_serviceGetNotification($aEvent, 'join_request', $this->_oConfig->CNF['T']['txt_ntfs_join_request']);
     }
 
 	/**
@@ -1422,10 +1457,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function serviceGetNotificationsFanAdded($aEvent)
     {
-        return $this->_serviceGetNotification($aEvent, $this->_oConfig->CNF['T']['txt_ntfs_fan_added']);
+        return $this->_serviceGetNotification($aEvent, 'fan_added', $this->_oConfig->CNF['T']['txt_ntfs_fan_added']);
     }
 
-    protected function _serviceGetNotification($aEvent, $sLangKey)
+    protected function _serviceGetNotification($aEvent, $sType, $sLangKey)
     {
     	$CNF = &$this->_oConfig->CNF;
 
@@ -1442,24 +1477,30 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$oProfile)
             return array();
 
+        $iGroupProfileId = $oGroupProfile->id();
+
         /*
          * Note. Group Profile URL is used for both Entry and Subentry URLs, 
          * because Subentry URL has higher display priority and notification
-         * should be linked to Group Profile (Group Profile -> Members tab) 
+         * should be linked to Group Profile (Group Profile -> Members tab or Manage page) 
          * instead of Personal Profile of a member, who performed an action.
          */
-        if(empty($CNF['URL_ENTRY_FANS']))
-            $sEntryUrl = bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oGroupProfile->getUrl()), '{bx_url_root}');
-        else
-            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], [
-                'profile_id' => $oGroupProfile->id()
+        if($sType == 'join_request' && !empty($CNF['URL_ENTRY_MANAGE']))
+            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_MANAGE'], [
+                'profile_id' => $iGroupProfileId
             ]), '{bx_url_root}');
+        else if(!empty($CNF['URL_ENTRY_FANS']))
+            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], [
+                'profile_id' => $iGroupProfileId
+            ]), '{bx_url_root}');
+        else
+            $sEntryUrl = bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oGroupProfile->getUrl()), '{bx_url_root}');
 
         return [
             'entry_sample' => $CNF['T']['txt_sample_single'],
             'entry_url' => $sEntryUrl,
             'entry_caption' => $oGroupProfile->getDisplayName(),
-            'entry_author' => $oGroupProfile->id(),
+            'entry_author' => $iGroupProfileId,
             'subentry_sample' => $oProfile->getDisplayName(),
             'subentry_url' => $sEntryUrl,
             'lang_key' => $sLangKey

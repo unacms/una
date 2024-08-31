@@ -191,8 +191,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_iId = 0; ///< obect id to be commented
     protected $_iAuthorId = 0; ///< currently logged in user who browse, post, etc.
 
-    protected $_aT = array (); ///< an array of lang keys
-    protected $_aMarkers = array ();
+    protected $_aParams = [];
+    protected $_aT = []; ///< an array of lang keys
+    protected $_aMarkers = [];
 
     protected $_sDisplayType = '';
     protected $_sDpSessionKey = '';
@@ -279,7 +280,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->_sMetatagsObj = 'sys_cmts';
 
-        $this->_aT = array(
+        if(($aParams = bx_get('params')) !== false) {
+            if(is_string($aParams))
+                $aParams = json_decode($aParams, true);
+            if(!empty($aParams) && is_array($aParams))
+                $this->_aParams = array_merge($this->_aParams, $aParams);
+        }
+
+        $this->_aT = [
             'block_comments_title' => '_cmt_block_comments_title',
             'txt_sample_single' => '_cmt_txt_sample_comment_single',
             'txt_sample_vote_single' => '_cmt_txt_sample_vote_single',
@@ -287,7 +295,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'txt_sample_score_up_single' => '_cmt_txt_sample_score_up_single',
             'txt_sample_score_down_single' => '_cmt_txt_sample_score_down_single',
             'txt_min_form_placeholder' => '_cmt_txt_min_form_placeholder'
-        );
+        ];
 
         if ($iInit)
             $this->init($iId);
@@ -407,6 +415,21 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'object_id' => $this->getId(),
             'user_id' => $this->_getAuthorId()
         ));
+    }
+
+    public function setParam($sName, $sValue)
+    {
+        $this->_aParams[$sName] = $sValue;
+    }
+
+    public function isParam($sName)
+    {
+        return isset($this->_aParams[$sName]);
+    }
+
+    public function getParam($sName)
+    {
+        return $this->_aParams[$sName];
     }
 
     public function getId ()
@@ -825,6 +848,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function getCommentRow ($iCmtId)
     {
         return $this->_oQuery->getComment ($this->getId(), $iCmtId);
+    }
+
+    public function getCommentParents ($mixedCmt, $iDepthMax = 0)
+    {
+        if(!is_array($mixedCmt))
+            $mixedCmt = $this->_oQuery->getCommentsBy(['type' => 'id', 'id' => (int)$mixedCmt]);
+
+        $iDepth = 0;
+        $aParents = [];
+        $this->_getParents($mixedCmt, $iDepthMax, $iDepth, $aParents);
+
+        return $aParents;
     }
 
     public function onObjectDelete ($iObjectId = 0)
@@ -2377,7 +2412,23 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
     	return '_cmt_txt_do';
     }
-    
+
+    protected function _getParents($aCmt, $iDepthMax, &$iDepth, &$aParents)
+    {
+        $iParentId = (int)$aCmt['cmt_parent_id'];
+        if($iParentId == 0)
+            return;
+
+        $aParents[] = $iParentId;
+        $iDepth++;
+
+        if($iDepthMax != 0 && $iDepth == $iDepthMax)
+            return;
+
+        $aCmt = $this->_oQuery->getCommentsBy(['type' => 'id', 'id' => $iParentId]);
+        $this->_getParents($aCmt, $iDepthMax, $iDepth, $aParents);
+    }
+
     public function _getStructure($mixedItem, $aBp, &$iLevel, &$aStructure)
     {
         $bItem = !empty($mixedItem) && is_array($mixedItem);

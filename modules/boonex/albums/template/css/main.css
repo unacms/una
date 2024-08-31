@@ -110,6 +110,14 @@
 .bx-search-result-block.bx-base-text-unit-gallery-wrapper .bx-base-text-unit.bx-base-text-unit-gallery {
 	display: inline-block;
 }
+.bx-search-result-block.bx-albums-media .bx-search-result-content {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    margin: -0.5rem;
+}
 
 .bx-albums-media-thumb {
     position: relative;    

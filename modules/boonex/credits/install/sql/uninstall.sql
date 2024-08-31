@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_credits_bundles`, `bx_credits_orders`, `bx_credits_orders_deleted`, `bx_credits_profiles`, `bx_credits_history`;
+DROP TABLE IF EXISTS `bx_credits_bundles`, `bx_credits_orders`, `bx_credits_orders_deleted`, `bx_credits_profiles`, `bx_credits_history`, `bx_credits_withdrawals`;
 
 
 -- FORMS

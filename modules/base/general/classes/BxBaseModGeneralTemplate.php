@@ -132,6 +132,20 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $sResult;
     }
 
+    public function getAbstract($aData, $mixedProcessOutput = BX_DATA_TEXT)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        if(!isset($CNF['FIELD_ABSTRACT']) || !isset($aData[$CNF['FIELD_ABSTRACT']]))
+            return '';
+
+        $sResult = $aData[$CNF['FIELD_ABSTRACT']];
+        if($mixedProcessOutput !== false && !empty($sResult))
+            $sResult = bx_process_output($sResult, (int)$mixedProcessOutput);
+
+        return $sResult;
+    }
+
     public function getText($aData, $mixedProcessOutput = BX_DATA_HTML)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -148,6 +162,10 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
     protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')
     {
+        $sAbstract = $this->getAbstract($aData);
+        if(!empty($sAbstract))
+            return $sAbstract;
+
         $CNF = &$this->getModule()->_oConfig->CNF;
         if(empty($CNF['PARAM_CHARS_SUMMARY']))
             return '';
@@ -200,8 +218,15 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         $aVars = $aData;
         $aVars['entry_title'] = $this->getTitle($aData);
+        $aVars['entry_abstract'] = $this->getAbstract($aData);
+        $aVars['bx_if:show_entry_abstract'] = [
+            'condition' => !empty($aVars['entry_abstract']),
+            'content' => [
+                'entry_abstract' => $aVars['entry_abstract']
+            ]
+        ];
         $aVars['entry_text'] = $this->getText($aData);
-		$aVars['badges'] = $this->getModule()->serviceGetBadges($aData[$CNF['FIELD_ID']]);
+        $aVars['badges'] = $this->getModule()->serviceGetBadges($aData[$CNF['FIELD_ID']]);
         if (!empty($CNF['OBJECT_METATAGS'])) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
 
@@ -766,43 +791,27 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $sCoverSettings;
     }
 
-    function _prepareImage($aData, $sUniqId, $sUploader, $sStorage, $sField, $bAllowTweak)
+    function _prepareImage($aData, $sUniqId, $aUploaders, $sStorage, $sField, $bAllowTweak, $bAllowMultiple = false)
     {
-        $CNF = &$this->_oConfig->CNF;
-        
         $oUploader = null;
-        $sUploadersButtons = $sUploadersJs = '';
-
-        $aUploaders = $sUploader;
-        $sUploadersJs = '';
-        $sJsName = '';
+        $sJsName = $sJsCode = '';
         foreach ($aUploaders as $sUploaderObject) {
             $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorage, $sUniqId, $this);
             $sGhostTemplate = '{file_id}';
 
-            $aParamsJs = array_merge($oUploader->getUploaderJsParams(), 
-                [
-                    'content_id' => $aData['id'],
-                    'storage_private' => '0',
-                    'is_init_ghosts' => 0,
-                    'is_init_reordering' => 0
-                ]
-            );
-            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, false, $aParamsJs);
+            $sJsCode .= $oUploader->getUploaderJs($sGhostTemplate, $bAllowMultiple, array_merge($oUploader->getUploaderJsParams(), [
+                'latest' => 1,
+                'content_id' => $aData['id'],
+                'storage_private' => '0',
+                'is_init_ghosts' => 0,
+                'is_init_reordering' => 0
+            ]));
             $sJsName = $oUploader->getNameJsInstanceUploader();
         }
 
-        $aParamsButtons = [
-            'content_id' => $aData['id'],
-            'storage_private' => '0',
-            'btn_class' => '',
-            'button_title' => '',
-            'attrs' => "class='hidden'"
-        ];
-        
         $this->addJs(['BxDolUploader.js']);
-
-        $sAddCode = $this->parseHtmlByName('image_tweak.html', [
+        $this->addJsTranslation(['_sys_uploader_image_reposition_info']);        
+        return $this->parseHtmlByName('image_tweak.html', [
             'id' => $aData['id'],
             'js_object' => $sJsName,
             'unique_id' => $sUniqId,
@@ -811,11 +820,15 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'image_exists' => $aData[$sField] == 0 ? 'bx-image-edit-buttons-no-image' : '',
             'field' => $sField,
             'action_url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri(),
-            'uploader' => $oUploader->getUploaderButton($aParamsButtons),
-            'uploader_js' => $sUploadersJs,
-        ]); 
-        $this->addJsTranslation(['_sys_uploader_image_reposition_info']);        
-        return $sAddCode;
+            'uploader' => $oUploader->getUploaderButton([
+                'content_id' => $aData['id'],
+                'storage_private' => '0',
+                'btn_class' => '',
+                'button_title' => '',
+                'attrs' => "class='hidden'"
+            ]),
+            'uploader_js' => $sJsCode,
+        ]);
     }
 
     public function addCssJs()

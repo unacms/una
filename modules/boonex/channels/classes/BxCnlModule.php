@@ -121,15 +121,37 @@ class BxCnlModule extends BxBaseModGroupsModule
             )
         ));
 
-        $aParams = array(
+        $aParams = [
             'object_author_id' => $iAuthorId, 
             'privacy_view' => -$iCnlProfileId, 
             'subobject_id' => $iId,
             'content_module' => $sModuleName,
             'content_id' => $iContentId,
             'content_author_id' => $iAuthorId
-        );
-        bx_alert('system', 'prepare_alert_params', 0, 0, array('unit'=> $this->_aModule['name'], 'action' => 'hashtag_added_notif', 'object_id' => $mixedCnlId, 'sender_id' => $iCnlProfileId, 'extras' => &$aParams));
+        ];
+        /**
+         * @hooks
+         * @hookdef hook-system-prepare_alert_params 'system', 'prepare_alert_params' - hook to override alert (hook) params
+         * - $unit_name - equals `system`
+         * - $action - equals `prepare_alert_params`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `unit` - [string] unit name
+         *      - `action` - [string] equals to 'hashtag_added_notif'
+         *      - `object_id` - [int] object id
+         *      - `sender_id` - [int] action performer profile id
+         *      - `extras` - [array] by ref, extra params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-system-prepare_alert_params
+         */
+        bx_alert('system', 'prepare_alert_params', 0, 0, [
+            'unit'=> $this->_aModule['name'], 
+            'action' => 'hashtag_added_notif', 
+            'object_id' => $mixedCnlId, 
+            'sender_id' => $iCnlProfileId, 
+            'extras' => &$aParams
+        ]);
+        
         /**
          * @hooks
          * @hookdef hook-bx_channels-hashtag_added_notif 'bx_channels', 'hashtag_added_notif' - hook on after found hashtag in content
@@ -484,7 +506,17 @@ class BxCnlModule extends BxBaseModGroupsModule
 
         return '';
     }
-    
+
+    public function serviceBrowseActive ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
+    {
+        return $this->_serviceBrowse ('active', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
+    public function serviceBrowseTrending ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
+    {
+        return $this->_serviceBrowse ('trending', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
     public function serviceBrowseByLevel ($iLevelId = 0, $bDisplayEmptyMsg = false)
     {
         return $this->_serviceBrowse ('level', array('level' => $iLevelId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);

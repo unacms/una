@@ -37,7 +37,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
         $this->CNF = array_merge($this->CNF, array (
 
             // module icon
-            'ICON' => 'briefcase col-red2',
+            'ICON' => 'building col-red2',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
@@ -91,6 +91,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'URL_HOME' => 'page.php?i=organizations-home',
             'URL_CREATE' => 'page.php?i=create-organization-profile',
             'URL_ENTRY_FANS' => 'page.php?i=organization-profile-fans',
+            'URL_ENTRY_MANAGE' => 'page.php?i=organization-manage',
             'URL_MANAGE_COMMON' => 'page.php?i=organizations-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=organizations-administration',
 
@@ -164,6 +165,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_organizations_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_organizations_view_profile_closed',
+            'OBJECT_PAGE_JOINED_ENTRY' => 'bx_organizations_join_profile',
             'OBJECT_PRIVACY_VIEW' => 'bx_organizations_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_organizations_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_organizations_allow_view_notification_to',

@@ -188,24 +188,31 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$sCode) : false;
             } 
             else {
-                //--- Process Inline SVG
-                if (strpos($sCode, '&lt;svg') !== false || strpos($sCode, '<svg') !== false) {
-                    if(strpos($sCode, '&lt;svg') !== false)
+
+                if (strpos($sCode, '&lt;img') !== false || strpos($sCode, '<img') !== false) {
+                    if(strpos($sCode, '&lt;img') !== false)
                         $sIconHtml = htmlspecialchars_decode($sCode);
                     else
-                        $sIconHtml = $sCode;    
+                        $sIconHtml = $sCode;
 
-                    $sClass .= 'sys-icon sys-icon-svg ';
-                    
-                    
-                    $sIconHtmlClear = strip_tags($sIconHtml, '<svg>');
-                    if ($sClass != '' && strpos($sIconHtmlClear, 'class="') !== false)
-                        $sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
-                    else
-                        $sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
+                    //--- Process Inline SVG
+                } else if (strpos($sCode, '&lt;svg') !== false || strpos($sCode, '<svg') !== false) {
+                        if(strpos($sCode, '&lt;svg') !== false)
+                            $sIconHtml = htmlspecialchars_decode($sCode);
+                        else
+                            $sIconHtml = $sCode;
 
-                    if ($sAttrs != '')
-                        $sIconHtml = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sIconHtml);
+                        $sClass .= 'sys-icon sys-icon-svg ';
+
+
+                        $sIconHtmlClear = strip_tags($sIconHtml, '<svg>');
+                        if ($sClass != '' && strpos($sIconHtmlClear, 'class="') !== false)
+                            $sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
+                        else
+                            $sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
+
+                        if ($sAttrs != '')
+                            $sIconHtml = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sIconHtml);
                 }
                 else {
                     $sEmojIsRegex =
@@ -551,8 +558,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         if(empty($sAlt))
             $sAlt = getParam('site_title');
 
-        $sLogo = '<span>' . $sAlt . '</span>';
-
+        $aLogoImages = [];
         if(($mixedFileUrl = $this->getMainLogoUrl()) && !empty($mixedFileUrl)) {
             if(!is_array($mixedFileUrl))
                 $mixedFileUrl = ['light' => $mixedFileUrl];
@@ -564,9 +570,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
                 $sHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
 
-                $sLogo = '<img style="' . $sWidth . ' ' . $sHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
+                $aLogoImages[] = [
+                    'id' => 'bx-logo', 
+                    'src' => $sFileUrl, 
+                    'alt' => bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE),
+                    'style' => $sWidth . ' ' . $sHeight
+                ];
             }
         }
+        $bLogoImages = !empty($aLogoImages) && is_array($aLogoImages);
 
         $aAttrs = array(
             'class' => 'bx-def-font-contrasted',
@@ -576,7 +588,29 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         if(!empty($aParams['attrs']) && is_array($aParams['attrs']))
             $aAttrs = array_merge($aAttrs, $aParams['attrs']);
 
-        return '<a' . bx_convert_array2attrs($aAttrs) . '>' . $sLogo . '</a>';
+        $sTmplName = 'logo_main.html';
+        $aTmplVars = [
+            'attrs' => bx_convert_array2attrs($aAttrs),
+             'bx_if:show_title' => [
+                'condition' => !$bLogoImages,
+                'content' => [
+                    'logo' => $sAlt,
+                ]
+            ],
+            'bx_if:show_logo' => [
+                'condition' => $bLogoImages,
+                'content' => [
+                    'bx_repeat:images' => $aLogoImages,
+                ]
+            ],
+        ];
+
+        bx_alert('system', 'get_logo', 0, 0, [
+            'tmpl_name' => &$sTmplName,
+            'tmpl_vars' => &$aTmplVars
+        ]);
+
+        return $this->_oTemplate->parseHtmlByName($sTmplName, $aTmplVars);
     }
 
     /**

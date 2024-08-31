@@ -44,14 +44,16 @@ BxDolScore.prototype.init = function()
     return;
 };
 
-BxDolScore.prototype.toggleByPopup = function(oLink) {
-    var $this = this;
-    var oData = this._getDefaultParams();
-    oData['action'] = 'GetVotedBy';
+BxDolScore.prototype.toggleByPopup = function(oLink, sType) {
+    var oParams = this._getDefaultParams();
+    oParams['action'] = 'GetVotedBy';
+    if(sType)
+        oParams['type'] = sType;
 
     $(oLink).dolPopupAjax({
         id: this._aHtmlIds['by_popup'], 
-        url: bx_append_url_params(this._sActionsUri, oData)
+        url: bx_append_url_params(this._sActionsUri, oParams),
+        removeOnClose: true
     });
 };
 

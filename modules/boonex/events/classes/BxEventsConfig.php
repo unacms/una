@@ -18,6 +18,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-event-profile' => 'checkAllowedView',
             'edit-event-profile' => 'checkAllowedEdit',
+            'event-manage' => 'checkAllowedEdit',
             'event-questionnaire' => 'checkAllowedEdit',
             'event-sessions' => 'checkAllowedEdit',
             'event-cover' => 'checkAllowedChangeCover',
@@ -165,6 +166,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_events_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_events_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_events_view_profile_closed',
+            'OBJECT_PAGE_JOINED_ENTRY' => 'bx_events_join_profile',
             'OBJECT_PRIVACY_VIEW' => 'bx_events_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_events_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_events_allow_view_notification_to',

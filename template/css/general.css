@@ -426,8 +426,8 @@ div.bx-account-unit-online {
 
 /* --------------- Join/Login Forms */
 
-#sys_account .bx-form-element .bx-form-input-submit.bx-btn,
-#sys-form-login .bx-form-element .bx-form-input-submit.bx-btn {
+.sys-jf .bx-form-advanced .bx-form-element .bx-form-input-submit.bx-btn,
+.sys-lf .bx-form-advanced .bx-form-element .bx-form-input-submit.bx-btn {
     width: 100%;
     -webkit-justify-content: center;
     justify-content: center;

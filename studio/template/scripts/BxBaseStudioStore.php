@@ -52,12 +52,12 @@ class BxBaseStudioStore extends BxDolStudioStore
             'downloaded' => ['icon' => 'mi-str-downloaded.svg', 'icon_bg' => true]
         ];
         foreach($aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array_merge([
+            $aMenu[] = array_merge($aItem, [
                 'name' => $sMenuItem,
                 'link' => $this->getBaseUrl($sMenuItem),
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            ], $aItem);
+            ]);
 
         $iCounter = BxDolStudioCart::getInstance()->getCount();
 
@@ -820,13 +820,21 @@ class BxBaseStudioStore extends BxDolStudioStore
             $bIcon = strpos($sIcon, '.') !== false;
 
             $sImage = '';
-            if(!empty($aItem['cover']['medium']))
-                $sImage = $aItem['cover']['medium'];
-            else if(!empty($aItem['cover']['large']))
-                $sImage = $aItem['cover']['large'];
-            else if(!empty($aItem['cover']['big']))
-                $sImage = $aItem['cover']['big'];
-            $bImage = !empty($sImage) && strpos($sImage, '.') !== false;
+            $bImage = $bImageRaw = false;
+            if(empty($aItem['cover_raw'])) {
+                if(!empty($aItem['cover']['medium']))
+                    $sImage = $aItem['cover']['medium'];
+                else if(!empty($aItem['cover']['large']))
+                    $sImage = $aItem['cover']['large'];
+                else if(!empty($aItem['cover']['big']))
+                    $sImage = $aItem['cover']['big'];
+                
+                $bImage = !empty($sImage) && strpos($sImage, '.') !== false;
+            }
+            else {
+                $sImage = $aItem['cover_raw'];
+                $bImageRaw = true;
+            }
 
             $aTmplVarsRate = array();
             $bTmplVarsRate = $bShowRating && !$bShoppingCart;
@@ -861,7 +869,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 	            	),
 	            ),
                 'bx_if:no_image' => array (
-	                'condition' => !$bImage,
+	                'condition' => !$bImage && !$bImageRaw,
 	                'content' => array(
             			'description_plain' => $aItem['description_plain'],
 	                	'strecher' => mb_strlen($aItem['description_plain']) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($aItem['description_plain'])) / 6))
@@ -872,6 +880,12 @@ class BxBaseStudioStore extends BxDolStudioStore
 	                'content' => array(
 	                	'image_url' => $sImage,
 	            		'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40)
+	            	),
+	            ),
+                'bx_if:image_raw' => array (
+	                'condition' => $bImageRaw,
+	                'content' => array(
+                            'image_raw' => $sImage,
 	            	),
 	            ),
                 'title' => $aItem['title'],

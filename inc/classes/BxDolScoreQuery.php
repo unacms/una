@@ -32,22 +32,30 @@ class BxDolScoreQuery extends BxDolObjectQuery
         $this->_sMethodGetEntry = 'getScore';
     }
 
-    public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
+    public function getPerformedBy($iObjectId, $aParams = [], $iStart = 0, $iPerPage = 0)
     {
+        $aBindings = [
+            'object_id' => $iObjectId
+        ];
+        $sWhereClause = " AND `object_id`=:object_id";
+
+        if(!empty($aParams['type'])) {
+            $sWhereClause .= " AND `type`=:type";
+            $aBindings['type'] = $aParams['type'];
+        }
+
         $sLimitClause = "";
-        if(!empty($iPerPage))
-            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
+        if(!empty($aParams['per_page']))
+            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $aParams['start'], $aParams['per_page']);
 
         $sQuery = "SELECT 
             	`author_id` AS `id`, 
             	`type` AS `vote_type`, 
             	`date` AS `vote_date` 
             FROM `{$this->_sTableTrack}` 
-            WHERE `object_id`=:object_id" . $sLimitClause;
+            WHERE 1" . $sWhereClause . $sLimitClause;
 
-        return $this->getAll($sQuery, array(
-            'object_id' => $iObjectId
-        ));
+        return $this->getAll($sQuery, $aBindings);
     }
 
     public function isPostTimeoutEnded($iObjectId, $iAuthorId, $sAuthorIp)
@@ -87,26 +95,33 @@ class BxDolScoreQuery extends BxDolObjectQuery
         return $aResult;
     }
 
-    public function putVote($iObjectId, $iAuthorId, $sAuthorIp, $sType)
+    public function putVote($iObjectId, $iAuthorId, $sAuthorIp, $aData, $bUndo = false)
     {
-        $bExists = (int)$this->getOne("SELECT `object_id` FROM `{$this->_sTable}` WHERE `object_id` = :object_id LIMIT 1", array('object_id' => $iObjectId)) != 0;
+        $bExists = (int)$this->getOne("SELECT `object_id` FROM `{$this->_sTable}` WHERE `object_id` = :object_id LIMIT 1", ['object_id' => $iObjectId]) != 0;
+        if(!$bExists && $bUndo)
+            return false;
+
+        $sType = $aData['type'];
 
         if(!$bExists)
             $sQuery = $this->prepare("INSERT INTO {$this->_sTable} SET `object_id` = ?, `count_" . $sType . "` = '1'", $iObjectId);
         else
-            $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `count_" . $sType . "` = `count_" . $sType . "` + 1 WHERE `object_id` = ?", $iObjectId);
+            $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `count_" . $sType . "` = `count_" . $sType . "` " . ($bUndo ? "-" : "+") . " 1 WHERE `object_id` = ?", $iObjectId);
 
         if((int)$this->query($sQuery) == 0)
             return false;
 
-        if((int)$this->query("INSERT INTO `{$this->_sTableTrack}` SET " . $this->arrayToSQL(array(
+        if($bUndo)
+            return $this->_deleteTrack($iObjectId, $iAuthorId);
+
+        if((int)$this->query("INSERT INTO `{$this->_sTableTrack}` SET " . $this->arrayToSQL([
             'object_id' => $iObjectId, 
             'author_id' => $iAuthorId, 
             'author_nip' => bx_get_ip_hash($sAuthorIp), 
             'type' => $sType, 
             'date' => time()
-        ))) > 0)
-        	return $this->lastId();
+        ])) > 0)
+            return $this->lastId();
 
         return false;
     }
@@ -128,7 +143,20 @@ class BxDolScoreQuery extends BxDolObjectQuery
         return $aResult;
     }
 
-	protected function _updateTriggerTable($iObjectId, $aEntry)
+    protected function _deleteTrack($iObjectId, $iAuthorId)
+    {
+        $iId = (int)$this->getOne("SELECT `id` FROM `{$this->_sTableTrack}` WHERE `object_id`=:object_id AND `author_id`=:author_id LIMIT 1", [
+            'object_id' => $iObjectId, 
+            'author_id' => $iAuthorId
+        ]);
+
+        if((int)$this->query("DELETE FROM `{$this->_sTableTrack}` WHERE `id`=:id LIMIT 1", ['id' => $iId]) > 0)
+            return $iId;
+
+        return false;
+    }
+
+    protected function _updateTriggerTable($iObjectId, $aEntry)
     {
         $aSet = array(
             $this->_sTriggerFieldScore => $aEntry['score'],

@@ -120,9 +120,13 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         if(!$oGroupProfile)
             return '';
 
-        $this->makeAuthorAdmin ($oGroupProfile, bx_get('initial_members'));
+        $mInitialMembers = bx_get('initial_members');
+        if($this->_bIsApi && $mInitialMembers && is_string($mInitialMembers))
+            $mInitialMembers = explode(',', $mInitialMembers);
 
-        $this->inviteMembers ($oGroupProfile, bx_get('initial_members'));
+        $this->makeAuthorAdmin($oGroupProfile, $mInitialMembers);
+
+        $this->inviteMembers($oGroupProfile, $mInitialMembers);
 
         return '';
     }

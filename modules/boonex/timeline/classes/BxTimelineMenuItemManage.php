@@ -42,6 +42,25 @@ class BxTimelineMenuItemManage extends BxTimelineMenuItemActions
             'module_uri' => $this->_oModule->_oConfig->getUri(),
         ));
     }
+
+    public function initContentParams()
+    {
+        parent::initContentParams();
+
+        $this->_aContentParams = array_merge($this->_aContentParams, [
+            'content_id' => $this->_iEvent
+        ]);
+    }
+
+    public function setContentParams($aParams)
+    {   
+        if(!isset($aParams['content_id']))
+            return false;
+
+        $this->setEventById($aParams['content_id']);
+
+        return parent::setContentParams($aParams);
+    }
 }
 
 /** @} */

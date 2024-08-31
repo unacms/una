@@ -72,6 +72,9 @@ class BxDolCronPruning extends BxDolCron
         $oKey = BxDolKey::getInstance();
         $iDeletedKeys = $oKey ? $oKey->prune() : 0;
 
+        // clean ai related data
+        $iDeletedItems = BxDolAI::pruning();
+        
         echo call_user_func_array('_t', ['_sys_pruning_db', 
             $iDeleteMemLevels, 
             $iSessions, $iDeletedKeys, 

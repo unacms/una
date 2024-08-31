@@ -69,6 +69,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_THUMB' => 'thumb',
             'FIELD_COVER_RAW' => 'cover_raw',
             'FIELD_COVER' => 'cover',
+            'FIELD_COVER_POSITION' => 'cover_data',
             'FIELD_FILE' => 'files',
             'FIELD_PACKAGE' => 'package',
             'FIELD_NOTES_PURCHASED' => 'notes_purchased',
@@ -108,6 +109,8 @@ class BxMarketConfig extends BxBaseModTextConfig
 
             // some params
             'PARAM_AUTO_APPROVE' => 'bx_market_enable_auto_approve',
+            'PARAM_NO_PAYMENTS' => 'bx_market_enable_no_payments',
+            'PARAM_USE_ICON' => 'bx_market_enable_icon',
             'PARAM_CHARS_SUMMARY' => 'bx_market_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_market_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_market_rss_num',
@@ -164,7 +167,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_GRID_COMMON' => 'bx_market_common',
             'OBJECT_GRID_LICENSES_ADMINISTRATION' => 'bx_market_licenses_administration',
             'OBJECT_GRID_LICENSES' => 'bx_market_licenses',
-            'OBJECT_UPLOADERS' => array('bx_market_simple', 'bx_market_html5'),
+            'OBJECT_UPLOADERS' => ['bx_market_html5'],
             'OBJECT_CONNECTION_SUBENTRIES' => 'bx_market_subentries',
             
             'BADGES_AVALIABLE' => true,

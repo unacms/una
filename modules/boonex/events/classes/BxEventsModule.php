@@ -342,40 +342,6 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         ]);
     }
 
-    public function serviceEntityEditQuestionnaire($iProfileId = 0)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        if(!$iProfileId)
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if(!$iProfileId)
-            return '';
-
-        $aProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iProfileId);
-        if(empty($aProfileInfo) || !is_array($aProfileInfo))
-            return '';
-        
-        $aContentInfo = $this->_oDb->getContentInfoById($aProfileInfo['content_id']);
-        if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
-
-        if($this->checkAllowedEdit($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
-            return MsgBox(_t('_Access denied'));
-
-        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_QUESTIONS_MANAGE']);
-        if(!$oGrid)
-            return '';
-        
-        if($this->_bIsApi){
-            return [
-                bx_api_get_block('grid', $oGrid->getCodeAPI())
-            ];
-            
-        }
-
-        return $oGrid->getCode();
-    }
-
     public function serviceEntitySessions($iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -490,19 +456,23 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         return $this->_serviceBrowse ('upcoming_connected', array_merge($aDefaults, $aParams), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
-    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sUnitView = false)
     {
         $sMode = 'recent';
 
         $sFilterSelector = '#' . $this->_oConfig->getHtmlIds('popup_bfilters_recent');
         $aFilterParams = ['mode' => $sMode];
 
-        return $this->_serviceBrowse ($sMode, [
+        $aParams = [
             'filters' => [
                 'values' => [],
                 'onclick' => $this->_oConfig->getJsObject('main') . ".changeBrowsingFilters(this, '" . $sFilterSelector . "', " . json_encode($aFilterParams) . ")"
             ]
-        ], BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+        ];
+        if ($sUnitView) {
+            $aParams['unit_view'] = $sUnitView;
+        }
+        return $this->_serviceBrowse ($sMode, $aParams, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
     /**

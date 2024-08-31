@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxMassMailerConfig extends BxBaseModGeneralConfig
+class BxMassMailerConfig extends BxBaseModTextConfig
 {
     function __construct($aModule)
     {
@@ -56,7 +56,10 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
             'URI_EDIT_CAMPAIGN' => 'edit-campaign',
             'URI_VIEW_CAMPAIGN' => 'view-campaign',
             'URL_MANAGE_CAMPAIGNS' => 'page.php?i=massmailer-campaigns',
-            
+
+            // some params
+            'PARAM_USE_CREATIVE' => true,
+
             // objects
             'OBJECT_FORM_ENTRY' => 'bx_massmailer',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_massmailer_campaign_edit',
@@ -81,6 +84,11 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
             'campaigns' => $this->CNF['OBJECT_GRID_CAMPAIGNS'],
             'letters' => $this->CNF['OBJECT_GRID_LETTERS'],
         );
+
+        $sPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array_merge($this->_aHtmlIds, [
+            'campaign_body' => $sPrefix . '-campaign-body',
+        ]);
     }
 }
 

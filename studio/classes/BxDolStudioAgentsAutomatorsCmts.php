@@ -78,14 +78,13 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         
         $aAutomator = $this->_oAI->getAutomator($iObjId, true);
         $aAutomator['code'] = $aCmt['cmt_text'];
-        
-        $oAlert = new BxDolAlerts('test', 'test', -1, -1, []);
-        $sRv = $this->_oAI->evalCode($aAutomator, false, ['alert' => $oAlert]);
-        
-        
-        if ($sRv != ''){
-            return echoJson(['msg' => 'Error in code: ' . $sRv]);
-        }
+
+        $aParams = [];
+        if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT)
+            $aParams['alert'] = new BxDolAlerts('test', 'test', 0);
+
+        if(($sResult = $this->_oAI->emulCode($aAutomator, $aParams)) != '')
+            return echoJson(['msg' => _t('_sys_agents_automators_txt_eval_response') . $sResult]);
 
         if(!$this->_oQueryAgents->updateAutomators(['code' => $aCmt['cmt_text'], 'status' => 'ready'], ['id' => (int)$this->getId()]))
             return echoJson([]);
@@ -149,7 +148,7 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 
     public function getFormBoxPost($aBp = [], $aDp = [])
     {
-        $aComments = $this->_oQuery->getCommentsBy(['type' => 'latest', 'start' => 0, 'per_page' => 1]);
+        $aComments = $this->_oQuery->getCommentsBy(['type' => 'latest', 'object_id' => (int)$this->getId(), 'start' => 0, 'per_page' => 1]);
         if(!empty($aComments) && is_array($aComments)) {
             $aLast = current($aComments);
             if($aLast['cmt_author_id'] != $this->_iProfileIdAi)
@@ -178,30 +177,23 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         $mixedResult = parent::onPostAfter($iCmtId, $aDp);
         if($this->_bAuto || $mixedResult === false) 
             return $mixedResult;
-        
-        $iObjId = (int)$this->getId();
-        
-        $aAutomator = $this->_oAI->getAutomator($iObjId, true);
 
-        $aMessages = [
-            ['role' => 'system', 'content' => $this->_oAI->getAutomatorInstructions($aAutomator['type'], true)],
-        ];
+        $iObjId = (int)$this->getId();
+        $aAutomator = $this->_oAI->getAutomator($iObjId, true);
 
         $aComments = $this->_oQuery->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjId]);
         if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
             $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
 
-        foreach($aComments as $aComment) {
-            $bAuthorAi = (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi;
-
+        $aMessages = [];
+        foreach($aComments as $aComment)
             $aMessages[] = [
-                'role' => $bAuthorAi ? 'assistant' : 'user',
-                'content' => $aComment['cmt_text'] . ($bAuthorAi ? '' : ' return only function, without explanation or false if you havn`t enougth data')
+                'ai' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi,
+                'content' => $aComment['cmt_text']
             ];
-        }
 
-        $sResponse = $this->_oAI->chat($aAutomator['model_url'], $aAutomator['model_model'], $aAutomator['model_key'], $aAutomator['model_params'], $aMessages);
-        if($sResponse != 'false') {
+        $oAIModel = $this->_oAI->getModelObject($aAutomator['model_id']);
+        if(($sResponse = $oAIModel->getResponse($aAutomator['type'], $aMessages, $aAutomator['params'])) !== false) {
             $mixedResultAuto = $this->addAuto([
                 'cmt_author_id' => $this->_iProfileIdAi,
                 'cmt_parent_id' => 0,
@@ -246,12 +238,17 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         return $aResult;
     }
     
-    protected function _getForm($sAction, $iId)
+    protected function _getForm($sAction, $iId, $aDp = [])
     {
-        $aResult = parent::_getForm($sAction, $iId);
+        $aResult = parent::_getForm($sAction, $iId, $aDp);
 
         $aResult->aInputs['cmt_text']['db']['pass'] = 'xss';
         return $aResult;
+    }
+    
+    protected function _prepareTextForOutput($s, $iCmtId = 0)
+    {
+        return nl2br(parent::_prepareTextForOutput($s, $iCmtId));
     }
 }
 

@@ -88,6 +88,10 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
      */
     public static function getNotificationsCount($iProfileId = 0, &$aBubbles = null)
     {    
+        if ('' != trim(getParam('sys_api_url_root_push'))) {
+             return bx_srv('bx_notifications', 'get_unread_notifications_num', [$iProfileId]);
+        }   
+        
         $iMemberIdCookie = null;
         $bLoggedMemberGlobals = null;
         if ($iProfileId && $iProfileId != bx_get_logged_profile_id()) {
@@ -141,19 +145,31 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             return false;
 
         if($bAddToQueue && BxDolQueuePush::getInstance()->add($iProfileId, $aMessage))
-            return true;        
-    
-        if(($sRootUrl = getParam('sys_api_url_root_push')) !== '') {
+            return true;
+
+        $sUrlWeb = $sUrlApp = !empty($aMessage['url']) ? $aMessage['url'] : '';
+
+        if(($sRootUrl = getParam('sys_api_url_root_email')) !== '') {
             if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
                 $sRootUrl .= '/';
 
-            if(!empty($aMessage['url']))
-                $aMessage['url'] = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $aMessage['url']);
+            if($sUrlWeb)
+                $sUrlWeb = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sUrlWeb);
 
             if(empty($aMessage['contents']) && is_array($aMessage['contents']))
                 foreach($aMessage['contents'] as $sKey => $sValue)
                     $aMessage['contents'][$sKey] = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sValue);
         }
+
+        if(($sRootUrl = getParam('sys_api_url_root_push')) !== '') {
+            if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
+                $sRootUrl .= '/';
+
+            if($sUrlApp)
+                $sUrlApp = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sUrlApp);
+        }
+        else
+            $sUrlApp = $sUrlWeb;
 
         $aFields = [
             'app_id' => $this->_sAppId,
@@ -162,8 +178,11 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             ],
             'contents' => !empty($aMessage['contents']) && is_array($aMessage['contents']) ? $aMessage['contents'] : [],
             'headings' => !empty($aMessage['headings']) && is_array($aMessage['headings']) ? $aMessage['headings'] : [],
-            'web_url' => !empty($aMessage['url']) ? $aMessage['url'] : '',
-            'data' => array('url' => !empty($aMessage['url']) ? $aMessage['url'] : ''),
+            'web_url' => $sUrlWeb,
+            'app_url' => $sUrlApp,
+            'data' => [
+                'url' => $sUrlWeb
+            ],
             'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : '',
         ];
 
@@ -183,7 +202,8 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         curl_setopt($oChannel, CURLOPT_HEADER, false);
         curl_setopt($oChannel, CURLOPT_POST, true);
         curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
-        curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
+        if (getParam('sys_curl_ssl_allow_untrusted') == 'on')
+            curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
 
         $sResult = curl_exec($oChannel);
         curl_close($oChannel);

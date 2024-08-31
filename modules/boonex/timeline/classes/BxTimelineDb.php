@@ -425,29 +425,42 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->query("TRUNCATE TABLE `" . $this->_sTableHotTrack . "`");
     }
 
-    public function getHotTrackByDate($iInterval = 24)
+    public function getHotTrackByDate($iInterval = 0)
     {
         $aBindings = [
-            'interval' => $iInterval
+            'mux' => $this->_oConfig->getHotContentAgeMux()
         ];
+        $sQueryWhere = "";
+
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+
+            $sQueryWhere .= " AND `te`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         $sQuery = "SELECT 
                 `te`.`id` AS `event_id`,
-                `te`.`date` AS `value`
+                `te`.`date` * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
-            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `te`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0)" . $sQueryWhere;
 
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+            
+            $sQueryWhere .= " AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -464,7 +477,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`cmt_time`) AS `value`
+                MAX(`tt`.`cmt_time`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`cmt_object_id` AND `te`.`object_owner_id`<>`tt`.`cmt_author_id` AND `te`.`type`=:module 
             WHERE 1 " . $sQueryWhere . " 
@@ -473,14 +486,19 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+            
+            $sQueryWhere .= " AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -497,7 +515,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`cmt_time`) AS `value`
+                MAX(`tt`.`cmt_time`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`cmt_object_id` AND `te`.`object_owner_id`<>`tt`.`cmt_author_id` AND `te`.`type`=:module
             WHERE 1 " . $sQueryWhere . " 
@@ -506,14 +524,19 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+
+            $sQueryWhere .= " AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -530,7 +553,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`date`) AS `value`
+                MAX(`tt`.`date`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`object_owner_id`<>`tt`.`author_id` AND `te`.`type`=:module 
             WHERE 1 " . $sQueryWhere . " 
@@ -539,14 +562,19 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
+    public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 0, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
+            'mux' => $this->_oConfig->getHotContentAgeMux(),
             'module' => $sModule, 
-            'interval' => $iInterval
         ];
 
-        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0)";
+        if($iInterval != 0) {
+            $aBindings['interval'] = $iInterval;
+
+            $sQueryWhere .= " AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+        }
 
         if($iThresholdAge != 0) {
             $aBindings['threshold_age'] = $iThresholdAge;
@@ -563,7 +591,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sQuery = "SELECT 
                 `te`.`id` as `event_id`,
-                MAX(`tt`.`date`) AS `value`
+                MAX(`tt`.`date`) * (1 - :mux * (UNIX_TIMESTAMP() - `te`.`date`) / UNIX_TIMESTAMP()) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`object_owner_id`<>`tt`.`author_id` AND `te`.`type`=:module 
             WHERE 1 " . $sQueryWhere . " 
@@ -604,9 +632,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getAll($sQuery, array('module' => $sModule, 'interval' => $iInterval));
     }
 
-    public function updateHotTrack($aTrack)
+    public function updateHotTrack($iEventId, $iValue)
     {
-        return (int)$this->query("REPLACE INTO `" . $this->_sTableHotTrack . "` SET " . $this->arrayToSQL($aTrack)) > 0;
+        return (int)$this->query("INSERT INTO `" . $this->_sTableHotTrack . "` (`event_id`, `value`) VALUES (:event_id, :value) ON DUPLICATE KEY UPDATE `value` = :value", [
+            'event_id' => $iEventId,
+            'value' => $iValue
+        ]) > 0;
     }
 
     public function rebuildSlice()
@@ -633,6 +664,17 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function getEvents($aParams)
     {
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_events_before 'bx_timeline', 'get_events_before' - hook to override params which are used to get events
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_events_before`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `params` - [array] by ref, params array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_events_before
+         */
         bx_alert($this->_oConfig->getName(), 'get_events_before', 0, 0, [
             'params' => &$aParams,
         ]);
@@ -655,6 +697,26 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $aAlertParams = $aParams;
         unset($aAlertParams['browse']);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_events 'bx_timeline', 'get_events' - hook to override events list which will be received from database
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_events`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `browse` - [string] browsing type
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `table` - [string] datatbase table name
+         *      - `table_alias` - [string] datatbase table alias
+         *      - `method` - [string] by ref, database class method name, @see BxDolDb, can be overridden in hook processing
+         *      - `select_clause` - [string] by ref, 'select' part of SQL query, can be overridden in hook processing
+         *      - `join_clause` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `where_clause` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `order_clause` - [string] by ref, 'order' part of SQL query, can be overridden in hook processing
+         *      - `limit_clause` - [string] by ref, 'limit' part of SQL query, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_events
+         */
         bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, [
             'browse' => $aParams['browse'],
             'params' => $aAlertParams,
@@ -710,12 +772,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if($bCount)
             return array_sum($aSqlParts);
 
-        /*
-         * TODO: Should be updated when GROUP BY `source` will be used in sub selects.
-         */
         $sSqlMaskUnion = '(' . implode(') UNION (', $aSqlParts) . ')';
         if($bValidate)
             $sSqlMaskUnion = 'SELECT MAX(`tu`.`id`) AS `id` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
+        else
+            $sSqlMaskUnion = 'SELECT *, GROUP_CONCAT(`owner_id`) AS `owner_id_grouped` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
         $sSqlMaskUnion .= ' {order} {limit}';
 
         $sSql = bx_replace_markers($sSqlMaskUnion, [
@@ -1346,6 +1407,34 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $aAlertParams = $aParams;
         unset($aAlertParams['type'], $aAlertParams['owner_id']);
 
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-get_list_by_type 'bx_timeline', 'get_list_by_type' - hook to override SQL query parts which are used to get events list
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `get_list_by_type`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `type` - [string] a type of events list
+         *      - `owner_id` - [int] owner profile id
+         *      - `params` - [array] browse params array as key&value pairs
+         *      - `table` - [string] datatbase table name
+         *      - `table_alias` - [string] datatbase table alias
+         *      - `join_clause` - [string] by ref, 'join' part of SQL query, can be overridden in hook processing
+         *      - `join_subclause` - [string] or [array] by ref, 'join subclause' part of SQL query, string is attached to 'join' part, array is used to create query with UNIONs, can be overridden in hook processing
+         *      - `where_clause` - [string] by ref, 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_status` - [string] by ref, 'status' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_filter` - [string] by ref, 'filter' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_timeline` - [string] by ref, 'timeline' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_modules` - [string] by ref, 'modules' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_hidden` - [string] by ref, 'hidden' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_medias` - [string] by ref, 'medias' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_muted` - [string] by ref, 'muted' conditions in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_unpublished` - [string] by ref, 'unpublished' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_clause_cf` - [string] by ref, 'cf' condition in 'where' part of SQL query, can be overridden in hook processing
+         *      - `where_subclause` - [string] or [array] by ref, 'where subclause' part of SQL query, string is attached to 'where' part, array is used to create query with UNIONs, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-get_list_by_type
+         */
         bx_alert($this->_oConfig->getName(), 'get_list_by_type', 0, 0, [
             'type' => $aParams['type'],
             'owner_id' => $aParams['owner_id'],
@@ -1406,7 +1495,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     protected function _isList($aParams)
     {
-        return in_array($aParams['browse'], ['list', 'ids']) && (!isset($aParams['newest']) || $aParams['newest'] === false);
+        return $this->_oConfig->isBrowseList($aParams) && (!isset($aParams['newest']) || $aParams['newest'] === false);
     }
 
     public function getMenuItemMaxOrder($sSetName)

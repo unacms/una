@@ -86,7 +86,20 @@ class BxBaseMenu extends BxDolMenu
         return [
             'object' => $this->_sObject, 
             'persistent' => $this->_aObject['persistent'],
+            'params' => $this->getContentParams(),
             'items' => $aItems
+        ];
+    }
+
+    /**
+     * Get menu short code API.
+     * @return array
+     */
+    public function getShortCodeAPI ()
+    {
+        return [
+            'object' => $this->_sObject, 
+            'params' => $this->getContentParams()
         ];
     }
 
@@ -190,7 +203,8 @@ class BxBaseMenu extends BxDolMenu
                 'icon' => $sIcon ? $sIcon : '',
                 'image' => $sIconUrl ? $sIconUrl : '',
                 'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : '',
-                'addon' => $this->_bDisplayAddons ? $this->_getMenuAddon($a) : ''
+                'addon' => $this->_bDisplayAddons ? $this->_getMenuAddon($a) : '',
+                'primary' => $a['primary'],
             ];
 
             if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))

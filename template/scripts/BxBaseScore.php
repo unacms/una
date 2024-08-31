@@ -47,6 +47,7 @@ class BxBaseScore extends BxDolScore
             'show_counter' => true,
             'show_counter_only' => true,
             'show_counter_empty' => true,
+            'show_counter_style' => self::$_sCounterStyleSimple, //--- Alloved styles are 'simple', 'divided'
             'show_counter_label_icon' => false,
             'show_counter_label_text' => true,
             'show_legend' => false,
@@ -98,12 +99,85 @@ class BxBaseScore extends BxDolScore
         return $this->getJsObjectName() . '.vote' . ucfirst($sType) . '(this)';
     }
 
-    public function getJsClickCounter()
+    public function getJsClickCounter($aParams = [])
     {
-        return $this->getJsObjectName() . '.toggleByPopup(this)';
+        $sJsObject = $this->getJsObjectName();
+        $sJsMethod = 'toggleByPopup';
+
+        if(!isset($aParams['type'], $aParams['show_counter_style']) || $aParams['show_counter_style'] == self::$_sCounterStyleSimple)
+            return $sJsObject . '.' . $sJsMethod . '(this)';
+
+        return $sJsObject . '.' . $sJsMethod . '(this, \'' . $aParams['type'] . '\')';
     }
 
     public function getCounter($aParams = [])
+    {
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
+
+        $sDefault = $this->_aElementDefaults['show_counter_style'];
+        $sCounterStyle = !empty($aParams['show_counter_style']) ? $aParams['show_counter_style'] : $sDefault;
+
+        $sMethodPrefix = '_getCounter';
+        $sMethod = $sMethodPrefix . bx_gen_method_name($sCounterStyle);
+        if(!method_exists($this, $sMethod))
+            $sMethod = $sMethodPrefix . bx_gen_method_name($sDefault);
+
+        return $this->$sMethod($aParams);
+    }
+
+    public function _getCounterSimple($aParams = [])
+    {
+        $aScore = $this->_oQuery->getScore($this->getId());
+
+        $iCup = (int)$aScore['count_up'];
+        $iCdown = (int)$aScore['count_down'];
+
+        return $this->_getCounterItem(array_merge($aParams, [
+            'allowed_view_voters' => $this->isAllowedVoteViewVoters(),
+            'value' => $iCup - $iCdown,
+            'value_empty' => $iCup == 0 && $iCdown == 0,
+        ]));
+    }
+
+    public function _getCounterDivided($aParams = [])
+    {
+        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
+        $bShowCounterOnly = isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true;
+        $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
+
+        $bAllowedViewVoters = $this->isAllowedVoteViewVoters();
+
+        $bScore = $this->_isVote();
+        $aScore = $this->_getVote();
+
+        $aCounters = [
+            BX_DOL_SCORE_DO_UP => (int)$aScore['count_up'],
+            BX_DOL_SCORE_DO_DOWN => (int)$aScore['count_down']
+        ];
+
+        $sCounters = '';
+        foreach($aCounters as $sType => $iValue)
+            $sCounters .= $this->_getCounterItem(array_merge($aParams, [
+                'show_counter_label_icon' => $bShowCounterOnly,
+                'show_script' => false,
+                'allowed_view_voters' => $bAllowedViewVoters,
+                'type' => $sType,
+                'value_html_id' => $this->_aHtmlIds['counter'] . '-' . $sType,
+                'value' => $iValue,
+                'value_empty' => !$bScore,
+            ]));
+
+        return $this->_oTemplate->parseHtmlByName('score_counter_wrapper.html', [
+            'html_id' => $this->_aHtmlIds['counter'],
+            'style_prefix' => $this->_sStylePrefix,
+            'class' => $this->_aHtmlIds['counter'] . (!$bScore && !$bShowCounterEmpty ? ' bx-sc-hidden' : ''),
+            'style' => self::$_sCounterStyleDivided,
+            'counter' => $sCounters,
+            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
+        ]);
+    }
+
+    public function _getCounterItem($aParams = [])
     {
         $aParams = array_merge($this->_aElementDefaults, $aParams);
 
@@ -112,14 +186,6 @@ class BxBaseScore extends BxDolScore
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true;
         $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
-
-        $bAllowedViewViewVoters = $this->isAllowedVoteViewVoters();
-
-        $aScore = $this->_oQuery->getScore($this->getId());
-
-        $iCup = (int)$aScore['count_up'];
-        $iCdown = (int)(int)$aScore['count_down'];
-        $bEmpty = $iCup == 0 && $iCdown == 0;
 
         $sClass = 'sys-action-counter';
         if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
@@ -131,18 +197,18 @@ class BxBaseScore extends BxDolScore
         if($bShowDoVoteAsButton)
             $sClass .= ' bx-btn-height';
 
-        $bLink = $bAllowedViewViewVoters && !$bEmpty;
-        $sCounter = !$bEmpty || $bShowEmpty ? $this->_getCounterLabel($iCup - $iCdown, $aParams) : '';
+        $bLink = $aParams['allowed_view_voters'] && !$aParams['value_empty'];
+        $sCounter = !$aParams['value_empty'] || $bShowEmpty ? $this->_getCounterLabel($aParams['value'], $aParams) : '';
 
         $aTmplVarsText = [
-            'id' => $this->_aHtmlIds['counter'],
+            'id' => isset($aParams['value_html_id']) ? $aParams['value_html_id'] : $this->_aHtmlIds['counter'],
             'class' => $sClass,
             'content' => $sCounter,
             'title' => _t($this->_getTitleDoBy()),
         ];
 
         $aTmplVarsLink = array_merge($aTmplVarsText, [
-            'onclick' => $bLink ? 'javascript:' . $this->getJsClickCounter() : ''
+            'onclick' => $bLink ? 'javascript:' . $this->getJsClickCounter($aParams) : ''
         ]);
 
         return $this->_oTemplate->parseHtmlByName('score_counter.html', array(
@@ -209,34 +275,63 @@ class BxBaseScore extends BxDolScore
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true;
         $bShowCounterEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
+        $bShowCounterSimple = $bShowCounterDivided = false;
+        if(isset($aParams['show_counter_style'])) {
+            if($aParams['show_counter_style'] == self::$_sCounterStyleSimple)
+                $bShowCounterSimple = true;
+            if($aParams['show_counter_style'] == self::$_sCounterStyleDivided)
+                $bShowCounterDivided = true;
+        }
 
         $iObjectId = $this->getId();
         $iAuthorId = $this->_getAuthorId();
         $iAuthorIp = $this->_getAuthorIp();
-        $aScore = $this->_oQuery->getScore($iObjectId);
-        $bCount = (int)$aScore['count_up'] != 0 || (int)$aScore['count_down'] != 0;
-
         $isAllowedVote = $this->isAllowedVote();
         $isAllowedVoteView = $this->isAllowedVoteView();
+        $isAllowedVoteViewVoters = $this->isAllowedVoteViewVoters();
+        
+        $aScore = $this->_oQuery->getScore($iObjectId);
+        $bCount = $this->_isCount($aScore);
+        $bCounter = $this->_isShowCounter($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
+
         $aParams['is_voted'] = $this->isPerformed($iObjectId, $iAuthorId, $iAuthorIp) ? true : false;
 
         //--- Do Vote
         $bTmplVarsDoVote = $this->_isShowDoVote($aParams, $isAllowedVote, $bCount);
-        $aTmplVarsDoVoteUp = $aTmplVarsDoVoteDown = array();
+        $aTmplVarsDoVoteUp = $aTmplVarsDoVoteDown = [];
         if($bTmplVarsDoVote)
-            $aTmplVarsDoVoteUp = array(
-                'style_prefix' => $this->_sStylePrefix,
-                'do_vote' => $this->_getDoVote(BX_DOL_SCORE_DO_UP, $aParams, $isAllowedVote),
-            );
-        
-        if($bTmplVarsDoVote)
-            $aTmplVarsDoVoteDown = array(
-                'style_prefix' => $this->_sStylePrefix,
-                'do_vote' => $this->_getDoVote(BX_DOL_SCORE_DO_DOWN, $aParams, $isAllowedVote),
-            );
+            foreach([BX_DOL_SCORE_DO_UP, BX_DOL_SCORE_DO_DOWN] as $sType)
+                ${'aTmplVarsDoVote' . ucfirst($sType)} = [
+                    'style_prefix' => $this->_sStylePrefix,
+                    'style' => $aParams['show_counter_style'],
+                    'do_vote' => $this->_getDoVote($sType, $aParams, $isAllowedVote),
+                    'bx_if:show_counter_' . $sType => [
+                        'condition' => $bShowCounterDivided && $bCounter,
+                        'content' => [
+                            'style_prefix' => $this->_sStylePrefix,
+                            'style' => $aParams['show_counter_style'],
+                            'bx_if:show_c' . $sType . '_hidden' => [
+                                'condition' => !$bShowCounterEmpty && !$bCount,
+                                'content' => []
+                            ],
+                            'counter' => $this->_getCounterItem(array_merge($aParams, [
+                                'show_do_vote_as_button' => false,
+                                'show_do_vote_as_button_small' => false,
+                                'show_counter_only' => false,
+                                'show_counter_label_icon' => false,
+                                'show_script' => false,
+                                'allowed_view_voters' => $isAllowedVoteViewVoters,
+                                'type' => $sType,
+                                'value_html_id' => $this->_aHtmlIds['counter'] . '-' . $sType,
+                                'value' => isset($aScore['count_' . $sType]) ? (int)$aScore['count_' . $sType] : 0,
+                                'value_empty' => !$bCount,
+                            ]))
+                        ]
+                    ]
+                ];
 
-        //--- Counter
-        $bTmplVarsCounter = $this->_isShowCounter($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
+        //--- Counter (Simple)
+        $bTmplVarsCounter = $bShowCounterSimple && $bCounter;
         $aTmplVarsCounter = array();
         if($bTmplVarsCounter)
             $aTmplVarsCounter = array(
@@ -339,10 +434,11 @@ class BxBaseScore extends BxDolScore
 
     protected function _getDoVote($sType, $aParams = [], $isAllowedVote = true)
     {
+        $bUndo = $this->isUndo();
     	$bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true;
-        $bDisabled = !$isAllowedVote || $bVoted;
+        $bDisabled = !$isAllowedVote || ($bVoted && !$bUndo);
 
         $sClass = '';
         if($bShowDoVoteAsButton)
@@ -355,6 +451,7 @@ class BxBaseScore extends BxDolScore
 
         if($this->_bApi)
             return [
+                'is_undo' => $bUndo,
                 'is_voted' => $bVoted,
                 'is_disabled' => $bDisabled,
                 'title' => _t($this->_getTitleDo($sType)),
@@ -367,7 +464,7 @@ class BxBaseScore extends BxDolScore
         ));
     }
 
-    protected function _getCounterLabel($iCount, $aParams = array())
+    protected function _getCounterLabel($iCount, $aParams = [])
     {
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterLabel(), array(
             'style_prefix' => $this->_sStylePrefix,
@@ -375,7 +472,7 @@ class BxBaseScore extends BxDolScore
                 'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDo())
+                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDo(isset($aParams['type']) ? $aParams['type'] : ''))
                 )
             ),
             'bx_if:show_text' => array(
@@ -416,8 +513,12 @@ class BxBaseScore extends BxDolScore
             'show_do_vote_label' => false
         ]);
 
+        $aParamsDb = [];
+        if(!empty($aParams['type']))
+            $aParamsDb['type'] = $aParams['type'];
+        $aUsers = $this->_oQuery->getPerformedBy($this->getId(), $aParamsDb);
+
         $aTmplUsers = [];
-        $aUsers = $this->_oQuery->getPerformedBy($this->getId());
         foreach($aUsers as $aUser) {
             list($sUserName, $sUserLink, $sUserIcon, $sUserUnit, $sUserUnitWoInfo) = $this->_getAuthorInfo($aUser['id']);
             $aTmplUsers[] = [

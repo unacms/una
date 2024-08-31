@@ -88,7 +88,7 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
         if(oData && oData.label_use)
             switch(oData.label_use) {
                 case 'icon':
-                    if($(this).find('.sys-action-do-icon .sys-icon').length != 0)
+                    if($(this).find('.sys-action-do-icon .sys-icon').length && !$(oData.label_icon).hasClass('sys-icon'))
                         $(this).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon).html('');
                     else
                         $(this).find('.sys-action-do-icon').html(oData.label_icon);

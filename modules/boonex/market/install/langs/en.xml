@@ -5,6 +5,7 @@
     <string name="_bx_market_reactions"><![CDATA[Market's Reactions]]></string>
 
     <string name="_bx_market_option_enable_auto_approve"><![CDATA[Auto approve a product after creation]]></string>
+    <string name="_bx_market_option_enable_no_payments"><![CDATA[Allow to work without payments]]></string>
     <string name="_bx_market_option_enable_recurring"><![CDATA[Allow to sell subscriptions]]></string>
     <string name="_bx_market_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>
     <string name="_bx_market_option_summary_chars"><![CDATA[Number of characters in auto-cropped product summary]]></string>
@@ -14,6 +15,8 @@
     <string name="_bx_market_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_market_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_market_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+    <string name="_bx_market_option_enable_icon"><![CDATA[Enable product icon]]></string>
+    
 
     <string name="_bx_market_form_entry"><![CDATA[Product]]></string>
     <string name="_bx_market_form_entry_display_add"><![CDATA[Add Product]]></string>

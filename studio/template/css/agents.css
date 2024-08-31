@@ -16,3 +16,78 @@
 
     color: #e5e7eb;
 }
+
+/*-- Automators form: Providers --*/
+.bx-form-input-provider {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-form-input-provider-cell.bx-fi-pc-txt {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.bx-form-input-provider-cell.bx-fi-pc-btn {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+}
+.bx-form-input-provider-add {
+    text-align: right;
+}
+.bx-form-input-provider-add .bx-form-input-button {
+    display: inline-block;
+    float: none;
+}
+
+/*-- Automators form: Helpers --*/
+.bx-form-input-helper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-form-input-helper-cell.bx-fi-hc-txt {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.bx-form-input-helper-cell.bx-fi-hc-btn {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+}
+.bx-form-input-helper-add {
+    text-align: right;
+}
+.bx-form-input-helper-add .bx-form-input-button {
+    display: inline-block;
+    float: none;
+}
+
+/*-- Automators form: Assistants --*/
+.bx-form-input-assistant {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-form-input-assistant-cell.bx-fi-ac-txt {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.bx-form-input-assistant-cell.bx-fi-ac-btn {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+}
+.bx-form-input-assistant-add {
+    text-align: right;
+}
+.bx-form-input-assistant-add .bx-form-input-button {
+    display: inline-block;
+    float: none;
+}

@@ -64,8 +64,8 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             'module' => $this->_aObject['module'],
             'unit' => 'general-content-list',
             'request_url' => '/api.php?r=system/get_results/TemplSearchExtendedServices&params[]=',
-            'data' =>  $aData,
-            'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'search_params' => $aParamsSearch],
+            'data' =>  defined('BX_API_PAGE') ? [] : $aData,
+            'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'object' => $this->_aObject['module'], 'search_params' => $aParamsSearch],
         ]);
     }
     
@@ -90,10 +90,6 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         $iStart = !empty($aParams['start']) ? $aParams['start'] : 0;
         $iPerPage = !empty($aParams['per_page']) ? $aParams['per_page'] : 0;
-        if($this->_bIsApi && isset($aParams['params'])){
-            $iPerPage = $aParams['params']['per_page'];
-            $iStart = $aParams['params']['start'];
-        }
         unset($aParams['start'], $aParams['per_page']);
 
         $sUnitTemplate = !empty($aParams['template']) ? $aParams['template'] : '';
@@ -120,7 +116,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return '';
 
         $aParamsSearch = [];
-        if(!$this->_bIsApi || !isset($aParams['search_params'])) {
+        if(empty($aParams['search_params'])) {
             foreach($this->_aObject['fields'] as $aField) {
                 $mixedValue = $oForm->getCleanValue($aField['name']);
                 if(empty($mixedValue) || (is_array($mixedValue) && bx_is_empty_array($mixedValue)))
@@ -191,7 +187,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1, $this->_bFilterMode);
 
     	if(empty($aResults) || !is_array($aResults))
-    	    return $this->_bIsApi ? bx_api_get_msg(_t('Nothing found'), ['ext' => ['msg_type' => 'result']]) : _t('Nothing found');
+    	    return $this->_bIsApi ? [bx_api_get_msg(_t('Nothing found'), ['ext' => ['msg_type' => 'result']])] : _t('Nothing found');
 
         if(!empty($aParams['cond']) && is_array($aParams['cond']))
             $aParams['cond'] = self::encodeConditions($aParams['cond']);
@@ -233,9 +229,9 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         if($this->_bIsApi) {
             if(isset($aParams['search_params']))
-                return [$this->getResultsAPI($aRes, $iPerPage, $iStart, $aParamsSearch)];
+                return [$this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch)];
             else
-                return $this->getResultsAPI([], $iPerPage, $iStart, $aParamsSearch);
+                return [$this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch)];
         }
 
         $aTxtDirection = [
@@ -293,14 +289,15 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             }
         }
 
-        return $this->_oTemplate->parseHtmlByName('search_extended_results.html', array(
+        return $this->_oTemplate->parseHtmlByName('search_extended_results.html', [
+            'class' => str_replace('_', '-', $this->_sObject),
             'sort' => $sSort,
             'code' => $mixedResults,
-            'bx_if:show_paginate' => array(
+            'bx_if:show_paginate' => [
                 'condition' => $bTmplVarsPaginate,
                 'content' => $aTmplVarsPaginate
-            )
-        ));
+            ]
+        ]);
     }
 
     protected function &prepareForm($aParams = array())
@@ -312,6 +309,12 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $sFormSubmit = 'search' . $this->_sObject;
 
         list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+        
+        $mDefValues = bx_get('filters');
+       
+        if ($mDefValues){
+            $mDefValues = json_decode($mDefValues, true);
+        }
 
         $aForm = array(
             'form_attrs' => array(
@@ -366,7 +369,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 'caption' => _t($aField['caption']),
             	'info' => _t($aField['info']),
                 'values' => $aField['values'],
-                'value' => $aField['search_value'],
+                'value' => $aField['search_value'] == '' && isset($mDefValues) && isset($mDefValues[$aField['name']]) ? $mDefValues[$aField['name']] : $aField['search_value'],
                 'attrs' => $aAttrs,
                 'db' => array(
                     'pass' => 'datepicker_range_age' === $aField['search_type'] ? 'AgeRange' : (!empty($aField['pass']) ? $aField['pass'] : 'Xss')

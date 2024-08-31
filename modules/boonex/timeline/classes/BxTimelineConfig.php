@@ -55,6 +55,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iHotThresholdContent;
     protected $_iHotThresholdComment;
     protected $_iHotThresholdVote;
+    protected $_fHotContentAgeMux;
     protected $_aHotSources;
     protected $_aHotSourcesList;
     protected $_aHotList;
@@ -492,6 +493,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iHotThresholdComment = (int)getParam($sOptionPrefix . 'hot_threshold_comment');
         $this->_iHotThresholdVote = (int)getParam($sOptionPrefix . 'hot_threshold_vote');
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
+        $this->_fHotContentAgeMux = (float)getParam($sOptionPrefix . 'hot_content_age_mux');
         $this->_aHotSources = explode(',', getParam($sOptionPrefix . 'hot_sources'));
         $this->_aHotList = $this->_bHot ? $this->_oDb->getHot() : [];
 
@@ -737,7 +739,23 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCacheTableCheckFields()
     {
         $mixedResult = null;
-        bx_alert($this->getName(), 'cache_table_check_fields', 0, 0, ['check_fields' => $this->_aCacheTableCheckFields, 'override_result' => &$mixedResult]);
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_timeline-cache_table_check_fields 'bx_timeline', 'cache_table_check_fields' - hook to override cache table fields, which should be checked
+         * - $unit_name - equals `bx_timeline`
+         * - $action - equals `cache_table_check_fields`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `check_fields` - [array] an array with fields which are checked by default
+         *      - `override_result` - [array] by ref, new check fields array or null to use the dafault one, can be overridden in hook processing
+         * @hook @ref hook-bx_timeline-cache_table_check_fields
+         */
+        bx_alert($this->getName(), 'cache_table_check_fields', 0, 0, [
+            'check_fields' => $this->_aCacheTableCheckFields, 
+            'override_result' => &$mixedResult
+        ]);
         if($mixedResult !== null)
             return $mixedResult;
         
@@ -854,6 +872,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getHotInterval()
     {
         return $this->_iHotInterval;
+    }
+
+    public function getHotContentAgeMux()
+    {
+        return $this->_fHotContentAgeMux;
     }
 
     public function getLimitAttachLinks()
@@ -990,6 +1013,16 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getBrowseParams($sValue)
     {
         return json_decode(base64_decode(urldecode($sValue)), true);
+    }
+    
+    public function isBrowseItem($aParams)
+    {
+        return isset($aParams['browse']) && in_array($aParams['browse'], ['id', 'descriptor', 'first', 'last']);
+    }
+
+    public function isBrowseList($aParams)
+    {
+        return isset($aParams['browse']) && in_array($aParams['browse'], ['list', 'ids']);
     }
 
     public function setUserChoice($aChoices = array())

@@ -245,6 +245,11 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $aValues;
     }
 
+    public function getModule()
+    {
+        return $this->_aObject['module'];
+    }
+
     /**
      * Add all available meta tags to the head section 
      * @return number of successfully added metas

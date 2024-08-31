@@ -129,6 +129,8 @@
     <string name="_bx_orgs_page_title_edit_profile"><![CDATA[Edit Profile]]></string>
     <string name="_bx_orgs_page_title_sys_edit_profile_cover"><![CDATA[Edit Profile Cover]]></string>
     <string name="_bx_orgs_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_orgs_page_title_manage_profile"><![CDATA[Manage]]></string>
+    <string name="_bx_orgs_page_title_sys_manage_profile"><![CDATA[Manage]]></string>
     <string name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[Delete Profile]]></string>
     <string name="_bx_orgs_page_title_delete_profile"><![CDATA[Delete Profile]]></string>
     <string name="_bx_orgs_page_title_sys_join_profile"><![CDATA[Join Organization]]></string>
@@ -214,8 +216,9 @@
     <string name="_bx_orgs_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_orgs_page_block_title_fans"><![CDATA[Members]]></string>
     <string name="_bx_orgs_page_block_title_system_fans"><![CDATA[Members]]></string>
-    <string name="_bx_orgs_page_block_title_fans_invites"><![CDATA[Invites]]></string>
-    <string name="_bx_orgs_page_block_title_system_invites"><![CDATA[Invites]]></string>
+    <string name="_bx_orgs_page_block_title_system_fans_manage"><![CDATA[Manage fans]]></string>
+    <string name="_bx_orgs_page_block_title_invites"><![CDATA[Invites]]></string>
+    <string name="_bx_orgs_page_block_title_system_invites_manage"><![CDATA[Invites]]></string>
     <string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Location]]></string>
     <string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Following]]></string>
@@ -320,6 +323,8 @@
     <string name="_bx_orgs_menu_item_title_view_profile_more_auto"><![CDATA[More]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_joined_groups"><![CDATA[Organizations]]></string>
     <string name="_bx_orgs_menu_item_title_view_joined_groups"><![CDATA[Organizations]]></string>
+    <string name="_bx_orgs_menu_item_title_system_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_orgs_menu_item_title_manage"><![CDATA[Manage]]></string>
     <string name="_bx_orgs_menu_item_title_system_invite"><![CDATA[Invite]]></string>
     <string name="_bx_orgs_menu_item_title_invite"><![CDATA[Invite]]></string>
     <string name="_bx_orgs_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>

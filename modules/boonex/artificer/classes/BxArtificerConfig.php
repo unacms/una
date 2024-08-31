@@ -40,6 +40,11 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
     {
         parent::__construct($aModule);
 
+        $this->CNF = array_merge($this->CNF, [
+            // some params
+            'PARAM_IMAGES_CUSTOM' => 'bx_artificer_images_custom',
+        ]);
+
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'utils' => 'BxArtificerUtils'
         ));

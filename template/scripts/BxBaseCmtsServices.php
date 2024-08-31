@@ -70,8 +70,10 @@ class BxBaseCmtsServices extends BxDol
         return $oCmts->serviceGetInfo((int)$aCmt['cmt_id'], $bSearchableFieldsOnly);
     }
 
-    public function serviceGetBlockView($sSystem = '', $iObjectId = 0, $iCommentId = 0)
+    public function serviceGetBlockView($sSystem = '', $iObjectId = 0, $iCommentId = 0, $iParentsDepthMax = false)
     {
+        $bIsApi = bx_is_api();
+
         if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
             $sSystem = bx_process_input($sSystem);
 
@@ -81,24 +83,35 @@ class BxBaseCmtsServices extends BxDol
         if(empty($iCommentId) && ($iCommentId = bx_get('cmt_id')) !== false)
             $iCommentId = bx_process_input($iCommentId, BX_DATA_INT);
 
-        if(bx_is_api()) {
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
+        if(!$oCmts)
+            return $bIsApi ? [] : '';
+
+        $iCmtStartFrom = $iCommentId;
+        if($iParentsDepthMax !== false) {
+            $aCmtParents = $oCmts->getCommentParents($iCommentId, $iParentsDepthMax);
+            if(!empty($aCmtParents) && is_array($aCmtParents))
+                $iCmtStartFrom = array_pop($aCmtParents);
+        }
+
+        if($bIsApi) {
             $aRv = $this->serviceGetDataApi([
                 'module' => $sSystem,
                 'object_id' => $iObjectId,
-                'comment_id' => $iCommentId
+                'comment_id' => $iCmtStartFrom
             ]);
 
-            if(isset($aRv['browse']) && is_array($aRv['browse']))
+            if(isset($aRv['browse']) && is_array($aRv['browse'])) {
                 $aRv['browse']['data']['total_count'] = 0;
+
+                if($iParentsDepthMax !== false)
+                    $aRv['browse']['data']['highlighted'] = $iCommentId;
+            }
 
             return [$aRv];
         }
 
-        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
-        if(!$oCmts)
-            return '';
-
-        return $oCmts->getCommentBlock($iCommentId);
+        return $oCmts->getCommentBlock($iCmtStartFrom);
     }
 
     public function serviceAlertResponseSysCmtsImagesFileDeleted($oAlert)
@@ -581,7 +594,10 @@ class BxBaseCmtsServices extends BxDol
             
             // add view (form + new comment)
             if($oForm['form']->isSubmittedAndValid()){
-               $aParams['insert'] = $aParams['order_way'] == 'desc' ? 'before' : 'after';
+                $sInsert = $aParams['order_way'] == 'desc' ? 'after' : 'before';
+                if (bx_get('cmt_parent_id') > 0)
+                     $sInsert = 'after';
+                $aParams['insert'] = $sInsert;
                 $aParams['comment_id'] = $oForm['res'];
                 $bIsList = true;
                 $aForm['inputs']['cmt_parent_id']['value'] = 0;
@@ -642,6 +658,7 @@ class BxBaseCmtsServices extends BxDol
         }
         $aCmtsRv = [];
         foreach ($aCmts as $aCmt) {
+            $aBp['order_way'] = 'asc';
             $oCmt = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
             if($oCmt === false)
                 continue;
@@ -668,6 +685,7 @@ class BxBaseCmtsServices extends BxDol
             'module' => $oCmts->getSystemName(), 
             'object_id' => $oCmts->getId(),
             'max_level' => $oCmts->getSystemInfo()['number_of_levels'],
+            'highlighted' => 0,
             'data' => $aCmtsRv,
         ];
         if (isset($aParams['mode']) &&  $aParams['mode'] == 'feed')

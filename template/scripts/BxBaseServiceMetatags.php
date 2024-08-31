@@ -79,7 +79,28 @@ class BxBaseServiceMetatags extends BxDol
      */
     public function serviceLocationsMap($sObject, $iId, $aParams = array())
     {
-        return BxDolMetatags::getObjectInstance($sObject)->getLocationsMap($iId, $aParams);
+        $oMetatags = BxDolMetatags::getObjectInstance($sObject);
+        if($oMetatags === false)
+            return false;
+
+        $sModule = $oMetatags->getModule();
+
+        $aContentInfo = bx_srv($sModule, 'get_info', [$iId, false]);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return false;
+
+        $oFormsHelper = bx_srv($sModule, 'forms_helper');
+        $oFormView = $oFormsHelper->getObjectFormView();
+        if(!$oFormView)
+            return false;
+
+        $CNF = &BxDolModule::getInstance($sModule)->_oConfig->CNF;
+
+        $oFormView->initChecker($aContentInfo);
+        if(empty($CNF['FIELD_LOCATION']) || !$oFormView->isInputVisible($CNF['FIELD_LOCATION']))
+            return false;
+
+        return $oMetatags->getLocationsMap($iId, $aParams);
     }
 
     /**

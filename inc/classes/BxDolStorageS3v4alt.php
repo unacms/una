@@ -13,7 +13,7 @@ if (!defined('CURL_SSLVERSION_TLSv1'))
 if (!defined('BX_DOL_STORAGE_S3V4_MULTIPART_UPLOAD'))
     define('BX_DOL_STORAGE_S3V4_MULTIPART_UPLOAD', 5*1024*1024);
 
-define('AKEEBAENGINE', 1);
+defined('AKEEBAENGINE') or define('AKEEBAENGINE', 1);
 
 /**
  * Alternatove file storage implementation for Amazon S3 
@@ -24,12 +24,30 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
 {
     protected function init ($aObject)
     {
+        $sAccessKey = getParam('sys_storage_s3_access_key');
+        $sSecretKey = getParam('sys_storage_s3_secret_key');
+        $aCredentials = [];
+        if (getParam('sys_storage_s3_amz_iam_role')) {
+            $sToken = bx_file_get_contents('http://169.254.169.254/latest/api/token', [], 'PUT', ['X-aws-ec2-metadata-token-ttl-seconds: 600']);
+            $sRole = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/', [], 'GET', ["X-aws-ec2-metadata-token: $sToken"]);
+            $sCredentials = bx_file_get_contents('http://169.254.169.254/latest/meta-data/iam/security-credentials/' . $sRole, [], 'GET', ["X-aws-ec2-metadata-token: $sToken"]);
+            if ($sCredentials && ($aCredentials = @json_decode($sCredentials, true))) {
+                $sAccessKey = $aCredentials['AccessKeyId'];
+                $sSecretKey = $aCredentials['SecretAccessKey'];
+            }
+        }
+
+        if (!$sAccessKey)
+            return;
+
         $oConfiguration = new Akeeba\Engine\Postproc\Connector\S3v4\Configuration(
-            getParam('sys_storage_s3_access_key'),
-            getParam('sys_storage_s3_secret_key'),
+            $sAccessKey,
+            $sSecretKey,
             getParam('sys_storage_s3_sig_ver'),
             getParam('sys_storage_s3_region')
         );
+        if ($aCredentials && isset($aCredentials['Token']))
+            $oConfiguration->setToken($aCredentials['Token']);
         if ($this->_sEndpoint)
             $oConfiguration->setEndpoint($this->_sEndpoint);
 
@@ -46,11 +64,11 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
         $aFile = $this->_oDb->getFileById($iFileId);
         if (!$aFile)
             return false;
-
-        if ($aFile['private']) {
+    
+        if ($this->isAuthUrl($aFile)) {
             $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
             $sRet = $this->_s3->getAuthenticatedURL($this->_sBucket, $sFileLocation, $this->_aObject['token_life'], $this->_bSSL);
-        } 
+        }
         else {
             $sRet = $this->getObjectBaseUrl($aFile['private']) . $aFile['path'];
         }
@@ -69,6 +87,9 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
         if (!$aFile)
             return false;
 
+        if (!getParam('sys_storage_s3_acl_enable'))
+            return parent::setFilePrivate($iFileId, 0);
+
         $sFileLocation = $this->getObjectBaseDir($aFile['private']) . $aFile['path'];
         
         $sTmpFile = tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
@@ -82,10 +103,14 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
         } catch (Exception $e) {
             @unlink($sTmpFile);
             $this->setErrorCode(BX_DOL_STORAGE_ERR_UNLINK);
+            bx_log('sys_storage_s3v4alt', $e->getMessage());
             return false;
         }
 
-        $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
+        if (getParam('sys_storage_s3_acl_enable'))
+            $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
+        else
+            $sACL = '';
         $aRequestHeaders = $this->generateHeaders('', $isPrivate, $aFile['mime_type']);
         if (!$this->_upload($sTmpFile, $sFileLocation, $sACL, $aRequestHeaders))
             return false;
@@ -101,8 +126,10 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
         $sPath = $this->genPath($sLocalId, $this->_aObject['levels']);
         $sRemoteNamePath = $sPath . $sLocalId . ($sExt ? '.' . $sExt : '');
         $aRequestHeaders = $this->generateHeaders($sName, $isPrivate);
-        $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
-
+        if (getParam('sys_storage_s3_acl_enable'))
+            $sACL = $isPrivate ? Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_AUTHENTICATED_READ : Akeeba\Engine\Postproc\Connector\S3v4\Acl::ACL_PUBLIC_READ;
+        else
+            $sACL = '';
         return $this->_upload($sTmpFile, $this->getObjectBaseDir($isPrivate) . $sRemoteNamePath, $sACL, $aRequestHeaders);
     }
 
@@ -144,6 +171,7 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
 
         } catch (Exception $e) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_ADD);
+            bx_log('sys_storage_s3v4alt', $e->getMessage());
             return false;
         }
 
@@ -158,6 +186,7 @@ class BxDolStorageS3v4alt extends BxDolStorageS3
             $this->_s3->deleteObject($this->_sBucket, $sFileLocation);
         } catch (Exception $e) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_UNLINK);
+            bx_log('sys_storage_s3v4alt', $e->getMessage());
             return false;
         }
 

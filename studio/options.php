@@ -19,8 +19,11 @@ bx_require_authentication(true);
 $sType = bx_get('type');
 $sType = $sType !== false ? bx_process_input($sType) : '';
 
-$mixedCategory = bx_get('category');
-$mixedCategory = $mixedCategory !== false ? bx_process_input($mixedCategory) : '';
+$mixedCategory = '';
+if(($mixedCategory = bx_get('category')) !== false)
+    $mixedCategory = bx_process_input($mixedCategory);
+if(!$mixedCategory && ($mixedCategory = bx_get('categories')) !== false)
+    $mixedCategory = bx_process_input($mixedCategory);
 
 $oOptions = new BxTemplStudioOptions($sType, $mixedCategory);
 

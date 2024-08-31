@@ -198,6 +198,9 @@ class BxBasePage extends BxDolPage
             $sResult .= $oTemplate->addCss($a['url'], true);
         foreach ($aJs as $a)
             $sResult .= $oTemplate->addJs($a['url'], true);
+        
+        // add js translations
+        $sResult .= $oTemplate->getJsTranslation(true);
 
         return $sResult;
     }
@@ -500,6 +503,7 @@ class BxBasePage extends BxDolPage
 
         $bIsAvailable = $this->_isAvailablePage($this->_aObject);
         $bIsVisible = $this->_isVisiblePage($this->_aObject);
+        //TODO: If page isn't Available or isn't Visible then we should exit with related Error Codes immediately.
 
         $sMetaTitle = $this->_getPageMetaTitle();
         $sName = $this->_getPageTitle();
@@ -537,7 +541,7 @@ class BxBasePage extends BxDolPage
          * Profile/Context view page.
          */
         if(isset($this->_aProfileInfo)) {
-            $oProfileModule = BxDolModule::getInstance($this->getModule());
+            $oProfileModule = BxDolModule::getInstance($this->_aProfileInfo['type']);
             if($oProfileModule !== null)
                 $aProfileContentInfo = $oProfileModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
 
@@ -566,7 +570,7 @@ class BxBasePage extends BxDolPage
                     if(!empty($CNF['OBJECT_CONNECTIONS']) && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])) !== false)
                         $a['cover_block']['members_list'] = $oConnection->getConnectedListAPI($this->_aProfileInfo['id'], false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 10);
 
-                    if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']) && ($oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) !== false)
+                    if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']) && ($oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) !== false)
                         $a['cover_block']['actions_menu'] = $oActionMenu->getCodeAPI();
                 }
                 
@@ -590,34 +594,15 @@ class BxBasePage extends BxDolPage
                         if(isset($a['cover_block'], $a['cover_block']['actions_menu']) && is_array($a['cover_block']['actions_menu']))
                             $a['cover_block']['actions_menu']['items'] = array_merge($a['cover_block']['actions_menu']['items'], $aMenuManage['items']);
                         else
-                            $a['menu'] = $aMenuManage;
+                            $a['cover_block']['actions_menu'] = $aMenuManage;
                     }
                 }
             }
         }
 
         if (isLogged()) {
-            /* temporatery commented
-                if(($oMenuAddContent = BxDolMenu::getObjectInstance('sys_add_content')) !== false)
-                $a['menu_add'] = $oMenuAddContent->getCodeAPI();
-            */
-
             $o = BxDolProfile::getInstance();
             $a['user'] = BxDolProfile::getDataForPage($o);
-
-            $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
-            $sRet = $oInformer ? $oInformer->display() : '';
-            if ($sRet){
-                $a['user']['informer'] = $sRet;
-            }
-            
-            $sModuleNotifications = 'bx_notifications';
-            if(BxDolRequest::serviceExists($sModuleNotifications, 'get_unread_notifications_num'))
-                $a['user']['notifications'] = bx_srv($sModuleNotifications, 'get_unread_notifications_num', [$o->id()]);
-
-            $oPayments = BxDolPayments::getInstance();
-            if($oPayments->isActive())
-                $a['user']['cart'] = $oPayments->getCartItemsCount();
         }
         
         $aExtras = [
@@ -680,7 +665,7 @@ class BxBasePage extends BxDolPage
                     continue;
                 }
 
-                $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+                $sFunc = '_getBlock' . bx_gen_method_name($aBlock['type']);
                 $mBlock = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
 
                 $aCells[$sKey][$i] = array_merge($aCells[$sKey][$i], [
@@ -865,6 +850,12 @@ class BxBasePage extends BxDolPage
 
             if(is_array($mixedContent) && !empty($mixedContent['content'])) {
                 $iDesignboxId = isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'];
+
+                if(!empty($mixedContent['markers']) && is_array($mixedContent['markers'])) {
+                    $this->addMarkers($mixedContent['markers']);
+
+                    $sTitle = $this->getBlockTitle($aBlock);
+                }
 
                 $sHelpTitle = $sHelpContent = '';
                 if(!in_array($iDesignboxId, $aDbNoTitle))
@@ -1074,6 +1065,46 @@ class BxBasePage extends BxDolPage
                 ]
             ]
         ]);
+    }
+
+    /**
+     * Get content for 'bento_grid' block type.
+     * @return string
+     */
+    protected function _getBlockBentoGrid ($aBlock)
+    {
+        if(bx_is_api()) {
+            $iBlockId = (int)$aBlock['id'];
+
+            $iContentId = 0;
+            if(($mContentId = bx_get('id')) !== false) 
+                $iContentId = (int)$mContentId;
+
+            $sContentModule = '';
+            if(!empty($this->_aObject['module']) && !in_array($this->_aObject['module'], ['system', 'custom']))
+                $sContentModule = $this->_aObject['module'];
+
+            $bIsAllowedEdit = false;
+            if(!empty($sContentModule) && bx_is_srv($sContentModule, 'check_allowed_with_content'))
+                $bIsAllowedEdit = bx_srv($sContentModule, 'check_allowed_with_content', ['edit', $iContentId]) === CHECK_ACTION_RESULT_ALLOWED;
+            else
+                $bIsAllowedEdit = isAdmin();
+
+            return [bx_api_get_block('bento_grid', [
+                'title' => _t($aBlock['title']), 
+                'content' => self::getPageBlockData($iBlockId, $iContentId, $sContentModule)
+            ], ['ext' => [
+                'block_id' => $iBlockId,
+                'content_id' => $iContentId,
+                'content_module' => $sContentModule,
+                'is_allowed_edit' => $bIsAllowedEdit
+            ]])];
+        }
+
+        /**
+         * Isn't supported for now.
+         */
+        return '';
     }
 
     /**

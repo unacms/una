@@ -698,7 +698,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     protected function initImages()
     {
         self::$_iImagesCacheTTL = 86400;
-        self::$_sImagesCacheKey = 'db_layout_images_' . $this->_sCode .  '_' . bx_site_hash('images') . '.php';
+        self::$_sImagesCacheKey = 'sys_layout_images_' . $this->_sCode .  '_' . bx_site_hash('images') . '.php';
         self::$_aImages = BxDolDb::getInstance()->getDbCacheObject()->getData(self::$_sImagesCacheKey);
         if(!self::$_aImages)
             self::$_aImages = [];
@@ -1176,6 +1176,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         return $bDynamic ? $this->_processJsTranslations() : '';
     }
+
+    /**
+     * get added js translations
+     */ 
+    function getJsTranslation($bDynamic = false)
+    {
+        return $bDynamic ? $this->_processJsTranslations() : $this->aPage['js_translations'];
+    }
+
     /**
      * Add image in JS output.
      *
@@ -2206,6 +2215,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sContent = ob_get_clean();
 
         return $sContent;
+    }
+
+    public function clearTemplatesCache($sType = '')
+    {
+        if(!$sType)
+            $sType = 'template';
+
+        $this->getTemplatesCacheObject()->removeAllByPrefix($this->getCacheFilePrefix($sType));
+    }
+
+    public function clearImagesCache($sCode = '')
+    {
+        if(!$sCode)
+            $sCode = $this->_sCode;
+
+        BxDolDb::getInstance()->getDbCacheObject()->removeAllByPrefix('sys_layout_images_' . $sCode .  '_');
     }
 
     /**
