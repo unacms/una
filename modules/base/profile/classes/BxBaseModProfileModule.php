@@ -1742,7 +1742,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $CNF = &$this->_oConfig->CNF;
 
         // check privacy
-        if (empty($CNF['OBJECT_PRIVACY_VIEW'])) 
+        if (empty($CNF['OBJECT_PRIVACY_VIEW']) || isAdmin() || CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntry())
             return CHECK_ACTION_RESULT_ALLOWED;
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
