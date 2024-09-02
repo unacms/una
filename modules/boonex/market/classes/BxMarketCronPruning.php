@@ -37,13 +37,18 @@ class BxMarketCronPruning extends BxDolCron
                 $aSubscription = array_shift($aSubscription);
 
                 if($aSubscription['data']['status'] == 'active') {
-                    $this->_oModule->_oDb->updateLicense(array('expired' => $aSubscription['data']['cperiod_end'] + 86400 * (int)getParam($CNF['OPTION_RECURRING_RESERVE'])), array('id' => $aLicense['id']));
+                    $this->_oModule->_oDb->updateLicense([
+                        'expired' => $aSubscription['data']['cperiod_end'] + 86400 * (int)getParam($CNF['OPTION_RECURRING_RESERVE'])
+                    ], ['id' => $aLicense['id']]);
                     continue;
                 }
-                else {
+                else if(empty($aLicense['expired_notif'])) {
                     $oPayments->sendSubscriptionExpirationLetters($aSubscription['pending_id'], $aLicense['order']);
 
-                    $this->_oModule->_oDb->updateLicense(array('expired' => $aLicense['expired'] + 86400 * (int)getParam($CNF['OPTION_RECURRING_RESERVE'])), array('id' => $aLicense['id']));
+                    $this->_oModule->_oDb->updateLicense([
+                        'expired' => $aLicense['expired'] + 86400 * (int)getParam($CNF['OPTION_RECURRING_RESERVE']),
+                        'expired_notif' => time()
+                    ], ['id' => $aLicense['id']]);
                     continue;
                 }
             }
