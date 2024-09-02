@@ -186,7 +186,8 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
                         
                     }
                 }
-                else{
+                else {
+                    $this->aInputs['date_end']['value'] = $this->aInputs['date_start']['value']; //--- is needed for correct work of 'fixTimezone' in insert/update
                     $this->setSubmittedValue('date_end', $this->aInputs['date_start']['value'], BX_DOL_FORM_METHOD_POST);
                 }
             }
