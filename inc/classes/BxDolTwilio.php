@@ -7,6 +7,8 @@
  * @{
  */
 
+require_once BX_DIRECTORY_PATH_PLUGINS . 'twilio/sdk/src/Twilio/autoload.php';
+
 class BxDolTwilio extends BxDolFactory implements iBxDolSingleton
 {
     protected $_sSid;
@@ -47,8 +49,7 @@ class BxDolTwilio extends BxDolFactory implements iBxDolSingleton
     
     public function sendSms($sTo, $sMessage, $sFrom = '')
     {
-        try{
-            require_once BX_DIRECTORY_PATH_PLUGINS . 'Twilio/sdk/src/Twilio/autoload.php'; // Loads the library
+        try {
             $client = new Twilio\Rest\Client($this->_sSid, $this->_sToken);
             $aParams = array('body' => $sMessage, 'from' => $sFrom != '' ? $this->normalizePhone($sFrom) : $this->normalizePhone($this->_sFromNumber));
             $client->messages->create($this->normalizePhone($sTo), $aParams);
