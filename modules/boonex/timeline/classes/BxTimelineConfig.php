@@ -135,6 +135,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_LABELS' => 'labels',
             'FIELDS_DELAYED_PROCESSING' => 'video', // can be array of fields or comma separated string of field names
 
+            'FIELD_ATTACH_LINK_CONTENT_ID' => 'event_id',
+            'FIELD_ATTACH_LINK_URL' => 'url',
+            'FIELD_ATTACH_LINK_CONTROLS' => 'controls',
+
             // page URIs
             'URI_VIEW_LIST' => 'timeline-view',
             'URI_VIEW_ENTRY' => 'item',
@@ -147,6 +151,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             // objects
             'OBJECT_STORAGE' => $this->_sName . '_photos',
+            'OBJECT_STORAGE_PHOTOS' => $this->_sName . '_photos',
             'OBJECT_STORAGE_VIDEOS' => $this->_sName . '_videos',
             'OBJECT_STORAGE_FILES' => $this->_sName . '_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
@@ -170,6 +175,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_ADD_PUBLIC' => $this->_sName . '_post_add_public',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD_PROFILE' => $this->_sName . '_post_add_profile',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => $this->_sName . '_post_edit',
+            'OBJECT_FORM_ATTACH_LINK' => $this->_sName . '_attach_link',
+            'OBJECT_FORM_ATTACH_LINK_DISPLAY_ADD' => $this->_sName . '_attach_link_add',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_GRID_COMMON' => $this->_sName . '_common',
             'OBJECT_GRID_MUTE' => $this->_sName . '_mute',
@@ -280,14 +287,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'menu_post_attachments' => $this->CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'],
 
             'form_post' => $this->CNF['OBJECT_FORM_ENTRY'],
-            'form_attach_link' => $this->_sName . '_attach_link',
+            'form_attach_link' => $this->CNF['OBJECT_FORM_ATTACH_LINK'],
             'form_repost' => $this->_sName . '_repost',
             'form_display_post_add' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'],
             'form_display_post_view' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW'],
             'form_display_post_add_public' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD_PUBLIC'],
             'form_display_post_add_profile' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD_PROFILE'],
             'form_display_post_edit' => $this->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'],
-            'form_display_attach_link_add' => $this->_sName . '_attach_link_add',
+            'form_display_attach_link_add' => $this->CNF['OBJECT_FORM_ATTACH_LINK_DISPLAY_ADD'],
             'form_display_repost_with' => $this->_sName . '_repost_with',
             'form_display_repost_to' => $this->_sName . '_repost_to',
 

@@ -48,7 +48,9 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'FIELD_POLL_CONTENT_ID' => 'content_id',
             'FIELD_POLL_TEXT' => 'text',
             'FIELD_POLL_ANSWERS' => 'answers',
-            
+
+            'FIELD_ATTACH_LINK_CONTENT_ID' => 'content_id',
+            'FIELD_ATTACH_LINK_URL' => 'url',
             'FIELD_ATTACH_LINK_CONTROLS' => 'controls',
 
             // some params
@@ -62,7 +64,7 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             // objects
             'OBJECT_VOTES_POLL_ANSWERS' => $this->_sName . '_poll_answers',
             'OBJECT_FORM_ATTACH_LINK' => $this->_sName . '_attach_link',
-            'OBJECT_FORM_DISPLAY_ATTACH_LINK_ADD' => $this->_sName . '_attach_link_add',
+            'OBJECT_FORM_ATTACH_LINK_DISPLAY_ADD' => $this->_sName . '_attach_link_add',
             
 
             // styles
