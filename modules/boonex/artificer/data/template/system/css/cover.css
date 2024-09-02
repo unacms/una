@@ -36,6 +36,9 @@ import url(../../../../../../../template/css/cover.css);
     position: relative;
     z-index: 99;
 }
+.bg-cover{
+    background-size: 100% auto !important;
+}
 .bx-image-edit-move-info{
     display: flex;
     align-items: center;
