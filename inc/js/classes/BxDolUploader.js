@@ -1110,6 +1110,14 @@ BxDolImageTweak.prototype.changePosition = function (){
         $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
         $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + e.offsetY / $(e.currentTarget).height() * 100 + '%');
     });
+    if (window.innerWidth <= 800){
+        $('body').css('overflow', 'hidden')
+        $(".bx-image-edit-source-" + $this._sUniqueId).bind('touchmove', function(e){
+            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+            $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
+            $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + touch.pageY / $(e.currentTarget).height() * 100 + '%');
+        });
+    }
     with ($this._oContainerButtons) {
         find('.bx-image-edit-buttons-cancel').removeClass('hidden');
         find('.bx-image-edit-buttons-save').removeClass('hidden');
@@ -1120,8 +1128,9 @@ BxDolImageTweak.prototype.changePosition = function (){
 
 BxDolImageTweak.prototype.cancelPosition = function (){
     var $this = this;
+    $('body').css('overflow', '')
     $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
-    $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').unbind('dragover'); 
+    $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').unbind('dragover').unbind('touchmove'); 
     
     with ($this._oContainerButtons) {
         find('.bx-image-edit-buttons-cancel').addClass('hidden');
