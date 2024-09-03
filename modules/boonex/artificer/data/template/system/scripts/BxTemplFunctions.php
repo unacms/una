@@ -201,10 +201,11 @@ class BxTemplFunctions extends BxBaseFunctions
                     $mixedResult = parent::TemplPageAddComponent($sKey);
                 break;
 
-            case 'sys_site_search':
-                $oSearch = new BxTemplSearch();
-                $oSearch->setLiveSearch(true);
-                $mixedResult = $oSearch->getForm(BX_DB_PADDING_DEF, false, true) . $oSearch->getResultsContainer();
+            case 'sys_toolbar_search':
+                if(getParam('bx_artificer_header_search') == 'on')
+                    $mixedResult = parent::TemplPageAddComponent($sKey);
+                else
+                    $mixedResult = '';
                 break;
 
             default:

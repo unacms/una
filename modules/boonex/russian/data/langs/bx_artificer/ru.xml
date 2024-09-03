@@ -9,6 +9,7 @@
     <string name="_bx_artificer_stg_cpt_option_switcher_name"><![CDATA[Название в переключателе тем]]></string>	
     <string name="_bx_artificer_stg_cpt_option_page_width"><![CDATA[Ширина страницы]]></string>
     <string name="_bx_artificer_stg_cpt_option_header_stretched"><![CDATA[Растянутый заголовок]]></string>
+    <string name="_bx_artificer_stg_cpt_option_header_search"><![CDATA[Включить плавающую панель поиска]]></string>
     <string name="_bx_artificer_stg_cpt_option_color_scheme"><![CDATA[Цветовая схема]]></string>
     <string name="_bx_artificer_stg_cpt_option_color_scheme_auto"><![CDATA[Авто с переключателем]]></string>
     <string name="_bx_artificer_stg_cpt_option_color_scheme_light_only"><![CDATA[Только светлый режим]]></string>

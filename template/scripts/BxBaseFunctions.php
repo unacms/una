@@ -66,6 +66,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             case 'sys_header_width':
                 $mixedResult = 'bx-def-page-width';
                 break;
+
+            case 'sys_toolbar_search':
+                $oSearch = new BxTemplSearch();
+                $oSearch->setLiveSearch(true);
+
+                $mixedResult = $this->_oTemplate->parseHtmlByName('_page_toolbar_search.html', [
+                    'sys_site_search' => $oSearch->getForm(BX_DB_PADDING_DEF, false, true) . $oSearch->getResultsContainer()
+                ]);
+                break;
         }
 
         return $mixedResult;
