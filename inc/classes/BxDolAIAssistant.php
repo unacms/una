@@ -140,6 +140,11 @@ class BxDolAIAssistant extends BxDol
 
         return $sResult;
     }
+    
+    public function getAskBlock($aParams = [])
+    {
+        return $this->getAskChat();
+    }
 
     public function deleteChat($mixedChat)
     {

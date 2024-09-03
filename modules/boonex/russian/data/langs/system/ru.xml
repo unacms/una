@@ -1764,6 +1764,7 @@
     <string name="_adm_stg_cpt_option_sys_agents_asst_chats_trans_del"><![CDATA[Автоматическое удаление временных чатов каждый день]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_sa"><![CDATA[Помощник по студии]]></string>
     <string name="_adm_stg_cpt_option_sys_agents_lsa"><![CDATA[Помощник для интерактивного поиска]]></string>
+    <string name="_adm_stg_cpt_option_sys_agents_aba"><![CDATA[Помощник для блока "Спросите ИИ"]]></string>
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Метатег области просмотра]]></string>
 
     <string name="_adm_stg_cpt_category_pwa_manifest"><![CDATA[Manifest]]></string>
@@ -3480,6 +3481,8 @@
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
         <string name="_sys_page_block_title_sys_author"><![CDATA[Автор]]></string>
 	<string name="_sys_page_block_title_author"><![CDATA[Автор]]></string>
+        <string name="_sys_page_block_title_sys_ask_aqssistant"><![CDATA[Спросите ИИ]]></string>
+        <string name="_sys_page_block_title_ask_aqssistant"><![CDATA[Спросите ИИ]]></string>
         <string name="_sys_page_block_title_sys_recom_friends"><![CDATA[Рекомендуемые друзья]]></string>
         <string name="_sys_page_block_title_recom_friends"><![CDATA[С кем дружить]]></string>
         <string name="_sys_page_block_title_sys_recom_subscriptions"><![CDATA[Рекомендуемые подписки]]></string>

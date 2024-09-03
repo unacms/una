@@ -105,6 +105,11 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         return ($iId = (int)getParam('sys_agents_live_search_assistant')) != 0 ? $iId : 0;
     }
 
+    public static function getAssistantForAskBlock()
+    {
+        return ($iId = (int)getParam('sys_agents_ask_block_assistant')) != 0 ? $iId : 0;
+    }
+
     public function getProfileId()
     {
         return $this->_iProfileId;
