@@ -53,7 +53,8 @@
     <fileset dir="${project.basedir}" defaultexcludes="true" id="files_dist">
         <include name="**/*" />
         <exclude name="**/*.swp" />
-        <exclude name=".github" />
+        <exclude name=".github/**" />
+        <exclude name="ai/**" />
         <exclude name="inc/header*" />
         <exclude name="build.xml" />
         <exclude name="build.properties" />
