@@ -46,18 +46,10 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($oModule) && $sModuleName != 'sys_cmts')
             return;
 
-        /*
-         * Ticket #4640
-         * 
-         * Before: 
-         * Use content's author profile when Author ID wasn't provided. 
-         * Usually it happens when tags were processed with cron.
-         * 
-         * After:
-         * Use content's author profile every time when it's possible. Otherwise use sender from alert.
-         */
         $iAuthorId = 0;
-        if(($sModuleMethod = 'get_author') && bx_is_srv($sModuleName, $sModuleMethod))
+        if(($sModuleMethod = 'act_as_profile') && bx_is_srv($sModuleName, $sModuleMethod) && ($oAuthor = BxDolProfile::getInstanceByContentAndType($iContentId, $sModuleName)) !== false)
+            $iAuthorId = $oAuthor->id();
+        else if(($sModuleMethod = 'get_author') && bx_is_srv($sModuleName, $sModuleMethod))
             $iAuthorId = abs(bx_srv($sModuleName, $sModuleMethod, [$iContentId]));
         if(empty($iAuthorId) && !empty($iSenderId))
             $iAuthorId = $iSenderId;
