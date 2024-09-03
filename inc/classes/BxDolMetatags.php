@@ -210,7 +210,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $bHashtagsOnly = getParam('sys_metatags_hashtags_only') == 'on';
         $aLabels = []; 
         if($bHashtagsOnly)
-            $aLabels = array_map(function($sValue) {return strtolower($sValue);}, BxDolLabel::getInstance()->getLabels(['type' => 'values']));
+            $aLabels = array_map(function($sValue) {return mb_strtolower($sValue);}, BxDolLabel::getInstance()->getLabels(['type' => 'values']));
 
         $aValues = [];
         $aObjects = BxDolMetatagsQuery::getMetatagsObjects();
