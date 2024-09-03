@@ -21,8 +21,8 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
     {
         parent::__construct ($aObject, $oTemplate);
 
-        $this->_aHideFromSiteToolbar = array('search');
-        $this->_aHideFromMemberToolbar = array();
+        $this->_aHideFromSiteToolbar = ['search'];
+        $this->_aHideFromMemberToolbar = [];
 
         $this->_bSiteToolbar = $this->_sObject == 'sys_toolbar_site';
     }
@@ -31,6 +31,10 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
     {
         if(in_array($a['hidden_on'], [7, 15])) 
             return false;
+
+        //--- Update '[Main Menu]' from Site Toolbar
+        if($this->_bSiteToolbar && $a['name'] == 'main-menu')
+            $a['onclick'] = '';
 
     	//--- Hide '[Search]' from Site Toolbar
         if($this->_bSiteToolbar && in_array($a['name'], $this->_aHideFromSiteToolbar))
