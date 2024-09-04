@@ -46,7 +46,7 @@ class BxDolStudioToolsAudit extends BxDol
             BX_DOL_AUDIT_OK => _t('_sys_audit_title_ok'),
         );
 
-        $this->sMinPhpVer = '5.6.0';
+        $this->sMinPhpVer = '8.1.0';
         $this->aPhpSettings = array (
             'allow_url_fopen' => array('op' => '=', 'val' => true, 'type' => 'bool'),
             'allow_url_include' => array('op' => '=', 'val' => false, 'type' => 'bool'),
