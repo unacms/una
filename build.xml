@@ -16,6 +16,10 @@
 
 
     <if>
+        <not><isset property="db_host" /></not>
+        <then><property name="db_host" value="localhost" override="yes" /></then>
+    </if>
+    <if>
         <not><isset property="db_name" /></not>
         <then><property name="db_name" value="test" override="yes" /></then>
     </if>
@@ -122,7 +126,7 @@
             <not><isset property="install_base_dir" /></not>
             <then><property name="install_base_dir" value="${project.basedir}" /></then>
         </if>
-        <exec command="${php} cmd.php -m ${modules} --db_name=${db_name} --db_user=${db_user} --db_password=${db_password} --server_http_host=${http_host} --server_php_self=${php_self} --server_doc_root=${doc_root}" dir="${install_base_dir}/install" checkreturn="true" />
+        <exec command="${php} cmd.php -m ${modules} --db_host=${db_host} --db_name=${db_name} --db_user=${db_user} --db_password=${db_password} --server_http_host=${http_host} --server_php_self=${php_self} --server_doc_root=${doc_root}" dir="${install_base_dir}/install" checkreturn="true" />
     </target>
 
     <!-- ============================================  -->

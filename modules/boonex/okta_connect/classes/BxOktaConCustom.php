@@ -48,6 +48,12 @@ class BxOktaConCustom
 
         $v = 0;
         foreach ($a as $i) {
+            if ($i == 'K Grader')
+                $i = 20;
+            elseif ($i == 'TK Grader')
+                $i = 21;
+            elseif ($i == 'AL Grader')
+                $i = 22;
             $v += pow(2, (int)$i - 1);
         }
 
