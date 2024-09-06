@@ -4,13 +4,13 @@
         <bx_if:thumb>
             <a href="__content_url__" <bx_if:show_thumb_onclick>onclick="javascript:__content_onclick__"</bx_if:show_thumb_onclick> title="__summary_attr__">
                 <div class="shrink-0 m-1">
-                    <img class="aspect-video object-cover bg-cover w-full rounded" alt="__title__" style="background-image:url(__gallery_url__); __image_settings__" src="<bx_icon_url:spacer.gif />"  />
+                    <img class="bx-def-round-corners aspect-video object-cover bg-cover w-full" alt="__title__" style="background-image:url(__gallery_url__); __image_settings__" src="<bx_icon_url:spacer.gif />"  />
                 </div>
             </a>
         </bx_if:thumb>
         <bx_if:no_thumb>
             <div class="bx-def-gal-img-column shrink-0 m-1">
-                <div class="bx-base-text-unit-no-thumb flex flex-col items-center justify-center aspect-video p-4 bg-gradient-to-b from-red-400 to-red-500 box-border rounded"></div>
+                <div class="bx-base-text-unit-no-thumb bx-def-round-corners flex flex-col items-center justify-center aspect-video p-4 bg-gradient-to-b from-red-400 to-red-500 box-border"></div>
             </div>
         </bx_if:no_thumb>
         <div class="bx-base-text-unit-text flex flex-col flex-1 p-3 md:p-4 lg:p-6 pt-1 md:pt-2 lg:pt-3 box-border">

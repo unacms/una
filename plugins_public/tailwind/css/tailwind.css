@@ -453,7 +453,7 @@
         @apply border border-gray-200 dark:border-gray-700;
     }
     .bx-artificer .bx-def-round-corners {
-        @apply rounded-md;
+        @apply rounded-xl;
     }
 
     /* Fonts */
