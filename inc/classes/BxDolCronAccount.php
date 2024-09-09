@@ -28,14 +28,24 @@ class BxDolCronAccount extends BxDolCron
         $aEmails = [];
         
         /* password expired soon email */
+        bx_import('BxTemplAcl');
+
+        $oAclDb = BxDolAclQuery::getInstance();
+        $oAccountDb = BxDolAccountQuery::getInstance();
+
         $aMemberships = [];
-        $Membership = BxDolAclQuery::getInstance()->getLevels(['type' => 'password_can_expired'], $aMemberships);
+        $oAclDb->getLevels(['type' => 'password_can_expired'], $aMemberships, false);
+
         foreach($aMemberships as $aMembership) {
-            $aProfiles = BxDolAclQuery::getInstance()->getProfilesByMembership([$aMembership['id']]);
+            $aProfiles = $oAclDb->getProfilesByMembership([$aMembership['id']]);
             foreach($aProfiles as $aProfile) {
-                $iPasswordExpired = BxDolAccount::getInstance()->getPasswordExpiredDate($aMembership['password_expired'], $aProfile['account_id']);
-                $aAccountInfo = BxDolAccountQuery::getInstance()->getInfoById($aProfile['account_id']);
-                $iLastPassChanged = BxDolAccountQuery::getInstance()->getLastPasswordChanged($aProfile['account_id']);
+                $oAccount = BxDolAccount::getInstance($aProfile['account_id']);
+                if(!$oAccount)
+                    continue;
+
+                $iPasswordExpired = $oAccount->getPasswordExpiredDate($aMembership['password_expired']);
+                $aAccountInfo = $oAccountDb->getInfoById($aProfile['account_id']);
+                $iLastPassChanged = $oAccountDb->getLastPasswordChanged($aProfile['account_id']);
                 if (
                     !in_array($aAccountInfo['email'], $aEmails) 
                     && ($aMembership['password_expired'] - $aMembership['password_expired_notify']) * 86400 + $iLastPassChanged < time()
@@ -49,10 +59,10 @@ class BxDolCronAccount extends BxDolCron
                     $aEmails[] = $aAccountInfo['email'];
                 }
 
-                BxDolAccountQuery::getInstance()->updatePasswordExpired($aProfile['account_id'], $iPasswordExpired);
+                $oAccountDb->updatePasswordExpired($aProfile['account_id'], $iPasswordExpired);
             }
         }
-        
+
         /* new accounts email */
         if(getParam('enable_notification_account') != 'on')
             return;

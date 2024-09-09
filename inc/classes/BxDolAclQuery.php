@@ -103,7 +103,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 break;
                 
             case 'password_can_expired':
-                $sWhereClause .= "AND PasswordExpired <> 0";
+                $sWhereClause .= "AND `tal`.`PasswordExpired` <> 0";
                 break;
 
             case 'all':
