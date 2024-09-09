@@ -50,8 +50,6 @@
 }
 
 .background-color (@color) {
-    @a:percentage((1.0-alpha(@color))/5.0);
-    background-color: hsl(hue(@color), saturation(@color), lightness(@color)+@a);
     background-color: @color;
 }
 .column-width (@width) {
