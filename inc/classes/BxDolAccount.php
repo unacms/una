@@ -816,7 +816,8 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
                 $oInformer->add('sys-account-unconfirmed-phone', _t('_sys_txt_account_unconfirmed_phone', $sUrl), BX_INFORMER_ALERT);
             }
         }
-        $this->isNeedChangePassword();
+
+        $this->isNeedChangePassword(false, $oInformer);
     }
 
     /**
@@ -885,7 +886,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         return $this->getPasswordExpiredDate($iPasswordExpiredForMembership, $iAccountId);  
     }
     
-    public function isNeedChangePassword($iAccountId = false)
+    public function isNeedChangePassword($iAccountId = false, $oInformer = false)
     {
         $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         
@@ -907,15 +908,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
          *      - `override_result` - [bool] by ref, if Need Redirect To Change Password = true, otherwise = false, can be overridden in hook processing
          * @hook @ref hook-account-is_need_to_change_password
          */
-        bx_alert('account', 'is_need_to_change_password',  $iAccountId, false, array('override_result' => &$bNeedRedirectToChangePassword));
+        bx_alert('account', 'is_need_to_change_password',  $iAccountId, false, ['override_result' => &$bNeedRedirectToChangePassword]);
         
-        if ($aAccountInfo['password_expired'] >0 && $aAccountInfo['password_expired'] < time() && $bNeedRedirectToChangePassword){
+        if ($aAccountInfo['password_expired'] > 0 && $aAccountInfo['password_expired'] < time() && $bNeedRedirectToChangePassword) {
             if (getParam('sys_account_accounts_force_password_change_after_expiration') == 'on'){
                 header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password'));
                 exit;
             }
-            else{
-                $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
+            else {
+                if(!$oInformer)
+                    $oInformer = BxDolInformer::getInstance();
+
                 $oInformer->add('sys-account-need-to-change-password', _t('_sys_txt_account_need_to_change_password', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password')), BX_INFORMER_ALERT);
             }
         }
