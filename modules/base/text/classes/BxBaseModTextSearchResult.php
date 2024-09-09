@@ -171,9 +171,12 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
     protected function _updateCurrentForContext($sMode, $aParams, &$oProfileContext)
     {
         $CNF = &$this->oModule->_oConfig->CNF;
-            
+        
+        if(empty($aParams['context']))
+            return false;
+
         $oProfileContext = BxDolProfile::getInstance((int)$aParams['context']);
-        if (!$oProfileContext) 
+        if(!$oProfileContext) 
             return false;
 
         $iProfileIdContext = $oProfileContext->id();
