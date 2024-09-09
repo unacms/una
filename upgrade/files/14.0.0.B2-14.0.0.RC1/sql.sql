@@ -38,6 +38,7 @@ INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `typ
 (@iCategoryId, 'sys_storage_s3_acl_enable', '_adm_stg_cpt_option_sys_storage_s3_acl_enable', 'on', 'checkbox', '', '', '', 12),
 (@iCategoryId, 'sys_storage_s3_force_auth_urls', '_adm_stg_cpt_option_sys_storage_s3_force_auth_urls', '', 'digit', '', '', '', 14);
 
+UPDATE `sys_options` SET `value` = '365' WHERE `name` = 'sys_account_accounts_pruning_interval' AND `value` = '0';
 
 SET @iCategoryId = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'agents_general');
 INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
