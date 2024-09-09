@@ -1110,7 +1110,7 @@ BxDolImageTweak.prototype.changePosition = function (){
         $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
         $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + e.offsetY / $(e.currentTarget).height() * 100 + '%');
     });
-    if (window.innerWidth <= 800){
+    if (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0)) {
         $('body').css('overflow', 'hidden')
         $(".bx-image-edit-source-" + $this._sUniqueId).bind('touchmove', function(e){
             var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
@@ -1142,9 +1142,9 @@ BxDolImageTweak.prototype.cancelPosition = function (){
     
 BxDolImageTweak.prototype.savePosition = function (){
     var $this = this;
-    
+    $('body').css('overflow', '')
     $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
-    $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').unbind('dragover'); 
+    $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').unbind('dragover').unbind('touchmove'); 
     $(".bx-image-edit-source-" + $this._sUniqueId).removeClass('bx-image-edit-move')
     
     aPos = $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position').split(' ');
