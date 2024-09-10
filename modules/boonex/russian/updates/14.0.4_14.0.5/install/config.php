@@ -44,6 +44,7 @@ $aConfig = array(
      * Category for language keys.
      */
     'language_category' => array(
+        array('name' => 'Accounts', 'path' => 'bx_accounts/'),
         array('name' => 'Boonex Artificer Template', 'path' => 'bx_artificer/'),
         array('name' => 'Channels', 'path' => 'bx_channels/'),
         array('name' => 'Credits', 'path' => 'bx_credits/'),
