@@ -3,13 +3,14 @@
     <string name="_bx_accnt"><![CDATA[Accounts]]></string>
     <string name="_bx_accounts"><![CDATA[Accounts]]></string>
 
+    <string name="_bx_accounts_option_last_active_sorting"><![CDATA[Enable sorting by Last Active]]></string>
     <string name="_bx_accounts_option_export_to"><![CDATA[Export to]]></string>
     <string name="_bx_accounts_option_export_fields"><![CDATA[Export fields]]></string>
 
     <string name="_bx_accounts_form_display_account_settings_email_popup"><![CDATA[Edit Email]]></string>
     <string name="_bx_accounts_form_display_account_create_popup"><![CDATA[Create new Account]]></string>
     <string name="_bx_accounts_form_display_account_settings_password_popup"><![CDATA[Reset Password]]></string>
-	 <string name="_bx_accounts_form_display_account_send_message"><![CDATA[Send test email]]></string>
+    <string name="_bx_accounts_form_display_account_send_message"><![CDATA[Send test email]]></string>
 
     <string name="_bx_accnt_page_title_sys_manage_administration"><![CDATA[Manage All Accounts]]></string>
     <string name="_bx_accnt_page_title_manage"><![CDATA[Manage Accounts]]></string>

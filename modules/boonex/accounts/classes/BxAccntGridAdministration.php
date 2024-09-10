@@ -44,6 +44,17 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
+        $sSelectClause = $sJoinClause = '';
+        if($this->_oModule->_oConfig->isLastActiveSorting()) {
+            $sSelectClause = ', `ts`.`date` AS `last_active`';
+            $sJoinClause = ' LEFT JOIN `sys_sessions` AS `ts` ON `ts`.`id` = (SELECT `id` FROM `sys_sessions` WHERE `user_id`=`ta`.`id` ORDER BY `date` DESC LIMIT 1)';
+        }
+
+        $this->_aOptions['source'] = bx_replace_markers($this->_aOptions['source'], [
+            'select' => $sSelectClause,
+            'join' => $sJoinClause
+        ]);
+
     	if(!empty($this->_sFilter1Value))
             switch($this->_sFilter1Value) {
                 case 'unconfirmed':
@@ -162,9 +173,9 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         }
     }
 	
-	public function performActionSendMessage()
+    public function performActionSendMessage()
     {
-		$sAction = 'send_message';
+        $sAction = 'send_message';
 		
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -172,24 +183,23 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         if(!$aIds || !is_array($aIds))
             return echoJson(array());
 		
-		$oForm = BxDolForm::getObjectInstance('bx_accounts_account', 'bx_accounts_send_test');
+        $oForm = BxDolForm::getObjectInstance('bx_accounts_account', 'bx_accounts_send_test');
         if (!$oForm)
             return '';
 		
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-        	$aIdsAffected = array();
-			foreach($aIds as $iId) {
-				if(sendMail(BxDolAccount::getInstance()->getEmail($iId), $oForm->getCleanValue('message_subject'), $oForm->getCleanValue('message_text'), 0, [], BX_EMAIL_MASS, 'text', false, ['From' => "=?UTF-8?B?" . base64_encode(getParam('site_title')) . "?= <" . getParam('site_email_notify') . ">"], false)){
-					$aIdsAffected[] = $iId;
-				}	
-			}
-			
+            $aIdsAffected = array();
+                foreach($aIds as $iId) {
+                    if(sendMail(BxDolAccount::getInstance()->getEmail($iId), $oForm->getCleanValue('message_subject'), $oForm->getCleanValue('message_text'), 0, [], BX_EMAIL_MASS, 'text', false, ['From' => "=?UTF-8?B?" . base64_encode(getParam('site_title')) . "?= <" . getParam('site_email_notify') . ">"], false)){
+                        $aIdsAffected[] = $iId;
+                    }	
+                }
+
             echoJson(count($aIdsAffected) > 0 ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
         }
         else {
-            
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-account-send-message', _t('_bx_accounts_form_display_account_send_message'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
                 'form_id' => $oForm->id,
                 'form' => $oForm->getCode(true),
@@ -610,13 +620,16 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     } 
-    
+
     protected function _getCellLastActive($mixedValue, $sKey, $aField, $aRow)
     {
+        if(!isset($aRow['last_active']))
+            $mixedValue = (new BxDolSessionQuery())->getLastActivityAccount($aRow['id']);
+
         $iTs = max((int)$mixedValue, (int)$aRow['active']);
         return parent::_getCellDefault($iTs ? bx_time_js($iTs) : _t('_sys_not_available'), $sKey, $aField, $aRow);
-    } 
-    
+    }
+
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = !empty($mixedValue) ? bx_time_js($mixedValue) : _t('_sys_not_available');
@@ -633,17 +646,27 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         return parent::_getCellDefault(_t('_bx_accnt_grid_confirmation_status_' . $s), $sKey, $aField, $aRow);
     }
 
+    protected function _getOrderFields($bTranslatable = false)
+    {
+        $aResult = parent::_getOrderFields($bTranslatable);
+
+        if(!$bTranslatable && $this->_oModule->_oConfig->isLastActiveSorting())
+            $aResult[] = 'last_active';
+
+        return $aResult;
+    }
+    
     protected function _isCheckboxDisabled($aRow)
     {
         return false;
     }
 
-	protected function _getContentInfo($iId)
+    protected function _getContentInfo($iId)
     {
     	return BxDolAccountQuery::getInstance()->getInfoById($iId);
     }
 
-	protected function _doDelete($iId, $aParams = array())
+    protected function _doDelete($iId, $aParams = array())
     {
         $oAccount = BxDolAccount::getInstance($iId);
         if($oAccount)

@@ -24,6 +24,7 @@ class BxAccntConfig extends BxBaseModGeneralConfig
         $this->CNF = array (
             // some params
             'PARAM_PROFILE_NAME_LENGTH_MAX' => 10,
+            'PARAM_LA_SORTING' => 'bx_accounts_last_active_sorting',
             'PARAM_EXPORT_TO' => 'bx_accounts_export_to',
             'PARAM_EXPORT_FIELDS' => 'bx_accounts_export_fields',
 
@@ -89,6 +90,11 @@ class BxAccntConfig extends BxBaseModGeneralConfig
     public function init(&$oDb)
     {
         $this->_oDb = &$oDb;
+    }
+
+    public function isLastActiveSorting()
+    {
+        return getParam($this->CNF['PARAM_LA_SORTING']) == 'on';
     }
 
     public function getHtmlIds($sKey = '')
