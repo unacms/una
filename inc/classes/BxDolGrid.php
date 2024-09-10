@@ -383,7 +383,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         // sort
         $sSortField = false;
         $iSortDir = 1;
-        if ($sOrderField && !empty($this->_aOptions['sorting_fields']) && is_array($this->_aOptions['sorting_fields']) && in_array($sOrderField, $this->_aOptions['sorting_fields'])) { // explicit order
+        if ($sOrderField && ($aSortingFields = $this->_getOrderFields()) && in_array($sOrderField, $aSortingFields)) { // explicit order
             $sSortField = $sOrderField;
             $iSortDir = 0 === strcasecmp($sOrderDir, 'desc') ? -1 : 1;
         } elseif (!empty($this->_aOptions['field_order'])) { // order by "order" field
@@ -568,11 +568,11 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     {
         $sOrderClause = '';
 
-        if ($sOrderField && is_array($this->_aOptions['sorting_fields']) && in_array($sOrderField, $this->_aOptions['sorting_fields'])) { // explicit order
+        if ($sOrderField && ($aSortingFields = $this->_getOrderFields()) && in_array($sOrderField, $aSortingFields)) { // explicit order
 
             $sDir = (0 === strcasecmp($sOrderDir, 'desc') ? 'DESC' : 'ASC');
 
-            if (is_array($this->_aOptions['sorting_fields_translatable']) && in_array($sOrderField, $this->_aOptions['sorting_fields_translatable'])) {
+            if (($aSortingFieldsTranslatable = $this->_getOrderFieldsTranslatable()) && in_array($sOrderField, $aSortingFieldsTranslatable)) {
 
                 // translatable fields
                 $iLang = BxDolLanguages::getInstance()->getCurrentLangId();
@@ -645,6 +645,17 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected function _getFilterValue()
     {
         return bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['filter_get'])));
+    }
+
+    protected function _getOrderFields($bTranslatable = false)
+    {
+        $sKey = 'sorting_fields' . ($bTranslatable ? '_translatable' : '');
+        return !empty($this->_aOptions[$sKey]) && is_array($this->_aOptions[$sKey]) ? $this->_aOptions[$sKey] : [];
+    }
+
+    protected function _getOrderFieldsTranslatable()
+    {
+        return $this->_getOrderFields(true);
     }
 
     protected function _getOrderValue()

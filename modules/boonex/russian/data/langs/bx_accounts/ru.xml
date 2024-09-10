@@ -3,6 +3,7 @@
     <string name="_bx_accnt"><![CDATA[Аккаунты]]></string>
     <string name="_bx_accounts"><![CDATA[Аккаунты]]></string>
 
+    <string name="_bx_accounts_option_last_active_sorting"><![CDATA[Включить сортировку по последней активности]]></string>
     <string name="_bx_accounts_option_export_to"><![CDATA[Экспортировать в]]></string>
     <string name="_bx_accounts_option_export_fields"><![CDATA[Экспортируемые поля]]></string>
 

@@ -225,7 +225,7 @@ class BxBaseGrid extends BxDolGrid
             'id_wrap' => $sIdWrapper,
             'class_table_wrapper' => $this->_aOptions['responsive'] ? 'bx-grid-table-wrapper-responsive' : '',
             'sortable' => empty($this->_aOptions['field_order']) ? 0 : 1,
-            'sorting' => empty($this->_aOptions['sorting_fields']) ? 0 : 1,
+            'sorting' => empty($this->_getOrderFields()) ? 0 : 1,
             'sorting_field' => $sOrderField,
             'sorting_dir' => $sOrderDir,
         	'bx_if:display_head' => array(
@@ -440,7 +440,7 @@ class BxBaseGrid extends BxDolGrid
     {
         $sHeader = bx_process_output($aField['title']);
 
-        if (!empty($this->_aOptions['sorting_fields']) && is_array($this->_aOptions['sorting_fields']) && in_array($sKey, $this->_aOptions['sorting_fields'])) {
+        if (($aSortingFields = $this->_getOrderFields()) && in_array($sKey, $aSortingFields)) {
             $sHeader = '<a href="javascript:void(0);" class="bx-grid-sort-handle">' . $sHeader . '</a><span class="bx-grid-sort-indi"></span>';
             $aField['attr_head']['bx_grid_sort_head'] = $sKey;
         }

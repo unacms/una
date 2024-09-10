@@ -12,6 +12,7 @@ VALUES (@iTypeId, @sName, '_bx_accounts', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_accounts_last_active_sorting', '', @iCategId, '_bx_accounts_option_last_active_sorting', 'checkbox', '', '', '', 1),
 ('bx_accounts_export_to', 'csv', @iCategId, '_bx_accounts_option_export_to', 'select', '', '', 'a:2:{s:6:"module";s:11:"bx_accounts";s:6:"method";s:21:"get_options_export_to";}', 10),
 ('bx_accounts_export_fields', 'name,email', @iCategId, '_bx_accounts_option_export_fields', 'list', '', '', 'a:2:{s:6:"module";s:11:"bx_accounts";s:6:"method";s:25:"get_options_export_fields";}', 20);
 
@@ -81,7 +82,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `show_total_count`, `override_class_name`, `override_class_file`) VALUES
-('bx_accounts_administration', 'Sql', 'SELECT `ta`.*, `tp`.`status` AS `status`, `ta`.`active`, `ts`.`date` AS `last_active` FROM `sys_accounts` AS `ta` LEFT JOIN `sys_sessions` AS `ts` ON `ta`.`id`=`ts`.`user_id` LEFT JOIN `sys_profiles` AS `tp` ON `ta`.`id`=`tp`.`account_id` AND `tp`.`type`=''system'' WHERE 1 ', 'sys_accounts', 'id', 'logged', 'status', '', 20, NULL, 'start', '', 'name,email,ip,phone', '', 'like', 'email_confirmed,logged,last_active,added', '', 192, 1, 'BxAccntGridAdministration', 'modules/boonex/accounts/classes/BxAccntGridAdministration.php');
+('bx_accounts_administration', 'Sql', 'SELECT `ta`.*, `tp`.`status` AS `status`, `ta`.`active` {select} FROM `sys_accounts` AS `ta` LEFT JOIN `sys_profiles` AS `tp` ON `ta`.`id`=`tp`.`account_id` AND `tp`.`type`=''system'' {join} WHERE 1 ', 'sys_accounts', 'id', 'logged', 'status', '', 20, NULL, 'start', '', 'name,email,ip,phone', '', 'like', 'email_confirmed,logged,added', '', 192, 1, 'BxAccntGridAdministration', 'modules/boonex/accounts/classes/BxAccntGridAdministration.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_accounts_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
