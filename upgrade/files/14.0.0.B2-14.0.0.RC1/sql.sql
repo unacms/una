@@ -10,27 +10,6 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 -- Options
 
-SET @iCategoryId = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'hidden');
-
-INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_embed_microlink_key', '_adm_stg_cpt_option_sys_embed_microlink_key', '', 'digit', '', '', '', '', 300);
-
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_site_title' WHERE `name` = 'site_title';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_site_email' WHERE `name` = 'site_email';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_site_email_notify' WHERE `name` = 'site_email_notify';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_site_tour_home' WHERE `name` = 'site_tour_home';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_site_tour_studio' WHERE `name` = 'site_tour_studio';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_autoupdate' WHERE `name` = 'sys_autoupdate';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_autoupdate_force_modified_files' WHERE `name` = 'sys_autoupdate_force_modified_files';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_smart_app_banner' WHERE `name` = 'smart_app_banner';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_smart_app_banner_ios_app_id' WHERE `name` = 'smart_app_banner_ios_app_id';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_per_page_search_keyword_single' WHERE `name` = 'sys_per_page_search_keyword_single';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_per_page_search_keyword_plural' WHERE `name` = 'sys_per_page_search_keyword_plural';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_live_search_limit' WHERE `name` = 'sys_live_search_limit';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_profiles_search_limit' WHERE `name` = 'sys_profiles_search_limit';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_profile_bot' WHERE `name` = 'sys_profile_bot';
-UPDATE `sys_options` SET `info` = '_adm_stg_inf_option_sys_create_post_form_preloading_list' WHERE `name` = 'sys_create_post_form_preloading_list';
-
 
 SET @iCategoryId = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'storage');
 INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -38,6 +17,7 @@ INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `typ
 (@iCategoryId, 'sys_storage_s3_acl_enable', '_adm_stg_cpt_option_sys_storage_s3_acl_enable', 'on', 'checkbox', '', '', '', 12),
 (@iCategoryId, 'sys_storage_s3_force_auth_urls', '_adm_stg_cpt_option_sys_storage_s3_force_auth_urls', '', 'digit', '', '', '', 14);
 
+UPDATE `sys_options` SET `value` = '365' WHERE `name` = 'sys_account_accounts_pruning_interval' AND `value` = '0';
 
 SET @iCategoryId = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'agents_general');
 INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES

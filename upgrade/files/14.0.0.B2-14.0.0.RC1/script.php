@@ -3,6 +3,9 @@
     if (!$this->oDb->isFieldExists('sys_options', 'info'))
         $this->oDb->query("ALTER TABLE `sys_options` ADD `info` varchar(255) NOT NULL default '' AFTER `caption`");
 
+    $aPathInfo = pathinfo(__FILE__);
+    $this->oDb->executeSQL($aPathInfo['dirname'] . '/sql_update_info.sql');
+
     if (!$this->oDb->isFieldExists('sys_agents_models', 'for_asst'))
         $this->oDb->query("ALTER TABLE `sys_agents_models` ADD `for_asst` tinyint(4) NOT NULL DEFAULT '0' AFTER `params`");
 
