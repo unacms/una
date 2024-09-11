@@ -216,7 +216,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             }
         }
 
-
+        bx_alert('system', 'get_profile_for_page_api', 0, 0, ['override_result' => &$aRv]);
+        
         return $aRv;
     }
 
