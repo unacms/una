@@ -291,15 +291,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function updatePassword($sPassword, $iAccountId = false)
     {
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPassword, $sSalt);
-        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-        $oAccountSender = BxDolAccount::getInstance();
 
         $this->_oQuery->logPassword($iId);
-        $iPasswordExpired = $this->getPasswordExpiredDateByAccount($iAccountId);
         
-        if((int)$this->_oQuery->updatePassword($sPasswordHash, $sSalt, $iId, $iPasswordExpired) > 0) {
+        if((int)$this->_oQuery->updatePassword($sPasswordHash, $sSalt, $iId) > 0) {
             /**
              * @hooks
              * @hookdef hook-account-edited 'account', 'edited' - hook on account edited $oAccount->updatePassword 
@@ -311,10 +310,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
              *      - `action` - [string] action's name, can be reset_password
              * @hook @ref hook-account-edited
              */
-            bx_alert('account', 'edited', $iId, $oAccountSender ? $oAccountSender->id() : $iId, array('action' => 'reset_password'));
+            bx_alert('account', 'edited', $iId, ($iSenderId = getLoggedId()) != 0 ? $iSenderId : $iId, [
+                'action' => 'reset_password'
+            ]);
+
             $this->doAudit($iId, '_sys_audit_action_account_reset_password');
             return true;
         }
+
         return false;
     }
     /**
@@ -847,54 +850,32 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         return md5($a['email'] . $a['salt'] . BX_DOL_SECRET);
     }
     
-    public function getPasswordExpiredDate($iPasswordExpiredForMembership, $iAccountId = false)
+    public function getPasswordChangedDate($mixedAccount = false)
     {
-        if ($iPasswordExpiredForMembership == 0)
+        if(($bEmpty = empty($mixedAccount)) || !is_array($mixedAccount))
+            $mixedAccount = $this->_oQuery->getInfoById(!$bEmpty ? (int)$mixedAccount : $this->_iAccountID);
+
+        $iLastChanged = (int)$mixedAccount['password_changed'];
+        return $iLastChanged ? $iLastChanged : (int)$mixedAccount['added'];
+    }
+
+    public function getPasswordExpiredDate($iPasswordExpiredForMembership, $mixedAccount = false)
+    {
+        if($iPasswordExpiredForMembership == 0)
             return 0;
-        
-        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-        
-        $aAccountInfo = $this->_oQuery->getInfoById($iAccountId);
-                
-        $iLastPassChanged = $this->_oQuery->getLastPasswordChanged($iAccountId);
-        if ($iLastPassChanged == 0)
-            $iLastPassChanged = $aAccountInfo['added'];
 
-        return $iPasswordExpiredForMembership * 86400 + $iLastPassChanged;
+        return $iPasswordExpiredForMembership * 86400 + $this->getPasswordChangedDate($mixedAccount);
     }
-    
-    public function getPasswordExpiredDateByAccount($iAccountId = false)
-    {
-        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-        
-        $oACL = BxDolAcl::getInstance();
 
-        $aProfiles = BxDolAccount::getInstance($iAccountId)->getProfiles();
-        $iPasswordExpiredForMembership = 0;
-        foreach ($aProfiles as $aProfile) {
-            $aMembersipInfo = $oACL->getMemberMembershipInfo($aProfile['id']);
-            $Memberships = [];
-            BxDolAclQuery::getInstance()->getLevels(['type' => 'by_id', 'value' => $aMembersipInfo['id']], $aMembership);
-            if($aMembership['password_expired'] > 0){
-                if ($iPasswordExpiredForMembership > 0 && $aMembership['password_expired'] < $iExpired)
-                    $iPasswordExpiredForMembership = $aMembership['password_expired'];
-                if ($iPasswordExpiredForMembership == 0 )
-                    $iPasswordExpiredForMembership = $aMembership['password_expired'];
-            }
-        }
-
-        return $this->getPasswordExpiredDate($iPasswordExpiredForMembership, $iAccountId);  
-    }
-    
     public function isNeedChangePassword($iAccountId = false, $oInformer = false)
     {
         $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-        
-        $aAccountInfo = $this->getInfo();
-        list($sPageLink, $aPageParams) = bx_get_base_url_inline();
-        $bNeedRedirectToChangePassword = true;
 
-        if (isset($aPageParams['i']) && $aPageParams['i'] == 'account-settings-password')
+        list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+
+        $sChangePasswordUri = 'account-settings-password';
+        $bNeedRedirectToChangePassword = true;
+        if(isset($aPageParams['i']) && $aPageParams['i'] == $sChangePasswordUri)
             $bNeedRedirectToChangePassword = false;
 
         /**
@@ -908,31 +889,39 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
          *      - `override_result` - [bool] by ref, if Need Redirect To Change Password = true, otherwise = false, can be overridden in hook processing
          * @hook @ref hook-account-is_need_to_change_password
          */
-        bx_alert('account', 'is_need_to_change_password',  $iAccountId, false, ['override_result' => &$bNeedRedirectToChangePassword]);
-        
-        if ($aAccountInfo['password_expired'] > 0 && $aAccountInfo['password_expired'] < time() && $bNeedRedirectToChangePassword) {
-            if (getParam('sys_account_accounts_force_password_change_after_expiration') == 'on'){
-                header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password'));
+        bx_alert('account', 'is_need_to_change_password',  $iAccountId, false, [
+            'override_result' => &$bNeedRedirectToChangePassword
+        ]);
+
+        if(!$bNeedRedirectToChangePassword)
+            return;
+
+        $aAccountInfo = $this->getInfo();
+        $aMembershipInfo = BxDolAcl::getInstance()->getMemberMembershipInfo($aAccountInfo['profile_id']);
+        $sChangePasswordUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sChangePasswordUri);
+
+        if(($iPasswordExpiredDate = $this->getPasswordExpiredDate($aMembershipInfo['password_expired'], $aAccountInfo)) && $iPasswordExpiredDate < time()) {
+            if(getParam('sys_account_accounts_force_password_change_after_expiration') == 'on') {
+                header('Location: ' . $sChangePasswordUrl);
                 exit;
             }
             else {
                 if(!$oInformer)
                     $oInformer = BxDolInformer::getInstance();
 
-                $oInformer->add('sys-account-need-to-change-password', _t('_sys_txt_account_need_to_change_password', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password')), BX_INFORMER_ALERT);
+                $oInformer->add('sys-account-need-to-change-password', _t('_sys_txt_account_need_to_change_password', $sChangePasswordUrl), BX_INFORMER_ALERT);
             }
         }
     }
-    
-    public function doAudit($iAccountId, $sAction, $aData = array())
+
+    public function doAudit($iAccountId, $sAction, $aData = [])
     {
         $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-        bx_audit(
-            $iAccountId, 
-            'bx_accounts', 
-            $sAction,  
-            array('content_title' => $this->getEmail(), 'data' => $aData)
-        );
+
+        bx_audit($iAccountId, 'bx_accounts', $sAction,  [
+            'content_title' => $this->getEmail(), 
+            'data' => $aData
+        ]);
     }
 
     /**

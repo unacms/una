@@ -158,10 +158,13 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      * @param $iAccountId - account id to update password for
      * @return number of affected rows
      */
-    public function updatePassword($sPasswordHash, $sSalt, $iAccountId, $iPasswordExpired)
+    public function updatePassword($sPasswordHash, $sSalt, $iAccountId)
     {
-        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `password` = ?, `salt` = ?, `password_expired` = ? WHERE `id`= ?", $sPasswordHash, $sSalt, $iPasswordExpired, $iAccountId);
-        return $this->query($sQuery);
+        return $this->query("UPDATE `sys_accounts` SET `password` = :password, `salt` = :salt, `password_changed` = UNIX_TIMESTAMP() WHERE `id` = :id", [
+            'id' => $iAccountId,
+            'password' => $sPasswordHash,
+            'salt' => $sSalt
+        ]);
     }
 
     /**
@@ -173,23 +176,24 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      */
     public function logPassword($iAccountId)
     {
-        $iCountPassword = (int)getParam('sys_account_accounts_password_log_count');
-        
-        if ($iCountPassword > 0){
-            $sSql = $this->prepare("SELECT `password`, `salt` FROM `sys_accounts` WHERE `id` = ?", $iAccountId);
-            $aAccount = $this->getRow($sSql);
+        $iCount = (int)getParam('sys_account_accounts_password_log_count');
+        if($iCount <= 0)
+            return;
 
-            $sQuery = "INSERT INTO `sys_accounts_password` (`password`, `password_changed`, `salt`, `account_id`) VALUES(:password, :password_changed, :salt, :account_id)";
-            $aBindings = array(
-               'password' => $aAccount['password'],
-               'password_changed' => time(),
-               'salt' => $aAccount['salt'],
-               'account_id' => $iAccountId,
-            );
-            $this->query($sQuery, $aBindings);
-            
-            $this->query($this->prepare("DELETE FROM `sys_accounts_password` WHERE `id` NOT IN (SELECT `id` FROM (SELECT `id` FROM `sys_accounts_password` WHERE `account_id` = ? ORDER BY `password_changed` DESC LIMIT 0, " . getParam('sys_account_accounts_password_log_count') . ") a)", $iAccountId));
-        }
+        $aAccount = $this->getRow("SELECT `password`, `password_changed`, `salt` FROM `sys_accounts` WHERE `id` = :id", [
+            'id' => $iAccountId
+        ]);
+
+        $this->query("INSERT INTO `sys_accounts_password` SET " . $this->arrayToSQL([
+            'account_id' => $iAccountId,
+            'password' => $aAccount['password'],
+            'password_changed' => $aAccount['password_changed'],
+            'salt' => $aAccount['salt'],
+        ]));
+
+        $this->query("DELETE FROM `sys_accounts_password` WHERE `id` NOT IN (SELECT `id` FROM (SELECT `id` FROM `sys_accounts_password` WHERE `account_id` = :account_id ORDER BY `password_changed` DESC LIMIT 0, " . $iCount . ") AS `tap`)", [
+            'account_id' => $iAccountId
+        ]);
     }
     
     public function getLastPasswordChanged($iAccountId)
@@ -202,12 +206,6 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     {
         $sSql = $this->prepare("SELECT * FROM `sys_accounts_password` WHERE `account_id` = ? ", $iAccountId);
         return $this->getAll($sSql);
-    }
-    
-    public function updatePasswordExpired($iAccountId, $iPasswordExpired)
-    {
-        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `password_expired` = ? WHERE `id`= ?", $iPasswordExpired, $iAccountId);
-        return $this->query($sQuery);
     }
     
     /**

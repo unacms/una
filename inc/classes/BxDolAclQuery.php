@@ -105,6 +105,10 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             case 'password_can_expired':
                 $sWhereClause .= "AND `tal`.`PasswordExpired` <> 0";
                 break;
+            
+            case 'password_expired_notify':
+                $sWhereClause .= "AND `tal`.`PasswordExpired` <> 0 AND tal`.`PasswordExpiredNotify` <> 0";
+                break;
 
             case 'all':
                 break;
@@ -239,6 +243,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                     `sys_acl_levels`.`QuotaSize` AS `quota_size`,
                     `sys_acl_levels`.`QuotaNumber` AS `quota_number`,
                     `sys_acl_levels`.`QuotaMaxFileSize` AS `quota_max_file_size`,
+                    `sys_acl_levels`.`PasswordExpired` AS `password_expired`,
                     UNIX_TIMESTAMP(`sys_acl_levels_members`.`DateStarts`) as `date_starts`,
                     UNIX_TIMESTAMP(`sys_acl_levels_members`.`DateExpires`) as `date_expires`,
                     `sys_acl_levels_members`.`State` AS `state`,
@@ -263,7 +268,8 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 `tal`.`Name` AS `name`,
                 `tal`.`QuotaSize` AS `quota_size`,
                 `tal`.`QuotaNumber` AS `quota_number`,
-                `tal`.`QuotaMaxFileSize` AS `quota_max_file_size`
+                `tal`.`QuotaMaxFileSize` AS `quota_max_file_size`,
+                `tal`.`PasswordExpired` AS `password_expired`
             FROM `sys_acl_levels` AS `tal`
             WHERE `tal`.`ID`=?
             LIMIT 1", $iLevel);
@@ -470,11 +476,26 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
         );
     }
 
-    function getProfilesByMembership($mixedLevelId)
+    function getProfilesByMembership($mixedLevelId, $aParams = [])
     {
-    	$aSqlParts = $this->getContentByLevelAsSQLPart('sys_profiles', 'id', $mixedLevelId);
+        $sSelectClause = $sJoinClause = $sWhereClause = '';
 
-    	return $this->getAll("SELECT `sys_profiles`.* FROM `sys_profiles`" . $aSqlParts['join'] . " WHERE 1" . $aSqlParts['where']);
+    	$aSqlParts = $this->getContentByLevelAsSQLPart('sys_profiles', 'id', $mixedLevelId);
+        if(isset($aSqlParts['join'], $aSqlParts['where'])) {
+            $sJoinClause = $aSqlParts['join'];
+            $sWhereClause = $aSqlParts['where'];
+        }
+
+        if(isset($aParams['password_expired'], $aParams['password_expired_notify'])) {
+            $iExpire = (int)$aParams['password_expired'] * 86400;
+            $iNotify = ($iExpire - (int)$aParams['password_expired_notify']) * 86400;
+
+            $sSelectClause .= ", `ta`.`email` AS `email`, IF(`ta`.`password_changed` <> 0, `ta`.`password_changed`, `ta`.`added`) + " . $iExpire . " AS `password_expired`";
+            $sJoinClause .= " LEFT JOIN `sys_accounts` AS `ta` ON `sys_profiles`.`account_id`=`ta`.`id`";
+            $sWhereClause .= " AND IF(`ta`.`password_changed` <> 0, `ta`.`password_changed`, `ta`.`added`) + " . $iNotify . " < UNIX_TIMESTAMP() AND IF(`ta`.`password_changed` <> 0, `ta`.`password_changed`, `ta`.`added`) + " . $iExpire . " >= UNIX_TIMESTAMP()";
+        }
+
+    	return $this->getAll("SELECT `sys_profiles`.*" . $sSelectClause . " FROM `sys_profiles`" . $sJoinClause . " WHERE 1" . $sWhereClause);
     }
 
     function getProfilesByAction($mixedActionName, $aParams = [])

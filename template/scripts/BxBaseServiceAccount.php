@@ -836,14 +836,12 @@ class BxBaseServiceAccount extends BxDol
      */
     public function generateUserNewPwd($iAccountId)
     {
-        $sPwd = genRndPwd(8, false);
+        $sPassword = genRndPwd(8, false);
         $sSalt = genRndSalt();
-        $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
-        
-        $oAccount = BxDolAccount::getInstance($iAccountId);
-        $iPasswordExpired = $oAccount->getPasswordExpiredDateByAccount($iAccountId);
-        
-        $this->_oAccountQuery->updatePassword($sPasswordHash, $sSalt, $iAccountId, $iPasswordExpired);
+        $sPasswordHash = encryptUserPwd($sPassword, $sSalt);
+
+        $this->_oAccountQuery->logPassword($iAccountId);
+        $this->_oAccountQuery->updatePassword($sPasswordHash, $sSalt, $iAccountId);
 
         /**
          * @hooks
@@ -856,9 +854,11 @@ class BxBaseServiceAccount extends BxDol
          *      - `action` - [string] can be forgot_password/change_password or $sDisplayName  (display name for current form)
          * @hook @ref hook-account-edited
          */
-        bx_alert('account', 'edited', $iAccountId, $iAccountId, array('action' => 'forgot_password'));
+        bx_alert('account', 'edited', $iAccountId, $iAccountId, [
+            'action' => 'forgot_password'
+        ]);
 
-        return $sPwd;
+        return $sPassword;
     }
 
     protected function _confirmEmail($sKey)

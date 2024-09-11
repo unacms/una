@@ -2545,6 +2545,10 @@
     <string name="_sys_et_txt_body_account"><![CDATA[{email_header}
 <p>{account_output}</p>
 {email_footer}]]></string>
+    <string name="_sys_et_txt_body_account_password_expired"><![CDATA[{email_header}
+<p>Срок действия вашего пароля истекает {expired_date}</p>
+<p>Пожалуйста, войдите в систему и измените пароль.</p>
+{email_footer}]]></string>
     <string name="_sys_et_txt_body_pruning"><![CDATA[{email_header}
 <p>{pruning_output}</p>
 {email_footer}]]></string>
@@ -2603,6 +2607,7 @@
         <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Статус аккаунта изменён на Заблокированный]]></string>
         <string name="_sys_et_txt_name_manage_approve"><![CDATA[Одобрение: Связаться с автором контента]]></string>
 	<string name="_sys_et_txt_name_system_account"><![CDATA[Новые аккаунты]]></string>
+        <string name="_sys_et_txt_name_system_account_password_expired"><![CDATA[Срок действия пароля истекает]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Результат очистки]]></string>
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Обновление не удалось]]></string>
 	<string name="_sys_et_txt_name_upgrade_modules_failed"><![CDATA[Обновление модулей не удалось]]></string>
@@ -2626,6 +2631,7 @@
         <string name="_sys_et_txt_subject_manage_approve"><![CDATA[Одобрение. Вопрос о '{content_title}'.]]></string>
         <string name="_sys_et_txt_body_manage_approve"><![CDATA[]]></string>
 	<string name="_sys_et_txt_subject_account"><![CDATA[{site_name} - {account_count} аккаунтов, созданных вчера]]></string>
+        <string name="_sys_et_txt_subject_account_password_expired"><![CDATA[Срок действия вашего пароля скоро истечет]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} - результат очистки]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} - обновление не удалось]]></string>
 	<string name="_sys_et_txt_subject_upgrade_modules_failed"><![CDATA[Не удалось обновить модули на сайте {site_name}]]></string>

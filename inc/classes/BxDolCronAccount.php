@@ -24,42 +24,32 @@ class BxDolCronAccount extends BxDolCron
     {
         set_time_limit(0);
         ignore_user_abort();
-        
-        $aEmails = [];
-        
+
         /* password expired soon email */
         bx_import('BxTemplAcl');
 
         $oAclDb = BxDolAclQuery::getInstance();
-        $oAccountDb = BxDolAccountQuery::getInstance();
 
+        $aEmails = [];
         $aMemberships = [];
-        $oAclDb->getLevels(['type' => 'password_can_expired'], $aMemberships, false);
+        $oAclDb->getLevels(['type' => 'password_expired_notify'], $aMemberships, false);
 
         foreach($aMemberships as $aMembership) {
-            $aProfiles = $oAclDb->getProfilesByMembership([$aMembership['id']]);
+            $aProfiles = $oAclDb->getProfilesByMembership([$aMembership['id']], [
+                'password_expired' => $aMembership['password_expired'], 
+                'password_expired_notify' => $aMembership['password_expired_notify']
+            ]);
+
             foreach($aProfiles as $aProfile) {
-                $oAccount = BxDolAccount::getInstance($aProfile['account_id']);
-                if(!$oAccount)
+                if(in_array($aProfile['email'], $aEmails))
                     continue;
 
-                $iPasswordExpired = $oAccount->getPasswordExpiredDate($aMembership['password_expired']);
-                $aAccountInfo = $oAccountDb->getInfoById($aProfile['account_id']);
-                $iLastPassChanged = $oAccountDb->getLastPasswordChanged($aProfile['account_id']);
-                if (
-                    !in_array($aAccountInfo['email'], $aEmails) 
-                    && ($aMembership['password_expired'] - $aMembership['password_expired_notify']) * 86400 + $iLastPassChanged < time()
-                    && $iPasswordExpired >= time()
-                ){
-                    $aPlus = array();
-                    $aPlus['expired_date'] = date('d.m.Y', $iPasswordExpired);
-                    $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_AccountPasswordExpired', $aPlus);
+                $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_AccountPasswordExpired', [
+                    'expired_date' => date('d.m.Y', $aProfile['password_expired'])
+                ]);
 
-                    sendMail($aAccountInfo['email'], $aTemplate['Subject'], $aTemplate['Body'], $aProfile['id']);
-                    $aEmails[] = $aAccountInfo['email'];
-                }
-
-                $oAccountDb->updatePasswordExpired($aProfile['account_id'], $iPasswordExpired);
+                sendMail($aProfile['email'], $aTemplate['Subject'], $aTemplate['Body'], $aProfile['id']);
+                $aEmails[] = $aProfile['email'];                
             }
         }
 

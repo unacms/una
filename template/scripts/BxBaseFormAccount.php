@@ -114,14 +114,15 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
  */
 class BxBaseFormAccount extends BxTemplFormView
 {
-	static $FIELD_EMAIL = 'email';
+    static $FIELD_EMAIL = 'email';
     static $FIELD_PASSWORD = 'password';
+    static $FIELD_PASSWORD_CHANGED = 'password_changed';
     static $FIELD_SALT = 'salt';
     static $FIELD_ADDED = 'added';
     static $FIELD_CHANGED = 'changed';
     static $FIELD_IP = 'ip';
     static $FIELD_REFERRED = 'referred';
-	static $FIELD_PHONE = 'phone';
+    static $FIELD_PHONE = 'phone';
 
     protected $_bSetPendingApproval = false;
 
@@ -176,81 +177,90 @@ class BxBaseFormAccount extends BxTemplFormView
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
+        $iNow = time();
+
     	$sEmail = isset($aValsToAdd[self::$FIELD_EMAIL]) ? $aValsToAdd[self::$FIELD_EMAIL] : $this->getCleanValue(self::$FIELD_EMAIL);
     	$sEmail = trim(strtolower($sEmail));
-		
-		$sPhone = isset($aValsToAdd[self::$FIELD_PHONE]) ? $aValsToAdd[self::$FIELD_PHONE] : $this->getCleanValue(self::$FIELD_PHONE);
+
+        $sPhone = isset($aValsToAdd[self::$FIELD_PHONE]) ? $aValsToAdd[self::$FIELD_PHONE] : $this->getCleanValue(self::$FIELD_PHONE);
     	$sPhone = trim(strtolower($sPhone));
-    	
+
         $sPwd = isset($aValsToAdd[self::$FIELD_PASSWORD]) ? $aValsToAdd[self::$FIELD_PASSWORD] : $this->getCleanValue(self::$FIELD_PASSWORD);
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
 
-        $aValsToAdd = array_merge($aValsToAdd, array (
-        	self::$FIELD_EMAIL => $sEmail, 
+        return parent::insert(array_merge($aValsToAdd, [
+            self::$FIELD_EMAIL => $sEmail, 
             self::$FIELD_PASSWORD => $sPasswordHash,
+            self::$FIELD_PASSWORD_CHANGED => $iNow,
             self::$FIELD_SALT => $sSalt,
-            self::$FIELD_ADDED => time(),
-            self::$FIELD_CHANGED => time(),
+            self::$FIELD_ADDED => $iNow,
+            self::$FIELD_CHANGED => $iNow,
             self::$FIELD_IP => getVisitorIP(),
             self::$FIELD_REFERRED => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '',
-			self::$FIELD_PHONE => $sPhone,
-        ));
-        return parent::insert ($aValsToAdd, $isIgnore);
+            self::$FIELD_PHONE => $sPhone,
+        ]), $isIgnore);
     }
 
-    function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    function update ($val, $aValsToAdd = [], &$aTrackTextFieldsChanges = null)
     {
-        $sPwd = $this->getCleanValue(self::$FIELD_PASSWORD);
-        if ($sPwd) {
+        $oDb = BxDolAccountQuery::getInstance();
+        $iNow = time();
+
+        $_aValsToAdd = [
+            self::$FIELD_CHANGED => $iNow
+        ];        
+
+        if(($sPwd = $this->getCleanValue(self::$FIELD_PASSWORD))) {
+            $oDb->logPassword($val);
+
             $sSalt = genRndSalt();
-            $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
-            
-            $oAccount = BxDolAccount::getInstance($val, true);
-            $iPasswordExpired = $oAccount->getPasswordExpiredDateByAccount($val);
-            
-            BxDolAccountQuery::getInstance()->logPassword($val);
-            BxDolAccountQuery::getInstance()->updatePasswordExpired($val, $iPasswordExpired);
+            $sPasswordHash = encryptUserPwd($sPwd, $sSalt);            
+
+            $_aValsToAdd = array_merge($_aValsToAdd, [
+                self::$FIELD_PASSWORD => $sPasswordHash,
+                self::$FIELD_PASSWORD_CHANGED => $iNow,
+                self::$FIELD_SALT => $sSalt
+            ]);
         }
 
-        $aValsToAdd = array_merge(
-            $aValsToAdd,
-            array (self::$FIELD_CHANGED => time()),
-            $sPwd ? array (self::$FIELD_PASSWORD => $sPasswordHash, self::$FIELD_SALT => $sSalt) : array()
-        );
-        
-        $bResult = parent::update ($val, $aValsToAdd, $aTrackTextFieldsChanges);
-        
-        if ($bResult){
-            $oAccount = BxDolAccount::getInstance($val, true);
-            if ($oAccount) { 
-                $aAccountInfo = $oAccount->getInfo();
-                /**
-                 * @hooks
-                 * @hookdef hook-account-change_receive_news 'account', 'change_receive_news' - hook after change receive_news parameter for account
-                 * - $unit_name - equals `system`
-                 * - $action - equals `change_receive_news` 
-                 * - $object_id - not used 
-                 * - $sender_id - not used 
-                 * - $extra_params - array of additional params with the following array keys:
-                 *      - `account_id` - [int] account id 
-                 *      - `old_value` - [bool] old value for receive_news parameter
-                 *      - `new_value` - [bool] new value for receive_news parameter
-                 *      - `email` - [string] account's email
-                 * @hook @ref hook-account-change_receive_news
-                 */
-                bx_alert('account', 'change_receive_news', 0, false, array('account_id' => $val, 'old_value' => $aAccountInfo['receive_news'], 'new_value' => $this->getCleanValue('receive_news'), 'email' => $aAccountInfo['email']));
-            }
+        $aInfoOld = $oDb->getInfoById($val);
+
+        $bResult = parent::update($val, array_merge($aValsToAdd, $_aValsToAdd), $aTrackTextFieldsChanges);
+        if($bResult) {
+            $aInfoNew = $oDb->getInfoById($val);
+
+            /**
+             * @hooks
+             * @hookdef hook-account-change_receive_news 'account', 'change_receive_news' - hook after change receive_news parameter for account
+             * - $unit_name - equals `system`
+             * - $action - equals `change_receive_news` 
+             * - $object_id - not used 
+             * - $sender_id - not used 
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `account_id` - [int] account id 
+             *      - `old_value` - [bool] old value for receive_news parameter
+             *      - `new_value` - [bool] new value for receive_news parameter
+             *      - `email` - [string] account's email
+             * @hook @ref hook-account-change_receive_news
+             */
+            bx_alert('account', 'change_receive_news', 0, false, [
+                'account_id' => $val, 
+                'old_value' => $aInfoOld['receive_news'], 
+                'new_value' => $aInfoNew['receive_news'], 
+                'email' => $aInfoNew['email']]
+            );
         }
+
         return $bResult;
     }
 
-	protected function genCustomInputAgreement ($aInput)
+    protected function genCustomInputAgreement ($aInput)
     {
     	$oPermalink = BxDolPermalinks::getInstance();
         return '<div>' . _t('_sys_form_account_input_agreement_value', bx_absolute_url($oPermalink->permalink('page.php?i=terms')), bx_absolute_url($oPermalink->permalink('page.php?i=privacy'))) . '</div>';
     }
-    
+
     protected function _setCustomError ($s)
     {
         $this->aInputs['do_submit']['error'] = $s;

@@ -1378,7 +1378,7 @@ CREATE TABLE `sys_accounts` (
   `referred` varchar(255) NOT NULL DEFAULT '',
   `login_attempts` tinyint(4) NOT NULL DEFAULT '0',
   `locked` tinyint(4) NOT NULL DEFAULT '0',
-  `password_expired` int(11) NOT NULL DEFAULT '0',
+  `password_changed` int(11) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`(191)),
