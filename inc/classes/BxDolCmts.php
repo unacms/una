@@ -1590,11 +1590,30 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $this->deleteUniqueIds($iCmtId);
 
         $iCount = (int)$this->getCommentsCountAll(0, true);
-        return [
+        $aResult = [
             'id' => $iCmtId,
             'count' => $iCount,
             'countf' => $iCount > 0 ? $this->getCounter() : ''
         ];
+
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()) {
+            $oSockets->sendEvent($this->getSocketName(), $iObjId, 'comment_deleted', json_encode(array_merge($aResult, [
+                'author_id' => $iPerformerId
+            ])));
+
+            /**
+             * Send 'content edited' event.
+             * Note. 0 is used as $iContentId to allow to subscribe on all events at once.
+             */
+            $oSockets->sendEvent($this->_aSystem['module'], 0, 'edited', json_encode([
+                'id' => $iObjId,
+                'author_id' => $this->getObjectAuthorId(),
+                'cmt_author_id' => $aCmt['cmt_author_id'],
+                'peformer_id' => $iPerformerId
+            ]));
+        }
+
+        return $aResult;
     }
 
     public function add($aValues)
@@ -1765,11 +1784,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'countf' => $iCount > 0 ? $this->getCounter(['show_script' => false]) : ''
         ];
 
-        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()) {
             $oSockets->sendEvent($this->getSocketName(), $iObjId, 'comment_added', json_encode(array_merge($aResult, [
                 'author_id' => $iPerformerId, 
                 'anchor' => $this->getItemAnchor($iCmtId)
             ])));
+
+            /**
+             * Send 'content edited' event.
+             * Note. 0 is used as $iContentId to allow to subscribe on all events at once.
+             */
+            $oSockets->sendEvent($this->_aSystem['module'], 0, 'edited', json_encode([
+                'id' => $iObjId,
+            ]));
+        }
 
         return $aResult;
     }
@@ -1821,7 +1849,27 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aAuditParams = $this->_prepareAuditParams($iCmtId, ['comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']]);
         bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_edit_comment', $aAuditParams);
 
-        return ['id' => $iCmtId, 'content' => $this->_getContent($aCmt, $aBp, $aDp)];
+        $aResult = [
+            'id' => $iCmtId, 
+            'content' => $this->_getContent($aCmt, $aBp, $aDp)
+        ];
+
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()) {
+            $oSockets->sendEvent($this->getSocketName(), $iObjId, 'comment_edited', json_encode(array_merge($aResult, [
+                'author_id' => $iPerformerId, 
+                'anchor' => $this->getItemAnchor($iCmtId)
+            ])));
+
+            /**
+             * Send 'content edited' event.
+             * Note. 0 is used as $iContentId to allow to subscribe on all events at once.
+             */
+            $oSockets->sendEvent($this->_aSystem['module'], 0, 'edited', json_encode([
+                'id' => $iObjId,
+            ]));
+        }
+
+        return $aResult;
     }
 
     public function serviceGetAuthor ($iContentId)

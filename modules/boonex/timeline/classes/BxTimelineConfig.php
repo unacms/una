@@ -109,6 +109,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_AUTHOR' => 'object_owner_id',
             'FIELD_OWNER_ID' => 'owner_id',
             'FIELD_SYSTEM' => 'system',
+            'FIELD_TYPE' => 'type',
+            'FIELD_ACTION' => 'action',
             'FIELD_OBJECT_ID' => 'object_id', //Note. For 'Direct Timeline Posts' ('system' db field == 0) this field contains post's author profile ID.
             'FIELD_OBJECT_OWNER_ID' => 'object_owner_id',
             'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
@@ -247,7 +249,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'option' => 'bx_timeline_',
             'common_post' => 'timeline_common_',
             'cache_list_hot' => 'bx_timeline_list_hot',
-            'cache_item' => 'bx_timeline_item_'
+            'cache_item' => 'bx_timeline_item_',
+            'socket' => 'bx_timeline',
         );
 
         $this->_aObjects = array_merge($this->_aObjects, array(
@@ -767,6 +770,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             return $mixedResult;
         
         return $this->_aCacheTableCheckFields;
+    }
+
+    public function getSocketName($aParams = [])
+    {
+        return $this->getPrefix('socket');
     }
 
     public function getPostFormDisplay($sType)

@@ -3946,6 +3946,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
 
+            $this->onEdit($iId);
+
             return $this->_bIsApi ? [ 'id' => $iId ] : [ 'id' => $iId ];
         }
 
@@ -4748,8 +4750,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
-        if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iContentId]);
+
+        if($this->_oConfig->isSystem($aEvent[$CNF['FIELD_TYPE']], $aEvent[$CNF['FIELD_ACTION']])) {
             //--- Request event's data from content module and update it in the Timeline DB.
             $this->_oTemplate->getDataCached($aEvent);
 
@@ -4798,11 +4801,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
          * @hook @ref hook-bx_timeline-defer_common
          */
         bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, [
-            'source' => $this->_oConfig->getName() . '_' . $iContentId,
-            'owner_id' => $aEvent['owner_id'],
+            'source' => $aEvent[$CNF['FIELD_SOURCE']],
+            'owner_id' => $aEvent[$CNF['FIELD_OWNER_ID']],
             'object_author_id' => $iObjectAuthorId,
-            'privacy_view' => $aEvent['object_privacy_view'],
+            'privacy_view' => $aEvent[$CNF['FIELD_OBJECT_PRIVACY_VIEW']],
         ]);
+
+        /**
+         * Note. 0 is used as $iContentId to allow to subscribe on all events at once.
+         */
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
+            $oSockets->sendEvent($this->_oConfig->getSocketName(), 0, 'added', json_encode([
+                'id' => $aEvent[$CNF['FIELD_ID']],
+                'author_id' => $aEvent[$CNF['FIELD_OBJECT_OWNER_ID']],
+                'peformer_id' => $iSenderId
+            ]));
+    }
+
+    public function onEdit($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iContentId]);
+        $iSenderId = $this->_oConfig->isSystem($aEvent[$CNF['FIELD_TYPE']], $aEvent[$CNF['FIELD_ACTION']]) ? $aEvent['owner_id'] : $aEvent['object_id'];
+
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
+            $oSockets->sendEvent($this->_oConfig->getSocketName(), 0, 'edited', json_encode([
+                'id' => $aEvent[$CNF['FIELD_ID']],
+                'author_id' => $aEvent[$CNF['FIELD_OBJECT_OWNER_ID']],
+                'peformer_id' => $iSenderId
+            ]));
     }
 
     public function onPublished($iContentId)
@@ -5134,6 +5162,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
              */
             bx_alert($this->_oConfig->getObject('alert'), 'delete', $aEvent[$CNF['FIELD_ID']], $iUserId);
         //--- Event -> Delete for Alerts Engine ---//
+
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
+            $oSockets->sendEvent($this->_oConfig->getSocketName(), 0, 'deleted', json_encode([
+                'id' => $aEvent[$CNF['FIELD_ID']],
+                'author_id' => $aEvent[$CNF['FIELD_OBJECT_OWNER_ID']],
+                'peformer_id' => $iUserId
+            ]));
     }
 
     public function getParams($sView = '', $sType = '', $iOwnerId = 0, $iStart = 0, $iPerPage = 0, $sFilter = BX_TIMELINE_FILTER_ALL, $aModules = array(), $iTimeline = 0)
