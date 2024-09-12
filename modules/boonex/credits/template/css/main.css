@@ -2,6 +2,11 @@
     color: #334455;
 }
 
+/*--- 'Auto suggestion' popups ---*/
+.ui-autocomplete.ui-front {
+    z-index: 10001;
+}
+
 /*--- Bundles ---*/
 .bx-credits-bundle-cnt > div {
     -webkit-flex: 0 1 auto; 
