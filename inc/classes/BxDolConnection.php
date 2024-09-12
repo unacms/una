@@ -394,13 +394,14 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
              * Call socket.
              */
             if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
-                $sMessage = json_encode([
+                $aMessage = [
                     'object' => $this->_sObject, 
-                    'action' => 'added'
-                ]);
-
-                $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', $sMessage);
-                $oSockets->sendEvent('sys_connections', $iContent , 'changed', $sMessage);
+                    'action' => 'added',
+                    
+                ];
+                
+                $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iInitiator)])));
+                $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iContent)])));
             }
         }
     }
@@ -454,13 +455,13 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
          * Call socket.
          */
         if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
-            $sMessage = json_encode([
+            $aMessage = json_encode([
                 'object' => $this->_sObject, 
-                'action' => 'deleted'
+                'action' => 'deleted',
             ]);
 
-            $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', $sMessage);
-            $oSockets->sendEvent('sys_connections', $iContent , 'changed', $sMessage);
+            $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iInitiator)])));
+            $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iContent)])));
         }
     }
 
