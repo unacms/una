@@ -142,7 +142,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             $sForm = $oForm->getCode();
             if(!$oForm->isSubmitted()) {
                 $this->getCssJs();
-                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : $this->parseHtmlByName('block_request_form.html', array(
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : $this->parseHtmlByName('block_request_form.html', array(
                     'style_prefix' => $this->_oConfig->getPrefix('style'),
                     'js_object' => $sJsObject,
                     'js_code' => $this->getJsCode('main'),
@@ -152,7 +152,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             }
 
             if(!$oForm->isValid())
-                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : array('content' => $sForm, 'content_id' => $sFormId, 'eval' => $sEval);
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_form_request', 'immutable' => true]]])] : array('content' => $sForm, 'content_id' => $sFormId, 'eval' => $sEval);
         }
         
         $sEmail = $oForm->getCleanValue('email');
