@@ -50,6 +50,18 @@ class BxBasePage extends BxDolPage
             'help_popup' => $sHtmlId . '-help-popup-',
         );
         $this->addMarkers(array('site_title' => getParam('site_title')));
+        if (isLogged() && $oProfile = BxDolProfile::getInstance()) {
+            $this->addMarkers([
+                'logged_profile_id' => $oProfile->id(),;
+                'logged_account_id' => $oProfile->getAccountId()]);
+                'logged_profile_module' => $oProfile->getModule()]);
+                'logged_display_name' => $oProfile->getDisplayName()]);
+                'logged_profile_url' => $oProfile->getUrl()
+            ]);
+        }
+        if (isset($GLOBALS['bxReplaceableMarkersPages'])) {
+            $this->addMarkers($GLOBALS['bxReplaceableMarkersPages']);
+        }
     }
 
     public function performActionGetHelp ()
