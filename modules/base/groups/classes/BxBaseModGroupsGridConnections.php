@@ -23,6 +23,12 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
     protected $_bPaidJoin;
     protected $_bMember;
     protected $_bManageMembers;
+    
+    protected $_sParamsDivider;
+
+    protected $_sFilter1Name;
+    protected $_sFilter1Value;
+    protected $_aFilter1Values;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -50,12 +56,32 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         $this->_bMember = $this->_oModule->isFan($this->_aContentInfo[$CNF['FIELD_ID']]);
         $this->_bManageMembers = $this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) === CHECK_ACTION_RESULT_ALLOWED || $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) === CHECK_ACTION_RESULT_ALLOWED;
 
+        $this->_sParamsDivider = '#-#';
+
+        if($this->_bRoles) {
+            $this->_sFilter1Name = 'frole';
+            $this->_aFilter1Values = [];
+            foreach($this->_aRoles as $iRoleId => $sRoleTitle)
+                $this->_aFilter1Values[] = [
+                    'key' => $this->_roleItoS($iRoleId), 
+                    'value' => $sRoleTitle
+                ];
+
+            if(($sFilter1 = bx_get($this->_sFilter1Name))) {
+                $this->_sFilter1Value = bx_process_input($sFilter1);
+                $this->_aQueryAppend[$this->_sFilter1Name] = $this->_sFilter1Value;
+            }
+        }
+
         $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_iGroupProfileId, $this->_bOwner ? false : true);
-        $this->addMarkers(array(
+        if($this->_bRoles)
+            $aSQLParts['join'] .= $this->_oModule->_oDb->prepareAsString(" LEFT JOIN `" . $CNF['TABLE_ADMINS'] . "` AS `ca` ON (`p`.`id` = `ca`.`fan_id` AND `ca`.`group_profile_id`= ?)", $this->_iGroupProfileId);
+
+        $this->addMarkers([
             'profile_id' => $this->_iGroupProfileId,
             'join_connections' => $aSQLParts['join'],
             'content_module' => $this->_sContentModule,
-        ));
+        ]);
     }
 
     public function getCode ($isDisplayHeader = true)
@@ -470,12 +496,106 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
             return array($iId2, $iId1);
     }
 
+    protected function _getFilterControls()
+    {
+        parent::_getFilterControls();
+
+        $sResult = '';
+        if($this->_bRoles && !empty($this->_sFilter1Name))
+            $sResult .= $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values);
+        $sResult .= $this->_getSearchInput();
+
+        return $sResult;
+    }
+
+    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues, $bAddSelectOne = true)
+    {
+        if(empty($sFilterName) || empty($aFilterValues))
+            return '';
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
+
+        $aInputValues = [];
+        if($bAddSelectOne && ($sLangKey = 'filter_item_select_one_' . $sFilterName))
+            $aInputValues[''] = _t(!empty($CNF['T'][$sLangKey]) ? $CNF['T'][$sLangKey] : '_Select_one');
+
+        foreach($aFilterValues as $aFilterValue)
+            $aInputValues[$aFilterValue['key']] = _t($aFilterValue['value']);
+
+        $aInputModules = [
+            'type' => 'select',
+            'name' => $sFilterName,
+            'attrs' => [
+                'id' => 'bx-grid-' . $sFilterName . '-' . $this->_sObject,
+                'onChange' => 'javascript:' . $sJsObject . '.onChangeMembersFilter(this)'
+            ],
+            'value' => $sFilterValue,
+            'values' => $aInputValues
+        ];
+
+        $oForm = new BxTemplFormView([]);
+        return $oForm->genRow($aInputModules);
+    }
+
+    protected function _getSearchInput()
+    {
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
+
+        $aInputSearch = [
+            'type' => 'text',
+            'name' => 'search',
+            'attrs' => [
+                'id' => 'bx-grid-search-' . $this->_sObject,
+                'onKeyup' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeMembersFilter(this)',
+                'onBlur' => 'javascript:' . $sJsObject . '.onChangeMembersFilter(this)',
+            ]
+        ];
+
+        $oForm = new BxTemplFormView([]);
+        return $oForm->genRow($aInputSearch);
+    }
+
     protected function _addJsCss()
     {
         parent::_addJsCss();
 
-        if($this->_bRoles)
+        if($this->_bRoles) {
+            $this->_oModule->_oTemplate->addCss(['main.css']);
             $this->_oModule->_oTemplate->addJs(['modules/base/groups/js/|main.js', 'main.js']);
+            $this->_oModule->_oTemplate->addJsTranslation(['_sys_grid_search']);
+        }
+    }
+
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        $aFilterParts = explode($this->_sParamsDivider, $sFilter);
+        switch (substr_count($sFilter, $this->_sParamsDivider)) {
+            case 1:
+                list($this->_sFilter1Value, $sFilter) = $aFilterParts;
+                break;
+        }
+
+        if(strpos($this->_aOptions['source'], 'WHERE') === false)
+            $this->_aOptions['source'] .= ' WHERE 1';
+
+        if($this->_bRoles && !empty($this->_sFilter1Value)) {
+            $this->_sFilter1Value = $this->_roleStoI($this->_sFilter1Value);
+
+            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString($this->_sFilter1Value == 0 ? " AND (ISNULL(`ca`.`role`) OR `ca`.`role` = ?)" : " AND `ca`.`role` = ?", $this->_sFilter1Value);
+        }
+
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+
+    protected function _roleItoS($iRole)
+    {
+        return 'r' . $iRole;
+    }
+
+    protected function _roleStoI($sRole)
+    {
+        return (int)substr($sRole, 1);
     }
 }
 
