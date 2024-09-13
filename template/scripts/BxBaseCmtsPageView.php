@@ -54,7 +54,8 @@ class BxBaseCmtsPageView extends BxTemplPage
 
     public function getCode()
     {
-        BxDolTemplate::getInstance()->setPageUrl($this->_oCmts->getViewUrl($this->_iCmtId));
+        if($this->_oCmts)
+            BxDolTemplate::getInstance()->setPageUrl($this->_oCmts->getViewUrl($this->_iCmtId));
 
         return parent::getCode();
     }
