@@ -34,6 +34,21 @@ class BxCreditsFormCredit extends BxTemplFormView
         if(($iUserId = bx_get('user_id')) !== false)
                 $this->_iUserId = (int)$iUserId;
 
+        if(isset($this->aInputs[$CNF['FIELD_C_AMOUNT']])) {
+            $sInfo = '_bx_credits_form_credit_input_amount_inf_';
+            switch($this->aParams['display']) {
+                case $CNF['OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_REQUEST']:
+                    $sInfo .= 'wr';
+                    break;
+                
+                default:
+                    $sInfo = '';
+            }
+
+            if($sInfo)
+                $this->aInputs[$CNF['FIELD_C_AMOUNT']]['info'] = _t($sInfo);
+        }
+
         if(isset($this->aInputs[$CNF['FIELD_C_MESSAGE']])) {
             $sInfo = '_bx_credits_form_credit_input_message_inf_';
             switch($this->aParams['display']) {
@@ -47,10 +62,6 @@ class BxCreditsFormCredit extends BxTemplFormView
 
                 case $CNF['OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_REQUEST']:
                     $sInfo .= 'wr';
-                    break;
-                
-                case $CNF['OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_CONFIRM']:
-                    $sInfo .= 'wc';
                     break;
             }
 

@@ -57,14 +57,13 @@
     <string name="_bx_credits_form_credit_input_result"><![CDATA[Result]]></string>
     <string name="_bx_credits_form_credit_input_sys_amount"><![CDATA[Amount]]></string>
     <string name="_bx_credits_form_credit_input_amount"><![CDATA[Amount]]></string>
-    <string name="_bx_credits_form_credit_input_amount_inf"><![CDATA[Minimum amount is {wdw_minimum} credits and remaining balance after withdrawal should be {wdw_remaining} credits.]]></string>
+    <string name="_bx_credits_form_credit_input_amount_inf_wr"><![CDATA[Minimum amount is {wdw_minimum} credits and remaining balance after withdrawal should be {wdw_remaining} credits.]]></string>
     <string name="_bx_credits_form_credit_input_amount_err"><![CDATA[This field is essential. Please fill it in.]]></string>
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Message]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Message]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_g"><![CDATA[]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_s"><![CDATA[Indicate the purpose of sending to reflect it in history for future references]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_wr"><![CDATA[Payment instructions and other notes]]></string>
-    <string name="_bx_credits_form_credit_input_message_inf_wc"><![CDATA[Payment confirmation and other notes]]></string>
     <string name="_bx_credits_form_credit_input_profile"><![CDATA[Profile]]></string>
     <string name="_bx_credits_form_credit_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_credits_form_credit_input_do_submit"><![CDATA[Submit]]></string>

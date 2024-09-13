@@ -85,7 +85,6 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'OBJECT_FORM_CREDIT_DISPLAY_GRANT' => 'bx_credits_credit_grant',
             'OBJECT_FORM_CREDIT_DISPLAY_SEND' => 'bx_credits_credit_send',
             'OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_REQUEST' => 'bx_credits_credit_withdraw_request',
-            'OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_CONFIRM' => 'bx_credits_credit_withdraw_confirm',
             'OBJECT_FORM_BUNDLE' => 'bx_credits_bundle',
             'OBJECT_FORM_BUNDLE_DISPLAY_ADD' => 'bx_credits_bundle_add',
             'OBJECT_FORM_BUNDLE_DISPLAY_EDIT' => 'bx_credits_bundle_edit',
