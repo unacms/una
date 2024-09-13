@@ -455,10 +455,10 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
          * Call socket.
          */
         if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
-            $aMessage = json_encode([
+            $aMessage = [
                 'object' => $this->_sObject, 
                 'action' => 'deleted',
-            ]);
+            ];
 
             $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iInitiator)])));
             $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iContent)])));
