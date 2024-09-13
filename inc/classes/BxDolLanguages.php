@@ -205,7 +205,7 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
 
             if(($iNumArgs = func_num_args()) > 1)
                 for($i = 1; $i < $iNumArgs; $i++)
-                    $str = str_replace('{' . ($i - 1) . '}', func_get_arg($i), $str);
+                    $str = str_replace('{' . ($i - 1) . '}', (string)func_get_arg($i), $str);
 
             return $str;
         } else
