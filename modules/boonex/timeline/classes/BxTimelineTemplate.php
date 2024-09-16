@@ -2017,7 +2017,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     $aEvent['content']['embed'] = $oEmbed->getLinkHTML(current($aEvent['content']['links'])['url']);
             }
 
-            if ($aEvent['content']['embed'] == '')
+            if (empty($aEvent['content']['embed']))
                 $aEvent['content']['embed'] = bx_linkify_embeded($aEvent['content']['text']);
         }
 

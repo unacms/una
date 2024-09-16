@@ -320,7 +320,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             'form_attrs' => array(
                 'id' => $sForm,
                 'name' => $sForm,
-                'action' => BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, array('i' => $aPageParams['i']))),
+                'action' => !empty($aPageParams['i']) ? BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, array('i' => $aPageParams['i']))) : $sPageLink,
                 'method' => 'post'
             ),
             'params' => array(
