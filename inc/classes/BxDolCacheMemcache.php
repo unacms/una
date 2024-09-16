@@ -21,8 +21,22 @@ class BxDolCacheMemcache extends BxDolCache
         parent::__construct();
         if (class_exists('Memcache')) {
             $this->oMemcache = new Memcache();
-            if (!$this->oMemcache->connect (getParam('sys_cache_memcache_host'), getParam('sys_cache_memcache_port')))
-                $this->oMemcache = null;
+            $sHost = getParam('sys_cache_memcache_host');
+            if (false === strpos($sHost, ',')) {
+                if (!$this->oMemcache->connect (getParam('sys_cache_memcache_host'), getParam('sys_cache_memcache_port')))
+                    $this->oMemcache = null;
+            } 
+            else {
+                // setting memcache.hash_strategy = consistent is recommended
+                $aHosts = explode(',', $sHost);
+                if ($aHosts) {
+                    foreach ($aHosts as $s)
+                        $this->oMemcache->addServer(trim($s), getParam('sys_cache_memcache_port'));
+                } 
+                else {
+                    $this->oMemcache = null;
+                }
+            }
         }
     }
 
