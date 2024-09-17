@@ -28,7 +28,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_events_enable_subscribe_wo_join', '', @iCategId, '_bx_events_option_enable_subscribe_wo_join', 'checkbox', '', '', '', 55),
 ('bx_events_enable_subscribe_for_past_events', 'on', @iCategId, '_bx_events_option_enable_subscribe_for_past_events', 'checkbox', '', '', '', 57),
 ('bx_events_internal_notifications', '', @iCategId, '_bx_events_option_internal_notifications', 'checkbox', '', '', '', 60),
-('bx_events_reminder_interval', '24', @iCategId, '_bx_events_option_reminder_interval', 'select', '24,48', '', '', 70);
+('bx_events_reminder_interval', '24', @iCategId, '_bx_events_option_reminder_interval', 'select', '24,48', '', '', 70),
+('bx_events_rm_from_timeline_after', '0', @iCategId, '_bx_events_option_rm_from_timeline_after', 'digit', '', '', '', 80);
 
 -- PAGES
 

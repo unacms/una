@@ -20,6 +20,7 @@
     <string name="_bx_events_option_enable_subscribe_wo_join"><![CDATA[Allow to mark as Interested without joining (marking as Going)]]></string>
     <string name="_bx_events_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
     <string name="_bx_events_option_enable_subscribe_for_past_events"><![CDATA[Enable join for past events]]></string>
+    <string name="_bx_events_option_rm_from_timeline_after"><![CDATA[Delete past events from Timeline after N hours (0 - don't delete)]]></string>
 
     <string name="_bx_events_form_profile"><![CDATA[Events]]></string>
     <string name="_bx_events_form_profile_display_add"><![CDATA[Add Event]]></string>

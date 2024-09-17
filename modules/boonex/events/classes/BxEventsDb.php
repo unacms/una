@@ -53,6 +53,42 @@ class BxEventsDb extends BxBaseModGroupsDb
         ));
     }
 
+    public function getEntriesBy($aParams = [])
+    {
+        if(isset($aParams['type']) && !in_array($aParams['type'], ['past']))
+            return parent::getEntriesBy($aParams); 
+            
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query', 1 => []]];
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.*";
+
+        switch($aParams['type']) {
+            case 'past':
+                if(!empty($aParams['date_from'])) {
+                    $aMethod['params'][1]['date_from'] = (int)$aParams['date_from'];
+
+                    $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_DATE_END'] . "` >= :date_from";
+                }
+
+                $aMethod['params'][1]['date_to'] = !empty($aParams['date_to']) ? (int)$aParams['date_to'] : time();
+
+                $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_DATE_END'] . "` < :date_to";
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_ENTRIES'] . "` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
     public function getEntriesByDate($sDateFrom, $sDateTo, $iEventId = 0, $aSQLPart = array())
     {
         $CNF = &$this->_oConfig->CNF;

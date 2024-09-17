@@ -114,6 +114,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'PARAM_SBS_WO_JOIN' => 'bx_events_enable_subscribe_wo_join',
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_events_per_page_for_favorites_lists',
             'PARAM_USE_IN' => 'bx_events_internal_notifications',
+            'PARAM_DELETE_FROM_TIMELINE_AFTER' => 'bx_events_rm_from_timeline_after',
 
             // objects
             'OBJECT_STORAGE' => 'bx_events_pics',
