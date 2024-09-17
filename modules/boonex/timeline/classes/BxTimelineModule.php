@@ -727,7 +727,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aRv['form'] = ['id' => 'bx_timeline', 'type' => 'form', 'name' => 'feed_edit', 'data' => $aFrm, 'request' => ['immutable' => true]];
         $aItemData = $this->getItemData($iId);
         if(is_array($aItemData) && !empty($aItemData['event']))
-            $aRv['item'] = $this->_oTemplate->_getPostApi($aItemData['event']);
+            $aRv['item'] = $this->_oTemplate->getPostApi($aItemData['event']);
         return $aRv;
     }
 
@@ -2228,7 +2228,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aItemData = $this->getItemData($iItemId, $aParams);
 
         if (bx_is_api()){
-            $aItemData['event'] = $this->_oTemplate->_getPostApi($aItemData['event'], $aParams);
+            $aItemData['event'] = $this->_oTemplate->getPostApi($aItemData['event'], $aParams);
             return [bx_api_get_block('feed_item', $aItemData)];
         }
         

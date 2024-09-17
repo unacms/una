@@ -195,11 +195,15 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      */
     public function serviceGetData($aParams)
     {
-        if(is_string($aParams)){
-            $aParams = json_decode($aParams, true);
-        }
+        if(is_string($aParams))
+            $aParams = bx_api_get_browse_params($aParams, true);
 
-        return $this->serviceGetBlockView($aParams['params']['type'], $aParams['params']['start'], $aParams['params']['per_page'], $aParams['params']['modules']);
+        return call_user_func_array([$this, 'serviceGetBlockView'], [
+            isset($aParams['type']) ? $aParams['type'] : '',
+            isset($aParams['start']) ? (int)$aParams['start'] : -1,
+            isset($aParams['per_page']) ? (int)$aParams['per_page'] : -1,
+            isset($aParams['modules']) ? $aParams['modules'] : [],
+        ]);
     }
     
     /**
