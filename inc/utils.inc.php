@@ -716,8 +716,12 @@ function echoJson($a)
 function clear_xss($val)
 {
     // HTML Purifier plugin
+    global $logged;
     global $oHtmlPurifier;
-    if (!isset($oHtmlPurifier) && !$GLOBALS['logged']['admin']) {
+
+    $bAdmin = isset($logged) && $logged['admin'];
+
+    if (!isset($oHtmlPurifier) && !$bAdmin) {
         HTMLPurifier_Bootstrap::registerAutoload();
 
         $oConfig = HTMLPurifier_Config::createDefault();
@@ -775,11 +779,14 @@ function clear_xss($val)
         $oHtmlPurifier = new HTMLPurifier($oConfig);
     }
 
-    if (!$GLOBALS['logged']['admin'])
+    /**
+     * Note. I'm not sure if double 'purify' is needed for non-admins.
+     */
+    if(!$bAdmin)
         $val = $oHtmlPurifier->purify($val);
 
     $sNewVal = $val;
-    if (!$GLOBALS['logged']['admin'])
+    if(!$bAdmin)
         $sNewVal = $oHtmlPurifier->purify($val);
 
     /**
@@ -2453,6 +2460,9 @@ function bx_log($sObject, $mixed)
 
 function bx_birthday2age($sBirthday)
 {
+    if(!$sBirthday)
+        return 0;
+
     $iPosSpace = strpos($sBirthday, ' ');
     if($iPosSpace !== false)
         $sBirthday = trim(substr($sBirthday, 0, $iPosSpace));
@@ -2463,8 +2473,10 @@ function bx_birthday2age($sBirthday)
     $iCdMonth = (int)date('n');
     $iCdDay = (int)date('j');
 
-    $iResult = $iCdYear - (int)$aDate[0];
-    if($iCdMonth < (int)$aDate[1] || ($iCdMonth == (int)$aDate[1] && $iCdDay < (int)$aDate[2]))
+    $iResult = 0;
+    if(isset($aDate[0]))
+        $iResult = $iCdYear - (int)$aDate[0];
+    if((isset($aDate[1]) && $iCdMonth < (int)$aDate[1]) || (isset($aDate[1], $aDate[2]) && $iCdMonth == (int)$aDate[1] && $iCdDay < (int)$aDate[2]))
         $iResult -= 1;
 
     return $iResult;
