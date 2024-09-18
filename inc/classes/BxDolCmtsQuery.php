@@ -359,6 +359,15 @@ class BxDolCmtsQuery extends BxDolDb
                     break;
             }
 
+        bx_alert('comment', 'get_comments', 0, $iAuthorId, [
+            'data_type' => 'structure',
+            'system' => $this->_oMain->getSystemInfo(), 
+            'select_clause' => &$sSelectClause, 
+            'join_clause' => &$sJoinClause, 
+            'where_clause' => &$sWhereClause,  
+            'params' => &$aBindings
+        ]);
+        
         $sQuery = "SELECT
                 `tc`.`cmt_id`, 
                 `tc`.`cmt_replies`, 
@@ -366,6 +375,9 @@ class BxDolCmtsQuery extends BxDolDb
             FROM `{$this->_sTable}` AS `tc`
             LEFT JOIN `{$this->_sTableIds}` AS `ti` ON `tc`.`cmt_id` = `ti`.`cmt_id` AND `ti`.`system_id` = :system_id $sJoinClause
             WHERE `tc`.`cmt_object_id` = :cmt_object_id" . $sWhereClause;
+        
+       
+        
         return $this->getAll($sQuery, $aBindings);
     }
 
