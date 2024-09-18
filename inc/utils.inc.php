@@ -1630,9 +1630,9 @@ function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgn
         foreach($mixedParams as $sKey => $sValue) {
             if (!is_array($sValue)) {
                 if ($bEncodeParams) {
-                    if (!in_array($sKey, $aIgnoreParams))
+                    if ($sKey && !in_array($sKey, $aIgnoreParams))
                         $sKey = rawurlencode($sKey);
-                    if (!in_array($sValue, $aIgnoreParams))
+                    if ($sValue && !in_array($sValue, $aIgnoreParams))
                         $sValue = rawurlencode($sValue);
                 }
                 $sParams .= $sKey . '=' . $sValue . '&';
@@ -1640,9 +1640,9 @@ function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgn
             else {
                 foreach($sValue as $sSubValue) {
                     if ($bEncodeParams) {
-                        if (!in_array($sKey, $aIgnoreParams))
+                        if ($sKey && !in_array($sKey, $aIgnoreParams))
                             $sKey = rawurlencode($sKey);
-                        if (!in_array($sSubValue, $aIgnoreParams))
+                        if ($sSubValue && !in_array($sSubValue, $aIgnoreParams))
                             $sSubValue = rawurlencode($sSubValue);
                     }
                     $sParams .= $sKey . '[]=' . $sSubValue . '&';
