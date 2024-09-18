@@ -376,11 +376,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
 
             $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
-            foreach($aPosts as &$aPost)
-                $aPost = $this->_getPostApi(array_merge($aPost, [
+            foreach($aPosts as &$aPost) {
+                $aPost = array_merge($aPost, [
                     'menu_actions' => $oMenuActions,
                     'menu_manage' => $oMenuManage
-                ]), $aParams);
+                ]);
+
+                $aPost = $this->_getPostApi($aPost, $aParams);
+            }
 
             return $aPosts;
         }
