@@ -20,15 +20,6 @@ class BxCreditsGridHistoryAdministration extends BxCreditsGrid
         $this->_sDefaultSortingOrder = 'DESC';
     }
 
-    public function getCode($isDisplayHeader = true)
-    {
-        $sResult = parent::getCode($isDisplayHeader);
-        if(!empty($sResult) && $isDisplayHeader)
-            $sResult = $this->_oModule->_oTemplate->getJsCode('withdraw') . $sResult;
-
-        return $sResult;
-    }
-
     public function performActionGrant()
     {
         $sAction = 'grant';

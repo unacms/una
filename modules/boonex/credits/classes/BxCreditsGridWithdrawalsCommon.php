@@ -43,6 +43,15 @@ class BxCreditsGridWithdrawalsCommon extends BxCreditsGridWithdrawalsAdministrat
         return echoJson($this->_onPerformAction($aResult));
     }
 
+    public function getCode($isDisplayHeader = true)
+    {
+        $sResult = parent::getCode($isDisplayHeader);
+        if(!empty($sResult) && $isDisplayHeader)
+            $sResult = $this->_oModule->_oTemplate->getJsCode('withdraw') . $sResult;
+
+        return $sResult;
+    }
+
     protected function _getActionWithdrawRequest($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if(!$this->_bWithdraw)
