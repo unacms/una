@@ -38,6 +38,41 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         
         return $aResult;
     }
+    
+    public function processingAPI () 
+    {
+        $aResult = parent::processingAPI();
+        
+        switch($this->_sMode) {
+            case 'created_entries':
+                if(isset($this->_aParams['author']))
+                    $aResult['params']['author'] = $this->_aParams['author'];
+                break;
+
+            case 'joined_entries':
+                if(isset($this->_aParams['joined_profile']))
+                    $aResult['params']['joined_profile'] = $this->_aParams['joined_profile'];
+                break;
+
+            case 'followed_entries':
+                if(isset($this->_aParams['followed_profile']))
+                    $aResult['params']['followed_profile'] = $this->_aParams['followed_profile'];
+                break;
+
+            case 'context':
+                if(isset($this->_aParams['context']))
+                    $aResult['params']['context'] = $this->_aParams['context'];
+                break;
+
+            case 'connections':
+                foreach(['object', 'type', 'profile', 'profile2', 'mutual'] as $sParam)
+                    if(isset($this->_aParams[$sParam]))
+                        $aResult['params'][$sParam] = $this->_aParams[$sParam];
+                break;
+        }
+        
+        return $aResult;
+    }
 
     protected function addConditionsForPrivateContent($CNF, $oProfile, $aCustomGroup = array()) 
     {
