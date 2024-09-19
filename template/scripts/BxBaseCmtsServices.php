@@ -656,22 +656,23 @@ class BxBaseCmtsServices extends BxDol
             $aCmts = array_slice($aCmts, 0, $aBp['per_view']); 
             $aParams['start_from'] = $aBp['start'] + $aBp['per_view'];
         }
+
         $aCmtsRv = [];
         foreach ($aCmts as $aCmt) {
             $aBp['order_way'] = 'asc';
-            $oCmt = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
-            if($oCmt === false)
+            $aCmts = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
+            if($aCmts === false)
                 continue;
 
-            if(($sKey = array_shift(array_keys($oCmt))) && $oCmt[$sKey]['data']['cmt_parent_id'] > 0){
-                $aParent = $oCmts->getCommentSimple((int)$oCmt[$sKey]['data']['cmt_parent_id']);
-                $oCmt[$sKey]['data']['cmt_parent'] = [
+            if(($aKeys = array_keys($aCmts)) && ($sKey = array_shift($aKeys)) && $aCmts[$sKey]['data']['cmt_parent_id'] > 0) {
+                $aParent = $oCmts->getCommentSimple((int)$aCmts[$sKey]['data']['cmt_parent_id']);
+                $aCmts[$sKey]['data']['cmt_parent'] = [
                     'data' => $aParent,
                     'author_data' => BxDolProfile::getData($aParent['cmt_author_id'])
                 ];
             }
 
-            $aCmtsRv[] = $oCmt;
+            $aCmtsRv[] = $aCmts;
         }
         
         $aData = [

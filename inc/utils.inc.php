@@ -1940,7 +1940,7 @@ function bx_srv_ic($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bI
 
 function bx_replace_markers($mixed, $aMarkers)
 {
-    if (empty($aMarkers))
+    if (empty($mixed) || empty($aMarkers))
         return $mixed;
 
     if (is_array($mixed)) {
