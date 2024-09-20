@@ -44,6 +44,9 @@ import url(../../../../../../../template/css/common.css);
 .bx-main.bx-pt-application .bx-menu-toolbar-padding {
     padding-top: 0;
 }
+.bx-main.bx-pt-application .bx-main-column.narrow {
+    z-index: 4999;
+}
 .bx-main.bx-pt-application .bx-main-column.narrow.bx-mc-narrowed .bx-mc-cnt {
     padding: 0;
 }
