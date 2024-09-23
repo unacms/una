@@ -47,15 +47,16 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
             $aProfiles = array_slice($aProfiles, 0, $iMax);
 
         $i = 0;
-        foreach ($aProfiles as $iProfileId => $aProfile) {
-            $oProfile = BxDolProfile::getInstance($iProfileId);
+        foreach ($aProfiles as $aProfile) {
+            $oProfile = BxDolProfile::getInstance((int)$aProfile['id']);
             if(!$oProfile)
                 continue;
 
+            $iId = $oProfile->id();
             $sName = $oProfile->getDisplayName();
             $aTmplVarsProfile = [
-            	'html_id' => $this->_oConfig->getHtmlIds('profile') . $aProfile['id'],
-                'id' => $oProfile->id(),
+                'html_id' => $this->_oConfig->getHtmlIds('profile') . $iId,
+                'id' => $iId,
                 'url' => $oProfile->getUrl(),
                 'name' => strmaxtextlen($sName, $CNF['PARAM_PROFILE_NAME_LENGTH_MAX'], '...'),
                 'name_attr' => bx_html_attribute($sName)
