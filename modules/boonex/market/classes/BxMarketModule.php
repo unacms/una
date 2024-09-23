@@ -1439,6 +1439,19 @@ class BxMarketModule extends BxBaseModTextModule
         $this->checkAllowedHide($aDataEntry, true);
         return echoJson(array('reload' => 1));
     }
+
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+
+        if($this->_bIsApi) 
+            foreach(['PRICE_SINGLE', 'PRICE_RECURRING', 'DURATION_RECURRING', 'TRIAL_RECURRING'] as $sKey)
+                $aResult[$CNF['FIELD_' . $sKey]] = $aContentInfo[$CNF['FIELD_' . $sKey]];
+
+        return $aResult;
+    }
 }
 
 /** @} */
