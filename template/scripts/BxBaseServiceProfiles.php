@@ -1039,7 +1039,8 @@ class BxBaseServiceProfiles extends BxDol
             'profile_template' => &$sProfileTemplate,
             'profiles' => &$aProfiles
         ));
-        
+
+        $aProfilesData = [];
         foreach ($aProfiles as $aProfile) {
             if (!$bShowAll && $iActiveProfileId == $aProfile['id'])
                 continue;
