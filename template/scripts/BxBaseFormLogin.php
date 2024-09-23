@@ -112,6 +112,11 @@ class BxBaseFormLogin extends BxTemplFormView
         $this->_iRole = $iRole == BX_DOL_ROLE_ADMIN ? BX_DOL_ROLE_ADMIN : BX_DOL_ROLE_MEMBER;
     }
 
+    public function getRememberMe()
+    {
+        return isset($this->aInputs['rememberMe']) ? (bool)$this->getCleanValue('rememberMe') : bx_is_remember_me();
+    }
+
     public function getLoginError ()
     {
         return isset($this->aInputs['ID']['error']) ? $this->aInputs['ID']['error'] : '';

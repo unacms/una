@@ -649,7 +649,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_account_accounts_force_password_change_after_expiration', '_adm_stg_cpt_option_sys_accounts_force_password_change_after_expiration', '', 'checkbox', '', '', '', 58),
 
 (@iCategoryId, 'sys_account_switch_to_profile_redirect', '_adm_stg_cpt_option_sys_account_switch_to_profile_redirect', 'back', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:38:"get_options_switch_to_profile_redirect";s:5:"class";s:18:"BaseServiceAccount";}', '', '', 60),
-(@iCategoryId, 'sys_account_switch_to_profile_redirect_custom', '_adm_stg_cpt_option_sys_account_switch_to_profile_redirect_custom', '', 'digit', '', '', '', 61);
+(@iCategoryId, 'sys_account_switch_to_profile_redirect_custom', '_adm_stg_cpt_option_sys_account_switch_to_profile_redirect_custom', '', 'digit', '', '', '', 61),
+
+(@iCategoryId, 'sys_account_remember_me', '_adm_stg_cpt_option_sys_account_remember_me', 'on', 'checkbox', '', '', '', 70);
 --
 -- CATEGORY: ACL
 --

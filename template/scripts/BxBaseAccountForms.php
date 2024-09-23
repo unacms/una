@@ -220,7 +220,7 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         // login to the created account automatically
         if ($bNeedToLogin)
-            bx_login($iAccountId);
+            bx_login($iAccountId, bx_is_remember_me());
 
         return $iProfileId;
     }
@@ -328,7 +328,7 @@ class BxBaseAccountForms extends BxDolProfileForms
             // relogin with new password
             bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('action' => 'change_password'));
             bx_logout();
-            bx_login($aAccountInfo['id']);
+            bx_login($aAccountInfo['id'], bx_is_remember_me());
         }
 
         // check if other text info was changed - if auto-appproval is off

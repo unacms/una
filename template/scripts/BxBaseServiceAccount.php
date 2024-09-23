@@ -886,7 +886,7 @@ class BxBaseServiceAccount extends BxDol
             return _t("_sys_txt_confirm_email_error_occured");
 
         // login to user's account automatically
-        bx_login($aData['account_id']);
+        bx_login($aData['account_id'], bx_is_remember_me());
 
         return (int)$aData['account_id'];
     }

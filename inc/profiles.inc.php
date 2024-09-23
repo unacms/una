@@ -188,6 +188,11 @@ function bx_logout($bNotify = true)
     BxDolSession::getInstance()->setUserId(0);
 }
 
+function bx_is_remember_me()
+{
+    return getParam('sys_account_remember_me') == 'on';
+}
+
 /**
  * Check if user is logged in (necessary cookies are present) and set some global variables
  */

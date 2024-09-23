@@ -28,7 +28,7 @@ if (isset($_POST['ID'])) { // login form is submitted
         if ($bLoginSuccess) {
             $s = 'OK';
             $oAccount = BxDolAccount::getInstance(trim($oForm->getCleanValue('ID')));
-            $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
+            $aAccount = bx_login($oAccount->id(), $oForm->getRememberMe());
         }
         else {
             $s = $oForm->getLoginError();
@@ -56,12 +56,12 @@ if (isset($_POST['ID'])) { // login form is submitted
             && (getParam('sys_account_activation_2fa_lifetime') == 0 || (time() - $aAccountInfo['logged'] > getParam('sys_account_activation_2fa_lifetime')))){
             $oSession = BxDolSession::getInstance();
             $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID, trim($oForm->getCleanValue('ID')));
-            $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_IS_REMEMBER, ($oForm->getCleanValue('rememberMe') ? true : false));
+            $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_IS_REMEMBER, $oForm->getRememberMe());
             header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2'));
         }
         else{
     	   
-            $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
+            $aAccount = bx_login($oAccount->id(), $oForm->getRememberMe());
 
             $sUrlRelocate = $oForm->getCleanValue('relocate');
             if (!$sUrlRelocate || 0 !== strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
