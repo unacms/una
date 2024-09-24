@@ -29,7 +29,38 @@ class BxBaseCmtsServices extends BxDol
 
         return $oCmts->serviceGetAuthor((int)$aCmt['cmt_id']);
     }
-    
+
+    public function serviceGetBlockContent($sSystem = '', $iObjectId = 0, $iCommentId = 0)
+    {
+        $bIsApi = bx_is_api();
+
+        if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
+            $sSystem = bx_process_input($sSystem);
+
+        if(empty($iObjectId) && ($iObjectId = bx_get('id')) !== false)
+            $iObjectId = bx_process_input($iObjectId, BX_DATA_INT);
+
+        if(empty($iCommentId) && ($iCommentId = bx_get('cmt_id')) !== false)
+            $iCommentId = bx_process_input($iCommentId, BX_DATA_INT);
+
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
+        if(!$oCmts || !$oCmts->isEnabled())
+            return $bIsApi ? [] : '';
+
+        if($bIsApi) {
+            $aSystem = $oCmts->getSystemInfo();
+
+            return [bx_api_get_block('comment_content', [
+                'author' => $oCmts->getObjectAuthorId(),
+                'title' => $oCmts->getObjectTitle(),
+                'text' => bx_is_srv($aSystem['module'], 'get_text') ?  bx_srv($aSystem['module'], 'get_text', [$iObjectId]) : '',
+                'link' => bx_api_get_relative_url($oCmts->getBaseUrl())
+            ])];
+        }
+
+        return '';
+    }
+
     public function serviceGetBlockAuthor($sSystem = '', $iObjectId = 0, $iCommentId = 0)
     {
         if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)

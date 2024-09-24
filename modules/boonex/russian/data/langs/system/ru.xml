@@ -1995,6 +1995,7 @@
 	<string name="_cmt_page_view_header"><![CDATA[Комментарий к '{object_title}']]></string>
 	<string name="_cmt_page_view_title"><![CDATA[Комментарий к <a href="{object_url}">{object_title}</a>]]></string>
         <string name="_cmt_page_view_title_author"><![CDATA[Автор комментария]]></string>
+        <string name="_cmt_page_view_title_content"><![CDATA[Прокомментированный контент]]></string>
 	<string name="_cmt_download_attached_file"><![CDATA[Скачать файл]]></string>
 	<string name="_cmt_view_attached_image"><![CDATA[Просмотреть изображение]]></string>
 	<string name="_cmt_load_more_comments_head"><![CDATA[Увидеть новые комментарии...]]></string>
@@ -3516,6 +3517,7 @@
         <string name="_sys_page_block_title_dashboard_reports"><![CDATA[Панель - жалобы]]></string>
         <string name="_sys_page_block_title_system_cmts_view"><![CDATA[Просмотр комментария]]></string>
         <string name="_sys_page_block_title_system_cmts_view_author"><![CDATA[Автор комментария]]></string>
+        <string name="_sys_page_block_title_system_cmts_view_content"><![CDATA[Прокомментированный контент]]></string>
 	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
         <string name="_sys_page_block_title_system_audit_administration"><![CDATA[Аудит]]></string>
     <string name="_sys_page_block_title_logout"><![CDATA[Выход]]></string>

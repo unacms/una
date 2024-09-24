@@ -2019,6 +2019,7 @@
 	<string name="_cmt_page_view_header"><![CDATA[Comment to '{object_title}']]></string>
 	<string name="_cmt_page_view_title"><![CDATA[Comment to <a href="{object_url}">{object_title}</a>]]></string>
         <string name="_cmt_page_view_title_author"><![CDATA[Comment author]]></string>
+        <string name="_cmt_page_view_title_content"><![CDATA[Comment content]]></string>
 	<string name="_cmt_download_attached_file"><![CDATA[Download file]]></string>
 	<string name="_cmt_view_attached_image"><![CDATA[View image]]></string>
 	<string name="_cmt_load_more_comments_head"><![CDATA[See newer comments...]]></string>
@@ -3554,6 +3555,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_page_block_title_dashboard_reports"><![CDATA[Dashboard - Reports]]></string>
     <string name="_sys_page_block_title_system_cmts_view"><![CDATA[View Comment]]></string>
     <string name="_sys_page_block_title_system_cmts_view_author"><![CDATA[Comment Author]]></string>
+    <string name="_sys_page_block_title_system_cmts_view_content"><![CDATA[Commented Content]]></string>
     <string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
     <string name="_sys_page_block_title_system_audit_administration"><![CDATA[Audit]]></string>
     <string name="_sys_page_block_title_logout"><![CDATA[Log out]]></string>
