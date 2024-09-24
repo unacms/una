@@ -1489,6 +1489,33 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_text get_text
+     * 
+     * @code bx_srv('bx_timeline', 'get_text', [...]); @endcode
+     * 
+     * Get content text by content ID. Is used in "Content Info Objects" system.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @return an array with content info. Empty array is returned if something is wrong.
+     * 
+     * @see BxTimelineModule::serviceGetText
+     */
+    /** 
+     * @ref bx_timeline-get_text "get_text"
+     */
+    public function serviceGetText ($iContentId)
+    {
+        $sResult = parent::serviceGetText($iContentId);
+        if(!$sResult)
+            return $sResult;
+    
+        return $this->_oConfig->getDescription($sResult, $this->_getFieldValue('FIELD_OBJECT_OWNER_ID', $iContentId), '');
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
      * @subsubsection bx_timeline-get_search_result_unit get_search_result_unit
      * 
      * @code bx_srv('bx_timeline', 'get_search_result_unit', [...]); @endcode

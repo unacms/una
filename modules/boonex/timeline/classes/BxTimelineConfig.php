@@ -411,7 +411,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aPregPatterns = array(
             "meta_title" => "/<title>(.*)<\/title>/",
             "meta_description" => "/<meta[\s]+[^>]*?name[\s]?=[\s\"\']+description[\s\"\']+content[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",
-            "url" => "/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%#\/\.\w\-_!\(\)]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/"
+            "url" => "/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%#\/\.\w\-_!\(\)]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/",
+            "marker" => "/\{[A-Za-z\-_]*\}/"
         );
 
         $this->_aBriefCardsTags = array('a', 'b', 'i');
@@ -957,6 +958,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             $sResult = 'media';
 
         return $this->CNF['T']['txt_sample_with_' . $sResult];
+    }
+    
+    public function getDescription($s, $mixedProfile = false, $sMethodLength = 'getCharsDisplayMaxTitle')
+    {
+        if(preg_match($this->getPregPattern('marker'), $s))
+            $s = $this->getTitle($s, $mixedProfile, $sMethodLength);
+
+        return $s;
     }
 
     public function getViewUrl($iOwnerId, $bAbsolute = true)
