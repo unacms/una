@@ -52,6 +52,7 @@ class BxBaseCmtsServices extends BxDol
 
             return [bx_api_get_block('comment_content', [
                 'author' => $oCmts->getObjectAuthorId(),
+                'module' => $aSystem['module'],
                 'title' => bx_is_srv($aSystem['module'], 'get_title') ?  bx_srv($aSystem['module'], 'get_title', [$iObjectId]) : '',
                 'text' => bx_is_srv($aSystem['module'], 'get_text') ?  bx_srv($aSystem['module'], 'get_text', [$iObjectId]) : '',
                 'link' => bx_api_get_relative_url($oCmts->getBaseUrl())

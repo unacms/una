@@ -44,6 +44,14 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $CNF = &$oModule->_oConfig->CNF;
 
         $aVars = parent::getTmplVarsText($aData);
+        
+        $bIcon = getParam($CNF['PARAM_USE_ICON']) == 'on';
+        if($this->_bIsApi) {
+            if($bIcon)
+                $aVars['icon'] = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aData[$CNF['FIELD_THUMB']]);
+
+            return $aVars;
+        }
 
         //--- Process RAW Cover
         $bCoverRaw = !empty($CNF['FIELD_COVER_RAW']) && !empty($aData[$CNF['FIELD_COVER_RAW']]);
@@ -77,7 +85,6 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $bIsAllowEditIcon = $bIsAllowEditCover;
 
         $sIcon = '';
-        $bIcon = getParam($CNF['PARAM_USE_ICON']) == 'on';
         if($bIcon) {
             $mixedIcon = $oModule->getEntryImageData($aData, 'FIELD_THUMB', ['OBJECT_IMAGES_TRANSCODER_THUMB', 'OBJECT_IMAGES_TRANSCODER_GALLERY']);
             if($mixedIcon !== false) {
