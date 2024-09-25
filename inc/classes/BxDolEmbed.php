@@ -83,6 +83,7 @@ class BxDolEmbed extends BxDolFactoryObject
     
     public function getData ($sUrl, $sTheme)
     {
+        $sUrl = $this->cleanYoutubeUrl($sUrl);
         $sData = BxDolEmbedQuery::getLocal($sUrl, $sTheme, $this->_sTableName);
         if(!$sData) {
             $sData = $this->getDataFromApi($sUrl, $sTheme); 
@@ -96,6 +97,26 @@ class BxDolEmbed extends BxDolFactoryObject
     public function getDataFromApi ($sUrl, $sTheme)
     {
         // override this function in particular embed provider class
+    }
+    
+    function cleanYoutubeUrl($url) {
+        $parsedUrl = parse_url($url);
+        if (isset($parsedUrl['host']) && $parsedUrl['host'] === 'youtu.be') {
+            if (isset($parsedUrl['query'])) {
+                parse_str($parsedUrl['query'], $queryParams);
+                if (isset($queryParams['si'])) {
+                    unset($queryParams['si']);
+                }
+                $queryString = http_build_query($queryParams);
+                $cleanUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $parsedUrl['path'];
+                if (!empty($queryString)) {
+                    $cleanUrl .= '?' . $queryString;
+                }
+                return $cleanUrl;
+            }
+            return $url;
+        }
+        return $url;
     }
 }
 
