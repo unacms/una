@@ -2044,7 +2044,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         else
             $oMenuManage = $aEvent['menu_manage'];
 
-        $aEvent['menu_manage'] = $oMenuManage !== false && $oMenuManage->setEvent($aEvent) ? $oMenuManage->getCodeAPI() : [];
+        $aEvent['menu_manage'] = $oMenuManage !== false && $oMenuManage->setEvent($aEvent) ? $oMenuManage->getShortCodeAPI() : [];
 
         if ($aParams['type'] != 'owner')
             $aEvent['owners'] = $this->_getTmplVarsTimelineOwner($aEvent);
