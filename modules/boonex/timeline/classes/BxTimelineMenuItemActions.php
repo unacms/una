@@ -390,6 +390,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sAction = $this->_aEvent['action'];
         $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
 
+        if($this->_bIsApi)
+            return [
+                'id' => $aItem['id'],
+                'name' => $aItem['name'],
+                'display_type' => 'element',
+                'data' => $this->_oModule->serviceGetRepostElementBlockApi($this->_aEvent['owner_id'], $sType, $sAction, $iObjectId, $aRepostsParams)
+            ];
+
         $sMethodName = '';
         $aMethodParams = [];
         switch($this->_sMode) {

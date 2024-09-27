@@ -2812,7 +2812,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aReposted) || !is_array($aReposted))
             return [];
         
-        $aParams = array_merge($this->_oConfig->getRepostDefaults(), $aParams);
+        $aParams = array_merge($this->_oConfig->getRepostDefaults(true), $aParams);
 
         $bPerformed = $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $this->getUserId());
         $bDisabled = $this->isAllowedRepost($aReposted) !== true;
@@ -2823,7 +2823,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => 'reposts',
             'system' => $sType . (!empty($sAction) ? '_' . $sAction : ''),
             'object_id' => $iObjectId,
-            'params' => $aParams,
+            'params' => array_intersect_key($aParams, array_flip($this->_oConfig->getRepostParams(true))),
             'action' => [
                 'is_undo' => false,
                 'is_performed' => $bPerformed,

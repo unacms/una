@@ -84,6 +84,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sMenuItemActions;
 
     protected $_aRepostDefaults;
+    protected $_aRepostDefaultsApi;
+    protected $_aRepostParamsApi;
 
     protected $_iTimelineVisibilityThreshold;
     protected $_aPregPatterns;
@@ -375,7 +377,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             )
         );
 
-        $this->_aRepostDefaults = array(
+        $this->_aRepostDefaults = [
             'do' => 'repost',
 
             'show_do_repost_as_button' => false,
@@ -404,7 +406,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             //--- Templates
             'template_do_repost_label' => '',
             'template_do_repost_label_name' => 'repost_do_repost_label.html',
-        );
+        ];
+
+        $this->_aRepostDefaultsApi = array_merge($this->_aRepostDefaults, [
+            'show_counter' => true
+        ]);
+
+        $this->_aRepostParamsApi = ['do', 'is_voted'];
 
         $this->_iTimelineVisibilityThreshold = 0;
 
@@ -900,9 +908,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_iLimitAttachLinks;
     }
 
-    public function getRepostDefaults()
+    public function getRepostDefaults($bForApi = false)
     {
-        return $this->_aRepostDefaults;
+        return ($sField = '_aRepostDefaults' . ($bForApi ? 'Api' : '')) && isset($this->$sField) ? $this->$sField : [];
+    }
+
+    public function getRepostParams($bForApi = false)
+    {
+        return ($sField = '_aRepostParams' . ($bForApi ? 'Api' : '')) && isset($this->$sField) ? $this->$sField : [];
     }
 
     public function getPregPattern($sType)
