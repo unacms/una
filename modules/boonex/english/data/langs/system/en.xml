@@ -2684,8 +2684,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_captcha_action_title_image"><![CDATA[Get an image CAPTCHA]]></string>
 	<string name="_sys_form_account_input_captcha_action_help"><![CDATA[help]]></string>
 	<string name="_sys_form_account_input_captcha_action_title_help"><![CDATA[Get Help]]></string>
-	<string name="_sys_form_account_input_delete_confirm"><![CDATA[I'm sure that I want to delete the account with content.]]></string>
-	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete your account and your content.]]></string>
+	<string name="_sys_form_account_input_delete_confirm"><![CDATA[I'm sure that I want to delete the account and data.]]></string>
+        <string name="_sys_form_account_input_delete_confirm_wo_content"><![CDATA[I'm sure that I want to delete the account.]]></string>
+	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete account.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
 	<string name="_sys_form_account_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_account_input_email_error"><![CDATA[Email is not valid]]></string>

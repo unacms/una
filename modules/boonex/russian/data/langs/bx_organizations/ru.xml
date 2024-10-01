@@ -277,8 +277,8 @@
     <string name="_bx_orgs_menu_set_title_entries_my"><![CDATA[Организации профиля - Меню]]></string>
     <string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_orgs_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
-    <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
-    <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Удалить с данными]]></string>
+    <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Удалить с данными]]></string>
     <string name="_bx_orgs_menu_item_title_system_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_orgs_menu_item_title_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
@@ -287,12 +287,12 @@
     <string name="_bx_orgs_menu_item_title_edit_pricing"><![CDATA[Редактировать цены]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_profile"><![CDATA[Редактировать организацию]]></string>
     <string name="_bx_orgs_menu_item_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
-    <string name="_bx_orgs_menu_item_title_system_delete_profile"><![CDATA[Удалить организацию]]></string>
-    <string name="_bx_orgs_menu_item_title_delete_profile"><![CDATA[Удалить профиль]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete_profile"><![CDATA[Удалить профиль и данные]]></string>
+    <string name="_bx_orgs_menu_item_title_delete_profile"><![CDATA[Удалить профиль и данные]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_account"><![CDATA[Удалить аккаунт]]></string>
     <string name="_bx_orgs_menu_item_title_delete_account"><![CDATA[Удалить аккаунт]]></string>
-    <string name="_bx_orgs_menu_item_title_system_delete_account_content"><![CDATA[Удалить аккаунт и контент]]></string>
-    <string name="_bx_orgs_menu_item_title_delete_account_content"><![CDATA[Удалить аккаунт и контент]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete_account_content"><![CDATA[Удалить аккаунт и данные]]></string>
+    <string name="_bx_orgs_menu_item_title_delete_account_content"><![CDATA[Удалить аккаунт и данные]]></string>
     <string name="_bx_orgs_menu_item_title_system_profile_type"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Организация]]></string>

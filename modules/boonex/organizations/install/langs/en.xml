@@ -283,8 +283,8 @@
     <string name="_bx_orgs_menu_set_title_entries_my"><![CDATA[Profile Organizations Menu]]></string>
     <string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_orgs_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
-    <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
-    <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Delete with Data]]></string>
+    <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Delete with Data]]></string>
     <string name="_bx_orgs_menu_item_title_system_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_orgs_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
@@ -293,12 +293,12 @@
     <string name="_bx_orgs_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_profile"><![CDATA[Edit Organization]]></string>
     <string name="_bx_orgs_menu_item_title_edit_profile"><![CDATA[Edit Profile]]></string>
-    <string name="_bx_orgs_menu_item_title_system_delete_profile"><![CDATA[Delete Organization]]></string>
-    <string name="_bx_orgs_menu_item_title_delete_profile"><![CDATA[Delete Profile]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete_profile"><![CDATA[Delete Profile and Data]]></string>
+    <string name="_bx_orgs_menu_item_title_delete_profile"><![CDATA[Delete Profile and Data]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_orgs_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
-    <string name="_bx_orgs_menu_item_title_system_delete_account_content"><![CDATA[Delete Account with Content]]></string>
-    <string name="_bx_orgs_menu_item_title_delete_account_content"><![CDATA[Delete Account with Content]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete_account_content"><![CDATA[Delete Account and Data]]></string>
+    <string name="_bx_orgs_menu_item_title_delete_account_content"><![CDATA[Delete Account and Data]]></string>
     <string name="_bx_orgs_menu_item_title_system_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Organization]]></string>

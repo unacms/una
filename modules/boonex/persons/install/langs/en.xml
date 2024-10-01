@@ -197,8 +197,7 @@
     <string name="_bx_persons_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended People]]></string>
     <string name="_bx_persons_page_block_title_sys_active_entries_view_showcase"><![CDATA[Active People (Showcase View)]]></string>
     <string name="_bx_persons_page_block_title_active_entries_view_showcase"><![CDATA[Active People]]></string>
-	
-	<string name="_bx_persons_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
+    <string name="_bx_persons_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
     <string name="_bx_persons_page_block_title_cover_block"><![CDATA[Cover]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Persons Submenu]]></string>
@@ -213,8 +212,8 @@
     <string name="_bx_persons_menu_title_view_profile_submenu"><![CDATA[View Person Submenu]]></string>
     <string name="_bx_persons_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_persons_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
-    <string name="_bx_persons_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
-    <string name="_bx_persons_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_persons_menu_item_title_system_delete_with_content"><![CDATA[Delete with Data]]></string>
+    <string name="_bx_persons_menu_item_title_delete_with_content"><![CDATA[Delete with Data]]></string>
     <string name="_bx_persons_menu_item_title_system_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_persons_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_persons_menu_item_title_system_manage_cf"><![CDATA[Manage audience]]></string>
@@ -223,12 +222,12 @@
     <string name="_bx_persons_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_persons_menu_item_title_system_edit_profile"><![CDATA[Edit Person]]></string>
     <string name="_bx_persons_menu_item_title_edit_profile"><![CDATA[Edit Profile]]></string>
-    <string name="_bx_persons_menu_item_title_system_delete_profile"><![CDATA[Delete Person]]></string>
-    <string name="_bx_persons_menu_item_title_delete_profile"><![CDATA[Delete Profile]]></string>
+    <string name="_bx_persons_menu_item_title_system_delete_profile"><![CDATA[Delete Profile and Data]]></string>
+    <string name="_bx_persons_menu_item_title_delete_profile"><![CDATA[Delete Profile and Data]]></string>
     <string name="_bx_persons_menu_item_title_system_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_persons_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
-    <string name="_bx_persons_menu_item_title_system_delete_account_content"><![CDATA[Delete Account with Content]]></string>
-    <string name="_bx_persons_menu_item_title_delete_account_content"><![CDATA[Delete Account with Content]]></string>
+    <string name="_bx_persons_menu_item_title_system_delete_account_content"><![CDATA[Delete Account and Data]]></string>
+    <string name="_bx_persons_menu_item_title_delete_account_content"><![CDATA[Delete Account and Data]]></string>
     <string name="_bx_persons_menu_item_title_system_profile_type"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_profile_type"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_system_create_profile"><![CDATA[Person]]></string>

@@ -254,8 +254,11 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         // check and display form
         $oForm = $this->getObjectFormDelete();
-        if(bx_get('content') !== false)
+        if(bx_get('content') !== false) {
             $oForm->aInputs['delete_content']['value'] = (int)bx_get('content');
+            if(!$oForm->aInputs['delete_content']['value'])
+                $oForm->aInputs['delete_confirm']['caption'] = _t('_sys_form_account_input_delete_confirm_wo_content');
+        }
 
         if (!$oForm)
             return $bIsApi ? _t('_sys_txt_error_occured') : MsgBox(_t('_sys_txt_error_occured'));

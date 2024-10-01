@@ -2662,8 +2662,9 @@
 	<string name="_sys_form_account_input_captcha_action_title_image"><![CDATA[Получить CAPTCHA в виде изображения]]></string>
 	<string name="_sys_form_account_input_captcha_action_help"><![CDATA[помощь]]></string>
 	<string name="_sys_form_account_input_captcha_action_title_help"><![CDATA[Получить помощь]]></string>
-	<string name="_sys_form_account_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить аккаунт вместе с содержимым.]]></string>
-	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если Вы действительно хотите удалить свой аккаунт вместе с содержимым.]]></string>
+	<string name="_sys_form_account_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить аккаунт и данные.]]></string>
+        <string name="_sys_form_account_input_delete_confirm_wo_content"><![CDATA[Я уверен, что хочу удалить аккаунт.]]></string>
+	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если Вы действительно хотите удалить аккаунт.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
 	<string name="_sys_form_account_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_account_input_email_error"><![CDATA[Введите правильный адрес электронной почты]]></string>
