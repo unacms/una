@@ -183,9 +183,17 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             'data' => [
                 'url' => $sUrlWeb
             ],
-            'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : '',
         ];
-
+        
+        if (empty($aMessage['icon'])){
+            $aMessage['icon'] = BxTemplFunctions::getInstance()->getMainLogoUrl();
+        }
+        if (!empty($aMessage['icon'])){
+            $aFields['chrome_web_icon'] = $aMessage['icon'];
+            $aFields['large_icon'] = $aMessage['icon'];
+            $aFields['ios_attachments'] = ['id'=> $aMessage['icon']];
+        }
+        
         if ('on' == getParam('bx_nexus_option_push_notifications_count')) {
             $iBadgeCount = $this->getNotificationsCount($iProfileId);
             $aFields['ios_badgeType'] = 'SetTo';
