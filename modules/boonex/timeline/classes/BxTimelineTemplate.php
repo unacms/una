@@ -3142,7 +3142,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $mixedResult = $this->$sMethod($aEvent);
         }
 
-        if($mixedResult === false)
+        if(empty($mixedResult) || !is_array($mixedResult))
             return '';
 
         $this->_preparetDataActions(false, $aEvent, $mixedResult);
@@ -3226,7 +3226,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 }
 
                 if(empty($aReposted) || !is_array($aReposted))
-                    return array();
+                    return [];
 
                 $aEventReposted['content'] = $aReposted['content'];
 
