@@ -411,7 +411,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         ];
 
         $aUploadButtonParams = [];
-        $bUploadAllowed = $this->oModule->checkAllowedAdd() == CHECK_ACTION_RESULT_ALLOWED && $this->oModule->serviceIsAllowedAddContentToProfile($this->iFileManagerUploadTo);
+        $bUploadAllowed = $this->oModule->checkAllowedAdd() == CHECK_ACTION_RESULT_ALLOWED && $this->oModule->serviceIsAllowedAddContentToContext($this->iFileManagerUploadTo);
         if ($bUploadAllowed) {
             $sUniqId = genRndPwd (8, false);
             $oUploader = BxDolUploader::getObjectInstance('bx_files_html5', $this->oModule->_oConfig->CNF['OBJECT_STORAGE'], $sUniqId, $this->oModule->_oTemplate);

@@ -19,23 +19,12 @@ class BxFilesModule extends BxBaseModFilesModule
         parent::__construct($aModule);
     }
 
-    public function serviceIsAllowedAddContentToProfile($iGroupProfileId)
-    {
-        if (!$iGroupProfileId || !($oProfile = BxDolProfile::getInstance((int)$iGroupProfileId)))
-            return false;
-
-        if ($iGroupProfileId == bx_get_logged_profile_id())
-            return true;
-
-        return bx_srv($oProfile->getModule(), 'check_allowed_post_in_profile', array($oProfile->getContentId(), $this->getName())) === CHECK_ACTION_RESULT_ALLOWED;
-    }
-
     public function serviceMyEntriesActions ($iProfileId = 0)
     {
         if (!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
-        if (!$this->serviceIsAllowedAddContentToProfile($iProfileId))
+        if (!$this->serviceIsAllowedAddContentToContext($iProfileId))
             return false;
 
         $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
@@ -462,7 +451,7 @@ class BxFilesModule extends BxBaseModFilesModule
             exit;
         }
 
-        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || $iContext && !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || $iContext && !$this->serviceIsAllowedAddContentToContext($iContext)) {
             echoJson(['message' => _t('_Access denied')]);
             exit;
         }
@@ -504,7 +493,7 @@ class BxFilesModule extends BxBaseModFilesModule
             exit;
         }
 
-        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || $iContext && !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || $iContext && !$this->serviceIsAllowedAddContentToContext($iContext)) {
             echoJson(['message' => _t('_Access denied')]);
             exit;
         }
@@ -541,7 +530,7 @@ class BxFilesModule extends BxBaseModFilesModule
 
         $iContext = $aData[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 ? -$aData[$CNF['FIELD_ALLOW_VIEW_TO']] : $aData[$CNF['FIELD_AUTHOR']];
 
-        if (!isAdmin() && ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext))) {
+        if (!isAdmin() && ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToContext($iContext))) {
             echoJson(['message' => _t('_Access denied')]);
             exit;
         }
@@ -557,7 +546,7 @@ class BxFilesModule extends BxBaseModFilesModule
 
                 $iContextMoveTo = $aDataMoveTo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 ? -$aDataMoveTo[$CNF['FIELD_ALLOW_VIEW_TO']] : $aDataMoveTo[$CNF['FIELD_AUTHOR']];
 
-                if (!isAdmin() && ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContextMoveTo))) {
+                if (!isAdmin() && ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToContext($iContextMoveTo))) {
                     echoJson(['message' => _t('_Access denied')]);
                     exit;
                 }

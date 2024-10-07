@@ -16,22 +16,19 @@ class BxFilesFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
 {
     public function __construct($oModule)
     {
-		$this->_sDisplayForFormAdd ='bx_files_entry_upload';
-		$this->_sObjectNameForFormAdd ='bx_files_upload';
+        $this->_sDisplayForFormAdd ='bx_files_entry_upload';
+        $this->_sObjectNameForFormAdd ='bx_files_upload';
+
         parent::__construct($oModule);
     }
 
     public function addDataForm ($sDisplay = false, $sCheckFunction = false)
     {
+        $sKey = 'need_redirect_after_action';
         $mixedContent = $this->addDataFormAction($sDisplay, $sCheckFunction);
-        if (is_array($mixedContent) && $mixedContent['need_redirect_after_action']) {
-            $CNF = &$this->_oModule->_oConfig->CNF;
-            
-            $aContentIds = $mixedContent['content_ids_array'];
-            $iContentId = array_pop($aContentIds);
-            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-            $oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
-            $sUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . ($oProfile ? $oProfile->id() : bx_get_logged_profile_id());
+        if(is_array($mixedContent) && !empty($mixedContent[$sKey])) {
+            $sUrl = $this->getRedirectUrlAfterAdd($mixedContent);
+
             if($this->_bAjaxMode) {
                 echoJson($this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect'));
                 exit;
@@ -39,9 +36,8 @@ class BxFilesFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
             else
                 $this->_redirectAndExit($sUrl);
         }
-        else {
-                return $mixedContent;	
-        }
+        else
+            return $mixedContent;
     }
 
     protected function redirectAfterDelete($aContentInfo)

@@ -16,8 +16,9 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
 {
     public function __construct($oModule)
     {
-		$this->_sDisplayForFormAdd ='bx_photos_entry_upload';
-		$this->_sObjectNameForFormAdd ='bx_photos_upload';
+        $this->_sDisplayForFormAdd ='bx_photos_entry_upload';
+        $this->_sObjectNameForFormAdd ='bx_photos_upload';
+
         parent::__construct($oModule);
     }
     
@@ -25,10 +26,9 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
     {
         $sKey = 'need_redirect_after_action';
         $mixedContent = $this->addDataFormAction($sDisplay, $sCheckFunction);
-        if (is_array($mixedContent) && isset($mixedContent[$sKey]) && $mixedContent[$sKey]) {
-            $CNF = &$this->_oModule->_oConfig->CNF;
+        if(is_array($mixedContent) && !empty($mixedContent[$sKey])) {
+            $sUrl = $this->getRedirectUrlAfterAdd($mixedContent);
 
-            $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . bx_get_logged_profile_id());
             if($this->_bAjaxMode) {
                 echoJson($this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect'));
                 exit;
@@ -36,9 +36,8 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
             else
                 $this->_redirectAndExit($sUrl);
         }
-        else {
+        else
             return $mixedContent;
-        }
     }
     
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
