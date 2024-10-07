@@ -418,6 +418,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         parent::initChecker ($aValues, $aSpecificValues);
 
+        $this->_processContextBeforeAdd();
+
         foreach($aPrivacyFields as $sField => $sObject)
             $this->_validatePrivacyField($sField, $sObject, $aValues);
     }
@@ -509,33 +511,35 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $bMulticatEnabled = $this->_isMulticatEnabled();
         if ($bMulticatEnabled)
             $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
-        $iContentId = parent::insert ($aValsToAdd, $isIgnore);
-        
-        if(!empty($iContentId)) {
-            foreach($this->aInputs as $aInput) {
-                if ($aInput['type'] == 'nested_form') {
-                    if (is_array($aInput['ghost_template']) && !isset($aInput['ghost_template']['inputs'])) {
-                        foreach ($aInput['ghost_template'] as $oFormNested) {
-                            $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
 
-                            if ($aInput['rateable']) {
-                                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName(), $iNestedContentId);
-                            }
+        $iContentId = parent::insert ($aValsToAdd, $isIgnore);
+        if(empty($iContentId))
+            return $iContentId;
+
+        foreach($this->aInputs as $aInput) {
+            if ($aInput['type'] == 'nested_form') {
+                if (is_array($aInput['ghost_template']) && !isset($aInput['ghost_template']['inputs'])) {
+                    foreach ($aInput['ghost_template'] as $oFormNested) {
+                        $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
+
+                        if ($aInput['rateable']) {
+                            BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName(), $iNestedContentId);
                         }
                     }
                 }
             }
-            
-            if ($bMulticatEnabled)
-                $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
         }
 
-        foreach($this->aInputs as $aInput) {
-            if (isset($aInput['rateable']) && $aInput['rateable'] && $aInput['type'] != 'nested_form'){
+        if($bMulticatEnabled)
+            $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
+
+        foreach($this->aInputs as $aInput)
+            if(isset($aInput['rateable']) && $aInput['rateable'] && $aInput['type'] != 'nested_form')
                 BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName());
-            }
-        }
 
+        if(($iContextNid = $this->getCleanValue('context_nid')) !== false)
+            $this->_processContextAfterAdd($iContentId, $iContextNid);
+            
         return $iContentId;
     }
 
@@ -996,6 +1000,52 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 array('key' => '', 'value' => '----', 'attrs' => array('disabled' => 'disabled'))
             ), $this->aInputs[$sField]['values']);
         }
+    }
+
+    protected function _processContextBeforeAdd()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sKey = 'FIELD_ALLOW_VIEW_TO';
+        if(!isset($CNF[$sKey], $this->aInputs[$CNF[$sKey]]))
+            return;
+
+        if(($iContextId = bx_get('context_pid')) !== false)
+            $this->aInputs[$CNF[$sKey]] = array_merge($this->aInputs[$CNF[$sKey]], [
+                'type' => 'hidden',
+                'value' => -abs((int)$iContextId)
+            ]);
+
+        if(($iNodeId = bx_get('context_nid')) !== false && !isset($this->aInputs['context_nid'])) {
+            $this->aInputs['context_nid'] = [
+                'name' => 'context_nid',
+                'type' => 'hidden',
+                'value' => (int)$iNodeId
+            ];
+        }
+    }
+
+    protected function _processContextAfterAdd($iContentId, $iContextNid)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sKey = 'FIELD_ALLOW_VIEW_TO';
+        if(!isset($CNF[$sKey]))
+            return;
+
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        if(!is_numeric($aContentInfo[$CNF[$sKey]]) || (int)$aContentInfo[$CNF[$sKey]] > 0)
+            return;
+
+        $iContextPid = abs($aContentInfo[$CNF[$sKey]]);
+        $oContext = BxDolProfile::getInstance($iContextPid);
+        if(!$oContext)
+            return;
+
+        $sModule = $oContext->getModule();
+        $sMethod = 'on_content_added';
+        if(bx_is_srv($sModule, $sMethod))
+            bx_srv($sModule, $sMethod, [$this->MODULE, $iContentId, $oContext->getContentId(), $iContextNid]);
     }
 
     /**

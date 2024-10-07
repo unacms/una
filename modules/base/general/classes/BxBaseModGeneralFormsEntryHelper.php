@@ -626,6 +626,17 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if(($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacy->deleteGroupCustomByContentId($iContentId);
 
+        $sKey = 'FIELD_ALLOW_VIEW_TO';
+        if(isset($CNF[$sKey], $aContentInfo[$CNF[$sKey]]) && ($iContextPid = (int)$aContentInfo[$CNF[$sKey]]) < 0) {
+            $iContextPid = abs($iContextPid);
+            if(($oContext = BxDolProfile::getInstance($iContextPid)) !== false) {
+                $sModule = $oContext->getModule();
+                $sMethod = 'on_content_deleted';
+                if(bx_is_srv($sModule, $sMethod))
+                    bx_srv($sModule, $sMethod, [$this->_oModule->getName(), $iContentId, $oContext->getContentId()]);
+            }
+        }
+
         bx_audit(
             $iContentId, 
             $this->_oModule->getName(), 

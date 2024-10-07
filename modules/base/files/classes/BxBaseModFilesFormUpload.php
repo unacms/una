@@ -55,15 +55,12 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
         bx_import('BxDolPrivacy');
 
         // get values form main form to pass it to each file later
-        $aFormValues = array();
-        foreach ($this->aInputs as $aInput) {
-            if(in_array($aInput['name'], array('do_submit', 'profile_id', $CNF['FIELD_PHOTO'])))
-                continue;
+        $aFormValues = [];
+        foreach ($this->aInputs as $aInput)
+            if(!empty($aInput['db']) && is_array($aInput['db']))
+                $aFormValues[$aInput['name']] = $this->getCleanValue($aInput['name']);
 
-            $aFormValues[$aInput['name']] = $this->getCleanValue($aInput['name']);
-        }
-
-        $aContentIds = array();
+        $aContentIds = [];
         foreach ($aGhostFiles as $aFile) {
             if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedAdd())
                 continue;
@@ -74,7 +71,7 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
                 $iContentId = BxBaseModGeneralFormEntry::insert (array_merge(array(
                     $CNF['FIELD_FOR_STORING_FILE_ID'] => $aFile['id'],
                     $CNF['FIELD_TITLE'] => $this->getCleanValue('title-' . $aFile['id']),
-                    $CNF['FIELD_AUTHOR'] => bx_get('profile_id') && $this->_oModule->serviceIsAllowedAddContentToProfile(bx_get('profile_id')) ? bx_get('profile_id') : '',
+                    $CNF['FIELD_AUTHOR'] => bx_get('profile_id') && $this->_oModule->serviceIsAllowedAddContentToContext(bx_get('profile_id')) ? bx_get('profile_id') : '',
                     $CNF['FIELD_STATUS_ADMIN'] => !$this->_oModule->_isModerator() && !$this->_oModule->_oConfig->isAutoApproveEnabled() ? BX_BASE_MOD_GENERAL_STATUS_PENDING : BX_BASE_MOD_TEXT_STATUS_ACTIVE
                 ), $aFormValues));
             if (!$iContentId)

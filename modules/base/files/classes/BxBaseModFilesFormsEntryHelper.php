@@ -87,6 +87,30 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         
         return array('need_redirect_after_action' => true, 'content_ids_array' => $aContentIds);
     }
+    
+    protected function getRedirectUrlAfterAdd($mixedContent)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+            
+        $iProfileId = false;
+        $sUri = $CNF['URI_AUTHOR_ENTRIES'];
+
+        $sKeyIds = 'content_ids_array';
+        if(!empty($mixedContent[$sKeyIds]) && is_array($mixedContent[$sKeyIds])) {
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById(array_pop($mixedContent[$sKeyIds]));
+
+            if(($sKey = 'FIELD_AUTHOR') && isset($CNF[$sKey]) && ($iAuthor = (int)$aContentInfo[$CNF[$sKey]])) {
+                $iProfileId = $iAuthor;
+            }
+
+            if(($sKey = 'FIELD_ALLOW_VIEW_TO') && isset($CNF[$sKey]) && ($iVisibility = (int)$aContentInfo[$CNF[$sKey]]) < 0) {
+                $iProfileId = abs($iVisibility);
+                $sUri = $CNF['URI_ENTRIES_BY_CONTEXT'];
+            }
+        }
+
+        return 'page.php?i=' . $sUri . '&profile_id=' . (($oProfile = BxDolProfile::getInstance($iProfileId)) !== false ? $oProfile->id() : bx_get_logged_profile_id());
+    }
 }
 
 /** @} */

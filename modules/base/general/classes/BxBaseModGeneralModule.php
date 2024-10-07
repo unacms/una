@@ -503,6 +503,17 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== SERVICE METHODS
+    public function serviceIsAllowedAddContentToContext($iContextPid)
+    {
+        $oContext = false;
+        if(!$iContextPid || !($oContext = BxDolProfile::getInstance((int)$iContextPid)))
+            return false;
+
+        if($iContextPid == bx_get_logged_profile_id())
+            return true;
+
+        return bx_srv($oContext->getModule(), 'check_allowed_post_in_profile', [$oContext->getContentId(), $this->getName()]) === CHECK_ACTION_RESULT_ALLOWED;
+    }
 
     public function serviceIsBadgesAvaliable()
     {
