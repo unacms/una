@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_courses_data`, `bx_courses_pics`, `bx_courses_pics_resized`, `bx_courses_cmts`, `bx_courses_cmts_notes`, `bx_courses_views_track`, `bx_courses_meta_keywords`, `bx_courses_meta_locations`, `bx_courses_meta_mentions`, `bx_courses_fans`, `bx_courses_admins`, `bx_courses_votes`, `bx_courses_votes_track`, `bx_courses_reports`, `bx_courses_reports_track`, `bx_courses_favorites_track`, `bx_courses_favorites_lists`, `bx_courses_scores`, `bx_courses_scores_track`, `bx_courses_invites`, `bx_courses_prices`;
+DROP TABLE IF EXISTS `bx_courses_data`, `bx_courses_content_structure`, `bx_courses_content_nodes`, `bx_courses_content_data`, `bx_courses_pics`, `bx_courses_pics_resized`, `bx_courses_cmts`, `bx_courses_cmts_notes`, `bx_courses_views_track`, `bx_courses_meta_keywords`, `bx_courses_meta_locations`, `bx_courses_meta_mentions`, `bx_courses_fans`, `bx_courses_admins`, `bx_courses_votes`, `bx_courses_votes_track`, `bx_courses_reports`, `bx_courses_reports_track`, `bx_courses_favorites_track`, `bx_courses_favorites_lists`, `bx_courses_scores`, `bx_courses_scores_track`, `bx_courses_invites`, `bx_courses_prices`;
 
 -- PROFILES
 

@@ -35,6 +35,9 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
             'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
+            'TABLE_CNT_STRUCTURE' => $aModule['db_prefix'] . 'content_structure',
+            'TABLE_CNT_NODES' => $aModule['db_prefix'] . 'content_nodes',
+            'TABLE_CNT_DATA' => $aModule['db_prefix'] . 'content_data',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -76,6 +79,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
             'URL_HOME' => 'page.php?i=courses-home',
             'URL_ENTRY_FANS' => 'page.php?i=course-fans',
+            'URL_MANAGE_STRUCTURE' => 'page.php?i=edit-course-content',
             'URL_MANAGE_COMMON' => 'page.php?i=courses-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=courses-administration',
 
@@ -92,6 +96,10 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_courses_per_page_for_favorites_lists',
             'PARAM_USE_IN' => 'bx_courses_internal_notifications',
+
+            'PARAM_CONTENT' => 'bx_courses_enable_content',
+            'PARAM_CONTENT_LEVEL_MAX' => 'bx_courses_content_level_max',
+            'PARAM_CONTENT_MODULES' => 'bx_courses_content_modules',
 
             // objects
             'OBJECT_STORAGE' => 'bx_courses_pics',
@@ -125,6 +133,9 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_PRICE' => 'bx_courses_price',
             'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_courses_price_add',
             'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_courses_price_edit',
+            'OBJECT_FORM_CNT_NODE' => 'bx_courses_content_node',
+            'OBJECT_FORM_CNT_NODE_DISPLAY_ADD' => 'bx_courses_content_node_add',
+            'OBJECT_FORM_CNT_NODE_DISPLAY_EDIT' => 'bx_courses_content_node_edit',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_courses_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_courses_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_courses_view_actions_all', // all actions menu on view entry page
@@ -136,6 +147,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_VIEW_ENTRY_META' => 'bx_courses_view_meta', // meta menu on view entry page
             'OBJECT_MENU_SNIPPET_META' => 'bx_courses_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_courses_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_MENU_CONTENT_ADD' => 'bx_courses_content_add',
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_courses_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_courses_view_profile_closed',
             'OBJECT_PAGE_JOINED_ENTRY' => 'bx_courses_join_profile',
@@ -149,6 +161,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_INVITES' => 'bx_courses_invites',
             'OBJECT_GRID_PRICES_MANAGE' => 'bx_courses_prices_manage',
             'OBJECT_GRID_PRICES_VIEW' => 'bx_courses_prices_view',
+            'OBJECT_GRID_CNT_STRUCTURE_MANAGE' => 'bx_courses_cnt_structure_manage',
+            'OBJECT_GRID_CNT_DATA_MANAGE' => 'bx_courses_cnt_data_manage',
             'OBJECT_CONNECTIONS' => 'bx_courses_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_courses_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_courses_picture_crop'),
@@ -252,6 +266,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'msg_performed' => '_bx_courses_msg_performed',
                 'popup_title_price_add' => '_bx_courses_popup_title_price_add',
                 'popup_title_price_edit' => '_bx_courses_popup_title_price_edit',
+                'popup_title_content_node_add' => '_bx_courses_popup_title_cnt_add',
+                'popup_title_content_node_edit' => '_bx_courses_popup_title_cnt_edit',
                 'err_period_unit' => '_bx_courses_form_price_input_err_period_unit',
                 'err_price_duplicate' => '_bx_courses_err_price_duplicate',
                 'err_cannot_perform' => '_bx_courses_err_cannot_perform',
@@ -259,26 +275,45 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
         );
 
-        $this->_aJsClasses = array(
+        $this->_aJsClasses = [
             'main' => 'BxCoursesMain',
             'manage_tools' => 'BxCoursesManageTools',
             'invite_popup' => 'BxCoursesInvitePopup',
             'prices' => 'BxCoursesPrices'
-        );
+        ];
 
-        $this->_aJsObjects = array(
+        $this->_aJsObjects = [
             'main' => 'oBxCoursesMain',
             'manage_tools' => 'oBxCoursesManageTools',
             'invite_popup' => 'oBxCoursesInvitePopup',
             'prices' => 'oBxCoursesPrices'
-        );
+        ];
 
-        $this->_aGridObjects = array(
+        $this->_aGridObjects = [
             'common' => $this->CNF['OBJECT_GRID_COMMON'],
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        );
+        ];
+
+        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = [
+            'popup_content_node' => $sHtmlPrefix . '-popup-content-node'
+        ];
     }
 
+    public function isContent()
+    {
+        return getParam($this->CNF['PARAM_CONTENT']) == 'on';
+    }
+
+    public function isContentLevelMax()
+    {
+        return (int)getParam($this->CNF['PARAM_CONTENT_LEVEL_MAX']);
+    }
+
+    public function getContentModules()
+    {
+        return explode(',', getParam($this->CNF['PARAM_CONTENT_MODULES']));
+    }
 }
 
 /** @} */

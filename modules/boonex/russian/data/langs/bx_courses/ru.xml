@@ -4,6 +4,9 @@
     <string name="_bx_courses_cmts"><![CDATA[Курсы - Комментарии]]></string>
 
     <string name="_bx_courses_option_enable_auto_approve"><![CDATA[Автоматически активировать курс после создания]]></string>
+    <string name="_bx_courses_option_enable_content"><![CDATA[Включить возможность добавления контента в курс]]></string>
+    <string name="_bx_courses_option_content_level_max"><![CDATA[Максимальный уровень для узла в древовидной структуре]]></string>
+    <string name="_bx_courses_option_content_modules"><![CDATA[Модули, из которых контент может быть размещен в курсе]]></string>
     <string name="_bx_courses_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
     <string name="_bx_courses_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_courses_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
@@ -75,6 +78,17 @@
     <string name="_bx_courses_form_price_input_sys_do_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_courses_form_price_input_do_cancel"><![CDATA[Отменить]]></string>
 
+    <string name="_bx_courses_form_content_node"><![CDATA[Узел контента]]></string>
+    <string name="_bx_courses_form_content_node_display_add"><![CDATA[Добавить узел]]></string>
+    <string name="_bx_courses_form_content_node_display_edit"><![CDATA[Редактировать узел]]></string>
+        <string name="_bx_courses_form_content_node_input_sys_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_courses_form_content_node_input_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_courses_form_content_node_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_courses_form_content_node_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_courses_form_content_node_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_courses_form_content_node_input_sys_do_cancel"><![CDATA[Отменить]]></string>
+    <string name="_bx_courses_form_content_node_input_do_cancel"><![CDATA[Отменить]]></string>
+
     <string name="_bx_courses_acl_action_create_profile"><![CDATA[Создать курс]]></string>
     <string name="_bx_courses_acl_action_use_paid_join"><![CDATA[Использовать платное посещение курса]]></string>
     <string name="_bx_courses_acl_action_delete_profile"><![CDATA[Удалить курс]]></string>
@@ -115,6 +129,8 @@
     <string name="_bx_courses_page_title_profile_info"><![CDATA[Инфо о {display_name}]]></string>
     <string name="_bx_courses_page_title_sys_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_courses_page_title_profile_pricing"><![CDATA[Цены]]></string>
+    <string name="_bx_courses_page_title_sys_profile_content"><![CDATA[Контент]]></string>
+    <string name="_bx_courses_page_title_profile_content"><![CDATA[Контент]]></string>
     <string name="_bx_courses_page_title_sys_recent"><![CDATA[Новые курсы]]></string>
     <string name="_bx_courses_page_title_recent"><![CDATA[Новые курсы]]></string>
     <string name="_bx_courses_page_title_sys_manage"><![CDATA[Управление собственными курсами]]></string>
@@ -154,6 +170,10 @@
     <string name="_bx_courses_page_block_title_system_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_courses_page_block_title_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_courses_page_block_title_profile_pricing_link"><![CDATA[Расценки курса: <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_courses_page_block_title_system_profile_structure"><![CDATA[Структура]]></string>
+    <string name="_bx_courses_page_block_title_profile_structure_link"><![CDATA[Структура курса: <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_courses_page_block_title_system_profile_data"><![CDATA[Контент]]></string>
+    <string name="_bx_courses_page_block_title_profile_data_link"><![CDATA[Контент курса: <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_profile_description"><![CDATA[Описание]]></string>
     <string name="_bx_courses_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
     <string name="_bx_courses_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
@@ -221,6 +241,8 @@
     <string name="_bx_courses_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_pricing"><![CDATA[Редактировать цены]]></string>
     <string name="_bx_courses_menu_item_title_edit_pricing"><![CDATA[Редактировать цены]]></string>
+    <string name="_bx_courses_menu_item_title_system_edit_content"><![CDATA[Редактировать содержимое]]></string>
+    <string name="_bx_courses_menu_item_title_edit_content"><![CDATA[Редактировать содержимое]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_profile"><![CDATA[Редактировать курс]]></string>
     <string name="_bx_courses_menu_item_title_edit_profile"><![CDATA[Редактировать курс]]></string>
     <string name="_bx_courses_menu_item_title_system_delete_profile"><![CDATA[Удалить курс]]></string>
@@ -344,6 +366,22 @@
     <string name="_bx_courses_popup_title_price_add"><![CDATA[Добавить ценовой план]]></string>
     <string name="_bx_courses_popup_title_price_edit"><![CDATA[Редактировать ценовой план]]></string>
 
+    <string name="_bx_courses_grid_column_title_cnt_active"><![CDATA[]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_added"><![CDATA[Создано]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_cn_l2"><![CDATA[Тем]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_cn_l3"><![CDATA[Уроков]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_counters"><![CDATA[Инфо]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_content_id"><![CDATA[Контент]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_content_type"><![CDATA[Тип]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_back"><![CDATA[Назад]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_add"><![CDATA[Добавить: {узел}]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_add_content"><![CDATA[Добавить]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_edit"><![CDATA[Редактировать]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_courses_popup_title_cnt_add"><![CDATA[Добавить: {node}]]></string>
+    <string name="_bx_courses_popup_title_cnt_edit"><![CDATA[Редактировать: {node}]]></string>
+
     <string name="_bx_courses_chart_growth"><![CDATA[Курсы: Развитие]]></string>
     <string name="_bx_courses_chart_growth_speed"><![CDATA[Курсы: Скорость развития]]></string>
 
@@ -374,6 +412,9 @@
     <string name="_bx_courses_txt_n_unit"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_courses_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
     <string name="_bx_courses_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (пожизненно)]]></string>
+    <string name="_bx_courses_txt_module"><![CDATA[модуль]]></string>
+    <string name="_bx_courses_txt_theme"><![CDATA[тема]]></string>
+    <string name="_bx_courses_txt_lesson"><![CDATA[урок]]></string>
 
     <string name="_bx_courses_msg_performed"><![CDATA[Действие было успешно выполнено.]]></string>
     <string name="_bx_courses_err_price_duplicate"><![CDATA[Аналогичный ценовой план уже существует.]]></string>

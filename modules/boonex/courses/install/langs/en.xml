@@ -4,6 +4,9 @@
     <string name="_bx_courses_cmts"><![CDATA[Courses' Comments]]></string>
 
     <string name="_bx_courses_option_enable_auto_approve"><![CDATA[Auto approve a course after creation]]></string>
+    <string name="_bx_courses_option_enable_content"><![CDATA[Enable possibility to add content in a course]]></string>
+    <string name="_bx_courses_option_content_level_max"><![CDATA[Max level for a node in tree based structure]]></string>
+    <string name="_bx_courses_option_content_modules"><![CDATA[Modules from which the content can be posted in a course]]></string>
     <string name="_bx_courses_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
     <string name="_bx_courses_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_courses_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
@@ -75,6 +78,17 @@
     <string name="_bx_courses_form_price_input_sys_do_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_courses_form_price_input_do_cancel"><![CDATA[Cancel]]></string>
 
+    <string name="_bx_courses_form_content_node"><![CDATA[Content Node]]></string>
+    <string name="_bx_courses_form_content_node_display_add"><![CDATA[Add Node]]></string>
+    <string name="_bx_courses_form_content_node_display_edit"><![CDATA[Edit Node]]></string>
+    <string name="_bx_courses_form_content_node_input_sys_title"><![CDATA[Title]]></string>
+    <string name="_bx_courses_form_content_node_input_title"><![CDATA[Title]]></string>
+    <string name="_bx_courses_form_content_node_input_title_err"><![CDATA[Title is essential. Please, fill in this field.]]></string>
+    <string name="_bx_courses_form_content_node_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_courses_form_content_node_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_courses_form_content_node_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_courses_form_content_node_input_do_cancel"><![CDATA[Cancel]]></string>
+
     <string name="_bx_courses_acl_action_create_profile"><![CDATA[Create Course]]></string>
     <string name="_bx_courses_acl_action_use_paid_join"><![CDATA[Use paid join]]></string>
     <string name="_bx_courses_acl_action_delete_profile"><![CDATA[Delete Course]]></string>
@@ -116,6 +130,8 @@
     <string name="_bx_courses_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
     <string name="_bx_courses_page_title_sys_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_courses_page_title_profile_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_courses_page_title_sys_profile_content"><![CDATA[Content]]></string>
+    <string name="_bx_courses_page_title_profile_content"><![CDATA[Content]]></string>
     <string name="_bx_courses_page_title_sys_recent"><![CDATA[New Courses]]></string>
     <string name="_bx_courses_page_title_recent"><![CDATA[New Courses]]></string>
     <string name="_bx_courses_page_title_sys_manage"><![CDATA[Manage Own Courses]]></string>
@@ -155,6 +171,10 @@
     <string name="_bx_courses_page_block_title_system_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_courses_page_block_title_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_courses_page_block_title_profile_pricing_link"><![CDATA[Pricing of <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_courses_page_block_title_system_profile_structure"><![CDATA[Structure]]></string>
+    <string name="_bx_courses_page_block_title_profile_structure_link"><![CDATA[Structure of <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_courses_page_block_title_system_profile_data"><![CDATA[Content]]></string>
+    <string name="_bx_courses_page_block_title_profile_data_link"><![CDATA[Content of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_profile_description"><![CDATA[Description]]></string>
     <string name="_bx_courses_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_profile_friends"><![CDATA[Friends]]></string>
@@ -222,6 +242,8 @@
     <string name="_bx_courses_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_courses_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
+    <string name="_bx_courses_menu_item_title_system_edit_content"><![CDATA[Edit Content]]></string>
+    <string name="_bx_courses_menu_item_title_edit_content"><![CDATA[Edit Content]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_profile"><![CDATA[Edit Course]]></string>
     <string name="_bx_courses_menu_item_title_edit_profile"><![CDATA[Edit Course]]></string>
     <string name="_bx_courses_menu_item_title_system_delete_profile"><![CDATA[Delete Course]]></string>
@@ -345,6 +367,22 @@
     <string name="_bx_courses_popup_title_price_add"><![CDATA[Add Pricing Plan]]></string>
     <string name="_bx_courses_popup_title_price_edit"><![CDATA[Edit Pricing Plan]]></string>
 
+    <string name="_bx_courses_grid_column_title_cnt_active"><![CDATA[]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_title"><![CDATA[Title]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_cn_l2"><![CDATA[Themes]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_cn_l3"><![CDATA[Lessons]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_counters"><![CDATA[Info]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_added"><![CDATA[Added]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_content_id"><![CDATA[Content]]></string>
+    <string name="_bx_courses_grid_column_title_cnt_content_type"><![CDATA[Type]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_back"><![CDATA[Back]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_add"><![CDATA[Add {node}]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_add_content"><![CDATA[Add]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_courses_grid_action_title_cnt_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_courses_popup_title_cnt_add"><![CDATA[Add {node}]]></string>
+    <string name="_bx_courses_popup_title_cnt_edit"><![CDATA[Edit {node}]]></string>
+
     <string name="_bx_courses_chart_growth"><![CDATA[Courses: Growth]]></string>
     <string name="_bx_courses_chart_growth_speed"><![CDATA[Courses: Growth Speed]]></string>
 
@@ -375,6 +413,9 @@
     <string name="_bx_courses_txt_n_unit"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_courses_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
     <string name="_bx_courses_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (lifetime)]]></string>    
+    <string name="_bx_courses_txt_module"><![CDATA[module]]></string>
+    <string name="_bx_courses_txt_theme"><![CDATA[theme]]></string>
+    <string name="_bx_courses_txt_lesson"><![CDATA[lesson]]></string>
 
     <string name="_bx_courses_msg_performed"><![CDATA[The action was successfully performed.]]></string>
     <string name="_bx_courses_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>
