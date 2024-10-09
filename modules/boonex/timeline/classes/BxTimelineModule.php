@@ -2811,13 +2811,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
         if(empty($aReposted) || !is_array($aReposted))
             return [];
-        
+
         $aParams = array_merge($this->_oConfig->getRepostDefaults(true), $aParams);
 
         $bPerformed = $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $this->getUserId());
         $bDisabled = $this->isAllowedRepost($aReposted) !== true;
 
         $sDo = isset($aParams['do']) ? $aParams['do'] : 'repost';
+
+        $sDataType = $sType;
+        $sDataAction = $sAction;
+        $iDataObjectId = $iObjectId;
+        if(($sCommonPrefix = $this->_oConfig->getPrefix('common_post')) && str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+            $aRepostedData = unserialize($aReposted['content']);
+
+            $sDataType = $aRepostedData['type'];
+            $sDataAction = $aRepostedData['action'];
+            $iDataObjectId = $aRepostedData['object_id'];
+        }
 
         return [
             'type' => 'reposts',
@@ -2832,9 +2843,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'data' => [
                     'author_id' => $iOwnerId,
                     'owner_id' => $iOwnerId,
-                    'type' => $sType,
-                    'action' => $sAction,
-                    'object_id' => $iObjectId
+                    'type' => $sDataType,
+                    'action' => $sDataAction,
+                    'object_id' => $iDataObjectId
                 ]
             ],
             'counter' => []
@@ -3098,6 +3109,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         return $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, false, $bForce);
+    }
+
+    public function isReposted($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId)
+    {
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        if(empty($aReposted) || !is_array($aReposted))
+            return false;
+
+        if(str_replace($this->_oConfig->getPrefix('common_post'), '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+            $aRepostedData = unserialize($aReposted['content']);
+
+            $aReposted = $this->_oDb->getReposted($aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
+            if(empty($aReposted) || !is_array($aReposted))
+                return false;
+        }
+
+        return $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $iAuthorId);
     }
 
     public function repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $mixedData = false, $bForce = false)

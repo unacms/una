@@ -379,23 +379,28 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         if(!isset($this->_aEvent['reposts'])) 
             return false;
 
-        $aRepostsParams = array(
+        $aRepostsParams = [
             'show_do_repost_text' => $this->_bShowTitles,
             'show_counter' => $this->_bShowCounters,
             'show_counter_label_icon' => $this->_bShowCountersIcons,
             'dynamic_mode' => $this->_bDynamicMode
-        );
+        ];
 
+        $iOwnerId = $this->_aEvent['owner_id'];
         $sType = $this->_aEvent['type'];
         $sAction = $this->_aEvent['action'];
         $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
+
+        $iAuthorId = $this->_oModule->getUserId();
+        if($this->_oModule->isReposted($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId)) 
+            return false;
 
         if($this->_bIsApi)
             return [
                 'id' => $aItem['id'],
                 'name' => $aItem['name'],
                 'display_type' => 'element',
-                'data' => $this->_oModule->serviceGetRepostElementBlockApi($this->_aEvent['owner_id'], $sType, $sAction, $iObjectId, $aRepostsParams)
+                'data' => $this->_oModule->serviceGetRepostElementBlockApi($iOwnerId, $sType, $sAction, $iObjectId, $aRepostsParams)
             ];
 
         $sMethodName = '';
@@ -403,7 +408,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sMethodName = 'serviceGetRepostElementBlock';
-                $aMethodParams = [$this->_aEvent['owner_id'], $sType, $sAction, $iObjectId, $aRepostsParams];
+                $aMethodParams = [$iOwnerId, $sType, $sAction, $iObjectId, $aRepostsParams];
                 break;
 
             case self::$_sModeCounters:
