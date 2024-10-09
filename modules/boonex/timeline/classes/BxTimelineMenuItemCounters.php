@@ -56,7 +56,13 @@ class BxTimelineMenuItemCounters extends BxTimelineMenuItemActions
                 break;
         }
 
-        return $this->_oModule->getCmtsObject($sCommentsSystem, $iCommentsObject)->$sCommentsMethod($aCommentsParams);
+        $oObject = $this->_oModule->getCmtsObject($sCommentsSystem, $iCommentsObject);
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oObject->getElementApi(array_merge($aCommentsParams, [
+                'show_counter' => true,
+            ])));
+
+        return $oObject->$sCommentsMethod($aCommentsParams);
     }
 }
 
