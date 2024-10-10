@@ -82,6 +82,8 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
             $mixedValue = bx_srv($sModule, $sMethod, [$iContentId]);
         if(!$mixedValue && ($sMethod = 'get_text') &&  bx_is_srv($sModule, $sMethod))
             $mixedValue = bx_srv($sModule, $sMethod, [$iContentId]);
+        if(!$mixedValue)
+            $mixedValue = _t('_undefined');
 
         if(($sMethod = 'get_link') && bx_is_srv($sModule, $sMethod))
             $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', [
@@ -96,7 +98,12 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
     protected function _getCellContentType($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(_t('_' . $mixedValue), $sKey, $aField, $aRow);
-    }    
+    }
+
+    protected function _getCellUsage($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(_t('_bx_courses_txt_data_usage_' . $mixedValue), $sKey, $aField, $aRow);
+    }
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
@@ -122,12 +129,22 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
+    protected function _getActionAddSt($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $a['attr'] = array_merge($a['attr'], [
-            "onclick" => "$(this).off('click'); bx_menu_popup('" . $CNF['OBJECT_MENU_CONTENT_ADD'] . "', this, {}, {entry_pid: " . $this->_iEntryPid . ", node_id: " . $this->_iNodeId . "});"
+            "onclick" => "$(this).off('click'); bx_menu_popup('" . $CNF['OBJECT_MENU_CONTENT_ADD'] . "', this, {removeOnClose: 1}, {entry_pid: " . $this->_iEntryPid . ", node_id: " . $this->_iNodeId . ", usage:0});"
+    	]);
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _getActionAddAt($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $a['attr'] = array_merge($a['attr'], [
+            "onclick" => "$(this).off('click'); bx_menu_popup('" . $CNF['OBJECT_MENU_CONTENT_ADD'] . "', this, {removeOnClose: 1}, {entry_pid: " . $this->_iEntryPid . ", node_id: " . $this->_iNodeId . ", usage:1});"
     	]);
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }

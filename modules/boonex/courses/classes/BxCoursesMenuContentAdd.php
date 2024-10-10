@@ -16,6 +16,7 @@ class BxCoursesMenuContentAdd extends BxTemplMenu
     
     protected $_iEntryPid;
     protected $_iNodeId;
+    protected $_iUsage;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -31,6 +32,10 @@ class BxCoursesMenuContentAdd extends BxTemplMenu
         $this->_iNodeId = 0;
         if(($iNodeId = bx_get('node_id')) !== false)
             $this->_iNodeId = (int)$iNodeId;
+        
+        $this->_iUsage = 0;
+        if(($iUsage = bx_get('usage')) !== false)
+            $this->_iUsage = (int)$iUsage;
     }
 
     protected function getMenuItemsRaw()
@@ -39,7 +44,7 @@ class BxCoursesMenuContentAdd extends BxTemplMenu
 
         $oPermalink = BxDolPermalinks::getInstance();
 
-        $aModules = $this->_oModule->_oConfig->getContentModules();
+        $aModules = $this->_oModule->_oConfig->getContentModules($this->_iUsage);
         foreach($aModules as $sModule) {
             $oModule = BxDolModule::getInstance($sModule);
             if(!$oModule)
@@ -52,9 +57,18 @@ class BxCoursesMenuContentAdd extends BxTemplMenu
             $sUrl = $oPermalink->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY'], [
                 'context_pid' => $this->_iEntryPid,
                 'context_nid' => $this->_iNodeId,
+                'context_usage' => $this->_iUsage
             ]);
 
-            $aResults[] = ['id' => $sModule, 'name' => $sModule, 'class' => '', 'link' => $sUrl, 'target' => '_self', 'title' => _t('_' . $sModule)];
+            $aResults[] = [
+                'id' => $sModule, 
+                'name' => $sModule, 
+                'class' => '', 
+                'link' => $sUrl, 
+                'onclick' => "$(this).parents('.bx-popup-applied:visible:first').dolPopupHide()",
+                'target' => '_blank', 
+                'title' => _t('_' . $sModule)
+            ];
         }
 
         return $aResults;

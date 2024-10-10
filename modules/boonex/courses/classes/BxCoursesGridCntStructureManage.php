@@ -44,9 +44,9 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $this->_iLevelMax = $this->_oModule->_oConfig->isContentLevelMax();
 
         $this->_aLevelToNode = [
-            1 => _t('_bx_courses_txt_module'),
-            2 => _t('_bx_courses_txt_theme'),
-            3 => _t('_bx_courses_txt_lesson')
+            1 => _t('_bx_courses_txt_sample_l1_single'),
+            2 => _t('_bx_courses_txt_sample_l2_single'),
+            3 => _t('_bx_courses_txt_sample_l3_single')
         ];
     }
 
@@ -96,6 +96,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     	$oForm->setId($sForm);
         $oForm->setName($sForm);
         $oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', ['o' => $this->_sObject, 'a' => $sAction, 'entry_id' => $this->_iEntryId, 'parent_id' => $this->_iParentId]));
+        $oForm->setData($this->_iParentId, $this->_iLevel);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -155,6 +156,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $oForm->setId($sForm);
         $oForm->setName($sForm);
     	$oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', ['o' => $this->_sObject, 'a' => $sAction, 'entry_id' => $this->_iEntryId, 'parent_id' => $this->_iParentId, 'id' => $aNode['id']]));
+        $oForm->setData($this->_iParentId);
 
         $oForm->initChecker($aNode);
         if($oForm->isSubmittedAndValid()) {
@@ -275,6 +277,9 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
 
     protected function _delete($mixedId)
     {
+        if($this->_iLevel > 1) 
+            $this->_oModule->_oDb->updateContentStructureCounters($this->_iParentId, $this->_iLevel, -1);
+
         $this->_oModule->_oDb->deleteContentStructureNode(['node_id' => (int)$mixedId]);
 
         return parent::_delete($mixedId);
@@ -302,7 +307,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
 
     protected function _getNodeLevel()
     {
-        return (is_array($this->_aParentInfo) && !empty($this->_aParentInfo['level']) ? (int)$this->_aParentInfo['level'] : 0) + 1;
+        return $this->_oModule->getNodeLevelByParent($this->_aParentInfo);
     }
     
     protected function _parseNodeName($s)

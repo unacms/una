@@ -538,8 +538,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName());
 
         if(($iContextNid = $this->getCleanValue('context_nid')) !== false)
-            $this->_processContextAfterAdd($iContentId, $iContextNid);
-            
+            $this->_processContextAfterAdd($iContentId, $iContextNid, (int)$this->getCleanValue('context_usage'));
+
         return $iContentId;
     }
 
@@ -1016,16 +1016,27 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 'value' => -abs((int)$iContextId)
             ]);
 
-        if(($iNodeId = bx_get('context_nid')) !== false && !isset($this->aInputs['context_nid'])) {
-            $this->aInputs['context_nid'] = [
-                'name' => 'context_nid',
+        $sKey = 'context_nid';
+        if(($iNodeId = bx_get($sKey)) !== false && !isset($this->aInputs[$sKey])) {
+            $this->aInputs[$sKey] = [
+                'name' => $sKey,
                 'type' => 'hidden',
                 'value' => (int)$iNodeId
             ];
         }
+
+        $sKey = 'context_usage';
+        if(($iUsage = bx_get($sKey)) !== false && !isset($this->aInputs[$sKey])) {
+            $this->aInputs[$sKey] = [
+                'name' => $sKey,
+                'type' => 'hidden',
+                'value' => (int)$iUsage
+            ];
+        }
+        
     }
 
-    protected function _processContextAfterAdd($iContentId, $iContextNid)
+    protected function _processContextAfterAdd($iContentId, $iContextNid, $iContextUsage = 0)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -1045,7 +1056,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $sModule = $oContext->getModule();
         $sMethod = 'on_content_added';
         if(bx_is_srv($sModule, $sMethod))
-            bx_srv($sModule, $sMethod, [$this->MODULE, $iContentId, $oContext->getContentId(), $iContextNid]);
+            bx_srv($sModule, $sMethod, [$this->MODULE, $iContentId, $oContext->getContentId(), $iContextNid, $iContextUsage]);
     }
 
     /**

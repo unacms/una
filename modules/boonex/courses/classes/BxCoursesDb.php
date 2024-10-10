@@ -44,9 +44,9 @@ class BxCoursesDb extends BxBaseModGroupsDb
                     'id' => $aParams['id']
                 ];
 
-                $sSelectClause .= ", `tcs`.*";
-                $sWhereClause = "AND `tcn`.`id`=:id";
+                $sSelectClause .= ", `tcs`.`parent_id`, `tcs`.`level`, `tcs`.`order`, `tcs`.`cn_l2`, `tcs`.`cn_l3`";
                 $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_CNT_STRUCTURE'] . "` AS `tcs` ON `tcn`.`id`=`tcs`.`node_id`";
+                $sWhereClause = "AND `tcn`.`id`=:id";
                 break;
         }
 
@@ -68,6 +68,26 @@ class BxCoursesDb extends BxBaseModGroupsDb
             return false;
 
         return $this->query("UPDATE `" . $CNF['TABLE_CNT_NODES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function insertContentNodes2Users($aParamsSet)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_CNT_NODES2USERS'] . "` SET " . $this->arrayToSQL($aParamsSet) . " ON DUPLICATE KEY UPDATE `date`=UNIX_TIMESTAMP()") > 0 ? (int)$this->lastId() : false;
+    }
+
+    public function deleteContentNodes2Users($aParamsWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsWhere))
+            return false;
+
+        return $this->query("DELETE FROM `" . $CNF['TABLE_CNT_NODES2USERS'] . "` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
     }
 
     public function getContentStructure($aParams)
@@ -96,6 +116,67 @@ class BxCoursesDb extends BxBaseModGroupsDb
                 ];
 
                 $sWhereClause = "AND `tcs`.`node_id`=:node_id";
+                break;
+
+            case 'entry_id_full':
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id']
+                ];
+
+                $sSelectClause .= ", `tcn`.`title`, `tcn`.`counters`";
+                $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_CNT_NODES'] . "` AS `tcn` ON `tcs`.`node_id`=`tcn`.`id`";
+                $sWhereClause = "AND `tcs`.`entry_id`=:entry_id";
+
+                if(isset($aParams['parent_id'])) {
+                    $aMethod['params'][1]['parent_id'] = $aParams['parent_id'];
+                        
+                    $sWhereClause .= " AND `tcs`.`parent_id`=:parent_id";
+                }
+
+                if(isset($aParams['level'])) {
+                    $aMethod['params'][1]['level'] = $aParams['level'];
+                        
+                    $sWhereClause .= " AND `tcs`.`level`=:level";
+                }
+
+                if(isset($aParams['status'])) {
+                    $aMethod['params'][1]['status'] = $aParams['status'];
+                        
+                    $sWhereClause .= " AND `tcn`.`status`=:status";
+                }
+
+                if(isset($aParams['start'], $aParams['per_page']) && (int)$aParams['per_page'] != 0)
+                    $sLimitClause = $aParams['start'] . ', ' . $aParams['per_page'];
+                break;
+                
+            case 'parent_id':
+                $aMethod['params'][1] = [
+                    'parent_id' => $aParams['parent_id']
+                ];
+
+                $sWhereClause = "AND `tcs`.`parent_id`=:parent_id";
+                break;
+
+            case 'user_passed':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'profile_id' => $aParams['profile_id'],
+                    'node_id' => $aParams['node_id']
+                ];
+
+                $sSelectClause = "`tcnu`.*";
+                $sJoinClause = "INNER JOIN `" . $CNF['TABLE_CNT_NODES2USERS'] . "` AS `tcnu` ON `tcs`.`node_id`=`tcnu`.`node_id` AND `tcnu`.`node_id`=:node_id AND `tcnu`.`profile_id`=:profile_id";
+                break;
+
+            case 'user_track':
+                $aMethod['params'][1] = [
+                    'profile_id' => $aParams['profile_id'],
+                    'entry_id' => $aParams['entry_id'],
+                    'node_id' => $aParams['node_id']
+                ];
+
+                $sJoinClause = "INNER JOIN `" . $CNF['TABLE_CNT_NODES2USERS'] . "` AS `tcnu` ON `tcs`.`node_id`=`tcnu`.`node_id` AND `tcnu`.`profile_id`=:profile_id";
+                $sWhereClause = "AND `tcs`.`entry_id`=:entry_id AND `tcs`.`parent_id`=:node_id";
                 break;
         }
 
@@ -190,6 +271,53 @@ class BxCoursesDb extends BxBaseModGroupsDb
 
                 $sWhereClause = "AND `tcd`.`content_type`=:content_type AND `tcd`.`content_id`=:content_id";
                 break;
+
+            case 'node_id':
+                $aMethod['params'][1] = [
+                    'node_id' => $aParams['node_id']
+                ];
+
+                $sWhereClause = "AND `tcd`.`node_id`=:node_id";
+                $sOrderClause = "`tcd`.`order` ASC";
+                break;
+
+            case 'entry_node_ids':
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id'],
+                    'node_id' => $aParams['node_id']
+                ];
+
+                $sWhereClause = "AND `tcd`.`entry_id`=:entry_id AND `tcd`.`node_id`=:node_id";
+                $sOrderClause = "`tcd`.`order` ASC";
+
+                if(isset($aParams['usage'])) {
+                    $aMethod['params'][1]['usage'] = $aParams['usage'];
+
+                    $sWhereClause .= " AND `tcd`.`usage`=:usage";
+                }
+                break;
+
+            case 'user_passed':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'profile_id' => $aParams['profile_id'],
+                    'data_id' => $aParams['data_id']
+                ];
+
+                $sSelectClause = "`tcdu`.*";
+                $sJoinClause = "INNER JOIN `" . $CNF['TABLE_CNT_DATA2USERS'] . "` AS `tcdu` ON `tcd`.`id`=`tcdu`.`data_id` AND `tcdu`.`data_id`=:data_id AND `tcdu`.`profile_id`=:profile_id";
+                break;
+
+            case 'user_track':
+                $aMethod['params'][1] = [
+                    'profile_id' => $aParams['profile_id'],
+                    'entry_id' => $aParams['entry_id'],
+                    'node_id' => $aParams['node_id']
+                ];
+
+                $sJoinClause = "INNER JOIN `" . $CNF['TABLE_CNT_DATA2USERS'] . "` AS `tcdu` ON `tcd`.`id`=`tcdu`.`data_id` AND `tcdu`.`profile_id`=:profile_id";
+                $sWhereClause = "AND `tcd`.`entry_id`=:entry_id AND `tcd`.`node_id`=:node_id AND `tcd`.`usage`='" . BX_COURSES_CND_USAGE_ST . "'";
+                break;
         }
 
         if(!empty($sOrderClause))
@@ -230,6 +358,26 @@ class BxCoursesDb extends BxBaseModGroupsDb
             return false;
 
         return $this->query("DELETE FROM `" . $CNF['TABLE_CNT_DATA'] . "` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function insertContentData2Users($aParamsSet)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_CNT_DATA2USERS'] . "` SET " . $this->arrayToSQL($aParamsSet) . " ON DUPLICATE KEY UPDATE `date`=UNIX_TIMESTAMP()") > 0 ? (int)$this->lastId() : false;
+    }
+
+    public function deleteContentData2Users($aParamsWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsWhere))
+            return false;
+
+        return $this->query("DELETE FROM `" . $CNF['TABLE_CNT_DATA2USERS'] . "` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
     }
 }
 

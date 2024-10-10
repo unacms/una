@@ -10,6 +10,14 @@
  */
 
 /**
+ * Content data usage:
+ * st - step,
+ * at - attachment
+ */
+define('BX_COURSES_CND_USAGE_ST', 0);
+define('BX_COURSES_CND_USAGE_AT', 1);
+
+/**
  * Courses profiles module.
  */
 class BxCoursesModule extends BxBaseModGroupsModule
@@ -21,15 +29,159 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $this->_aSearchableNamesExcept[] = $this->_oConfig->CNF['FIELD_JOIN_CONFIRMATION'];
     }
 
-    public function serviceGetOptionsContentModules()
+    public function actionPassNode()
     {
-        $aResult = [];
+        $iNodeId = bx_get('node_id');
+        if($iNodeId === false)
+            return echoJson([]);
 
-        $aModules = bx_srv('system', 'get_modules_by_type', ['content']);
-        foreach($aModules as $aModule)
-            $aResult[] = ['key' => $aModule['name'], 'value' => $aModule['title']];
+        return echoJson($this->servicePassNode((int)$iNodeId));
+    }
+
+    public function actionPassData()
+    {
+        $iDataId = bx_get('data_id');
+        if($iDataId === false)
+            return echoJson([]);
+
+        return echoJson($this->servicePassData((int)$iDataId));
+    }
+
+    public function serviceGetSafeServices()
+    {
+        return array_merge(parent::serviceGetSafeServices(), [
+            'PassNode' => '',
+            'PassData' => '',
+        ]);
+    }
+
+    public function servicePassNode($iNodeId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aNode = $this->_oDb->getContentNodes([
+            'sample' => 'id',
+            'id' => $iNodeId
+        ]);
+
+        if(empty($aNode) || !is_array($aNode))
+            return ['code' => 1];
+
+        $iEntryId = (int)$aNode['entry_id'];
+        $iProfileId = bx_get_logged_profile_id();
+        if($this->isNodePassed($iProfileId, $iNodeId)) {
+            $aDataItems = $this->_oDb->getContentData([
+                'sample' => 'entry_node_ids', 
+                'entry_id' => $iEntryId,
+                'node_id' => $iNodeId,
+            ]);
+
+            if(!empty($aDataItems) && is_array($aDataItems))
+                foreach($aDataItems as $aDataItem)
+                    $this->_oDb->deleteContentData2Users(['data_id' => $aDataItem['id'], 'profile_id' => $iProfileId]);
+
+            $this->_oDb->deleteContentNodes2Users(['node_id' => $iNodeId, 'profile_id' => $iProfileId]);
+        }
+
+        return [
+            'code' => 0, 
+            'redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iEntryId, [
+                'node_id' => $iNodeId
+            ])
+        ];
+    }
+
+    public function servicePassData($iDataId)
+    {
+        $iNow = time();
+        $iProfileId = bx_get_logged_profile_id();
+        
+        $aData = $this->_oDb->getContentData([
+            'sample' => 'id',
+            'id' => $iDataId
+        ]);
+        
+        if(empty($aData) || !is_array($aData))
+            return ['code' => 1];
+
+        $this->_oDb->insertContentData2Users([
+            'data_id' => $iDataId, 
+            'profile_id' => $iProfileId, 
+            'date' => $iNow
+        ]);
+
+        $aNode = $this->_oDb->getContentNodes([
+            'sample' => 'id_full',
+            'id' => $aData['node_id']
+        ]);
+
+        $iTotal = $this->getDataTotalByNode($aNode, BX_COURSES_CND_USAGE_ST);
+
+        $aUserTrack = $this->_oDb->getContentData([
+            'sample' => 'user_track', 
+            'entry_id' => $aNode['entry_id'], 
+            'node_id' => $aNode['id'], 
+            'profile_id' => $iProfileId
+        ]);
+
+        if(count($aUserTrack) == $iTotal) {
+            $this->_oDb->insertContentNodes2Users([
+                'node_id' => $aNode['id'], 
+                'profile_id' => $iProfileId, 
+                'date' => $iNow
+            ]);
+            
+            $this->_autoPassNodes($iProfileId, $aNode['parent_id']);
+        }
+
+        $aResult = ['code' => 0];
+        if(($sMethod = 'get_link') && bx_is_srv($aData['content_type'], $sMethod))
+            $aResult['redirect'] = bx_srv($aData['content_type'], $sMethod, [$aData['content_id']]);
 
         return $aResult;
+    }
+    
+    protected function _autoPassNodes($iProfileId, $iNodeId)
+    {
+        $aNode = $this->_oDb->getContentStructure([
+            'sample' => 'node_id', 
+            'node_id' => $iNodeId, 
+        ]);
+
+        if(empty($aNode) || !is_array($aNode))
+            return;
+
+        $iTotal = (int)$aNode['cn_l' . ($aNode['level'] + 1)];
+        if(!$iTotal)
+            return;
+
+        $aUserTrack = $this->_oDb->getContentStructure([
+            'sample' => 'user_track',
+            'profile_id' => $iProfileId,
+            'entry_id' => $aNode['entry_id'],
+            'node_id' => $iNodeId
+        ]);
+
+        if(count($aUserTrack) == $iTotal) {
+            $this->_oDb->insertContentNodes2Users([
+                'node_id' => $iNodeId, 
+                'profile_id' => $iProfileId, 
+                'date' => time()
+            ]);
+
+            if((int)$aNode['parent_id'] != 0)
+                $this->_autoPassNodes($iProfileId, $aNode['parent_id']);
+        }
+    }
+
+    public function serviceGetOptionsContentModulesSt()
+    {
+        return $this->_getOptionsContentModules();
+    }
+
+    public function serviceGetOptionsContentModulesAt()
+    {
+        return $this->_getOptionsContentModules();
     }
 
     public function serviceIsContentAvaliable($iProfileId)
@@ -44,13 +196,14 @@ class BxCoursesModule extends BxBaseModGroupsModule
         return true;
     }
 
-    public function serviceOnContentAdded($sContentType, $iContentId, $iContextId, $iContextNodeId)
+    public function serviceOnContentAdded($sContentType, $iContentId, $iContextId, $iContextNodeId, $iContextUsage)
     {
         $this->_oDb->insertContentData([
             'entry_id' => $iContextId,
             'node_id' => $iContextNodeId,
             'content_type' => $sContentType,
             'content_id' => $iContentId,
+            'usage' => $iContextUsage,
             'added' => time(),
             'order' => $this->_oDb->getContentDataOrderMax($iContextId, $iContextNodeId)
         ]);
@@ -61,9 +214,13 @@ class BxCoursesModule extends BxBaseModGroupsModule
         if(!empty($aNode['counters']))
             $aCounters = json_decode($aNode['counters'], true);
 
-        if(!isset($aCounters[$sContentType]))
-            $aCounters[$sContentType] = 0;
-        $aCounters[$sContentType] += 1;
+        $sUsage = $this->_oConfig->getUsageI2S($iContextUsage);
+        if(!isset($aCounters[$sUsage]))
+            $aCounters[$sUsage] = [];
+
+        if(!isset($aCounters[$sUsage][$sContentType]))
+            $aCounters[$sUsage][$sContentType] = 0;
+        $aCounters[$sUsage][$sContentType] += 1;
 
         $this->_oDb->updateContentNodes(['counters' => json_encode($aCounters)], ['id' => $iContextNodeId]);
     }
@@ -82,9 +239,14 @@ class BxCoursesModule extends BxBaseModGroupsModule
 
         $aNode = $this->_oDb->getContentNodes(['sample' => 'id', 'id' => $aData['node_id']]);
         if(!empty($aNode['counters'])) {
+            $sUsage = $this->_oConfig->getUsageI2S($aData['usage']);
             $aCounters = json_decode($aNode['counters'], true);
-            if(!empty($aCounters[$sContentType])) {
-                $aCounters[$sContentType] -= 1;
+
+            if(!empty($aCounters[$sUsage][$sContentType])) {
+                if((int)$aCounters[$sUsage][$sContentType] > 1)
+                    $aCounters[$sUsage][$sContentType] -= 1;
+                else
+                    unset($aCounters[$sUsage][$sContentType]);
 
                 $this->_oDb->updateContentNodes(['counters' => json_encode($aCounters)], ['id' => $aData['node_id']]);
             }
@@ -137,6 +299,133 @@ class BxCoursesModule extends BxBaseModGroupsModule
         return $oGrid->getCode();
     }
     
+    public function serviceEntityStructureL1Block($iContentId = 0)
+    {
+        if(!$this->_oConfig->isContent())
+            return '';
+
+        return $this->_serviceTemplateFuncEx ('entryStructureByLevel', $iContentId, [
+            'level' => 1,
+            'selected' => ($iNodeId = bx_get('parent_id')) !== false ? (int)$iNodeId : 0,
+            'start' => ($iStart = bx_get('start')) !== false ? (int)$iStart : 0,
+            'per_page' => ($iPerPage = bx_get('per_page')) !== false ? (int)$iPerPage : 0,
+        ]);
+    }
+
+    public function serviceEntityStructureL2Block($iContentId = 0, $iParentId = 0)
+    {
+        if(!$this->_oConfig->isContent())
+            return '';
+
+        if(!$iParentId && ($_iParentId = bx_get('parent_id')) !== false)
+            $iParentId = (int)$_iParentId;
+
+        return $this->_serviceTemplateFuncEx ('entryStructureByParentMl3', $iContentId, [
+            'parent_id' => $iParentId
+        ]);
+    }
+    
+    public function serviceEntityNodeBlock($iContentId = 0, $iNodeId = 0, $iUsage = false)
+    {
+        if(!$this->_oConfig->isContent())
+            return '';
+
+        if(!$iNodeId && ($_iNodeId = bx_get('node_id')) !== false)
+            $iNodeId = (int)$_iNodeId;
+
+        if($iUsage === false && ($_iUsage = bx_get('usage')) !== false)
+            $iUsage = (int)$_iUsage;
+
+        return $this->_serviceTemplateFuncEx ('entryNode', $iContentId, [
+            'node_id' => $iNodeId,
+            'usage' => $iUsage
+        ]);
+    }
+    
+    public function getNodeLevelByParent($aParentInfo)
+    {
+        return (is_array($aParentInfo) && !empty($aParentInfo['level']) ? (int)$aParentInfo['level'] : 0) + 1;
+    }
+    
+    public function getDataTotalByNode($mixedNode, $iUsage = 0)
+    {
+        if(!is_array($mixedNode))
+            $mixedNode = $this->_oDb->getContentNodes([
+                'sample' => 'id', 
+                'id' => (int)$mixedNode
+            ]);
+        
+        $iTotal = 0;
+        $sUsage = $this->_oConfig->getUsageI2S($iUsage);
+        if(!empty($mixedNode['counters']) && ($aCountes = json_decode($mixedNode['counters'], true)) && !empty($aCountes[$sUsage]) && is_array($aCountes[$sUsage]))
+            $iTotal = array_sum($aCountes[$sUsage]);
+
+        return $iTotal;
+    }
+
+    public function isNodeStarted($iProfileId, $mixedNode)
+    {
+        $iNodeId = is_array($mixedNode) ? $mixedNode['id'] : (int)$mixedNode;
+
+        $aChildNodes = $this->_oDb->getContentStructure([
+            'sample' => 'parent_id',
+            'parent_id' => $iNodeId
+        ]);
+
+        if(!empty($aChildNodes) && is_array($aChildNodes)) {
+            foreach($aChildNodes as $aChildNode)
+                if($this->isNodePassed($iProfileId, $aChildNode['node_id']))
+                    return true;
+                else
+                    return $this->isNodeStarted($iProfileId, $aChildNode['node_id']);
+        }
+        else {
+            $aChildData = $this->_oDb->getContentData([
+                'sample' => 'node_id',
+                'node_id' => $iNodeId
+            ]);
+
+            if(!empty($aChildData) && is_array($aChildData))
+                foreach($aChildData as $aChildData)
+                    if($this->isDataPassed($iProfileId, $aChildData['id']))
+                        return true;
+
+            return false;
+        }
+    }
+
+    public function isNodePassed($iProfileId, $mixedNode)
+    {
+        $aUserTrack = $this->_oDb->getContentStructure([
+            'sample' => 'user_passed', 
+            'profile_id' => $iProfileId, 
+            'node_id' => is_array($mixedNode) ? $mixedNode['id'] : (int)$mixedNode
+        ]);
+
+        return !empty($aUserTrack) && is_array($aUserTrack);
+    }
+    
+    public function isDataPassed($iProfileId, $mixedData)
+    {
+        $aUserTrack = $this->_oDb->getContentData([
+            'sample' => 'user_passed', 
+            'profile_id' => $iProfileId, 
+            'data_id' => is_array($mixedData) ? $mixedData['id'] : (int)$mixedData
+        ]);
+
+        return !empty($aUserTrack) && is_array($aUserTrack);
+    }
+
+    protected function _getOptionsContentModules()
+    {
+        $aResult = [];
+
+        $aModules = bx_srv('system', 'get_modules_by_type', ['content']);
+        foreach($aModules as $aModule)
+            $aResult[] = ['key' => $aModule['name'], 'value' => $aModule['title']];
+
+        return $aResult;
+    }
 }
 
 /** @} */

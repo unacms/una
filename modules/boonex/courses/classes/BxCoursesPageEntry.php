@@ -19,6 +19,16 @@ class BxCoursesPageEntry extends BxBaseModGroupsPageEntry
         $this->MODULE = 'bx_courses';
         parent::__construct($aObject, $oTemplate);
     }
+
+    public function getCode ()
+    {
+        $sResult = parent::getCode();
+        if(!empty($sResult))
+            $sResult .= $this->_oModule->_oTemplate->getJsCode('entry');
+
+        $this->_oModule->_oTemplate->addJs(['modules/base/groups/js/|entry.js', 'entry.js']);
+        return $sResult;
+    }
 }
 
 /** @} */

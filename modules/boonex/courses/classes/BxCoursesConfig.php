@@ -37,7 +37,9 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
             'TABLE_CNT_STRUCTURE' => $aModule['db_prefix'] . 'content_structure',
             'TABLE_CNT_NODES' => $aModule['db_prefix'] . 'content_nodes',
+            'TABLE_CNT_NODES2USERS' => $aModule['db_prefix'] . 'content_nodes2users',
             'TABLE_CNT_DATA' => $aModule['db_prefix'] . 'content_data',
+            'TABLE_CNT_DATA2USERS' => $aModule['db_prefix'] . 'content_data2users',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -71,6 +73,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-course-profile',
+            'URI_VIEW_ENTRY_NODE' => 'view-course-profile-node',
             'URI_EDIT_ENTRY' => 'edit-course-profile',
             'URI_JOIN_ENTRY' => 'join-course-profile',
             'URI_JOINED_ENTRIES' => 'joined-courses',
@@ -99,7 +102,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
             'PARAM_CONTENT' => 'bx_courses_enable_content',
             'PARAM_CONTENT_LEVEL_MAX' => 'bx_courses_content_level_max',
-            'PARAM_CONTENT_MODULES' => 'bx_courses_content_modules',
+            'PARAM_CONTENT_MODULES_ST' => 'bx_courses_content_modules_st',
+            'PARAM_CONTENT_MODULES_AT' => 'bx_courses_content_modules_at',
 
             // objects
             'OBJECT_STORAGE' => 'bx_courses_pics',
@@ -277,6 +281,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
         $this->_aJsClasses = [
             'main' => 'BxCoursesMain',
+            'entry' => 'BxCoursesEntry',
             'manage_tools' => 'BxCoursesManageTools',
             'invite_popup' => 'BxCoursesInvitePopup',
             'prices' => 'BxCoursesPrices'
@@ -284,6 +289,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
         $this->_aJsObjects = [
             'main' => 'oBxCoursesMain',
+            'entry' => 'oBxCoursesEntry',
             'manage_tools' => 'oBxCoursesManageTools',
             'invite_popup' => 'oBxCoursesInvitePopup',
             'prices' => 'oBxCoursesPrices'
@@ -310,9 +316,22 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
         return (int)getParam($this->CNF['PARAM_CONTENT_LEVEL_MAX']);
     }
 
-    public function getContentModules()
+    public function getContentModules($iUsage)
     {
-        return explode(',', getParam($this->CNF['PARAM_CONTENT_MODULES']));
+        return explode(',', getParam($this->CNF['PARAM_CONTENT_MODULES_' . $this->getUsageI2S($iUsage, false)]));
+    }
+
+    public function getUsageI2S($iUsage, $bLowerCase = true)
+    {
+        $a = [
+            BX_COURSES_CND_USAGE_ST => 'st',
+            BX_COURSES_CND_USAGE_AT => 'at'
+        ];
+
+        if(!isset($a[$iUsage]))
+            $iUsage = BX_COURSES_CND_USAGE_ST;        
+
+        return $bLowerCase ? $a[$iUsage] : strtoupper($a[$iUsage]);
     }
 }
 

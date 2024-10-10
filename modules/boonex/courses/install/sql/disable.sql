@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_courses';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_courses' OR `object` IN('bx_courses_create_profile', 'bx_courses_delete_profile', 'bx_courses_join_profile', 'bx_courses_edit_profile', 'bx_courses_edit_profile_cover', 'bx_courses_invite', 'bx_courses_view_profile', 'bx_courses_view_profile_closed', 'bx_courses_profile_info', 'bx_courses_profile_pricing', 'bx_courses_profile_comments', 'bx_courses_home', 'bx_courses_fans', 'bx_courses_joined', 'bx_courses_favorites', 'bx_courses_top', 'bx_courses_search', 'bx_courses_manage', 'bx_courses_administration');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_courses' OR `object` IN('bx_courses_create_profile', 'bx_courses_delete_profile', 'bx_courses_join_profile', 'bx_courses_edit_profile', 'bx_courses_edit_profile_cover', 'bx_courses_invite', 'bx_courses_view_profile', 'bx_courses_view_profile_closed', 'bx_courses_view_profile_node', 'bx_courses_profile_info', 'bx_courses_profile_pricing', 'bx_courses_profile_comments', 'bx_courses_home', 'bx_courses_fans', 'bx_courses_joined', 'bx_courses_favorites', 'bx_courses_top', 'bx_courses_search', 'bx_courses_manage', 'bx_courses_administration');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_courses';
