@@ -6,8 +6,9 @@
                 <div class="bx-courses-index bx-def-font-grayed text-xs"><span class="capitalize"><bx_text:_bx_courses_txt_sample_l1_single /></span> __index__:</div>
                 <div class="bx-courses-title font-bold">__title__</div>
                 <div class="bx-courses-counters flex pt-2 space-x-2">
-                    <div><bx_text:_bx_courses_txt_sample_l2_plural />: <span class="font-bold">__cn_l2__</span></div>
-                    <div><bx_text:_bx_courses_txt_sample_l3_plural />: <span class="font-bold">__cn_l3__</span></div>
+                    <bx_repeat:counters>
+                        <div>__cn_title__: <span class="font-bold">__cn_value__</span></div>
+                    </bx_repeat:counters>
                 </div>
             </div>
         </div>

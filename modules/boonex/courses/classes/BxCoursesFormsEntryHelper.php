@@ -35,6 +35,30 @@ class BxCoursesFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
 
         return '';
     }
+
+    public function onDataDeleteAfter($iContentId, $aContentInfo, $oProfile)
+    {
+        if($s = parent::onDataDeleteAfter($iContentId, $aContentInfo, $oProfile))
+            return $s;
+
+        $aDataItems = $this->_oModule->_oDb->getContentData([
+            'sample' => 'entry_id',
+            'entry_id' => $iContentId
+        ]);
+
+        if(!empty($aDataItems) && is_array($aDataItems))
+            foreach($aDataItems as $aDataItem)
+                if(($sMethod = 'delete_entity') && bx_is_srv($aDataItem['content_type'], $sMethod))
+                    bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
+
+        $this->_oModule->_oDb->deleteContentDataWithTracks($iContentId);
+
+        $this->_oModule->_oDb->deleteContentNodesWithTracks($iContentId);
+
+        $this->_oModule->_oDb->deleteContentStructureNode(['entry_id' => $iContentId]);
+
+        return '';
+    }
 }
 
 /** @} */

@@ -5,7 +5,7 @@
 
     <string name="_bx_courses_option_enable_auto_approve"><![CDATA[Автоматически активировать курс после создания]]></string>
     <string name="_bx_courses_option_enable_content"><![CDATA[Включить возможность добавления контента в курс (экспериментально)]]></string>
-    <string name="_bx_courses_option_content_level_max"><![CDATA[Максимальный уровень для узла в древовидной структуре]]></string>
+    <string name="_bx_courses_option_content_level_max"><![CDATA[Максимальный уровень для узла в древовидной структуре (выбирайте перед началом создания курсов)]]></string>
     <string name="_bx_courses_option_content_modules_step"><![CDATA[Модули, из которых контент может быть добален в курс как шаг]]></string>
     <string name="_bx_courses_option_content_modules_attachment"><![CDATA[Модули, из которых контент может быть добален в курс как вложение]]></string>
     <string name="_bx_courses_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>

@@ -24,6 +24,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected $_iLevel;
     protected $_iLevelMax;
     protected $_aLevelToNode;
+    protected $_aLevelToNodePl;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -41,13 +42,9 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $this->setParentId(($iParentId = bx_get('parent_id')) !== false ? $iParentId : 0);            
 
         $this->_iLevel = $this->_getNodeLevel();
-        $this->_iLevelMax = $this->_oModule->_oConfig->isContentLevelMax();
-
-        $this->_aLevelToNode = [
-            1 => _t('_bx_courses_txt_sample_l1_single'),
-            2 => _t('_bx_courses_txt_sample_l2_single'),
-            3 => _t('_bx_courses_txt_sample_l3_single')
-        ];
+        $this->_iLevelMax = $this->_oModule->_oConfig->getContentLevelMax();
+        $this->_aLevelToNode = $this->_oModule->_oConfig->getContentLevel2Node();
+        $this->_aLevelToNodePl = $this->_oModule->_oConfig->getContentLevel2Node(false);
     }
 
     public function setEntryId($iEntryId)
@@ -181,17 +178,19 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
 
     protected function _getCellHeaderCnL2($sKey, $aField)
     {
-        if($this->_iLevel >= 2)
+        if($this->_iLevelMax < 2 || $this->_iLevel >= 2)
             return '';
 
+        $aField['title'] = ucfirst($this->_aLevelToNodePl[2]);
         return parent::_getCellHeaderDefault($sKey, $aField);
     }
     
     protected function _getCellHeaderCnL3($sKey, $aField)
     {
-        if($this->_iLevel >= 3)
+        if($this->_iLevelMax < 3 || $this->_iLevel >= 3)
             return '';
 
+        $aField['title'] = ucfirst($this->_aLevelToNodePl[3]);
         return parent::_getCellHeaderDefault($sKey, $aField);
     }
     
@@ -216,7 +215,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     
     protected function _getCellCnL2($mixedValue, $sKey, $aField, $aRow)
     {
-        if($this->_iLevel >= 2)
+        if($this->_iLevelMax < 2 || $this->_iLevel >= 2)
             return '';
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
@@ -224,7 +223,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     
     protected function _getCellCnL3($mixedValue, $sKey, $aField, $aRow)
     {
-        if($this->_iLevel >= 3)
+        if($this->_iLevelMax < 3 || $this->_iLevel >= 3)
             return '';
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);

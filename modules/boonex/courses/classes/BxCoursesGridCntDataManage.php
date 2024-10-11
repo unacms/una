@@ -38,7 +38,7 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
 
         $this->setNodeId(($iNodeId = bx_get('parent_id')) !== false ? $iNodeId : 0);            
 
-        $this->_iLevelMax = $this->_oModule->_oConfig->isContentLevelMax();
+        $this->_iLevelMax = $this->_oModule->_oConfig->getContentLevelMax();
     }
 
     public function setEntryId($iEntryId)

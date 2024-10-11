@@ -28,7 +28,7 @@ class BxCoursesFormContentNode extends BxTemplFormView
 
         $this->_iParentId = 0;
         $this->_iLevel = 0;
-        $this->_iLevelMax = $this->_oModule->_oConfig->isContentLevelMax();
+        $this->_iLevelMax = $this->_oModule->_oConfig->getContentLevelMax();
         $this->_aLevelMaxInputs = ['text', 'passing'];
         
         if(isset($this->aInputs['passing']))

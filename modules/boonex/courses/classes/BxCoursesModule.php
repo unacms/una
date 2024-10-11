@@ -237,6 +237,10 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'content_id' => $iContentId,
         ]);
 
+        $this->_oDb->deleteContentData2Users([
+            'data_id' => $aData['id']
+        ]);
+
         $aNode = $this->_oDb->getContentNodes(['sample' => 'id', 'id' => $aData['node_id']]);
         if(!empty($aNode['counters'])) {
             $sUsage = $this->_oConfig->getUsageI2S($aData['usage']);
@@ -301,7 +305,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
     
     public function serviceEntityStructureL1Block($iContentId = 0)
     {
-        if(!$this->_oConfig->isContent())
+        if(!$this->_oConfig->isContent() || $this->_oConfig->getContentLevelMax() == 1)
             return '';
 
         return $this->_serviceTemplateFuncEx ('entryStructureByLevel', $iContentId, [
@@ -320,7 +324,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
         if(!$iParentId && ($_iParentId = bx_get('parent_id')) !== false)
             $iParentId = (int)$_iParentId;
 
-        return $this->_serviceTemplateFuncEx ('entryStructureByParentMl3', $iContentId, [
+        return $this->_serviceTemplateFuncEx ('entryStructureByParentMl' . $this->_oConfig->getContentLevelMax(), $iContentId, [
             'parent_id' => $iParentId
         ]);
     }

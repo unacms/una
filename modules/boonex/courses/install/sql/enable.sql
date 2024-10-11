@@ -13,7 +13,7 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_courses_enable_auto_approve', 'on', @iCategId, '_bx_courses_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_courses_enable_content', '', @iCategId, '_bx_courses_option_enable_content', 'checkbox', '', '', '', 5),
-('bx_courses_content_level_max', '3', @iCategId, '_bx_courses_option_content_level_max', 'select', '1,2,3,4,5', '', '', 6),
+('bx_courses_content_level_max', '3', @iCategId, '_bx_courses_option_content_level_max', 'select', '1,2,3', '', '', 6),
 ('bx_courses_content_modules_st', '', @iCategId, '_bx_courses_option_content_modules_step', 'list', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:30:"get_options_content_modules_st";}', '', '', 7),
 ('bx_courses_content_modules_at', '', @iCategId, '_bx_courses_option_content_modules_attachment', 'list', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:30:"get_options_content_modules_at";}', '', '', 8),
 ('bx_courses_num_connections_quick', '6', @iCategId, '_bx_courses_option_num_connections_quick', 'digit', '', '', '', 10),

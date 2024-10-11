@@ -70,6 +70,25 @@ class BxCoursesDb extends BxBaseModGroupsDb
         return $this->query("UPDATE `" . $CNF['TABLE_CNT_NODES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
     }
 
+    public function deleteContentNodes($aParamsWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsWhere))
+            return false;
+
+        return $this->query("DELETE FROM `" . $CNF['TABLE_CNT_NODES'] . "` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function deleteContentNodesWithTracks($iEntryId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->query("DELETE FROM `tcn`, `tcnu` USING `" . $CNF['TABLE_CNT_NODES'] . "` AS `tcn` LEFT JOIN `" . $CNF['TABLE_CNT_NODES2USERS'] . "` AS `tcnu` ON `tcn`.`id`=`tcnu`.`node_id` WHERE `tcn`.`entry_id`=:entry_id", [
+            'entry_id' => $iEntryId
+        ]);
+    }
+
     public function insertContentNodes2Users($aParamsSet)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -272,6 +291,14 @@ class BxCoursesDb extends BxBaseModGroupsDb
                 $sWhereClause = "AND `tcd`.`content_type`=:content_type AND `tcd`.`content_id`=:content_id";
                 break;
 
+            case 'entry_id':
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id']
+                ];
+
+                $sWhereClause = "AND `tcd`.`entry_id`=:entry_id";
+                break;
+
             case 'node_id':
                 $aMethod['params'][1] = [
                     'node_id' => $aParams['node_id']
@@ -358,6 +385,15 @@ class BxCoursesDb extends BxBaseModGroupsDb
             return false;
 
         return $this->query("DELETE FROM `" . $CNF['TABLE_CNT_DATA'] . "` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function deleteContentDataWithTracks($iEntryId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->query("DELETE FROM `tcd`, `tcdu` USING `" . $CNF['TABLE_CNT_DATA'] . "` AS `tcd` LEFT JOIN `" . $CNF['TABLE_CNT_DATA2USERS'] . "` AS `tcdu` ON `tcd`.`id`=`tcdu`.`data_id` WHERE `tcd`.`entry_id`=:entry_id", [
+            'entry_id' => $iEntryId
+        ]);
     }
 
     public function insertContentData2Users($aParamsSet)

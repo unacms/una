@@ -311,14 +311,45 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
         return getParam($this->CNF['PARAM_CONTENT']) == 'on';
     }
 
-    public function isContentLevelMax()
+    public function getContentModules($iUsage)
+    {
+        return explode(',', getParam($this->CNF['PARAM_CONTENT_MODULES_' . $this->getUsageI2S($iUsage, false)]));
+    }
+
+    public function getContentLevelMax()
     {
         return (int)getParam($this->CNF['PARAM_CONTENT_LEVEL_MAX']);
     }
 
-    public function getContentModules($iUsage)
+    public function getContentLevel2Node($bSingle = true)
     {
-        return explode(',', getParam($this->CNF['PARAM_CONTENT_MODULES_' . $this->getUsageI2S($iUsage, false)]));
+        $aResult = [];
+
+        $sPostfix = $bSingle ? 'single' : 'plural';
+        switch($this->getContentLevelMax()) {
+            case 1:
+                $aResult = [
+                    1 => _t('_bx_courses_txt_sample_l3_' . $sPostfix)
+                ];
+                break;
+            
+            case 2:
+                $aResult = [
+                    1 => _t('_bx_courses_txt_sample_l1_' . $sPostfix),
+                    2 => _t('_bx_courses_txt_sample_l3_' . $sPostfix)
+                ];
+                break;
+            
+            case 3:
+                $aResult = [
+                    1 => _t('_bx_courses_txt_sample_l1_' . $sPostfix),
+                    2 => _t('_bx_courses_txt_sample_l2_' . $sPostfix),
+                    3 => _t('_bx_courses_txt_sample_l3_' . $sPostfix)
+                ];
+                break;
+        }
+        
+        return $aResult;
     }
 
     public function getUsageI2S($iUsage, $bLowerCase = true)

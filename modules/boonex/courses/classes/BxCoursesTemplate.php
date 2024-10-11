@@ -75,8 +75,18 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         if(empty($aNodes) || !is_array($aNodes))
             return '';
 
+        $iLevelMax = $this->_oConfig->getContentLevelMax();
+        $aLevelToNodePl = $this->_oConfig->getContentLevel2Node(false);
+
         $aTmplVarsNodes = [];
-        foreach($aNodes as $iKey => $aNode)
+        foreach($aNodes as $iKey => $aNode) {
+            $aTmplVarsCounters = [];
+            for($i = $iLevel + 1; $i <= $iLevelMax; $i++)
+                $aTmplVarsCounters[] = [
+                    'cn_title' => $aLevelToNodePl[$i],
+                    'cn_value' => $aNode['cn_l' . $i]
+                ];
+
             $aTmplVarsNodes[] = $this->parseHtmlByName('node_l' . $iLevel . '.html', array_merge($aNode, [
                 'bx_if:selected' => [
                     'condition' => $aNode['node_id'] == $iSelected,
@@ -87,7 +97,9 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     'parent_id' => $aNode['node_id']
                 ]),
                 'status' => $this->_getNodeStatus($iProfileId, $iContentId, $aNode['node_id']),
+                'bx_repeat:counters' => $aTmplVarsCounters
             ]));
+        }
 
         $oPaginate = new BxTemplPaginate([
             'start' => $iStart,
@@ -104,17 +116,14 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
     }
 
     /**
-     * For 2 levels bases structure ( Max Level = 2)
+     * For 1 level bases structure ( Max Level = 1)
      */
-    public function entryStructureByParentMl2($aContentInfo, $aParams = [])
+    public function entryStructureByParentMl1($aContentInfo, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!isset($aParams['parent_id']))
-            return '';
-
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
-        $iParentId = (int)$aParams['parent_id'];
+        $iParentId = isset($aParams['parent_id']) ? (int)$aParams['parent_id'] : 0;
         $iProfileId = bx_get_logged_profile_id();
 
         $aNodes = $this->_oDb->getContentStructure([
@@ -127,22 +136,55 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         if(empty($aNodes) || !is_array($aNodes))
             return '';
 
+        $sJsObject = $this->_oConfig->getJsObject('entry');
         $oPermalink = BxDolPermalinks::getInstance();
+        
+        $iLevelMax = $this->_oConfig->getContentLevelMax();
 
         $aTmplVarsNodes = [];
         foreach($aNodes as $iKey => $aNode) {
+            list($iPassPercent, $sPassProgress, $sPassStatus, $sPassTitle) = $this->_getNodePass($iProfileId, $iContentId, $aNode);
+
+            $sLink = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iContentId, [
+                'node_id' => $aNode['node_id']
+            ]);
+
             $aTmplVarsNodes[] = [
-                'node' => $this->parseHtmlByName('ml2_node_l' . $aNode['level'] . '.html', array_merge($aNode, [
+                'node' => $this->parseHtmlByName('ml' . $iLevelMax . '_node_l' . $aNode['level'] . '.html', array_merge($aNode, [
+                    'level_max' => $iLevelMax,
                     'index' => $iKey,
-                    'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $aNode['id']),
-                    'status' => $this->_getNodeStatus($iProfileId, $iContentId, $aNode['node_id']),
+                    'link' => $sLink,
+                    'pass_percent' => $iPassPercent,
+                    'pass_progress' => $sPassProgress,
+                    'pass_status' => $sPassStatus,
+                    'bx_if:show_pass' => [
+                        'condition' => $sPassTitle,
+                        'content' => [
+                            'js_object' => $sJsObject,
+                            'id' => $aNode['node_id'],
+                            'pass_href' => $sLink,
+                            'pass_title' => $sPassTitle,
+                        ]
+                    ]
                 ]))
             ];
         }
 
-        return $this->parseHtmlByName('ml2_nodes_l' . $aSubNode['level'] . '.html', [
+        return $this->parseHtmlByName('ml' . $iLevelMax . '_nodes_l' . $aNode['level'] . '.html', [
+            'level_max' => $iLevelMax,
             'bx_repeat:nodes' => $aTmplVarsNodes
         ]);
+    }
+
+    /**
+     * For 2 levels bases structure ( Max Level = 2)
+     */
+    public function entryStructureByParentMl2($aContentInfo, $aParams = [])
+    {
+        if(empty($aParams['parent_id']))
+            return '';
+
+        return $this->entryStructureByParentMl1($aContentInfo, $aParams);
     }
 
     /**
