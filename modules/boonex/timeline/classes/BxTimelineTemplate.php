@@ -2075,31 +2075,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ]));
 
         return array_intersect_key($aEvent, array_flip([
-            'id', 'type', 'object_privacy_view', 'content', 'labels', 'date', 'menu_actions', 'menu_manage', 'author_data', 'author_actions', 'url', 'owners', 'cmts'
+            'id', 'type', 'object_privacy_view', 'content', 'labels', 'date', 'menu_actions', 'menu_counters', 'menu_manage', 'author_data', 'author_actions', 'url', 'owners', 'cmts'
         ]));
-        
-        /*-- TODO: Rewrite --*/
-        $keysToCopy = ['id', 'type', 'object_privacy_view', 'content', 'labels', 'date', 'menu_actions', 'menu_manage', 'url', 'owners', 'cmts', 'author_actions','author_data'];
-
-        $aEventC = [];
-        foreach ($keysToCopy as $key) {
-            if (isset($aEvent[$key])) {
-                $aEventC[$key] = $aEvent[$key];
-            }
-        }
-        
-        $aEventCData = [];
-        $keysToCopy = ['object_id', 'text', 'links', 'images_attach', 'videos_attach', 'files_attach', 'embed', 'owner_name', 'parse_type'];
-        foreach ($keysToCopy as $key) {
-            if (isset($aEvent['content'][$key])) {
-                $aEventCData[$key] = $aEvent['content'][$key];
-            }
-        }
-        
-        unset($aEventC['content']);
-        $aEventC['content'] = $aEventCData;
-        return $aEventC;
-        /*-- TODO: Rewrite --*/
     }
 
     protected function _getContent($sType, $aEvent, $aBrowseParams = array())
