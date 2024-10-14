@@ -61,6 +61,18 @@ class BxTimelineMenuItemManage extends BxTimelineMenuItemActions
 
         return parent::setContentParams($aParams);
     }
+
+    public function setEvent($aEvent, $aBrowseParams = [])
+    {
+        $bResult = parent::setEvent($aEvent);
+
+        if($bResult) 
+            $this->_aContentParams = array_merge($this->_aContentParams, [
+                'content_id' => $this->_iEvent
+            ]);
+
+        return $bResult;
+    }
 }
 
 /** @} */

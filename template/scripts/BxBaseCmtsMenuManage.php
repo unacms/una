@@ -51,6 +51,17 @@ class BxBaseCmtsMenuManage extends BxTemplCmtsMenuActions
 
         return parent::setContentParams($aParams);
     }
+
+    public function setCmtsData($oCmts, $iCmtId, $aBp = [], $aDp = [])
+    {
+        parent::setCmtsData($oCmts, $iCmtId, $aBp, $aDp);
+
+        $this->_aContentParams = array_merge($this->_aContentParams, [
+            'cmt_system' => $this->_oCmts->getSystemName(),
+            'cmt_object_id' => $this->_oCmts->getId(),
+            'cmt_id' => (int)$this->_aCmt['cmt_id']
+        ]);
+    }
 }
 
 /** @} */
