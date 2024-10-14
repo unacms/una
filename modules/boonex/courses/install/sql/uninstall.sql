@@ -21,7 +21,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_cours
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_courses';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_courses';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_courses';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_course_add', 'bx_course_delete', 'bx_course_edit', 'bx_course_edit_cover', 'bx_course_view', 'bx_course_view_full', 'bx_course_invite', 'bx_courses_price_add', 'bx_courses_price_edit');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_course_add', 'bx_course_delete', 'bx_course_edit', 'bx_course_edit_cover', 'bx_course_view', 'bx_course_view_full', 'bx_course_invite', 'bx_courses_price_add', 'bx_courses_price_edit', 'bx_courses_content_node_add', 'bx_courses_content_node_edit');
 
 -- PRE-VALUES
 
