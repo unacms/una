@@ -38,9 +38,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_courses%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_courses%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view', 'bx_courses_content_manage');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view', 'bx_courses_content_manage');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view', 'bx_courses_content_manage');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view', 'bx_courses_cnt_structure_manage', 'bx_courses_cnt_data_manage');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view', 'bx_courses_cnt_structure_manage', 'bx_courses_cnt_data_manage');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view', 'bx_courses_cnt_structure_manage', 'bx_courses_cnt_data_manage');
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_courses' LIMIT 1);
