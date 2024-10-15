@@ -78,6 +78,14 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         return parent::getCode($isDisplayHeader);
     }
 
+    public function getCodeAPI($bForceReturn = false)
+    {
+        if($this->_iLevel > $this->_iLevelMax)
+            return [];
+
+        return parent::getCodeAPI($bForceReturn);
+    }
+
     public function performActionAdd()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -179,7 +187,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected function _getCellHeaderCnL2($sKey, $aField)
     {
         if($this->_iLevelMax < 2 || $this->_iLevel >= 2)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $aField['title'] = ucfirst($this->_aLevelToNodePl[2]);
         return parent::_getCellHeaderDefault($sKey, $aField);
@@ -188,7 +196,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected function _getCellHeaderCnL3($sKey, $aField)
     {
         if($this->_iLevelMax < 3 || $this->_iLevel >= 3)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $aField['title'] = ucfirst($this->_aLevelToNodePl[3]);
         return parent::_getCellHeaderDefault($sKey, $aField);
@@ -197,13 +205,16 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected function _getCellHeaderCounters($sKey, $aField)
     {
         if($this->_iLevel != $this->_iLevelMax)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return parent::_getCellHeaderDefault($sKey, $aField);
     }
 
     protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
+        if($this->_bIsApi)
+            return ['type' => 'text', 'value'=> $mixedValue]; 
+
         $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', [
             'href' => bx_append_url_params($this->_sPageUrl, ['parent_id' => $aRow['id']]),
             'title' => bx_html_attribute($mixedValue),
@@ -216,7 +227,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected function _getCellCnL2($mixedValue, $sKey, $aField, $aRow)
     {
         if($this->_iLevelMax < 2 || $this->_iLevel >= 2)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -224,7 +235,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected function _getCellCnL3($mixedValue, $sKey, $aField, $aRow)
     {
         if($this->_iLevelMax < 3 || $this->_iLevel >= 3)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -232,7 +243,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected function _getCellCounters($mixedValue, $sKey, $aField, $aRow)
     {
         if($this->_iLevel != $this->_iLevelMax)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $sCounters = '';
         if(!empty($mixedValue) && ($aCounters = json_decode(html_entity_decode($mixedValue), true)))

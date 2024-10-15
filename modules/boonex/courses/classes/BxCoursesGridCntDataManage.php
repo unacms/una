@@ -72,6 +72,14 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
         return parent::getCode($isDisplayHeader);
     }
 
+    public function getCodeAPI($bForceReturn = false)
+    {
+        if(empty($this->_aNodeInfo) || !is_array($this->_aNodeInfo) || $this->_aNodeInfo['level'] != $this->_iLevelMax)
+            return [];
+
+        return parent::getCodeAPI($bForceReturn);
+    }
+
     protected function _getCellContentId($mixedValue, $sKey, $aField, $aRow)
     {
         $iContentId = (int)$mixedValue;

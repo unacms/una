@@ -277,6 +277,12 @@ class BxCoursesModule extends BxBaseModGroupsModule
             return '';
 
         $oGrid->setEntryId($aContentInfo[$CNF['FIELD_ID']]);
+
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+
         return $oGrid->getCode();
     }
     
@@ -300,33 +306,43 @@ class BxCoursesModule extends BxBaseModGroupsModule
             return '';
 
         $oGrid->setEntryId($aContentInfo[$CNF['FIELD_ID']]);
+
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+
         return $oGrid->getCode();
     }
     
     public function serviceEntityStructureL1Block($iContentId = 0)
     {
         if(!$this->_oConfig->isContent() || $this->_oConfig->getContentLevelMax() == 1)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
-        return $this->_serviceTemplateFuncEx ('entryStructureByLevel', $iContentId, [
+        $mixedResult = $this->_serviceTemplateFuncEx ('entryStructureByLevel', $iContentId, [
             'level' => 1,
             'selected' => ($iNodeId = bx_get('parent_id')) !== false ? (int)$iNodeId : 0,
             'start' => ($iStart = bx_get('start')) !== false ? (int)$iStart : 0,
             'per_page' => ($iPerPage = bx_get('per_page')) !== false ? (int)$iPerPage : 0,
         ]);
+
+        return $this->_bIsApi ? [bx_api_get_block('entity_structure_l1', $mixedResult)] : $mixedResult;
     }
 
     public function serviceEntityStructureL2Block($iContentId = 0, $iParentId = 0)
     {
         if(!$this->_oConfig->isContent())
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if(!$iParentId && ($_iParentId = bx_get('parent_id')) !== false)
             $iParentId = (int)$_iParentId;
 
-        return $this->_serviceTemplateFuncEx ('entryStructureByParentMl' . $this->_oConfig->getContentLevelMax(), $iContentId, [
+        $mixedResult = $this->_serviceTemplateFuncEx ('entryStructureByParentMl' . $this->_oConfig->getContentLevelMax(), $iContentId, [
             'parent_id' => $iParentId
         ]);
+
+        return $this->_bIsApi ? [bx_api_get_block('entity_structure_l2', $mixedResult)] : $mixedResult;
     }
     
     public function serviceEntityNodeBlock($iContentId = 0, $iNodeId = 0, $iUsage = false)

@@ -86,7 +86,7 @@ class BxBaseStudioFormView extends BxDolStudioForm
             $sValue = '';
             if(key_exists($aLanguage['id'], $aStrings))
                 $sValue = $aStrings[$aLanguage['id']]['string'];
-            else if(isset($aInput['values'][$aLanguage['name']]))
+            if(!$sValue && isset($aInput['values'][$aLanguage['name']]))
                 $sValue = $aInput['values'][$aLanguage['name']];
             $bValue = !empty($sValue);
 

@@ -78,6 +78,9 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         $iLevelMax = $this->_oConfig->getContentLevelMax();
         $aLevelToNodePl = $this->_oConfig->getContentLevel2Node(false);
 
+        $sTmplKeysSelected = $this->_bIsApi ? 'selected' : 'bx_if:selected';
+        $sTmplKeysCounters = $this->_bIsApi ? 'counters' : 'bx_repeat:counters';
+        
         $aTmplVarsNodes = [];
         foreach($aNodes as $iKey => $aNode) {
             $aTmplVarsCounters = [];
@@ -87,19 +90,28 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     'cn_value' => $aNode['cn_l' . $i]
                 ];
 
-            $aTmplVarsNodes[] = $this->parseHtmlByName('node_l' . $iLevel . '.html', array_merge($aNode, [
-                'bx_if:selected' => [
-                    'condition' => $aNode['node_id'] == $iSelected,
+            $bSelected = $aNode['node_id'] == $iSelected;
+            $sLink = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&' . $CNF['FIELD_ID'] . '=' . $iContentId, [
+                'parent_id' => $aNode['node_id']
+            ]);
+            $aNode = array_merge($aNode, [
+                $sTmplKeysSelected => $this->_bIsApi ? $bSelected : [
+                    'condition' => $bSelected,
                     'content' => [true]
                 ],
                 'index' => $iKey,
-                'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&' . $CNF['FIELD_ID'] . '=' . $iContentId, [
-                    'parent_id' => $aNode['node_id']
-                ]),
+                'link' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink,
                 'status' => $this->_getNodeStatus($iProfileId, $iContentId, $aNode['node_id']),
-                'bx_repeat:counters' => $aTmplVarsCounters
-            ]));
+                $sTmplKeysCounters => $aTmplVarsCounters
+            ]);
+
+            $aTmplVarsNodes[] = $this->_bIsApi ? $aNode : [
+                'node' => $this->parseHtmlByName('node_l' . $iLevel . '.html', $aNode)
+            ];
         }
+
+        if($this->_bIsApi)
+            return $aTmplVarsNodes;
 
         $oPaginate = new BxTemplPaginate([
             'start' => $iStart,
@@ -134,12 +146,14 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         ]);
 
         if(empty($aNodes) || !is_array($aNodes))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $sJsObject = $this->_oConfig->getJsObject('entry');
         $oPermalink = BxDolPermalinks::getInstance();
         
         $iLevelMax = $this->_oConfig->getContentLevelMax();
+
+        $aTmplKeysShowPass = $this->_bIsApi ? 'show_pass' : 'bx_if:show_pass';
 
         $aTmplVarsNodes = [];
         foreach($aNodes as $iKey => $aNode) {
@@ -149,26 +163,33 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                 'node_id' => $aNode['node_id']
             ]);
 
-            $aTmplVarsNodes[] = [
-                'node' => $this->parseHtmlByName('ml' . $iLevelMax . '_node_l' . $aNode['level'] . '.html', array_merge($aNode, [
-                    'level_max' => $iLevelMax,
-                    'index' => $iKey,
-                    'link' => $sLink,
-                    'pass_percent' => $iPassPercent,
-                    'pass_progress' => $sPassProgress,
-                    'pass_status' => $sPassStatus,
-                    'bx_if:show_pass' => [
-                        'condition' => $sPassTitle,
-                        'content' => [
-                            'js_object' => $sJsObject,
-                            'id' => $aNode['node_id'],
-                            'pass_href' => $sLink,
-                            'pass_title' => $sPassTitle,
-                        ]
+            $bShowPass = !empty($sPassTitle);
+
+            $aNode = array_merge($aNode, [
+                'level_max' => $iLevelMax,
+                'index' => $iKey,
+                'link' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink,
+                'pass_percent' => $iPassPercent,
+                'pass_progress' => $sPassProgress,
+                'pass_status' => $sPassStatus,
+                $aTmplKeysShowPass => $this->_bIsApi ? $bShowPass : [
+                    'condition' => $bShowPass,
+                    'content' => [
+                        'js_object' => $sJsObject,
+                        'id' => $aNode['node_id'],
+                        'pass_href' => $sLink,
+                        'pass_title' => $sPassTitle,
                     ]
-                ]))
+                ]
+            ]);
+
+            $aTmplVarsNodes[] = $this->_bIsApi ? $aNode : [
+                'node' => $this->parseHtmlByName('ml' . $iLevelMax . '_node_l' . $aNode['level'] . '.html', $aNode)
             ];
         }
+
+        if($this->_bIsApi)
+            return $aTmplVarsNodes;
 
         return $this->parseHtmlByName('ml' . $iLevelMax . '_nodes_l' . $aNode['level'] . '.html', [
             'level_max' => $iLevelMax,
@@ -182,7 +203,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
     public function entryStructureByParentMl2($aContentInfo, $aParams = [])
     {
         if(empty($aParams['parent_id']))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         return $this->entryStructureByParentMl1($aContentInfo, $aParams);
     }
