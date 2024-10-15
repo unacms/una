@@ -78,7 +78,7 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
             return [];
 
         return parent::getCodeAPI($bForceReturn);
-    }
+    }    
 
     protected function _getCellContentId($mixedValue, $sKey, $aField, $aRow)
     {

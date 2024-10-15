@@ -78,12 +78,48 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         return parent::getCode($isDisplayHeader);
     }
 
+    public function getFormBlockTitleAPI($sAction, $iId = 0)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sResult = '';
+
+        switch($sAction) {
+            case 'add':
+                $sResult = $CNF['T']['popup_title_content_node_add'];
+                break;
+
+            case 'edit':
+                $sResult = $CNF['T']['popup_title_content_node_edit'];
+                break;
+        }
+
+        return $this->_parseNodeName(_t($sResult));
+    }
+
+    public function getFormCallBackUrlAPI($sAction, $iId = 0)
+    {
+         return '/api.php?r=system/perfom_action_api/TemplServiceGrid/&params[]=&o=' . $this->_sObject . '&a=' . $sAction . '&entry_id=' . $this->_iEntryId . '&parent_id=' . $this->_iParentId . '&id=' . $iId;
+    }
+
     public function getCodeAPI($bForceReturn = false)
     {
         if($this->_iLevel > $this->_iLevelMax)
             return [];
 
         return parent::getCodeAPI($bForceReturn);
+    }
+
+    protected function _getActionsAPI ($sType)
+    {
+        $aResult = parent::_getActionsAPI($sType);
+
+        if($aResult && $sType == 'independent') {
+            if(!empty($aResult['add']))
+                $aResult['add']['title'] = $this->_parseNodeName($aResult['add']['title']);
+        }
+
+        return $aResult;
     }
 
     public function performActionAdd()
@@ -94,7 +130,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
 
         $aEntryInfo = $this->_oModule->_oDb->getContentInfoById($this->_iEntryId);
         if(($mixedResult = $this->_oModule->checkAllowedEdit($aEntryInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return echoJson(['msg' => $mixedResult]);
+            return $this->_getActionResult(['msg' => $mixedResult]);
 
         $sForm = $CNF['OBJECT_FORM_CNT_NODE_DISPLAY_ADD'];
     	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_CNT_NODE'], $CNF['OBJECT_FORM_CNT_NODE_DISPLAY_ADD']);
@@ -119,13 +155,16 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
                 if($this->_iLevel > 1) 
                     $this->_oModule->_oDb->updateContentStructureCounters($this->_iParentId, $this->_iLevel, 1);
 
-                $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
+                $aResult = $this->_bIsApi ? [] : ['grid' => $this->getCode(false), 'blink' => $iId];
             }
             else
-                $aRes = ['msg' => _t($CNF['T']['err_cannot_perform'])];
+                $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return echoJson($aRes);
+            return $this->_getActionResult($aResult);
         }
+
+        if($this->_bIsApi)
+            return $this->getFormBlockAPI($oForm, $sAction);
 
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_content_node'), $this->_parseNodeName(_t($CNF['T']['popup_title_content_node_add'])), $this->_oModule->_oTemplate->parseHtmlByName('popup_content_node.html', [
@@ -146,15 +185,15 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
 
         $aEntryInfo = $this->_oModule->_oDb->getContentInfoById($this->_iEntryId);
         if(($mixedResult = $this->_oModule->checkAllowedEdit($aEntryInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return echoJson(['msg' => $mixedResult]);
+            return $this->_getActionResult(['msg' => $mixedResult]);
 
         $aIds = $this->_getIds();
         if($aIds === false)
-            return echoJson([]);
+            return $this->_getActionResult([]);
 
         $aNode = $this->_oModule->_oDb->getContentNodes(['sample' => 'id', 'id' => array_shift($aIds)]);
         if(!is_array($aNode) || empty($aNode))
-            return echoJson([]);
+            return $this->_getActionResult([]);
 
         $sForm = $CNF['OBJECT_FORM_CNT_NODE_DISPLAY_EDIT'];
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_CNT_NODE'], $CNF['OBJECT_FORM_CNT_NODE_DISPLAY_EDIT']);
@@ -166,12 +205,15 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $oForm->initChecker($aNode);
         if($oForm->isSubmittedAndValid()) {
             if($oForm->update($aNode['id']) !== false)
-                $aRes = ['grid' => $this->getCode(false), 'blink' => $aNode['id']];
+                $aResult = $this->_bIsApi ? [] : ['grid' => $this->getCode(false), 'blink' => $aNode['id']];
             else
-                $aRes = ['msg' => _t($CNF['T']['err_cannot_perform'])];
+                $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return echoJson($aRes);
+            return $this->_getActionResult($aResult);
         }
+
+        if($this->_bIsApi)
+            return $this->getFormBlockAPI($oForm, $sAction, $aNode['id']);
 
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_content_node'), $this->_parseNodeName(_t($CNF['T']['popup_title_content_node_edit'])), $this->_oModule->_oTemplate->parseHtmlByName('popup_content_node.html', [
@@ -212,11 +254,16 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
 
     protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
+        $sLink = bx_append_url_params($this->_sPageUrl, ['parent_id' => $aRow['id']]);
+
         if($this->_bIsApi)
-            return ['type' => 'text', 'value'=> $mixedValue]; 
+            return ['type' => 'link', 'data' => [
+                'text' => $mixedValue,
+                'url' => bx_api_get_relative_url($sLink)
+            ]];
 
         $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', [
-            'href' => bx_append_url_params($this->_sPageUrl, ['parent_id' => $aRow['id']]),
+            'href' => $sLink,
             'title' => bx_html_attribute($mixedValue),
             'content' => $mixedValue
         ]);
@@ -248,6 +295,9 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $sCounters = '';
         if(!empty($mixedValue) && ($aCounters = json_decode(html_entity_decode($mixedValue), true)))
             $sCounters = $this->_oModule->_oTemplate->getCounters($aCounters);
+
+        if($this->_bIsApi)
+            return ['type' => 'text', 'data' => $sCounters];
 
         return parent::_getCellDefault($sCounters, $sKey, $aField, $aRow);
     }
