@@ -327,7 +327,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'per_page' => ($iPerPage = bx_get('per_page')) !== false ? (int)$iPerPage : 0,
         ]);
 
-        return $this->_bIsApi ? [bx_api_get_block('entity_structure_l1', $mixedResult)] : $mixedResult;
+        return $this->_bIsApi ? [bx_api_get_block('course_structure', $mixedResult)] : $mixedResult;
     }
 
     public function serviceEntityStructureL2Block($iContentId = 0, $iParentId = 0)
@@ -342,7 +342,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'parent_id' => $iParentId
         ]);
 
-        return $this->_bIsApi ? [bx_api_get_block('entity_structure_l2', $mixedResult)] : $mixedResult;
+        return $this->_bIsApi ? [bx_api_get_block('module_structure', $mixedResult)] : $mixedResult;
     }
     
     public function serviceEntityNodeBlock($iContentId = 0, $iNodeId = 0, $iUsage = false)
