@@ -30,12 +30,21 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             $bTmplVarsCounters = !empty($aCounters[$sUsage]) && is_array($aCounters[$sUsage]);
             if($bTmplVarsCounters) {
                 $aTmplVarsCounters['bx_repeat:counters_' . $sUsage] = [];
-                foreach($aCounters[$sUsage] as $sModule => $iCount)
-                    $aTmplVarsCounters['bx_repeat:counters_' . $sUsage][] = [
+                foreach($aCounters[$sUsage] as $sModule => $iCount) {
+                    $aCounter = [
                         'title' => _t('_' . $sModule), 
                         'value' => $iCount
                     ];
+
+                    if($this->_bIsApi)
+                        $aTmplVars[$sUsage] = $aCounter;
+                    else
+                        $aTmplVarsCounters['bx_repeat:counters_' . $sUsage][] = $aCounter;
+                }
             }
+            
+            if($this->_bIsApi)
+                continue;
 
             $aTmplVars['bx_if:show_' . $sUsage] = [
                 'condition' => $bTmplVarsCounters,
@@ -43,7 +52,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             ];
         }
 
-        return $this->parseHtmlByName('counters.html', $aTmplVars);
+        return $this->_bIsApi ? $aTmplVars : $this->parseHtmlByName('counters.html', $aTmplVars);
     }
     
     public function entryStructureByLevel($aContentInfo, $aParams = [])
@@ -168,7 +177,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             $aNode = array_merge($aNode, [
                 'level_max' => $iLevelMax,
                 'index' => $iKey,
-                'link' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink,
+                'link' => $sLink,
                 'pass_percent' => $iPassPercent,
                 'pass_progress' => $sPassProgress,
                 'pass_status' => $sPassStatus,
@@ -182,6 +191,17 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     ]
                 ]
             ]);
+
+            if($this->_bIsApi) {
+                if(!empty($aNode['counters']) && ($aCounters = json_decode($aNode['counters'], true)))
+                    $aNode['counters'] = $this->getCounters($aCounters);
+
+                $aNode = array_merge($aNode, [
+                    'link' => bx_api_get_relative_url($aNode['link']),
+                    'pass_title' => $sPassTitle,
+                    'pass_callback' => $this->MODULE . '/pass_node&params[]=' . $aNode['node_id'],
+                ]);
+            }
 
             $aTmplVarsNodes[] = $this->_bIsApi ? $aNode : [
                 'node' => $this->parseHtmlByName('ml' . $iLevelMax . '_node_l' . $aNode['level'] . '.html', $aNode)

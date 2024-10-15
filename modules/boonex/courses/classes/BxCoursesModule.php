@@ -83,11 +83,13 @@ class BxCoursesModule extends BxBaseModGroupsModule
             $this->_oDb->deleteContentNodes2Users(['node_id' => $iNodeId, 'profile_id' => $iProfileId]);
         }
 
+        $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iEntryId, [
+            'node_id' => $iNodeId
+        ]);
+
         return [
             'code' => 0, 
-            'redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iEntryId, [
-                'node_id' => $iNodeId
-            ])
+            'redirect' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink
         ];
     }
 
@@ -137,6 +139,9 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $aResult = ['code' => 0];
         if(($sMethod = 'get_link') && bx_is_srv($aData['content_type'], $sMethod))
             $aResult['redirect'] = bx_srv($aData['content_type'], $sMethod, [$aData['content_id']]);
+
+        if($this->_bIsApi)
+            $aResult['redirect'] = bx_api_get_relative_url($aResult['redirect']);
 
         return $aResult;
     }
@@ -361,7 +366,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'usage' => $iUsage
         ]);
 
-        return $this->_bIsApi ? [bx_api_get_block('entity_node', $mixedResult)] : $mixedResult;
+        return $this->_bIsApi ? [bx_api_get_block('lesson_structure', $mixedResult)] : $mixedResult;
     }
     
     public function getNodeLevelByParent($aParentInfo)
