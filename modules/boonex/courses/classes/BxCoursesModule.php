@@ -279,9 +279,9 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $oGrid->setEntryId($aContentInfo[$CNF['FIELD_ID']]);
 
         if($this->_bIsApi)
-            return [
-                bx_api_get_block('grid', $oGrid->getCodeAPI())
-            ];
+            return ($aGrid = $oGrid->getCodeAPI()) ? [
+                bx_api_get_block('grid', $aGrid)
+            ] : [];
 
         return $oGrid->getCode();
     }
@@ -308,9 +308,9 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $oGrid->setEntryId($aContentInfo[$CNF['FIELD_ID']]);
 
         if($this->_bIsApi)
-            return [
-                bx_api_get_block('grid', $oGrid->getCodeAPI())
-            ];
+            return ($aGrid = $oGrid->getCodeAPI()) ? [
+                bx_api_get_block('grid', $aGrid)
+            ] : [];
 
         return $oGrid->getCode();
     }
@@ -348,7 +348,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
     public function serviceEntityNodeBlock($iContentId = 0, $iNodeId = 0, $iUsage = false)
     {
         if(!$this->_oConfig->isContent())
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if(!$iNodeId && ($_iNodeId = bx_get('node_id')) !== false)
             $iNodeId = (int)$_iNodeId;
@@ -356,10 +356,12 @@ class BxCoursesModule extends BxBaseModGroupsModule
         if($iUsage === false && ($_iUsage = bx_get('usage')) !== false)
             $iUsage = (int)$_iUsage;
 
-        return $this->_serviceTemplateFuncEx ('entryNode', $iContentId, [
+        $mixedResult = $this->_serviceTemplateFuncEx('entryNode', $iContentId, [
             'node_id' => $iNodeId,
             'usage' => $iUsage
         ]);
+
+        return $this->_bIsApi ? [bx_api_get_block('entity_node', $mixedResult)] : $mixedResult;
     }
     
     public function getNodeLevelByParent($aParentInfo)
