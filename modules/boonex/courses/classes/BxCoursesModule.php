@@ -455,24 +455,30 @@ class BxCoursesModule extends BxBaseModGroupsModule
         foreach($aChildren as $aChild)
             $this->getNodePass($iProfileId, $iContentId, $aChild, $aPassDetails);
 
-        $aPassLevelMax = $aPassDetails[$this->_oConfig->getContentLevelMax()];
-        if($aPassLevelMax['passed'] != 0) {
-            if($aPassLevelMax['passed'] != $aPassLevelMax['total']) {
-                $sPassStatus = '_bx_courses_txt_status_in_process';
-                $sPassTitle = '_bx_courses_txt_pass_continue';
+        $iPassPercent = 0;
+        $sPassStatus = $sPassTitle = '';
+        $iLevelMax = $this->_oConfig->getContentLevelMax();
+        if(isset($aPassDetails[$iLevelMax]) && ($aPassLevelMax = $aPassDetails[$iLevelMax])) {
+            $iPassPercent = (int)round(100 * $aPassLevelMax['passed']/$aPassLevelMax['total']);
+
+            if($aPassLevelMax['passed'] != 0) {
+                if($aPassLevelMax['passed'] != $aPassLevelMax['total']) {
+                    $sPassStatus = '_bx_courses_txt_status_in_process';
+                    $sPassTitle = '_bx_courses_txt_pass_continue';
+                }
+                else {
+                    $sPassStatus = '_bx_courses_txt_status_completed';
+                    $sPassTitle = '_bx_courses_txt_pass_again';
+                }
             }
             else {
-                $sPassStatus = '_bx_courses_txt_status_completed';
-                $sPassTitle = '_bx_courses_txt_pass_again';
+                $sPassStatus = '_bx_courses_txt_status_not_started';
+                $sPassTitle = '_bx_courses_txt_pass_start';
             }
-        }
-        else {
-            $sPassStatus = '_bx_courses_txt_status_not_started';
-            $sPassTitle = '_bx_courses_txt_pass_start';
         }
 
         return [
-            (int)round(100 * $aPassLevelMax['passed']/$aPassLevelMax['total']),
+            $iPassPercent,
             $aPassDetails,
             _t($sPassStatus),
             _t($sPassTitle)
@@ -589,23 +595,23 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $aCounters = [];
         foreach($aPassDetails as $iLevel => $aDetails) {
             $aCounters[] = [
+                'level' => $iLevel,
                 'title' => $aLevelToNodePl[$iLevel],
                 'passed' => $aDetails['passed'],
                 'total' => $aDetails['total'],
                 'progress' => bx_replace_markers($sTxtProgress, $aDetails)
             ];
         }
-            
-        $aResult = array_merge($aResult, [
-            'progress' => $iPassPercent,
+
+        $bShowPass = $iPassPercent > 0 && $iPassPercent < 100;
+        return array_merge($aResult, [
+            'percent' => $iPassPercent,
             'counters' => $aCounters,
             'status' => $sPassStatus,
-            'pass_link' => $aResult['url'],
-            'pass_title' => $sPassTitle,
-            'show_pass' => $iPassPercent > 0 && $iPassPercent < 100
+            'show_pass' => $bShowPass,
+            'pass_link' => $bShowPass ? $aResult['url'] : '',
+            'pass_title' => $bShowPass ? $sPassTitle : '',
         ]);
-
-        return $aResult;
     }
 
     protected function _getOptionsContentModules()
