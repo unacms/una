@@ -234,7 +234,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $aField['title'] = ucfirst($this->_aLevelToNodePl[2]);
         return parent::_getCellHeaderDefault($sKey, $aField);
     }
-    
+
     protected function _getCellHeaderCnL3($sKey, $aField)
     {
         if($this->_iLevelMax < 3 || $this->_iLevel >= 3)
@@ -243,7 +243,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $aField['title'] = ucfirst($this->_aLevelToNodePl[3]);
         return parent::_getCellHeaderDefault($sKey, $aField);
     }
-    
+
     protected function _getCellHeaderCounters($sKey, $aField)
     {
         if($this->_iLevel != $this->_iLevelMax)

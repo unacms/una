@@ -446,8 +446,10 @@
     <string name="_bx_courses_txt_pass_continue"><![CDATA[Continue]]></string>
     <string name="_bx_courses_txt_pass_again"><![CDATA[Pass again]]></string>
     <string name="_bx_courses_txt_pass"><![CDATA[Pass]]></string>
+    <string name="_bx_courses_txt_passed"><![CDATA[Passed]]></string>
     <string name="_bx_courses_txt_steps"><![CDATA[steps]]></string>
-    <string name="_bx_courses_txt_n_m_steps"><![CDATA[{0} / {1} steps]]></string>
+    <string name="_bx_courses_txt_n_m_steps"><![CDATA[{0}/{1} steps]]></string>
+    <string name="_bx_courses_txt_n_m_progress"><![CDATA[{passed}/{total}]]></string>
     <string name="_bx_courses_txt_attachments"><![CDATA[attachments]]></string>
     <string name="_bx_courses_txt_data_type_bx_files"><![CDATA[file]]></string>
     <string name="_bx_courses_txt_data_type_bx_photos"><![CDATA[image]]></string>

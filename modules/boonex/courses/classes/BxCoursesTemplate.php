@@ -14,10 +14,78 @@
  */
 class BxCoursesTemplate extends BxBaseModGroupsTemplate
 {
-    function __construct(&$oConfig, &$oDb)
+    protected $_iProfileId;
+
+    public function __construct(&$oConfig, &$oDb)
     {
         $this->MODULE = 'bx_courses';
+
         parent::__construct($oConfig, $oDb);
+
+        $this->_iProfileId = bx_get_logged_profile_id();
+    }
+
+    public function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = [])
+    {
+        if(!empty($aParams['context']) && in_array($aParams['context'], ['favorite', 'joined_entries']))
+            $aParams['template_name'] = 'unit_personal.html';
+
+        return parent::unit($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
+    }
+
+    public function unitVars($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aVars = parent::unitVars($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
+
+        $bVarsShowProgress = $bVarsShoStats = false;
+        $aVarsShowProgress = $aVarsShowStats = [true];
+        if(!empty($aParams['context']) && in_array($aParams['context'], ['favorite', 'joined_entries'])) {
+            $aLevelToNodePl = $this->_oConfig->getContentLevel2Node(false);
+            $sTxtProgress = _t('_bx_courses_txt_n_m_progress');
+
+            list($iPassPercent, $aPassDetails, $sPassStatus, $sPassTitle) = $this->_oModule->getEntryPass($this->_iProfileId, $aData[$CNF['FIELD_ID']]);
+
+            $bVarsShowProgress = true;
+            $aVarsShowProgress = [
+                'progress' => $iPassPercent
+            ];
+
+            $aTmplVarsCounters = [];
+            foreach($aPassDetails as $iLevel => $aDetails) {
+                $aTmplVarsCounters[] = [
+                    'cn_title' => $aLevelToNodePl[$iLevel],
+                    'cn_passed' => $aDetails['passed'],
+                    'cn_total' => $aDetails['total'],
+                    'cn_progress' => bx_replace_markers($sTxtProgress, $aDetails)
+                ];
+            }
+
+            $bVarsShoStats = true;
+            $aVarsShowStats = [
+                'status' => $sPassStatus,
+                'bx_repeat:counters' => $aTmplVarsCounters,
+                'bx_if:show_pass' => [
+                    'condition' => $iPassPercent > 0 && $iPassPercent < 100,
+                    'content' => [
+                        'pass_link' => $aVars['content_url'],
+                        'pass_title' => $sPassTitle
+                    ]
+                ]
+            ];
+        }
+
+        return array_merge($aVars, [
+            'bx_if:show_pass_progress' => [
+                'condition' => $bVarsShowProgress,
+                'content' => $aVarsShowProgress
+            ],
+            'bx_if:show_pass_stats' => [
+                'condition' => $bVarsShoStats,
+                'content' => $aVarsShowStats
+            ]
+        ]);
     }
 
     public function getCounters($aCounters)
@@ -87,17 +155,27 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         $iLevelMax = $this->_oConfig->getContentLevelMax();
         $aLevelToNodePl = $this->_oConfig->getContentLevel2Node(false);
 
+        $sTxtProgress = _t('_bx_courses_txt_n_m_progress');
         $sTmplKeysSelected = $this->_bIsApi ? 'selected' : 'bx_if:selected';
         $sTmplKeysCounters = $this->_bIsApi ? 'counters' : 'bx_repeat:counters';
         
         $aTmplVarsNodes = [];
         foreach($aNodes as $iKey => $aNode) {
+            $aNodeStats = [];
+            $this->_oModule->getNodePassByChildren($iProfileId, $iContentId, $aNode, $aNodeStats);           
+
             $aTmplVarsCounters = [];
-            for($i = $iLevel + 1; $i <= $iLevelMax; $i++)
+            for($i = $iLevel + 1; $i <= $iLevelMax; $i++) {
+                if(!isset($aNodeStats[$i]))
+                    continue;
+
                 $aTmplVarsCounters[] = [
                     'cn_title' => $aLevelToNodePl[$i],
-                    'cn_value' => $aNode['cn_l' . $i]
+                    'cn_passed' => $aNodeStats[$i]['passed'],
+                    'cn_total' => $aNodeStats[$i]['total'],
+                    'cn_progress' => bx_replace_markers($sTxtProgress, $aNodeStats[$i])
                 ];
+            }
 
             $bSelected = $aNode['node_id'] == $iSelected;
             $sLink = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&' . $CNF['FIELD_ID'] . '=' . $iContentId, [
@@ -110,6 +188,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                 ],
                 'index' => $iKey,
                 'link' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink,
+                'progress' => round(100 * $aNodeStats[$iLevelMax]['passed']/$aNodeStats[$iLevelMax]['total']),
                 'status' => $this->_getNodeStatus($iProfileId, $iContentId, $aNode['node_id']),
                 $sTmplKeysCounters => $aTmplVarsCounters
             ]);
@@ -166,7 +245,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
 
         $aTmplVarsNodes = [];
         foreach($aNodes as $iKey => $aNode) {
-            list($iPassPercent, $sPassProgress, $sPassStatus, $sPassTitle) = $this->_getNodePass($iProfileId, $iContentId, $aNode);
+            list($iPassPercent, $sPassProgress, $sPassStatus, $sPassTitle) = $this->_oModule->getNodePassByData($iProfileId, $iContentId, $aNode);
 
             $sLink = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iContentId, [
                 'node_id' => $aNode['node_id']
@@ -275,7 +354,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                 $sTmplKeysShowPass = $this->_bIsApi ? 'show_pass' : 'bx_if:show_pass';
                 $aTmplVarsNodes = [];
                 foreach($aSubNodes as $iKey => $aSubNode) {
-                    list($iPassPercent, $sPassProgress, $sPassStatus, $sPassTitle) = $this->_getNodePass($iProfileId, $iContentId, $aSubNode);
+                    list($iPassPercent, $sPassProgress, $sPassStatus, $sPassTitle) = $this->_oModule->getNodePassByData($iProfileId, $iContentId, $aSubNode);
 
                     $sLink = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iContentId, [
                         'node_id' => $aSubNode['node_id']
@@ -472,46 +551,6 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             return _t('_bx_courses_txt_status_in_process');
         
         return _t('_bx_courses_txt_status_not_started');
-    }
-
-    protected function _getNodePass($iProfileId, $iContentId, $aNode)
-    {
-        $iTotal = 0;
-        $iPassCount = $iPassPercent = 0;
-        $sPassStatus = $sPassTitle = '';
-        if(($iTotal = $this->_oModule->getDataTotalByNode($aNode)) != 0) {
-            $aUserTrack = $this->_oDb->getContentData([
-                'sample' => 'user_track', 
-                'entry_id' => $iContentId, 
-                'node_id' => $aNode['node_id'], 
-                'profile_id' => $iProfileId
-            ]);
-
-            $iPassCount = count($aUserTrack);
-            $iPassPercent = round(100 * $iPassCount/$iTotal);
-            
-            if($iPassCount == 0) {
-                $sPassStatus = '_bx_courses_txt_status_not_started';
-                $sPassTitle = '_bx_courses_txt_pass_start';
-            }
-            else {
-                if($iPassCount != $iTotal) {
-                    $sPassStatus = '_bx_courses_txt_status_in_process';
-                    $sPassTitle = '_bx_courses_txt_pass_continue';
-                }
-                else {
-                    $sPassStatus = '_bx_courses_txt_status_completed';
-                    $sPassTitle = '_bx_courses_txt_pass_again';
-                }
-            }
-        }
-
-        return [
-            $iPassPercent,
-            _t('_bx_courses_txt_n_m_steps', $iPassCount, $iTotal),
-            _t($sPassStatus ? $sPassStatus : '_undefined'),
-            _t($sPassTitle)
-        ];
     }
 }
 

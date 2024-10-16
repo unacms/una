@@ -136,6 +136,20 @@ class BxCoursesDb extends BxBaseModGroupsDb
 
                 $sWhereClause = "AND `tcs`.`node_id`=:node_id";
                 break;
+            
+            case 'entry_id':
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id']
+                ];
+
+                $sWhereClause = "AND `tcs`.`entry_id`=:entry_id";
+
+                if(isset($aParams['level'])) {
+                    $aMethod['params'][1]['level'] = $aParams['level'];
+                        
+                    $sWhereClause .= " AND `tcs`.`level`=:level";
+                }
+                break;
 
             case 'entry_id_full':
                 $aMethod['params'][1] = [

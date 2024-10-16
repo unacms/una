@@ -423,14 +423,8 @@ class BxBaseGrid extends BxDolGrid
 
         foreach($this->_aOptions['fields'] as $sKey => $aField) {
             $sMethod = '_getCellHeader' . $this->_genMethodName($sKey);
-            if(method_exists($this, $sMethod))
-                $aHeader[] = $this->$sMethod($sKey, $aField);
-            else
-                $aHeader[] = [
-                    'name' => bx_process_output($aField['name']),
-                    'title' => bx_process_output($aField['title']),
-                    'width' => $aField['width']
-                ];
+            if(($aHeaderItem = $this->{method_exists($this, $sMethod) ? $sMethod : '_getCellHeaderDefault'}($sKey, $aField)))
+                $aHeader[] = $aHeaderItem;
         }
 
         return $aHeader;
@@ -438,6 +432,13 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getCellHeaderDefault ($sKey, $aField)
     {
+        if($this->_bIsApi)
+            return [
+                'name' => bx_process_output($aField['name']),
+                'title' => bx_process_output($aField['title']),
+                'width' => $aField['width']
+            ];
+
         $sHeader = bx_process_output($aField['title']);
 
         if (($aSortingFields = $this->_getOrderFields()) && in_array($sKey, $aSortingFields)) {
@@ -456,22 +457,17 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getCellHeaderCheckbox ($sKey, $aField)
     {
-        if($this->_bIsApi){
-            return [
-                'name' => bx_process_output($aField['name']),
-                'title' => bx_process_output($aField['title']),
-                'width' => $aField['width']
-            ];   
-        }
+        if($this->_bIsApi)
+            return $this->_getCellHeaderDefault($sKey, $aField);
         
     	$aAttr = array(
-    		'type' => 'checkbox',
-    		'id' => $this->_sObject . '_check_all',
-    		'name' => $this->_sObject . '_check_all',
-    		'onclick' => "$('input[name=" . $this->_sObject . "_check]:not([disabled])').attr('checked', this.checked)"
+            'type' => 'checkbox',
+            'id' => $this->_sObject . '_check_all',
+            'name' => $this->_sObject . '_check_all',
+            'onclick' => "$('input[name=" . $this->_sObject . "_check]:not([disabled])').attr('checked', this.checked)"
     	);
     	if($this->_bSelectAll)
-    		$aAttr['checked'] = 'checked';
+            $aAttr['checked'] = 'checked';
 
     	$aField['attr'] = isset($aField['attr']) && is_array($aField['attr']) ? array_merge($aAttr, $aField['attr']) : $aAttr;
 
