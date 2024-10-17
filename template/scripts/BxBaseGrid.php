@@ -74,7 +74,7 @@ class BxBaseGrid extends BxDolGrid
         foreach ($aOrder as $mixedId)
             $this->_updateOrder($mixedId, ++$iOrder);
 
-        echoJson(array());
+        return $this->_getActionResult([]);
     }
 
     public function performActionDelete()
@@ -361,7 +361,8 @@ class BxBaseGrid extends BxDolGrid
                 if(!method_exists($this, $sMethod))
                     $sMethod = $sMethodDefault;
 
-                $aDataRv[$iKey][$sKey] = $this->$sMethod(isset($aData[$iKey][$sKey]) ? $aData[$iKey][$sKey] : _t('_undefined'), $sKey, $aField, $aRow);
+                if(($aCell = $this->$sMethod(isset($aData[$iKey][$sKey]) ? $aData[$iKey][$sKey] : _t('_undefined'), $sKey, $aField, $aRow)))
+                    $aDataRv[$iKey][$sKey] = $aCell;
             }
         }
 

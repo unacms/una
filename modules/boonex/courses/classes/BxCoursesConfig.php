@@ -351,6 +351,12 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
         
         return $aResult;
     }
+    
+    public function getContentNodeTitle($iLevel, $bSingle = true)
+    {
+        $aLevelToNode = $this->getContentLevel2Node($bSingle);
+        return isset($aLevelToNode[$iLevel]) ? $aLevelToNode[$iLevel] : _t('_undefined');
+    }
 
     public function getUsageI2S($iUsage, $bLowerCase = true)
     {

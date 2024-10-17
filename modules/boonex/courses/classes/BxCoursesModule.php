@@ -329,7 +329,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'level' => 1,
             'selected' => ($iNodeId = bx_get('parent_id')) !== false ? (int)$iNodeId : 0,
             'start' => ($iStart = bx_get('start')) !== false ? (int)$iStart : 0,
-            'per_page' => ($iPerPage = bx_get('per_page')) !== false ? (int)$iPerPage : 0,
+            'per_page' => ($iPerPage = bx_get('per_page')) !== false ? (int)$iPerPage : 2,
         ]);
 
         return $this->_bIsApi ? [bx_api_get_block('course_structure', $mixedResult)] : $mixedResult;
@@ -459,7 +459,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $sPassStatus = $sPassTitle = '';
         $iLevelMax = $this->_oConfig->getContentLevelMax();
         if(isset($aPassDetails[$iLevelMax]) && ($aPassLevelMax = $aPassDetails[$iLevelMax])) {
-            $iPassPercent = (int)round(100 * $aPassLevelMax['passed']/$aPassLevelMax['total']);
+            $iPassPercent = ($iTotal = (int)$aPassLevelMax['total']) != 0 ? (int)round(100 * $aPassLevelMax['passed']/$iTotal) : 0;
 
             if($aPassLevelMax['passed'] != 0) {
                 if($aPassLevelMax['passed'] != $aPassLevelMax['total']) {
@@ -586,32 +586,59 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $CNF = $this->_oConfig->CNF;
 
         $aResult = parent::decodeDataAPI($aData, $aParams);
+        $aResultAdd = [];
 
-        $aLevelToNodePl = $this->_oConfig->getContentLevel2Node(false);
-        $sTxtProgress = _t('_bx_courses_txt_n_m_progress');
+        $iEntryId = (int)$aData[$CNF['FIELD_ID']];
+        $aLevelToNode = $this->_oConfig->getContentLevel2Node(false);        
+        if($this->isFan($iEntryId, $this->_iProfileId)) {
+            $sTxtProgress = _t('_bx_courses_txt_n_m_progress');
 
-        list($iPassPercent, $aPassDetails, $sPassStatus, $sPassTitle) = $this->getEntryPass($this->_iProfileId, $aData[$CNF['FIELD_ID']]);
+            list($iPassPercent, $aPassDetails, $sPassStatus, $sPassTitle) = $this->getEntryPass($this->_iProfileId, $iEntryId);
 
-        $aCounters = [];
-        foreach($aPassDetails as $iLevel => $aDetails) {
-            $aCounters[] = [
-                'level' => $iLevel,
-                'title' => $aLevelToNodePl[$iLevel],
-                'passed' => $aDetails['passed'],
-                'total' => $aDetails['total'],
-                'progress' => bx_replace_markers($sTxtProgress, $aDetails)
+            $aCounters = [];
+            foreach($aPassDetails as $iLevel => $aDetails) {
+                $aCounters[] = [
+                    'level' => $iLevel,
+                    'title' => $aLevelToNode[$iLevel],
+                    'passed' => $aDetails['passed'],
+                    'total' => $aDetails['total'],
+                    'progress' => bx_replace_markers($sTxtProgress, $aDetails)
+                ];
+            }
+
+            $aResultAdd = [
+                'percent' => $iPassPercent,
+                'counters' => $aCounters,
+                'status' => $sPassStatus,
+                'show_pass' => $iPassPercent > 0 && $iPassPercent < 100,
+            ];
+
+            if($aResultAdd['show_pass'])
+                $aResultAdd = array_merge($aResultAdd, [
+                    'pass_link' => $aResult['url'],
+                    'pass_title' => $sPassTitle,
+                ]);
+            
+        }
+        else {
+            $iLevelMax = $this->_oConfig->getContentLevelMax();
+            $aEntryCounters = $this->_oDb->getContentStructure(['sample' => 'entry_id_counters', 'entry_id' => $iEntryId]);
+
+            $aCounters = [];
+            for($i = 1; $i <= $iLevelMax; $i++) {
+                $aCounters[] = [
+                    'level' => $i,
+                    'title' => $aLevelToNode[$i],
+                    'total' => $aEntryCounters['cn_l' . $i]
+                ];
+            }
+
+            $aResultAdd = [
+                'counters' => $aCounters,
             ];
         }
 
-        $bShowPass = $iPassPercent > 0 && $iPassPercent < 100;
-        return array_merge($aResult, [
-            'percent' => $iPassPercent,
-            'counters' => $aCounters,
-            'status' => $sPassStatus,
-            'show_pass' => $bShowPass,
-            'pass_link' => $bShowPass ? $aResult['url'] : '',
-            'pass_title' => $bShowPass ? $sPassTitle : '',
-        ]);
+        return array_merge($aResult, $aResultAdd);
     }
 
     protected function _getOptionsContentModules()

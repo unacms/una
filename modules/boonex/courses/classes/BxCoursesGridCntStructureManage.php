@@ -292,14 +292,23 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         if($this->_iLevel != $this->_iLevelMax)
             return $this->_bIsApi ? [] : '';
 
-        $sCounters = '';
+        $mixedCounters = '';
         if(!empty($mixedValue) && ($aCounters = json_decode(html_entity_decode($mixedValue), true)))
-            $sCounters = $this->_oModule->_oTemplate->getCounters($aCounters);
+            $mixedCounters = $this->_oModule->_oTemplate->getCounters($aCounters);
 
-        if($this->_bIsApi)
-            return ['type' => 'text', 'data' => $sCounters];
+        if($this->_bIsApi) {
+            $sResult = '';
+            foreach($mixedCounters as $sUsage => $aCounters) {
+                foreach($aCounters as $iKey => $aCounter)
+                    $aCounters[$iKey] = $aCounter['value'] . ' ' . $aCounter['title'];
+                
+                $sResult .= ucfirst(_t('_bx_courses_txt_' . $sUsage)) . ': ' . implode(', ', $aCounters) . ' ';
+            }
 
-        return parent::_getCellDefault($sCounters, $sKey, $aField, $aRow);
+            return ['type' => 'text', 'value' => trim($sResult)];
+        }
+
+        return parent::_getCellDefault($mixedCounters, $sKey, $aField, $aRow);
     }
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
@@ -353,6 +362,20 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tcn`.`entry_id`=? AND `tcs`.`parent_id`=?", $this->_iEntryId, $this->_iParentId);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+
+    protected function _updateOrder($mixedId, $iOrder)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sTable = $CNF['TABLE_CNT_STRUCTURE'];
+        $sFieldId = 'node_id';
+        $sFieldOrder = $this->_aOptions['field_order'];
+
+        return BxDolDb::getInstance()->query("UPDATE `{$sTable}` SET `{$sFieldOrder}` = :order WHERE `{$sFieldId}` = :id", [
+            'id' => $mixedId,
+            'order' => $iOrder
+        ]);
     }
 
     protected function _switcherChecked2State($isChecked)

@@ -116,7 +116,7 @@ class BxCoursesDb extends BxBaseModGroupsDb
         $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
 
         $sSelectClause = "`tcs`.*";
-        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+        $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['sample']) {
             case 'id':
@@ -182,6 +182,17 @@ class BxCoursesDb extends BxBaseModGroupsDb
                     $sLimitClause = $aParams['start'] . ', ' . $aParams['per_page'];
                 break;
                 
+            case 'entry_id_counters':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id']
+                ];
+
+                $sSelectClause = "COUNT(`tcs`.`id`) AS `cn_l1`, SUM(`tcs`.`cn_l2`) AS `cn_l2`, SUM(`tcs`.`cn_l3`) AS `cn_l3`";
+                $sWhereClause = "AND `tcs`.`entry_id`=:entry_id AND `tcs`.`level`='1'";
+                $sGroupClause = "`tcs`.`entry_id`";
+                break;
+                
             case 'parent_id':
                 $aMethod['params'][1] = [
                     'parent_id' => $aParams['parent_id']
@@ -213,13 +224,16 @@ class BxCoursesDb extends BxBaseModGroupsDb
                 break;
         }
 
+        if(!empty($sGroupClause))
+            $sGroupClause = "GROUP BY " . $sGroupClause;
+
         if(!empty($sOrderClause))
             $sOrderClause = "ORDER BY " . $sOrderClause;
         
         if(!empty($sLimitClause))
             $sLimitClause = "LIMIT " . $sLimitClause;
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_CNT_STRUCTURE'] . "` AS `tcs` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_CNT_STRUCTURE'] . "` AS `tcs` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 

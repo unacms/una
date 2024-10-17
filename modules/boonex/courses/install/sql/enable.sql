@@ -640,14 +640,14 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_courses_cnt_structure_manage', 'Sql', 'SELECT `tcn`.*, `tcs`.`parent_id`, `tcs`.`level`, `tcs`.`cn_l2`, `tcs`.`cn_l3` FROM `bx_courses_content_nodes` AS `tcn` LEFT JOIN `bx_courses_content_structure` AS `tcs` ON `tcn`.`id`=`tcs`.`node_id` WHERE 1 ', 'bx_courses_content_nodes', 'id', 'order', 'status', '', 20, NULL, 'start', '', 'title', '', 'like', '', '', 2147483647, 'BxCoursesGridCntStructureManage', 'modules/boonex/courses/classes/BxCoursesGridCntStructureManage.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_courses_cnt_structure_manage', 'order', '', '1%', 0, 0, '', 1),
-('bx_courses_cnt_structure_manage', 'checkbox', '_sys_select', '2%', 0, 0, '', 2),
+('bx_courses_cnt_structure_manage', 'order', '', '4%', 0, 0, '', 1),
+('bx_courses_cnt_structure_manage', 'checkbox', '_sys_select', '4%', 0, 0, '', 2),
 ('bx_courses_cnt_structure_manage', 'switcher', '_bx_courses_grid_column_title_cnt_active', '7%', 0, 0, '', 3),
 ('bx_courses_cnt_structure_manage', 'title', '_bx_courses_grid_column_title_cnt_title', '35%', 0, 0, '', 4),
 ('bx_courses_cnt_structure_manage', 'cn_l2', '_bx_courses_grid_column_title_cnt_cn_l2', '10%', 0, 0, '', 5),
 ('bx_courses_cnt_structure_manage', 'cn_l3', '_bx_courses_grid_column_title_cnt_cn_l3', '10%', 0, 0, '', 6),
 ('bx_courses_cnt_structure_manage', 'counters', '_bx_courses_grid_column_title_cnt_counters', '20%', 0, 0, '', 7),
-('bx_courses_cnt_structure_manage', 'added', '_bx_courses_grid_column_title_cnt_added', '15%', 0, 0, '', 8),
+('bx_courses_cnt_structure_manage', 'added', '_bx_courses_grid_column_title_cnt_added', '10%', 0, 0, '', 8),
 ('bx_courses_cnt_structure_manage', 'actions', '', '20%', 0, 0, '', 9);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES

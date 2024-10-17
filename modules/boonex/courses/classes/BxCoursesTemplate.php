@@ -42,7 +42,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         $bVarsShowProgress = $bVarsShoStats = false;
         $aVarsShowProgress = $aVarsShowStats = [true];
         if(!empty($aParams['context']) && in_array($aParams['context'], ['favorite', 'joined_entries'])) {
-            $aLevelToNodePl = $this->_oConfig->getContentLevel2Node(false);
+            $aLevelToNode = $this->_oConfig->getContentLevel2Node(false);
             $sTxtProgress = _t('_bx_courses_txt_n_m_progress');
 
             list($iPassPercent, $aPassDetails, $sPassStatus, $sPassTitle) = $this->_oModule->getEntryPass($this->_iProfileId, $aData[$CNF['FIELD_ID']]);
@@ -55,7 +55,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             $aTmplVarsCounters = [];
             foreach($aPassDetails as $iLevel => $aDetails) {
                 $aTmplVarsCounters[] = [
-                    'cn_title' => $aLevelToNodePl[$iLevel],
+                    'cn_title' => $aLevelToNode[$iLevel],
                     'cn_passed' => $aDetails['passed'],
                     'cn_total' => $aDetails['total'],
                     'cn_progress' => bx_replace_markers($sTxtProgress, $aDetails)
@@ -105,7 +105,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     ];
 
                     if($this->_bIsApi)
-                        $aTmplVars[$sUsage] = $aCounter;
+                        $aTmplVars[$sUsage][] = $aCounter;
                     else
                         $aTmplVarsCounters['bx_repeat:counters_' . $sUsage][] = $aCounter;
                 }
@@ -138,7 +138,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         $iLevel = (int)$aParams['level'];
         $iSelected = (int)$aParams['selected'];
         $iStart = isset($aParams['start']) ? (int)$aParams['start'] : 0;
-        $iPerPage = isset($aParams['per_page']) ? (int)$aParams['per_page'] : 0;
+        $iPerPage = isset($aParams['per_page']) ? (int)$aParams['per_page'] : 2;
 
         $aNodes = $this->_oDb->getContentStructure([
             'sample' => 'entry_id_full', 
@@ -153,7 +153,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             return '';
 
         $iLevelMax = $this->_oConfig->getContentLevelMax();
-        $aLevelToNodePl = $this->_oConfig->getContentLevel2Node(false);
+        $aLevelToNode = $this->_oConfig->getContentLevel2Node(false);
 
         $sTxtProgress = _t('_bx_courses_txt_n_m_progress');
         $sTmplKeysSelected = $this->_bIsApi ? 'selected' : 'bx_if:selected';
@@ -170,7 +170,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     continue;
 
                 $aTmplVarsCounters[] = [
-                    'cn_title' => $aLevelToNodePl[$i],
+                    'cn_title' => $aLevelToNode[$i],
                     'cn_passed' => $aNodeStats[$i]['passed'],
                     'cn_total' => $aNodeStats[$i]['total'],
                     'cn_progress' => bx_replace_markers($sTxtProgress, $aNodeStats[$i])
@@ -186,9 +186,9 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     'condition' => $bSelected,
                     'content' => [true]
                 ],
-                'index' => $iKey,
+                'index' => $iKey + 1,
                 'link' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink,
-                'progress' => round(100 * $aNodeStats[$iLevelMax]['passed']/$aNodeStats[$iLevelMax]['total']),
+                'percent' => isset($aNodeStats[$iLevelMax]) && ($aStats = $aNodeStats[$iLevelMax]) && $aStats['total'] ? round(100 * $aStats['passed']/$aStats['total']) : 0,
                 'status' => $this->_getNodeStatus($iProfileId, $iContentId, $aNode['node_id']),
                 $sTmplKeysCounters => $aTmplVarsCounters
             ]);
@@ -255,7 +255,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
 
             $aNode = array_merge($aNode, [
                 'level_max' => $iLevelMax,
-                'index' => $iKey,
+                'index' => $iKey + 1,
                 'link' => $sLink,
                 'pass_percent' => $iPassPercent,
                 'pass_progress' => $sPassProgress,
@@ -363,7 +363,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     $bShowPass = !empty($sPassTitle);
                     
                     $aSubNode = array_merge($aSubNode, [
-                        'index' => $iKey,
+                        'index' => $iKey + 1,
                         'link' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink,
                         'pass_percent' => $iPassPercent,
                         'pass_progress' => $sPassProgress,
@@ -415,8 +415,6 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
 
         if(!isset($aParams['node_id']))
             return '';
-        
-        $sJsObject = $this->_oConfig->getJsObject('entry');
 
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
         $iNodeId = (int)$aParams['node_id'];
@@ -428,16 +426,58 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             'id' => $iNodeId,
         ]);
 
+        $aTmplVars = [
+            'index' => $aNode['order'],
+            'sample' => $this->_oConfig->getContentNodeTitle($aNode['level']),
+            'title' => $aNode['title'],
+            'text' => $aNode['text']
+        ];
+
+        if($this->_bIsApi)
+            return array_merge($aTmplVars, [
+                'steps' => $this->_entryNodeItems($iProfileId, $iContentId, $aNode, BX_COURSES_CND_USAGE_ST),
+                'attachments' => $this->_entryNodeItems($iProfileId, $iContentId, $aNode, BX_COURSES_CND_USAGE_AT) 
+            ]);
+        else
+            $aTmplVars['bx_repeat:items'] = $this->_entryNodeItems($iProfileId, $iContentId, $aNode, $iUsage);
+            
+
+        $sMiName = 'node-data-';
+        $sMiLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iContentId, [
+            'node_id' => $iNodeId,
+            'usage' => ''
+        ]);
+
+        $oMenu = new BxTemplMenu([
+            'template' => 'menu_block_submenu_ver.html', 
+            'menu_id'=> 'node-data', 
+            'menu_items' => [
+                ['id' => $sMiName . 'st', 'name' => $sMiName . 'st', 'class' => '', 'link' => $sMiLink . '0', 'target' => '_self', 'title' => _t('_bx_courses_menu_item_title_node_data_steps')],
+                ['id' => $sMiName . 'at', 'name' => $sMiName . 'at', 'class' => '', 'link' => $sMiLink . '1', 'target' => '_self', 'title' => _t('_bx_courses_menu_item_title_node_data_attachments')]
+            ]
+        ]);
+        $oMenu->setSelected('', $sMiName . $this->_oConfig->getUsageI2S($iUsage));
+
+        return [
+            'content' => $this->parseHtmlByName('node_view.html', $aTmplVars),
+            'menu' => $oMenu
+        ];
+    }
+
+    protected function _entryNodeItems($iProfileId, $iContentId, $aNode, $iUsage)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('entry');
+
         $aDataItems = $this->_oDb->getContentData([
             'sample' => 'entry_node_ids', 
             'entry_id' => $iContentId,
-            'node_id' => $iNodeId,
+            'node_id' => $aNode['id'],
             'usage' => $iUsage
         ]);
 
         $sTxtUndefined = _t('_undefined');
 
-        $aTmplVarsItems = [];
+        $aResults = [];
         if(!empty($aDataItems) && is_array($aDataItems))
             foreach($aDataItems as $iIndex => $aDataItem) {
                 $sImageUrl = '';
@@ -474,72 +514,53 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     'title' => $sTitle
                 ] : [true];
 
-                $aTmplVarsItems[] = $this->_bIsApi ? [
-                    'type' => $sType,
-                    'title' => $sTitle,
-                    'image' => $sImageUrl,
-                    'link_view' => $bTmplVarsShowLink ? bx_api_get_relative_url($sLink) : '',
-                    'link_pass' => $bTmplVarsPass ? bx_api_get_relative_url($sLink) : '',
-                ] : [
-                    'bx_if:show_image' => [
-                        'condition' => $sImageUrl,
-                        'content' => [
-                            'image' => $sImageUrl
+                if($this->_bIsApi) {
+                    $sText = '';
+                    if(($sMethod = 'get_text') &&  bx_is_srv($aDataItem['content_type'], $sMethod))
+                        $sText = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
+
+                    $aResults[] = [
+                        'type' => $sType,
+                        'title' => $sTitle,
+                        'text' => $sText,
+                        'image' => $sImageUrl,
+                        'link_view' => $bTmplVarsShowLink ? bx_api_get_relative_url($sLink) : '',
+                        'link_pass' => $bTmplVarsPass ? bx_api_get_relative_url($sLink) : '',
+                    ];
+                }
+                else 
+                    $aResults[] = [
+                        'bx_if:show_image' => [
+                            'condition' => $sImageUrl,
+                            'content' => [
+                                'image' => $sImageUrl
+                            ]
+                        ],
+                        'bx_if:show_image_empty' => [
+                            'condition' => !$sImageUrl,
+                            'content' => [
+                                'type' => $sType
+                            ]
+                        ],
+                        'type' => $sType,
+                        'bx_if:show_link' => [
+                            'condition' => $bTmplVarsShowLink,
+                            'content' => $aTmplVarsShowLink
+                        ],
+                        'bx_if:show_text' => [
+                            'condition' => !$bTmplVarsShowLink,
+                            'content' => [
+                                'title' => $sTitle,
+                            ]
+                        ],
+                        'bx_if:show_pass' => [
+                            'condition' => $bTmplVarsPass,
+                            'content' => $aTmplVarsPass
                         ]
-                    ],
-                    'bx_if:show_image_empty' => [
-                        'condition' => !$sImageUrl,
-                        'content' => [
-                            'type' => $sType
-                        ]
-                    ],
-                    'type' => $sType,
-                    'bx_if:show_link' => [
-                        'condition' => $bTmplVarsShowLink,
-                        'content' => $aTmplVarsShowLink
-                    ],
-                    'bx_if:show_text' => [
-                        'condition' => !$bTmplVarsShowLink,
-                        'content' => [
-                            'title' => $sTitle,
-                        ]
-                    ],
-                    'bx_if:show_pass' => [
-                        'condition' => $bTmplVarsPass,
-                        'content' => $aTmplVarsPass
-                    ]
-                ];
+                    ];
             }
 
-        if($this->_bIsApi)
-            return $aTmplVarsItems;
-
-        $sMiName = 'node-data-';
-        $sMiLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_NODE'] . '&id=' . $iContentId, [
-            'node_id' => $iNodeId,
-            'usage' => ''
-        ]);
-
-        $oMenu = new BxTemplMenu([
-            'template' => 'menu_block_submenu_ver.html', 
-            'menu_id'=> 'node-data', 
-            'menu_items' => [
-                ['id' => $sMiName . 'st', 'name' => $sMiName . 'st', 'class' => '', 'link' => $sMiLink . '0', 'target' => '_self', 'title' => _t('_bx_courses_menu_item_title_node_data_steps')],
-                ['id' => $sMiName . 'at', 'name' => $sMiName . 'at', 'class' => '', 'link' => $sMiLink . '1', 'target' => '_self', 'title' => _t('_bx_courses_menu_item_title_node_data_attachments')]
-            ]
-        ]);
-        $oMenu->setSelected('', $sMiName . $this->_oConfig->getUsageI2S($iUsage));
-
-        return [
-            'content' => $this->parseHtmlByName('node_view.html', [
-                'index' => $aNode['order'],
-                'sample' => _t('_bx_courses_txt_sample_l' . $aNode['level'] . '_single'),
-                'title' => $aNode['title'],
-                'text' => $aNode['text'],
-                'bx_repeat:items' => $aTmplVarsItems
-            ]),
-            'menu' => $oMenu
-        ];
+        return $aResults;
     }
 
     protected function _getNodeStatus($iProfileId, $iContentId, $iNodeId)

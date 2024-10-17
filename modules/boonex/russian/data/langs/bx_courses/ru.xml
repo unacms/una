@@ -448,6 +448,8 @@
     <string name="_bx_courses_txt_passed"><![CDATA[Пройдено]]></string>
     <string name="_bx_courses_txt_n_m_steps"><![CDATA[{0}/{1} шагов]]></string>
     <string name="_bx_courses_txt_n_m_progress"><![CDATA[{passed}/{total}]]></string>
+    <string name="_bx_courses_txt_st"><![CDATA[шаги]]></string>
+    <string name="_bx_courses_txt_at"><![CDATA[вложения]]></string>
     <string name="_bx_courses_txt_data_type_bx_files"><![CDATA[файл]]></string>
     <string name="_bx_courses_txt_data_type_bx_photos"><![CDATA[изображение]]></string>
     <string name="_bx_courses_txt_data_type_bx_polls"><![CDATA[опрос]]></string>
