@@ -26,7 +26,7 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
         $aTmplVars = BxBaseModGeneralTemplate::getTmplVarsText($aData);
-        return $this->parseHtmlByName($sTemplateName, $aTmplVars);
+        return $this->_bIsApi ? $aTmplVars : $this->parseHtmlByName($sTemplateName, $aTmplVars);
     }
 
     public function entryPhoto ($aContentInfo, $bAsArray = false)
@@ -36,7 +36,7 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         if(empty($aContentInfo[$CNF['FIELD_THUMB']]))
-            return $bAsArray ? array() : false;
+            return $bAsArray || $this->_bIsApi ? [] : false;
 
         $iImage = (int)$aContentInfo[$CNF['FIELD_THUMB']];
 
@@ -45,14 +45,19 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
             $sImage = $oImagesTranscoder->getFileUrl($iImage);
         
         if(empty($sImage)) {
-            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS']);
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
             if($oStorage)
                 $sImage = $oStorage->getFileUrlById($iImage);
         }
 
         if(empty($sImage))
-            return $bAsArray ? array() : '';
+            return $bAsArray || $this->_bIsApi ? [] : '';
 
+        if($this->_bIsApi)
+            return array_merge($aTmplVars, [
+                'image' => bx_api_get_image($CNF['OBJECT_STORAGE'], $iImage)
+            ]);
+        
         $aTmplVars = array_merge($aTmplVars, array(
             'content_description_before' => '',
             'entry_photo' => $sImage,

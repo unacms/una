@@ -120,7 +120,9 @@ class BxFilesTemplate extends BxBaseModTextTemplate
 
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-        return $this->parseHtmlByName($sTemplateName, $this->getTmplVarsText($aData));
+        $aTmplVars = $this->getTmplVarsText($aData);
+
+        return $this->_bIsApi ? $aTmplVars : $this->parseHtmlByName($sTemplateName, $aTmplVars);
     }
 
     public function entryInfoPopup($aData) {

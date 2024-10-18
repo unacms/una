@@ -21,25 +21,7 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
 
         parent::__construct($oModule);
     }
-    
-    public function addDataForm ($sDisplay = false, $sCheckFunction = false)
-    {
-        $sKey = 'need_redirect_after_action';
-        $mixedContent = $this->addDataFormAction($sDisplay, $sCheckFunction);
-        if(is_array($mixedContent) && !empty($mixedContent[$sKey])) {
-            $sUrl = $this->getRedirectUrlAfterAdd($mixedContent);
 
-            if($this->_bAjaxMode) {
-                echoJson($this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect'));
-                exit;
-            }
-            else
-                $this->_redirectAndExit($sUrl);
-        }
-        else
-            return $mixedContent;
-    }
-    
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
     {
         $this->updateExif($iContentId, $aContentInfo);

@@ -295,7 +295,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         $sResult = $this->onDataAddAfter (getLoggedId(), $iContentId);
         if ($sResult)
-            return $this->prepareResponse($sResult, $bAsJson, 'msg');
+            return bx_is_api() ? [bx_api_get_msg($sResult)] : $this->prepareResponse($sResult, $bAsJson, 'msg');
 
         list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
