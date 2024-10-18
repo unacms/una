@@ -11,6 +11,7 @@ class BxDolUpgrader extends BxDol
 {
     protected $_sUrlVersionCheck = 'https://v.unacms.com/';
     protected $_sError = false;
+    protected $oDb = null;
 
     /**
      * Prepare for system upgrade.
@@ -20,6 +21,7 @@ class BxDolUpgrader extends BxDol
      */
     public function prepare($bAuto = true)
     {
+        $this->oDb = BxDolDb::getInstance(); // to use in check.php file 
         $this->setError(false);
         $iUmaskSave = umask(0);
 
@@ -87,6 +89,12 @@ class BxDolUpgrader extends BxDol
             if (!$this->isValidPatch ($sUnpackedPath, $aVersionUpdateInfo)) {
                 $this->deleteUpgradeFolder($sPatchPath);
                 $this->setError(_t('_sys_upgrade_patch_invalid'));
+                break;
+            }
+
+            if (true !== ($sError = $this->performCheck ($sUnpackedPath, $aVersionUpdateInfo))) {
+                $this->deleteUpgradeFolder($sPatchPath);
+                $this->setError($sError);
                 break;
             }
 
@@ -198,6 +206,13 @@ class BxDolUpgrader extends BxDol
         $sCheckFilePath =  $sPath . 'check.php';
         $sVersionFilePath =  $sPath . 'files/inc/version.inc.php';
         return file_exists($sCheckFilePath) && file_exists($sVersionFilePath) && file_exists($sUnpackedPath . 'BxDolUpgradeCron.php');
+    }
+
+    protected function performCheck ($sUnpackedPath, $aVersionUpdateInfo)
+    {
+        $sPath = $sUnpackedPath . 'files/' . $this->normalizeVersion(bx_get_ver()) . '-' . $this->normalizeVersion($aVersionUpdateInfo['patch']['ver']) . '/';
+        $sCheckFilePath =  $sPath . 'check.php';
+        return include ($sCheckFilePath);
     }
 
     public function setTransientUpgradeCronJob ($sUnpackedPath)
