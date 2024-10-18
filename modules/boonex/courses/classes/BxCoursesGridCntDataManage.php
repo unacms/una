@@ -129,6 +129,9 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
         $sUrl = $this->_sPageUrl;
         if(!empty($this->_aNodeInfo['parent_id']))
             $sUrl = bx_append_url_params($sUrl, ['parent_id' => $this->_aNodeInfo['parent_id']]);
+        
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'link', 'link' => bx_api_get_relative_url($sUrl)]);
 
         $a['attr'] = array_merge($a['attr'], [
             "onclick" => "window.open('" . $sUrl . "', '_self');"
@@ -140,7 +143,7 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
     protected function _getActionAddSt($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
         if($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'values' => $this->_getValues(BX_COURSES_CND_USAGE_ST)]);
+            return array_merge($a, ['name' => $sKey, 'type' => 'menu', 'action' => $sKey, 'values' => $this->_getValues(BX_COURSES_CND_USAGE_ST)]);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -153,7 +156,7 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
     protected function _getActionAddAt($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
         if($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'values' => $this->_getValues(BX_COURSES_CND_USAGE_AT)]);
+            return array_merge($a, ['name' => $sKey, 'type' => 'menu', 'action' => $sKey, 'values' => $this->_getValues(BX_COURSES_CND_USAGE_AT)]);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 

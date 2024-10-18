@@ -458,7 +458,7 @@
     <string name="_bx_courses_txt_data_type_bx_videos"><![CDATA[video]]></string>
     <string name="_bx_courses_txt_data_usage_0"><![CDATA[step]]></string>
     <string name="_bx_courses_txt_data_usage_1"><![CDATA[attachment]]></string>
-    
+    <string name="_bx_courses_txt_download"><![CDATA[Download]]></string>
 
     <string name="_bx_courses_msg_performed"><![CDATA[The action was successfully performed.]]></string>
     <string name="_bx_courses_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>

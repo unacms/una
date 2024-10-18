@@ -457,6 +457,7 @@
     <string name="_bx_courses_txt_data_type_bx_videos"><![CDATA[видео]]></string>
     <string name="_bx_courses_txt_data_usage_0"><![CDATA[шаг]]></string>
     <string name="_bx_courses_txt_data_usage_1"><![CDATA[вложение]]></string>
+    <string name="_bx_courses_txt_download"><![CDATA[Скачать]]></string>
 
     <string name="_bx_courses_msg_performed"><![CDATA[Действие было успешно выполнено.]]></string>
     <string name="_bx_courses_err_price_duplicate"><![CDATA[Аналогичный ценовой план уже существует.]]></string>

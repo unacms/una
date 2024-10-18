@@ -10,6 +10,14 @@
  */
 
 /**
+ * How to pass a lesson's steps:
+ * 0 - all at once, the order is not important
+ * 1 - alternate, the order is important
+ */
+define('BX_COURSES_CND_PASSING_ALL', 0);
+define('BX_COURSES_CND_PASSING_ALTERNATE', 1);
+
+/**
  * Content data usage:
  * st - step,
  * at - attachment

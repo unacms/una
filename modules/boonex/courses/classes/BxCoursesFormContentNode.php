@@ -33,8 +33,8 @@ class BxCoursesFormContentNode extends BxTemplFormView
         
         if(isset($this->aInputs['passing']))
             $this->aInputs['passing']['values'] = [
-                ['key' => 0, 'value' => _t('_bx_courses_form_content_node_input_passing_all')],
-                ['key' => 1, 'value' => _t('_bx_courses_form_content_node_input_passing_alternate')]
+                ['key' => BX_COURSES_CND_PASSING_ALL, 'value' => _t('_bx_courses_form_content_node_input_passing_all')],
+                ['key' => BX_COURSES_CND_PASSING_ALTERNATE, 'value' => _t('_bx_courses_form_content_node_input_passing_alternate')]
             ];
     }
 

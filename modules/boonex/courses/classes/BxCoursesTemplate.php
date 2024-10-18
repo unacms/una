@@ -430,7 +430,8 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             'index' => $aNode['order'],
             'sample' => $this->_oConfig->getContentNodeTitle($aNode['level']),
             'title' => $aNode['title'],
-            'text' => $aNode['text']
+            'text' => $aNode['text'],
+            'passing' => $aNode['passing']
         ];
 
         if($this->_bIsApi)
@@ -478,6 +479,9 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         $sTxtUndefined = _t('_undefined');
         $sTxtPass = _t('_bx_courses_txt_pass');
 
+        $bUsageSt = $iUsage == BX_COURSES_CND_USAGE_ST;
+        $bUsageAt = $iUsage == BX_COURSES_CND_USAGE_AT;
+
         $aResults = [];
         if(!empty($aDataItems) && is_array($aDataItems))
             foreach($aDataItems as $iIndex => $aDataItem) {
@@ -489,8 +493,10 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                 if(($sMethod = 'get_link') && bx_is_srv($aDataItem['content_type'], $sMethod))
                     $sLink = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
 
+                $bPassed = $bUsageSt && $this->_oModule->isDataPassed($iProfileId, $aDataItem);
+
                 $aTmplVarsPass = [true];
-                $bTmplVarsPass = $iUsage == BX_COURSES_CND_USAGE_ST && $sLink && !$this->_oModule->isDataPassed($iProfileId, $aDataItem) && ((int)$aNode['passing'] == 0 || $iIndex == 0 || $this->_oModule->isDataPassed($iProfileId, $aDataItems[$iIndex - 1]));
+                $bTmplVarsPass = $bUsageSt && !$bPassed && $sLink && ((int)$aNode['passing'] == BX_COURSES_CND_PASSING_ALL || $iIndex == 0 || $this->_oModule->isDataPassed($iProfileId, $aDataItems[$iIndex - 1]));
                 if($bTmplVarsPass) {
                     $aTmplVarsPass = [
                         'js_object' => $sJsObject,
@@ -510,28 +516,48 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                 if(!$sTitle)
                     $sTitle = $sTxtUndefined;
 
-                $bTmplVarsShowLink = $iUsage == BX_COURSES_CND_USAGE_AT && $sLink;
+                $bTmplVarsShowLink = $bUsageAt && $sLink;
                 $aTmplVarsShowLink = $bTmplVarsShowLink ? [
                     'link' => $sLink,
                     'title' => $sTitle
                 ] : [true];
+
+                $bTmplVarsShowSize = false;
+                $aTmplVarsShowSize = [true];
+                $bTmplVarsShowDownload = false;
+                $aTmplVarsShowDownload = [true];
+                if($bUsageAt && ($bTmplVarsShowSize = ($sMethod = 'get_file') && bx_is_srv($aDataItem['content_type'], $sMethod))) {
+                    $aFileInfo = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
+                    if(!empty($aFileInfo) && is_array($aFileInfo)) {
+                        $aTmplVarsShowSize['size'] = _t_format_size($aFileInfo['size']);
+
+                        $bTmplVarsShowDownload = !empty($aFileInfo['url_download']);
+                        $aTmplVarsShowDownload = [
+                            'link' => $aFileInfo['url_download']
+                        ];
+                    }
+                }
 
                 if($this->_bIsApi) {
                     $sText = '';
                     if(($sMethod = 'get_text') &&  bx_is_srv($aDataItem['content_type'], $sMethod))
                         $sText = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
 
-                    $aResults[] = [
+                    $aResults[] = array_merge([
                         'id' => $aDataItem['id'],
                         'type' => $sType,
                         'title' => $sTitle,
                         'text' => $sText,
                         'image' => $sImageUrl,
-                        'link_view' => $bTmplVarsShowLink ? bx_api_get_relative_url($sLink) : '',
-                        'link_pass' => $bTmplVarsPass ? bx_api_get_relative_url($sLink) : '',
-                        'link_title' => $sTxtPass,
-                        'status' => '???' //TODO: Some status is needed. Ask Roman.
-                    ];
+                    ], ($bUsageSt ? [
+                        'pass_link' => $bTmplVarsPass ? bx_api_get_relative_url($sLink) : '',
+                        'pass_title' => $sTxtPass,
+                        'passed' => $bPassed
+                    ] : [
+                        'size' => $bTmplVarsShowSize ? $aTmplVarsShowSize['size'] : '',
+                        'view_link' => $bTmplVarsShowLink ? bx_api_get_relative_url($sLink) : '',
+                        'download_link' => $bTmplVarsShowDownload ? bx_api_get_relative_url($aTmplVarsShowDownload['link']) : '',
+                    ]));
                 }
                 else 
                     $aResults[] = [
@@ -558,10 +584,18 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                                 'title' => $sTitle,
                             ]
                         ],
+                        'bx_if:show_size' => [
+                            'condition' => $bTmplVarsShowSize,
+                            'content' => $aTmplVarsShowSize
+                        ],
                         'bx_if:show_pass' => [
                             'condition' => $bTmplVarsPass,
                             'content' => $aTmplVarsPass
-                        ]
+                        ],
+                        'bx_if:show_download' => [
+                            'condition' => $bTmplVarsShowDownload,
+                            'content' => $aTmplVarsShowDownload
+                        ],
                     ];
             }
 

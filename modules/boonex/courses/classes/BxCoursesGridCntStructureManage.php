@@ -322,11 +322,14 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
     protected function _getActionBack($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
         if(empty($this->_aParentInfo))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $sUrl = $this->_sPageUrl;
         if(!empty($this->_aParentInfo['parent_id']))
             $sUrl = bx_append_url_params($sUrl, ['parent_id' => $this->_aParentInfo['parent_id']]);
+
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'link', 'link' => bx_api_get_relative_url($sUrl)]);
 
         $a['attr'] = array_merge($a['attr'], [
             "onclick" => "window.open('" . $sUrl . "','_self');"

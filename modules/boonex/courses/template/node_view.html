@@ -20,11 +20,17 @@
                             <bx_if:show_link><a href="__link__" target="_blank">__title__</a></bx_if:show_link>
                             <bx_if:show_text>__title__</bx_if:show_text>
                         </div>
+                        <bx_if:show_size>
+                            <div class="bx-courses-nid-size">__size__</div>
+                        </bx_if:show_size>
                     </div>
                     <div class="bx-courses-ni-action flex items-center">
                         <bx_if:show_pass>
                             <a class="bx-btn bx-btn-small" href="__link__" onclick="javascript:return __js_object__.passData(this, __id__);">__title__</a>
                         </bx_if:show_pass>
+                        <bx_if:show_download>
+                            <a class="bx-btn bx-btn-small" href="__link__"><bx_text:_bx_courses_txt_download /></a>
+                        </bx_if:show_download>
                     </div>
                 </div>
             </bx_repeat:items>
