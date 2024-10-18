@@ -476,6 +476,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         ]);
 
         $sTxtUndefined = _t('_undefined');
+        $sTxtPass = _t('_bx_courses_txt_pass');
 
         $aResults = [];
         if(!empty($aDataItems) && is_array($aDataItems))
@@ -494,7 +495,8 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     $aTmplVarsPass = [
                         'js_object' => $sJsObject,
                         'id' => $aDataItem['id'],
-                        'link' => $sLink
+                        'link' => $sLink,
+                        'title' => $sTxtPass
                     ];
                 }
 
@@ -520,12 +522,15 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                         $sText = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
 
                     $aResults[] = [
+                        'id' => $aDataItem['id'],
                         'type' => $sType,
                         'title' => $sTitle,
                         'text' => $sText,
                         'image' => $sImageUrl,
                         'link_view' => $bTmplVarsShowLink ? bx_api_get_relative_url($sLink) : '',
                         'link_pass' => $bTmplVarsPass ? bx_api_get_relative_url($sLink) : '',
+                        'link_title' => $sTxtPass,
+                        'status' => '???' //TODO: Some status is needed. Ask Roman.
                     ];
                 }
                 else 

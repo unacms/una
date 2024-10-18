@@ -124,7 +124,7 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
     protected function _getActionBack($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
         if(empty($this->_aNodeInfo))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $sUrl = $this->_sPageUrl;
         if(!empty($this->_aNodeInfo['parent_id']))
@@ -139,6 +139,9 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
 
     protected function _getActionAddSt($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'values' => $this->_getValues(BX_COURSES_CND_USAGE_ST)]);
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $a['attr'] = array_merge($a['attr'], [
@@ -149,6 +152,9 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
 
     protected function _getActionAddAt($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
     {
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'values' => $this->_getValues(BX_COURSES_CND_USAGE_AT)]);
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $a['attr'] = array_merge($a['attr'], [
@@ -192,6 +198,38 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
         }
 
         return $aIds;
+    }
+
+    protected function _getValues($iUsage)
+    {
+        $aValues = [];
+        $oPermalink = BxDolPermalinks::getInstance();
+
+        $aModules = $this->_oModule->_oConfig->getContentModules($iUsage);
+        foreach($aModules as $sModule) {
+            $oModule = BxDolModule::getInstance($sModule);
+            if(!$oModule)
+                continue;
+
+            $CNF = &$oModule->_oConfig->CNF;
+            if(!isset($CNF['URI_ADD_ENTRY']))
+                continue;
+
+            $aParams = [
+                'context_pid' => $this->_iEntryPid,
+                'context_nid' => $this->_iNodeId,
+                'context_usage' => $iUsage
+            ];
+
+            $aValues[] = [
+                'key' => $sModule, 
+                'title' => _t('_' . $sModule),
+                'link' => bx_api_get_relative_url(BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY'], $aParams)), 
+                'callback' => $sModule . '/entity_create/&params[]=' . json_encode($aParams)
+            ];
+        }
+
+        return $aValues;
     }
 }
 

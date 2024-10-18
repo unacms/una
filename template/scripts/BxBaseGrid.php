@@ -751,19 +751,18 @@ class BxBaseGrid extends BxDolGrid
         if(empty($this->_aOptions[$sActionsType]) || !is_array($this->_aOptions[$sActionsType]))
             return [];
 
-        
-        
-        foreach ($this->_aOptions[$sActionsType] as $sKey => $aAction){
-            $sFunc = '_getAction' . $this->_genMethodName($sType . '_' . $sKey);
-            if (method_exists($this, $sFunc)){
-                $this->_aOptions[$sActionsType][$sKey] = $this->$sFunc($aAction);
-            }
-            else{
-                $this->_aOptions[$sActionsType][$sKey]['type'] = 'modal';
-                $this->_aOptions[$sActionsType][$sKey]['action'] = $sKey;
-                $this->_aOptions[$sActionsType][$sKey]['params'] = '';
-            }
+        foreach ($this->_aOptions[$sActionsType] as $sKey => $aAction) {
+            $sMethod = '_getAction' . $this->_genMethodName($sKey);
+            if(!method_exists($this, $sMethod))
+                $sMethod = '_getActionDefault';
+
+            if(!isset($aAction['attr']))
+                $aAction['attr'] = [];
+
+            if(($_aAction = $this->$sMethod($sType, $sKey, $aAction)))
+                $this->_aOptions[$sActionsType][$sKey] = $_aAction;
         }
+
         return $this->_aOptions[$sActionsType];
     }
 
@@ -777,23 +776,15 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getActionDefault ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        
         if ($a['icon_only'] && empty($a['attr']['title']) && !empty($a['title']))
             $a['attr']['title'] = $a['title'];
 
         if ($this->_bIsApi) {
-            $sFunc = '_getAction' . $this->_genMethodName($sType . '_' . $sKey);
-            if (method_exists($this, $sFunc)) {
-                $aAction = $this->$sFunc($a, ['id'=> $aRow[$this->_aOptions['field_id']]]);
-                if(empty($aAction) || !is_array($aAction))
-                    return [];
+            $sParams = '';
+            if($sType == 'single' && ($sFieldId = $this->_aOptions['field_id']) && isset($aRow[$sFieldId]))
+                $sParams = '&id=' . $aRow[$sFieldId];
 
-                return array_merge($a, ['name' => $sKey], $aAction);
-            }
-            else {
-                return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'params' => '&id=' . $aRow[$this->_aOptions['field_id']] ]);
-            }
-            
+            return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'params' => $sParams]);
         }
 
         $sAttr = $this->_convertAttrs(
