@@ -132,7 +132,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
             'player' => BxTemplFunctions::getInstance()->videoPlayer(
                 $sPoster, 
                 $aTranscodersVideo['mp4']->getFileUrl($iFile), 
-                $sVideoUrlHd, $aAttrs, $sStyles ? $sStyles : 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
+                $sVideoUrlHd, $aAttrs, $sStyles ? $sStyles : ''
             )
         );
     }
