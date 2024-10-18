@@ -78,6 +78,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'URL_UPDATED' => 'page.php?i=files-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=files-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=files-administration',
+            'URL_DOWNLOAD' => 'modules/?r=files/download/{file_download_token}/{content_id}.{file_ext}',
 
             // some params
             'PARAM_AUTO_APPROVE' => 'bx_files_enable_auto_approve',

@@ -24,6 +24,16 @@ class BxPhotosModule extends BxBaseModFilesModule
         echo BxDolPage::getObjectInstance($this->_oConfig->CNF['OBJECT_PAGE_VIEW_ENTRY_BRIEF'], $this->_oTemplate)->getCodeDynamic();
     }
 
+    public function serviceGetFile ($iContentId, $aParams = []) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($aParams['field']))
+            $aParams['field'] = $CNF['FIELD_THUMB'];
+
+        return parent::serviceGetFile($iContentId, $aParams);
+    }
+
     /**
      * Display entries of the author
      * @return HTML string

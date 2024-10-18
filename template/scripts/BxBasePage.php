@@ -668,17 +668,22 @@ class BxBasePage extends BxDolPage
                     if(isset($aContent['module'], $aContent['method']))
                         $sSource = $aContent['module'] . ':' . $aContent['method'];
                 }
-                else{
+                else
                     $sSource = 'system:block_' . $aBlock['id'];
-                }
 
                 if($bBlocks && !in_array($sSource, $aBlocks)) {
                     unset($aCells[$sKey][$i]);
                     continue;
                 }
 
-                $sFunc = '_getBlock' . bx_gen_method_name($aBlock['type']);
-                $mBlock = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
+                $mBlock = $aBlock['content'];
+                if(($sFunc = '_getBlock' . bx_gen_method_name($aBlock['type'])) && method_exists($this, $sFunc))
+                    $mBlock = $this->$sFunc($aBlock); 
+
+                if(empty($mBlock)) {
+                    unset($aCells[$sKey][$i]);
+                    continue;
+                }
 
                 $aCells[$sKey][$i] = array_merge($aCells[$sKey][$i], [
                     'title' => isset($mBlock['title']) ? $mBlock['title'] : $this->getBlockTitle($aBlock),
@@ -686,6 +691,7 @@ class BxBasePage extends BxDolPage
                     'menu' => isset($mBlock['menu']) ? $mBlock['menu'] : '',
                     'source' => $sSource
                 ]);
+
                 $aCells[$sKey][$i] = array_diff_key($aCells[$sKey][$i], array_flip($aFieldsUnset));
             }
         }

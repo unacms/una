@@ -15,6 +15,23 @@ class BxBaseModFilesModule extends BxBaseModTextModule
     {
         parent::__construct($oConfig);
     }
+    
+    public function serviceGetFile ($iContentId, $aParams = []) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return false;
+
+        $sStorage = !empty($aParams['storage']) ? $aParams['storage'] : $CNF['OBJECT_STORAGE'];
+        $oStorage = BxDolStorage::getObjectInstance($sStorage);
+        if(!$oStorage)
+            return false;
+
+        $sFieldFileId = !empty($aParams['field']) ? $aParams['field'] : $CNF['FIELD_FILE_ID'];
+        return $oStorage->getFile($aContentInfo[$sFieldFileId]);
+    }
 }
 
 /** @} */

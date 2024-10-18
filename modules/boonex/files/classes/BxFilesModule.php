@@ -175,6 +175,34 @@ class BxFilesModule extends BxBaseModFilesModule
 
         return $this->_addFileFields(array_pop($aGhostFiles));
     }
+    
+    public function getDownloadLink($mixedData) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!is_array($mixedData))
+            $mixedData = $this->_oDb->getContentInfoById((int)$mixedData);
+        if(empty($mixedData) || !is_array($mixedData))
+            return false;
+        
+        $aFile = $this->getContentFile($mixedData);
+        if($aFile === false)
+            return false;
+
+        $sFileExt = !empty($aFile['ext']) ? $aFile['ext'] : '';
+
+        $aMarkers = array_merge([
+            'content_id' => $mixedData[$CNF['FIELD_ID']]
+        ], ($aFile['private'] && ($oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])) ? [
+            'file_download_token' => $oStorage->genToken($aFile['id']),
+            'file_ext' => $sFileExt
+        ] : [
+            'file_download_token' => '0',
+            'file_ext' => $sFileExt,
+        ]));
+
+        return bx_replace_markers(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_DOWNLOAD']), $aMarkers);
+    }
 
     protected function _addFileFields($aFile) 
     {
@@ -603,6 +631,16 @@ class BxFilesModule extends BxBaseModFilesModule
         if ($oProfile && $oProfile->getModule() == 'bx_persons') return;
 
         return parent::serviceBrowseContext($iProfileId, $aParams);
+    }
+
+    public function serviceGetFile ($iContentId, $aParams = []) 
+    {
+        $aResult = parent::serviceGetFile ($iContentId, $aParams);
+        if(!$aResult)
+            return $aResult;
+
+        $aResult['url_download'] = $this->getDownloadLink($iContentId);
+        return $aResult;
     }
 }
 
