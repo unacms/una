@@ -27,11 +27,7 @@ class BxDolUpgrader extends BxDol
 
         while(true) {
 
-            /**
-             * 
-             * NOTE. Temporary disabled.
-             * TODO. Enable after "Main Version Compatibility Check" will be performed for updates.
-             * 
+            // check for modules updates before system update
             if(!$bAuto) {
                 $aUpdates = BxDolStudioInstallerUtils::getInstance()->checkUpdates();
                 if(!empty($aUpdates) && is_array($aUpdates)) {
@@ -39,7 +35,6 @@ class BxDolUpgrader extends BxDol
                     break;
                 }
             }
-             */
 
             $aVersionUpdateInfo = $this->getVersionUpdateInfo();
             if (null === $aVersionUpdateInfo) {
