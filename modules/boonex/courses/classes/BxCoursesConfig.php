@@ -303,7 +303,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = [
-            'popup_content_node' => $sHtmlPrefix . '-popup-content-node'
+            'popup_content_node' => $sHtmlPrefix . '-popup-content-node',
+            'popup_content_data' => $sHtmlPrefix . '-popup-content-data',
         ];
     }
 

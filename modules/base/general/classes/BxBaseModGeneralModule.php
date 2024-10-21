@@ -756,6 +756,27 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browsing Browsing
+     * @subsubsection bx_base_general-get_view get_view
+     * 
+     * @code bx_srv('bx_posts', 'get_view', [3]); @endcode
+     * 
+     * Get view for the specified content
+     * @param $iContentId content id
+     * 
+     * @see BxBaseModGeneralModule::serviceGetView
+     */
+    /** 
+     * @ref bx_base_general-get_view "get_view"
+     */
+    public function serviceGetView ($iContentId)
+    {
+        return $this->serviceEntityTextBlock($iContentId);
+    }
+
     public function serviceGetAll ($aParams = array())
     {
         if(empty($aParams) || !is_array($aParams))
@@ -1580,7 +1601,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceEntityCreate ($sParams = false)
     {
         if($this->_bIsApi && ($aParams = bx_api_get_browse_params($sParams))) {
-            if($aKeys = ['context_pid', 'context_nid', 'context_usage'] && ($aParamsContext = array_intersect_key($aParams, array_flip($aKeys)))) {
+            if(($aKeys = ['context_pid', 'context_nid', 'context_usage']) && ($aParamsContext = array_intersect_key($aParams, array_flip($aKeys)))) {
                 $_GET = array_merge($_GET, $aParamsContext);
                 $sParams = array_diff_key($aParams, array_flip($aKeys));
             }

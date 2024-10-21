@@ -465,6 +465,55 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         ];
     }
 
+    public function entryData($aData, $sView)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('entry');
+
+        $aNode = $this->_oDb->getContentNodes([
+            'sample' => 'id', 
+            'id' => $aData['node_id']
+        ]);  
+
+        $iOrder = (int)$aData['order'];
+        $aSiblings = $this->_oDb->getContentData([
+            'sample' => 'siblings', 
+            'entry_id' => $aData['entry_id'], 
+            'node_id' => $aData['node_id'], 
+            'usage' => BX_COURSES_CND_USAGE_ST, 
+            'order' => $iOrder
+        ]);
+
+        $bTmplVarsBack = false;
+        $aTmplVarsBack = ($iOrderB = $iOrder - 1) && ($bTmplVarsBack = !empty($aSiblings[$iOrderB]) && is_array($aSiblings[$iOrderB])) ? [
+            'js_object' => $sJsObject,
+            'id_back' => $aSiblings[$iOrderB]['id']
+        ] : [true];
+
+        $bTmplVarsNext = false;
+        $aTmplVarsNext = ($iOrderN = $iOrder + 1) && ($bTmplVarsNext = !empty($aSiblings[$iOrderN]) && is_array($aSiblings[$iOrderN])) ? [
+            'js_object' => $sJsObject,
+            'id_next' => $aSiblings[$iOrderN]['id']
+        ] : [true];
+
+        return ['popup' => [
+            'html' => BxTemplFunctions::getInstance()->popupBox($this->_oConfig->getHtmlIds('popup_content_data'), $aNode['title'], $this->parseHtmlByName('node_data_view.html', [
+                'js_object' => $sJsObject,
+                'view' => $sView,
+                'bx_if:show_back' => [
+                    'condition' => $bTmplVarsBack,
+                    'content' => $aTmplVarsBack
+                ],
+                'bx_if:show_next' => [
+                    'condition' => $bTmplVarsNext,
+                    'content' => $aTmplVarsNext
+                ]
+            ]), true),
+            'options' => [
+                'onHide' => 'document.location = document.location'
+            ]
+        ]];
+    }
+
     protected function _entryNodeItems($iProfileId, $iContentId, $aNode, $iUsage)
     {
         $sJsObject = $this->_oConfig->getJsObject('entry');

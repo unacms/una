@@ -351,6 +351,19 @@ class BxCoursesDb extends BxBaseModGroupsDb
                     $sWhereClause .= " AND `tcd`.`usage`=:usage";
                 }
                 break;
+                
+            case 'siblings':
+                $aMethod['name'] = 'getAllWithKey';
+                $aMethod['params'][1] = 'order';
+                $aMethod['params'][2] = [
+                    'entry_id' => $aParams['entry_id'],
+                    'node_id' => $aParams['node_id'],
+                    'usage' => $aParams['usage'],
+                    'order' => $aParams['order']
+                ];
+                $sWhereClause = "AND `tcd`.`entry_id`=:entry_id AND `tcd`.`node_id`=:node_id AND `tcd`.`usage`=:usage AND (`tcd`.`order`=(:order - 1) OR `tcd`.`order`=(:order + 1))";
+                $sOrderClause = "`tcd`.`order` ASC";
+                break;
 
             case 'user_passed':
                 $aMethod['name'] = 'getRow';

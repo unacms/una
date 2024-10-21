@@ -24,6 +24,11 @@ class BxPhotosModule extends BxBaseModFilesModule
         echo BxDolPage::getObjectInstance($this->_oConfig->CNF['OBJECT_PAGE_VIEW_ENTRY_BRIEF'], $this->_oTemplate)->getCodeDynamic();
     }
 
+    public function serviceGetView ($iContentId)
+    {
+        return $this->serviceEntityPhotoBlock($iContentId);
+    }
+
     public function serviceGetFile ($iContentId, $aParams = []) 
     {
         $CNF = &$this->_oConfig->CNF;

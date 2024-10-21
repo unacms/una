@@ -145,7 +145,11 @@ class BxCoursesModule extends BxBaseModGroupsModule
         }
 
         $aResult = ['code' => 0];
-        if(($sMethod = 'get_link') && bx_is_srv($aData['content_type'], $sMethod))
+        if(($sMethod = 'get_view') && bx_is_srv($aData['content_type'], $sMethod)) {
+            $sView = bx_srv($aData['content_type'], $sMethod, [$aData['content_id']]);
+            $aResult = $this->_oTemplate->entryData($aData, $sView);
+        }
+        else if(($sMethod = 'get_link') && bx_is_srv($aData['content_type'], $sMethod))
             $aResult['redirect'] = bx_srv($aData['content_type'], $sMethod, [$aData['content_id']]);
 
         if($this->_bIsApi)
@@ -218,7 +222,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'content_id' => $iContentId,
             'usage' => $iContextUsage,
             'added' => time(),
-            'order' => $this->_oDb->getContentDataOrderMax($iContextId, $iContextNodeId)
+            'order' => $this->_oDb->getContentDataOrderMax($iContextId, $iContextNodeId) + 1
         ]);
 
         $aNode = $this->_oDb->getContentNodes(['sample' => 'id', 'id' => $iContextNodeId]);
