@@ -1,6 +1,6 @@
 {
   "name": "plyr",
-  "version": "3.7.3",
+  "version": "3.7.8",
   "description": "A simple, accessible and customizable HTML5, YouTube and Vimeo media player",
   "homepage": "https://plyr.io",
   "author": "Sam Potts <sam@potts.es>",
@@ -34,7 +34,7 @@
     "lint": "eslint src/js && npm run remark && stylelint **/*.scss",
     "lint:fix": "eslint --fix src/js && stylelint **/*.scss --fix",
     "remark": "remark -f --use 'validate-links=repository:\"sampotts/plyr\"' '{,!(node_modules),.?**/}*.md'",
-    "deploy": "yarn lint && gulp version && gulp build && gulp deploy",
+    "deploy": "npm run lint && gulp version && gulp build && gulp deploy",
     "format": "prettier --write \"./{src,demo/src}/**/*.{js,scss}\"",
     "spellcheck": "cspell \"**/*.{js,md,scss,json}\" --no-must-find-files",
     "start": "gulp"
