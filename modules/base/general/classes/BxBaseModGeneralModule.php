@@ -1579,6 +1579,13 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityCreate ($sParams = false)
     {
+        if($this->_bIsApi && ($aParams = bx_api_get_browse_params($sParams))) {
+            if($aKeys = ['context_pid', 'context_nid', 'context_usage'] && ($aParamsContext = array_intersect_key($aParams, array_flip($aKeys)))) {
+                $_GET = array_merge($_GET, $aParamsContext);
+                $sParams = array_diff_key($aParams, array_flip($aKeys));
+            }
+        }
+
         $bParamsArray = is_array($sParams);
 
         $sDisplay = is_string($sParams) ? $sParams : false;
@@ -1590,10 +1597,8 @@ class BxBaseModGeneralModule extends BxDolModule
             $oFormsHelper->setDynamicMode($sParams['dynamic_mode']);
 
         $mixedResult = $oFormsHelper->addDataForm($sDisplay);
-        
-        if (bx_is_api()){
+        if($this->_bIsApi)
             return $mixedResult;
-        }
         
         if(isset($mixedResult['_dt']) && $mixedResult['_dt'] == 'json') {
             echoJson($mixedResult);

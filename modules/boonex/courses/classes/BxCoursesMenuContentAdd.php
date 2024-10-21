@@ -66,7 +66,7 @@ class BxCoursesMenuContentAdd extends BxTemplMenu
                 'class' => '', 
                 'link' => $sUrl, 
                 'onclick' => "$(this).parents('.bx-popup-applied:visible:first').dolPopupHide()",
-                'target' => '_blank', 
+                'target' => '_self', 
                 'title' => _t('_' . $sModule)
             ];
         }

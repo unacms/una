@@ -321,14 +321,17 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         else
             $this->redirectAfterAdd($aContentInfo);
     }
-
+            
     public function redirectAfterAdd($aContentInfo, $sUrl = '')
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
         if ($sUrl == '')
             $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
-        
+
+        if(($mixedUrl = $this->_getRedirectFromContext('add', $aContentInfo)) !== false)
+              $sUrl = $mixedUrl;
+
         /**
          * @hooks
          * @hookdef hook-bx_base_general-redirect_after_add '{module_name}', 'redirect_after_add' - hook to override redirect URL which is used after content creation
@@ -755,6 +758,27 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return;
 
         $oForm->setAbsoluteActionUrl(bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF[$sKeyUri])));
+    }
+
+    protected function _getRedirectFromContext($sAction, $aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sKey = 'FIELD_ALLOW_VIEW_TO';
+        if(empty($CNF[$sKey]) || !isset($aContentInfo[$CNF[$sKey]]) || (int)$aContentInfo[$CNF[$sKey]] >= 0) 
+            return false;
+
+        $iContextPid = abs($aContentInfo[$CNF[$sKey]]);
+        $oContext = BxDolProfile::getInstance($iContextPid);
+        if(!$oContext)
+            return false;
+
+        $sModuleContext = $oContext->getModule();
+        $sMethodContext = 'on_content_' . $sAction . 'ed_redirect';
+        if(!bx_is_srv($sModuleContext, $sMethodContext))
+            return false;
+
+        return bx_srv($sModuleContext, $sMethodContext, [$this->_oModule->getName(), $aContentInfo[$CNF['FIELD_ID']]]);
     }
 }
 

@@ -238,6 +238,21 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $this->_oDb->updateContentNodes(['counters' => json_encode($aCounters)], ['id' => $iContextNodeId]);
     }
 
+    public function serviceOnContentAddedRedirect($sContentType, $iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aData = $this->_oDb->getContentData(['sample' => 'content', 'content_type' => $sContentType, 'content_id' => $iContentId]);
+        if(empty($aData) || !is_array($aData))
+            return false;
+
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY_CONTENT'] . '&id=' . $aData['entry_id'], [
+            'parent_id' => $aData['node_id']
+        ]);
+
+        return $this->_bIsApi ? bx_api_get_relative_url($sUrl) : $sUrl;
+    }
+
     public function serviceOnContentDeleted($sContentType, $iContentId, $iContextId)
     {
         $aData = $this->_oDb->getContentData(['sample' => 'content', 'content_type' => $sContentType, 'content_id' => $iContentId]);

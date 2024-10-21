@@ -128,7 +128,12 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
             }
         }
 
-        return 'page.php?i=' . $sUri . '&profile_id=' . (($oProfile = BxDolProfile::getInstance($iProfileId)) !== false ? $oProfile->id() : bx_get_logged_profile_id());
+        $sUrl = 'page.php?i=' . $sUri . '&profile_id=' . (($oProfile = BxDolProfile::getInstance($iProfileId)) !== false ? $oProfile->id() : bx_get_logged_profile_id());
+
+        if(($mixedUrl = $this->_getRedirectFromContext('add', $aContentInfo)) !== false)
+            $sUrl = $mixedUrl;
+
+        return $sUrl;
     }
 }
 
