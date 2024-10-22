@@ -84,8 +84,8 @@ class BxCoursesMenuSnippetMeta extends BxBaseModGroupsMenuSnippetMeta
         ]));
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, ['display' => 'link'], [
-                'title' => $sTitle,
+            return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
+                'title' => $sPassTitle,
                 'link' => bx_api_get_relative_url($sLink)
             ]);
 
