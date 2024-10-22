@@ -351,8 +351,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             'override_result' => &$sUrl,
         ]);
 
-        if (bx_is_api())
-            return [bx_api_get_block('redirect', ['uri' => BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000])];
+        if($this->_bIsApi)
+            return !empty($sUrl) ? [bx_api_get_block('redirect', ['uri' => BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000])] : [];
         
         if($this->_bAjaxMode) {
             echoJson($this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect'));

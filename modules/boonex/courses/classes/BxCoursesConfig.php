@@ -59,6 +59,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'FIELD_CF' => 'cf',
             'FIELD_VIEWS' => 'views',
             'FIELD_VOTES' => 'votes',
+            'FIELD_REPORTS' => 'reports',
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_COMMENTS' => 'comments',

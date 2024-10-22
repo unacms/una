@@ -254,7 +254,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'parent_id' => $aData['node_id']
         ]);
 
-        return $this->_bIsApi ? bx_api_get_relative_url($sUrl) : $sUrl;
+        return $this->_bIsApi ? '' : $sUrl;
     }
 
     public function serviceOnContentDeleted($sContentType, $iContentId, $iContextId)
@@ -483,7 +483,8 @@ class BxCoursesModule extends BxBaseModGroupsModule
             $this->getNodePass($iProfileId, $iContentId, $aChild, $aPassDetails);
 
         $iPassPercent = 0;
-        $sPassStatus = $sPassTitle = '';
+        $sPassStatus = '_bx_courses_txt_status_not_started';
+        $sPassTitle = '_bx_courses_txt_pass_start';
         $iLevelMax = $this->_oConfig->getContentLevelMax();
         if(isset($aPassDetails[$iLevelMax]) && ($aPassLevelMax = $aPassDetails[$iLevelMax])) {
             $iPassPercent = ($iTotal = (int)$aPassLevelMax['total']) != 0 ? (int)round(100 * $aPassLevelMax['passed']/$iTotal) : 0;
@@ -497,10 +498,6 @@ class BxCoursesModule extends BxBaseModGroupsModule
                     $sPassStatus = '_bx_courses_txt_status_completed';
                     $sPassTitle = '_bx_courses_txt_pass_again';
                 }
-            }
-            else {
-                $sPassStatus = '_bx_courses_txt_status_not_started';
-                $sPassTitle = '_bx_courses_txt_pass_start';
             }
         }
 

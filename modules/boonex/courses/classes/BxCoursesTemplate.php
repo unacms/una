@@ -605,7 +605,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     ] : [
                         'size' => $bTmplVarsShowSize ? $aTmplVarsShowSize['size'] : '',
                         'view_link' => $bTmplVarsShowLink ? bx_api_get_relative_url($sLink) : '',
-                        'download_link' => $bTmplVarsShowDownload ? bx_api_get_relative_url($aTmplVarsShowDownload['link']) : '',
+                        'download_link' => $bTmplVarsShowDownload ? $aTmplVarsShowDownload['link'] : '',
                     ]));
                 }
                 else 

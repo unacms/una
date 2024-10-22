@@ -344,6 +344,8 @@
     <string name="_bx_courses_menu_item_title_sm_leave"><![CDATA[Leave]]></string>
     <string name="_bx_courses_menu_item_title_sm_leave_reject"><![CDATA[Reject attend request]]></string>
     <string name="_bx_courses_menu_item_title_sm_leave_cancel"><![CDATA[Cancel attend request]]></string>
+    <string name="_bx_courses_menu_item_title_system_sm_reports"><![CDATA[Reports]]></string>
+    <string name="_bx_courses_menu_item_title_system_sm_pass"><![CDATA[Pass]]></string>
 
     <string name="_bx_courses_menu_title_content_add"><![CDATA[Add Content]]></string>
     <string name="_bx_courses_menu_set_title_content_add"><![CDATA[Add Content]]></string>

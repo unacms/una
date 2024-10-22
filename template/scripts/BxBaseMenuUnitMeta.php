@@ -225,7 +225,8 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
             'display_type' => $sDisplayType,
             'content_type' => $sContentType,
             'title' => $aItem['title'],
-            'link' => !empty($aItem['link']) && $aItem['link'] != 'javascript:void(0)' ? $aItem['link'] : ''
+            'link' => !empty($aItem['link']) && $aItem['link'] != 'javascript:void(0)' ? $aItem['link'] : '',
+            'primary' => !empty($aItem['primary']),
         ], $aData);
 
         return $aItemData;

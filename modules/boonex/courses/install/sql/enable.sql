@@ -388,12 +388,14 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_snippet_meta', 'bx_courses', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', 0, 0, 1, 20),
 ('bx_courses_snippet_meta', 'bx_courses', 'members', '_bx_courses_menu_item_title_system_sm_members', '_bx_courses_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', 1, 0, 1, 25),
 ('bx_courses_snippet_meta', 'bx_courses', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', 0, 0, 1, 30),
+('bx_courses_snippet_meta', 'bx_courses', 'reports', '_bx_courses_menu_item_title_system_sm_reports', '', '', '', '', '', '', 2147483647, '', 0, 0, 1, 33),
 ('bx_courses_snippet_meta', 'bx_courses', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', 1, 0, 1, 35),
 ('bx_courses_snippet_meta', 'bx_courses', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 40),
 ('bx_courses_snippet_meta', 'bx_courses', 'join', '_bx_courses_menu_item_title_system_sm_join', '_bx_courses_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 45),
 ('bx_courses_snippet_meta', 'bx_courses', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, '', 0, 0, 1, 50),
 ('bx_courses_snippet_meta', 'bx_courses', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 55),
-('bx_courses_snippet_meta', 'bx_courses', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 60);
+('bx_courses_snippet_meta', 'bx_courses', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 60),
+('bx_courses_snippet_meta', 'bx_courses', 'pass', '_bx_courses_menu_item_title_system_sm_pass', '', '', '', '', '', '', 2147483647, '', 0, 0, 1, 65);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);

@@ -103,6 +103,7 @@
   <string name="_report_status_check_out"><![CDATA[Обработан]]></string>
   <string name="_report_status_all"><![CDATA[Все]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
+        <string name="_report_n_reports"><![CDATA[{0} жалоб]]></string>
 	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
         <string name="_report_do_report_with_sample"><![CDATA[Пожаловаться]]></string>
         <string name="_report_do_unreport"><![CDATA[Отменить жалобу]]></string>

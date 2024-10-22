@@ -343,6 +343,8 @@
     <string name="_bx_courses_menu_item_title_sm_leave"><![CDATA[Покинуть]]></string>
     <string name="_bx_courses_menu_item_title_sm_leave_reject"><![CDATA[Отклонить запрос на посещение]]></string>
     <string name="_bx_courses_menu_item_title_sm_leave_cancel"><![CDATA[Отменить запрос на посещение]]></string>
+    <string name="_bx_courses_menu_item_title_system_sm_reports"><![CDATA[Жалобы]]></string>
+    <string name="_bx_courses_menu_item_title_system_sm_pass"><![CDATA[Пройти]]></string>
 
     <string name="_bx_courses_menu_title_content_add"><![CDATA[Добавить контент]]></string>
     <string name="_bx_courses_menu_set_title_content_add"><![CDATA[Добавить контент]]></string>
