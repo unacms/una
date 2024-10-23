@@ -45,7 +45,7 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 
         $sUrl = $this->getRedirectUrlAfterAdd($mixedContent);
         if($this->_bIsApi)
-            return [bx_api_get_block('redirect', ['uri' => BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000])];
+            return !empty($sUrl) ? [bx_api_get_block('redirect', ['uri' => BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000])] : [];
 
         if($this->_bAjaxMode) {
             echoJson($this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect'));
