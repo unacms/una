@@ -84,6 +84,7 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
                 $sLocationString = $aVars['lat'] . ', ' . $aVars['lng'];
             }
 
+            $aVars['form_id'] = $oForm->id;
             $aVars['name'] = $aInput['name'];
             $aVars['input'] = $oForm->genInputSwitcher($aInputField);
             $aVars['id_status'] = $oForm->getInputId($aInput) . '_status';
@@ -133,6 +134,7 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
                 }
             }
             $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain.html', array(
+                'form_id' => $oForm->id,
                 'name' => $aInput['name'],
                 'minimized' => $bMinimized ? 'minimized' : '',
                 'nominatim_server' => $this->getNominatimServer(),
