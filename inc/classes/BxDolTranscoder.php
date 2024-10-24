@@ -367,7 +367,7 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getFileUrl($mixedHandler)
     {
-         if (bx_is_api())
+        if (bx_is_api() && !($this instanceof BxDolTranscoderVideo))
             return $this->getOrigFileUrl($mixedHandler);
         
         if ($this->isFileReady($mixedHandler)) {
@@ -405,9 +405,9 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getFileUrlById($mixedHandler)
     {
-        if (bx_is_api())
+        if (bx_is_api() && !($this instanceof BxDolTranscoderVideo))
             return $this->getOrigFileUrl($mixedHandler);
-        
+
         return $this->getFileUrl($mixedHandler);
     }
 

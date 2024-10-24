@@ -4175,7 +4175,15 @@ class BxBaseModGeneralModule extends BxDolModule
         $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
         $aImagesAttach = $this->_getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
-        if(bx_is_api() && getParam('sys_api_extended_units') != 'on') {
+        //--- Video(s)
+        $aVideos = $this->_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $aVideosAttach = $this->_getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
+        //--- Files(s)
+        $aFiles = $this->_getFilesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $aFilesAttach = $this->_getFilesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
+        if($this->_bIsApi && getParam('sys_api_extended_units') != 'on') {
             $sTitle = '';
             if(isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]))
                 $sTitle = $aContentInfo[$CNF['FIELD_TITLE']];
@@ -4187,22 +4195,22 @@ class BxBaseModGeneralModule extends BxDolModule
             $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
             $sText = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sText), 240);
 
-            return [
+            $aResults = [
                 'url' => $sUrl,
                 'title' => $sTitle,
                 'abstract' => $sAbstract,
-                'text' => $sText,
-                'images' => $aImages
+                'text' => $sText
             ];
+
+            if(!empty($aImages) && is_array($aImages))
+                $aResults['images'] = $aImages;
+            if(!empty($aVideos) && is_array($aVideos))
+                $aResults['videos'] = $aVideos;
+            if(!empty($aFiles) && is_array($aFiles))
+                $aResults['files'] = $aFiles;
+
+            return $aResults;
         }
-
-        //--- Video(s)
-        $aVideos = $this->_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
-        $aVideosAttach = $this->_getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
-
-        //--- Files(s)
-        $aFiles = $this->_getFilesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
-        $aFilesAttach = $this->_getFilesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
         //--- Title
         $sTitle = '';
@@ -4255,6 +4263,7 @@ class BxBaseModGeneralModule extends BxDolModule
             if(isset($CNF['FIELD_COVER']) && !empty($aContentInfo[$CNF['FIELD_COVER']])) {
                 $aResult[] = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aContentInfo[$CNF['FIELD_COVER']]);
             }
+            
             if(isset($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']])) {
                 $aResult[] = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aContentInfo[$CNF['FIELD_THUMB']]);
             }

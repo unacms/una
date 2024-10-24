@@ -71,8 +71,9 @@ class BxVideosModule extends BxBaseModFilesModule
             return false;
 
         list($iContentId, $aContentInfo) = $mixedContent;
+        $s = $this->_oTemplate->entryVideo($aContentInfo);
 
-        return $this->_oTemplate->entryVideo($aContentInfo);
+        return $this->_bIsApi ? [bx_api_get_block('entity_text', $s)] : $s;
     }
 
 	/**
@@ -98,9 +99,78 @@ class BxVideosModule extends BxBaseModFilesModule
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
     }
 
+    public function serviceGetThumb ($iContentId, $sTranscoder = '') 
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        if($this->_bIsApi) {
+            $aImage = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aContentInfo[$CNF['FIELD_THUMB']]);
+            if(!$aImage)
+                $aImage = bx_api_get_image([$CNF['OBJECT_STORAGE_VIDEOS'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']], (int)$aContentInfo[$CNF['FIELD_VIDEO']]);
+            
+            return $aImage;
+        }
+
+        list($iImageId, $sImageThumb, $sImageGallery, $sImageCover) = $this->_oTemplate->getUnitImages($aContentInfo);
+        return $sImageCover ? $sImageCover : $sImageGallery;
+    }
+
+    public function serviceGetVideo ($iContentId) 
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        return $this->getVideoData($aContentInfo);
+    }
+
+    public function getVideoData($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_STORAGE_VIDEOS']) || empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
+            return [];
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
+
+        $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
+        $aFile = $oStorage->getFile($iFile);
+        if(empty($aFile) || !is_array($aFile) || strncmp('video/', $aFile['mime_type'], 6) !== 0)
+            return [];
+
+        $oTcvPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
+        $oTciPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER']);
+        $oTcvMp4 = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
+        $oTcvMp4Hd = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
+        if(!($oTcvPoster || $oTciPoster) || !$oTcvMp4 || !$oTcvMp4Hd)
+            return [];
+
+        $sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
+        if(!empty($sPosterSrc) && !empty($aContentInfo[$sPosterSrc]) && $oTciPoster)
+            $sPoster = $oTciPoster->getFileUrl($aContentInfo[$sPosterSrc]);
+        else 
+            $sPoster = $oTcvPoster->getFileUrl($iFile);
+
+        $sVideoUrl = $oStorage->getFileUrlById($iFile);
+        $aVideoFile = $oStorage->getFile($iFile);
+
+        $sVideoUrlHd = '';
+        if (!empty($aVideoFile['dimensions']) && $oTcvMp4Hd->isProcessHD($aVideoFile['dimensions']))
+            $sVideoUrlHd = $oTcvMp4Hd->getFileUrl($iFile);
+
+        return [
+            'id' => $iFile,
+            'src_poster' => $sPoster, 
+            'src_mp4' => $oTcvMp4->getFileUrl($iFile), 
+            'src_mp4_hd' => $sVideoUrlHd
+        ];
+    }
+            
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+        if($this->_bIsApi)
+            return $aResult;
 
         if ($aContentInfo['video_source'] == 'embed' && !empty($aContentInfo['video_embed_data'])) {
             if (!is_array($aContentInfo['video_embed_data'])) $aContentInfo['video_embed_data'] = unserialize($aContentInfo['video_embed_data']);
@@ -118,6 +188,16 @@ class BxVideosModule extends BxBaseModFilesModule
     }
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($this->_bIsApi) {
+            $aImage = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aContentInfo[$CNF['FIELD_THUMB']]);
+            if(!$aImage)
+                $aImage = bx_api_get_image([$CNF['OBJECT_STORAGE_VIDEOS'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']], (int)$aContentInfo[$CNF['FIELD_VIDEO']]);
+
+            return $aImage ? [$aImage] : [];
+        }
+
         list($iImageId, $sImageThumb, $sImageGallery, $sImageCover) = $this->_oTemplate->getUnitImages($aContentInfo);
         if(empty($sImageGallery) && !empty($sImageThumb))
             $sImageGallery = $sImageThumb;
@@ -130,48 +210,15 @@ class BxVideosModule extends BxBaseModFilesModule
         );
     }
 
-    protected function _getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    protected function _getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = [])
     {
-        $CNF = &$this->_oConfig->CNF;
+        $aResult = $this->getVideoData($aContentInfo);
+        if(!$aResult)
+            return $aResult;
 
-        if(empty($CNF['OBJECT_STORAGE_VIDEOS']) || empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
-            return array();
-
-        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
-
-        $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
-        $aFile = $oStorage->getFile($iFile);
-        if(empty($aFile) || !is_array($aFile) || strncmp('video/', $aFile['mime_type'], 6) !== 0)
-            return array();
-
-        $oTcvPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
-        $oTciPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER']);
-        $oTcvMp4 = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
-        $oTcvMp4Hd = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
-        if(!($oTcvPoster || $oTciPoster) || !$oTcvMp4 || !$oTcvMp4Hd)
-            return array();
-
-        $sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
-        if(!empty($sPosterSrc) && !empty($aContentInfo[$sPosterSrc]) && $oTciPoster)
-            $sPoster = $oTciPoster->getFileUrl($aContentInfo[$sPosterSrc]);
-        else 
-            $sPoster = $oTcvPoster->getFileUrl($iFile);
-
-        $sVideoUrl = $oStorage->getFileUrlById($iFile);
-        $aVideoFile = $oStorage->getFile($iFile);
-
-        $sVideoUrlHd = '';
-        if (!empty($aVideoFile['dimensions']) && $oTcvMp4Hd->isProcessHD($aVideoFile['dimensions']))
-            $sVideoUrlHd = $oTcvMp4Hd->getFileUrl($iFile);
-
-        return array(
-            $iFile => array(
-            	'id' => $iFile,
-            	'src_poster' => $sPoster, 
-            	'src_mp4' => $oTcvMp4->getFileUrl($iFile), 
-            	'src_mp4_hd' => $sVideoUrlHd
-            )
-        );
+        return $this->_bIsApi ? [$aResult] : [
+            $aResult['id'] => $aResult
+        ];
     }
 }
 

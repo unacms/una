@@ -25,7 +25,20 @@ class BxVideosTemplate extends BxBaseModTextTemplate
 
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-        $aVars = $this->getTmplVarsText($aData);        
+        $CNF = &$this->_oConfig->CNF;
+
+        $aVars = $this->getTmplVarsText($aData);
+        if($this->_bIsApi) {
+            $aImage = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aData[$CNF['FIELD_THUMB']]);
+            if(!$aImage)
+                $aImage = bx_api_get_image([$CNF['OBJECT_STORAGE_VIDEOS'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']], (int)$aData[$CNF['FIELD_VIDEO']]);
+
+            return array_merge($aVars, [
+                'image' => $aImage,
+                'video' => $this->_oModule->getVideoData($aData)
+            ]);
+        }
+
         $mixedResult = $this->parseHtmlByName($sTemplateName, $aVars);
 
         $sVideoPlayer = $this->entryVideo($aData);
@@ -39,26 +52,26 @@ class BxVideosTemplate extends BxBaseModTextTemplate
 
     public function entryVideo ($aContentInfo, $mixedContext = false, $aAttrs = false, $sStyles = false)
     {
-        $aTmplVars = array(
+        $aTmplVars = [
             'video_title' => bx_process_output($aContentInfo['title']),
             'video_title_attr' => bx_html_attribute($aContentInfo['title']),
             'video_poster_url' => '',
             'video' => ''
-        );
+        ];
 
-        if ($aContentInfo['video_source'] == 'embed' && !empty($aContentInfo['video_embed_data'])) {
-            if (!is_array($aContentInfo['video_embed_data'])) $aContentInfo['video_embed_data'] = unserialize($aContentInfo['video_embed_data']);
-            if (isset($aContentInfo['video_embed_data']['embed']) && !empty($aContentInfo['video_embed_data']['embed'])) {
+        if($aContentInfo['video_source'] == 'embed' && !empty($aContentInfo['video_embed_data'])) {
+            if(!is_array($aContentInfo['video_embed_data'])) 
+                $aContentInfo['video_embed_data'] = unserialize($aContentInfo['video_embed_data']);
+
+            if(isset($aContentInfo['video_embed_data']['embed']) && !empty($aContentInfo['video_embed_data']['embed']))
                 return $this->getResponsiveEmbed($aContentInfo['video_embed_data']['embed']);
-            }
         }
 
-        $mixedVideo = $this->getVideo($aContentInfo, $aAttrs, $sStyles);
-        if($mixedVideo !== false)
-            $aTmplVars = array_merge($aTmplVars, array(
+        if(($mixedVideo = $this->getVideo($aContentInfo, $aAttrs, $sStyles)) !== false)
+            $aTmplVars = array_merge($aTmplVars, [
                 'video_poster_url' => $mixedVideo['poster_url'],
                 'video' => $mixedVideo['player']
-            ));
+            ]);
 
         return $this->parseHtmlByName('entry-video.html', $aTmplVars);
     }

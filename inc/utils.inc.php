@@ -2660,28 +2660,43 @@ function bx_api_get_msg($sMessage, $aParams = [])
     return bx_api_get_block('msg', $sMessage != '' ? _t($sMessage) : '', $aParams);
 }
 
-function bx_api_get_image($sStorage, $iId)
+function bx_api_get_image($mixedStorage, $iId)
 {
-    $oS = BxDolStorage::getObjectInstance($sStorage);
-    $aFile = $oS->getFile($iId);
-    $sUrl = $oS->getFileUrlById($iId);
+    $sStorage = $sTranscoder = '';
+
+    if(is_array($mixedStorage))
+        list($sStorage, $sTranscoder) = $mixedStorage;
+    else
+        $sStorage = $mixedStorage;
+
+    $sUrl = '';
     $iWidth = 500;
     $iHeight = 500;
-    
-    if(!empty($aFile['dimensions'])){
-        $aTmp = explode('x', $aFile['dimensions']);
-        $iWidth = (int) $aTmp[0];
-        $iHeight = (int) $aTmp[1];
+    if($sTranscoder && ($oTranscoder = BxDolTranscoder::getObjectInstance($sTranscoder))) {
+        $sUrl = $oTranscoder->getFileUrl($iId);
+
+        if(($aSize = $oTranscoder->getSize($sUrl)) !== false) {
+            $iWidth = (int)$aSize['w'];
+            $iHeight = (int)$aSize['h'];
+        }
     }
-    if (!empty($sUrl)){
-        return [
-            'storage' => $sStorage,
-            'src' => $sUrl,
-            'width' => $iWidth,
-            'height' => $iHeight,
-        ];
-    }    
-    return false;
+    
+    if(!$sUrl && ($oS = BxDolStorage::getObjectInstance($sStorage))) {
+        $sUrl = $oS->getFileUrlById($iId);
+
+        if(($aFile = $oS->getFile($iId)) && !empty($aFile['dimensions'])) {
+            $aTmp = explode('x', $aFile['dimensions']);
+            $iWidth = (int)$aTmp[0];
+            $iHeight = (int)$aTmp[1];
+        }
+    }
+
+    return !empty($sUrl) ? [
+        'storage' => $sStorage,
+        'src' => $sUrl,
+        'width' => $iWidth,
+        'height' => $iHeight,
+    ] : false;
 }
 
 function bx_api_get_browse_params($sParams, $bParamsOnly = false)

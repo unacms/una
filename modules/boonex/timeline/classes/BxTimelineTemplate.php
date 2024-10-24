@@ -2071,7 +2071,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $aEvent['content'] = array_intersect_key($aEvent['content'], array_flip([
-            'object_id', 'text', 'links', 'images_attach', 'videos_attach', 'files_attach', 'parse_type', 'owner_name', 'embed'
+            'object_id', 'title', 'text', 'links', 'images', 'images_attach', 'videos', 'videos_attach', 'files', 'files_attach', 'parse_type', 'owner_name', 'embed'
         ]));
 
         return array_intersect_key($aEvent, array_flip([

@@ -85,8 +85,9 @@ class BxPhotosModule extends BxBaseModFilesModule
             return false;
 
         list($iContentId, $aContentInfo) = $mixedContent;
+        $s = $this->_oTemplate->entryPhoto($aContentInfo);
 
-        return $this->_oTemplate->entryPhoto($aContentInfo);
+        return $this->_bIsApi ? [bx_api_get_block('entity_text', $s)] : $s;
     }
 
     /**
@@ -161,6 +162,8 @@ class BxPhotosModule extends BxBaseModFilesModule
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $aImages = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        if($this->_bIsApi)
+            return $aImages;
 
         $bView = $this->checkAllowedView($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED;
         foreach($aImages as $iKey => $aImage)

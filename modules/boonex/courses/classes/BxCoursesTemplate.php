@@ -538,6 +538,10 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                 if(($sMethod = 'get_thumb') && bx_is_srv($aDataItem['content_type'], $sMethod))
                     $sImageUrl = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
 
+                $sVideoUrl = '';
+                if(($sMethod = 'get_video') && bx_is_srv($aDataItem['content_type'], $sMethod))
+                    $sVideoUrl = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
+
                 $sLink = '';
                 if(($sMethod = 'get_link') && bx_is_srv($aDataItem['content_type'], $sMethod))
                     $sLink = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
@@ -598,6 +602,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                         'title' => $sTitle,
                         'text' => $sText,
                         'image' => $sImageUrl,
+                        'video' => $sVideoUrl
                     ], ($bUsageSt ? [
                         'pass_link' => $bTmplVarsPass ? bx_api_get_relative_url($sLink) : '',
                         'pass_title' => $sTxtPass,
@@ -620,6 +625,12 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                             'condition' => !$sImageUrl,
                             'content' => [
                                 'type' => $sType
+                            ]
+                        ],
+                        'bx_if:show_video' => [
+                            'condition' => $sVideoUrl,
+                            'content' => [
+                                'video' => $sVideoUrl
                             ]
                         ],
                         'type' => $sType,
