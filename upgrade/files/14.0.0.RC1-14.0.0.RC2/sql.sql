@@ -16,5 +16,5 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 -- Last step is to update current version
 
-UPDATE `sys_modules` SET `version` = '14.0.0-RC1' WHERE (`version` = '14.0.0.B2' OR `version` = '14.0.0-B2') AND `name` = 'system';
+UPDATE `sys_modules` SET `version` = '14.0.0-RC2' WHERE (`version` = '14.0.0.RC1' OR `version` = '14.0.0-RC1') AND `name` = 'system';
 
