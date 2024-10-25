@@ -124,6 +124,18 @@ class BxVideosModule extends BxBaseModFilesModule
         return $this->getVideoData($aContentInfo);
     }
 
+    public function serviceGetFile ($iContentId, $aParams = []) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($aParams['storage']))
+            $aParams['storage'] = $CNF['OBJECT_STORAGE_VIDEOS'];
+        if(!isset($aParams['field']))
+            $aParams['field'] = $CNF['FIELD_VIDEO'];       
+
+        return parent::serviceGetFile($iContentId, $aParams);
+    }
+
     public function getVideoData($aContentInfo)
     {
         $CNF = &$this->_oConfig->CNF;
