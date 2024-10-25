@@ -24,12 +24,26 @@ class BxBaseModFilesModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return false;
 
-        $sStorage = !empty($aParams['storage']) ? $aParams['storage'] : $CNF['OBJECT_STORAGE'];
+        $sStorage = '';
+        if(!empty($aParams['storage']))
+            $sStorage = $aParams['storage'];
+        else if(!empty($CNF['OBJECT_STORAGE']))
+            $sStorage = $CNF['OBJECT_STORAGE'];
+        else 
+            return false;
+
         $oStorage = BxDolStorage::getObjectInstance($sStorage);
         if(!$oStorage)
             return false;
 
-        $sFieldFileId = !empty($aParams['field']) ? $aParams['field'] : $CNF['FIELD_FILE_ID'];
+        $sFieldFileId = '';
+        if(!empty($aParams['field']))
+            $sFieldFileId = $aParams['field'];
+        else if(!empty($CNF['FIELD_FILE_ID']))
+            $sFieldFileId = $CNF['FIELD_FILE_ID'];
+        else 
+            return false;
+
         return $oStorage->getFile($aContentInfo[$sFieldFileId]);
     }
 }

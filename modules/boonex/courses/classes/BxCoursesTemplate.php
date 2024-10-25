@@ -584,10 +584,10 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     if(!empty($aFileInfo) && is_array($aFileInfo)) {
                         $aTmplVarsShowSize['size'] = _t_format_size($aFileInfo['size']);
 
-                        $bTmplVarsShowDownload = !empty($aFileInfo['url_download']);
-                        $aTmplVarsShowDownload = [
-                            'link' => $aFileInfo['url_download']
-                        ];
+                        if(($bTmplVarsShowDownload = !empty($aFileInfo['url_download'])))
+                            $aTmplVarsShowDownload = [
+                                'link' => $aFileInfo['url_download']
+                            ];
                     }
                 }
 
