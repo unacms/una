@@ -17,12 +17,13 @@
 <input type="hidden" name="__name___street_number" value="__street_number__" />
 
 <script>
-    $('input[name=__name__][type=checkbox]').on('change', function () {
+    var eForm = $('#__form_id__');
+    eForm.find('input[name=__name__][type=checkbox]').on('change', function () {
         var _self = this;
         var callbackOnLocationReset = function (error) {
-            $('[name="__name___lat"]').val('');
-            $('[name="__name___lng"]').val('');
-            $('#__id_status__ span').html("<bx_text_js:_sys_location_field_label />");
+            eForm.find('[name="__name___lat"]').val('');
+            eForm.find('[name="__name___lng"]').val('');
+            eForm.find('#__id_status__ span').html("<bx_text_js:_sys_location_field_label />");
             $(_self).prop("checked", false);
             $(_self).parents('.bx-switcher-cont').removeClass('on').addClass('off');
         }
@@ -42,17 +43,17 @@
                     glBxLocationFieldPlainAutoGeocodingRequest = false;
 
                     if (('object' === typeof oResult) && ('undefined' !== typeof oResult.display_name) && ('undefined' !== typeof oResult.address) && ('undefined' !== typeof oResult.address.country_code)) {
-                        $('[name="__name___lat"]').val(position.coords.latitude);
-                        $('[name="__name___lng"]').val(position.coords.longitude);
+                        eForm.find('[name="__name___lat"]').val(position.coords.latitude);
+                        eForm.find('[name="__name___lng"]').val(position.coords.longitude);
 
-                        $('[name="__name___country"]').val(oResult.address.country_code.toUpperCase());
+                        eForm.find('[name="__name___country"]').val(oResult.address.country_code.toUpperCase());
 
                         if ('undefined' !== typeof oResult.address.suburb)
-                            $('[name="__name___city"]').val(oResult.address.suburb);
+                            eForm.find('[name="__name___city"]').val(oResult.address.suburb);
                         else if ('undefined' !== typeof oResult.address.town)
-                            $('[name="__name___city"]').val(oResult.address.town);
+                            eForm.find('[name="__name___city"]').val(oResult.address.town);
                         else if ('undefined' !== typeof oResult.address.city)
-                            $('[name="__name___city"]').val(oResult.address.city);
+                            eForm.find('[name="__name___city"]').val(oResult.address.city);
 
                         var oMap = {
                             'postcode': '__name___zip',
@@ -62,16 +63,16 @@
                         }
                         $.each(oMap, function (i) {
                             if ('undefined' !== typeof oResult.address[i])
-                                $('[name="' + this + '"]').val(oResult.address[i]);
+                                eForm.find('[name="' + this + '"]').val(oResult.address[i]);
                         });
 
-                        $('#__id_status__ span').html(oResult.display_name);
+                        eForm.find('#__id_status__ span').html(oResult.display_name);
                         if  ('undefined' !== typeof oResult.licence)
-                            $('#__id_status__copyright').html(oResult.licence);
+                            eForm.find('#__id_status__copyright').html(oResult.licence);
 
                     } 
                     else {
-                        $('#__id_status__ span').html(position.coords.latitude + ', ' + position.coords.longitude);
+                        eForm.find('#__id_status__ span').html(position.coords.latitude + ', ' + position.coords.longitude);
                     }
                 });
             }, iTimeout);
@@ -80,11 +81,11 @@
         }
 
         if ($(this).is(':checked')) {
-            $('#__id_status__ span').html('<bx_text_js:_sys_location_determining />');
+            eForm.find('#__id_status__ span').html('<bx_text_js:_sys_location_determining />');
             if (navigator.geolocation)
                 navigator.geolocation.getCurrentPosition(callbackOnLocationSucess, callbackOnLocationReset);
             else
-                $('#__id_status__ span').html('<bx_text_js:_sys_location_geolocation_not_supported_by_browser />');
+                eForm.find('#__id_status__ span').html('<bx_text_js:_sys_location_geolocation_not_supported_by_browser />');
         }
         else {
             callbackOnLocationReset();
