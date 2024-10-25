@@ -573,16 +573,16 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                 $aTmplVarsShowLink = $bTmplVarsShowLink ? [
                     'link' => $sLink,
                     'title' => $sTitle
-                ] : [true];
+                ] : false;
 
-                $bTmplVarsShowSize = false;
-                $aTmplVarsShowSize = [true];
-                $bTmplVarsShowDownload = false;
-                $aTmplVarsShowDownload = [true];
+                $bTmplVarsShowSize = $aTmplVarsShowSize = false;
+                $bTmplVarsShowDownload = $aTmplVarsShowDownload = false;
                 if($bUsageAt && ($bTmplVarsShowSize = ($sMethod = 'get_file') && bx_is_srv($aDataItem['content_type'], $sMethod))) {
                     $aFileInfo = bx_srv($aDataItem['content_type'], $sMethod, [$aDataItem['content_id']]);
                     if(!empty($aFileInfo) && is_array($aFileInfo)) {
-                        $aTmplVarsShowSize['size'] = _t_format_size($aFileInfo['size']);
+                        $aTmplVarsShowSize = [
+                            'size' => _t_format_size($aFileInfo['size'])
+                        ];
 
                         if(($bTmplVarsShowDownload = !empty($aFileInfo['url_download'])))
                             $aTmplVarsShowDownload = [
