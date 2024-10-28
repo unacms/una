@@ -57,6 +57,9 @@ class BxTimelinePageViewItem extends BxTemplPage
 
     public function getCode()
     {
+        if(empty($this->_aItemData) || !is_array($this->_aItemData))
+            $this->_oTemplate->displayPageNotFound();
+
         if($this->_aItemData['code'] != 0) {
             switch($this->_aItemData['code']) {
                 case 1:
