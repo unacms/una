@@ -116,6 +116,14 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
             'title' => $this->getDisplayName()
         ), $aTemplateVars));
     }
+
+    /**
+     * Get profile unit for API calls
+     */
+    public function getUnitAPI($iProfileId = 0, $aParams = [])
+    {
+        return [];
+    }
     
     /**
      * Get badges

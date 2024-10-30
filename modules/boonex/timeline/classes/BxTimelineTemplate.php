@@ -2056,17 +2056,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         if ($aParams['type'] != 'owner')
             $aEvent['owners'] = $this->_getTmplVarsTimelineOwner($aEvent);
-        
-        $aCmts = [];
-        $oCmts = $oModule->getCmtsObject($aEvent['comments']['system'], $aEvent['comments']['object_id']);
-        if($oCmts !== false) {
-            if (getParam('bx_timeline_preload_comments') > 0){
-                $aCmtsParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0,'is_form' => false, 'per_view' => getParam('bx_timeline_preload_comments')];
-                $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, $aCmtsParams], 'TemplCmtsServices');
-                $aCmts['data'] = array_reverse($aCmts['data']);
+
+        if(($oCmts = $oModule->getCmtsObject($aEvent['comments']['system'], $aEvent['comments']['object_id'])) !== false) {
+            $aEvent['cmts'] = [];
+            if(($iCmtsPreload = (int)getParam('bx_timeline_preload_comments')) > 0) {
+                $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, [
+                    'mode' => 'feed', 
+                    'order_way' => 'desc', 
+                    'start_from' => 0,
+                    'per_view' => $iCmtsPreload,
+                    'is_form' => false, 
+                ]], 'TemplCmtsServices');
+
+                if(!empty($aCmts['data']) && is_array($aCmts['data'])) {
+                    $aCmts['data'] = array_reverse($aCmts['data']);
+
+                    $aEvent['cmts'] = $aCmts;
+                }
             }
 
-            $aEvent['cmts'] = $aCmts;
             $aEvent['cmts']['count'] = $aEvent['comments']['count'];
         }
 
@@ -2367,10 +2375,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'icon' => 'check'
                 );
             }
-            if(bx_is_api()) {
+
+            if($this->_bIsApi)
                 $aTmplVarsOwners[] = $oOwner->getUnitAPI(0, ['template' => 'unit_wo_info']);
-            }
-            else{
+            else
                 $aTmplVarsOwners[] =  array(
                     'style_prefix' => $sStylePrefix,
                     'owner_type' => _t('_' . $sToType),
@@ -2384,7 +2392,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         )
                     )
                 );
-            }
         }
 
         if(empty($aTmplVarsOwners))
