@@ -2172,6 +2172,55 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	return $this->_serviceGetBlockViewByType($aParams);
     }
 
+    public function serviceGetBlockViewChannels($sView = 'timeline')
+    {
+        return $this->serviceGetBlockViewCustom([
+            'view' => $sView, 
+            'type' => 'channels'
+        ]);
+    }
+    
+    public function serviceGetBlockViewFeedAndHot($sView = 'timeline')
+    {
+        return $this->serviceGetBlockViewCustom([
+            'view' => $sView, 
+            'type' => 'feed_and_hot'
+        ]);
+    }
+    
+    public function serviceGetBlockViewContexts($sView = 'timeline', $sContextModule = 'bx_groups')
+    {
+        return $this->serviceGetBlockViewCustom([
+            'view' => $sView, 
+            'type' => 'connected_contexts',
+            'context' => $sContextModule
+        ]);
+    }
+
+    public function serviceGetBlockViewMedia($sView = 'timeline', $mixedMedia = ['files', 'images', 'videos'])
+    {
+        return $this->serviceGetBlockViewCustom([
+            'view' => $sView, 
+            'type' => 'feed',
+            'media' => $mixedMedia
+        ]);
+    }
+
+    public function serviceGetBlockViewMediaFiles($sView = 'timeline')
+    {
+        return $this->serviceGetBlockViewMedia($sView, 'files');
+    }
+
+    public function serviceGetBlockViewMediaImages($sView = 'timeline')
+    {
+        return $this->serviceGetBlockViewMedia($sView, 'images');
+    }
+
+    public function serviceGetBlockViewMediaVideos($sView = 'timeline')
+    {
+        return $this->serviceGetBlockViewMedia($sView, 'videos');
+    }
+
     public function serviceGetBlockMenuDb($aParams = [])
     {
         $aParams = $this->_prepareParams(array_merge([
