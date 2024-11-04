@@ -748,6 +748,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        if(empty($aEvent) || !is_array($aEvent))
+            return '';
+
         $iEventId = (int)$aEvent[$CNF['FIELD_ID']];
         $iViewerId = isset($aBrowseParams['viewer_id']) ? (int)$aBrowseParams['viewer_id'] : bx_get_logged_profile_id();
 
@@ -2054,7 +2057,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         
         $aEvent['menu_manage'] = $oMenuManage !== false && $oMenuManage->setEvent($aEvent) ? $oMenuManage->getShortCodeAPI() : [];
 
-        if ($aParams['type'] != 'owner')
+        if(!isset($aParams['type']) || $aParams['type'] != 'owner')
             $aEvent['owners'] = $this->_getTmplVarsTimelineOwner($aEvent);
 
         if(($oCmts = $oModule->getCmtsObject($aEvent['comments']['system'], $aEvent['comments']['object_id'])) !== false) {

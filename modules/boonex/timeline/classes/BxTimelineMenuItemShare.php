@@ -68,15 +68,22 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             $sRepostToOnclick = $this->_oModule->serviceGetRepostToJsClick($iOwnerId, $sType, $sAction, $iObjectId);
 
             //--- Send item
-    	    $sAetSend = urlencode(base64_encode(serialize(array(
-    	        'name' => 'bx_timeline_send',
-    	        'params' => array(
-    	            'ViewLink' => $this->_aEvent['url']
-    	        )
-    	    )))); 
+            $sAetSend = urlencode(base64_encode(serialize([
+                'name' => 'bx_timeline_send',
+                'params' => [
+                    'ViewLink' => $this->_aEvent['url']
+                ]
+            ]))); 
         }
 
-    	$this->addMarkers(array(
+        if($this->_bIsApi && ($sRootUrl = bx_api_get_base_url()) !== false) {
+            if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
+                $sRootUrl .= '/';
+
+            $this->_aEvent['url'] = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $this->_aEvent['url']);
+        }
+
+        $this->addMarkers([
             'content_id' => $this->_iEvent,
             'content_url' => $this->_aEvent['url'],
 
@@ -87,7 +94,7 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             'repost_to_onclick' => $sRepostToOnclick,
 
             'et_send' => $sAetSend
-    	));
+        ]);
     }
 
     public function getMenuItems ()

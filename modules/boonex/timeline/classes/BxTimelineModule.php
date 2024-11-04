@@ -721,13 +721,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     
     public function serviceGetEditForm($iId)
     {
-        $aFrm = $this->getFormEdit($iId)['form'];
-        $aFrm['inputs']['tlb_do_submit'] = $aFrm['inputs']['controls'][0];
+        $aForm = $this->getFormEdit($iId)['form'];
+        $aForm['inputs']['tlb_do_submit'] = $aForm['inputs']['controls'][0];
         unset($aForm['inputs']['controls']);
-        $aRv['form'] = ['id' => 'bx_timeline', 'type' => 'form', 'name' => 'feed_edit', 'data' => $aFrm, 'request' => ['immutable' => true]];
+
+        $aRv['form'] = ['id' => 'bx_timeline', 'type' => 'form', 'name' => 'feed_edit', 'data' => $aForm, 'request' => ['immutable' => true]];
         $aItemData = $this->getItemData($iId);
         if(is_array($aItemData) && !empty($aItemData['event']))
             $aRv['item'] = $this->_oTemplate->getPostApi($aItemData['event']);
+
         return $aRv;
     }
 
