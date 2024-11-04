@@ -68,6 +68,16 @@ class BxDolBackgroundJobs  extends BxDolFactory implements iBxDolSingleton
         return true;
     }
 
+    public function exists($sName)
+    {
+        $aJob = $this->_oQuery->getJobs([
+            'sample' => 'name', 
+            'name' => $sName
+        ]);
+
+        return !empty($aJob) && is_array($aJob);
+    }
+
     public function process($mixedJob)
     {
         if(!empty($mixedJob) && !is_array($mixedJob))

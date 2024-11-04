@@ -90,9 +90,9 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name
         $this->addMarkers(array('profile_link' => $this->_oProfile->getUrl())); // profile link
 
-        $aInformers = array ();
-        $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-        if($oInformer) {
+        if(($oInformer = BxDolInformer::getInstance($this->_oTemplate))) {
+            $aInformers = [];
+
             // display message to profile author if profile isn't active
             if ($bLoggedOwner && !empty($CNF['INFORMERS']['status'])) {
                 $sStatus = $this->_aContentInfo['profile_status'];
@@ -118,6 +118,9 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             if ($aInformers)
                 foreach ($aInformers as $a)
                     $oInformer->add($a['name'], $this->_replaceMarkers($a['msg']), $a['type']);
+
+            if($bLoggedOwner || $bLoggedModerator)
+                $this->_oProfile->getAccountObject()->addInformerDeletionScheduled($oInformer);
         }
 
         // display message if it is possible to switch to this profile

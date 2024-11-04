@@ -740,9 +740,13 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     /**
      * Delete profile.
      * @param $bDeleteWithContent - delete associated profiles with all its contents
+     * @param $bScheduled - delete account using background jobs.
      */
-    function delete($bDeleteWithContent = false)
+    function delete($bDeleteWithContent = false, $bScheduled = false)
     {
+        if ($bScheduled)
+            return BxDolBackgroundJobs::getInstance()->add('account_delete_' . $this->_iAccountID, ['system', 'account_delete', [$this->_iAccountID, $bDeleteWithContent], 'TemplServiceAccount']);
+
         $aAccountInfo = $this->_oQuery->getInfoById($this->_iAccountID);
         if (!$aAccountInfo)
             return false;
@@ -821,6 +825,12 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         }
 
         $this->isNeedChangePassword(false, $oInformer);
+    }
+    
+    public function addInformerDeletionScheduled($oInformer)
+    {
+        if(BxDolBackgroundJobs::getInstance()->exists('account_delete_' . $this->_iAccountID))
+            $oInformer->add('sys-account-deletion-scheduled', _t('_sys_txt_account_deletion_scheduled'), BX_INFORMER_ALERT);
     }
 
     /**

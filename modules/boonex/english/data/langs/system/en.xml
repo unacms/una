@@ -3909,6 +3909,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_account_profile_system"><![CDATA[Please <a href="{0}">create a profile</a> to start using the site.]]></string>
     <string name="_sys_txt_account_need_to_change_password"><![CDATA[Your password has been expired. Please <a href="{0}">change your password</a>.]]></string>
     <string name="_sys_txt_account_cannot_delete"><![CDATA[Cannot delete the only Operator account]]></string>
+    <string name="_sys_txt_account_deletion_scheduled"><![CDATA[Account deletion was scheduled and would be done in a few minutes.]]></string>
     
     <string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA not available]]></string>
     <string name="_sys_txt_categories_button_caption_add"><![CDATA[Add]]></string>

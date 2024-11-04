@@ -672,7 +672,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
     protected function _doDelete($iId, $aParams = [])
     {
-        return BxDolBackgroundJobs::getInstance()->add('account_delete_' . $iId, ['system', 'account_delete', [$iId, isset($aParams['with_content']) && $aParams['with_content'] === true], 'TemplServiceAccount']);
+        return ($oAccount = BxDolAccount::getInstance($iId)) !== false && $oAccount->delete(isset($aParams['with_content']) && $aParams['with_content'] === true, true);
     }
 
     protected function _addJsCss()

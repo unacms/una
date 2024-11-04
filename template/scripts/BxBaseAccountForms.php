@@ -267,18 +267,16 @@ class BxBaseAccountForms extends BxDolProfileForms
             unset($aAccountInfo['password']);
 
         $oForm->initChecker($aAccountInfo);
-
         if (!$oForm->isSubmittedAndValid())
             return $bIsApi ? $oForm->getCodeAPI() : $oForm->getCode();
 
         // delete account
-        $oAccount = BxDolAccount::getInstance($aAccountInfo['id']);
-        if (!$oAccount->delete(false === bx_get('delete_content') ? true : (int)$oForm->getCleanValue('delete_content') != 0))
+        if (($oAccount = BxDolAccount::getInstance($aAccountInfo['id'])) !== false && !$oAccount->delete(false === bx_get('delete_content') ? true : (int)$oForm->getCleanValue('delete_content') != 0, true))
             return $bIsApi ? _t('_sys_txt_error_account_delete') : MsgBox(_t('_sys_txt_error_account_delete'));
 
         // logout from deleted account
-        if($iAccountId == getLoggedId())
-        	bx_logout();
+        if ($iAccountId == getLoggedId())
+            bx_logout();
 
         // redirect to homepage
         $this->_redirectAndExit('', false);
