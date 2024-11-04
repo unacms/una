@@ -711,6 +711,10 @@
         @apply text-center;
     }
 
+    .bx-btn img {
+        @apply bg-contain bg-no-repeat bg-center;
+    }
+
     .bx-btn u {
         @apply ml-2 first:ml-0 no-underline;
     }

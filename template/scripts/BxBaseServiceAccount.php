@@ -275,6 +275,14 @@ class BxBaseServiceAccount extends BxDol
         return $mixedResult;
     }
 
+    public function serviceAccountDelete($iId, $bWithContent = false)
+    {
+        if(($oAccount = BxDolAccount::getInstance($iId)) !== false)
+            return $oAccount->delete($bWithContent);
+
+        return false;
+    }
+
     /**
      * Display unsubscribe from newsletters form
      */

@@ -85,6 +85,7 @@
     <string name="_bx_accnt_grid_action_title_adm_send_message"><![CDATA[Отправить письмо]]></string>
     <string name="_bx_accnt_grid_action_title_adm_more_actions"><![CDATA[Дополнительно]]></string>
     <string name="_bx_accnt_grid_action_title_adm_more_add"><![CDATA[Добавить новый]]></string>
+    <string name="_bx_accnt_grid_action_msg_delete_scheduled"><![CDATA[Удаление аккаунта(ов) запланировано и будет выполнено через несколько минут.]]></string>
     <string name="_bx_accnt_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) аккаунт(ы).]]></string>
     <string name="_bx_accnt_grid_action_err_perform"><![CDATA[Невозможно выполнить действие для выбранного(ных) аккаунта(ов).]]></string>
     <string name="_bx_accnt_grid_action_unlock_successed"><![CDATA[Успешно разблокирован]]></string>

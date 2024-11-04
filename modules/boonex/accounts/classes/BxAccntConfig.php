@@ -42,6 +42,7 @@ class BxAccntConfig extends BxBaseModGeneralConfig
 
                 // some language keys
             'T' => array (
+                'grid_action_msg_delete_scheduled' => '_bx_accnt_grid_action_msg_delete_scheduled',
                 'grid_action_err_delete' => '_bx_accnt_grid_action_err_delete',
                 'grid_action_err_perform' => '_bx_accnt_grid_action_err_perform',
                 'filter_item_active' => '_bx_accnt_grid_filter_item_title_adm_active',

@@ -21,6 +21,8 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     protected $_sStatusField;
     protected $_aStatusValues;
+    
+    protected $_bDeleteWithBgJobs; 
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -38,6 +40,8 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         $this->_aStatusValues = array('active');
 
         $this->_sDefaultSortingOrder = 'DESC';
+        
+        $this->_bDeleteWithBgJobs = false;
     }
 
     public function performActionDelete($aParams = array())
@@ -69,8 +73,12 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             $iAffected++;
         }
 
-        if($iAffected)
-            $aResult = !$this->_bIsApi ? ['grid' => $this->getCode(false), 'blink' => $aIdsAffected] : [];
+        if($iAffected) {
+            if(!$this->_bIsApi) 
+                $aResult = !$this->_bDeleteWithBgJobs ? ['grid' => $this->getCode(false), 'blink' => $aIdsAffected] : ['msg' => _t($CNF['T']['grid_action_msg_delete_scheduled'])];
+            else 
+                $aResult = [];
+        }
         else
             $aResult = ['msg' => _t($CNF['T']['grid_action_err_delete'])];
 

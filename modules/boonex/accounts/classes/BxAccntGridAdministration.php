@@ -12,15 +12,19 @@
 class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 {
     protected $_sFilter2Name;
-	protected $_sFilter2Value;
-	protected $_aFilter2Values;
-    
+    protected $_sFilter2Value;
+    protected $_aFilter2Values;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_accounts';
+
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_bDeleteWithBgJobs = true;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
+
         $this->_aFilter1Values = array_merge($this->_aFilter1Values, array(
             'unconfirmed' => $CNF['T']['filter_item_unconfirmed'],
             'locked' => $CNF['T']['filter_item_locked'],
@@ -666,16 +670,10 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     	return BxDolAccountQuery::getInstance()->getInfoById($iId);
     }
 
-    protected function _doDelete($iId, $aParams = array())
+    protected function _doDelete($iId, $aParams = [])
     {
-        $oAccount = BxDolAccount::getInstance($iId);
-        if($oAccount)
-            return $oAccount->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
-        
-        return false;
+        return BxDolBackgroundJobs::getInstance()->add('account_delete_' . $iId, ['system', 'account_delete', [$iId, isset($aParams['with_content']) && $aParams['with_content'] === true], 'TemplServiceAccount']);
     }
-    
-    
 
     protected function _addJsCss()
     {

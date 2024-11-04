@@ -82,9 +82,10 @@
     <string name="_bx_accnt_grid_action_title_adm_unlock_account"><![CDATA[Unlock]]></string>
     <string name="_bx_accnt_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_accnt_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
-	<string name="_bx_accnt_grid_action_title_adm_send_message"><![CDATA[Send email]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_send_message"><![CDATA[Send email]]></string>
     <string name="_bx_accnt_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_accnt_grid_action_title_adm_more_add"><![CDATA[Add new]]></string>
+    <string name="_bx_accnt_grid_action_msg_delete_scheduled"><![CDATA[Account(s) deletion was scheduled and would be done in a few minutes.]]></string>
     <string name="_bx_accnt_grid_action_err_delete"><![CDATA[Cannot delete the selected account(s).]]></string>
     <string name="_bx_accnt_grid_action_err_perform"><![CDATA[Cannot perform the action for selected account(s).]]></string>
     <string name="_bx_accnt_grid_action_unlock_successed"><![CDATA[Successfully unlocked]]></string>
@@ -96,13 +97,13 @@
 
     <string name="_bx_accnt_form_login_input_caption_system_email_confirmed"><![CDATA[Email confirmed]]></string>
     <string name="_bx_accnt_form_account_input_email_confirmed"><![CDATA[Email confirmed]]></string>
-	<string name="_bx_accnt_form_account_input_caption_system_message_subject"><![CDATA[Subject]]></string>
+    <string name="_bx_accnt_form_account_input_caption_system_message_subject"><![CDATA[Subject]]></string>
     <string name="_bx_accnt_form_account_input_caption_message_subject"><![CDATA[Subject]]></string>
-	<string name="_bx_accnt_form_account_input_message_subject_error"><![CDATA[Subject can't be empty]]></string>
-	<string name="_bx_accnt_form_account_input_caption_system_message_text"><![CDATA[Text]]></string>
+    <string name="_bx_accnt_form_account_input_message_subject_error"><![CDATA[Subject can't be empty]]></string>
+    <string name="_bx_accnt_form_account_input_caption_system_message_text"><![CDATA[Text]]></string>
     <string name="_bx_accnt_form_account_input_caption_message_text"><![CDATA[Text]]></string>
-	<string name="_bx_accnt_form_account_input_message_text_error"><![CDATA[Text can't be empty]]></string>
-	<string name="_bx_accnt_form_display_send_message"><![CDATA[Send email]]></string>
+    <string name="_bx_accnt_form_account_input_message_text_error"><![CDATA[Text can't be empty]]></string>
+    <string name="_bx_accnt_form_display_send_message"><![CDATA[Send email]]></string>
  
     <string name="_bx_accnt_txt_more"><![CDATA[{0} more]]></string>
     <string name="_bx_accnt_txt_see_more"><![CDATA[See more]]></string>
