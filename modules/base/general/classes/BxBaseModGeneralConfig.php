@@ -20,6 +20,8 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     protected $_aHtmlIds;
     protected $_aGridObjects;
 
+    protected $_bIsApi;
+
     /**
      * Delayed Publishing Notification Time (in seconds)
      * If video transcoding takes more than specified amount of time
@@ -38,6 +40,8 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         $this->_aJsClasses = array();
         $this->_aJsObjects = array();
         $this->_aGridObjects = array();
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_iDpnTime = 3600;
     }

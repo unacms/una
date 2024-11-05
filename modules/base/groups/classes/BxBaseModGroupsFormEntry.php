@@ -82,8 +82,9 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
 
              $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
         }
-        
-        $aValsToAdd[$CNF['FIELD_STATUS']] = (isset($CNF['FIELD_PUBLISHED']) && ($aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']])) ? 'awaiting' : 'active';
+
+        if(!empty($CNF['FIELD_STATUS']) && empty($aValsToAdd[$CNF['FIELD_STATUS']]))
+            $aValsToAdd[$CNF['FIELD_STATUS']] = (isset($CNF['FIELD_PUBLISHED']) && ($aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']])) ? 'awaiting' : 'active';
 
         return parent::insert ($aValsToAdd, $isIgnore);
     }

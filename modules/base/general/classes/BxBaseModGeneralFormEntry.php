@@ -1033,7 +1033,6 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 'value' => (int)$iUsage
             ];
         }
-        
     }
 
     protected function _processContextAfterAdd($iContentId, $iContextNid, $iContextUsage = 0)

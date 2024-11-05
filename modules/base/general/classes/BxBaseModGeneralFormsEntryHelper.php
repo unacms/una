@@ -439,6 +439,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sUrl == '')
             $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
 
+        if(($mixedUrl = $this->_getRedirectFromContext('edit', $aContentInfo)) !== false)
+            $sUrl = $mixedUrl;
+
         /**
          * @hooks
          * @hookdef hook-bx_base_general-redirect_after_edit '{module_name}', 'redirect_after_edit' - hook to override redirect URL which is used after content changing

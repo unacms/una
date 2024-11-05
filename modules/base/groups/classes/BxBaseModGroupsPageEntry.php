@@ -39,6 +39,13 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
             $sStatus = isset($CNF['FIELD_STATUS']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
             $sStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']] : '';
 
+            //--- Display message to context author if context isn't active
+            if ($bLoggedOwner && !empty($CNF['INFORMERS']['status'])) {
+                $aInformer = $CNF['INFORMERS']['status'];
+                if (isset($aInformer['map'][$sStatus]))
+                    $aInformers[] = ['name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]), 'type' => BX_INFORMER_ALERT];
+            }
+
             //--- Display 'approving' informer.
             if(!empty($sStatusAdmin) && $sStatusAdmin != BX_BASE_MOD_GENERAL_STATUS_ACTIVE) {
                 if(!empty($CNF['INFORMERS']['approving']) && isset($CNF['INFORMERS']['approving']['map'][$sStatusAdmin])) {
