@@ -228,7 +228,6 @@
     <string name="_bx_courses_page_block_title_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
     <string name="_bx_courses_page_block_title_sys_cover_block"><![CDATA[Обложка]]></string>
     <string name="_bx_courses_page_block_title_cover_block"><![CDATA[Обложка]]></string>
-    
 
     <string name="_bx_courses_menu_title_submenu"><![CDATA[Курсы - Подменю]]></string>
     <string name="_bx_courses_menu_set_title_submenu"><![CDATA[Курсы - Подменю]]></string>
@@ -256,6 +255,10 @@
     <string name="_bx_courses_menu_item_title_edit_pricing"><![CDATA[Редактировать цены]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_content"><![CDATA[Редактировать содержимое]]></string>
     <string name="_bx_courses_menu_item_title_edit_content"><![CDATA[Редактировать содержимое]]></string>
+    <string name="_bx_courses_menu_item_title_system_hide_profile"><![CDATA[Скрыть курс]]></string>
+    <string name="_bx_courses_menu_item_title_hide_profile"><![CDATA[Скрыть]]></string>
+    <string name="_bx_courses_menu_item_title_system_unhide_profile"><![CDATA[Показать курс]]></string>
+    <string name="_bx_courses_menu_item_title_unhide_profile"><![CDATA[Публиковать]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_profile"><![CDATA[Редактировать курс]]></string>
     <string name="_bx_courses_menu_item_title_edit_profile"><![CDATA[Редактировать курс]]></string>
     <string name="_bx_courses_menu_item_title_system_delete_profile"><![CDATA[Удалить курс]]></string>
@@ -412,7 +415,7 @@
 
     <string name="_bx_courses_txt_account_pending"><![CDATA[Этот курс ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_courses_txt_account_suspended"><![CDATA[Этот курс заблокирован.]]></string>
-    <string name="_bx_courses_txt_status_hidden"><![CDATA[Этот курс был скрыт.]]></string>
+    <string name="_bx_courses_txt_status_hidden"><![CDATA[Этот курс скрыт.]]></string>
     <string name="_bx_courses_txt_N_fans"><![CDATA[{0} студентов]]></string>
     <string name="_bx_courses_txt_role"><![CDATA[Роль]]></string>
     <string name="_bx_courses_txt_role_added"><![CDATA[Начало]]></string>

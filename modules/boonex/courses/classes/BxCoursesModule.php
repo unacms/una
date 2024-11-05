@@ -37,6 +37,28 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $this->_aSearchableNamesExcept[] = $this->_oConfig->CNF['FIELD_JOIN_CONFIRMATION'];
     }
 
+    public function actionPerform()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $mixedContent = $this->_getContent();
+        if($mixedContent === false)
+            return echoJson(['code' => 1]);
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        $sAction = bx_process_input(bx_get('action'));
+        if(empty($CNF['MENU_ITEM_TO_METHOD'][$CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']][$sAction])) 
+            return echoJson(['code' => 2]);
+
+        $sMethodCheck = $CNF['MENU_ITEM_TO_METHOD'][$CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']][$sAction];
+        $sMethodPerform = '_perform' . bx_gen_method_name($sAction, ['-', '_']);
+        if(!method_exists($this, $sMethodCheck) || $this->$sMethodCheck($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED || !method_exists($this, $sMethodPerform))
+            return echoJson(['code' => 3, 'msg' => _t('_sys_txt_access_denied')]);
+
+        return echoJson($this->$sMethodPerform($aContentInfo) ? ['reload' => 1] : []);
+    }
+
     public function actionPassNode()
     {
         $iNodeId = bx_get('node_id');
@@ -58,9 +80,31 @@ class BxCoursesModule extends BxBaseModGroupsModule
     public function serviceGetSafeServices()
     {
         return array_merge(parent::serviceGetSafeServices(), [
+            'Hide' => '',
+            'Publish' => '',
             'PassNode' => '',
             'PassData' => '',
         ]);
+    }
+
+    public function serviceHide($iContentId)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+                
+        if($this->checkAllowedHide($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+        
+        return $this->_performHideCourseProfile($aContentInfo);
+    }
+
+    public function servicePublish($iContentId)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+                
+        if($this->checkAllowedUnhide($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+        
+        return $this->_performUnhideCourseProfile($aContentInfo);
     }
 
     public function servicePassNode($iNodeId)
@@ -244,6 +288,16 @@ class BxCoursesModule extends BxBaseModGroupsModule
 
     public function serviceOnContentAddedRedirect($sContentType, $iContentId)
     {
+        return $this->serviceOnContentActionRedirect('add', $sContentType, $iContentId);
+    }
+
+    public function serviceOnContentEditedRedirect($sContentType, $iContentId)
+    {
+        return $this->serviceOnContentActionRedirect('edit', $sContentType, $iContentId);
+    }
+
+    public function serviceOnContentActionRedirect($sAction, $sContentType, $iContentId)
+    {
         $CNF = &$this->_oConfig->CNF;
 
         $aData = $this->_oDb->getContentData(['sample' => 'content', 'content_type' => $sContentType, 'content_id' => $iContentId]);
@@ -356,7 +410,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             'level' => 1,
             'selected' => ($iNodeId = bx_get('parent_id')) !== false ? (int)$iNodeId : 0,
             'start' => ($iStart = bx_get('start')) !== false ? (int)$iStart : 0,
-            'per_page' => ($iPerPage = bx_get('per_page')) !== false ? (int)$iPerPage : 2,
+            'per_page' => ($iPerPage = bx_get('per_page')) !== false ? (int)$iPerPage : $this->_oConfig->getPerPageDefault('structure_l1'),
         ]);
 
         return $this->_bIsApi ? [bx_api_get_block('course_structure', $mixedResult)] : $mixedResult;
@@ -394,6 +448,34 @@ class BxCoursesModule extends BxBaseModGroupsModule
         ]);
 
         return $this->_bIsApi ? [bx_api_get_block('lesson_structure', $mixedResult)] : $mixedResult;
+    }
+
+    public function checkAllowedHide($aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aDataEntry[$CNF['FIELD_STATUS']] != 'active')
+            return CHECK_ACTION_RESULT_NOT_ALLOWED;
+
+        // moderator and owner always have access
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return CHECK_ACTION_RESULT_NOT_ALLOWED;
+    }
+
+    public function checkAllowedUnhide($aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aDataEntry[$CNF['FIELD_STATUS']] == 'active')
+            return CHECK_ACTION_RESULT_NOT_ALLOWED;
+
+        // moderator and owner always have access
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return CHECK_ACTION_RESULT_NOT_ALLOWED;
     }
 
     public function getNodeLevelByParent($aParentInfo)
@@ -610,7 +692,9 @@ class BxCoursesModule extends BxBaseModGroupsModule
         $CNF = $this->_oConfig->CNF;
 
         $aResult = parent::decodeDataAPI($aData, $aParams);
-        $aResultAdd = [];
+        $aResultAdd = [
+            $CNF['FIELD_STATUS'] => $aData[CNF['FIELD_STATUS']]
+        ];
 
         $iEntryId = (int)$aData[$CNF['FIELD_ID']];
         $aLevelToNode = $this->_oConfig->getContentLevel2Node(false);        
@@ -633,7 +717,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
             $aResultAdd = [
                 'percent' => $iPassPercent,
                 'counters' => $aCounters,
-                'status' => $sPassStatus,
+                'pass_status' => $sPassStatus,
                 'show_pass' => $iPassPercent > 0 && $iPassPercent < 100,
             ];
 
@@ -674,6 +758,26 @@ class BxCoursesModule extends BxBaseModGroupsModule
             $aResult[] = ['key' => $aModule['name'], 'value' => $aModule['title']];
 
         return $aResult;
+    }
+
+    protected function _performHideCourseProfile($aDataEntry) {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => 'hidden'], [$CNF['FIELD_ID'] => $aDataEntry[$CNF['FIELD_ID']]])) 
+            return false;
+
+        $this->checkAllowedHide($aDataEntry, true);
+        return true;
+    }
+
+    protected function _performUnhideCourseProfile($aDataEntry) {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => 'active'], [$CNF['FIELD_ID'] => $aDataEntry[$CNF['FIELD_ID']]])) 
+            return false;
+
+        $this->checkAllowedHide($aDataEntry, true);
+        return true;
     }
 }
 

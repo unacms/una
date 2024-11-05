@@ -78,6 +78,7 @@ class BxCoursesGridCntStructureManage extends BxTemplGrid
         return parent::getCode($isDisplayHeader);
     }
 
+    //TODO: Need to check level and return correct title.
     public function getFormBlockTitleAPI($sAction, $iId = 0)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

@@ -21,7 +21,17 @@ class BxCoursesFormEntry extends BxBaseModGroupsFormEntry
         parent::__construct($aInfo, $oTemplate);
 
         if(isset($this->aInputs['initial_members']))
-            $this->aInputs['initial_members']['value'] = array();
+            $this->aInputs['initial_members']['value'] = [];
+    }
+
+    public function insert ($aValsToAdd = [], $isIgnore = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_oModule->_oConfig->isContent())
+            $aValsToAdd[$CNF['FIELD_STATUS']] = 'hidden';
+
+        return parent::insert ($aValsToAdd, $isIgnore);
     }
 }
 

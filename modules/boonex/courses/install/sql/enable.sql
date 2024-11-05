@@ -275,6 +275,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_courses_view_actions_more', 'bx_courses', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', 192, '', 1, 0, 20),
 ('bx_courses_view_actions_more', 'bx_courses', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_courses&content_id={content_id}', '', '', 'history', '', 192, '', 1, 0, 30),
+('bx_courses_view_actions_more', 'bx_courses', 'hide-course-profile', '_bx_courses_menu_item_title_system_hide_profile', '_bx_courses_menu_item_title_hide_profile', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''hide-course-profile'', {content_id});', '', 'stop-circle', '', 2147483647, '', 1, 0, 35),
+('bx_courses_view_actions_more', 'bx_courses', 'unhide-course-profile', '_bx_courses_menu_item_title_system_unhide_profile', '_bx_courses_menu_item_title_unhide_profile', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''unhide-course-profile'', {content_id});', '', 'play-circle', '', 2147483647, '', 1, 0, 36),
 ('bx_courses_view_actions_more', 'bx_courses', 'edit-course-profile', '_bx_courses_menu_item_title_system_edit_profile', '_bx_courses_menu_item_title_edit_profile', 'page.php?i=edit-course-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
 ('bx_courses_view_actions_more', 'bx_courses', 'edit-course-pricing', '_bx_courses_menu_item_title_system_edit_pricing', '_bx_courses_menu_item_title_edit_pricing', 'page.php?i=edit-course-pricing&profile_id={profile_id}', '', '', 'money-check-alt', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:20:"is_pricing_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 41),
 ('bx_courses_view_actions_more', 'bx_courses', 'edit-course-content', '_bx_courses_menu_item_title_system_edit_content', '_bx_courses_menu_item_title_edit_content', 'page.php?i=edit-course-content&profile_id={profile_id}', '', '', 'folder-tree', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:20:"is_content_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 42),
@@ -676,7 +678,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_courses_cnt_data_manage', 'independent', 'back', '_bx_courses_grid_action_title_cnt_back', 'arrow-left', 0, 0, 1),
 ('bx_courses_cnt_data_manage', 'independent', 'add_st', '_bx_courses_grid_action_title_cnt_add_step', '', 0, 0, 2),
 ('bx_courses_cnt_data_manage', 'independent', 'add_at', '_bx_courses_grid_action_title_cnt_add_attachment', '', 0, 0, 3),
-('bx_courses_cnt_data_manage', 'single', 'delete', '_bx_courses_grid_action_title_cnt_delete', 'remove', 1, 1, 1),
+('bx_courses_cnt_data_manage', 'single', 'edit', '_bx_courses_grid_action_title_cnt_edit', 'pencil-alt', 1, 0, 1),
+('bx_courses_cnt_data_manage', 'single', 'delete', '_bx_courses_grid_action_title_cnt_delete', 'remove', 1, 1, 2),
 ('bx_courses_cnt_data_manage', 'bulk', 'delete', '_bx_courses_grid_action_title_cnt_delete', '', 0, 1, 1);
 
 

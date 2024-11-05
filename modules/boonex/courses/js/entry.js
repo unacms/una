@@ -17,6 +17,26 @@ function BxCoursesEntry(oOptions) {
 BxCoursesEntry.prototype = Object.create(BxBaseModGroupsEntry.prototype);
 BxCoursesEntry.prototype.constructor = BxCoursesEntry;
 
+BxCoursesEntry.prototype.perform = function(oLink, sAction, iId) {
+    var oDate = new Date();
+    var oData = {
+    	action: sAction,
+    	id: iId,
+        _t:oDate.getTime()
+    };
+
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({});
+
+    $.post(
+        this._sActionsUrl + 'perform/',
+        oData,
+        function(oData) {
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
 BxCoursesEntry.prototype.passNode = function(oElement, iNodeId) {
     var $this = this;
     var oParams = this._getDefaultData();

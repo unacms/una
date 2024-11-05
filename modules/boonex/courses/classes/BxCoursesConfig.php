@@ -11,6 +11,8 @@
 
 class BxCoursesConfig extends BxBaseModGroupsConfig
 {
+    protected $_aPerPageDefault;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -18,6 +20,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-course-profile' => 'checkAllowedView',
             'edit-course-profile' => 'checkAllowedEdit',
+            'hide-course-profile' => 'checkAllowedHide',
+            'unhide-course-profile' => 'checkAllowedUnhide',
             'edit-course-cover' => 'checkAllowedChangeCover',
             'invite-to-course' => 'checkAllowedInvite',
             'delete-course-profile' => 'checkAllowedDelete',
@@ -205,6 +209,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'status' => array (
                     'name' => 'bx-courses-status-not-active',
                     'map' => array (
+                        'hidden' => '_bx_courses_txt_status_hidden',
                         BX_PROFILE_STATUS_PENDING => '_bx_courses_txt_account_pending',
                         BX_PROFILE_STATUS_SUSPENDED => '_bx_courses_txt_account_suspended',
                     ),
@@ -307,6 +312,19 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'popup_content_node' => $sHtmlPrefix . '-popup-content-node',
             'popup_content_data' => $sHtmlPrefix . '-popup-content-data',
         ];
+
+        $this->_aPerPageDefault = [
+            'default' => 12,
+            'structure_l1' => !$this->_bIsApi ? 2 : 9999
+        ];
+    }
+
+    public function getPerPageDefault($sType)
+    {
+        if(!isset($this->_aPerPageDefault[$sType]))
+            $sType = 'default';
+
+        return (int)$this->_aPerPageDefault[$sType];
     }
 
     public function isContent()

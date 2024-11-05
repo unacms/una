@@ -199,7 +199,11 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         }
 
         if($this->_bIsApi)
-            return $aTmplVarsNodes;
+            return [
+                'items' => $aTmplVarsNodes, 
+                'isEditable' => $this->_oModule->checkAllowedEdit($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED, 
+                'course_id' => $iContentId
+            ];
 
         $oPaginate = new BxTemplPaginate([
             'start' => $iStart,
@@ -233,8 +237,8 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             'status' => 'active'
         ]);
 
-        if(empty($aNodes) || !is_array($aNodes))
-            return $this->_bIsApi ? [] : '';
+        if((empty($aNodes) || !is_array($aNodes)) && !$this->_bIsApi)
+            return '';
 
         $sJsObject = $this->_oConfig->getJsObject('entry');
         $oPermalink = BxDolPermalinks::getInstance();
@@ -287,11 +291,17 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             ];
         }
 
-        if($this->_bIsApi)
-            return $aTmplVarsNodes;
+        if($this->_bIsApi)           
+            return [
+                'items' => $aTmplVarsNodes, 
+                'isEditable' => $this->_oModule->checkAllowedEdit($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED, 
+                'course_id' => $iContentId, 
+                'parent_id' => $iParentId
+            ];
 
         return $this->parseHtmlByName('ml' . $iLevelMax . '_nodes_l' . $aNode['level'] . '.html', [
             'level_max' => $iLevelMax,
+            'level' => $aNode['level'],
             'bx_repeat:nodes' => $aTmplVarsNodes
         ]);
     }
@@ -334,6 +344,8 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         $sJsObject = $this->_oConfig->getJsObject('entry');
         $oPermalink = BxDolPermalinks::getInstance();
 
+        $iLevelMax = $this->_oConfig->getContentLevelMax();
+
         $aInputs = [];
         foreach($aNodes as $aNode) {
             $aInputs['node_' . $aNode['node_id']] = [
@@ -363,6 +375,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     $bShowPass = !empty($sPassTitle);
                     
                     $aSubNode = array_merge($aSubNode, [
+                        'level_max' => $iLevelMax,
                         'index' => $iKey + 1,
                         'link' => $this->_bIsApi ? bx_api_get_relative_url($sLink) : $sLink,
                         'pass_percent' => $iPassPercent,
@@ -390,6 +403,8 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
                     'name' => $sInput,
                     'caption' => '',
                     'content' => $this->_bIsApi ? $aTmplVarsNodes : $this->parseHtmlByName('ml3_nodes_l' . $aSubNode['level'] . '.html', [
+                        'level_max' => $iLevelMax,
+                        'level' => $aSubNode['level'],
                         'bx_repeat:nodes' => $aTmplVarsNodes
                     ]),
                 ];

@@ -180,6 +180,8 @@ class BxCoursesDb extends BxBaseModGroupsDb
 
                 if(isset($aParams['start'], $aParams['per_page']) && (int)$aParams['per_page'] != 0)
                     $sLimitClause = $aParams['start'] . ', ' . $aParams['per_page'];
+                
+                $sOrderClause = "`tcs`.`order` ASC";
                 break;
                 
             case 'entry_id_counters':
@@ -343,13 +345,14 @@ class BxCoursesDb extends BxBaseModGroupsDb
                 ];
 
                 $sWhereClause = "AND `tcd`.`entry_id`=:entry_id AND `tcd`.`node_id`=:node_id";
-                $sOrderClause = "`tcd`.`order` ASC";
 
                 if(isset($aParams['usage'])) {
                     $aMethod['params'][1]['usage'] = $aParams['usage'];
 
                     $sWhereClause .= " AND `tcd`.`usage`=:usage";
                 }
+
+                $sOrderClause = "`tcd`.`order` ASC";
                 break;
                 
             case 'siblings':

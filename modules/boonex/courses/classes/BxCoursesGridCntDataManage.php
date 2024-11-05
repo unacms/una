@@ -166,6 +166,27 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
+    protected function _getActionEdit($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = [])
+    {
+        $oModule = BxDolModule::getInstance($aRow['content_type']);
+        if(!$oModule)
+            return '';
+        
+        $CNF_MODULE = &$oModule->_oConfig->CNF;
+        if(!isset($CNF_MODULE['URI_EDIT_ENTRY']))
+            return '';
+
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF_MODULE['URI_EDIT_ENTRY'] . '&id=' . $aRow['content_id']));
+
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'link', 'url' => bx_api_get_relative_url($sUrl)]);
+
+    	$a['attr'] = array_merge($a['attr'], [
+            "onclick" => "window.open('" . $sUrl . "', '_self');"
+    	]);
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
     protected function _delete($mixedId)
     {
         $aData = $this->_oModule->_oDb->getContentData(['sample' => 'id', 'id' => (int)$mixedId]);

@@ -257,6 +257,10 @@
     <string name="_bx_courses_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_content"><![CDATA[Edit Content]]></string>
     <string name="_bx_courses_menu_item_title_edit_content"><![CDATA[Edit Content]]></string>
+    <string name="_bx_courses_menu_item_title_system_hide_profile"><![CDATA[Hide Course]]></string>
+    <string name="_bx_courses_menu_item_title_hide_profile"><![CDATA[Hide]]></string>
+    <string name="_bx_courses_menu_item_title_system_unhide_profile"><![CDATA[Unhide Course]]></string>
+    <string name="_bx_courses_menu_item_title_unhide_profile"><![CDATA[Publish]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_profile"><![CDATA[Edit Course]]></string>
     <string name="_bx_courses_menu_item_title_edit_profile"><![CDATA[Edit Course]]></string>
     <string name="_bx_courses_menu_item_title_system_delete_profile"><![CDATA[Delete Course]]></string>
@@ -413,7 +417,7 @@
 
     <string name="_bx_courses_txt_account_pending"><![CDATA[This course is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_courses_txt_account_suspended"><![CDATA[This course is suspended.]]></string>
-    <string name="_bx_courses_txt_status_hidden"><![CDATA[This course was hidden.]]></string>
+    <string name="_bx_courses_txt_status_hidden"><![CDATA[This course is hidden.]]></string>
     <string name="_bx_courses_txt_N_fans"><![CDATA[{0} students]]></string>
     <string name="_bx_courses_txt_role"><![CDATA[Role]]></string>
     <string name="_bx_courses_txt_role_added"><![CDATA[Added]]></string>
