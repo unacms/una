@@ -2471,6 +2471,7 @@ CREATE TABLE `sys_background_jobs` (
   `added` int(11) unsigned NOT NULL default '0',
   `priority` tinyint(4) unsigned NOT NULL default '0',
   `service_call` text NOT NULL default '', 
+  `status` varchar(16) NOT NULL default 'awaiting',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 );

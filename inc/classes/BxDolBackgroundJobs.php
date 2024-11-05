@@ -89,12 +89,17 @@ class BxDolBackgroundJobs  extends BxDolFactory implements iBxDolSingleton
         if(empty($mixedJob['service_call']) || !BxDolService::isSerializedService($mixedJob['service_call']))
             return false;
 
+        $this->_oQuery->updateJob($mixedJob['name'], [
+            'status' => 'processing'
+        ]);
+
+        $fStart = microtime(true);
         BxDolService::callSerialized($mixedJob['service_call']);
+        $fTiming = microtime(true) - $fStart;
 
         $this->_oQuery->deleteJob($mixedJob['name']);
 
-        bx_log($this->_sObjectLog, "Processed: " . $mixedJob['name']);
-
+        bx_log($this->_sObjectLog, "Processed: " . $mixedJob['name'] . " / timing: " . $fTiming . " / memory: " . memory_get_usage());
         return true;
     }
 

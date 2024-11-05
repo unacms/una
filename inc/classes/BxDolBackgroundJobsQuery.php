@@ -60,6 +60,24 @@ class BxDolBackgroundJobsQuery extends BxDolDb
         ]) !== false;
     }
 
+    public function updateJob($sName, $aParamsSet)
+    {
+        if(empty($sName))
+            return false;
+
+        return $this->updateJobExt($aParamsSet, [
+            'name' => $sName
+        ]);
+    }
+
+    public function updateJobExt($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        return $this->query("UPDATE `sys_background_jobs` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
     public function deleteJob($sName)
     {
         return $this->query("DELETE FROM `sys_background_jobs` WHERE `name`=:name", [
