@@ -44,6 +44,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'show_counter' => true,
             'show_counter_style' => self::$_sCounterStyleCompound
         ]);
+        $this->_aElementParamsApi = array_merge($this->_aElementParamsApi, ['t']);
 
         $this->_sTmplNameBySummary = 'vote_by_summary_reactions.html';
         $this->_sTmplNameByList = 'vote_by_list_reactions.html';
@@ -337,6 +338,19 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         $aParams['class_element'] .= ' ' . $sClass;
 
         return parent::getElement($aParams);
+    }
+    
+    public function getElementAPI($aParams = [])
+    {
+        $aReactions = $this->getReactions();
+
+        $aT = [];
+        foreach($aReactions as $sName)
+            $aT[$sName] = _t($this->_aDataList[$sName]['title']);
+
+        return parent::getElementAPI(array_merge($aParams, [
+            't' => $aT
+        ]));
     }
 
     public function getPerformedByAPI($aParams = [])
