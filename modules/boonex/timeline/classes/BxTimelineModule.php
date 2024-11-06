@@ -718,19 +718,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'dynamic_mode' => true
         ], $aBrowseParams));
     }
-    
+
     public function serviceGetEditForm($iId)
     {
-        $aForm = $this->getFormEdit($iId)['form'];
-        $aForm['inputs']['tlb_do_submit'] = $aForm['inputs']['controls'][0];
-        unset($aForm['inputs']['controls']);
+        $aResult = [];
 
-        $aRv['form'] = ['id' => 'bx_timeline', 'type' => 'form', 'name' => 'feed_edit', 'data' => $aForm, 'request' => ['immutable' => true]];
+        if(($aForm = $this->getFormEdit($iId)) && isset($aForm['form'])) {
+            $aForm['form']['inputs']['tlb_do_submit'] = $aForm['form']['inputs']['controls'][0];
+            unset($aForm['form']['inputs']['controls']);
+            
+            $aResult['form'] = ['id' => 'bx_timeline', 'type' => 'form', 'name' => 'feed_edit', 'data' => $aForm['form'], 'request' => ['immutable' => true]];
+        }
+
         $aItemData = $this->getItemData($iId);
         if(is_array($aItemData) && !empty($aItemData['event']))
-            $aRv['item'] = $this->_oTemplate->getPostApi($aItemData['event']);
+            $aResult['item'] = $this->_oTemplate->getPostApi($aItemData['event']);
 
-        return $aRv;
+        return $aResult;
     }
 
     public function actionGetComments()
