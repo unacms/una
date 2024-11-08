@@ -31,6 +31,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     {
         $sAction = 'add';
 
+        $oTemplate = BxDolStudioTemplate::getInstance();
         $oAI = BxDolAI::getInstance();
 
         $aForm = $this->_getForm($sAction);
@@ -150,7 +151,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                                 'assistant_id' => $iAssistantId
                             ]);
 
-                    if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
+                    if(($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($iId, $oTemplate)) !== null) {
                         if($bMessage) {
                             $iProfileId = bx_get_logged_profile_id();
 
@@ -205,6 +206,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
     {
         $sAction = 'edit';
 
+        $oTemplate = BxDolStudioTemplate::getInstance();
         $oAI = BxDolAI::getInstance();
 
         $iId = $this->_getId();
@@ -308,7 +310,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 foreach($aAssistantsValues as $iAssistantsValue)
                     $this->_oDb->insertAutomatorAssistant([
                         'automator_id' => $iId,
-                        'helper_id' => (int)$iAssistantsValue,
+                        'assistant_id' => (int)$iAssistantsValue,
                     ]);
             }
 
@@ -326,7 +328,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                 $aValsToAdd['params'] = json_encode(['scheduler_time' => $sSchedulerTime]);
 
             if($oForm->update($iId, $aValsToAdd) !== false) {
-                if(($oCmts = BxDolCmts::getObjectInstance($this->_sCmts, $iId)) !== null) {
+                if(($oCmts = BxDolAI::getInstance()->getAutomatorCmtsObject($iId, $oTemplate)) !== null) {
                     $sInstructions = $oAI->getAutomatorInstruction('profile', $iProfileId);
 
                     $aProviders = $this->_oDb->getAutomatorsBy(['sample' => 'providers_by_id_pairs', 'id' => $iId]);
