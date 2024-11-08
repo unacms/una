@@ -693,7 +693,7 @@ class BxCoursesModule extends BxBaseModGroupsModule
 
         $aResult = parent::decodeDataAPI($aData, $aParams);
         $aResultAdd = [
-            $CNF['FIELD_STATUS'] => $aData[CNF['FIELD_STATUS']]
+            $CNF['FIELD_STATUS'] => $aData[$CNF['FIELD_STATUS']]
         ];
 
         $iEntryId = (int)$aData[$CNF['FIELD_ID']];

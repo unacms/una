@@ -202,7 +202,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             return [
                 'items' => $aTmplVarsNodes, 
                 'isEditable' => $this->_oModule->checkAllowedEdit($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED, 
-                'course_id' => $iContentId
+                'entry_id' => $iContentId
             ];
 
         $oPaginate = new BxTemplPaginate([
@@ -295,7 +295,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
             return [
                 'items' => $aTmplVarsNodes, 
                 'isEditable' => $this->_oModule->checkAllowedEdit($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED, 
-                'course_id' => $iContentId, 
+                'entry_id' => $iContentId, 
                 'parent_id' => $iParentId
             ];
 

@@ -179,7 +179,12 @@ class BxCoursesGridCntDataManage extends BxTemplGrid
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF_MODULE['URI_EDIT_ENTRY'] . '&id=' . $aRow['content_id']));
 
         if($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'link', 'url' => bx_api_get_relative_url($sUrl)]);
+            return array_merge($a, [
+                'name' => $sKey, 
+                'type' => 'modal', 
+                'callback' => $aRow['content_type'] . '/entity_edit/&params[]=' . $aRow['content_id'],
+                'content_type' => $aRow['content_type']
+            ]);
 
     	$a['attr'] = array_merge($a['attr'], [
             "onclick" => "window.open('" . $sUrl . "', '_self');"
