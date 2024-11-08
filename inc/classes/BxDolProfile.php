@@ -182,8 +182,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'operator' => isAdmin(),
             //'info' => $oProfile->getInfo(),
             'confirmed' => $oAccount->isConfirmed(),
-            'notifications' => 0,
-            'cart' => 0,
+            'counters' => bx_srv('system', 'profile_counters', [], 'TemplServiceProfiles'),
             'profiles_count' => $oAccount->getProfilesNumber(true),
             'hash' => encryptUserId($iId),
             'profiles_limit' => (int)getParam('sys_account_limit_profiles_number'),
@@ -198,7 +197,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
                 $aRv['informer'] = $sRet;
             }
 
-            $oPayments = BxDolPayments::getInstance();
+          /*  $oPayments = BxDolPayments::getInstance();
             if($oPayments->isActive())
                 $aRv['cart'] = $oPayments->getCartItemsCount();
             
@@ -213,7 +212,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
                     if($oMenuProfileAdd !== false)
                         $aRv['menu'] = $oMenuProfileAdd->getCodeAPI();
                 }
-            }
+            }*/
         }
 
         bx_alert('system', 'get_profile_for_page_api', 0, 0, ['override_result' => &$aRv]);
