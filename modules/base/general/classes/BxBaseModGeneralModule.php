@@ -1680,21 +1680,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityEdit ($iContentId = 0, $sDisplay = false)
     {
-        $mixedResult = $this->_serviceEntityForm ('editDataForm', $iContentId, $sDisplay);
-        if(!bx_is_api()) 
-            return $mixedResult;
-
-        $aResult = [];
-        if(is_a($mixedResult, 'BxTemplFormView')){
-            $iContentId = $this->_getContent($iContentId, false);
-            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_edit&params[]=' . $iContentId . '&params[]=' . $mixedResult->aParams['display'], 'immutable' => true]]]);
-        }
-        else
-            $aResult = $mixedResult;
-
-        return [
-            $aResult
-        ];
+        return $this->_serviceEntityForm ('editDataForm', $iContentId, $sDisplay);
     }
 
     /**
