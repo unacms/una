@@ -760,24 +760,34 @@ class BxCoursesModule extends BxBaseModGroupsModule
         return $aResult;
     }
 
-    protected function _performHideCourseProfile($aDataEntry) {
+    protected function _performHideCourseProfile($aDataEntry)
+    {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => 'hidden'], [$CNF['FIELD_ID'] => $aDataEntry[$CNF['FIELD_ID']]])) 
+        $iContentId = $aDataEntry[$CNF['FIELD_ID']];
+        if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => 'hidden'], [$CNF['FIELD_ID'] => $iContentId])) 
             return false;
 
         $this->checkAllowedHide($aDataEntry, true);
-        return true;
+        return $this->_bIsApi ? [
+            'title' => _t($CNF['T']['menu_item_title_unhide']),
+            'request_url' => $this->_oConfig->getName() . '/publish/&params[]=' . $iContentId, 
+        ] : true;
     }
 
-    protected function _performUnhideCourseProfile($aDataEntry) {
+    protected function _performUnhideCourseProfile($aDataEntry)
+    {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => 'active'], [$CNF['FIELD_ID'] => $aDataEntry[$CNF['FIELD_ID']]])) 
+        $iContentId = $aDataEntry[$CNF['FIELD_ID']];
+        if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => 'active'], [$CNF['FIELD_ID'] => $iContentId])) 
             return false;
 
         $this->checkAllowedHide($aDataEntry, true);
-        return true;
+        return $this->_bIsApi ? [
+            'title' => _t($CNF['T']['menu_item_title_hide']),
+            'request_url' => $this->_oConfig->getName() . '/hide/&params[]=' . $iContentId, 
+        ] : true;
     }
 }
 
