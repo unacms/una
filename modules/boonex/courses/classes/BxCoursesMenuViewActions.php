@@ -27,8 +27,6 @@ class BxCoursesMenuViewActions extends BxBaseModGroupsMenuViewActions
 
     protected function _getMenuItem ($a)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         $aResult = parent::_getMenuItem($a);
         if(!$aResult)
             return $aResult;
@@ -39,10 +37,6 @@ class BxCoursesMenuViewActions extends BxBaseModGroupsMenuViewActions
                 'data' => [
                     'request_url' => $this->MODULE . '/' . ($bHide ? 'hide' : 'publish') . '/&params[]=' . $this->_iContentId, 
                     'on_callback' => 'change',
-                    'on_callback_param' => [
-                        'title' => _t($CNF['T']['menu_item_title_' . ($bHide ? 'un' : '') . 'hide']),
-                        'request_url' => $this->MODULE . '/' . ($bHide ? 'publish' : 'hide') . '/&params[]=' . $this->_iContentId, 
-                    ]
                 ]
             ]);
         }
