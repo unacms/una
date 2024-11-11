@@ -1,0 +1,22 @@
+{
+  "name": "vrana/jush",
+  "description": "JUSH - JavaScript Syntax Highlighter",
+  "homepage": "http://jush.sourceforge.net/",
+  "keywords": [
+    "syntax highlighter",
+    "javascript"
+  ],
+  "support": {
+    "source": "https://github.com/vrana/jush/"
+  },
+  "authors": [
+    {
+      "name": "Jakub Vrána",
+      "homepage": "https://www.vrana.cz/"
+    }
+  ],
+  "license": [
+    "Apache-2.0",
+    "GPL-2.0-only"
+  ]
+}
