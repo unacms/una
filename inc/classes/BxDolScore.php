@@ -383,9 +383,11 @@ class BxDolScore extends BxDolObject
 
         $aResult['api'] = [
             'performer_id' => $iAuthorId,
-            'is_voted' => $aResult['voted'],
-            'is_disabled' => $aResult['disabled'],
+            'is_voted' => $aResult['voted'], //TODO: Remove after 14.0.0-RC3 is released.
+            'is_disabled' => $aResult['disabled'], //TODO: Remove after 14.0.0-RC3 is released.
             $sType => [
+                'is_voted' => $aResult['voted'],
+                'is_disabled' => $aResult['disabled'],
                 'icon' => $aResult['label_icon'],
                 'title' => $aResult['label_title'],
             ],
