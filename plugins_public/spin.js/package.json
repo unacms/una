@@ -1,0 +1,43 @@
+{
+  "name": "spin.js",
+  "version": "4.1.2",
+  "description": "A spinning activity indicator",
+  "files": [
+    "spin.css",
+    "spin.d.ts",
+    "spin.js",
+    "SpinnerOptions.d.ts"
+  ],
+  "type": "module",
+  "main": "spin.js",
+  "types": "spin.d.ts",
+  "author": "Felix Gnass <fgnass@gmail.com>",
+  "contributors": [
+    "Theodore Brown (https://github.com/theodorejb)",
+    "Timothy Gu <timothygu99@gmail.com>"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fgnass/spin.js.git"
+  },
+  "keywords": [
+    "css",
+    "progress indicator",
+    "spin",
+    "spinner"
+  ],
+  "scripts": {
+    "prepare": "tsc && grunt --gruntfile Gruntfile.cjs && rollup -c",
+    "gh-pages": "grunt gh-pages --gruntfile Gruntfile.cjs",
+    "start": "serve site/"
+  },
+  "devDependencies": {
+    "grunt": "^1.6.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-gh-pages": "^4.0.0",
+    "rollup": "^4.18.1",
+    "serve": "^14.2.3",
+    "typescript": "^5.5.3"
+  }
+}
