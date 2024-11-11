@@ -245,6 +245,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'menu_item_title_unfriend_reject_request' => '_bx_courses_menu_item_title_unfriend_reject_request',
                 'menu_item_title_befriend' => '_bx_courses_menu_item_title_befriend',
                 'menu_item_title_unfriend' => '_bx_courses_menu_item_title_unfriend',
+                'menu_item_title_hide' => '_bx_courses_menu_item_title_hide_profile',
+                'menu_item_title_unhide' => '_bx_courses_menu_item_title_unhide_profile',
                 'grid_action_err_delete' => '_bx_courses_grid_action_err_delete',
                 'grid_txt_account_manager' => '_bx_courses_grid_txt_account_manager',
                 'filter_item_active' => '_bx_courses_grid_filter_item_title_adm_active',

@@ -130,8 +130,9 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         if(!isset($aParams['level']))
             return '';
 
-        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
         $iProfileId = bx_get_logged_profile_id();
+        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $bEditable = $this->_oModule->checkAllowedEdit($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED;
 
         $oPermalink = BxDolPermalinks::getInstance();
 
@@ -150,7 +151,11 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         ]);
 
         if(empty($aNodes) || !is_array($aNodes))
-            return '';
+            return $this->_bIsApi ? [
+                'items' => [], 
+                'isEditable' => $bEditable, 
+                'entry_id' => $iContentId
+            ] : '';
 
         $iLevelMax = $this->_oConfig->getContentLevelMax();
         $aLevelToNode = $this->_oConfig->getContentLevel2Node(false);
@@ -201,7 +206,7 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
         if($this->_bIsApi)
             return [
                 'items' => $aTmplVarsNodes, 
-                'isEditable' => $this->_oModule->checkAllowedEdit($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED, 
+                'isEditable' => $bEditable, 
                 'entry_id' => $iContentId
             ];
 
