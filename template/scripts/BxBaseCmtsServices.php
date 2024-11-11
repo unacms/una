@@ -669,10 +669,12 @@ class BxBaseCmtsServices extends BxDol
         $aBp['type'] = 'head';
         $oCmts->getParams($aBp, $aDp);
         $oCmts->prepareParams($aBp, $aDp);
-        
-        $aBp['order']['way'] = $aParams['order_way'];
-        $aBp['order_way'] = $aParams['order_way'];
-        $aBp['start'] = $aParams['start_from'] ; 
+
+        $sOrderWay = !empty($aParams['order_way']) ? $aParams['order_way'] : 'desc';
+
+        $aBp['order']['way'] = $sOrderWay;
+        $aBp['order_way'] = $sOrderWay;
+        $aBp['start'] = !empty($aParams['start_from']) ? (int)$aParams['start_from'] : 0; 
         $aPp = $aBp['per_view'];
         $aBp['per_view'] =  $aBp['per_view'] + 1; 
         if (isset($aParams['per_view'])){
@@ -713,7 +715,7 @@ class BxBaseCmtsServices extends BxDol
             'count' => count($aCmts),
             'per_view' => $aBp['per_view'],
             'total_count' => $oCmts->getCommentsCount(),
-            'order' => $aParams['order_way'],
+            'order' => $sOrderWay,
             'view' => $aDp['type'],
             'module' => $oCmts->getSystemName(), 
             'object_id' => $oCmts->getId(),
@@ -727,7 +729,7 @@ class BxBaseCmtsServices extends BxDol
         $aRv = [
             'id' => 'cmt_list', 
             'type' => 'browse', 
-            'insert' => $aParams['insert'], 
+            'insert' => !empty($aParams['insert']) ? $aParams['insert'] : 'before', 
             'data' => $aData
         ];
         

@@ -1438,7 +1438,7 @@ class BxBaseCmts extends BxDolCmts
                 if(($mixedResult = $this->onEditAfter($iCmtId, $aDp)) !== false){
                     if (bx_is_api()){
                         $this->_unsetFormObject(BX_CMT_ACTION_POST);
-                        return ['form' => $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId), 'res' => $iCmtId];
+                        return ['form' => $this->_getForm(BX_CMT_ACTION_POST, $aCmt['cmt_parent_id']), 'res' => $iCmtId];
                     }
                     else{
                         return $mixedResult;
