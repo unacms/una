@@ -150,6 +150,18 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
     	return $aResult;
     }
+    
+    
+    public function performApi()
+    {
+        $aRequested = $this->_getRequestedData($iIndex, true, $aCurrent);
+        $aResult = array();
+        foreach($aRequested as $sName => $aData) {
+                $aResult[$sName] = (int)$aData['count'];
+        }
+
+    	return $aResult;
+    }
 
     protected function _addSystem($sName, $iFrequency, $sServiceCall, $mixedActive = true)
     {
