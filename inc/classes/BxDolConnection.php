@@ -394,14 +394,23 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
              * Call socket.
              */
             if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
-                $aMessage = [
+                $aMessageInitiator = $aMessageContent = [
                     'object' => $this->_sObject, 
                     'action' => 'added',
-                    
                 ];
-                
-                $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iInitiator)])));
-                $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iContent)])));
+
+                if(bx_is_api()) {
+                    $aMessageInitiator = array_merge($aMessageInitiator, [
+                        'user' => BxDolProfile::getDataForPage($iInitiator)
+                    ]);
+
+                    $aMessageContent = array_merge($aMessageContent, [
+                        'user' => BxDolProfile::getDataForPage($iContent)
+                    ]);
+                }
+
+                $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode($aMessageInitiator));
+                $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode($aMessageContent));
             }
         }
     }
@@ -455,13 +464,23 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
          * Call socket.
          */
         if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
-            $aMessage = [
+            $aMessageInitiator = $aMessageContent = [
                 'object' => $this->_sObject, 
                 'action' => 'deleted',
             ];
 
-            $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iInitiator)])));
-            $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode(array_merge($aMessage, ['user' => BxDolProfile::getDataForPage($iContent)])));
+            if(bx_is_api()) {
+                $aMessageInitiator = array_merge($aMessageInitiator, [
+                    'user' => BxDolProfile::getDataForPage($iInitiator)
+                ]);
+
+                $aMessageContent = array_merge($aMessageContent, [
+                    'user' => BxDolProfile::getDataForPage($iContent)
+                ]);
+            }
+
+            $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode($aMessageInitiator));
+            $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode($aMessageContent));
         }
     }
 
