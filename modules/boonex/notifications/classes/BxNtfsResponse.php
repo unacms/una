@@ -59,8 +59,11 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
                 $sMethod = 'getInsertData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
-                if(!method_exists($this, $sMethod))
-                    $sMethod = 'getInsertData';
+                if(!method_exists($this, $sMethod)) {
+                    $sMethod = 'getInsertData' . bx_gen_method_name('any_' . $oAlert->sAction);
+                    if(!method_exists($this, $sMethod))
+                        $sMethod = 'getInsertData';
+                }
 
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
 
@@ -180,6 +183,19 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         );
     }
 
+    /*
+     * Custom insert data getter for any module -> commentPost alerts. 
+     */
+    protected function getInsertDataAnyCommentPost(&$oAlert, &$aHandler)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(getParam($CNF['PARAM_REPLY_AS_COMMENT']) != 'on' && isset($oAlert->aExtras['comment_parent_id']) && (int)$oAlert->aExtras['comment_parent_id'] != 0)
+            return [];
+
+        return $this->getInsertData($oAlert, $aHandler);
+    }
+    
     /*
      * Custom insert data getter for comment -> added and deleted alerts. 
      */

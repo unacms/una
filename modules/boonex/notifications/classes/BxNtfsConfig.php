@@ -52,6 +52,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             // some params
             'PARAM_QUEUE_ADD_THRESHOLD' => 0,
             'PARAM_COMMENT_POST_EXT' => 'bx_notifications_enable_comment_post_ext',
+            'PARAM_REPLY_AS_COMMENT' => 'bx_notifications_enable_reply_as_comment',
             'PARAM_PROCESSED_EVENT' => 'bx_notifications_processed_event',
 
             // objects

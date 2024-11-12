@@ -2170,6 +2170,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'comment_id' => $iCmtId, 
             'comment_uniq_id' => $iCmtUniqId,
             'comment_author_id' => $aCmt['cmt_author_id'], 
+            'comment_parent_id' => $aCmt['cmt_parent_id'], 
             'comment_text' => $aCmt['cmt_text'],
 
             'privacy_view' => $iObjAthrPrivacyView,
