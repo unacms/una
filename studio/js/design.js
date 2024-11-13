@@ -17,10 +17,10 @@ function BxDolStudioDesign(oOptions) {
             $this.initCodeMirror($this.sCodeMirror);
     });
 
-    var oCollapsable = $('#adm-settings-form .bx-form-collapsable');
-    oCollapsable.on('bx_show', function() {
-    	$this.refreshCodeMirror();
-    });
+    if($this.sCodeMirror != '')
+        $('#adm-settings-form-categorized .bx-form-collapsable').on('bx_show', function() {
+            $this.refreshCodeMirror();
+        });
 }
 
 BxDolStudioDesign.prototype = Object.create(BxDolStudioModule.prototype);
