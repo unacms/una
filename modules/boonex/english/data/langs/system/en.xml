@@ -3962,6 +3962,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_forgot_pasword_email_send_failed"><![CDATA[Email send failed, please try again later.]]></string>
     <string name="_sys_txt_forgot_pasword_error_occured"><![CDATA[Error occurred, please report error to the site administrator.]]></string>
     <string name="_sys_txt_forgot_pasword_sms_text"><![CDATA[Click the link below to reset your password {0}]]></string>
+    <string name="_sys_txt_forgot_pasword_logged_in"><![CDATA[You are already logged in. If you still wish to reset your password, please log out first and then initiate the password recovery process.]]></string>
 
     <string name="_sys_txt_form_entry_input_picture_copy"><![CDATA[Copy URL]]></string>
     <string name="_sys_txt_form_entry_input_picture_delete"><![CDATA[Delete]]></string>
