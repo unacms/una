@@ -5978,7 +5978,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `type` enum('raw','html','creative','bento_grid','lang','image','rss','menu','custom','service','wiki') NOT NULL DEFAULT 'raw',
-  `content` text NOT NULL,
+  `content` mediumtext NOT NULL,
   `content_empty` varchar(255) NOT NULL DEFAULT '',
   `text` mediumtext NOT NULL,
   `text_updated` int(11) NOT NULL,
