@@ -591,6 +591,12 @@ class BxBaseServiceAccount extends BxDol
     public function serviceForgotPassword()
     {
         if(isLogged()){
+            $bApi = bx_is_api();
+            if($bApi) {
+               return [
+                    bx_api_get_msg(_t("_sys_txt_forgot_pasword_logged_in"), ['ext' => ['msg_type' => 'result']]),
+                ];
+            }
             header('Location: ' . BX_DOL_URL_ROOT);
             exit;
         }
