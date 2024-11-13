@@ -343,6 +343,19 @@ class BxCoursesModule extends BxBaseModGroupsModule
         }
     }
 
+    public function serviceJoinedEntriesSummary ($iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+
+        if ($iProfileId != $this->_iProfileId)
+            return false;
+
+        return $this->_oTemplate->getJoinedEntriesSummary($iProfileId);
+    }
+
     public function serviceEntityContentStructureBlock($iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;

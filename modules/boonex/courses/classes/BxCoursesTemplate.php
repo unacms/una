@@ -122,7 +122,41 @@ class BxCoursesTemplate extends BxBaseModGroupsTemplate
 
         return $this->_bIsApi ? $aTmplVars : $this->parseHtmlByName('counters.html', $aTmplVars);
     }
-    
+
+    public function getJoinedEntriesSummary($iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        if(!$oConnection)
+            return false;
+
+        $aEntries = $oConnection->getConnectedContent($iProfileId);
+
+        $iJoined = count($aEntries);
+        $iStarted = 0;
+        $iPassed = 0;
+
+        foreach($aEntries as $iEntryId) {
+            $aEntryInfo = $this->_oDb->getContentInfoByProfileId($iEntryId);
+
+            list($iPassPercent) = $this->_oModule->getEntryPass($iProfileId, $aEntryInfo[$CNF['FIELD_ID']]);
+            if($iPassPercent > 0 && $iPassPercent < 100)
+                $iStarted += 1;
+            else if($iPassPercent == 100)
+                $iPassed +=1;
+        }
+
+        $aTmplVars = [
+            'joined' => $iJoined,
+            'passed' => $iPassed,
+            'not_passed' => $iJoined - $iPassed,
+            'passed_percent' => $iJoined != 0 ? (int)round(100 * $iPassed/$iJoined) : 0
+        ];
+
+        return $this->_bIsApi ? $aTmplVars : $this->parseHtmlByName('entries_summary.html', $aTmplVars);
+    }
+
     public function entryStructureByLevel($aContentInfo, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
