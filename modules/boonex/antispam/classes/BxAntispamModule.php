@@ -282,44 +282,43 @@ class BxAntispamModule extends BxDolModule
         if($this->_oConfig->getAntispamOption('lm_enable') == 'on' && (bx_srv('system', 'is_module_content', [$sModule]) || bx_srv('system', 'is_module_context', [$sModule]) || in_array($sModule, ['bx_timeline'])) && ($oModule = BxDolModule::getInstance($sModule)) !== null) {
             $CNF = &$oModule->_oConfig->CNF;
 
-            $iAuthorId = bx_get_logged_profile_id();
-            $iAuthorName = BxDolProfile::getInstance()->getDisplayName();
+            if(($iAuthorId = bx_get_logged_profile_id()) !== false && ($oAuthor = BxDolProfile::getInstance()) !== false) {
+                $iDataAdded = time();
 
-            $iDataAdded = time();
+                $sText = '';
+                if(isset($CNF['FIELD_TEXT'], $oForm->aInputs[$CNF['FIELD_TEXT']]))
+                    $sText = $oForm->getCleanValue($CNF['FIELD_TEXT']);
+                if(empty($sText) && isset($oForm->aInputs['text']))
+                    $sText = $oForm->getCleanValue('text');
 
-            $sText = '';
-            if(isset($CNF['FIELD_TEXT'], $oForm->aInputs[$CNF['FIELD_TEXT']]))
-                $sText = $oForm->getCleanValue($CNF['FIELD_TEXT']);
-            if(empty($sText) && isset($oForm->aInputs['text']))
-                $sText = $oForm->getCleanValue('text');
+                $aMedias = [
+                    'images' => ['fields' => ['FIELD_PHOTO', 'FIELD_PICTURE', 'FIELD_COVER'], 'data' => []], 
+                    'videos' => ['fields' => ['FIELD_VIDEO'], 'data' => []]
+                ];
+                foreach($aMedias as $sName => $aMedia) 
+                    foreach($aMedia['fields'] as $sField) {
+                        if(!isset($CNF[$sField], $oForm->aInputs[$CNF[$sField]]))
+                            continue;
 
-            $aMedias = [
-                'images' => ['fields' => ['FIELD_PHOTO', 'FIELD_PICTURE', 'FIELD_COVER'], 'data' => []], 
-                'videos' => ['fields' => ['FIELD_VIDEO'], 'data' => []]
-            ];
-            foreach($aMedias as $sName => $aMedia) 
-                foreach($aMedia['fields'] as $sField) {
-                    if(!isset($CNF[$sField], $oForm->aInputs[$CNF[$sField]]))
-                        continue;
+                        $oStorage = BxDolStorage::getObjectInstance($oForm->aInputs[$CNF[$sField]]['storage_object']);
+                        if(!$oStorage)
+                            continue;
 
-                    $oStorage = BxDolStorage::getObjectInstance($oForm->aInputs[$CNF[$sField]]['storage_object']);
-                    if(!$oStorage)
-                        continue;
+                        $aGhosts = $oStorage->getGhosts($iAuthorId, $sAction == 'insert' ? 0 : $iEntry);
+                        foreach($aGhosts as $aGhost)
+                            $aMedias[$sName]['data'][] = $oStorage->getFileUrlById($aGhost['id']);
+                    }
 
-                    $aGhosts = $oStorage->getGhosts($iAuthorId, $sAction == 'insert' ? 0 : $iEntry);
-                    foreach($aGhosts as $aGhost)
-                        $aMedias[$sName]['data'][] = $oStorage->getFileUrlById($aGhost['id']);
-                }
-
-            $oLassoModeration = bx_instance('BxAntispamLassoModeration', [], $this->getName());
-            $oLassoModeration->addContent($sModule, $iEntry, [
-                'author_id' => $iAuthorId,
-                'author_name' => $iAuthorName,
-                'date_added' => $iDataAdded,
-                'text' => $sText,
-                'images' => $aMedias['images']['data'], 
-                'videos' => $aMedias['videos']['data']
-            ]);
+                $oLassoModeration = bx_instance('BxAntispamLassoModeration', [], $this->getName());
+                $oLassoModeration->addContent($sModule, $iEntry, [
+                    'author_id' => $iAuthorId,
+                    'author_name' => $oAuthor->getDisplayName(),
+                    'date_added' => $iDataAdded,
+                    'text' => $sText,
+                    'images' => $aMedias['images']['data'], 
+                    'videos' => $aMedias['videos']['data']
+                ]);
+            }
         }
     }
 
