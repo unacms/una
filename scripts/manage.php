@@ -153,7 +153,6 @@ class BxDolManageCmd
                 ), $sErr);
             } catch (Exception $e) {
                 $this->finish($this->_aReturnCodes['db connect failed']['code'], $this->_aReturnCodes['db connect failed']['msg'] . $e->getMessage());
-                exit;
             }
         }
     }
@@ -177,7 +176,9 @@ class BxDolManageCmd
 
     function _parseModules($s) 
     {
-        $a = explode(',',trim($s));
+        if (!$s)
+            return [];
+        $a = explode(',', trim($s));
         foreach ($a as $k => $v)
             $a[$k] = trim($v);
         return $a;
