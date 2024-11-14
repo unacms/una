@@ -36,10 +36,24 @@ class BxSpacesModule extends BxBaseModGroupsModule
         $iContentId = $this->_getContent($iContentId, false);
         if($iContentId === false)
             return false;
+
         $iCount = $this->_oDb->getCountEntriesByParent($iContentId);
-        if ($iCount > 0)
-            return MsgBox(_t('_bx_spaces_err_delete_child_presend'));
-        return $this->_serviceEntityForm ('deleteDataForm', $iContentId);
+        if($iCount > 0 && ($sMsg = '_bx_spaces_err_delete_child_presend'))
+            return !$this->_bIsApi ? MsgBox(_t($sMsg)) : [bx_api_get_msg($sMsg)];
+
+        $mixedResult = $this->_serviceEntityForm ('deleteDataForm', $iContentId);
+        if(!$this->_bIsApi)
+            return $mixedResult;
+
+        $aResult = [];
+        if(is_a($mixedResult, 'BxTemplFormView'))
+            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_delete&params[]=' . $iContentId . '&params[]=' . $mixedResult->aParams['display'], 'immutable' => true]]]);
+        else
+            $aResult = $mixedResult;
+
+        return [
+            $aResult
+        ];
     }
     
     public function serviceEntityParent ($iContentId = 0, $aParams = [])
