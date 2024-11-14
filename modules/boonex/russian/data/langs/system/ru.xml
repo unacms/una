@@ -2981,6 +2981,7 @@
 	<string name="_sys_inst_conf_desc_db_pwd"><![CDATA[MySQL БД - пароль.]]></string>
 	<string name="_sys_inst_conf_desc_db_sock"><![CDATA[Оставьте пустым или укажите другой путь к сокету.]]></string>
 	<string name="_sys_inst_conf_desc_db_user"><![CDATA[MySQL БД - имя пользователя с правами чтения/записи.]]></string>
+    <string name="_sys_inst_conf_desc_db_engine"><![CDATA[Некоторые подсистемы хранения базы данных могут нуждаться в специальной конфигурации.]]></string>
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Язык для установки по умолчанию.]]></string>
 	<string name="_sys_inst_conf_desc_profiles"><![CDATA[Модуль профилей для установки по умолчанию.]]></string>
 	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.una.io/page/kands-manage">Получить UNA Key & Secret</a>]]></string>
@@ -3000,6 +3001,7 @@
 	<string name="_sys_inst_conf_field_db_pwd"><![CDATA[База Данных - пароль]]></string>
 	<string name="_sys_inst_conf_field_db_sock"><![CDATA[База Данных - путь к сокету]]></string>
 	<string name="_sys_inst_conf_field_db_user"><![CDATA[База Данных - имя пользователя]]></string>
+	<string name="_sys_inst_conf_field_db_engine"><![CDATA[База Данных - подсистема хранения]]></string>
 	<string name="_sys_inst_conf_field_language"><![CDATA[Язык]]></string>
 	<string name="_sys_inst_conf_field_profiles"><![CDATA[Профили]]></string>
 	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[UNA key]]></string>
