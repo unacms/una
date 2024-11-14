@@ -117,6 +117,12 @@ class BxDolInstallSiteConfig
                 'desc' => _t('_sys_inst_conf_desc_db_pwd'),
                 'db_conf' => 'pwd',
             ),
+            'db_engine' => array(
+                'name' => _t('_sys_inst_conf_field_db_engine'),
+                'ex' => 'INNODB',
+                'desc' => _t('_sys_inst_conf_desc_db_engine'),
+                'def' => 'MYISAM',
+            ),
 
             'section_db_config_close' => array(
                 'func' => 'rowSectionClose',

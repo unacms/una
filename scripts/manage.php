@@ -19,7 +19,7 @@ class BxDolManageCmd
     protected $_isQuiet = false;
     protected $_aReturnCodes = array(
         'success' => array ('code' => 0, 'msg' => 'Success.'),
-        'una not found' => array ('code' => 1, 'msg' => 'UNA wasn\'t found in the specified path.'),
+        'una not found' => array ('code' => 1, 'msg' => 'UNA wasn\'t found in the specified path: '),
         'unknown cmd' => array ('code' => 2, 'msg' => 'Unknown command.'),
         'db connect failed' => array ('code' => 3, 'msg' => 'Database connection failed: '),
         'error' => array ('code' => 9, 'msg' => 'Error occured.'),
@@ -132,7 +132,7 @@ class BxDolManageCmd
         $sHeaderPath = $this->_sPathToUna . '/inc/header.inc.php';
 
         if (!file_exists($sHeaderPath))
-            $this->finish($this->_aReturnCodes['una not found']['code'], $this->_aReturnCodes['una not found']['msg']);
+            $this->finish($this->_aReturnCodes['una not found']['code'], $this->_aReturnCodes['una not found']['msg'] . $sHeaderPath);
 
         require_once($sHeaderPath);
 

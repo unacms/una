@@ -3004,6 +3004,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_desc_db_pwd"><![CDATA[Your MySQL database password here.]]></string>
 	<string name="_sys_inst_conf_desc_db_sock"><![CDATA[Leave blank or specify MySQL database socket path.]]></string>
 	<string name="_sys_inst_conf_desc_db_user"><![CDATA[Your MySQL database user name with read/write access.]]></string>
+	<string name="_sys_inst_conf_desc_db_engine"><![CDATA[MySQL database engine, some DB engines may require custom MYSQL configuration.]]></string>
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Language to install by default.]]></string>
 	<string name="_sys_inst_conf_desc_profiles"><![CDATA[Profiles module to install by default.]]></string>
 	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.una.io/page/kands-manage">Get UNA Key & Secret</a>]]></string>
@@ -3023,6 +3024,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_field_db_pwd"><![CDATA[Database password]]></string>
 	<string name="_sys_inst_conf_field_db_sock"><![CDATA[Database socket path]]></string>
 	<string name="_sys_inst_conf_field_db_user"><![CDATA[Database user]]></string>
+	<string name="_sys_inst_conf_field_db_engine"><![CDATA[Database engine]]></string>
 	<string name="_sys_inst_conf_field_language"><![CDATA[Language]]></string>
 	<string name="_sys_inst_conf_field_profiles"><![CDATA[Profiles]]></string>
 	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[UNA key]]></string>

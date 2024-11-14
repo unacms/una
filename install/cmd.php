@@ -41,6 +41,7 @@ class BxDolInstallCmd
             'db_name' => 'test',
             'db_user' => 'root',
             'db_password' => 'root',
+            'db_engine' => 'MYISAM',
             'site_title' => 'UNA Test',
             'site_email' => 'no-reply@example.com',
             'admin_email' => 'admin@example.com',
