@@ -634,8 +634,8 @@ class BxBaseCmtsServices extends BxDol
                 $bIsList = true;
                 $aForm['inputs']['cmt_parent_id']['value'] = 0;
             }
-            
-            $aRv['form'] = ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $aForm, 'request' => ['immutable' => true]];
+            if (bx_get_logged_profile_id())           
+                $aRv['form'] = ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $aForm, 'request' => ['immutable' => true]];
 
             // default view (form + list)
             if (!$oForm['form']->isSubmitted()){

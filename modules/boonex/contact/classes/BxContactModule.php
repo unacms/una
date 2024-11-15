@@ -124,11 +124,19 @@ class BxContactModule extends BxDolModule
             }
         }
 
-        if (bx_is_api())
-            return [
-                bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=bx_contact/get_block_form', 'immutable' => true]]]),
-                bx_api_get_msg($sResult, ['id' => 2])
-            ];
+        if (bx_is_api()){
+            if ($oForm->isSubmittedAndValid()){
+                return [
+                    bx_api_get_msg($sResult, ['ext' => ['msg_type' => 'result']])
+                ];
+            }
+            else{
+                return [
+                    bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=bx_contact/get_block_form', 'immutable' => true]]]),
+
+                ];
+            }
+        }
 
         return ['content' => ($sResult ?  MsgBox($sResult) : '') . $oForm->getCode()];
     }
