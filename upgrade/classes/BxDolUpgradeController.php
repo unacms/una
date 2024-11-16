@@ -96,12 +96,12 @@ class BxDolUpgradeController
         return false;
     }
 
-    public function runUpgrade ($sFolder)
+    public function runUpgrade ($sFolder, $bIgnoreVersionCheck = false)
     {
         $this->aLogMsgs = array();
         $this->sError = false;
 
-        if (bx_get_ver() != BX_DOL_VERSION) {
+        if (!$bIgnoreVersionCheck && bx_get_ver() != BX_DOL_VERSION) {
             $this->sError = 'Database and files versions are different';
             return false;
         }

@@ -5,7 +5,10 @@
  *
  * @defgroup    UnaManageCmd UNA Manage command line script
  * @{
- *
+ */
+
+$GLOBALS['bx_profiler_disable'] = true;
+define('BX_DOL_CRON_EXECUTE', '1');
 
 /**
  * UNA command line interface
@@ -22,6 +25,7 @@ class BxDolManageCmd
         'una not found' => array ('code' => 1, 'msg' => 'UNA wasn\'t found in the specified path: '),
         'unknown cmd' => array ('code' => 2, 'msg' => 'Unknown command.'),
         'db connect failed' => array ('code' => 3, 'msg' => 'Database connection failed: '),
+        'system update failed' => array ('code' => 4, 'msg' => 'System update failed: '),
         'error' => array ('code' => 9, 'msg' => 'Error occured.'),
     );
 
@@ -91,7 +95,7 @@ class BxDolManageCmd
         $s .= str_pad("\t -q", 35) . "Quiet\n";
         $s .= str_pad("\t -u", 35) . "Path to UNA\n";
         $s .= str_pad("\t -c", 35) . "Command to run (update, update_modules, install_modules)\n";
-        $s .= str_pad("\t -o", 35) . "Command options, comma separated list of modules names for 'update_modules' and 'install_module' commands\n";
+        $s .= str_pad("\t -o", 35) . "Command options, comma separated list of modules names for 'update_modules' and 'install_module' commands, 'ignore_version_check' for 'update' command\n";
 
         foreach ($this->_aSiteConfig as $sKey => $sVal)
             if ('site_config' != $sKey)
@@ -121,7 +125,7 @@ class BxDolManageCmd
         if ('.' == $this->_sPathToUna)
             $this->_sPathToUna = '';
         
-        if ($this->_sPathToUna && '/' !== $this->_sPathToUna[0]) {
+        if (!$this->_sPathToUna || '/' !== $this->_sPathToUna[0]) {
             $aPathInfo = pathinfo(__FILE__);
             $this->_sPathToUna = $aPathInfo['dirname'] . '/' . $this->_sPathToUna;
         }
@@ -159,7 +163,48 @@ class BxDolManageCmd
 
     function cmdUpdate()
     {
+        $oCronDb = BxDolCronQuery::getInstance();
+        $aCronJobs = $oCronDb->getTransientJobs();
 
+        if (!isset($aCronJobs['sys_perform_upgrade'])) {
+            $oUpgrader = bx_instance('BxDolUpgrader');
+            $aUpdateInfo = $oUpgrader->getVersionUpdateInfo();
+
+            $bUpgrade = $oUpgrader->isUpgradeAvailable($aUpdateInfo);
+            if (!$bUpgrade)
+                $this->finish($this->_aReturnCodes['system update failed']['code'], $this->_aReturnCodes['system update failed']['msg'] . 'you have up to date version');
+
+            if(!$oUpgrader->prepare(false, 'ignore_version_check' == $this->_sCmdOptions))
+                $this->finish($this->_aReturnCodes['system update failed']['code'], $this->_aReturnCodes['system update failed']['msg'] . $oUpgrader->getError());
+        }
+
+        $aCronJobs = $oCronDb->getTransientJobs();
+        if (empty($aCronJobs['sys_perform_upgrade']))
+            $this->finish($this->_aReturnCodes['system update failed']['code'], $this->_aReturnCodes['system update failed']['msg'] . 'no cron job with patch path was found');
+
+        $sPatchDir = BX_DIRECTORY_PATH_ROOT . $aCronJobs['sys_perform_upgrade']['file'];
+        $sPatchDir = str_replace('BxDolUpgradeCron.php', '', $sPatchDir);
+        define ('BX_UPGRADE_DIR_UPGRADES', $sPatchDir . 'files/');
+
+        require_once($sPatchDir . 'classes/BxDolUpgradeController.php');
+        require_once($sPatchDir . 'classes/BxDolUpgradeUtil.php');
+        require_once($sPatchDir . 'classes/BxDolUpgradeDb.php');
+
+        $oController = new BxDolUpgradeController();
+        if ($oController->setMaintenanceMode(true)) {
+            $sFolder = $oController->getAvailableUpgrade();
+            if ($sFolder && $oController->runUpgrade($sFolder)) { 
+                setParam('sys_revision', getParam('sys_revision') + 1);
+                @bx_rrmdir($sUpgradeDir);
+            }
+            $oController->setMaintenanceMode(false);
+        }
+
+        $oCronDb->deleteTransientJobs();
+
+        if ($sErrorMsg = $oController->getErrorMsg()) {
+            $this->finish($this->_aReturnCodes['system update failed']['code'], $this->_aReturnCodes['system update failed']['msg'] . $sErrorMsg);
+        }
     }
 
     function cmdUpdateModules()
