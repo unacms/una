@@ -95,8 +95,23 @@ class BxDolManageCmd
         $s .= str_pad("\t -h", 35) . "Print this help\n";
         $s .= str_pad("\t -q", 35) . "Quiet\n";
         $s .= str_pad("\t -u", 35) . "Path to UNA\n";
-        $s .= str_pad("\t -c", 35) . "Command to run (update, update_modules, install_modules)\n";
-        $s .= str_pad("\t -o", 35) . "Command options, comma separated list of modules names for 'update_modules' and 'install_module' commands, 'ignore_version_check' for 'update' command\n";
+        $s .= str_pad("\t -c", 35) . "Command to run:\n";
+        $s .= str_pad("\t", 39) . "- update - options:\n";
+        $s .= str_pad("\t", 43) . "'ignore_version_check' to ignore version comparison in DB and files\n";
+        $s .= str_pad("\t", 43) . "'skip_files_op' skip files oprations, such copying and deleting\n";
+        $s .= str_pad("\t", 39) . "- check_update - no options\n";
+        $s .= str_pad("\t", 39) . "- update_modules - options:\n";
+        $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
+        $s .= str_pad("\t", 39) . "- check_modules_updates - no options\n";
+        $s .= str_pad("\t", 39) . "- install_modules - options:\n";
+        $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
+        $s .= str_pad("\t", 39) . "- uninstall_modules - options:\n";
+        $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
+        $s .= str_pad("\t", 39) . "- disable_modules - options:\n";
+        $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
+        $s .= str_pad("\t", 39) . "- enable_modules - options:\n";
+        $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
+        $s .= str_pad("\t -o", 35) . "Command options\n";
 
         foreach ($this->_aSiteConfig as $sKey => $sVal)
             if ('site_config' != $sKey)
@@ -104,9 +119,18 @@ class BxDolManageCmd
 
         $s .= "\nIf DB params aren't specified then UNA DB params from header.inc.php are used.\n\n";
 
+        $s .= "Examples:\n";
+        $s .= "\tCheck if update is available:\n";
+        $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c check_update\n\n";
+        $s .= "\tCheck if updates for modules are available:\n";
+        $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c check_modules_updates\n\n";
+        $s .= "\tInstall Ads and Albums modules:\n";
+        $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c install_modules -o boonex/ads,boonex/albums\n\n";
+
         $s .= "Return codes:\n";
-        foreach ($this->_aReturnCodes as $r)
-            $s .= str_pad("\t {$r['code']}", 5) . "{$r['msg']}\n";
+        foreach ($this->_aReturnCodes as $r) {
+            $s .= str_pad("\t {$r['code']}", 5) . $r['msg'] . (mb_substr(trim($r['msg']), -1) == ':' ? 'message' : '') . "\n";
+        }
 
         return $s;
     }
@@ -162,8 +186,20 @@ class BxDolManageCmd
         }
     }
 
+    function cmdCheckUpdate()
+    {
+        $oUpgrader = bx_instance('BxDolUpgrader');
+        $aUpdateInfo = $oUpgrader->getVersionUpdateInfo();
+        if (!isset($aUpdateInfo['patch']))
+            $this->finish($this->_aReturnCodes['success']['code'], 'No system update available');
+
+        $s = str_pad(bx_get_ver(), 12) . str_pad($aUpdateInfo['patch']['ver'], 12) . $aUpdateInfo['latest_version']; 
+        $this->finish($this->_aReturnCodes['success']['code'], $s);
+    }
+
     function cmdUpdate()
     {
+        $aOptions = $this->_parseOptions($this->_sCmdOptions);
         $oCronDb = BxDolCronQuery::getInstance();
         $aCronJobs = $oCronDb->getTransientJobs();
 
@@ -175,7 +211,7 @@ class BxDolManageCmd
             if (!$bUpgrade)
                 $this->finish($this->_aReturnCodes['system update failed']['code'], $this->_aReturnCodes['system update failed']['msg'] . 'you have up to date version');
 
-            if(!$oUpgrader->prepare(false, 'ignore_version_check' == $this->_sCmdOptions))
+            if(!$oUpgrader->prepare(false, in_array('ignore_version_check', $aOptions)))
                 $this->finish($this->_aReturnCodes['system update failed']['code'], $this->_aReturnCodes['system update failed']['msg'] . $oUpgrader->getError());
         }
 
@@ -194,7 +230,7 @@ class BxDolManageCmd
         $oController = new BxDolUpgradeController();
         if ($oController->setMaintenanceMode(true)) {
             $sFolder = $oController->getAvailableUpgrade();
-            if ($sFolder && $oController->runUpgrade($sFolder, 'ignore_version_check' == $this->_sCmdOptions)) { 
+            if ($sFolder && $oController->runUpgrade($sFolder, in_array('ignore_version_check', $aOptions), in_array('skip_files_op', $aOptions))) {
                 setParam('sys_revision', getParam('sys_revision') + 1);
                 @bx_rrmdir($sUpgradeDir);
             }
@@ -208,9 +244,22 @@ class BxDolManageCmd
         }
     }
 
+    function cmdCheckModulesUpdates()
+    {
+        $a = BxDolStudioInstallerUtils::getInstance()->checkUpdates();
+        if (!$a)
+            $this->finish($this->_aReturnCodes['success']['code'], 'No modules updates available');
+
+        $s = '';
+        foreach ($a as $r) {
+            $s .= str_pad($r['name'], 20) . str_pad($r['file_version'], 12) . $r['file_version_to'] . "\n";
+        }
+        $this->finish($this->_aReturnCodes['success']['code'], trim($s));
+    }
+
     function cmdUpdateModules()
     {
-        $aModules = $this->_parseModules($this->_sCmdOptions);
+        $aModules = $this->_parseOptions($this->_sCmdOptions);
         var_dump($aModules);
     }
 
@@ -234,7 +283,7 @@ class BxDolManageCmd
         $this->_cmdModules('disable', ['html_response' => false]);
     }
 
-    function _parseModules($s) 
+    function _parseOptions($s) 
     {
         if (!$s)
             return [];
@@ -246,7 +295,7 @@ class BxDolManageCmd
 
     function _cmdModules($sOperation, $aOptions = [])
     {
-        $aModules = $this->_parseModules($this->_sCmdOptions);
+        $aModules = $this->_parseOptions($this->_sCmdOptions);
         foreach ($aModules as $sModule) {
             $sModule = trim($sModule, '/') . '/';
             $a = BxDolStudioInstallerUtils::getInstance()->perform($sModule, $sOperation, array('auto_enable' => true, 'html_response' => false));
