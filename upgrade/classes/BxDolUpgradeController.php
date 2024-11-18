@@ -96,7 +96,7 @@ class BxDolUpgradeController
         return false;
     }
 
-    public function runUpgrade ($sFolder, $bIgnoreVersionCheck = false)
+    public function runUpgrade ($sFolder, $bIgnoreVersionCheck = false, $bIgnoreFilesOperations = false)
     {
         $this->aLogMsgs = array();
         $this->sError = false;
@@ -117,6 +117,11 @@ class BxDolUpgradeController
             'filesDelete' => "Deprecated files were successfully deleted or there is no files to delete",
             'updateFilesHash' => "System files hash was successfully updated",
         );
+        if ($bIgnoreFilesOperations) {
+            $aFilesOperations = [
+                'updateFilesHash' => "System files hash was successfully updated",
+            ];
+        }
     
         foreach ($aFilesOperations as $sFunc => $sSuccessMsg) {
             $mixedResult = $this->oUtil->$sFunc ();

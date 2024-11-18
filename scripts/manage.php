@@ -26,6 +26,7 @@ class BxDolManageCmd
         'unknown cmd' => array ('code' => 2, 'msg' => 'Unknown command.'),
         'db connect failed' => array ('code' => 3, 'msg' => 'Database connection failed: '),
         'system update failed' => array ('code' => 4, 'msg' => 'System update failed: '),
+        'module operation failed' => array ('code' => 5, 'msg' => 'Module operation failed: '),
         'error' => array ('code' => 9, 'msg' => 'Error occured.'),
     );
 
@@ -193,7 +194,7 @@ class BxDolManageCmd
         $oController = new BxDolUpgradeController();
         if ($oController->setMaintenanceMode(true)) {
             $sFolder = $oController->getAvailableUpgrade();
-            if ($sFolder && $oController->runUpgrade($sFolder)) { 
+            if ($sFolder && $oController->runUpgrade($sFolder, 'ignore_version_check' == $this->_sCmdOptions)) { 
                 setParam('sys_revision', getParam('sys_revision') + 1);
                 @bx_rrmdir($sUpgradeDir);
             }
@@ -215,8 +216,22 @@ class BxDolManageCmd
 
     function cmdInstallModules()
     {
-        $aModules = $this->_parseModules($this->_sCmdOptions);
-        var_dump($aModules);
+        $this->_cmdModules('install', ['auto_enable' => true, 'html_response' => false]);
+    }
+
+    function cmdUninstallModules()
+    {
+        $this->_cmdModules('uninstall', ['html_response' => false]);
+    }
+
+    function cmdEnableModules()
+    {
+        $this->_cmdModules('enable', ['html_response' => false]);
+    }
+
+    function cmdDisableModules()
+    {
+        $this->_cmdModules('disable', ['html_response' => false]);
     }
 
     function _parseModules($s) 
@@ -228,6 +243,18 @@ class BxDolManageCmd
             $a[$k] = trim($v);
         return $a;
     }
+
+    function _cmdModules($sOperation, $aOptions = [])
+    {
+        $aModules = $this->_parseModules($this->_sCmdOptions);
+        foreach ($aModules as $sModule) {
+            $sModule = trim($sModule, '/') . '/';
+            $a = BxDolStudioInstallerUtils::getInstance()->perform($sModule, $sOperation, array('auto_enable' => true, 'html_response' => false));
+            if (!isset($a['code']) || $a['code'] !== BX_DOL_STUDIO_IU_RC_SUCCESS)
+                $this->finish($this->_aReturnCodes['module operation failed']['code'], $this->_aReturnCodes['module operation failed']['msg'] . (!empty($a['message']) ? $a['message'] : 'Error occured.') . ' (' . $sOperation . ': ' . $sModule . ')');
+        }
+    }
+
 }
 
 $o = new BxDolManageCmd();
