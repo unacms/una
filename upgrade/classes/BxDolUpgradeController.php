@@ -96,12 +96,12 @@ class BxDolUpgradeController
         return false;
     }
 
-    public function runUpgrade ($sFolder)
+    public function runUpgrade ($sFolder, $bIgnoreVersionCheck = false, $bIgnoreFilesOperations = false)
     {
         $this->aLogMsgs = array();
         $this->sError = false;
 
-        if (bx_get_ver() != BX_DOL_VERSION) {
+        if (!$bIgnoreVersionCheck && bx_get_ver() != BX_DOL_VERSION) {
             $this->sError = 'Database and files versions are different';
             return false;
         }
@@ -117,6 +117,11 @@ class BxDolUpgradeController
             'filesDelete' => "Deprecated files were successfully deleted or there is no files to delete",
             'updateFilesHash' => "System files hash was successfully updated",
         );
+        if ($bIgnoreFilesOperations) {
+            $aFilesOperations = [
+                'updateFilesHash' => "System files hash was successfully updated",
+            ];
+        }
     
         foreach ($aFilesOperations as $sFunc => $sSuccessMsg) {
             $mixedResult = $this->oUtil->$sFunc ();

@@ -19,7 +19,7 @@ class BxDolUpgrader extends BxDol
      * After all check are successfully completed, transient cron job is set to run upgrade upon next cron run.
      * @return true if upgrade was successfully scheduled to run, or false on error (you can call @see getError to determine particular error message)
      */
-    public function prepare($bAuto = true)
+    public function prepare($bAuto = true, $bIgnoreVersionCheck = false)
     {
         $this->oDb = BxDolDb::getInstance(); // to use in check.php file 
         $this->setError(false);
@@ -45,7 +45,7 @@ class BxDolUpgrader extends BxDol
             if (!$this->isUpgradeAvailable($aVersionUpdateInfo))
                 break;
 
-            if (BX_DOL_VERSION != bx_get_ver()) {
+            if (!$bIgnoreVersionCheck && BX_DOL_VERSION != bx_get_ver()) {
                 $this->setError(_t('_sys_upgrade_db_and_files_versions_different'));
                 break;
             }
