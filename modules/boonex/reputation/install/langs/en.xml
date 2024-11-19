@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+    <string name="_bx_reputation"><![CDATA[Reputation]]></string>
+
+    <string name="_bx_reputation_option_"><![CDATA[]]></string>
+
+    <string name="_bx_reputation_form_handler"><![CDATA[Handler]]></string>
+    <string name="_bx_reputation_form_handler_display_edit"><![CDATA[Edit Handler]]></string>
+    <string name="_bx_reputation_form_handler_input_sys_points_active"><![CDATA[Points (active)]]></string>
+    <string name="_bx_reputation_form_handler_input_points_active"><![CDATA[Points (active)]]></string>
+    <string name="_bx_reputation_form_handler_input_points_active_info"><![CDATA[Points received by a user when he does something (create a post, comment, vote, etc).]]></string>
+    <string name="_bx_reputation_form_handler_input_sys_points_passive"><![CDATA[Points (passive)]]></string>
+    <string name="_bx_reputation_form_handler_input_points_passive"><![CDATA[Points (passive)]]></string>
+    <string name="_bx_reputation_form_handler_input_points_passive_info"><![CDATA[Points received by a user when an action (comment, vote, etc) was done with his content by another user.]]></string>
+    <string name="_bx_reputation_form_handler_input_sys_controls"><![CDATA[Controls]]></string>
+    <string name="_bx_reputation_form_handler_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_reputation_form_handler_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_reputation_form_handler_input_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_reputation_form_handler_input_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_reputation_popup_title_handler_edit"><![CDATA[Edit Handler]]></string>
+
+    <string name="_bx_reputation_page_block_title_system_summary"><![CDATA[Summary]]></string>
+    <string name="_bx_reputation_page_block_title_summary"><![CDATA[Summary]]></string>
+
+    <string name="_bx_reviews_menu_item_title_manage"><![CDATA[Manage]]></string>
+
+    <string name="_bx_reputation_grid_column_title_active"><![CDATA[Active]]></string>
+    <string name="_bx_reputation_grid_column_title_alert_unit"><![CDATA[Section]]></string>
+    <string name="_bx_reputation_grid_column_title_alert_action"><![CDATA[Action]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_added"><![CDATA[Add]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_deleted"><![CDATA[Remove]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_commentPost"><![CDATA[Post comment]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_commentRemoved"><![CDATA[Remove comment]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_doVote"><![CDATA[Do vote]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_undoVote"><![CDATA[Undo vote]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_doVoteUp"><![CDATA[Do up vote]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_undoVoteUp"><![CDATA[Undo up vote]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_doVoteDown"><![CDATA[Do down vote]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_undoVoteDown"><![CDATA[Undo down vote]]></string>
+    <string name="_bx_reputation_grid_column_title_points_active"><![CDATA[Points (active)]]></string>
+    <string name="_bx_reputation_grid_column_title_points_passive"><![CDATA[Points (passive)]]></string>
+    <string name="_bx_reputation_grid_action_title_activate"><![CDATA[Activate]]></string>
+    <string name="_bx_reputation_grid_action_title_deactivate"><![CDATA[Deactivate]]></string>
+    <string name="_bx_reputation_grid_action_title_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_reputation_grid_action_err_perform"><![CDATA[Cannot perform the action for selected items(s).]]></string>
+    <string name="_bx_reputation_grid_filter_item_title_select_one_filter1"><![CDATA[All Sections]]></string>
+
+    <string name="_bx_reputation_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
+
+    <string name="_bx_reputation_txt_points"><![CDATA[points]]></string>
+</resources>

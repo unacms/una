@@ -1,0 +1,68 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defdroup    Reputation Reputation
+ * @indroup     UnaModules
+ *
+ * @{
+ */
+
+class BxReputationAlertsResponse extends BxBaseModNotificationsResponse
+{
+    public function __construct()
+    {
+        $this->_sModule = 'bx_reputation';
+
+        parent::__construct();
+    }
+
+    public function response($oAlert)
+    {
+        parent::response($oAlert);
+
+        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+        if(method_exists($this, $sMethod))
+            return $this->$sMethod($oAlert);
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_reputation-before_register_alert 'bx_reputation', 'before_register_alert' - hook to override alert (hook) before processing
+         * - $unit_name - equals `bx_reputation`
+         * - $action - equals `before_register_alert`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `unit` - [string] alert (hook) unit
+         *      - `action` - [string] alert (hook) action
+         *      - `alert` - [array] by ref, an instance of alert (hook), @see BxDolAlerts, can be overridden in hook processing        
+         * @hook @ref hook-bx_reputation-before_register_alert
+         */
+        bx_alert($this->_oModule->getName(), 'before_register_alert', 0, 0, [
+            'unit' => $oAlert->sUnit,
+            'action' => $oAlert->sAction,
+            'alert' => &$oAlert,
+        ]);
+
+        $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
+        if(empty($aHandler) || !is_array($aHandler))
+            return;
+
+        $iOwnerId = $oAlert->iSender;
+        $iObjectOwnerId = $this->_getObjectOwnerId($oAlert->aExtras);
+
+        if(($iPoints = (int)$aHandler['points_active']) != 0)
+            $this->_oModule->_oDb->insertProfile($iOwnerId, $iPoints);
+
+        if(($iPoints = (int)$aHandler['points_passive']) != 0 && $iOwnerId != $iObjectOwnerId)
+            $this->_oModule->_oDb->insertProfile($iObjectOwnerId, $iPoints);
+    }
+
+    protected function _processProfileDelete($oAlert)
+    {
+        $this->_oModule->_oDb->deleteProfile($oAlert->iObject);
+    }
+}
+
+/** @} */
