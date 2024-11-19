@@ -64,32 +64,28 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 
     public function insertData($aData)
     {
-        $aHandlers = array();
+        $aHandlers = [];
+        $aHandlerFields = $this->_oConfig->getHandlerFields();
     	$aHandlerDescriptor = $this->_oConfig->getHandlerDescriptor();
 
     	//--- Update Timeline Handlers ---//
         foreach($aData['handlers'] as $aHandler) {
             $sContent = $sPrivacy = '';
 
-            $bInsert = $aHandler['type'] == BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT;
-            if($bInsert) {
+            if($aHandler['type'] == BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT) {
             	if(empty($aHandler['module_class']))
-            		$aHandler['module_class'] = 'Module';
+                    $aHandler['module_class'] = 'Module';
 
             	$sContent = serialize(array_intersect_key($aHandler, $aHandlerDescriptor));
             	$sPrivacy = !empty($aHandler['module_event_privacy']) ? $aHandler['module_event_privacy'] : '';
             }
 
-            $sQuery = $this->prepare("INSERT INTO
-                    `{$this->_sTableHandlers}`
-                SET
-                	`group`=?,
-                    `type`=?,
-                    `alert_unit`=?,
-                    `alert_action`=?,
-                    `content`=?,
-                    `privacy`=?", $aHandler['group'], $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent, $sPrivacy);
+            $aHandler = array_merge($aHandler, [
+                'content' => $sContent,
+                'privacy' => $sPrivacy
+            ]);
 
+            $sQuery = "INSERT INTO `{$this->_sTableHandlers}` SET " . $this->arrayToSQL(array_intersect_key($aHandler, array_flip($aHandlerFields)));
             if(!$this->query($sQuery))
                 continue;
 
@@ -207,6 +203,15 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 
         if(!empty($aParams))
             switch($aParams['type']) {
+                case 'by_id':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1] = [
+                        'id' => $aParams['value']
+                    ];
+
+                    $sWhereClause = "AND `id`=:id";
+                    break;
+                
                 case 'by_type':
                     $aMethod['params'][1] = array(
                         'type' => $aParams['value']

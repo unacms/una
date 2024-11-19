@@ -2602,6 +2602,56 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
+     * Data for Reputation module
+     */
+    public function serviceGetReputationData()
+    {
+    	$sModule = $this->_aModule['name'];
+
+        $aResult = [
+            'handlers' => [
+                ['group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'points_active' => 3, 'points_passive' => 0],
+                ['group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted', 'points_active' => -3, 'points_passive' => 0],
+
+                ['group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'points_active' => 2, 'points_passive' => 1],
+                ['group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved', 'points_active' => -2, 'points_passive' => -1],
+
+                ['group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'points_active' => 1, 'points_passive' => 1],
+                ['group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote', 'points_active' => -1, 'points_passive' => -1],
+
+                ['group' => $sModule . '_reaction', 'type' => 'insert', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'doVote', 'points_active' => 1, 'points_passive' => 1],
+                ['group' => $sModule . '_reaction', 'type' => 'delete', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'undoVote', 'points_active' => -1, 'points_passive' => -1],
+
+                ['group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'points_active' => 1, 'points_passive' => 1],
+                ['group' => $sModule . '_score_up', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVoteUp', 'points_active' => -1, 'points_passive' => -1],
+
+                ['group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'points_active' => 1, 'points_passive' => -1],
+                ['group' => $sModule . '_score_down', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVoteDown', 'points_active' => -1, 'points_passive' => 1],
+            ],
+            'alerts' => [
+                ['unit' => $sModule, 'action' => 'added'],
+                ['unit' => $sModule, 'action' => 'deleted'],
+
+                ['unit' => $sModule, 'action' => 'commentPost'],
+                ['unit' => $sModule, 'action' => 'commentRemoved'],
+
+                ['unit' => $sModule, 'action' => 'doVote'],
+                ['unit' => $sModule, 'action' => 'undoVote'],
+
+                ['unit' => $sModule . '_reactions', 'action' => 'doVote'],
+                ['unit' => $sModule . '_reactions', 'action' => 'undoVote'],
+
+                ['unit' => $sModule, 'action' => 'doVoteUp'],
+                ['unit' => $sModule, 'action' => 'undoVoteUp'],
+                ['unit' => $sModule, 'action' => 'doVoteDown'],
+                ['unit' => $sModule, 'action' => 'undoVoteDown'],
+            ]
+        ];
+
+        return $aResult;
+    }
+
+    /**
      * Data for Timeline module
      */
     public function serviceGetTimelineData()

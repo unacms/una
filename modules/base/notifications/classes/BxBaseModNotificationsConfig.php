@@ -15,6 +15,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 
     protected $_aObjects;
 
+    protected $_aHandlerFields;
     protected $_aHandlerDescriptor;
     protected $_sHandlersMethod;
     protected $_aHandlers;
@@ -33,39 +34,40 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     {
         parent::__construct($aModule);
 
-        $this->_aPrefixes = array();
-        $this->_aObjects = array(
+        $this->_aPrefixes = [];
+        $this->_aObjects = [
             'alert' => $this->_sName,
 
             'privacy_view' => $this->_sName . '_privacy_view',
 
             'conn_subscriptions' => 'sys_profiles_subscriptions'
-        );
+        ];
 
-        $this->_aHandlerDescriptor = array();
+        $this->_aHandlerFields = ['group', 'type', 'alert_unit', 'alert_action', 'content', 'privacy'];
+        $this->_aHandlerDescriptor = [];
         $this->_sHandlersMethod = '';
-        $this->_aHandlersHidden = array();
-        $this->_aHandlers = array();
+        $this->_aHandlersHidden = [];
+        $this->_aHandlers = [];
 
-        $this->_aJsClasses = array();
-        $this->_aJsObjects = array();
+        $this->_aJsClasses = [];
+        $this->_aJsObjects = [];
 
-        $this->_aPerPage = array();
-        $this->_aHtmlIds = array();
+        $this->_aPerPage = [];
+        $this->_aHtmlIds = [];
 
         $this->_sAnimationEffect = 'fade';
         $this->_iAnimationSpeed = 'slow';
 
-        $this->_aPrivacyViewDefault = array(
+        $this->_aPrivacyViewDefault = [
             'object' => BX_DOL_PG_ALL,
             'event' => BX_DOL_PG_ALL
-        );
+        ];
 
         $iCfDefault = BxDolContentFilter::getInstance()->getDefaultValue();
-        $this->_aCfDefault = array(
+        $this->_aCfDefault = [
             'object' => $iCfDefault,
             'event' => $iCfDefault
-        );
+        ];
     }
 
     public function init(&$oDb)
@@ -87,6 +89,11 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
         $sHideTimeline = getParam($sOptionPrefix . 'events_hide');
         if(!empty($sHideTimeline))
             $this->_aHandlersHidden = explode(',', $sHideTimeline);
+    }
+
+    public function getHandlerFields()
+    {
+    	return $this->_aHandlerFields;
     }
 
     public function getHandlerDescriptor()

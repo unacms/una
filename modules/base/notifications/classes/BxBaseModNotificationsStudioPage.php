@@ -50,10 +50,14 @@ class BxBaseModNotificationsStudioPage extends BxTemplStudioModule
                     if(empty($aRelation['on_' . $sOperation]))
                         break 2;
 
+                    $sHandlersMethod = isset($aConfig['relation_handlers_method']) ? $aConfig['relation_handlers_method'] : '';
+
                     $aModules = $oInstallerDb->getModulesBy(array('type' => 'all', 'active' => 1));
                     foreach($aModules as $aModule) {
                         $aModuleConfig = BxDolInstallerUtils::getModuleConfig($aModule);
                         if(!empty($aModuleConfig['relations']) && is_array($aModuleConfig['relations']) && in_array($aConfig['name'], $aModuleConfig['relations']))
+                            bx_srv_ii($aConfig['name'], $aRelation['on_' . $sOperation], [$aModule['uri']]);
+                        else if($sHandlersMethod && bx_is_srv($aModule['name'], $sHandlersMethod) && (bx_srv('system', 'is_module_content', [$aModule['name']]) || bx_srv('system', 'is_module_context', [$aModule['name']])))
                             bx_srv_ii($aConfig['name'], $aRelation['on_' . $sOperation], [$aModule['uri']]);
                     }
                 }

@@ -706,14 +706,18 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         $aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $this->_aConfig['name']));
         if(empty($aRelation) || empty($aRelation['on_' . $sOperation]))
-                return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+            return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+
+        $sHandlersMethod = isset($this->_aConfig['relation_handlers_method']) ? $this->_aConfig['relation_handlers_method'] : '';
 
     	$aModules = $this->oDb->getModulesBy(array('type' => 'all', 'active' => 1));
         foreach($aModules as $aModule) {
             $aConfig = self::getModuleConfig($aModule);
-                if(!empty($aConfig['relations']) && is_array($aConfig['relations']) && in_array($this->_aConfig['name'], $aConfig['relations']))
-                    bx_srv_ii($this->_aConfig['name'], $aRelation['on_' . $sOperation], array($aModule['uri']));
-            }
+            if(!empty($aConfig['relations']) && is_array($aConfig['relations']) && in_array($this->_aConfig['name'], $aConfig['relations']))
+                bx_srv_ii($this->_aConfig['name'], $aRelation['on_' . $sOperation], array($aModule['uri']));
+            else if($sHandlersMethod && bx_is_srv($aModule['name'], $sHandlersMethod) && (bx_srv('system', 'is_module_content', [$aModule['name']]) || bx_srv('system', 'is_module_context', [$aModule['name']])))
+                bx_srv_ii($this->_aConfig['name'], $aRelation['on_' . $sOperation], array($aModule['uri']));
+        }
 
         if($sOperation == 'disable')
             $this->oDb->deleteRelation($this->_aConfig['name']);

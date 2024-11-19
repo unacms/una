@@ -1508,6 +1508,28 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     }
 
     /**
+     * Data for Reputation module
+     */
+    public function serviceGetReputationData()
+    {
+        $aResult = parent::serviceGetReputationData();
+
+    	$sModule = $this->_aModule['name'];
+
+        if(!empty($aResult['handlers']) && is_array($aResult['handlers']))
+            foreach($aResult['handlers'] as $iKey => $aHandler)
+                if(in_array($aHandler['group'], [$sModule . '_comment', $sModule . '_reaction']))
+                    unset($aResult['handlers'][$iKey]);
+
+        if(!empty($aResult['alerts']) && is_array($aResult['alerts']))
+            foreach($aResult['alerts'] as $iKey => $aAlert)
+                if($aAlert['unit'] == $sModule . '_reactions' || in_array($aAlert['action'], ['commentPost', 'commentRemoved']))
+                    unset($aResult['alerts'][$iKey]);
+
+        return $aResult;
+    }
+
+    /**
      * Data for Timeline module
      */
     public function serviceGetTimelineData()
