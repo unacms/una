@@ -76,14 +76,14 @@ class BxSpacesDb extends BxBaseModGroupsDb
         ));
     }
 
-    public function getChildEntriesIdByProfileId ($iParent)
+    public function getChildEntriesIdByProfileId ($iParentPid)
     {
-        $aBindings = array(
-            'content_id' => $iParent,
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->getColumn("SELECT `id` FROM `sys_profiles` WHERE `content_id` IN (SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_PARENT'] . "` = :parent_pid AND `" . $CNF['FIELD_STATUS'] . "` = 'active' AND `" . $CNF['FIELD_STATUS_ADMIN'] . "` = 'active') AND `type` = :type AND `status`='active'", [
+            'parent_pid' => $iParentPid,
             'type' => $this->_oConfig->getName()
-        );
-        $sQuery = "SELECT `id` FROM `sys_profiles` WHERE `content_id` IN (SELECT `" . $this->_oConfig->CNF['FIELD_ID'] . "` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_PARENT'] . "` IN (SELECT `id` FROM `sys_profiles` WHERE `content_id` = :content_id AND `type` = :type)) AND `type` = :type";
-        return $this->getColumn($sQuery, $aBindings);
+        ]);
     }
 }
 

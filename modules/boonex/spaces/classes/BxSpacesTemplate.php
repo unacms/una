@@ -20,29 +20,37 @@ class BxSpacesTemplate extends BxBaseModGroupsTemplate
         parent::__construct($oConfig, $oDb);
     }
     
-    public function entryChilds($aData, $aParams = array())
+    public function entryChilds($aData, $aParams = [])
     {
-        $CNF = $this->_oConfig->CNF;
-        $aChild = $this->_oModule->_oDb->getChildEntriesIdByProfileId($aData[$CNF['FIELD_ID']]);
-        
-        if (count($aChild) == 0)
-            return false;
-        
-        if (!isset($aParams['template']))
-            $aParams['template'] = 'unit_wo_cover';
-        
-        return $this->parseHtmlByName('entry-childs.html', array('content' => $this->getBrowseQuick($aChild, $aParams['template'])));
-    }
-    
-    public function entryParent($aData, $aParams = array())
-    {
-        $CNF = $this->_oConfig->CNF;
-        if ($aData[$CNF['FIELD_PARENT']] == 0)
+        $aChild = $this->_oModule->_oDb->getChildEntriesIdByProfileId($aData['profile_id']);
+        if(count($aChild) == 0)
             return false;
 
-        if (!isset($aParams['template']))
+        if(!isset($aParams['template']))
             $aParams['template'] = 'unit_wo_cover';
-        return $this->parseHtmlByName('entry-parent.html', array('content' => $this->getBrowseQuick(array($aData[$CNF['FIELD_PARENT']]), $aParams['template'])));
+
+        return $this->parseHtmlByName('entry-childs.html', [
+            'content' => $this->getBrowseQuick($aChild, $aParams['template'])
+        ]);
+    }
+
+    public function entryParent($aData, $aParams = [])
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $iParentPid = (int)$aData[$CNF['FIELD_PARENT']];
+        if($iParentPid == 0)
+            return false;
+        
+        $aParent = $this->_oDb->getContentInfoByProfileId($iParentPid);
+        if(empty($aParent) || !is_array($aParent) || $aParent[$CNF['FIELD_STATUS']] != 'active' || $aParent[$CNF['FIELD_STATUS_ADMIN']] != 'active')
+            return false;
+
+        if(!isset($aParams['template']))
+            $aParams['template'] = 'unit_wo_cover';
+        return $this->parseHtmlByName('entry-parent.html', [
+            'content' => $this->getBrowseQuick([$aData[$CNF['FIELD_PARENT']]], $aParams['template'])
+        ]);
     }
     
     private function getBrowseQuick($aProfiles, $sTemplate = 'unit_wo_cover')
