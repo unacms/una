@@ -279,7 +279,10 @@ class BxDolManageCmd
         foreach ($a as $r) {
             if (!in_array($r['module_name'], $aModules) && !in_array($r['module_dir'], $aModules))
                 continue;
-            $aRes = BxDolStudioInstallerUtils::getInstance()->perform($r['dir'], 'update', ['module_name' => $r['module_name']]);
+            $aRes = BxDolStudioInstallerUtils::getInstance()->perform($r['dir'], 'update', [
+                'module_name' => $r['module_name'],
+                'disabled_actions' => ['update_files'],
+            ]);
 
             $s .= str_pad($r['module_name'], 20);
             if (!isset($aRes['code']) || $aRes['code'] !== BX_DOL_STUDIO_IU_RC_SUCCESS) {
@@ -289,6 +292,9 @@ class BxDolManageCmd
                 $s .= "OK\n";
             }
         }
+
+        if (!$s)
+            $this->finish($this->_aReturnCodes['module operation failed']['code'], 'No downloaded updates or no updates were found for specified modules');
 
         $iCode = $bErr ? $this->_aReturnCodes['module operation failed']['code'] : $this->_aReturnCodes['success']['code'];
         $this->finish($iCode, trim($s));
