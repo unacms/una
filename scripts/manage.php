@@ -246,21 +246,59 @@ class BxDolManageCmd
 
     function cmdCheckModulesUpdates()
     {
+        $aDownloaded = BxDolStudioInstallerUtils::getInstance()->getUpdates();
         $a = BxDolStudioInstallerUtils::getInstance()->checkUpdates();
         if (!$a)
             $this->finish($this->_aReturnCodes['success']['code'], 'No modules updates available');
 
         $s = '';
         foreach ($a as $r) {
-            $s .= str_pad($r['name'], 20) . str_pad($r['file_version'], 12) . $r['file_version_to'] . "\n";
+            $s .= str_pad($r['name'], 20) . str_pad($r['file_version'], 12) . str_pad($r['file_version_to'], 12);
+            foreach ($aDownloaded as $j) {
+                if ($j['module_name'] == $r['name'])
+                    $s .= $j['dir'];
+            }
+            $s .= "\n";
         }
         $this->finish($this->_aReturnCodes['success']['code'], trim($s));
     }
 
     function cmdUpdateModules()
     {
+        // TODO: option to disable files operations
         $aModules = $this->_parseOptions($this->_sCmdOptions);
-        var_dump($aModules);
+        if (!$aModules)
+            $this->finish($this->_aReturnCodes['module operation failed']['code'], 'No modules were provided');
+
+        $bErr = false;
+        $s = "";
+        $a = BxDolStudioInstallerUtils::getInstance()->getUpdates();
+        if (!$a)
+            $this->finish($this->_aReturnCodes['success']['code'], 'No modules updates available');
+
+        foreach ($a as $r) {
+            if (!in_array($r['module_name'], $aModules) && !in_array($r['module_dir'], $aModules))
+                continue;
+            $aRes = BxDolStudioInstallerUtils::getInstance()->perform($r['dir'], 'update', ['module_name' => $r['module_name']]);
+
+            $s .= str_pad($r['module_name'], 20);
+            if (!isset($aRes['code']) || $aRes['code'] !== BX_DOL_STUDIO_IU_RC_SUCCESS) {
+                $bErr = true;
+                $s .= "ERROR " . html_entity_decode($aRes['message']) . "\n";
+            } else {
+                $s .= "OK\n";
+            }
+        }
+
+        $iCode = $bErr ? $this->_aReturnCodes['module operation failed']['code'] : $this->_aReturnCodes['success']['code'];
+        $this->finish($iCode, trim($s));
+/*
+        BxDolStudioInstallerUtils::getInstance()->performModulesUpgrade(array(
+            'directly' => true,
+            'transient' => false,
+            'autoupdate' => true
+        ));
+*/
     }
 
     function cmdInstallModules()
