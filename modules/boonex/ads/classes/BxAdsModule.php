@@ -2689,17 +2689,11 @@ class BxAdsModule extends BxBaseModTextModule
             ]);
 
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
-        if(empty($aResult['raw']))
-            $aResult['raw'] = '';
 
-        if($this->_bIsApi)
-            $aResult = array_merge($aResult, [
-                'price' => $sPrice,
-                'category_title' => $sCategory,
-                'register_click' => $this->_oConfig->isPromotion() ? 'bx_ads/register_click&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false,
-                'register_impression' => $this->_oConfig->isPromotion() ? 'bx_ads/register_impression&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false,
-            ]);
-        else
+        if(!$this->_bIsApi) {
+            if(empty($aResult['raw']))
+                $aResult['raw'] = '';
+
             $aResult['text'] = $this->_oTemplate->parseHtmlByName('timeline_post_text.html', [
                 'category_link' => $sCategoryLink,
                 'category_title' => $sCategory,
@@ -2707,9 +2701,20 @@ class BxAdsModule extends BxBaseModTextModule
                 'price' => $sPrice,
                 'text' => $aResult['text']
             ]);
+        }
+        else
+            $aResult = array_merge($aResult, [
+                'price' => $sPrice,
+                'category_title' => $sCategory,
+                'register_click' => $this->_oConfig->isPromotion() ? 'bx_ads/register_click&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false,
+                'register_impression' => $this->_oConfig->isPromotion() ? 'bx_ads/register_impression&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false,
+            ]);
 
         if($this->_oConfig->isSources() && !empty($aContentInfo[$CNF['FIELD_URL']]))
             $aResult['url'] = $aContentInfo[$CNF['FIELD_URL']];
+
+        if($this->_bIsApi)
+            return $aResult;
 
         if($this->_oConfig->isPromotion()) {
             $sJsObject = $this->_oConfig->getJsObject('main');

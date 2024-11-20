@@ -770,21 +770,22 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $sLocationString = $oMetatags ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : false;
 
-        $a['content']['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', [
-            'title' => $a['content']['title'],
-            'title_attr' => bx_html_attribute($a['content']['title']),
-            'url' => $a['content']['url'],
-            'bx_if:date' => [
-                'condition' => $oDateStart,
-                'content' => [
-                    'date' => $oDateStart ? bx_time_js($aContentInfo['date_start'], BX_FORMAT_DATE_TIME, true) : '',
-                    'date_c' => $oDateStart->format('c'),
-            ]],
-            'bx_if:location' => array(
-                'condition' => !!$sLocationString,
-                'content' => array('location' => $sLocationString),
-            ),
-        ]);
+        if(!$this->_bIsApi)
+            $a['content']['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', [
+                'title' => $a['content']['title'],
+                'title_attr' => bx_html_attribute($a['content']['title']),
+                'url' => $a['content']['url'],
+                'bx_if:date' => [
+                    'condition' => $oDateStart,
+                    'content' => [
+                        'date' => $oDateStart ? bx_time_js($aContentInfo['date_start'], BX_FORMAT_DATE_TIME, true) : '',
+                        'date_c' => $oDateStart->format('c'),
+                ]],
+                'bx_if:location' => array(
+                    'condition' => !!$sLocationString,
+                    'content' => array('location' => $sLocationString),
+                ),
+            ]);
 
         return $a;
     }

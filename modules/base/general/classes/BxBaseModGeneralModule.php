@@ -4273,14 +4273,9 @@ class BxBaseModGeneralModule extends BxDolModule
             if ($oCategory)
                 $sCategory = $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']]);
         } 
-        
-    	return array(
-            'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
-            'sample_wo_article' => $CNF['T']['txt_sample_single'],
-            'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
-            'url' => $sUrl,
+
+        $aResult = [
             'title' => $sTitle,
-            'category' => $sCategory,
             'text' => $sText,
             'images' => $aImages,
             'images_attach' => $aImagesAttach,
@@ -4288,7 +4283,15 @@ class BxBaseModGeneralModule extends BxDolModule
             'videos_attach' => $aVideosAttach,
             'files' => $aFiles,
             'files_attach' => $aFilesAttach
-        );
+        ];
+
+        return $this->_bIsApi ? $aResult : array_merge($aResult, [
+            'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+            'sample_wo_article' => $CNF['T']['txt_sample_single'],
+            'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+            'url' => $sUrl,
+            'category' => $sCategory,
+        ]);
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
