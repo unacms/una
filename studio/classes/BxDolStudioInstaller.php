@@ -997,6 +997,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $sMethod = 'action' . bx_gen_method_name($sAction);
             if($iEnabled == 0 || !method_exists($this, $sMethod))
                 continue;
+            if(isset($aParams['disabled_actions']) && in_array($sAction, $aParams['disabled_actions']))
+                continue;
 
             $mixedResult = $this->$sMethod($sOperationName);
 
