@@ -2013,8 +2013,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
-        if ($aEvent['content']['url'])
-        $aEvent['url'] = bx_ltrim_str($aEvent['content']['url'], BX_DOL_URL_ROOT);
+        $aEvent['url'] = '';
+        if(!empty($aEvent['content']['url']))
+            $aEvent['url'] = bx_ltrim_str($aEvent['content']['url'], BX_DOL_URL_ROOT);
 
         if(!empty($aEvent['content']) && !empty($aEvent['content']['text'])) {
             $sMethodPrepare = '_prepareTextForOutput';
@@ -3270,7 +3271,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         if($this->_bIsApi)
             $aResult['content'] = array_intersect_key($aResult['content'], array_flip([
-                'object_id', 'title', 'text', 'links', 'images', 'images_attach', 'videos', 'videos_attach', 'files', 'files_attach', 'parse_type', 'owner_name', 'embed'
+                'object_id', 'url', 'title', 'text', 'links', 'images', 'images_attach', 'videos', 'videos_attach', 'files', 'files_attach', 'parse_type', 'owner_name', 'embed'
             ]));
 
         return $aResult;
