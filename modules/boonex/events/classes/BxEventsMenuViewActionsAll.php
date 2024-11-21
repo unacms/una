@@ -88,11 +88,6 @@ class BxEventsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
         }
         return $a;
     }
-
-    protected function _getMenuItemProfileSetBadges($aItem)
-    {
-        return $this->_getMenuItemByNameActions($aItem);
-    }
 }
 
 /** @} */
