@@ -28,7 +28,11 @@
     <string name="_bx_reputation_grid_column_title_alert_unit"><![CDATA[Раздел]]></string>
     <string name="_bx_reputation_grid_column_title_alert_action"><![CDATA[Действие]]></string>
     <string name="_bx_reputation_grid_column_value_aa_added"><![CDATA[Добавить]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_post_common"><![CDATA[Написать пост]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_repost"><![CDATA[Сдулать репост]]></string>
     <string name="_bx_reputation_grid_column_value_aa_deleted"><![CDATA[Удалить]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_delete"><![CDATA[Удалить пост]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_delete_repost"><![CDATA[Удалить репост]]></string>
     <string name="_bx_reputation_grid_column_value_aa_commentPost"><![CDATA[Оставить комментарий]]></string>
     <string name="_bx_reputation_grid_column_value_aa_commentRemoved"><![CDATA[Удалить комментарий]]></string>
     <string name="_bx_reputation_grid_column_value_aa_doVote"><![CDATA[Проголосовать]]></string>

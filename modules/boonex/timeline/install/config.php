@@ -132,11 +132,12 @@ $aConfig = array(
     'relation_handlers' => array(
     	'on_install' => '',
     	'on_uninstall' => 'delete_module_events',
-	    'on_enable' => 'add_handlers',
-	    'on_disable' => 'delete_handlers',
+        'on_enable' => 'add_handlers',
+        'on_disable' => 'delete_handlers',
     ),
     'relations' => array(
-    	'bx_notifications'
+        'bx_notifications',
+    	'bx_reputation'
     )
 );
 

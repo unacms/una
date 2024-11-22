@@ -28,7 +28,11 @@
     <string name="_bx_reputation_grid_column_title_alert_unit"><![CDATA[Section]]></string>
     <string name="_bx_reputation_grid_column_title_alert_action"><![CDATA[Action]]></string>
     <string name="_bx_reputation_grid_column_value_aa_added"><![CDATA[Add]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_post_common"><![CDATA[Write post]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_repost"><![CDATA[Do repost]]></string>
     <string name="_bx_reputation_grid_column_value_aa_deleted"><![CDATA[Remove]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_delete"><![CDATA[Remove post]]></string>
+    <string name="_bx_reputation_grid_column_value_aa_delete_repost"><![CDATA[Remove repost]]></string>
     <string name="_bx_reputation_grid_column_value_aa_commentPost"><![CDATA[Post comment]]></string>
     <string name="_bx_reputation_grid_column_value_aa_commentRemoved"><![CDATA[Remove comment]]></string>
     <string name="_bx_reputation_grid_column_value_aa_doVote"><![CDATA[Do vote]]></string>
