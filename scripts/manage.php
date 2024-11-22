@@ -20,6 +20,7 @@ class BxDolManageCmd
     protected $_sPathToUna;
     protected $_aSiteConfig;
     protected $_isQuiet = false;
+    protected $_isSkipFilesOperation = false;
     protected $_aReturnCodes = array(
         'success' => array ('code' => 0, 'msg' => 'Success.'),
         'una not found' => array ('code' => 1, 'msg' => 'UNA wasn\'t found in the specified path: '),
@@ -46,13 +47,16 @@ class BxDolManageCmd
     {
         // set neccessary options
 
-        $a = getopt('hqc:u:p:o:', $this->getOptions());
+        $a = getopt('hqic:u:p:o:', $this->getOptions());
 
         if (isset($a['h']))
             $this->finish($this->_aReturnCodes['success']['code'], $this->getHelp());
 
         if (isset($a['q']))
             $this->_isQuiet = true;
+
+        if (isset($a['i']))
+            $this->_isSkipFilesOperation = true;
 
         if (isset($a['u']))
             $this->_sPathToUna = $a['u'];
@@ -96,9 +100,9 @@ class BxDolManageCmd
         $s .= str_pad("\t -q", 35) . "Quiet\n";
         $s .= str_pad("\t -u", 35) . "Path to UNA\n";
         $s .= str_pad("\t -c", 35) . "Command to run:\n";
+        $s .= str_pad("\t -i", 35) . "Skip files oprations, such copying and deleting when performing update commands\n";
         $s .= str_pad("\t", 39) . "- update - options:\n";
         $s .= str_pad("\t", 43) . "'ignore_version_check' to ignore version comparison in DB and files\n";
-        $s .= str_pad("\t", 43) . "'skip_files_op' skip files oprations, such copying and deleting\n";
         $s .= str_pad("\t", 39) . "- check_update - no options\n";
         $s .= str_pad("\t", 39) . "- update_modules - options:\n";
         $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
@@ -121,9 +125,15 @@ class BxDolManageCmd
 
         $s .= "Examples:\n";
         $s .= "\tCheck if update is available:\n";
+        $s .= "\tphp ./manage.php -u ../../unafolder -c check_update\n\n";
+        $s .= "\tCheck if update is available using custom DB connection params:\n";
         $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c check_update\n\n";
+        $s .= "\tUpdate system files by ignoring version check and skip files copying, it's necessary when the source code is maintained using VCS:\n";
+        $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c update -i -o ignore_version_check\n\n";
         $s .= "\tCheck if updates for modules are available:\n";
         $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c check_modules_updates\n\n";
+        $s .= "\tUpdate Nexus and Albums modules by ignoring files copying operation, update must be already exists in module's 'updates' folder, to update paid modules authorize the request first in Studio > Apps > Purchases:\n";
+        $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c update_modules -i -o bx_nexus,bx_albums\n\n";
         $s .= "\tInstall Ads and Albums modules:\n";
         $s .= "\tphp ./manage.php -u ../../unafolder --db_name=unadb --db_user=root --db_host=mysql --db_password=root -c install_modules -o boonex/ads,boonex/albums\n\n";
 
@@ -230,7 +240,7 @@ class BxDolManageCmd
         $oController = new BxDolUpgradeController();
         if ($oController->setMaintenanceMode(true)) {
             $sFolder = $oController->getAvailableUpgrade();
-            if ($sFolder && $oController->runUpgrade($sFolder, in_array('ignore_version_check', $aOptions), in_array('skip_files_op', $aOptions))) {
+            if ($sFolder && $oController->runUpgrade($sFolder, in_array('ignore_version_check', $aOptions), $this->_isSkipFilesOperation)) {
                 setParam('sys_revision', getParam('sys_revision') + 1);
                 @bx_rrmdir($sUpgradeDir);
             }
@@ -254,11 +264,14 @@ class BxDolManageCmd
         $s = '';
         foreach ($a as $r) {
             $s .= str_pad($r['name'], 20) . str_pad($r['file_version'], 12) . str_pad($r['file_version_to'], 12);
+            $sDir = '';
             foreach ($aDownloaded as $j) {
                 if ($j['module_name'] == $r['name'])
-                    $s .= $j['dir'];
+                    $sDir .= $j['dir'];
             }
-            $s .= "\n";
+            if (!$sDir)
+                $sDir = "Downloaded update wasn't found";
+            $s .= "$sDir\n";
         }
         $this->finish($this->_aReturnCodes['success']['code'], trim($s));
     }
@@ -279,10 +292,10 @@ class BxDolManageCmd
         foreach ($a as $r) {
             if (!in_array($r['module_name'], $aModules) && !in_array($r['module_dir'], $aModules))
                 continue;
-            $aRes = BxDolStudioInstallerUtils::getInstance()->perform($r['dir'], 'update', [
-                'module_name' => $r['module_name'],
-                'disabled_actions' => ['update_files'],
-            ]);
+            $aParams = ['module_name' => $r['module_name']];
+            if ($this->_isSkipFilesOperation)
+                $aParams['disabled_actions'] = ['update_files'];
+            $aRes = BxDolStudioInstallerUtils::getInstance()->perform($r['dir'], 'update', $aParams);
 
             $s .= str_pad($r['module_name'], 20);
             if (!isset($aRes['code']) || $aRes['code'] !== BX_DOL_STUDIO_IU_RC_SUCCESS) {

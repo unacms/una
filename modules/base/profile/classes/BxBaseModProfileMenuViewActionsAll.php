@@ -123,6 +123,42 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
         return $this->_getMenuItemByNameActions($aItem);
     }
 
+    protected function _getMenuItemProfileSetBadges($aItem)
+    {
+        $aItem = $this->_getMenuItemByNameActions($aItem);
+        if (!$aItem || !$this->_bIsApi)
+            return $aItem;
+        
+        $oBadges = BxDolBadges::getInstance();
+		$aBadges = $oBadges->getData(array('type' => 'by_module&object', 'object_id' => $this->_iContentId, 'module' => $this->_sModule));
+        
+        $aBadgesList = array_map(function ($aBadge) {
+            return [
+                "value" => $aBadge['id'],
+                "label" => $aBadge['text']
+            ];
+        }, $aBadges);
+        
+       $filteredBadges = array_filter($aBadges, function ($aBadge) {
+            return isset($aBadge['badge_id']);
+       });
+
+        $badgeIds = array_values(array_map(function ($aBadge2) {
+            return $aBadge2['id'];
+        }, $filteredBadges));
+
+        return array_merge($aItem, [
+            'display_type' => 'callback',
+            'content_type' => 'badges',
+            'data' => [
+                'content_id' => $this->_iContentId, 
+                'module' => $this->_sModule, 
+                'values' => $aBadgesList, 
+                'value' => $badgeIds
+            ]
+        ]);
+    }
+    
     protected function _getMenuItemProfileSetAclLevel($aItem)
     {
         $aItem = $this->_getMenuItemByNameActions($aItem);

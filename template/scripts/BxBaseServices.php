@@ -91,6 +91,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'UpdateSettings' => 'BxBaseServiceProfiles',
             'Befriend' => 'BxBaseServiceProfiles',
             'ProfileCounters' => 'BxBaseServiceProfiles',
+            'SetBadges' => 'BxBaseServiceProfiles',
             
             'GetChartGrowth' => 'BxBaseChartServices',
             'GetChartStats' => 'BxBaseChartServices',
