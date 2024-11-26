@@ -7,7 +7,13 @@ DELETE FROM `tot`, `toc`, `to` USING `sys_options_types` AS `tot` LEFT JOIN `sys
 
 -- PAGES & BLOCKS
 DELETE FROM `sys_objects_page` WHERE `module` = @sName;
-DELETE FROM `sys_pages_blocks` WHERE `module` = @sName; -- OR `object` IN('bx_reputation_home');
+DELETE FROM `sys_pages_blocks` WHERE `module` = @sName OR `object` IN('bx_reputation_leaderboard');
+
+
+-- MENU
+DELETE FROM `sys_objects_menu` WHERE `module` = @sName;
+DELETE FROM `sys_menu_sets` WHERE `module` = @sName;
+DELETE FROM `sys_menu_items` WHERE `module` = @sName; -- OR `set_name` IN('bx_reputation_submenu');
 
 
 -- GRIDS

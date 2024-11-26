@@ -2,7 +2,7 @@
 <resources name="en" flag="gb" title="English">
     <string name="_bx_reputation"><![CDATA[Reputation]]></string>
 
-    <string name="_bx_reputation_option_"><![CDATA[]]></string>
+    <string name="_bx_reputation_option_leaderboard_limit"><![CDATA[Number of items in leaderboard]]></string>
 
     <string name="_bx_reputation_form_handler"><![CDATA[Handler]]></string>
     <string name="_bx_reputation_form_handler_display_edit"><![CDATA[Edit Handler]]></string>
@@ -19,9 +19,16 @@
     <string name="_bx_reputation_form_handler_input_do_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_reputation_popup_title_handler_edit"><![CDATA[Edit Handler]]></string>
 
+    <string name="_bx_reputation_page_title_sys_leaderboard"><![CDATA[Leaderboard]]></string>
+    <string name="_bx_reputation_page_title_leaderboard"><![CDATA[Leaderboard]]></string>
+    <string name="_bx_reputation_page_block_title_leaderboard_week"><![CDATA[Leaderboard (7-days)]]></string>
+    <string name="_bx_reputation_page_block_title_leaderboard_month"><![CDATA[Leaderboard (30-days)]]></string>
+    <string name="_bx_reputation_page_block_title_leaderboard_all_time"><![CDATA[Leaderboard (all-time)]]></string>
     <string name="_bx_reputation_page_block_title_system_summary"><![CDATA[Summary]]></string>
     <string name="_bx_reputation_page_block_title_summary"><![CDATA[Summary]]></string>
 
+    <string name="_bx_reputation_menu_item_title_system_leaderboard"><![CDATA[Leaderboard]]></string>
+    <string name="_bx_reputation_menu_item_title_leaderboard"><![CDATA[Leaderboard]]></string>
     <string name="_bx_reviews_menu_item_title_manage"><![CDATA[Manage]]></string>
 
     <string name="_bx_reputation_grid_column_title_active"><![CDATA[Active]]></string>

@@ -2,7 +2,7 @@
 <resources name="ru" flag="ru" title="Russian">
     <string name="_bx_reputation"><![CDATA[Репутация]]></string>
 
-    <string name="_bx_reputation_option_"><![CDATA[]]></string>
+    <string name="_bx_reputation_option_leaderboard_limit"><![CDATA[Количество элементов в таблице лидеров]]></string>
 
     <string name="_bx_reputation_form_handler"><![CDATA[Обработчик]]></string>
     <string name="_bx_reputation_form_handler_display_edit"><![CDATA[Редактировать обработчик]]></string>
@@ -19,9 +19,16 @@
     <string name="_bx_reputation_form_handler_input_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_reputation_popup_title_handler_edit"><![CDATA[Редактировать обработчик]]></string>
 
+    <string name="_bx_reputation_page_title_sys_leaderboard"><![CDATA[Таблица лидеров]]></string>
+    <string name="_bx_reputation_page_title_leaderboard"><![CDATA[Таблица лидеров]]></string>
+    <string name="_bx_reputation_page_block_title_leaderboard_week"><![CDATA[Таблица лидеров (7 дней)]]></string>
+    <string name="_bx_reputation_page_block_title_leaderboard_month"><![CDATA[Таблица лидеров (30 дней)]]></string>
+    <string name="_bx_reputation_page_block_title_leaderboard_all_time"><![CDATA[Таблица лидеров (за все время)]]></string>
     <string name="_bx_reputation_page_block_title_system_summary"><![CDATA[Сводка]]></string>
     <string name="_bx_reputation_page_block_title_summary"><![CDATA[Сводка]]></string>
 
+    <string name="_bx_reputation_menu_item_title_system_leaderboard"><![CDATA[Таблица лидеров]]></string>
+    <string name="_bx_reputation_menu_item_title_leaderboard"><![CDATA[Таблица лидеров]]></string>
     <string name="_bx_reviews_menu_item_title_manage"><![CDATA[Управление]]></string>
 
     <string name="_bx_reputation_grid_column_title_active"><![CDATA[Активные]]></string>

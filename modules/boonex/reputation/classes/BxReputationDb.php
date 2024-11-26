@@ -20,11 +20,6 @@ class BxReputationDb extends BxBaseModNotificationsDb
         $this->_oConfig = $oConfig;
     }
 
-    public function insertEvent($aParamsSet)
-    {
-        return 0;
-    }
-
     public function updateEvent($aParamsSet, $aParamsWhere)
     {
         return false;
@@ -37,7 +32,41 @@ class BxReputationDb extends BxBaseModNotificationsDb
 
     public function getEvents($aParams)
     {
-        return [];
+        $CNF = &$this->_oConfig->CNF;
+
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+        $sSelectClause = '*';
+        $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = '';
+        
+        switch($aParams['sample']) {
+            case 'stats':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'owner_id';
+                $aMethod['params'][2] = 'points';
+                $aMethod['params'][3] = [];
+                
+                $sSelectClause = '`owner_id`, SUM(`points`) AS `points`';
+
+                if(!empty($aParams['days']))
+                    $sWhereClause = $this->prepareAsString('AND `date` >= UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ? DAY))', (int)$aParams['days']);
+                
+                $sGroupClause = '`owner_id`';
+                $sOrderClause = '`points` DESC';
+                $sLimitClause = '0, ' . (int)$aParams['limit'];
+                break;
+        }
+        
+        if($sGroupClause)
+            $sGroupClause = "GROUP BY " . $sGroupClause;
+
+        if($sOrderClause)
+            $sOrderClause = "ORDER BY " . $sOrderClause;
+
+        if($sLimitClause)
+            $sLimitClause = "LIMIT " . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_EVENTS'] . "` WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
 
     public function insertProfile($iId, $iPoints)
@@ -57,13 +86,13 @@ class BxReputationDb extends BxBaseModNotificationsDb
         return $this->query("DELETE FROM `" . $CNF['TABLE_PROFILES'] . "` WHERE `id`=:id", ['id' => $iId]);
     }
     
-    public function getProfile($aParams = [])
+    public function getProfiles($aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
 
         $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
         $sSelectClause = '*';
-        $sWhereClause = '';
+        $sWhereClause = $sOrderClause = $sLimitClause = '';
         
         switch($aParams['sample']) {
             case 'id':
@@ -74,10 +103,26 @@ class BxReputationDb extends BxBaseModNotificationsDb
 
                 $sWhereClause = "AND `id` = :id";
                 break;
+
+            case 'stats':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'points';
+                $aMethod['params'][3] = [];
+
+                $sOrderClause = '`points` DESC';
+                $sLimitClause = '0, ' . (int)$aParams['limit'];
+                break;
         }
-        
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_PROFILES'] . "` WHERE 1 " . $sWhereClause;
-        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
+        if($sOrderClause)
+            $sOrderClause = "ORDER BY " . $sOrderClause;
+
+        if($sLimitClause)
+            $sLimitClause = "LIMIT " . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_PROFILES'] . "` WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
     
     public function getHandlers($aParams = []) 

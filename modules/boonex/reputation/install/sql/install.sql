@@ -15,6 +15,21 @@ CREATE TABLE IF NOT EXISTS `bx_reputation_handlers` (
   UNIQUE `alert` (`alert_unit`, `alert_action`)
 );
 
+-- TABLES: events
+CREATE TABLE IF NOT EXISTS `bx_reputation_events` (
+  `id` int(11) NOT NULL auto_increment,
+  `owner_id` int(11) NOT NULL default '0',
+  `type` varchar(64) NOT NULL default '',
+  `action` varchar(64) NOT NULL default '',
+  `object_id` int(11) NOT NULL default '0',
+  `object_owner_id` int(11) NOT NULL default '0',
+  `points` int(11) NOT NULL DEFAULT '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `owner_id` (`owner_id`),
+  KEY `object_id` (`object_id`)
+);
+
 -- TABLE: profiles
 CREATE TABLE IF NOT EXISTS `bx_reputation_profiles` (
   `id` int(11) NOT NULL DEFAULT '0',

@@ -52,11 +52,33 @@ class BxReputationAlertsResponse extends BxBaseModNotificationsResponse
         $iOwnerId = $oAlert->iSender;
         $iObjectOwnerId = $this->_getObjectOwnerId($oAlert->aExtras);
 
-        if(($iPoints = (int)$aHandler['points_active']) != 0)
-            $this->_oModule->_oDb->insertProfile($iOwnerId, $iPoints);
+        $aEvent = [
+            'owner_id' => 0,
+            'type' => $oAlert->sUnit,
+            'action' => $oAlert->sAction,
+            'object_id' => $oAlert->iObject,
+            'object_owner_id' => $iObjectOwnerId,
+            'points' => 0,
+            'date' => time()
+        ];
 
-        if(($iPoints = (int)$aHandler['points_passive']) != 0 && $iOwnerId != $iObjectOwnerId)
+        if(($iPoints = (int)$aHandler['points_active']) != 0) {
+            $this->_oModule->_oDb->insertEvent(array_merge($aEvent, [
+                'owner_id' => $iOwnerId, 
+                'points' => $iPoints
+            ]));
+
+            $this->_oModule->_oDb->insertProfile($iOwnerId, $iPoints);
+        }
+
+        if(($iPoints = (int)$aHandler['points_passive']) != 0 && $iOwnerId != $iObjectOwnerId) {
+            $this->_oModule->_oDb->insertEvent(array_merge($aEvent, [
+                'owner_id' => $iObjectOwnerId, 
+                'points' => $iPoints
+            ]));
+
             $this->_oModule->_oDb->insertProfile($iObjectOwnerId, $iPoints);
+        }
     }
 
     protected function _processProfileDelete($oAlert)

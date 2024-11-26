@@ -30,6 +30,11 @@ class BxReputationModule extends BxBaseModNotificationsModule
 
         return $this->_oTemplate->getBlockSummary($iProfileId);
     }
+
+    public function serviceGetBlockLeaderboard($iDays = 0)
+    {
+        return $this->_oTemplate->getBlockLeaderboard($iDays);
+    }
 }
 
 /** @} */

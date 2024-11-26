@@ -19,13 +19,14 @@ class BxReputationConfig extends BxBaseModNotificationsConfig
 
         $this->CNF = [
             // database tables
+            'TABLE_EVENTS' => $aModule['db_prefix'] . 'events',
             'TABLE_PROFILES' => $aModule['db_prefix'] . 'profiles',
 
             // database fields
             'FIELD_' => '',
 
             // some params
-            'PARAM_' => 'bx_reputation_',
+            'PARAM_LEADERBOARD_LIMIT' => 'bx_reputation_leaderboard_limit',
 
             // objects
             'OBJECT_FORM_HANDLER' => 'bx_reputation_handler',
