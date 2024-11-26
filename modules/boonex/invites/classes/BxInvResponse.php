@@ -67,18 +67,15 @@ class BxInvResponse extends BxDolAlertsResponse
             return;
 
         $this->_oModule->attachAccountIdToInvite($oAlert->iObject, $sKey);
-        
-        $sKeysToRemove = $this->_oModule->_oDb->getInvites(array('type' => 'invites_code_by_single', 'value' => $sKey));
-        $aKeysToRemove = explode(',', $sKeysToRemove);
+
+        $aKeysToRemove = [$sKey];
+        if(($sKeysToRemove = $this->_oModule->_oDb->getInvites(['type' => 'invites_code_by_single', 'value' => $sKey])))
+            $aKeysToRemove = explode(',', $sKeysToRemove);  
+
         $oKeys = BxDolKey::getInstance();
-        if($oKeys){
-            foreach($aKeysToRemove as $sKeyToRemove) {
-                if($oKeys->isKeyExists($sKeyToRemove))
-                    $oKeys->removeKey($sKeyToRemove);
-            }
-        }
-        
-        return;
+        foreach($aKeysToRemove as $sKeyToRemove)
+            if($oKeys->isKeyExists($sKeyToRemove))
+                $oKeys->removeKey($sKeyToRemove);
     }
 
     protected function _processProfileAdd($oAlert)

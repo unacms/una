@@ -163,7 +163,8 @@ class BxInvGridRequests extends BxTemplGrid
             if(empty($mixedResult) || !is_array($mixedResult))
                 continue;
 
-            $this->_oModule->_oDb->attachInviteToRequest($iId, (int)array_shift(array_keys($mixedResult)));
+            $aInviteIds = array_keys($mixedResult);
+            $this->_oModule->_oDb->attachInviteToRequest($iId, (int)array_shift($aInviteIds));
 
             $aIdsAffected[] = $iId;
             $iAffected++;
