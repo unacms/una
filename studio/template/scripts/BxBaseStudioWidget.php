@@ -9,14 +9,16 @@
  */
 
 class BxBaseStudioWidget extends BxDolStudioWidget
-{    
+{
+    protected $bPageMenuIconsInline;
     protected $aPageCodeNoWrap;
 
     public function __construct($mixedPageName)
     {
         parent::__construct($mixedPageName);
 
-        $this->aPageCodeNoWrap = array();
+        $this->bPageMenuIconsInline = true;
+        $this->aPageCodeNoWrap = [];
     }
 
     public function getPageCss()
@@ -322,7 +324,7 @@ class BxBaseStudioWidget extends BxDolStudioWidget
     protected function getPageMenuObject($aMenu = array(), $aMarkers = array())
     {
         $oMenu = parent::getPageMenuObject($aMenu, $aMarkers);
-        $oMenu->setInlineIcons(false);
+        $oMenu->setInlineIcons($this->bPageMenuIconsInline);
 
         return $oMenu;
     }
