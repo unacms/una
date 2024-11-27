@@ -20,6 +20,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
     {
         parent::__construct(isset($aParams['type']) ? $aParams['type'] : '',  isset($aParams['page']) ? $aParams['page'] : '');
 
+        $this->bPageMenuTitle = false;
+
         $this->aParams = $aParams;
         $this->sBaseUrl = $this->aParams['url'];
         $this->sTypeUrl = $this->sBaseUrl . '&bp_type=%s';

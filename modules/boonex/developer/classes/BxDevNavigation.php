@@ -19,6 +19,8 @@ class BxDevNavigation extends BxTemplStudioNavigation
     {
         parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
 
+        $this->bPageMenuTitle = false;
+
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&nav_page=';
 

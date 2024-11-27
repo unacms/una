@@ -18,6 +18,8 @@ class BxDevForms extends BxTemplStudioForms
     function __construct($aParams)
     {
         parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
+        
+        $this->bPageMenuTitle = false;
 
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&form_page=';

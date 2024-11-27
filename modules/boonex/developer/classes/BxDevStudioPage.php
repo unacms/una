@@ -25,20 +25,30 @@ class BxDevStudioPage extends BxTemplStudioModule
         $this->sUrl = BX_DOL_URL_STUDIO . 'module.php?name=%s&page=%s';
     }
 
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+    function getPageMenu($aMenu = [], $aMarkers = [])
     {
-        $this->aMenuItems = array();
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $sActions = $this->getPageCaptionActions();
+        $oTemplate->addInjection('injection_header', 'text', BxTemplStudioFunctions::getInstance()->transBox('bx-std-pmenu-popup-actions', $sActions, true));
+
+        $this->aMenuItems = [];
         foreach($this->oModule->aTools as $aTool)
-            $this->aMenuItems[] = array(
+            $this->aMenuItems[] = [
                 'name' => $aTool['name'],
                 'icon' => $aTool['icon'],
                 'link' => sprintf($this->sUrl, $this->sModule, $aTool['name']),
                 'title' => $aTool['title'],
                 'selected' => $aTool['name'] == $this->sPage
-            );
+            ];
 
-        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_main_dev.html', 'menu_items' => $this->aMenuItems), $this->oModule->_oTemplate);
-        return $oMenu->getCode();
+        $oMenu = new BxTemplStudioMenu(['template' => 'menu_main_dev.html', 'menu_items' => $this->aMenuItems], $this->oModule->_oTemplate);
+
+        return $this->oModule->_oTemplate->parseHtmlByName('page_menu.html', [
+            'actions_onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
+            'actions_icon' => $oTemplate->getIconUrl('mi-cog.svg'),
+            'menu' => $oMenu->getCode()
+        ]);
     }
 
     protected function getSettings()
