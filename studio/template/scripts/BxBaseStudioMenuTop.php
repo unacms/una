@@ -55,7 +55,12 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop
                     $sContent = $oTemplate->parseHtmlByContent($sContent, [
                         'bx_if:show_search' => [
                             'condition' => $this->sPageName == 'home' && getParam('sys_std_show_header_right_search') == 'on',
-                            'content' => []
+                            'content' => [
+                                'bx_if:show_active' => [
+                                    'condition' => true,
+                                    'content' => []
+                                ]
+                            ]
                         ]
                     ]);
                 }

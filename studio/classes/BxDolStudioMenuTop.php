@@ -61,13 +61,12 @@ class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
             'menu_items' => []
         ];
 
-        if(false)
-            $this->aItems[BX_DOL_STUDIO_MT_CENTER]['menu_items']['launcher'] = [
-                'name' => 'launcher',
-                'icon' => 'wi-home.svg',
-                'link' => '{url_studio}',
-                'title' => '_adm_tmi_cpt_launcher'
-            ];
+        $this->aItems[BX_DOL_STUDIO_MT_CENTER]['menu_items']['launcher'] = [
+            'name' => 'launcher',
+            'icon' => 'wi-home.svg',
+            'link' => '{url_studio}',
+            'title' => '_adm_tmi_cpt_launcher'
+        ];
 
         //--- Get Featured
         $aMenuItems = array();

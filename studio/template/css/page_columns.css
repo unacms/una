@@ -23,6 +23,7 @@ div.bx-std-page-columns-cnt {
     */
 }
 
+/*--- Page Menu ---*/
 div.bx-std-page-column.bx-std-page-menu {
     position: relative;
     -webkit-flex: 0 0 20rem;
@@ -31,8 +32,8 @@ div.bx-std-page-column.bx-std-page-menu {
     width: 20rem;
     height: 100%;
 
-    border-right: 1px solid rgb(209, 213, 219);
-    background-color: rgb(229, 231, 235);
+    backdrop-filter: blur(40px);
+    box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.05);
 
     overflow-y: auto;
 }
@@ -45,7 +46,19 @@ div.bx-std-page-column.bx-std-page-menu div.bx-std-page-column-cnt {
     top: 0;
     padding-top: 5rem;
 }
-    
+div.bx-std-page-column.bx-std-page-menu .bx-std-pcm-actions {
+    justify-content: center;
+    -webkit-justify-content: center;
+
+    width: 2.5rem;
+    padding: 0;    
+}
+div.bx-std-page-column.bx-std-page-menu .bx-std-pcm-actions img {
+    width: 2.0rem;
+    height: 2.0rem;
+}
+ 
+/*--- Page Content ---*/
 div.bx-std-page-column.bx-std-page-content {
     position: relative;
     -webkit-flex-grow: 2;

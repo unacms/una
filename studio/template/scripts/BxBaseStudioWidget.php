@@ -10,14 +10,18 @@
 
 class BxBaseStudioWidget extends BxDolStudioWidget
 {
+    protected $bPageMenuTitle;
     protected $bPageMenuIconsInline;
+
     protected $aPageCodeNoWrap;
 
     public function __construct($mixedPageName)
     {
         parent::__construct($mixedPageName);
 
+        $this->bPageMenuTitle = true;
         $this->bPageMenuIconsInline = true;
+
         $this->aPageCodeNoWrap = [];
     }
 
@@ -47,17 +51,18 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         $oTemplate = BxDolStudioTemplate::getInstance();
         $oFunctions = BxTemplStudioFunctions::getInstance();
 
+        $sActions = '';
         $bActions = false;
-        $sActions = $this->getPageCaptionActions();
-        if(($bActions = strlen($sActions)) > 0)
+        if(false && ($sActions = $this->getPageCaptionActions()) && ($bActions = strlen($sActions)) > 0)    //--- Hidden for now.
             $sActions = $oFunctions->transBox('bx-std-pcap-menu-popup-actions', $sActions, true);
 
+        $sHelp = '';
         $bHelp = false;
-        $sHelp = $this->getPageCaptionHelp();
-        if(($bHelp = strlen($sHelp)) > 0)
+        if(false && ($sHelp = $this->getPageCaptionHelp()) && ($bHelp = strlen($sHelp)) > 0)    //--- Hidden for now.
             $sHelp = $oFunctions->transBox('bx-std-pcap-menu-popup-help', $sHelp, true);
 
-        $oTemplate->addInjection('injection_header', 'text', $sActions . $sHelp);
+        if($bActions || $bHelp)
+            $oTemplate->addInjection('injection_header', 'text', $sActions . $sHelp);
 
         //--- Menu Right ---//
         $aItemsRight = [];
@@ -113,6 +118,30 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         ));
 
         return $sResult;
+    }
+
+    public function getPageMenu($aMenu = [], $aMarkers = [])
+    {
+        $sMenu = parent::getPageMenu($aMenu, $aMarkers);
+        if(!$sMenu || !$this->bPageMenuTitle)
+            return $sMenu;
+
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $bActions = false;
+        if(($sActions = $this->getPageCaptionActions()) && ($bActions = strlen($sActions)) > 0)
+            $oTemplate->addInjection('injection_header', 'text', BxTemplStudioFunctions::getInstance()->transBox('bx-std-pmenu-popup-actions', $sActions, true));
+
+        return $oTemplate->parseHtmlByName('page_menu.html', [
+            'title' => _t($this->aPage['caption']),
+            'bx_if:show_actions' => [
+                'condition' => $bActions,
+                'content' => [
+                    'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
+                ]
+            ],
+            'menu' => $sMenu
+        ]);
     }
 
     public function getPageCode($sPage = '', $bWrap = true)

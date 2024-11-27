@@ -1,6 +1,6 @@
 <ul class="bx-menu-toolbar gap-x-4">
     <bx_if:show_search>
-        <li class="bx-menu-tab-search flex-auto">
+        <li class="bx-menu-tab-search<bx_if:show_active> bx-mt-active</bx_if:show_active> flex-auto">
             <div class="bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white hover:ring-4 hover:ring-gray-800 hover:ring-offset-4 hover:ring-offset-black active:opacity-80 duration-300">
                 <a class="text-gray-300 hover:text-white" href="javascript:void(0)" onclick="javascript:$(this).parents('li:first').toggleClass('bx-mt-active')">
                     <svg class="flex-none ml-1.5" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">

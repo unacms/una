@@ -36,6 +36,9 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
     var $this = this;
 
     var sId = '#bx-std-pcap-menu-popup-' + sName;
+    if(sName == 'actions' && $(sId).length == 0)
+        sId = '#bx-std-pmenu-popup-' + sName;
+
     if($(sId + ':visible').length > 0) {
         $(sId).dolPopupHide();
         return;

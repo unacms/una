@@ -397,12 +397,12 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_form_lpc_enable', '_adm_stg_cpt_option_sys_form_lpc_enable', 'on', 'checkbox', '', '', '', '', 260),
 
-(@iCategoryId, 'sys_std_show_header_left', '_adm_stg_cpt_option_sys_std_show_header_left', 'on', 'checkbox', '', '', '', '', 270),
-(@iCategoryId, 'sys_std_show_header_left_search', '_adm_stg_cpt_option_sys_std_show_header_left_search', 'on', 'checkbox', '', '', '', '', 271),
+(@iCategoryId, 'sys_std_show_header_left', '_adm_stg_cpt_option_sys_std_show_header_left', '', 'checkbox', '', '', '', '', 270),
+(@iCategoryId, 'sys_std_show_header_left_search', '_adm_stg_cpt_option_sys_std_show_header_left_search', '', 'checkbox', '', '', '', '', 271),
 (@iCategoryId, 'sys_std_show_header_center', '_adm_stg_cpt_option_sys_std_show_header_center', 'on', 'checkbox', '', '', '', '', 275),
 (@iCategoryId, 'sys_std_show_header_right', '_adm_stg_cpt_option_sys_std_show_header_right', 'on', 'checkbox', '', '', '', '', 280),
-(@iCategoryId, 'sys_std_show_header_right_search', '_adm_stg_cpt_option_sys_std_show_header_right_search', '', 'checkbox', '', '', '', '', 281),
-(@iCategoryId, 'sys_std_show_header_right_site', '_adm_stg_cpt_option_sys_std_show_header_right_site', 'on', 'checkbox', '', '', '', '', 282),
+(@iCategoryId, 'sys_std_show_header_right_search', '_adm_stg_cpt_option_sys_std_show_header_right_search', 'on', 'checkbox', '', '', '', '', 281),
+(@iCategoryId, 'sys_std_show_header_right_site', '_adm_stg_cpt_option_sys_std_show_header_right_site', '', 'checkbox', '', '', '', '', 282),
 (@iCategoryId, 'sys_std_show_launcher_left', '_adm_stg_cpt_option_sys_std_show_launcher_left', '', 'checkbox', '', '', '', '', 285),
 
 (@iCategoryId, 'sys_embed_microlink_key', '_adm_stg_cpt_option_sys_embed_microlink_key', '', 'digit', '', '', '', '', 300);

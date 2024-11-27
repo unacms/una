@@ -35,7 +35,12 @@ div.bx-std-menu-top.bx-std-menu-top-center {
     flex-grow: 1;
     height: 3.5rem;
 }
-div.bx-std-menu-top.bx-std-menu-top-center .bx-std-menu-top-center-cnt {
+div.bx-std-menu-top:nth-child(1).bx-std-menu-top-center {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+}
+div.bx-std-menu-top:nth-child(2).bx-std-menu-top-center .bx-std-menu-top-center-cnt {
     position: absolute;
     left: 0;
     width: 100vw;
@@ -315,14 +320,16 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-help,
 #bx-std-pcap-menu-popup-assistant,
 #bx-std-pcap-menu-popup-actions,
-#bx-std-pcap-menu-popup-account {
+#bx-std-pcap-menu-popup-account,
+#bx-std-pmenu-popup-actions {
     overflow: visible;
 }
 .bx-std-mod-popup-settings-wrapper .bx-popup-gap,
 #bx-std-pcap-menu-popup-help .bx-popup-gap,
 #bx-std-pcap-menu-popup-assistant .bx-popup-gap,
 #bx-std-pcap-menu-popup-actions .bx-popup-gap,
-#bx-std-pcap-menu-popup-account .bx-popup-gap {
+#bx-std-pcap-menu-popup-account .bx-popup-gap,
+#bx-std-pmenu-popup-actions .bx-popup-gap {
     margin-left: 0;
     margin-right: 0;
 }
@@ -335,7 +342,8 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     border-width: 0; 
     background-color: #001529;
 }
-#bx-std-pcap-menu-popup-actions .bx-popup-content {
+#bx-std-pcap-menu-popup-actions .bx-popup-content,
+#bx-std-pmenu-popup-actions .bx-popup-content {
     padding: 1.0rem;
 }
 #bx-std-pcap-menu-popup-account .bx-popup-content {
