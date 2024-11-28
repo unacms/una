@@ -88,7 +88,7 @@ class BxBaseMenuProfileFollowings extends BxTemplMenu
         if(!$iPerPage)
             $iPerPage = $this->_iPerPageDefault;
 
-        $aIds = $this->_oConnection->getConnectedContentByType($iProfile, [$sContextModule], false, $iStart, $iPerPage + 1);
+        $aIds = $this->_oConnection->getConnectedContentByType($iProfile, [$sContextModule], false, $iStart, $iPerPage + 1, BX_CONNECTIONS_ORDER_ADDED_DESC);
 
         $bNext = false;
         if(count($aIds) > $iPerPage) {
