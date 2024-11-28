@@ -919,34 +919,6 @@ class BxBaseServiceProfiles extends BxDol
         return $sCode;
     }
     
-    public function serviceSetBadges($iContentId, $sBadgesIds, $sModule)
-    {
-        $aSelectedBadges = explode(",", $sBadgesIds);
-        
-        $iPerformerId = bx_get_logged_profile_id();
-        $aCheck = checkActionModule($iPerformerId, 'set badge', 'system', false);
-        if(!isAdmin() && $aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return false;
-        
-        $oBadges = BxDolBadges::getInstance();
-
-        $aBadges = $oBadges->getData(array('type' => 'by_module&object', 'object_id' => $iContentId, 'module' => $sModule));
-
-        foreach ($aBadges as $aBadge) {
-            if (isset($aBadge['badge_id'])){
-                $oBadges->delete($aBadge['badge_id']);
-            }
-        }
-        
-        foreach ($aSelectedBadges as $iSelectedBadge) {
-           $oBadges->add($iSelectedBadge, $iContentId, $sModule);
-        }
-        
-        checkActionModule($iPerformerId, 'set badge', 'system', true); // perform action
-        
-        return true;
-    }
-    
     public function serviceSetMembership($mixedProfileId, $iAclLevelId, $iAclLevelDuration = 0)
     {
         if(!is_array($mixedProfileId))
