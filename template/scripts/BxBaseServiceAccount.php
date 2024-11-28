@@ -535,7 +535,17 @@ class BxBaseServiceAccount extends BxDol
     public function serviceConfirmEmail($sKey)
     {
         $mixedAccountId = $this->_confirmEmail($sKey);
-        return is_int($mixedAccountId) || is_numeric($mixedAccountId);
+        
+        if(is_string($mixedAccountId) && !is_numeric($mixedAccountId))
+            return $bApi ? [bx_api_get_msg($mixedAccountId)] : MsgBox($mixedAccountId);
+            
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
+			$oSockets->sendEvent('sys_account', $mixedAccountId, 'confirmed', '');
+		}
+        
+        bx_alert('account', 'after_email_confirmation', $mixedAccountId, false, ['override_result' => &$sUrl]);
+		
+        return true;
     }
 
     public function serviceGetOptionsResetPasswordRedirect()
