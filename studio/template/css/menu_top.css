@@ -10,7 +10,10 @@ div.bx-std-menu-top-wrp {
     flex-wrap: nowrap;
 
     width: 100%;
-    height: 5rem;
+    height: 4rem;
+
+    box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(16px);
 }
 div.bx-std-menu-top-wrp .bx-std-menu-top.bx-std-menu-top-center:first-child {
     padding-left: 0.75rem;
@@ -140,19 +143,7 @@ div.bx-std-menu-top .bx-menu-top-center li a {
     width: auto;
 }
 div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-active a {
-    border-color: rgba(37, 99, 235, 0.8);
-}
-div.bx-std-menu-top .bx-menu-top-center li .bx-mi-bg {
-    position: absolute;
-    display: none;
-    z-index: 1;
-
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    filter: blur(6px);
+    border-color: rgba(59, 130, 246, 0.5);
 }
 div.bx-std-menu-top .bx-menu-top-center li.bx-menu-tab-active .bx-mi-bg {
     display: block;
@@ -229,7 +220,7 @@ div.bx-std-menu-top ul li.bx-menu-tab-search > div {
     height: 2.5rem;
     right: 0;
 
-    border-radius: 1.5rem;
+    border-radius: 0.5rem;
 }
 div.bx-std-menu-top ul.bx-menu-breadcrumb li.bx-menu-tab-search > div {
     left: 0.5rem;
@@ -270,8 +261,7 @@ div.bx-std-menu-top .bx-menu-toolbar li {
     height: 2.5rem;
     min-width: 2.5rem;
     
-    border-radius: 1.5rem;
-    background-color: rgba(17, 24, 39, 1);
+    border-radius: 0.5rem;
 
     line-height: 2.5rem;
     overflow: hidden;
@@ -288,21 +278,11 @@ div.bx-std-menu-top .bx-menu-toolbar li:not(.bx-menu-tab-search) a {
     width: 100%;
     height: 100%;
 
-    border-radius: 1.5rem;
+    border-radius: 0.5rem;
 }
 
 div.bx-std-menu-top .bx-menu-toolbar li a:hover {
-    color: #ffffff;
-}
-
-div.bx-std-menu-top .bx-menu-toolbar li svg g {
-    opacity: 0.7;
-}
-div.bx-std-menu-top .bx-menu-toolbar li:hover {
-    background-color: rgba(31, 41, 55, 1);
-}
-div.bx-std-menu-top .bx-menu-toolbar li:hover svg g {
-    opacity: 0.85;
+    color: rgb(55, 65, 81);
 }
 
 div.bx-std-menu-top i.sys-icon {

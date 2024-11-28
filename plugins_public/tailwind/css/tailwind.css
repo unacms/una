@@ -1259,7 +1259,7 @@
     }
 
     .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
-        @apply ring-4 ring-blue-800 ring-offset-4 ring-offset-black;
+        @apply ring-4 ring-blue-500/50 ring-offset-2 ring-offset-white;
     }
     .bx-std .bx-menu-top-center .bx-menu-item-static,
     .bx-std .bx-menu-top-center .bx-menu-item-dynamic {
