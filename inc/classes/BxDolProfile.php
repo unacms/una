@@ -182,7 +182,6 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'operator' => isAdmin(),
             //'info' => $oProfile->getInfo(),
             'confirmed' => $oAccount->isConfirmed(),
-            'counters' => bx_srv('system', 'profile_counters', [], 'TemplServiceProfiles'),
             'profiles_count' => $oAccount->getProfilesNumber(true),
             'hash' => encryptUserId($iId),
             'profiles_limit' => (int)getParam('sys_account_limit_profiles_number'),
@@ -191,6 +190,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         ];
         
         if ($iId == bx_get_logged_profile_id()){
+            $aRv['counters'] = bx_srv('system', 'profile_counters', [], 'TemplServiceProfiles');
+            
             $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
             $sRet = $oInformer ? $oInformer->display() : '';
             if ($sRet){
