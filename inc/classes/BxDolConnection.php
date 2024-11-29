@@ -372,6 +372,30 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         $this->checkAllowedConnect ($iInitiator, $iContent, true, $iMutual, false);
 
         $bMutual = false;
+        
+        /**
+         * Call socket.
+         */
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
+            $aMessageInitiator = $aMessageContent = [
+                'object' => $this->_sObject, 
+                'action' => 'added',
+            ];
+
+            if(bx_is_api()) {
+                $aMessageInitiator = array_merge($aMessageInitiator, [
+                    'user' => BxDolProfile::getDataForPage($iInitiator)
+                ]);
+
+                $aMessageContent = array_merge($aMessageContent, [
+                    'user' => BxDolProfile::getDataForPage($iContent)
+                ]);
+            }
+
+            $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode($aMessageInitiator));
+            $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode($aMessageContent));
+        }
+        
         if($this->_aObject['type'] == BX_CONNECTIONS_TYPE_ONE_WAY || ($bMutual = ($this->_aObject['type'] == BX_CONNECTIONS_TYPE_MUTUAL && $iMutual))) {
             $oProfileQuery = BxDolProfileQuery::getInstance();
 
@@ -390,28 +414,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
                     BxDolRecommendation::updateData($iContent);
             }
 
-            /**
-             * Call socket.
-             */
-            if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled()){
-                $aMessageInitiator = $aMessageContent = [
-                    'object' => $this->_sObject, 
-                    'action' => 'added',
-                ];
-
-                if(bx_is_api()) {
-                    $aMessageInitiator = array_merge($aMessageInitiator, [
-                        'user' => BxDolProfile::getDataForPage($iInitiator)
-                    ]);
-
-                    $aMessageContent = array_merge($aMessageContent, [
-                        'user' => BxDolProfile::getDataForPage($iContent)
-                    ]);
-                }
-
-                $oSockets->sendEvent('sys_connections', $iInitiator , 'changed', json_encode($aMessageInitiator));
-                $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode($aMessageContent));
-            }
+            
         }
     }
 
