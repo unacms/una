@@ -39,7 +39,7 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
                     'table' => 'bx_courses_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'name', 'desc', 'picture', 'cover', 'cover_data', 'added', 'author', 'allow_view_to'),
+                    'joinFields' => array('id', 'name', 'desc', 'picture', 'cover', 'cover_data', 'added', 'author', 'allow_view_to', 'status'),
                 ),
                 'account' => array(
                     'type' => 'INNER',

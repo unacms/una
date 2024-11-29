@@ -746,13 +746,14 @@ class BxCoursesModule extends BxBaseModGroupsModule
             $aEntryCounters = $this->_oDb->getContentStructure(['sample' => 'entry_id_counters', 'entry_id' => $iEntryId]);
 
             $aCounters = [];
-            for($i = 1; $i <= $iLevelMax; $i++) {
-                $aCounters[] = [
-                    'level' => $i,
-                    'title' => $aLevelToNode[$i],
-                    'total' => $aEntryCounters['cn_l' . $i]
-                ];
-            }
+            if(!empty($aEntryCounters) && is_array($aEntryCounters))
+                for($i = 1; $i <= $iLevelMax; $i++) {
+                    $aCounters[] = [
+                        'level' => $i,
+                        'title' => $aLevelToNode[$i],
+                        'total' => $aEntryCounters['cn_l' . $i]
+                    ];
+                }
 
             $aResultAdd = [
                 'counters' => $aCounters,
