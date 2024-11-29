@@ -7,11 +7,10 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_PGT_TYPE_SETTINGS', 'settings');
-define('BX_DOL_STUDIO_PGT_TYPE_KEYS', 'keys');
-define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES', 'etemplates');
-define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF', 'etemplates_hf');
-define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_CREATIVE', 'etemplates_creative');
+define('BX_DOL_STUDIO_PGT_TYPE_SETTINGS', 'pgt_settings');
+define('BX_DOL_STUDIO_PGT_TYPE_KEYS', 'pgt_keys');
+define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_TEXT', 'etemplates_text');
+define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HTML', 'etemplates_html');
 
 define('BX_DOL_STUDIO_PGT_TYPE_DEFAULT', BX_DOL_STUDIO_PGT_TYPE_SETTINGS);
 
@@ -89,7 +88,10 @@ class BxDolStudioPolyglot extends BxTemplStudioWidget
         return $aResult;
     }
 
-    public function submitEtemplatesHf(&$oForm)
+    /**
+     * TODO: Remove (after UNA 14) if new version is working fine.
+     */
+    public function submitEtemplatesHtmlOld(&$oForm)
     {
         $sUnsubscribe = "{unsubscribe}";
         $sHeader = $oForm->getCleanValue('et_hf_header');
@@ -103,10 +105,10 @@ class BxDolStudioPolyglot extends BxTemplStudioWidget
         if(!$bResult)
             return $this->getJsResult('_adm_pgt_err_et_hf_save');
 
-        return $this->getJsResult('_adm_pgt_scs_et_hf_save', true, true, BX_DOL_URL_STUDIO . 'polyglot.php?page=' . BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF); 
+        return $this->getJsResult('_adm_pgt_scs_et_hf_save', true, true, BX_DOL_URL_STUDIO . 'polyglot.php?page=' . BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HTML); 
     }
     
-    public function submitEtemplatesCreative(&$oForm)
+    public function submitEtemplatesHtml(&$oForm)
     {
         $sUnsubscribe = "{unsubscribe}";
         $sContent = $oForm->getCleanValue('content');
@@ -121,7 +123,7 @@ class BxDolStudioPolyglot extends BxTemplStudioWidget
         if(!$bResult)
             return $this->getJsResult('_adm_pgt_err_et_hf_save');
 
-        return $this->getJsResult('_adm_pgt_scs_et_hf_save', true, true, BX_DOL_URL_STUDIO . 'polyglot.php?page=' . BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_CREATIVE); 
+        return $this->getJsResult('_adm_pgt_scs_et_hf_save', true, true, BX_DOL_URL_STUDIO . 'polyglot.php?page=' . BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HTML); 
     }
 }
 

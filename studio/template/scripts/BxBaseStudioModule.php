@@ -62,7 +62,7 @@ class BxBaseStudioModule extends BxDolStudioModule
             'js_code' => $this->getPageJsCode()
         ));
     }
-
+/*
     function getPageAttributes()
     {
         if((int)$this->aModule['enabled'] == 0)
@@ -70,21 +70,30 @@ class BxBaseStudioModule extends BxDolStudioModule
 
         return parent::getPageAttributes();
     }
-
+*/
     function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();
-        foreach($this->aMenuItems as $sName => $aItem)
-            $aMenu[] = array_merge($aItem, [
-                'name' => $sName,
-                'link' => isset($aItem['link'])  ? $aItem['link'] : bx_append_url_params($this->sManageUrl, array('page' => $sName)),
-                'title' => _t(!empty($aItem['title']) ? $aItem['title'] : $aItem['caption']),
-                'selected' => $sName == $this->sPage
-            ]);
+        $aMenu = [];
+        if((int)$this->aModule['enabled'] != 0)
+            foreach($this->aMenuItems as $sName => $aItem)
+                $aMenu[] = array_merge($aItem, [
+                    'name' => $sName,
+                    'link' => isset($aItem['link'])  ? $aItem['link'] : bx_append_url_params($this->sManageUrl, ['page' => $sName]),
+                    'title' => _t(!empty($aItem['title']) ? $aItem['title'] : $aItem['caption']),
+                    'selected' => $sName == $this->sPage
+                ]);
 
         return parent::getPageMenu($aMenu);
+    }
+
+    public function getPageCode($sPage = '', $bWrap = true)
+    {
+        if((int)$this->aModule['enabled'] == 0)
+            return '';
+
+        return parent::getPageCode($sPage, $bWrap);
     }
 
     protected function getSettings()

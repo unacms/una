@@ -314,13 +314,11 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     margin-right: 0;
 }
 #bx-std-pcap-menu-popup-help .bx-popup,
-#bx-std-pcap-menu-popup-assistant .bx-popup,
-#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header-color-bg,
 #bx-std-pcap-menu-popup-actions .bx-popup,
 #bx-std-pcap-menu-popup-account .bx-popup,
 .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
     border-width: 0; 
-    background-color: #001529;
+    background-color: #ffffff;
 }
 #bx-std-pcap-menu-popup-actions .bx-popup-content,
 #bx-std-pmenu-popup-actions .bx-popup-content {
@@ -360,11 +358,10 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header h2,
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header .bx-icon,
 #bx-std-pcap-menu-popup-assistant .bx-popup a,
-#bx-std-pcap-menu-popup-assistant .bx-popup .sys-icon,
 #bx-std-pcap-menu-popup-actions .bx-popup,
 #bx-std-pcap-menu-popup-account .bx-popup li a,
 #bx-std-pcap-menu-popup-account .bx-popup li .sys-icon {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.7);
 }
 #bx-std-pcap-menu-popup-account .bx-popup li svg g {
     opacity: 0.7;
@@ -373,7 +370,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-assistant .bx-popup a:hover,
 #bx-std-pcap-menu-popup-account .bx-popup li:hover a,
 #bx-std-pcap-menu-popup-account .bx-popup li:hover a .sys-icon {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(0, 0, 0, 0.85);
 }
 #bx-std-pcap-menu-popup-account .bx-popup li.bx-menu-tab-active {
     background-color: rgba(24, 144, 255, 0.2);
@@ -390,9 +387,6 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 }
 
 /*--- Assistant ---*/
-#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header {
-    border-bottom: 1px solid rgb(31 41 55);
-}
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-content {
     padding-top: 0;
 }
@@ -413,9 +407,6 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 .bx-std-pcap-assistant .cmt .cmt-head ul li:first-child .bx-base-general-unit-meta-div {
   display: none;
 }
-.bx-std-pcap-assistant .cmt .cmt-cont .cmt-body {
-    color: rgb(229, 231, 235);
-}
 .bx-std-pcap-assistant .cmt-reply.cmt-reply-bottom {
     margin-bottom: 0;
 }
@@ -431,5 +422,5 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 }
 .bx-std-pcap-assistant .bx-form-value .bx-form-input-textarea {
     height: 2.5rem;
-    background-color: rgb(31 41 55);
+    background-color: rgb(229, 231, 235);
 }

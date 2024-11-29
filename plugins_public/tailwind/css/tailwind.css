@@ -1250,14 +1250,6 @@
         @apply font-inter;
     }
 
-    .bx-std #bx-std-pcap-menu-popup-help .bx-popup,
-    .bx-std #bx-std-pcap-menu-popup-assistant .bx-popup,
-    .bx-std #bx-std-pcap-menu-popup-actions .bx-popup,
-    .bx-std #bx-std-pcap-menu-popup-account .bx-popup,
-    .bx-std .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
-        @apply ring-1 ring-gray-800;
-    }
-
     .bx-std .bx-menu-top-center .bx-menu-tab-active .bx-mi-icon {
         @apply ring-4 ring-blue-500/50 ring-offset-2 ring-offset-white;
     }

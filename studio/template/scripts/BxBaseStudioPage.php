@@ -172,10 +172,12 @@ class BxBaseStudioPage extends BxDolStudioPage
         return '';
     }
 
-    public function getPageMenu($aMenu = array(), $aMarkers = array())
+    public function getPageMenu($aMenu = [], $aMarkers = [])
     {
-        $oMenu = $this->getPageMenuObject($aMenu, $aMarkers);
-        return $oMenu->getCode();
+        if($aMenu === false)
+            return '';
+
+        return $this->getPageMenuObject($aMenu, $aMarkers)->getCode();
     }
 
     public function getPageCode($sPage = '', $bWrap = true) {

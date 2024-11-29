@@ -200,11 +200,6 @@ div.bx-std-widget-action {
     box-sizing: content-box;
 
     margin-top: 0.25rem;
-
-    border: 2px solid #000000;
-    border-radius: 16px;
-    
-    background-color: rgba(229, 231, 235, 1);
 }
 div.bx-std-widget-action:first-child {
     margin-top: 0;
@@ -272,7 +267,7 @@ div.bx-std-widget-caption-jitter {
 }
 div.bx-std-widget-caption,
 div.bx-std-widget-caption a {
-    color: rgb(156 163 175);
+    color: rgba(0, 0, 0, 0.5);
 }
 
 

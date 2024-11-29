@@ -53,29 +53,30 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     	return parent::getPageJsCode($aOptions, $bWrap);
     }
 
-    public function getPageMenu($aMenu = array(), $aMarkers = array())
+    public function getPageMenu($aMenu = [], $aMarkers = [])
     {
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();
-        $aMenuItems = array(
-            BX_DOL_STUDIO_DSG_TYPE_GENERAL => array('icon' => 'globe'),
-            BX_DOL_STUDIO_DSG_TYPE_LOGO => array('icon' => 'pencil-alt'),
-            BX_DOL_STUDIO_DSG_TYPE_ICON => array('icon' => 'far image'),
-            BX_DOL_STUDIO_DSG_TYPE_COVER => array('icon' => 'far file-image'),
-            BX_DOL_STUDIO_DSG_TYPE_SPLASH => array('icon' => 'far file-image'),
-            BX_DOL_STUDIO_DSG_TYPE_INJECTIONS => array('icon' => 'object-group'),
-            BX_DOL_STUDIO_DSG_TYPE_PWA => array('icon' => 'cubes'),
-            BX_DOL_STUDIO_DSG_TYPE_SETTINGS => array('icon' => 'cogs'),
-        );
+        $aMenu = [];
+        $aMenuItems = [
+            BX_DOL_STUDIO_DSG_TYPE_GENERAL => ['icon' => 'mi-dsg-general.svg'],
+            BX_DOL_STUDIO_DSG_TYPE_LOGO => ['icon' => 'mi-dsg-logo.svg'],
+            BX_DOL_STUDIO_DSG_TYPE_ICON => ['icon' => 'mi-dsg-icon.svg'],
+            BX_DOL_STUDIO_DSG_TYPE_COVER => ['icon' => 'mi-dsg-cover.svg'],
+            BX_DOL_STUDIO_DSG_TYPE_SPLASH => ['icon' => 'mi-dsg-splash.svg'],
+            BX_DOL_STUDIO_DSG_TYPE_INJECTIONS => ['icon' => 'mi-dsg-injections.svg'],
+            BX_DOL_STUDIO_DSG_TYPE_PWA => ['icon' => 'mi-dsg-pwa.svg'],
+            BX_DOL_STUDIO_DSG_TYPE_SETTINGS => ['icon' => 'mi-dsg-settings.svg'],
+        ];
         foreach($aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = [
                 'name' => $sMenuItem,
                 'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => BX_DOL_URL_STUDIO . 'designer.php?page=' . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            );
+            ];
 
         return parent::getPageMenu($aMenu);
     }

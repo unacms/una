@@ -40,24 +40,26 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         $aMenu = [];
         $aMenuItems = [
-            'goodies' => ['icon' => 'mi-str-home.svg', 'icon_bg' => true],
-            'latest' => ['icon' => 'mi-str-latest.svg', 'icon_bg' => true],
-            'featured' => ['icon' => 'mi-str-featured.svg', 'icon_bg' => true],
-            'popular' => ['icon' => 'mi-str-popular.svg', 'icon_bg' => true],
-            'categories' => ['icon' => 'mi-str-categories.svg', 'icon_bg' => true],
-            'search' => ['icon' => 'mi-str-search.svg', 'icon_bg' => true],
-            'purchases' => ['icon' => 'mi-str-purchases.svg', 'icon_bg' => true], 
-            'updates' => ['icon' => 'mi-str-updates.svg', 'icon_bg' => true], 
-            'checkout' => ['icon' => 'mi-str-checkout.svg', 'icon_bg' => true], 
-            'downloaded' => ['icon' => 'mi-str-downloaded.svg', 'icon_bg' => true]
+            'goodies' => ['icon' => 'mi-str-home.svg'],
+            'latest' => ['icon' => 'mi-str-latest.svg'],
+            'featured' => ['icon' => 'mi-str-featured.svg'],
+            'popular' => ['icon' => 'mi-str-popular.svg'],
+            'categories' => ['icon' => 'mi-str-categories.svg'],
+            'search' => ['icon' => 'mi-str-search.svg'],
+            'purchases' => ['icon' => 'mi-str-purchases.svg'], 
+            'updates' => ['icon' => 'mi-str-updates.svg'], 
+            'checkout' => ['icon' => 'mi-str-checkout.svg'], 
+            'downloaded' => ['icon' => 'mi-str-downloaded.svg']
         ];
         foreach($aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array_merge($aItem, [
+            $aMenu[] = [
                 'name' => $sMenuItem,
+                'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => $this->getBaseUrl($sMenuItem),
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            ]);
+            ];
 
         $iCounter = BxDolStudioCart::getInstance()->getCount();
 

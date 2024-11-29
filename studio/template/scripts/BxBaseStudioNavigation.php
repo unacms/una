@@ -19,11 +19,11 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_menu.php?page=';
 
-        $this->aGridObjects = array(
-	        'menus' => 'sys_studio_nav_menus',
-	        'sets' => 'sys_studio_nav_sets',
-	        'items' => 'sys_studio_nav_items'
-	    );
+        $this->aGridObjects = [
+            'menus' => 'sys_studio_nav_menus',
+            'sets' => 'sys_studio_nav_sets',
+            'items' => 'sys_studio_nav_items'
+        ];
     }
     function getPageCss()
     {
@@ -37,24 +37,25 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
     {
         return '';
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+    function getPageMenu($aMenu = [], $aMarkers = [])
     {
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();
-        $aMenuItems = array(
-            BX_DOL_STUDIO_NAV_TYPE_MENUS => array('icon' => 'sitemap'),
-            BX_DOL_STUDIO_NAV_TYPE_SETS => array('icon' => 'align-justify'),
-            BX_DOL_STUDIO_NAV_TYPE_ITEMS => array('icon' => 'indent')
-        );
+        $aMenu = [];
+        $aMenuItems = [
+            BX_DOL_STUDIO_NAV_TYPE_MENUS => ['icon' => 'mi-nav-menus.svg'],
+            BX_DOL_STUDIO_NAV_TYPE_SETS => ['icon' => 'mi-nav-sets.svg'],
+            BX_DOL_STUDIO_NAV_TYPE_ITEMS => ['icon' => 'mi-nav-items.svg']
+        ];
         foreach($aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = [
                 'name' => $sMenuItem,
                 'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            );
+            ];
 
         return parent::getPageMenu($aMenu);
     }

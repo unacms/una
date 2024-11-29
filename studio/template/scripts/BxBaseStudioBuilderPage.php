@@ -113,35 +113,35 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return 'oBxDolStudioBuilderPage';
     }
 
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+    function getPageMenu($aMenu = [], $aMarkers = [])
     {
-        $aMenuItems = array(
-            BX_DOL_STUDIO_MODULE_SYSTEM => array(
+        $aMenuItems = [
+            BX_DOL_STUDIO_MODULE_SYSTEM => [
                 'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
-                'icon' => 'mi-cog.svg',
-                'icon_bg' => true
-            ),
-            BX_DOL_STUDIO_MODULE_CUSTOM => array(
+                'icon' => 'mi-bp-system.svg',
+                'icon_bg' => true,
+                'title' => '_adm_bp_cpt_type_' . BX_DOL_STUDIO_MODULE_SYSTEM,
+            ],
+            BX_DOL_STUDIO_MODULE_CUSTOM => [
                 'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
-                'icon' => 'mi-wrench.svg',
+                'icon' => 'mi-bp-custom.svg',
                 'icon_bg' => true,
                 'title' => '_adm_bp_cpt_type_' . BX_DOL_STUDIO_MODULE_CUSTOM,
-            )
-        );
+            ]
+        ];
 
-        $aModulesDb = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'type', 'value' => array(BX_DOL_MODULE_TYPE_MODULE, BX_DOL_MODULE_TYPE_TEMPLATE)));
+        $aModulesDb = BxDolModuleQuery::getInstance()->getModulesBy(['type' => 'type', 'value' => [BX_DOL_MODULE_TYPE_MODULE, BX_DOL_MODULE_TYPE_TEMPLATE]]);
         foreach($aModulesDb as $aModuleDb) {
             $sName = $aModuleDb['name'];
+            if($sName == BX_DOL_STUDIO_MODULE_SYSTEM)
+                continue;
 
-            if(!empty($aMenuItems[$sName]))
-                $aMenuItems[$sName] = array_merge($aMenuItems[$sName], $aModuleDb);
-            else
-                $aMenuItems[$sName] = $aModuleDb;
-
-            $aMenuItems[$sName]['title'] = BxDolStudioUtils::getModuleTitle($sName);
-
-            if(empty($aMenuItems[$sName]['icon']))
-                $aMenuItems[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModuleDb, 'menu', false); 
+            $aMenuItems[] = [
+                'name' => $sName,
+                'icon' => BxDolStudioUtils::getModuleIcon($aModuleDb, 'menu', false),
+                'icon_bg' => false,
+                'title' => BxDolStudioUtils::getModuleTitle($sName)
+            ]; 
         }
 
         $aMenu = [];

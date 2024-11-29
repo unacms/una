@@ -34,21 +34,22 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     {
         $sType = $this->oOptions->getType();
 
-        $aTypes = $aMenu = array();
-        if($this->oDb->getTypes(array('type' => 'all', 'not_in_group' => array(BX_DOL_STUDIO_STG_GROUP_TEMPLATES)), $aTypes) > 0 ) {
-            $aTypesGrouped = array();
+        $aTypes = $aMenu = [];
+        if($this->oDb->getTypes(['type' => 'all', 'not_in_group' =>[BX_DOL_STUDIO_STG_GROUP_TEMPLATES]], $aTypes) > 0 ) {
+            $aTypesGrouped = [];
             foreach($aTypes as $aType)
                 $aTypesGrouped[$aType['group']][] = $aType;
 
             foreach($aTypesGrouped as $sGroup => $aTypes)
                 foreach($aTypes as $aType)
-                    $aMenu[] = array(
+                    $aMenu[] = [
                         'name' => $aType['name'],
                         'icon' => $this->getMenuIcon($sGroup, $aType),
+                        'icon_bg' => $aType['name'] == 'system',
                         'link' => BX_DOL_URL_STUDIO . 'settings.php?page=' . $aType['name'],
                         'title' => $aType['caption'],
                         'selected' => $aType['name'] == $sType
-                    );
+                    ];
         }
 
         return parent::getPageMenu($aMenu);

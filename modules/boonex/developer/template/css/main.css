@@ -1,6 +1,6 @@
 /*--- Overwrite ---*/
 body.bx-dev-page-body-columns div.bx-std-page-column.bx-std-page-content .bx-std-page-column-cnt {
-    padding: 5rem 0 0 0;
+    padding: 4.0rem 0 0 0;
 }
 body.bx-dev-page-body-single div.bx-std-page-menu,
 body.bx-dev-page-body-columns div.bx-std-page-menu {
@@ -140,5 +140,5 @@ div.bx-dev-page-column.bx-dev-page-content {
     overflow-y: auto;
 }
 div.bx-dev-page-column.bx-dev-page-content .bx-dev-page-column-cnt {
-    padding: 1.5rem;
+    padding: 1.0rem;
 }

@@ -20,16 +20,18 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
     {
         parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
 
+        $this->bPageMenuTitle = false;
+
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&pgt_page=';
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
 
-        $this->aMenuItems = array();
+        $this->aMenuItems = false;
 
-		$this->aGridObjects = array(
-			'manage' => $this->oModule->_oConfig->getObject('grid_pgt_manage'),
-		);
+        $this->aGridObjects = [
+            'manage' => $this->oModule->_oConfig->getObject('grid_pgt_manage'),
+        ];
     }
 
     function getPageCss()

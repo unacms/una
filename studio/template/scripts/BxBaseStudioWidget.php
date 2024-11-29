@@ -122,14 +122,13 @@ class BxBaseStudioWidget extends BxDolStudioWidget
 
     public function getPageMenu($aMenu = [], $aMarkers = [])
     {
-        $sMenu = parent::getPageMenu($aMenu, $aMarkers);
-        if(!$sMenu || !$this->bPageMenuTitle)
-            return $sMenu;
+        if(!$this->bPageMenuTitle && $aMenu === false)
+            return '';
 
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $bActions = false;
-        if(($sActions = $this->getPageCaptionActions()) && ($bActions = strlen($sActions)) > 0)
+        if($this->bPageMenuTitle && ($sActions = $this->getPageCaptionActions()) && ($bActions = strlen($sActions)) > 0)
             $oTemplate->addInjection('injection_header', 'text', BxTemplStudioFunctions::getInstance()->transBox('bx-std-pmenu-popup-actions', $sActions, true));
 
         return $oTemplate->parseHtmlByName('page_menu.html', [
@@ -140,7 +139,7 @@ class BxBaseStudioWidget extends BxDolStudioWidget
                     'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
                 ]
             ],
-            'menu' => $sMenu
+            'menu' => parent::getPageMenu($aMenu, $aMarkers)
         ]);
     }
 
@@ -149,7 +148,7 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         $sResult = parent::getPageCode($sPage, $bWrap);
         if($sResult === false)
             return false;
-
+ 
         if(!empty($this->aPage['wid_type']) && !BxDolStudioRolesUtils::getInstance()->isActionAllowed('use ' . $this->aPage['wid_type'])) {
             $this->setError('_Access denied');
             return false;

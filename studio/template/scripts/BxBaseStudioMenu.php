@@ -39,27 +39,19 @@ class BxBaseStudioMenu extends BxDolStudioMenu
             return $aItem;
 
         $aItem['class'] = isset($aItem['class']) ? $aItem['class'] : '';
-        if($this->_bInlineIcons && $aItem['bx_if:image']['condition'] && strpos($aItem['icon'], '.svg') !== false) {
-            $sImage = '';
-            if(($sIconPath = $this->_oTemplate->getIconPath($aItem['icon'])))
-                $sImage = file_get_contents($sIconPath);
-            else 
-                $sImage = bx_file_get_contents($aItem['icon']);
-
-            if($sImage)            
-                $aItem = array_merge($aItem, [
-                    'bx_if:image' => [
-                        'condition' => false,
-                        'content' => [],
+        if($this->_bInlineIcons && $aItem['bx_if:image']['condition'] && ($sImage = $this->_oTemplate->getIconContent($aItem['icon'])) !== false)
+            $aItem = array_merge($aItem, [
+                'bx_if:image' => [
+                    'condition' => false,
+                    'content' => [],
+                ],
+                'bx_if:image_inline' => [
+                    'condition' => true,
+                    'content' => [
+                        'image' => $sImage
                     ],
-                    'bx_if:image_inline' => [
-                        'condition' => true,
-                        'content' => [
-                            'image' => $sImage
-                        ],
-                    ],
-                ]);
-        }
+                ],
+            ]);
 
         if($this->_bMenuSide) {
             $aItem['bx_if:show_icon'] = [

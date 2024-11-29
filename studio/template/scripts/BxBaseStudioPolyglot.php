@@ -26,23 +26,17 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'polyglot.php?page=';
 
-        $this->aMenuItems = array(
-            BX_DOL_STUDIO_PGT_TYPE_SETTINGS => array('icon' => 'cogs'),
-            BX_DOL_STUDIO_PGT_TYPE_KEYS => array('icon' => 'key'),
-            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES => array('icon' => 'far envelope'),
-            /*
-             * Isn't used for now.
-             * 
-            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF => array('icon' => 'far sticky-note'),
-             * 
-             */
-            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_CREATIVE => array('icon' => 'far object-group')
-        );
+        $this->aMenuItems = [
+            BX_DOL_STUDIO_PGT_TYPE_SETTINGS => ['icon' => 'mi-pgt-settings.svg'],
+            BX_DOL_STUDIO_PGT_TYPE_KEYS => ['icon' => 'mi-pgt-keys.svg'],
+            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_TEXT => ['icon' => 'mi-pgt-etemplates-text.svg'],
+            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HTML => ['icon' => 'mi-pgt-etemplates-html.svg']
+        ];
 
-        $this->aGridObjects = array(
+        $this->aGridObjects = [
             'keys' => 'sys_studio_lang_keys',
             'etemplates' => 'sys_studio_lang_etemplates',
-        );
+        ];
 
         $this->aHtmlIds = [
             'etc_builder_id' => 'adm-pgt-etc-builder',
@@ -58,24 +52,28 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         return parent::getPageJsCode($aOptions, $bWrap);
     }
 
-    public function getPageMenu($aMenu = array(), $aMarkers = array())
+    public function getPageMenu($aMenu = [], $aMarkers = [])
     {
+        if($this->aMenuItems === false)
+            return '';
+
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();
+        $aMenu = [];
         foreach($this->aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = [
                 'name' => $sMenuItem,
                 'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            );
+            ];
 
         return parent::getPageMenu($aMenu);
     }
 
-    protected function getSettings()
+    protected function getPgtSettings()
     {
         $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_DEFAULT, BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES);
 
@@ -87,17 +85,20 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         ));
     }
 
-    protected function getKeys()
+    protected function getPgtKeys()
     {
         return $this->getGrid($this->aGridObjects['keys']);
     }
 
-    protected function getEtemplates()
+    protected function getEtemplatesText()
     {
         return $this->getGrid($this->aGridObjects['etemplates']);
     }
 
-    protected function getEtemplatesHf()
+    /**
+     * TODO: Remove (after UNA 14) if new version is working fine.
+     */
+    protected function getEtemplatesHtmlOld()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -162,7 +163,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            echo $this->submitEtemplatesHf($oForm);
+            echo $this->submitEtemplatesHtmlOld($oForm);
             exit;
         }
 
@@ -181,7 +182,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         ));
     }
 
-    protected function getEtemplatesCreative()
+    protected function getEtemplatesHtml()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -247,7 +248,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            echo $this->submitEtemplatesCreative($oForm);
+            echo $this->submitEtemplatesHtml($oForm);
             exit;
         }
 

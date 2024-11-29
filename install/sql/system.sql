@@ -314,7 +314,7 @@ CREATE TABLE `sys_options_types` (
 --
 -- Dumping data for tables `sys_options_types`
 --
-INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES ('system', 'system', '_adm_stg_cpt_type_system', 'cogs', 1);
+INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES ('system', 'system', '_adm_stg_cpt_type_system', 'mi-cog.svg', 1);
 SET @iTypeId = LAST_INSERT_ID();
 
 --

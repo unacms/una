@@ -17,10 +17,10 @@ class BxBaseStudioStorages extends BxDolStudioStorages
     {
         parent::__construct($sPage);
 
-        $this->aStorages = array(
-            BX_DOL_STUDIO_STRG_TYPE_FILES => array('icon' => 'far file'),
-            BX_DOL_STUDIO_STRG_TYPE_IMAGES => array('icon' => 'far file-image')
-        );
+        $this->aStorages = [
+            BX_DOL_STUDIO_STRG_TYPE_FILES => ['icon' => 'mi-stg-files.svg'],
+            BX_DOL_STUDIO_STRG_TYPE_IMAGES => ['icon' => 'mi-stg-images.svg']
+        ];
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'storages.php?page=';
     }
@@ -40,17 +40,18 @@ class BxBaseStudioStorages extends BxDolStudioStorages
         return '';
     }
 
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+    function getPageMenu($aMenu = [], $aMarkers = [])
     {
-        $aMenu = array();
+        $aMenu = [];
         foreach($this->aStorages as $sName => $aStorage)
-            $aMenu[] = array(
+            $aMenu[] = [
                 'name' => $sName,
                 'icon' => $aStorage['icon'],
+                'icon_bg' => true,
                 'link' => $this->sSubpageUrl . $sName,
                 'title' => _t('_adm_lmi_cpt_' . $sName),
                 'selected' => $sName == $this->sPage
-            );
+            ];
 
         return parent::getPageMenu($aMenu);
     }

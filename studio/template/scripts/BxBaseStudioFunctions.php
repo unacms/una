@@ -98,29 +98,36 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
                 $sActionIcon = $aAction['icon'];
                 $bActionIcon = strpos($sActionIcon, '.') === false;
 
-                if(!$bActionIcon)
+                $bActionIconInline = !$bActionIcon;
+                if($bActionIconInline && ($sActionIcon = $oTemplate->getIconContent($sActionIcon)) === false) {
                     $sActionIcon = $oTemplate->getIconUrl($sActionIcon);
+                    $bActionIconInline = false;
+                }
 
                 $sCaption = _t($aAction['caption']);
-                $aTmplVarsAction = array(
+                $aTmplVarsAction = [
                     'name' => !empty($aAction['name']) ? $aAction['name'] : $sPage . '-' . $iIndex,
                     'caption' => $sCaption,
                     'url' => !empty($aAction['url']) ? bx_replace_markers($aAction['url'], $aMarkers) : 'javascript:void(0)',
-                    'bx_if:show_click' => array(
+                    'bx_if:show_click' => [
                         'condition' => !empty($aAction['click']),
-                        'content' => array(
+                        'content' => [
                             'content' => 'javascript:' . $aAction['click'],
-                        )
-                    ),
-                    'bx_if:action_icon' => array (
+                        ]
+                    ],
+                    'bx_if:action_icon' => [
                         'condition' => $bActionIcon,
-                        'content' => array('icon' => $sActionIcon, 'caption' => $sCaption),
-                    ),
-                    'bx_if:action_image' => array (
-                        'condition' => !$bActionIcon,
-                        'content' => array('icon_url' => $sActionIcon, 'caption' => $sCaption),
-                    ),
-                );
+                        'content' => ['name' => $sActionIcon, 'caption' => $sCaption],
+                    ],
+                    'bx_if:action_image' => [
+                        'condition' => !$bActionIcon && !$bActionIconInline,
+                        'content' => ['url' => $sActionIcon, 'caption' => $sCaption],
+                    ],
+                    'bx_if:action_image_inline' => [
+                        'condition' => !$bActionIcon && $bActionIconInline,
+                        'content' => ['content' => $sActionIcon],
+                    ],
+                ];
 
                 if(in_array($aAction['name'], ['settings']))
                     $aTmplVarsActionsLeft[] = $aTmplVarsAction;

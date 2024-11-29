@@ -43,16 +43,14 @@ BxDolStudioModule.prototype.activate = function(oCheckbox, sName, iWidgetId) {
         this.sActionsUrl, aParams, function(oData) {
             processJsonData(oData);
 
-            if(oData.code != 0) {
-                $('.bx-popup-applied:visible').dolPopupHide();
+            $('.bx-popup-applied:visible').dolPopupHide();
 
+            if(oData.code != 0) {
                 $(oCheckbox).attr('checked', 'checked').trigger('enable');
                 return;
             }
 
             if(iWidgetId != 0 && oData.widget.length > 0) {
-                $('.bx-popup-applied:visible').dolPopupHide();
-
                 $('#bx-std-widget-' + iWidgetId).replaceWith(oData.widget);
                 oBxDolStudioLauncher.enableJitter();
                 return;
@@ -60,10 +58,8 @@ BxDolStudioModule.prototype.activate = function(oCheckbox, sName, iWidgetId) {
 
             var oContent = $('#bx-std-page-columns');
             if(oData.content.length > 0)
-                oContent.html(oData.content).bx_anim('show', $this.sAnimationEffect, $this.iAnimationSpeed);
-            else
                 oContent.bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
-                    $(this).html(oData.content);
+                    $(this).html(oData.content).bx_anim('show', $this.sAnimationEffect, 'fast');
                 });
         },
         'json'
