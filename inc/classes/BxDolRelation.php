@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolRelation extends BxDolConnection
+class BxDolRelation extends BxTemplConnection
 {
     protected static $_sParamEnabled = 'sys_relations_enable';
     protected static $_sParamTypes = 'sys_relations';

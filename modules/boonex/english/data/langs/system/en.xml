@@ -3211,6 +3211,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sm_members"><![CDATA[{0} members]]></string>
     <string name="_sys_menu_item_title_sm_membership"><![CDATA[Membership]]></string>
     <string name="_sys_menu_item_title_sm_subscribers"><![CDATA[{0} followers]]></string>
+    <string name="_sys_menu_item_title_sm_relations"><![CDATA[{0} relations]]></string>
     <string name="_sys_menu_item_title_sm_country"><![CDATA[Country]]></string>
     <string name="_sys_menu_item_title_sm_country_city"><![CDATA[Country and City]]></string>
     <string name="_sys_menu_item_title_sm_ignore"><![CDATA[Remove]]></string>
@@ -3326,12 +3327,13 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_sm_leave"><![CDATA[Leave]]></string>
     <string name="_sys_menu_item_title_system_sm_nl"><![CDATA[New Line]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribe"><![CDATA[Follow]]></string>
+    <string name="_sys_menu_item_title_system_sm_unsubscribe"><![CDATA[Unfollow]]></string>
     <string name="_sys_menu_item_title_system_sm_friends"><![CDATA[Friends]]></string>
     <string name="_sys_menu_item_title_system_sm_friends_mutual"><![CDATA[Mutual Friends]]></string>
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Members]]></string>
     <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Membership]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Followers]]></string>
-    <string name="_sys_menu_item_title_system_sm_unsubscribe"><![CDATA[Unfollow]]></string>
+    <string name="_sys_menu_item_title_system_sm_relations"><![CDATA[Relations]]></string>
     <string name="_sys_menu_item_title_system_sm_country"><![CDATA[Country]]></string>
     <string name="_sys_menu_item_title_system_sm_country_city"><![CDATA[Country and City]]></string>
     <string name="_sys_menu_item_title_system_sm_ignore"><![CDATA[Ignore Recommendation]]></string>

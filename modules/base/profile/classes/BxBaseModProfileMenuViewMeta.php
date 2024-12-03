@@ -165,6 +165,37 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         return $oConnection->getCounter($iContentProfileId, false, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 
+    protected function _getMenuItemRelations($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_bContentPublic || !$this->_oContentProfile)
+            return false;
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_relations');
+        if(!$oConnection)
+            return false;
+
+        $iContentProfileId = $this->_oContentProfile->id();
+
+        if($this->_bIsApi) {
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+
+            $sUrl = $this->_oContentProfile->getUrl();
+            if(!empty($CNF['URI_VIEW_RELATIONS']))
+                $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_RELATIONS'] . '&profile_id=' . $iContentProfileId));
+
+            return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
+                'title' => $aCounter['countf'],
+                'link' => bx_api_get_relative_url($sUrl),
+                'list' => $oConnection->getConnectedListAPI($iContentProfileId, false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS)
+            ]);
+        }
+
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+        return $oConnection->getCounter($iContentProfileId, true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+    }
+
     protected function _getMenuItemViews($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
