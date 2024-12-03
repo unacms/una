@@ -15,6 +15,7 @@ define('BX_DOL_CRON_EXECUTE', '1');
  */
 class BxDolManageCmd
 {
+    protected $_sVer = '1.0';
     protected $_sCmd;
     protected $_sCmdOptions;
     protected $_sPathToUna;
@@ -47,10 +48,13 @@ class BxDolManageCmd
     {
         // set neccessary options
 
-        $a = getopt('hqic:u:p:o:', $this->getOptions());
+        $a = getopt('hvqic:u:p:o:', $this->getOptions());
 
         if (isset($a['h']))
             $this->finish($this->_aReturnCodes['success']['code'], $this->getHelp());
+
+        if (isset($a['v']))
+            $this->finish($this->_aReturnCodes['success']['code'], $this->getVer());
 
         if (isset($a['q']))
             $this->_isQuiet = true;
@@ -90,6 +94,11 @@ class BxDolManageCmd
             if ('site_config' != $sKey)
                 $a[] = "$sKey::";
         return $a;
+    }
+
+    protected function getVer()
+    {
+        return "UNA Manage Script v." . $this->_sVer;
     }
 
     protected function getHelp()

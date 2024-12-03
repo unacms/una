@@ -73,7 +73,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
+        "php": ">=8.1",
         "akeeba/s3": "dev-development",
         "achingbrain/php5-akismet": "0.5",
         "unaio/amazon-s3-php-class-hmac-v2": "*",
@@ -92,7 +92,7 @@
         "paypal/paypal-checkout-sdk": "^1.0",
         "phpmailer/phpmailer": "^6.5",
         "stripe/stripe-php": "^7.95",
-        "twilio/sdk": "^5.19",
+        "twilio/sdk": "^8.3",
         "avto-dev/composer-cleanup-plugin": "dev-master",
         "mpratt/embera": "~2.0",
         "spatie/calendar-links": "^1.5",
