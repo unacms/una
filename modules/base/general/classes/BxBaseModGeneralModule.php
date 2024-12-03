@@ -2686,15 +2686,21 @@ class BxBaseModGeneralModule extends BxDolModule
         if((!empty($CNF['FIELD_STATUS']) && $aContentInfo[$CNF['FIELD_STATUS']] != 'active') || (!empty($CNF['FIELD_STATUS_ADMIN']) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != 'active'))
             return false;
 
+        $bCache = true;
         $iUserId = $this->getUserId();
         $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
         $iAuthorIdAbs = abs($iAuthorId);
 
         /**
-         * Don't show anonymous posts on the post's owner timeline.
+         * Don't show anonymous posts on the post's owner timeline
+         * and don't cache them when they're viewed by their authors. 
          */
-        if($iAuthorId < 0 && $iAuthorIdAbs != $iUserId && ((is_numeric($aEvent['owner_id']) && $iAuthorIdAbs == (int)$aEvent['owner_id']) || (is_array($aEvent['owner_id']) && in_array($iAuthorIdAbs, $aEvent['owner_id']))))
-            return false;
+        if($iAuthorId < 0 && ((is_numeric($aEvent['owner_id']) && $iAuthorIdAbs == (int)$aEvent['owner_id']) || (is_array($aEvent['owner_id']) && in_array($iAuthorIdAbs, $aEvent['owner_id'])))) {
+            if($iAuthorIdAbs != $iUserId)
+                return false;
+
+            $bCache = false;
+        }
 
         //--- Views
         $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $aContentInfo[$CNF['FIELD_ID']]) : null;
@@ -2771,15 +2777,15 @@ class BxBaseModGeneralModule extends BxDolModule
         if(isset($aEvent['object_privacy_view']) && (int)$aEvent['object_privacy_view'] < 0)
             $iOwnerId = abs($aEvent['object_privacy_view']);
 
-        $bCache = true;
         $aContent = $this->_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
         if(isset($aContent['_cache'])) {
-            $bCache = (bool)$aContent['_cache'];
+            if($bCache)
+                $bCache = (bool)$aContent['_cache'];
 
             unset($aContent['_cache']);
         }
 
-        return array(
+        return [
             '_cache' => $bCache,
             'owner_id' => $iOwnerId,
             'object_owner_id' => $iAuthorId,
@@ -2798,7 +2804,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'comments' => $aComments,
             'title' => $sTitle, //may be empty.
             'description' => '' //may be empty.
-        );
+        ];
     }
 
     public function serviceGetTimelinePostAllowedView($aEvent)
