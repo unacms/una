@@ -3326,6 +3326,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sRoot = BX_DOL_URL_ROOT;
         }
 
+        $aParts = [];
         if(strpos($sName,'|') !== false) {
             $aParts = explode('|', $sName);
             $sName = $aParts[1];
@@ -3375,9 +3376,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         /**
          * try to find from received path
          */
-        if(!$sResult && @is_file(BX_DIRECTORY_PATH_ROOT . $aParts[0] . DIRECTORY_SEPARATOR . $aParts[1])) {
+        if(!$sResult && isset($aParts[0], $aParts[1]) && @is_file(BX_DIRECTORY_PATH_ROOT . $aParts[0] . DIRECTORY_SEPARATOR . $aParts[1]))
             $sResult = $sRoot . $aParts[0] . $sDivider . $aParts[1];
-        }
 
         if(isset($sLocationKey))
            $this->removeLocation($sLocationKey);
