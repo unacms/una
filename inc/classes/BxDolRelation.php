@@ -89,7 +89,7 @@ class BxDolRelation extends BxTemplConnection
         if(!$iContent)
             $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
 
-        return $this->_action($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists');
+        return $this->_action($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
     }
 
     /**
