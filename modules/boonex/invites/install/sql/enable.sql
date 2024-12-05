@@ -26,6 +26,12 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_invites_invites', 1, @sName, '_bx_invites_page_block_title_invites', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_invites";s:6:"method";s:24:"get_block_manage_invites";}', 0, 1, 1);
 
+-- PAGES: add page block on homepage
+SET @iPBCellDashboard = 1;
+SET @iPBOrderDashboard = 0;
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `active_api`, `order`) VALUES
+('sys_home', @iPBCellDashboard, @sName, '_bx_invites_page_block_title_request_form', 11, 1, 'service', 'a:2:{s:6:"module";s:10:"bx_invites";s:6:"method";s:22:"get_block_form_request";}', 0, 0, 0, 1, @iPBOrderDashboard);
+
 -- PAGES: add page block on dashboard
 SET @iPBCellDashboard = 3;
 SET @iPBOrderDashboard = 2; --(SELECT IFNULL(MAX(`order`), 0) FROM `sys_pages_blocks` WHERE `object` = 'sys_dashboard' AND `cell_id` = @iPBCellDashboard LIMIT 1);
