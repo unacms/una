@@ -491,21 +491,19 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_courses_content_node', 'bx_courses', 'do_cancel', '_bx_courses_form_content_node_input_do_cancel', '', 0, 'button', '_bx_courses_form_content_node_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_courses_content_node_add', 'id', 2147483647, 0, 1),
-('bx_courses_content_node_add', 'title', 2147483647, 1, 2),
-('bx_courses_content_node_add', 'text', 2147483647, 1, 3),
-('bx_courses_content_node_add', 'passing', 2147483647, 1, 4),
-('bx_courses_content_node_add', 'controls', 2147483647, 1, 5),
-('bx_courses_content_node_add', 'do_submit', 2147483647, 1, 6),
-('bx_courses_content_node_add', 'do_cancel', 2147483647, 1, 7),
+('bx_courses_content_node_add', 'title', 2147483647, 1, 1),
+('bx_courses_content_node_add', 'text', 2147483647, 1, 2),
+('bx_courses_content_node_add', 'passing', 2147483647, 1, 3),
+('bx_courses_content_node_add', 'controls', 2147483647, 1, 4),
+('bx_courses_content_node_add', 'do_submit', 2147483647, 1, 5),
+('bx_courses_content_node_add', 'do_cancel', 2147483647, 1, 6),
 
-('bx_courses_content_node_edit', 'id', 2147483647, 1, 1),
-('bx_courses_content_node_edit', 'title', 2147483647, 1, 2),
-('bx_courses_content_node_edit', 'text', 2147483647, 1, 3),
-('bx_courses_content_node_edit', 'passing', 2147483647, 1, 4),
-('bx_courses_content_node_edit', 'controls', 2147483647, 1, 5),
-('bx_courses_content_node_edit', 'do_submit', 2147483647, 1, 6),
-('bx_courses_content_node_edit', 'do_cancel', 2147483647, 1, 7);
+('bx_courses_content_node_edit', 'title', 2147483647, 1, 1),
+('bx_courses_content_node_edit', 'text', 2147483647, 1, 2),
+('bx_courses_content_node_edit', 'passing', 2147483647, 1, 3),
+('bx_courses_content_node_edit', 'controls', 2147483647, 1, 4),
+('bx_courses_content_node_edit', 'do_submit', 2147483647, 1, 5),
+('bx_courses_content_node_edit', 'do_cancel', 2147483647, 1, 6);
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
