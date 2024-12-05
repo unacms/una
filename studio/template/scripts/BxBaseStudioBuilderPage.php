@@ -503,29 +503,29 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             )
         );
 
-        $aMenu = array(
-            BX_DOL_STUDIO_BP_SKELETONS => array(
+        $aMenu = [
+            BX_DOL_STUDIO_BP_SKELETONS => [
                 'name' => BX_DOL_STUDIO_BP_SKELETONS,
                 'icon' => 'mi-qrcode.svg',
                 'icon_bg' => true,
                 'title' => '_sys_block_types_skeletons',
                 'selected' => $sSelected == BX_DOL_STUDIO_BP_SKELETONS,
-            ),
-            BX_DOL_STUDIO_MODULE_SYSTEM => array(
+            ],
+            BX_DOL_STUDIO_MODULE_SYSTEM => [
                 'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
                 'icon' => 'mi-cog.svg',
                 'icon_bg' => true,
                 'title' => '_sys_block_types_system',
                 'selected' => $sSelected == BX_DOL_STUDIO_MODULE_SYSTEM,
-            ),
-            BX_DOL_STUDIO_MODULE_CUSTOM => array(
+            ],
+            BX_DOL_STUDIO_MODULE_CUSTOM => [
                 'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
                 'icon' => 'mi-wrench.svg',
                 'icon_bg' => true,
                 'title' => '_sys_block_types_custom',
                 'selected' => $sSelected == BX_DOL_STUDIO_MODULE_CUSTOM,
-            )
-        );
+            ]
+        ];
 
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(['type' => 'type', 'value' => [BX_DOL_MODULE_TYPE_MODULE, BX_DOL_MODULE_TYPE_TEMPLATE]]);
         $aModulesWithBlocks = $this->oDb->getModulesWithCopyableBlocks();
@@ -546,16 +546,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         foreach($aMenu as $sKey => $aItem)
             $aMenu[$sKey]['onclick'] =  $sJsObject . '.onChangeModule(\'' . $aItem['name'] . '\', this);';
 
-        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
-        $oMenu->setInlineIcons(false);
+        $oMenu = new BxTemplStudioMenu(['template' => 'menu_side.html', 'menu_items' => $aMenu]);
 
-        $aTmplParams = array(
+        $aForm['inputs']['blocks']['content'] = $oTemplate->parseHtmlByName('bp_add_block_form.html', [
             'menu' => $oMenu->getCode(),
             'html_block_lists_id' => $this->aHtmlIds['block_lists_id'],
             'blocks' => $this->getBlockList($sSelected)
-        );
-
-        $aForm['inputs']['blocks']['content'] = $oTemplate->parseHtmlByName('bp_add_block_form.html', $aTmplParams);
+        ]);
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();

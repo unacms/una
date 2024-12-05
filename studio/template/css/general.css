@@ -189,7 +189,6 @@ div.bx-std-pmen-item a,
 div.bx-std-pmen-item .sys-icon {
     color: #595959;
 }
-
 div.bx-std-pmen-item a {
     position: relative;
     display: block;
@@ -199,14 +198,9 @@ div.bx-std-pmen-item a {
     text-decoration: none;
     color: rgba(55, 65, 81, 1);
 }
-
 div.bx-std-pmen-item .sys-icon {
     font-size: 1.0rem;
     color: #ffffff;
-}
-
-div.bx-std-pmen-item svg g {
-    opacity: 0.7;
 }
 div.bx-std-pmen-item:hover,
 div.bx-std-pmen-item.bx-menu-tab-active {
@@ -225,10 +219,6 @@ div.bx-std-pmen-item.bx-menu-tab-active a {
     color: rgba(17, 24, 39, 1);
 }
 
-div.bx-std-pmen-item:hover svg g,
-div.bx-std-pmen-item.bx-menu-tab-active svg g {
-    opacity: 0.85;
-}
 /*--- Icons ---*/
 img.bx-item-icon,
 svg.bx-item-icon{
