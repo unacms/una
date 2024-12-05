@@ -1314,7 +1314,7 @@
         <string name="_adm_page_cpt_builder_roles"><![CDATA[Roles]]></string>
 	<string name="_adm_page_cpt_dashboard"><![CDATA[Dashboard]]></string>
 	<string name="_adm_page_cpt_designer"><![CDATA[Designer]]></string>
-	<string name="_adm_page_cpt_home"><![CDATA[]]></string>
+	<string name="_adm_page_cpt_home"><![CDATA[Studio]]></string>
 	<string name="_adm_page_cpt_login"><![CDATA[Login]]></string>
 	<string name="_adm_page_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_page_cpt_settings"><![CDATA[Settings]]></string>

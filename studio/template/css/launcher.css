@@ -161,7 +161,7 @@ div.bx-std-widget-notices {
     height: 2rem;
     
     background-color: #ff3b38;
-    border: 2px solid #000000;
+    border: 2px solid rgba(0, 0, 0, 0.1);
     border-radius: 1.25rem;
 
     line-height: 2rem;
