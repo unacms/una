@@ -3859,7 +3859,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             //--- Process Link ---//
             $aLinkIds = $oForm->getCleanValue($CNF['FIELD_LINK']);
-            $bLinkIds = !empty($aLinkIds) && is_array($aLinkIds);
+            $bLinkIds = !empty($aLinkIds) && ($this->_bIsApi ? is_string($aLinkIds) : is_array($aLinkIds));
 
             //--- Process Photos ---//
             $aPhotoIds = $oForm->getCleanValue($CNF['FIELD_PHOTO']);
@@ -3877,7 +3877,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
-                if(bx_is_api())
+                if($this->_bIsApi)
                     return ['form_object' => $oForm];
 
             	return $this->_prepareResponse([
@@ -3928,9 +3928,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $this->_processMetas($iId, $sText);
 
                 //--- Process Link ---//
-                if($bLinkIds)
-                    foreach($aLinkIds as $iLinkId)
-                        $this->_oDb->saveLink($iId, $iLinkId);
+                if($bLinkIds) {
+                    if($this->_bIsApi) {
+                        $aLinks = explode(',', $aLinkIds);
+                        if(!empty($aLinks) && is_array($aLinks))
+                            foreach($aLinks as $sLink) {
+                                $aLink = $this->addAttachLink([
+                                    $CNF['FIELD_ATTACH_LINK_CONTENT_ID'] => $iId,
+                                    $CNF['FIELD_ATTACH_LINK_URL'] => $sLink
+                                ]);
+                                
+                                if(!is_array($aLink) || empty($aLink['id']))
+                                    continue;
+
+                                $this->_oDb->saveLink($iId, $aLink['id']);
+                            }
+                    }
+                    else
+                        foreach($aLinkIds as $iLinkId)
+                            $this->_oDb->saveLink($iId, $iLinkId);
+                }
 
                 //--- Process Media ---//
                 $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId, true);
@@ -3939,7 +3956,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
                 $this->onPost($iId);
 
-                if(bx_is_api())
+                if($this->_bIsApi)
                     return ['form_object' => $oForm, 'id' => $iId];
 
                 return $this->_prepareResponse(['id' => $iId], $bAjaxMode, [

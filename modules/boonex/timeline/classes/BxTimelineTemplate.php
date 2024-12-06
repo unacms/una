@@ -2028,9 +2028,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if(($oEmbed = BxDolEmbed::getObjectInstance('sys_system')) !== false)
                     $aEvent['content']['embed'] = $oEmbed->getLinkHTML(current($aEvent['content']['links'])['url']);
             }
-
-            if (empty($aEvent['content']['embed']))
-                $aEvent['content']['embed'] = bx_linkify_embeded($aEvent['content']['text']);
         }
 
         if(empty($aEvent['menu_actions'])) {
