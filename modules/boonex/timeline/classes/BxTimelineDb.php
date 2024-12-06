@@ -774,7 +774,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sSqlMaskUnion = '(' . implode(') UNION (', $aSqlParts) . ')';
         if($bValidate)
-            $sSqlMaskUnion = 'SELECT MAX(`tu`.`id`) AS `id` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
+            $sSqlMaskUnion = 'SELECT MIN(`tu`.`id`) AS `min_id`, MAX(`tu`.`id`) AS `max_id` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
         else
             $sSqlMaskUnion = 'SELECT *, GROUP_CONCAT(`owner_id`) AS `owner_id_grouped` FROM (' . $sSqlMaskUnion . ') AS `tu` GROUP BY `tu`.`source`';
         $sSqlMaskUnion .= ' {order} {limit}';

@@ -5736,8 +5736,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $iIds = 0;
             $aIds = [];
+            $sModule = $this->_oConfig->getName();
             foreach($aEventsIds as $aEventId) {
-                $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => (int)$aEventId['id']]);
+                $aEvent = [];
+                if((int)$aEventId['min_id'] != (int)$aEventId['max_id']) {
+                    $aEs = [
+                        $this->_oDb->getEvents(['browse' => 'id', 'value' => (int)$aEventId['min_id']]),
+                        $this->_oDb->getEvents(['browse' => 'id', 'value' => (int)$aEventId['max_id']])
+                    ];
+
+                    foreach($aEs as $aE) {
+                        $bEs = (int)$aE['system'] != 0;
+                        if(($bEs ? $aE['type'] : $sModule) . '_' . abs($aE['object_owner_id']) . '_' . ($bEs ? $aE['object_id'] : $aE['id']) != $aE['source']) 
+                            continue;
+
+                        $aEvent = $aE;
+                        break;
+                    }
+                }
+                else 
+                    $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => (int)$aEventId['min_id']]);
+
                 if(empty($aEvent) || !is_array($aEvent))
                     continue;
 
