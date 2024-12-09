@@ -3436,6 +3436,10 @@
     <string name="_sys_menu_item_title_sa_edit"><![CDATA[Управление приложениями]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Язык]]></string>
     <string name="_sys_menu_item_title_sa_language"><![CDATA[Язык]]></string>
+    <string name="_sys_menu_item_title_system_sa_scheme_light"><![CDATA[Светлый режим]]></string>
+    <string name="_sys_menu_item_title_sa_scheme_light"><![CDATA[Светлый режим]]></string>
+    <string name="_sys_menu_item_title_system_sa_scheme_dark"><![CDATA[Темный режим]]></string>
+    <string name="_sys_menu_item_title_sa_scheme_dark"><![CDATA[Темный режим]]></string>
     <string name="_sys_menu_item_title_system_sa_logout"><![CDATA[Выйти]]></string>
     <string name="_sys_menu_item_title_sa_logout"><![CDATA[Выйти]]></string>
     <string name="_sys_menu_item_title_inherited"><![CDATA[Унаследованный]]></string>

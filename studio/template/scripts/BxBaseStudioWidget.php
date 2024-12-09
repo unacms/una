@@ -202,8 +202,8 @@ class BxBaseStudioWidget extends BxDolStudioWidget
     {
         $aTypeI2S = [
             BX_DB_CONTENT_ONLY => 'cnt',
-            BX_DB_DEF => 'cnt-ttl-bg bg-white rounded-2xl',
-            BX_DB_NO_CAPTION => 'cnt-bg bg-white rounded-2xl'
+            BX_DB_DEF => 'cnt-ttl-bg',
+            BX_DB_NO_CAPTION => 'cnt-bg'
         ];
         $iType = isset($aBlock['type'], $aTypeI2S[$aBlock['type']]) ? $aBlock['type'] : BX_DB_NO_CAPTION;
 

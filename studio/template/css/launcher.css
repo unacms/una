@@ -1,10 +1,6 @@
 /**
  * Overwrite
  */
-.bx-std-bg.bx-std-page-launcher {
-    background: rgb(229, 231, 235);
-}
-
 div.bx-std-menu-top-wrp {
     position: fixed;
     top: 0;

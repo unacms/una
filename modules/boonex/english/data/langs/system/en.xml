@@ -3474,6 +3474,10 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sa_edit"><![CDATA[Manage Apps]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Language]]></string>
     <string name="_sys_menu_item_title_sa_language"><![CDATA[Language]]></string>
+    <string name="_sys_menu_item_title_system_sa_scheme_light"><![CDATA[Light Mode]]></string>
+    <string name="_sys_menu_item_title_sa_scheme_light"><![CDATA[Light Mode]]></string>
+    <string name="_sys_menu_item_title_system_sa_scheme_dark"><![CDATA[Dark Mode]]></string>
+    <string name="_sys_menu_item_title_sa_scheme_dark"><![CDATA[Dark Mode]]></string>
     <string name="_sys_menu_item_title_system_sa_logout"><![CDATA[Sign out]]></string>
     <string name="_sys_menu_item_title_sa_logout"><![CDATA[Sign out]]></string>
     <string name="_sys_menu_item_title_inherited"><![CDATA[Inherited]]></string>

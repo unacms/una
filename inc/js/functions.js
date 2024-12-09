@@ -1419,6 +1419,50 @@ function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel, oParams)
     });
 }
 
+function bx_is_color_scheme_dark()
+{
+    return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+};
+
+function bx_set_color_scheme(iCode)
+{
+    switch(iCode) {
+        case 0:
+            localStorage.removeItem('theme');
+            break;
+
+        case 1:
+            localStorage.theme = 'sun'
+            break;
+
+        case 2:
+            localStorage.theme = 'dark'
+            break;
+    }
+
+    //--- Change scheme.
+    bx_set_color_scheme_html();
+
+    //--- Notify global handlers.
+    if(typeof glOnColorSchemeChange === 'undefined' || !(glOnColorSchemeChange instanceof Array)) 
+        return;
+
+    if(typeof iCode === 'undefined' || !iCode)
+        iCode = this.isColorSchemeDark() ? 2 : 1;
+
+    for(var i = 0; i < glOnColorSchemeChange.length; i++)
+        if(typeof glOnColorSchemeChange[i] === 'function')
+            glOnColorSchemeChange[i](iCode);
+};
+
+function bx_set_color_scheme_html()
+{
+    if(bx_is_color_scheme_dark())
+        $('html').addClass('dark')
+    else
+        $('html').removeClass('dark')
+}
+
 /**
  * Check if mobile or desktop device.
  */

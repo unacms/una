@@ -4944,7 +4944,9 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_studio_account_popup', 'system', 'site', '_sys_menu_item_title_system_sa_site', '_sys_menu_item_title_sa_site', '{url_root}', '', '', 'ami-site.svg', '', 2147483647, 1, 0, 0, 2),
 ('sys_studio_account_popup', 'system', 'edit', '_sys_menu_item_title_system_sa_edit', '_sys_menu_item_title_sa_edit', 'javascript:void(0)', '{js_object}.clickEdit(this);', '', 'ami-edit.svg', '', 2147483647, 1, 0, 0, 3),
 ('sys_studio_account_popup', 'system', 'language', '_sys_menu_item_title_system_sa_language', '_sys_menu_item_title_sa_language', 'javascript:void(0)', 'bx_menu_popup(''sys_switch_language_popup'', window);', '', 'ami-language.svg', '', 2147483647, 1, 0, 0, 4),
-('sys_studio_account_popup', 'system', 'logout', '_sys_menu_item_title_system_sa_logout', '_sys_menu_item_title_sa_logout', '{url_root}logout.php', '{js_object}.clickLogout(this);', '', 'ami-logout.svg', '', 2147483647, 1, 0, 0, 5);
+('sys_studio_account_popup', 'system', 'scheme_light', '_sys_menu_item_title_system_sa_scheme_light', '_sys_menu_item_title_sa_scheme_light', 'javascript:void(0)', '{js_object}.setColorScheme(this, 1);', '', 'ami-scheme-light.svg', '', 2147483647, 1, 0, 0, 5),
+('sys_studio_account_popup', 'system', 'scheme_dark', '_sys_menu_item_title_system_sa_scheme_dark', '_sys_menu_item_title_sa_scheme_dark', 'javascript:void(0)', '{js_object}.setColorScheme(this, 2);', '', 'ami-scheme-dark.svg', '', 2147483647, 1, 0, 0, 6),
+('sys_studio_account_popup', 'system', 'logout', '_sys_menu_item_title_system_sa_logout', '_sys_menu_item_title_sa_logout', '{url_root}logout.php', '{js_object}.clickLogout(this);', '', 'ami-logout.svg', '', 2147483647, 1, 0, 0, 7);
 -- --------------------------------------------------------
 
 

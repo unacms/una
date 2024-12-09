@@ -20,6 +20,20 @@ class BxBaseStudioMenuAccountPopup extends BxDolStudioMenuAccountPopup
             'url_studio' => BX_DOL_URL_STUDIO
         ));
     }
+    
+    protected function _getMenuItem ($aItem)
+    {
+        $aItem = parent::_getMenuItem($aItem);
+        if($aItem === false)
+            return $aItem;
+        
+        if(!isset($aItem['class_add']))
+            $aItem['class_add'] = '';
+
+        $aItem['class_add'] .= str_replace('_', ' ', $aItem['name']);
+
+        return $aItem;
+    }
 }
 
 /** @} */

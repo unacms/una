@@ -12,13 +12,6 @@ div.bx-std-cb {
 }
 
 /**
- * Page
- */
-.bx-def-color-bg-page.bx-std-bg {
-    background-color: rgba(229, 231, 235, 1.0);
-}
-
-/**
  * Page Content
  */
 div.bx-std-page-bg {
@@ -67,9 +60,6 @@ div.bx-std-page-columns-cnt {
     position: relative;
     width: 100%;
     height: 100%;
-}
-div.bx-std-page-columns-cnt {
-    background-color: rgba(255, 255, 255, 1.0);
 }
 
 /**
@@ -201,22 +191,6 @@ div.bx-std-pmen-item a {
 div.bx-std-pmen-item .sys-icon {
     font-size: 1.0rem;
     color: #ffffff;
-}
-div.bx-std-pmen-item:hover,
-div.bx-std-pmen-item.bx-menu-tab-active {
-    background-color: rgba(243, 244, 246, 1);
-}
-div.bx-std-pmen-item:hover {
-    font-weight: 500;
-}
-div.bx-std-pmen-item:hover a {
-    color: rgba(17, 24, 39, 1);
-}
-div.bx-std-pmen-item.bx-menu-tab-active {
-    font-weight: 600;    
-}
-div.bx-std-pmen-item.bx-menu-tab-active a {
-    color: rgba(17, 24, 39, 1);
 }
 
 /*--- Icons ---*/
