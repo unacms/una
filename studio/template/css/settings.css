@@ -22,12 +22,9 @@ div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     position: absolute;
     bottom: 0;
     width: 100%;
-    
+
     margin: 0;
     padding: 1.25rem 1.5rem;
-
-    border-top: 1px solid rgba(209, 213, 219, 1.0);
-    background-color: rgba(255, 255, 255, 1.0);
 }
 
 #adm-settings-form .bx-form-advanced-wrapper .bx-form-section-wrapper:first-child,

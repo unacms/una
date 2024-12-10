@@ -7,10 +7,10 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_AUD_TYPE_GENERAL', 'general');
+define('BX_DOL_STUDIO_AUD_TYPE_REPORTS', 'reports');
 define('BX_DOL_STUDIO_AUD_TYPE_SETTINGS', 'settings');
 
-define('BX_DOL_STUDIO_AUD_TYPE_DEFAULT', BX_DOL_STUDIO_AUD_TYPE_GENERAL);
+define('BX_DOL_STUDIO_AUD_TYPE_DEFAULT', BX_DOL_STUDIO_AUD_TYPE_REPORTS);
 
 class BxDolStudioAudit extends BxTemplStudioWidget
 {

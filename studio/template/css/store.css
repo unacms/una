@@ -184,9 +184,6 @@ span.bx-std-product-versions {
 .bx-std-pc-cover {
     display: block;
     height: 12.5rem;
-
-    background-color: rgba(228, 228, 231, 1);
-
     overflow: hidden;
 }
 

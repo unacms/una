@@ -30,24 +30,25 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
     {
         return 'oBxDolStudioPermissions';
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+    function getPageMenu($aMenu = [], $aMarkers = [])
     {
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();
-        $aMenuItems = array(
-            BX_DOL_STUDIO_PRM_TYPE_LEVELS => array('icon' => 'sliders-h'),
-            BX_DOL_STUDIO_PRM_TYPE_ACTIONS => array('icon' => 'exchange-alt')
-        );
+        $aMenu = [];
+        $aMenuItems = [
+            BX_DOL_STUDIO_PRM_TYPE_LEVELS => ['icon' => 'mi-prm-levels.svg'],
+            BX_DOL_STUDIO_PRM_TYPE_ACTIONS => ['icon' => 'mi-prm-actions.svg']
+        ];
 
         foreach($aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = [
                 'name' => $sMenuItem,
                 'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            );
+            ];
 
         return parent::getPageMenu($aMenu);
     }

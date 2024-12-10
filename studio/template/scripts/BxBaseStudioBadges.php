@@ -20,11 +20,11 @@ class BxBaseStudioBadges extends BxDolStudioBadges
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'badges.php?page=';
 
-        $this->aMenuItems = array(
-            BX_DOL_STUDIO_BADGES_TYPE_GENERAL => array('icon' => 'user-tag'),
-        );
+        $this->aMenuItems = [
+            BX_DOL_STUDIO_BADGES_TYPE_GENERAL => ['icon' => 'mi-bdg-badges.svg'],
+        ];
     }
-	
+
     function getPageCss()
     {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'badges.css'));
@@ -39,19 +39,20 @@ class BxBaseStudioBadges extends BxDolStudioBadges
         return parent::getPageJsCode($aOptions, $bWrap);
     }
     
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+    function getPageMenu($aMenu = [], $aMarkers = [])
     {
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();
+        $aMenu = [];
         foreach($this->aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = [
                 'name' => $sMenuItem,
                 'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            );
+            ];
 
         return parent::getPageMenu($aMenu);
     }

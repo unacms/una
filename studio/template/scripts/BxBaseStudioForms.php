@@ -20,19 +20,19 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_forms.php?page=';
 
-        $this->aMenuItems = array(
-            BX_DOL_STUDIO_FORM_TYPE_FORMS => array('icon' => 'list-alt'),
-            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS => array('icon' => 'desktop'),
-            BX_DOL_STUDIO_FORM_TYPE_FIELDS => array('icon' => 'check-square'),
-            BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS => array('icon' => 'align-justify'),
-            BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => array('icon' => 'indent'),
-            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => array('icon' => 'search'),
-            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
-            BX_DOL_STUDIO_FORM_TYPE_SEARCH_SORTABLE_FIELDS => array('icon' => 'sort'),
-            BX_DOL_STUDIO_FORM_TYPE_LABELS => array('icon' => 'tags'),
-            BX_DOL_STUDIO_FORM_TYPE_CATEGORIES => array('icon' => 'folder'),
-            BX_DOL_STUDIO_FORM_TYPE_GROUPS_ROLES => array('icon' => 'user'),
-        );
+        $this->aMenuItems = [
+            BX_DOL_STUDIO_FORM_TYPE_FORMS => ['icon' => 'mi-frm-forms.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS => ['icon' => 'mi-frm-displays.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_FIELDS => ['icon' => 'mi-frm-fields.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS => ['icon' => 'mi-frm-plists.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => ['icon' => 'mi-frm-pvalues.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => ['icon' => 'mi-frm-sforms.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => ['icon' => 'mi-frm-sfields.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_SORTABLE_FIELDS => ['icon' => 'mi-frm-ssfields.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_LABELS => ['icon' => 'mi-frm-labels.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_CATEGORIES => ['icon' => 'mi-frm-categories.svg'],
+            BX_DOL_STUDIO_FORM_TYPE_GROUPS_ROLES => ['icon' => 'mi-frm-groles.svg'],
+        ];
 
         $this->aGridObjects = array(
             'forms' => 'sys_studio_forms',
@@ -64,19 +64,20 @@ class BxBaseStudioForms extends BxDolStudioForms
         return '';
     }
 
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+    function getPageMenu($aMenu = [], $aMarkers = [])
     {
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();
+        $aMenu = [];
         foreach($this->aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array(
+            $aMenu[] = [
                 'name' => $sMenuItem,
-                'icon' => $aItem['icon'], 'mi-form-' . $sMenuItem . '.png',
+                'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            );
+            ];
 
         return parent::getPageMenu($aMenu);
     }

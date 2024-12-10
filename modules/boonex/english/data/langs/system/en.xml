@@ -1117,7 +1117,7 @@
     <string name="_adm_lmi_cpt_search_forms"><![CDATA[Search Forms]]></string>
     <string name="_adm_lmi_cpt_search_fields"><![CDATA[Search Fields]]></string>
     <string name="_adm_lmi_cpt_search_sortable_fields"><![CDATA[Search Sortable Fields]]></string>
-    <string name="_adm_lmi_cpt_splash"><![CDATA[Splash page]]></string>
+    <string name="_adm_lmi_cpt_splash"><![CDATA[Welcome page]]></string>
     <string name="_adm_lmi_cpt_displays"><![CDATA[Displays]]></string>
     <string name="_adm_lmi_cpt_downloaded"><![CDATA[Downloaded]]></string>
     <string name="_adm_lmi_cpt_etemplates_text"><![CDATA[Email Texts]]></string>
@@ -1147,6 +1147,7 @@
     <string name="_adm_lmi_cpt_purchases"><![CDATA[Purchases]]></string>
     <string name="_adm_lmi_cpt_pwa"><![CDATA[Progressive Web App]]></string>
     <string name="_adm_lmi_cpt_ractions"><![CDATA[Actions]]></string>
+    <string name="_adm_lmi_cpt_reports"><![CDATA[Reports]]></string>
     <string name="_adm_lmi_cpt_rlevels"><![CDATA[Levels]]></string>
     <string name="_adm_lmi_cpt_sets"><![CDATA[Sets]]></string>
     <string name="_adm_lmi_cpt_settings"><![CDATA[Settings]]></string>

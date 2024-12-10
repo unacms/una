@@ -32,11 +32,11 @@ class BxBaseStudioAgents extends BxDolStudioAgents
         ];
 
         $this->aMenuItems = [
-            BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'mi-cog.svg', 'icon_bg' => true],
-            BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'mi-agt-providers.svg', 'icon_bg' => true],
-            BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => ['icon' => 'mi-agt-helpers.svg', 'icon_bg' => true],
-            BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS => ['icon' => 'mi-agt-assistants.svg', 'icon_bg' => true],
-            BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'mi-agt-automators.svg', 'icon_bg' => true],
+            BX_DOL_STUDIO_AGENTS_TYPE_SETTINGS => ['icon' => 'mi-agt-settings.svg'],
+            BX_DOL_STUDIO_AGENTS_TYPE_PROVIDERS => ['icon' => 'mi-agt-providers.svg'],
+            BX_DOL_STUDIO_AGENTS_TYPE_HELPERS => ['icon' => 'mi-agt-helpers.svg'],
+            BX_DOL_STUDIO_AGENTS_TYPE_ASSISTANTS => ['icon' => 'mi-agt-assistants.svg'],
+            BX_DOL_STUDIO_AGENTS_TYPE_AUTOMATORS => ['icon' => 'mi-agt-automators.svg'],
         ];
 
         $this->aGridObjects = [
@@ -60,12 +60,14 @@ class BxBaseStudioAgents extends BxDolStudioAgents
 
         $aMenu = [];
         foreach($this->aMenuItems as $sMenuItem => $aItem)
-            $aMenu[] = array_merge($aItem, [
+            $aMenu[] = [
                 'name' => $sMenuItem,
+                'icon' => $aItem['icon'],
+                'icon_bg' => true,
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
-            ]);
+            ];
 
         return parent::getPageMenu($aMenu);
     }

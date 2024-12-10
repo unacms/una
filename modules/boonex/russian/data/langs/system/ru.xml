@@ -1101,7 +1101,7 @@
     <string name="_adm_lmi_cpt_search_forms"><![CDATA[Формы поиска]]></string>
     <string name="_adm_lmi_cpt_search_fields"><![CDATA[Поля поиска]]></string>
     <string name="_adm_lmi_cpt_search_sortable_fields"><![CDATA[Поля сортироски поиска]]></string>
-	<string name="_adm_lmi_cpt_splash"><![CDATA[Страница-заставка]]></string>
+	<string name="_adm_lmi_cpt_splash"><![CDATA[Приветственная страница]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Дисплеи]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>
 	<string name="_adm_lmi_cpt_etemplates_text"><![CDATA[Тексты email-ов]]></string>
@@ -1130,6 +1130,7 @@
 	<string name="_adm_lmi_cpt_purchases"><![CDATA[Покупки]]></string>
         <string name="_adm_lmi_cpt_pwa"><![CDATA[Веб приложение]]></string>
         <string name="_adm_lmi_cpt_ractions"><![CDATA[Действия]]></string>
+        <string name="_adm_lmi_cpt_reports"><![CDATA[Отчеты]]></string>
         <string name="_adm_lmi_cpt_rlevels"><![CDATA[Уровни]]></string>
 	<string name="_adm_lmi_cpt_sets"><![CDATA[Наборы]]></string>
 	<string name="_adm_lmi_cpt_settings"><![CDATA[Настройки]]></string>

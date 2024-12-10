@@ -1299,6 +1299,21 @@
         @apply text-gray-900 dark:text-white;
     }
 
+    .bx-std .bx-def-font-color {
+        @apply text-gray-800 dark:text-gray-200;
+    }
+
+    .bx-std .bx-btn:not(.bx-btn-primary) {
+        @apply bg-gray-200 dark:bg-gray-800 hover:bg-white dark:hover:bg-gray-700 active:bg-gray-100 dark:active:bg-gray-800;
+        @apply border-black/10 dark:border-white/10;
+        @apply text-gray-800 dark:text-gray-200;
+    }
+    .bx-std .bx-btn.bx-btn-primary {
+        @apply bg-black/80 dark:bg-white/80 hover:bg-black/90 dark:hover:bg-white/90;
+        @apply border-white/20 dark:border-white/20;
+        @apply text-white/80 dark:text-black/40;
+    }
+    
     /* Studio: Launcher */
     .bx-std-bg.bx-std-page-launcher {
         @apply bg-gray-200 dark:bg-black;
@@ -1306,6 +1321,11 @@
     
     .bx-std-widgets .bx-std-widget {
         @apply px-6 pt-6 pb-3 sm:px-10 sm:pt-10 sm:pb-4;
+    }
+    
+    /* Studio: Settings */
+    #adm-settings-form-categorized .bx-form-advanced-wrapper .bx-form-section-wrapper:last-child {
+        @apply bg-white/90 dark:bg-gray-900/90; 
     }
 
 
