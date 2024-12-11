@@ -783,6 +783,9 @@ class BxCoursesModule extends BxBaseModGroupsModule
             return false;
 
         $this->checkAllowedHide($aDataEntry, true);
+
+        $this->alertAfterEdit($this->_oDb->getContentInfoById($iContentId));
+
         return $this->_bIsApi ? [
             'title' => _t($CNF['T']['menu_item_title_unhide']),
             'request_url' => $this->_oConfig->getName() . '/publish/&params[]=' . $iContentId, 
@@ -798,6 +801,9 @@ class BxCoursesModule extends BxBaseModGroupsModule
             return false;
 
         $this->checkAllowedHide($aDataEntry, true);
+
+        $this->alertAfterEdit($this->_oDb->getContentInfoById($iContentId));
+
         return $this->_bIsApi ? [
             'title' => _t($CNF['T']['menu_item_title_hide']),
             'request_url' => $this->_oConfig->getName() . '/hide/&params[]=' . $iContentId, 
