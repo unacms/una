@@ -81,6 +81,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'description' => '',
                     'date' => $iDate,
                     'reacted' => $iDate,
+                    'status' => $this->_getStatus($oAlert->aExtras),
+                    'status_admin' => $this->_getStatus($oAlert->aExtras, 'status_admin'),
                 ];
 
                 $sMethod = '_prepareEvent' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
@@ -273,6 +275,16 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
             'object_id' => $oAlert->aExtras['comment_uniq_id']
         ]);
+    }
+
+    protected function _getStatus($aExtras, $sField = 'status')
+    {
+        return ($sValue = $this->_getFieldValue($aExtras, $sField)) !== false ? $sValue : 'active';
+    }
+
+    protected function _getFieldValue($aExtras, $sField)
+    {
+        return isset($aExtras[$sField]) ? $aExtras[$sField] : false;
     }
 
     protected function _processSystemClearCache($oAlert)
