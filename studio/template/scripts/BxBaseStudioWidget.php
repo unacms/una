@@ -100,6 +100,14 @@ class BxBaseStudioWidget extends BxDolStudioWidget
                 'title' => '_adm_tmi_cpt_site'
             ];
 
+        $aItemsRight['scheme'] = [
+            'name' => 'scheme',
+            'icon' => 'tmi-scheme-auto.svg',
+            'link' => 'javascript:void(0);',
+            'onclick' => 'bx_menu_popup_inline(\'#bx-std-pcap-menu-popup-scheme\', this);',
+            'title' => '_adm_tmi_cpt_scheme'
+        ];
+
         $aItemsRight['account'] = [
             'name' => 'account',
             'icon' => 'tmi-account.svg',

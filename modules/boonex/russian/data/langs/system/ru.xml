@@ -1892,6 +1892,7 @@
         <string name="_adm_tmi_cpt_assistant"><![CDATA[Ассистент]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
         <string name="_adm_tmi_cpt_search"><![CDATA[Искать...]]></string>
+        <string name="_adm_tmi_cpt_scheme"><![CDATA[Цветовая схема]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Загрузчик]]></string>
         <string name="_adm_txt_active_api"><![CDATA[Доступно в приложении]]></string>
@@ -3437,9 +3438,8 @@
     <string name="_sys_menu_item_title_sa_edit"><![CDATA[Управление приложениями]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Язык]]></string>
     <string name="_sys_menu_item_title_sa_language"><![CDATA[Язык]]></string>
-    <string name="_sys_menu_item_title_system_sa_scheme_light"><![CDATA[Светлый режим]]></string>
+    <string name="_sys_menu_item_title_sa_scheme_auto"><![CDATA[Системный]]></string>
     <string name="_sys_menu_item_title_sa_scheme_light"><![CDATA[Светлый режим]]></string>
-    <string name="_sys_menu_item_title_system_sa_scheme_dark"><![CDATA[Темный режим]]></string>
     <string name="_sys_menu_item_title_sa_scheme_dark"><![CDATA[Темный режим]]></string>
     <string name="_sys_menu_item_title_system_sa_logout"><![CDATA[Выйти]]></string>
     <string name="_sys_menu_item_title_sa_logout"><![CDATA[Выйти]]></string>

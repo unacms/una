@@ -1916,6 +1916,7 @@
         <string name="_adm_tmi_cpt_assistant"><![CDATA[Assistant]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
         <string name="_adm_tmi_cpt_search"><![CDATA[Search...]]></string>
+        <string name="_adm_tmi_cpt_scheme"><![CDATA[Color Scheme]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Launcher]]></string>
         <string name="_adm_txt_active_api"><![CDATA[Available in App]]></string>
@@ -3475,9 +3476,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sa_edit"><![CDATA[Manage Apps]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Language]]></string>
     <string name="_sys_menu_item_title_sa_language"><![CDATA[Language]]></string>
-    <string name="_sys_menu_item_title_system_sa_scheme_light"><![CDATA[Light Mode]]></string>
+    <string name="_sys_menu_item_title_sa_scheme_auto"><![CDATA[System]]></string>
     <string name="_sys_menu_item_title_sa_scheme_light"><![CDATA[Light Mode]]></string>
-    <string name="_sys_menu_item_title_system_sa_scheme_dark"><![CDATA[Dark Mode]]></string>
     <string name="_sys_menu_item_title_sa_scheme_dark"><![CDATA[Dark Mode]]></string>
     <string name="_sys_menu_item_title_system_sa_logout"><![CDATA[Sign out]]></string>
     <string name="_sys_menu_item_title_sa_logout"><![CDATA[Sign out]]></string>

@@ -95,6 +95,13 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
                     'link' => '{url_root}',
                     'title' => '_adm_tmi_cpt_site'
                 ),
+                'scheme' => array(
+                    'name' => 'scheme',
+                    'icon' => 'tmi-scheme-auto.svg',
+                    'link' => 'javascript:void(0);',
+                    'onclick' => 'bx_menu_popup_inline(\'#bx-std-pcap-menu-popup-scheme\', this);',
+                    'title' => '_adm_tmi_cpt_scheme'
+                ),
                 'account' => array(
                     'name' => 'account',
                     'icon' => 'tmi-account.svg',
@@ -105,14 +112,18 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
             )
         );
 
-        if(!$this->_bShowHeaderRightSite)
-            unset($aItemsRight['menu_items']['site']);
-        
+        if($this->_sType != BX_DOL_STUDIO_WTYPE_DEFAULT || getParam('site_tour_studio') != 'on')
+            unset($aItemsRight['menu_items']['tour']);
+
         if(!$this->_bShowHeaderRightAssistant)
             unset($aItemsRight['menu_items']['assistant']);
 
-        if($this->_sType != BX_DOL_STUDIO_WTYPE_DEFAULT || getParam('site_tour_studio') != 'on')
-            unset($aItemsRight['menu_items']['tour']);
+        if(!$this->_bShowHeaderRightSite)
+            unset($aItemsRight['menu_items']['site']);
+        
+        
+
+        
 
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
         $oTopMenu->setPageName($this->aPage['name']);

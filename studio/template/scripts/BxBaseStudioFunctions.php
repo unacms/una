@@ -220,6 +220,19 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
     {
         $sResult = '';
 
+        $oMenuScheme = new BxTemplStudioMenu(['template' => 'menu_vertical_lite.html', 'menu_items' => [
+            ['name' => 'scheme-auto', 'class' => 'auto', 'icon' => 'tmi-scheme-auto.svg', 'link' => 'javascript:void(0)', 'onclick' => '{js_object}.setColorScheme(this, 0);', 'title' => _t('_sys_menu_item_title_sa_scheme_auto')],
+            ['name' => 'scheme-light', 'class' => 'light', 'icon' => 'tmi-scheme-light.svg', 'link' => 'javascript:void(0)', 'onclick' => '{js_object}.setColorScheme(this, 1);', 'title' => _t('_sys_menu_item_title_sa_scheme_light')],
+            ['name' => 'scheme-dark', 'class' => 'dark', 'icon' => 'tmi-scheme-dark.svg', 'link' => 'javascript:void(0)', 'onclick' => '{js_object}.setColorScheme(this, 2);', 'title' => _t('_sys_menu_item_title_sa_scheme_dark')]
+        ]]);
+
+        $oMenuScheme->setInlineIcons(true);
+        $oMenuScheme->addMarkers([
+            'js_object' => BxTemplStudioMenuTop::getInstance()->getJsObject()
+        ]);
+
+        $sResult .= $this->transBox('bx-std-pcap-menu-popup-scheme', $oMenuScheme->getCode(), true);
+
         $oAccounMenu = BxDolMenu::getObjectInstance('sys_studio_account_popup');
         if($oAccounMenu)
             $sResult .= $this->transBox('bx-std-pcap-menu-popup-account', $oAccounMenu->getCode(), true);

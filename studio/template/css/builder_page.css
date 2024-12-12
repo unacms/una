@@ -25,12 +25,7 @@ div.adm-bp-block {
     position: relative;
     overflow: hidden;
 
-    border: 1px solid rgb(229 231 235);
-    border-radius: 1rem;
-
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-
-    background-color: #ffffff;
 }
 div.adm-bp-block.adm-bpb-inactive,
 div.bx-lr-dump div.adm-bp-block {
@@ -62,6 +57,7 @@ div.adm-bpb-icon img,
 div.adm-bpb-icon i.sys-icon {
     width: 2.5rem;
     height: 2.5rem;
+    max-width: none;
     margin-right: 0.75rem;
 }
 div.adm-bpb-icon {
@@ -133,41 +129,32 @@ div.adm-bp-create-block-form {}
 div.adm-bp-create-block-form-cnt {}
 
 div.adm-bp-create-block-form fieldset.bx-form-section {
-	padding-bottom: 0px;
+    padding-bottom: 0px;
 }
 div.adm-bp-create-block-form div.adm-bp-block:first-child {
-	margin-top: 0px;
+    margin-top: 0px;
 }
 div.adm-bp-cbf-left {
-	position: absolute;
-        top: 0px;
-        left: 0px;
-	width: 179px;
-	height: 300px;
-	border-style: solid;
-	border-width: 1px 1px 0px 0px;
-	overflow-y: auto; 
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 14rem;
+    height: 20rem;
+    overflow-y: auto; 
 }
 div.adm-bp-cbf-left-cnt {}
 div.adm-bp-cbf-right {
-	position: relative;
-	width: 620px;
-	height: 300px;
-	margin-left: 180px;
-	border-style: solid;
-	border-width: 1px 0px 0px 0px;
-	overflow-y: auto;
+    position: relative;
+    height: 20rem;
+    margin-left: 14rem;
+    overflow-y: auto;
 }
 div.adm-bp-cbf-right-cnt {}
-div.adm-bp-cbf-controls {
-	border-style: solid;
-	border-width: 1px 0px 0px 0px;
-}
 div.adm-bp-cbf-counter {
-	position: relative;
-	float: right;
-	line-height: 38px;
-	color: #b5b5b5;
+    position: relative;
+    float: right;
+    line-height: 38px;
+    color: #b5b5b5;
 }
 
 /*--- Edit Block popup style ---*/
@@ -212,10 +199,8 @@ div.adm-bp-epf-left {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 179px;
-    height: 310px;
-    border-right-style: solid;
-    border-right-width: 1px;
+    width: 14rem;
+    height: 20rem;
     overflow-y: auto; 
 }
 div.adm-bp-epf-left-cnt {}
@@ -224,16 +209,11 @@ div.adm-bp-epf-left .bx-std-pmen-item {
 }
 div.adm-bp-epf-right {
     position: relative;
-    width: 620px;
-    height: 310px;
-    margin-left: 180px;
+    height: 20rem;
+    margin-left: 14rem;
     overflow-y: auto;
 }
 div.adm-bp-epf-right-cnt {}
-div.adm-bp-epf-controls {
-    border-style: solid;
-    border-width: 1px 0px 0px 0px;
-}
 div.adm-bp-epf-controls .bx-def-margin-sec-left {
     margin-left: 0.5rem;
 }

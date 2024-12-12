@@ -1422,7 +1422,12 @@ function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel, oParams)
 function bx_is_color_scheme_dark()
 {
     return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-};
+}
+
+function bx_get_color_scheme()
+{
+    return 'theme' in localStorage ? localStorage.theme : 'auto';    
+}
 
 function bx_set_color_scheme(iCode)
 {
@@ -1453,7 +1458,7 @@ function bx_set_color_scheme(iCode)
     for(var i = 0; i < glOnColorSchemeChange.length; i++)
         if(typeof glOnColorSchemeChange[i] === 'function')
             glOnColorSchemeChange[i](iCode);
-};
+}
 
 function bx_set_color_scheme_html()
 {

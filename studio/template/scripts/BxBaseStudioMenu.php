@@ -39,6 +39,11 @@ class BxBaseStudioMenu extends BxDolStudioMenu
             return $aItem;
 
         $aItem['class'] = isset($aItem['class']) ? $aItem['class'] : '';
+
+        if(!isset($aItem['class_add']))
+            $aItem['class_add'] = '';
+        $aItem['class_add'] .= ' ' . str_replace('_', '-', $aItem['name']);
+
         if($this->_bInlineIcons && $aItem['bx_if:image']['condition'] && ($sImage = $this->_oTemplate->getIconContent($aItem['icon'])) !== false)
             $aItem = array_merge($aItem, [
                 'bx_if:image' => [

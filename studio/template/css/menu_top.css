@@ -309,13 +309,13 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-assistant .bx-popup-gap,
 #bx-std-pcap-menu-popup-actions .bx-popup-gap,
 #bx-std-pcap-menu-popup-account .bx-popup-gap,
+#bx-std-pcap-menu-popup-scheme .bx-popup-gap,
 #bx-std-pmenu-popup-actions .bx-popup-gap {
     margin-left: 0;
     margin-right: 0;
 }
 #bx-std-pcap-menu-popup-help .bx-popup,
 #bx-std-pcap-menu-popup-actions .bx-popup,
-#bx-std-pcap-menu-popup-account .bx-popup,
 .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
     border-width: 0; 
     background-color: #ffffff;
@@ -324,10 +324,12 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pmenu-popup-actions .bx-popup-content {
     padding: 1.0rem;
 }
-#bx-std-pcap-menu-popup-account .bx-popup-content {
-    padding: 0.5rem 0;
+#bx-std-pcap-menu-popup-account .bx-popup-content,
+#bx-std-pcap-menu-popup-scheme .bx-popup-content {
+    padding: 1.0rem 0;
 }
-#bx-std-pcap-menu-popup-account .bx-popup li {
+#bx-std-pcap-menu-popup-account .bx-popup li,
+#bx-std-pcap-menu-popup-scheme .bx-popup li {
     position: relative;
     height: 2.5rem;
     margin: 0;
@@ -339,14 +341,16 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     font-weight: 400;
     overflow: hidden;
 }
-#bx-std-pcap-menu-popup-account .bx-popup li a {
+#bx-std-pcap-menu-popup-account .bx-popup li a,
+#bx-std-pcap-menu-popup-scheme .bx-popup li a {
     position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
     align-items: center;
 }
-#bx-std-pcap-menu-popup-account .bx-popup li svg {
+#bx-std-pcap-menu-popup-account .bx-popup li svg,
+#bx-std-pcap-menu-popup-scheme .bx-popup li svg {
     margin-right: 0.75rem;
 }
 
@@ -358,21 +362,18 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header h2,
 #bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header .bx-icon,
 #bx-std-pcap-menu-popup-assistant .bx-popup a,
-#bx-std-pcap-menu-popup-actions .bx-popup,
-#bx-std-pcap-menu-popup-account .bx-popup li a,
-#bx-std-pcap-menu-popup-account .bx-popup li .sys-icon {
+#bx-std-pcap-menu-popup-actions .bx-popup {
     color: rgba(0, 0, 0, 0.7);
 }
 #bx-std-pcap-menu-popup-account .bx-popup li svg g {
     opacity: 0.7;
 }
 #bx-std-pcap-menu-popup-help .bx-popup a:hover,
-#bx-std-pcap-menu-popup-assistant .bx-popup a:hover,
-#bx-std-pcap-menu-popup-account .bx-popup li:hover a,
-#bx-std-pcap-menu-popup-account .bx-popup li:hover a .sys-icon {
+#bx-std-pcap-menu-popup-assistant .bx-popup a:hover {
     color: rgba(0, 0, 0, 0.85);
 }
-#bx-std-pcap-menu-popup-account .bx-popup li.bx-menu-tab-active {
+#bx-std-pcap-menu-popup-account .bx-popup li.bx-menu-tab-active,
+#bx-std-pcap-menu-popup-scheme .bx-popup li.bx-menu-tab-active {
     background-color: rgba(24, 144, 255, 0.2);
     box-shadow: inset 3px 0px 0px rgba(24, 144, 255, 1.0);
 }

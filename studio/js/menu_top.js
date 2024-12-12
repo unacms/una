@@ -14,16 +14,15 @@ function BxDolStudioMenuTop(oOptions) {
     bx_set_color_scheme_html();
 
     $(document).ready(function() {
-        var bDark = bx_is_color_scheme_dark();
-        $('.scheme.dark').toggle(!bDark);
-        $('.scheme.light').toggle(bDark);
+        $('.scheme-' + bx_get_color_scheme()).addClass('bx-menu-tab-active');
     });
 }
 
 BxDolStudioMenuTop.prototype.setColorScheme = function(oItem, iCode) {
     bx_set_color_scheme(iCode);
     
-    $(oItem).parents('li:first').hide().siblings('.scheme').show();
+    var sClassActive = 'bx-menu-tab-active';
+    $(oItem).parents('li:first').addClass(sClassActive).siblings('.' + sClassActive).removeClass(sClassActive);
 };
 
 BxDolStudioMenuTop.prototype.clickEdit = function(oItem) {

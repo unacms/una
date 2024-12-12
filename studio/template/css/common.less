@@ -7,10 +7,10 @@
 
 /* body */
 a {
-	color: rgba(30, 140, 240, 1); 
+    color: rgba(30, 140, 240, 1); 
 }
 a:hover {
-	color: rgba(10, 120, 220, 1); 
+    color: rgba(10, 120, 220, 1); 
 }
 .sys-icon:not(.sys-colored),
 .sys-icon-a {
@@ -93,22 +93,17 @@ div.bx-db-note {
 .bx-popup-content-indent {
     padding: 1.25rem;
 }
-.bx-popup-header {
-    padding: 1.25rem;
-    border-bottom: 1px solid rgba(228, 228, 231, 1.0);
+.bx-popup-header.bx-def-padding {
+    padding: 1.25rem 1.25rem 0 1.25rem;
 }
 .bx-popup-header-color-bg {
-    background-color: rgba(255, 255, 255, 1.0);
+    background-color: transparent;
 }
 .bx-popup-header h2 {
     line-height: 1.5rem;
     text-align: left;
     font-size: 1.5rem;
     font-weight: 600;
-    color: rgba(39, 39, 42, 1);
-}
-.bx-popup-header .bx-icon-close {
-    color: rgba(0, 0, 0, 1);
 }
 
 /* button large */
@@ -117,7 +112,6 @@ div.bx-db-note {
     .box-sizing(border-box);
 
     height: 2.5rem;
-    line-height: 2.5rem;
     padding: 0 1rem;
 
     .radius(8px);
@@ -127,23 +121,6 @@ div.bx-db-note {
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
 
     text-shadow: none;
-
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.bx-btn.bx-btn-primary {
-    border-width: 0px;
-    .background-color(rgba(28, 100, 242, 1));
-    color: rgba(255, 255, 255, 1);
-}
-
-.bx-btn:not(.bx-btn-primary) .sys-icon:not(.sys-colored) {
-    color: rgba(82, 82, 91, 1.0);
-}
-.bx-btn:not(.bx-btn-primary):hover .sys-icon:not(.sys-colored),
-.bx-btn:not(.bx-btn-primary):active .sys-icon:not(.sys-colored) {
-    color: rgba(82, 82, 91, 0.8);
 }
 
 .bx-btn.bx-btn-primary:hover,

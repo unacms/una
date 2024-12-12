@@ -6,9 +6,6 @@ body.bx-dev-page-body-single div.bx-std-page-menu,
 body.bx-dev-page-body-columns div.bx-std-page-menu {
     -webkit-flex-basis: 67px;
     flex-basis: 67px;
-
-    background-color: #4c6678;
-    box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2);
 }
 body.bx-dev-page-body-single div.bx-std-page-menu div.bx-std-page-column-cnt,
 body.bx-dev-page-body-columns div.bx-std-page-menu div.bx-std-page-column-cnt {
@@ -65,17 +62,17 @@ div.bx-dev-menu-main li.bx-def-color-bg-active {
     opacity:1;
     -moz-box-shadow: 0 0 9px 0px #ffffff;
     -webkit-box-shadow: 0 0 9px 0px #ffffff;
-	box-shadow: 0 0 9px 0px #ffffff;
+    box-shadow: 0 0 9px 0px #ffffff;
 }
 
 div.bx-dev-menu-main div.bx-dev-mm-item {
-	position: relative;
-	width: 32px;
-	height: 32px;
+    position: relative;
+    width: 32px;
+    height: 32px;
 } 
 
 div.bx-dev-menu-main div.bx-dev-mm-item img {
-	width: 32px;
+    width: 32px;
     height: 32px;
 }
 
@@ -113,7 +110,6 @@ div.bx-dev-page-column.bx-dev-page-menu {
     -webkit-flex: 0 0 20rem;
     flex: 0 0 20rem;
     width: 20rem;
-    background-color: #ffffff;
     
     overflow-y: auto;
 }
@@ -133,8 +129,6 @@ div.bx-dev-page-column.bx-dev-page-content {
     flex: 2 1 auto;
 
     height: 100%;
-
-    background: #e5e5e5;
 
     overflow-x: hidden;
     overflow-y: auto;

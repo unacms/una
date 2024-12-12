@@ -38,15 +38,19 @@ div.bx-grid-header div#bx-form-element-display {
 
 /*--- Fields page -> Add/Edit Field block style ---*/
 div#bx-form-element-type .bx-menu-ver li {
-	position: relative;
-	float: left;
-	width: 50%;
+    position: relative;
+    float: left;
+    width: 50%;
 }
+div#bx-form-element-type .bx-menu-ver li a {
+    width: 100%;
+}
+    
 div#bx-form-element-type .bx-menu-ver .bx-def-hr {
-	display: none;
+    display: none;
 }
 div#bx-form-element-info textarea.bx-form-input-textarea {
-	height: 53px;
+    height: 53px;
 }
 
 /*--- Pre Lists page -> Add/Edit Form block ---*/
