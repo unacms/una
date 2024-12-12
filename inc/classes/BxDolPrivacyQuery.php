@@ -282,8 +282,10 @@ class BxDolPrivacyQuery extends BxDolDb
             return true;
 
         $bResult = $this->query("DELETE FROM `sys_privacy_groups_custom` WHERE " . $sWhereClause . " LIMIT 1") !== false;
-        if($bResult)
-            $this->deleteGroupCustomMember(array('group_id' => $aGroup['id']));
+        if($bResult) {
+            $this->deleteGroupCustomMember(['group_id' => $aGroup['id']]);
+            $this->deleteGroupCustomMembership(['group_id' => $aGroup['id']]);
+        }
 
         return $bResult;
     }
