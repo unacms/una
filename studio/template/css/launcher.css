@@ -261,10 +261,6 @@ div.bx-std-widget-caption-jitter {
     width: 5rem;
     height: 2rem;
 }
-div.bx-std-widget-caption,
-div.bx-std-widget-caption a {
-    color: rgba(0, 0, 0, 0.5);
-}
 
 
 /**

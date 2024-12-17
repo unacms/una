@@ -1380,11 +1380,11 @@
     .bx-std-bg.bx-std-page-launcher {
         @apply bg-gray-200 dark:bg-black;
     }
-    
-    .bx-std-widgets .bx-std-widget {
+
+    .bx-std .bx-std-widgets .bx-std-widget {
         @apply px-6 pt-6 pb-3 sm:px-10 sm:pt-10 sm:pb-4;
     }
-    
+
     /* Studio: Settings */
     #adm-settings-form-categorized .bx-form-advanced-wrapper .bx-form-section-wrapper:last-child {
         @apply bg-white/90 dark:bg-gray-900/90; 
