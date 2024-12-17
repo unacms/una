@@ -2294,6 +2294,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(getParam('sys_api_conn_in_prof_units') == 'on' && $oProfile !== false) {
             $iProfileId = $oProfile->id();
             $aResult['title'] = $oProfile->getDisplayName();
+            $aResult['online'] = $oProfile->isOnline();
             if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false && isset($CNF['URI_VIEW_FRIENDS'])) {
                 $aResult['friends_count'] = $oConnection->getConnectedContentCount($iProfileId, true);
                 $aResult['friends_list'] = $oConnection->getConnectedListAPI($iProfileId, true, BX_CONNECTIONS_CONTENT_TYPE_CONTENT);

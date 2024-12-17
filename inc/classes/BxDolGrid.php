@@ -442,6 +442,9 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     	    return $aResults;
 
         // add filter condition
+        $sQuery = $this->_modifyDataSqlWhereClause($sQuery, $sFilter, $sOrderByFilter);
+
+        // add custom filter condition and order
         $sOrderByFilter = '';
         $sQuery .= $this->_getDataSqlWhereClause($sFilter, $sOrderByFilter);
 
@@ -468,10 +471,10 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             return array_sum($oDb->getColumn($sQuery));
     }
    
-    protected function _getDataSqlWhereClause($sFilter, &$sOrderByFilter)
+    protected function _modifyDataSqlWhereClause($sQuery, $sFilter, &$sOrderByFilter)
     {
         if(!$sFilter || (empty($this->_aOptions['filter_fields']) && empty($this->_aOptions['filter_fields_translatable']))) 
-            return '';
+            return $sQuery;
 
         $oDb = BxDolDb::getInstance();
 
@@ -480,6 +483,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $sMode = getParam('useLikeOperator') ? 'like' : 'fulltext';
 
         $sCond = '';
+        $sJoin = '';
         if('like' == $sMode) { // LIKE search
 
             // condition for regular fields
@@ -495,8 +499,10 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
                 $sCondFields = rtrim($sCondFields, ' OR ');
 
-                if ($sCondFields)
-                    $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `s`.`string` LIKE ? AND ($sCondFields) LIMIT 1) OR ", '%' . $sFilter . '%');
+                if ($sCondFields) {
+                    $sJoin .= " INNER JOIN `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) ";
+                    $sCond .= $oDb->prepareAsString("`s`.`string` LIKE ? AND ($sCondFields) ", '%' . $sFilter . '%');
+                }
             }
 
             $sCond = rtrim($sCond, ' OR ');
@@ -527,14 +533,71 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 foreach ($this->_aOptions['filter_fields_translatable'] as $sField)
                     $sCondFields .= "`k`.`Key` = `{$sField}` OR ";
 
-                $sCondFields = rtrim($sCondFields, ' OR ');
+                $sCondFields = rtrim($sCondFields, ',');
 
-                if ($sCondFields)
-                    $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE MATCH (`s`.`string`) AGAINST (?) AND ($sCondFields) LIMIT 1) OR ", $sFilter);
+                if ($sCondFields) {
+                    $sJoin .= " INNER JOIN `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) ";
+                    $sCond .= $oDb->prepareAsString(" (MATCH (`s`.`string`) AGAINST (?) AND ($sCondFields)) OR ", $sFilter);
+                }
             }
 
             $sCond = rtrim($sCond, ' OR ');
         }
+
+        /**
+         * @hooks
+         * @hookdef hook-grid-get_data_by_filter 'grid', 'get_data_by_filter' - hook to override the data to be shown in the grid
+         * - $unit_name - equals `grid`
+         * - $action - equals `get_data_by_filter`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object` - [string] grid object name
+         *      - `options` - [array] grid options array as key&value pairs
+         *      - `markers` - [array] markers array as key&value pairs
+         *      - `filter` - [string] filter value
+         *      - `browse_params` - [array] additional browse params array as key&value pairs
+         *      - `conditions` - [string] by ref, 'where' part of SQL query in accordance with provided filter(s), can be overridden in hook processing
+         * @hook @ref hook-grid-get_data_by_filter
+         */
+        bx_alert('grid', 'get_data_by_filter', 0, false, [
+            'object' => $this->_sObject, 
+            'options' => $this->_aOptions, 
+            'markers' => $this->_aMarkers, 
+            'filter' => $sFilter, 
+            'browse_params' => $this->_aBrowseParams, 
+            'query' => &$sQuery,
+            'conditions' => &$sCond,
+            'join' => &$sJoin,
+        ]);
+
+        // add WHERE for searching in translatable fields
+        $sQuery .= $sCond ? ' AND (' . $sCond . ')' : $sCond;
+
+        if (!empty($this->_aOptions['filter_fields_translatable'])) {
+
+            // add JOIN for searching in translatable fields
+            $sQuery = str_replace('WHERE', "$sJoin WHERE", $sQuery);
+
+            // change SELECT * to include table name
+            $sQuery = ltrim($sQuery);
+            if (preg_match("/^SELECT\s\*\sFROM\s`(.*?)`/i", $sQuery)) {
+                $sQuery = preg_replace("/^SELECT\s\*\sFROM\s`(.*?)`/i", "SELECT $1.* FROM `$1`", $sQuery);
+            }
+
+            // add DISTINCT for searching in translatable fields to remove duplicates
+            if (false === mb_stripos($sQuery, 'DISTINCT')) {
+                $sQuery = preg_replace('/^SELECT/i', 'SELECT DISTINCT', $sQuery);
+            }
+        }
+
+        return $sQuery;
+    }
+
+    protected function _getDataSqlWhereClause($sFilter, &$sOrderByFilter)
+    {
+        if(!$sFilter || (empty($this->_aOptions['filter_fields']) && empty($this->_aOptions['filter_fields_translatable']))) 
+            return '';
 
         /**
          * @hooks

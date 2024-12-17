@@ -568,7 +568,8 @@ class BxBasePage extends BxDolPage
                         'get_avatar' => 'getAvatarBig',
                         'with_info' => true
                     ]);
-                    
+                    $oProfile = BxDolProfile::getInstance($this->_aProfileInfo['id']);
+                    $aProfileInfo['online'] = $oProfile->isOnline();
                     unset($aProfileInfo['info']['profile_email']);
                     unset($aProfileInfo['info']['profile_last_active']);
                     unset($aProfileInfo['info']['profile_ip']);
@@ -577,7 +578,7 @@ class BxBasePage extends BxDolPage
                         'profile' => $aProfileInfo,
                         'actions_menu' => '',
                         'meta_menu' => '',
-                        'badges' => BxDolProfile::getInstance($this->_aProfileInfo['id'])->getBadges(),
+                        'badges' => $oProfile->getBadges(),
                         'cover' => $oProfileModule->serviceGetCover($this->_aProfileInfo['content_id']),
                         'allow_edit' =>  $oProfileModule->checkAllowedChangeCover($aProfileContentInfo) === CHECK_ACTION_RESULT_ALLOWED
                     ];
