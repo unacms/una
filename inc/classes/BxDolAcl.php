@@ -647,6 +647,21 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
             if($bResult) {
                 $this->oDb->cleanMemory('BxDolAclQuery::getLevelCurrent' . $iProfileId . time());
                 unset(self::$_aCacheData[$iProfileId . '_0']);
+
+                /**
+                 * @hooks
+                 * @hookdef hook-profile-unset_membership 'profile', 'unset_membership' - hook after a default membership level was set
+                 * - $unit_name - equals `profile`
+                 * - $action - equals `unset_membership`
+                 * - $object_id - not used
+                 * - $sender_id - profile id to set level to 
+                 * - $extra_params - array of additional params with the following array keys:
+                 *      - `mlevel` - [int] membership level id
+                 * @hook @ref hook-profile-unset_membership
+                 */
+                bx_alert('profile', 'unset_membership', '', $iProfileId, [
+                    'mlevel'=> $iLevelId
+                ]);
             }
 
             return $bResult;
