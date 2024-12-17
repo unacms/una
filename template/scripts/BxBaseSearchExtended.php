@@ -53,20 +53,8 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return '';
 
         $oForm = $this->prepareForm($aParams);
-        
-        return bx_is_api() ? bx_api_get_block('form', $oForm->getCodeAPI(), ['id' => 2, 'ext' => ['name' => $this->_aObject['module'] . '_serach', 'request' => ['url' => '/api.php?r=system/get_form/TemplSearchExtendedServices&params[]=' . $this->_aObject['module'], 'immutable' => true]]]) : $oForm->getCode();
-    }
 
-    public function getResultsAPI($aData, $iPerPage, $iStart, $aParamsSearch = '')
-    {
-        return bx_api_get_block('browse', [
-            'nocache' => true,
-            'module' => $this->_aObject['module'],
-            'unit' => 'general-content-list',
-            'request_url' => '/api.php?r=system/get_results/TemplSearchExtendedServices&params[]=',
-            'data' =>  defined('BX_API_PAGE') ? [] : $aData,
-            'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'object' => $this->_aObject['module'], 'search_params' => $aParamsSearch],
-        ]);
+        return bx_is_api() ? bx_api_get_block('form', $oForm->getCodeAPI(), ['id' => 2, 'ext' => ['name' => $this->_aObject['module'] . '_serach', 'request' => ['url' => '/api.php?r=system/get_form/TemplSearchExtendedServices&params[]=' . $this->_aObject['module'], 'immutable' => true]]]) : $oForm->getCode();
     }
     
     /**
@@ -234,69 +222,100 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 return [$this->getResultsAPI($mixedResults, $iPerPage, $iStart, $aParamsSearch)];
         }
 
-        $aTxtDirection = [
-            'asc' => _t('_order_asc'),
-            'desc' => _t('_order_desc')
-        ];
-
-        $sSort = '';
-        if($mixedResults != '') {
-            $aData = $this->_aObject['sortable_fields'];
-
-            $aValues = [];
-            foreach($aData as $aField) {
-                if ($aField['active'] == 0)
-                    continue;
-
-                $sLangKey = $aField['caption'] . '_' . $aField['direction'];
-                $sLangVal = _t($sLangKey);
-
-                $aValues[$aField['name'] . ':' . $aField['direction']] = strcmp($sLangKey, $sLangVal) != 0 ? $sLangVal : _t($aField['caption']) . ' ' . $aTxtDirection[$aField['direction']];
-            }
-            
-            if (!empty($aValues)){
-                $aValues = array_merge(['' => _t('_sys_txt_search_sort_by_default')], $aValues);
-            }
-            $oForm = new BxTemplFormView(array());
-            
-            $sOnChange = '';
-            if(!$bJsMode) {
-                unset($aParams['start']);
-                unset($aParams['per_page']);
-                list($sPageLink, $aPageParams) = bx_get_base_url_inline($aParams);
-                $sOnChange = "bx_search_extnded_sort(this,'" . BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams)) . "')";
-            }
-            else{
-                $sOnChange = "return !loadDynamicBlockAutoSort(this, $(this).val()," . bx_js_string(json_encode($aParams)) . ");";
-            }
-            
-            $sSort = '';
-            if (!empty($aValues)){
-                $aInputSort = array(
-                    'type' => 'select',
-                    'name' => 'sort',
-                    'value' =>  bx_get('sort') ? bx_get('sort') : '',
-                    'values' => $aValues,
-                    'caption' => _t('_sys_txt_search_sort_by'),
-                    'attrs' => array(
-                        'onChange' => $sOnChange,
-                    ),
-                    'tr_attrs' => array(
-                        'class' => 'sort'
-                    )
-                );
-                $sSort = $oForm->genRow($aInputSort);
-            }
-        }
-
         return $this->_oTemplate->parseHtmlByName('search_extended_results.html', [
             'class' => str_replace('_', '-', $this->_sObject),
-            'sort' => $sSort,
+            'sort' => $mixedResults != '' ? $this->getSorting($aParams) : '',
             'code' => $mixedResults,
             'bx_if:show_paginate' => [
                 'condition' => $bTmplVarsPaginate,
                 'content' => $aTmplVarsPaginate
             ]
+        ]);
+    }
+
+    public function getResultsAPI($aData, $iPerPage, $iStart, $aParamsSearch = '')
+    {
+        return bx_api_get_block('browse', [
+            'nocache' => true,
+            'module' => $this->_aObject['module'],
+            'unit' => 'general-content-list',
+            'request_url' => '/api.php?r=system/get_results/TemplSearchExtendedServices&params[]=',
+            'data' =>  defined('BX_API_PAGE') ? [] : $aData,
+            'params' => ['per_page' => $iPerPage, 'start' => $iStart, 'object' => $this->_aObject['module'], 'search_params' => $aParamsSearch],
+        ]);
+    }
+
+    public function getSorting($aParams = [])
+    {
+        if(!$this->isEnabled())
+            return '';
+
+        $aTxtDirection = [
+            'asc' => _t('_order_asc'),
+            'desc' => _t('_order_desc')
+        ];
+
+        $bJsMode = isset($aParams['js_mode']) ? (bool)$aParams['js_mode'] : $this->_bJsMode;        
+
+        $aValues = [];
+        foreach($this->_aObject['sortable_fields'] as $aField) {
+            if($aField['active'] == 0)
+                continue;
+
+            $sLangKey = $aField['caption'] . '_' . $aField['direction'];
+            $sLangVal = _t($sLangKey);
+
+            $aValues[] = [
+                'key' => $aField['name'] . ':' . $aField['direction'],
+                'value' => strcmp($sLangKey, $sLangVal) != 0 ? $sLangVal : _t($aField['caption']) . ' ' . $aTxtDirection[$aField['direction']]
+            ];
+        }
+
+        if(!empty($aValues))
+            $aValues = array_merge([['key' => '', 'value' => _t('_sys_txt_search_sort_by_default')]], $aValues);
+
+        if($this->_bIsApi)
+            return $this->getSortingAPI($aValues);
+
+        $oForm = new BxTemplFormView([]);
+
+        $sOnChange = '';
+        if(!$bJsMode) {
+            unset($aParams['start'], $aParams['per_page']);
+            list($sPageLink, $aPageParams) = bx_get_base_url_inline($aParams);
+            $sOnChange = "bx_search_extnded_sort(this,'" . BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams)) . "')";
+        }
+        else
+            $sOnChange = "return !loadDynamicBlockAutoSort(this, $(this).val()," . bx_js_string(json_encode($aParams)) . ");";
+
+        $sSort = '';
+        if(!empty($aValues)) {
+            $aInputSort = [
+                'type' => 'select',
+                'name' => 'sort',
+                'value' =>  bx_get('sort') ? bx_get('sort') : '',
+                'values' => $aValues,
+                'caption' => _t('_sys_txt_search_sort_by'),
+                'attrs' => [
+                    'onChange' => $sOnChange,
+                ],
+                'tr_attrs' => [
+                    'class' => 'sort'
+                ]
+            ];
+
+            $sSort = $oForm->genRow($aInputSort);
+        }
+
+        return $sSort;
+    }
+
+    public function getSortingAPI($aData)
+    {
+        return bx_api_get_block('sorting', [
+            'nocache' => true,
+            'module' => $this->_aObject['module'],
+            'data' => $aData
         ]);
     }
 

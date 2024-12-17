@@ -42,6 +42,25 @@ class BxBaseSearchExtendedServices extends BxDol
         return $mForm;
     }
 
+    public function serviceGetSorting($mParams)
+    {
+        $aParams = [];
+        if (is_string($mParams))
+            $aParams['object'] = $mParams;
+        else
+            $aParams = $mParams;
+        $this->prepareParams($aParams);
+
+        if(empty($aParams['object']))
+            return '';
+
+        $oSearch = BxDolSearchExtended::getObjectInstance($aParams['object']);
+        if(!$oSearch || !$oSearch->isEnabled())
+            return '';
+
+        return $oSearch->getSorting($aParams);
+    }
+
     public function serviceGetResults($mParams)
     {
         $aParams = [];
@@ -61,12 +80,11 @@ class BxBaseSearchExtendedServices extends BxDol
             $fProcessDefValues(json_decode($mDefValues, true));
 
         if(is_string($mParams)) {
-            $mParams = json_decode($mParams, true);    
-            if(!empty($mParams['params']) && is_array($mParams['params']))
-                $aParams = $mParams['params'];
-
+            $aParams = bx_api_get_browse_params($mParams, true);
             if(isset($aParams['filters']))
                 $fProcessDefValues($aParams['filters']);
+            if(isset($aParams['sort']))
+                $fProcessDefValues(['sort' => $aParams['sort']]);
         }
         else
             $aParams = $mParams;
@@ -88,7 +106,7 @@ class BxBaseSearchExtendedServices extends BxDol
         
         return !empty($sResults) ? $sResults : (isset($aParams['show_empty']) && (bool)$aParams['show_empty'] ? MsgBox(_t('_Empty')) : ''); 
     }
-    
+
     public function prepareParams(&$aParams)
     {
         if(empty($aParams['object']) && bx_get('object') !== false)
