@@ -67,6 +67,26 @@ class BxJobsModule extends BxBaseModGroupsModule
 
         return $mixedResult;
     }
+
+    public function decodeDataAPI($aData, $aParams = [])
+    {
+        $aResult = parent::decodeDataAPI($aData, $aParams);
+
+        if(isset($aParams['template']) && $aParams['template'] == 'unit_wo_info')
+            return $aResult;
+
+        $aResult = array_merge($aResult, [
+            'description' =>  strip_tags($aData['desc']),
+            'date_start ' =>  $aData['date_start'],
+            'date_end' =>  $aData['date_end'],
+            'pay_hourly' =>  $aData['pay_hourly'],
+            'pay_total' =>  $aData['pay_total'],
+            'votes' => $aData['votes'],
+            'votes_avg' => $aData['rate']
+        ]);
+
+        return $aResult;
+    }
 }
 
 /** @} */

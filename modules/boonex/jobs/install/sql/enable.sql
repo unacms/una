@@ -38,19 +38,19 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_jobs_view_profile', 'view-job-profile', '_bx_jobs_page_title_sys_view_profile', '_bx_jobs_page_title_view_profile', 'bx_jobs', 10, 2147483647, 1, 'page.php?i=view-job-profile', '', '', '', 0, 1, 0, 'BxJobsPageEntry', 'modules/boonex/jobs/classes/BxJobsPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0),
-('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 0, 0),
-('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 0),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 1),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_applicants', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:10:"applicants";}', 0, 0, 1, 2),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:4:"fans";}', 0, 0, 1, 3),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:6:"admins";}', 0, 0, 1, 4),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:7:"bx_jobs";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 5),
-('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
-('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_comments";}', 0, 0, 0, 0),
-('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_reports";}', 0, 0, 1, 6);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `active_api`, `order`) VALUES
+('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0, 0),
+('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 0, 0, 0),
+('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 1, 0),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0, 0),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 0, 1),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_applicants', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:10:"applicants";}', 0, 0, 1, 0, 2),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:4:"fans";}', 0, 0, 1, 0, 3),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:6:"admins";}', 0, 0, 1, 0, 4),
+('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:7:"bx_jobs";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 0, 5),
+('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 1, 0),
+('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_comments";}', 0, 0, 0, 0, 0),
+('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_reports";}', 0, 0, 1, 0, 6);
 
 
 -- PAGE: view closed profile 
@@ -120,8 +120,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_jobs_fans', 'job-fans', '_bx_jobs_page_title_sys_job_fans', '_bx_jobs_page_title_job_fans', 'bx_jobs', 5, 2147483647, 1, 'page.php?i=job-fans', '', '', '', 0, 1, 0, 'BxJobsPageEntry', 'modules/boonex/jobs/classes/BxJobsPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_jobs_fans', 1, 'bx_jobs', '_bx_jobs_page_block_title_system_fans', '_bx_jobs_page_block_title_fans_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"browse_members";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}}', 0, 0, 1, 1);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `active_api`, `order`) VALUES 
+('bx_jobs_fans', 1, 'bx_jobs', '_bx_jobs_page_block_title_system_fans', '_bx_jobs_page_block_title_fans_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"browse_members";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}}', 0, 0, 1, 1, 1);
 
 -- PAGE: job manage
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -379,12 +379,12 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_jobs_view_submenu', 'bx_jobs', '_bx_jobs_menu_set_title_view_profile_submenu', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_jobs_view_submenu', 'bx_jobs', 'view-job-profile', '_bx_jobs_menu_item_title_system_view_profile_view', '_bx_jobs_menu_item_title_view_profile_view', 'page.php?i=view-job-profile&id={content_id}', '', '', 'briefcase col-green2', '', '', 0, 2147483647, 1, 0, 1),
-('bx_jobs_view_submenu', 'bx_jobs', 'job-profile-info', '_bx_jobs_menu_item_title_system_view_profile_info', '_bx_jobs_menu_item_title_view_profile_info', 'page.php?i=job-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', '', 0, 2147483647, 1, 0, 2),
-('bx_jobs_view_submenu', 'bx_jobs', 'job-profile-comments', '_bx_jobs_menu_item_title_system_view_profile_comments', '_bx_jobs_menu_item_title_view_profile_comments', 'page.php?i=job-profile-comments&id={content_id}', '', '', '', '', '', 0, 2147483647, 0, 0, 3),
-('bx_jobs_view_submenu', 'bx_jobs', 'job-fans', '_bx_jobs_menu_item_title_system_view_fans', '_bx_jobs_menu_item_title_view_fans', 'page.php?i=job-fans&profile_id={profile_id}', '', '', 'briefcase col-green2', '', '', 0, 2147483647, 1, 0, 4),
-('bx_jobs_view_submenu', 'bx_jobs', 'more-auto', '_bx_jobs_menu_item_title_system_view_profile_more_auto', '_bx_jobs_menu_item_title_view_profile_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `active_api`, `copyable`, `order`) VALUES 
+('bx_jobs_view_submenu', 'bx_jobs', 'view-job-profile', '_bx_jobs_menu_item_title_system_view_profile_view', '_bx_jobs_menu_item_title_view_profile_view', 'page.php?i=view-job-profile&id={content_id}', '', '', 'briefcase col-green2', '', '', 0, 2147483647, 1, 1, 0, 1),
+('bx_jobs_view_submenu', 'bx_jobs', 'job-profile-info', '_bx_jobs_menu_item_title_system_view_profile_info', '_bx_jobs_menu_item_title_view_profile_info', 'page.php?i=job-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', '', 0, 2147483647, 1, 0, 0, 2),
+('bx_jobs_view_submenu', 'bx_jobs', 'job-profile-comments', '_bx_jobs_menu_item_title_system_view_profile_comments', '_bx_jobs_menu_item_title_view_profile_comments', 'page.php?i=job-profile-comments&id={content_id}', '', '', '', '', '', 0, 2147483647, 0, 0, 0, 3),
+('bx_jobs_view_submenu', 'bx_jobs', 'job-fans', '_bx_jobs_menu_item_title_system_view_fans', '_bx_jobs_menu_item_title_view_fans', 'page.php?i=job-fans&profile_id={profile_id}', '', '', 'briefcase col-green2', '', '', 0, 2147483647, 1, 1, 0, 4),
+('bx_jobs_view_submenu', 'bx_jobs', 'more-auto', '_bx_jobs_menu_item_title_system_view_profile_more_auto', '_bx_jobs_menu_item_title_view_profile_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 0, 9999);
 
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
