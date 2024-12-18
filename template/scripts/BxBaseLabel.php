@@ -256,7 +256,7 @@ class BxBaseLabel extends BxDolLabel
                 $bOpened = true;
 
             $aTmplVarsLabels[] = array(
-                'checkbox' => $oForm->genInput($aCheckbox),
+                'checkbox' => $oForm->genInputCheckbox($aCheckbox, true),
                 'html_id_label' => $sHtmlId,
                 'title' => $aLabel['value'],
                 'title_attr' => bx_html_attribute($aLabel['value']),

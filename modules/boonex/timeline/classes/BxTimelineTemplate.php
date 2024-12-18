@@ -1356,7 +1356,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aTmplVarsModules[$sProfileModule]['bx_repeat:contexts'][] = array(
                     'style_prefix' => $sStylePrefix,
-                    'checkbox' => $oForm->genInput($aCheckbox),
+                    'checkbox' => $oForm->genInputCheckbox($aCheckbox, true),
                     'unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_cover'))
                 );
             }

@@ -1473,6 +1473,13 @@ BLAH;
             'checkbox' => $sCheckbox
         ]);
     }
+    
+    function genInputCheckbox(&$aInput, $bWrapped = false)
+    {
+        $sInput = $this->genInputStandard($aInput);
+
+        return $bWrapped ? $this->genWrapperInput($aInput, $sInput) : $sInput;
+    }
 
     /**
      * Generate Button Input Element

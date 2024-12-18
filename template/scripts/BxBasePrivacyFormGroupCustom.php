@@ -193,7 +193,7 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
                 $aCheckbox['checked'] = in_array($iConnectedId, $aSelected) ? 1 : 0;
 
                 $aTmplVarsUsers[] = array(
-                    'checkbox' => $this->genInput($aCheckbox),
+                    'checkbox' => $this->genInputCheckbox($aCheckbox, true),
                     'unit' => $oProfile->getUnit()
                 );
             }
