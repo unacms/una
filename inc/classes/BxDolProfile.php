@@ -177,6 +177,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'avatar' => $oProfile->getAvatar(),
             'settings' => $oProfile->getSettings(),
             'membership' => $aMembershipInfo['id'],
+            'membership_name' => _t($aMembershipInfo['name']),
             //'level' => BxDolAcl::getInstance()->getMemberMembershipInfo($iId),
             'moderator' => (bool)BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_ADMINISTRATOR, MEMBERSHIP_ID_MODERATOR], $iId),
             'operator' => isAdmin(),

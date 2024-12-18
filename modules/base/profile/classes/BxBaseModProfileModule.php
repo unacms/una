@@ -375,8 +375,10 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         foreach ($a as $r) {
             $oProfile = BxDolProfile::getInstance($r['profile_id']);
 
-            if (bx_is_api()) {
+            if ($this->_bIsApi) {
                 $aData = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);
+                $aData['author_data']['label'] = $this->serviceProfileName($r['content_id']);
+
                 $aRet[] = $aData['author_data'];
             }
             else{
