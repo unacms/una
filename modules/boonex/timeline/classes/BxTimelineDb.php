@@ -1328,6 +1328,16 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                         $mixedWhereSubclause['p8'] = "`{$sTableAlias}`.`owner_id` IN (" . $this->implode_escape(array_keys($aList)) . ")";
                     }
                 }
+
+                //--- 'For You' feed only: Public
+                if($bForYou && in_array(BX_TIMELINE_FYFS_PUBLIC, $aForYouSources)) {
+                    //--- Select All System posts
+                    $sWhereSubclause = "`{$sTableAlias}`.`system`='1'";
+                    //--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
+                    $sWhereSubclause .= $this->prepareAsString(" OR `{$sTableAlias}`.`owner_id`=?", 0);
+
+                    $mixedWhereSubclause['p9'] = "(" . $sWhereSubclause . ")";
+                }
                 break;
 
             //--- Feed: Profile + All Profile Connections

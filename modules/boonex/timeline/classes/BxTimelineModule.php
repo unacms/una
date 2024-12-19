@@ -77,6 +77,7 @@ define('BX_TIMELINE_HFS_COMMENT', 'comment');
 define('BX_TIMELINE_HFS_VOTE', 'vote');
 
 //--- For You Feed sources
+define('BX_TIMELINE_FYFS_PUBLIC', 'public');
 define('BX_TIMELINE_FYFS_FEED', 'feed');
 define('BX_TIMELINE_FYFS_CHANNELS', 'channels');
 define('BX_TIMELINE_FYFS_HOT', 'hot');

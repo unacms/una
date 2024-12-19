@@ -80,6 +80,7 @@
     <string name="_bx_timeline_option_extenals_every_feed_and_hot_preload"><![CDATA[Показывать внешнее событие как каждое N-е в ленте 'Для тебя' при включенной 'Бесконечной прокрутке']]></string>
     <string name="_bx_timeline_option_for_you_sources"><![CDATA[Лента 'Для Вас' состоит из]]></string>
     <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[Для фида должен быть включен хотя бы один источник.]]></string>
+    <string name="_bx_timeline_option_for_you_sources_public"><![CDATA[Публичная лента]]></string>
     <string name="_bx_timeline_option_for_you_sources_feed"><![CDATA[Лента контекст (профиль) + подписки]]></string>
     <string name="_bx_timeline_option_for_you_sources_channels"><![CDATA[Каналы]]></string>
     <string name="_bx_timeline_option_for_you_sources_hot"><![CDATA['Горячая' хроника]]></string>

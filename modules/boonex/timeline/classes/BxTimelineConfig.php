@@ -229,6 +229,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'option_hfs_content' => '_bx_timeline_option_hot_sources_content',
                 'option_hfs_comment' => '_bx_timeline_option_hot_sources_comment',
                 'option_hfs_vote' => '_bx_timeline_option_hot_sources_vote',
+                'option_fyfs_public' => '_bx_timeline_option_for_you_sources_public',
                 'option_fyfs_feed' => '_bx_timeline_option_for_you_sources_feed',
                 'option_fyfs_channels' => '_bx_timeline_option_for_you_sources_channels',
                 'option_fyfs_hot' => '_bx_timeline_option_for_you_sources_hot',
@@ -434,6 +435,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         ];
 
         $this->_aForYouSourcesList = [
+            BX_TIMELINE_FYFS_PUBLIC,
             BX_TIMELINE_FYFS_FEED,
             BX_TIMELINE_TYPE_CHANNELS,
             BX_TIMELINE_FYFS_HOT,
