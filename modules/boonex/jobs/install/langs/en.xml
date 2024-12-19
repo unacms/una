@@ -206,7 +206,7 @@
     <string name="_bx_jobs_page_block_title_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_jobs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_jobs_page_block_title_entry_context"><![CDATA[Posted in]]></string>
-    <string name="_bx_jobs_page_block_title_admins"><![CDATA[Administrators]]></string>
+    <string name="_bx_jobs_page_block_title_admins"><![CDATA[Clients]]></string>
     <string name="_bx_jobs_page_block_title_applicants"><![CDATA[Applicants]]></string>
     <string name="_bx_jobs_page_block_title_fans_link"><![CDATA[Assignees of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_jobs_page_block_title_fans"><![CDATA[Assignees]]></string>

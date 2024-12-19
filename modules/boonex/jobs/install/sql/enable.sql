@@ -41,16 +41,16 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `active_api`, `order`) VALUES
 ('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0, 0),
 ('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 0, 0, 0),
-('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 1, 0),
+('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_applicants', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:10:"applicants";}', 0, 0, 1, 0, 1),
+('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 1, 2),
+('bx_jobs_view_profile', 1, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 1, 3),
 ('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0, 0),
 ('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 0, 1),
-('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_applicants', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:10:"applicants";}', 0, 0, 1, 0, 2),
 ('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:4:"fans";}', 0, 0, 1, 0, 3),
 ('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:6:"admins";}', 0, 0, 1, 0, 4),
 ('bx_jobs_view_profile', 3, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:7:"bx_jobs";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 0, 5),
-('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 1, 0),
 ('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:15:"entity_comments";}', 0, 0, 0, 0, 0),
-('bx_jobs_view_profile', 2, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_reports";}', 0, 0, 1, 0, 6);
+('bx_jobs_view_profile', 4, 'bx_jobs', '', '_bx_jobs_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:14:"entity_reports";}', 0, 0, 1, 0, 1);
 
 
 -- PAGE: view closed profile 
