@@ -244,12 +244,12 @@ import url(../../../../../../../template/css/forms.css);
 
 
 /*--- Form field: Location ---*/
-.bx-form-element .bx-form-value input,
-.bx-form-element .bx-form-value select {
+.bx-form-element .bx-form-value .bx-form-input-location-cont input,
+.bx-form-element .bx-form-value .bx-form-input-location-cont select {
     display: inline-block;
 }
-.bx-form-element .bx-form-value .minimized input,
-.bx-form-element .bx-form-value .minimized select {
+.bx-form-element .bx-form-value .bx-form-input-location-cont.minimized input,
+.bx-form-element .bx-form-value .bx-form-input-location-cont.minimized select {
     display: block;
 }
 .bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-country,

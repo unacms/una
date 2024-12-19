@@ -246,20 +246,8 @@
 .bx-form-input-select_multiple,
 .bx-form-input-radio_set,
 .bx-form-input-checkbox_set {
-    height:auto;
-}
-
-.bx-form-value .bx-form-input-radio_set,
-.bx-form-value .bx-form-input-checkbox_set {
-    line-height: 2.0;
-}
-
-.bx-form-value .bx-form-input-radio_set input,
-.bx-form-value .bx-form-input-checkbox_set input,
-.bx-form-value .bx-form-input-radio_set label,
-.bx-form-value .bx-form-input-checkbox_set label {
-    display: inline-block;
-    vertical-align: middle;
+    height: auto;
+    padding: 0.5rem;
 }
 
 .bx-form-value .bx-form-input-radio_set label,

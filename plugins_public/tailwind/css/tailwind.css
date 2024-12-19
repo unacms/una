@@ -882,7 +882,17 @@
     .bx-form-input-radio:checked {
         background-image:url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTYgMTYnIGZpbGw9JyNmZmYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PGNpcmNsZSBjeD0nOCcgY3k9JzgnIHI9JzMnLz48L3N2Zz4=)
     }
-
+    
+    .bx-form-input-radio_set,
+    .bx-form-input-checkbox_set {
+        @apply flex flex-wrap items-center;
+    }
+    .bx-form-input-dv {
+        @apply ml-4;
+    }
+    .bx-form-input-dv-nl {
+        @apply h-2 w-full last:hidden;
+    }
 
     /* Common elements: Forms: Switcher Input */
     .bx-switcher-cont.on button {

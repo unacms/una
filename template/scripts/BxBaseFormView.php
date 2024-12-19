@@ -49,7 +49,7 @@ class BxBaseFormView extends BxDolForm
     /**
      * Alternative divider for several inputs
      */
-    protected $_sDividerAlt = '<br />';
+    protected $_sDividerAlt = '<div class="bx-form-input-dv-nl"></div>';
 
     /**
      * Form is added dynamically.
@@ -2148,7 +2148,7 @@ BLAH;
         if (isset($aInput['values']) && is_array($aInput['values'])) {
             if (count($aInput['values']) > $iDividerThreshold && $sDivider == $this->_sDivider)
                 $sDivider = $this->_sDividerAlt;
-            
+
             // generate complex input using simple standard inputs
             foreach ($aInput['values'] as $sValue => $sLabel) {
                 if(is_array($sLabel)) {
@@ -2169,7 +2169,7 @@ BLAH;
                 if (isset($aInput['label_as_html']))
                     $aNewInput['label_as_html'] = $aInput['label_as_html'];
 
-                $sNewInput = $this->genInput($aNewInput);
+                $sNewInput = $this->genInputCheckbox($aNewInput, true) . $this->genLabel($aNewInput);
 
                 // add additional info for the field
                 if (isset($aAdditionalFieldInfo[$sValue]) && !empty($aAdditionalFieldInfo[$sValue]['LKey2']))
