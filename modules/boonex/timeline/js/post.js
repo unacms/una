@@ -338,17 +338,22 @@ BxTimelinePost.prototype._onGetPost = function(oData)
         var aTypes = Array.isArray(oData.type) ? oData.type : new Array(oData.type);
         aTypes.forEach(function(sType) {
             oData['type'] = sType;
-            $this.oView = $($this._getHtmlId('main', oData));
+            $this.oView = $($this._getHtmlId('main', oData) + ':visible');
+
+            /*
+             * Current UPF: 'Post to Feed' and Timeline: 'Post to Feed' forms 
+             * should work with both Feed and For You Feed blocks.
+             */
+            if(!$this.oView.length && oData['type'] == 'feed')
+                $this.oView = $($this._getHtmlId('main', jQuery.extend({}, oData, {type: 'feed_and_hot'})) + ':visible');
 
             /*
              * For backward compatibility.
              * Current UPF: 'Post to Feed' and Timeline: 'Post to Feed' forms 
              * should work with an old Account Feed ('Owner and Connections') block.
              */
-            if(!$this.oView.length && oData['type'] == 'feed') {
-                oData['type'] = 'owner_and_connections';
-                $this.oView = $($this._getHtmlId('main', oData));
-            }
+            if(!$this.oView.length && oData['type'] == 'feed')
+                $this.oView = $($this._getHtmlId('main', jQuery.extend({}, oData, {type: 'owner_and_connections'})) + ':visible');
 
             var oLoadMore = $this.oView.find('.' + $this.sSP + '-load-more');
             if(!oLoadMore.is(':visible'))
