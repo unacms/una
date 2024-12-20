@@ -289,15 +289,19 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
                 case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
                     $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
-                    $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
+                    $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'owner_id', $aParams['owner_id']);
                     if(empty($aQueryParts) || !is_array($aQueryParts) || empty($aQueryParts['join']))
                         break;
 
+                    //--- Show notifications from connected contexts (using INNER JOIN)
                     $sJoinClause .= " LEFT JOIN `sys_profiles` AS `tsp` ON `{$this->_sTable}`.`owner_id`=`tsp`.`id` " . $aQueryParts['join'];
 
                     $sWhereClauseType = '';
+                    //--- Don't show notifications about own posts to connected contexts
+                    $sWhereClauseType .= $this->prepareAsString("AND `{$this->_sTable}`.`object_owner_id` <> ? ", $aParams['owner_id']);
+                    //--- Don't show notifications about posts created before the connection was established
                     if(!empty($aQueryParts['fields']['added']))
-                        $sWhereClauseType = "AND `{$this->_sTable}`.`date` >= " . $aQueryParts['fields']['added'];
+                        $sWhereClauseType .= "AND `{$this->_sTable}`.`date` >= " . $aQueryParts['fields']['added'];
 
                     list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
                     $sJoinClause .= $this->prepareAsString(" INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1' AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . ")))", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
@@ -331,7 +335,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                         $sJoinClause .= " LEFT JOIN `sys_profiles` AS `tsp` ON `{$this->_sTable}`.`owner_id`=`tsp`.`id`";
                         $sJoinClause .= " LEFT JOIN `" . $aQueryParts['join']['table'] . "` AS `" . $aQueryParts['join']['table_alias'] . "` ON (" . $aQueryParts['join']['condition'] . ")";
 
+                        //--- Show notifications from connected contexts
                         $sWhereClauseConnections = "NOT ISNULL(`c`.`content`) ";
+                        //--- Don't show notifications about own posts to connected contexts
+                        $sWhereClauseConnections .= $this->prepareAsString("AND `{$this->_sTable}`.`object_owner_id` <> ? ", $aParams['owner_id']);
+                        //--- Don't show notifications about posts created before the connection was established
                         if(!empty($aQueryParts['fields']['added']))
                             $sWhereClauseConnections .= "AND `{$this->_sTable}`.`date` >= `" . $aQueryParts['fields']['added']['table_alias'] . "`.`" . $aQueryParts['fields']['added']['name'] . "` ";
                     }
