@@ -107,6 +107,9 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetPerformedBy' => 'BxBaseVoteServices',
 
             'Perform' => 'BxBaseFeatureServices',
+            
+            'Perform' => 'BxBaseFavoriteServices',
+            'GetPerformedBy' => 'BxBaseFavoriteServices',
 
             'Perform' => 'BxBaseServiceConnections',
             'Perform' => 'BxBaseServiceRecommendations',

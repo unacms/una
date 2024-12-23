@@ -47,7 +47,14 @@ define('BX_DOL_FAVORITE_USAGE_DEFAULT', BX_DOL_FAVORITE_USAGE_BLOCK);
  */
 class BxDolFavorite extends BxDolObject
 {
+    protected $_sType;
     protected $_sBaseUrl;
+
+    protected $_aFavorite;
+
+    protected $_aElementDefaults;
+    protected $_aElementDefaultsApi;
+    protected $_aElementParamsApi; //--- Params from DefaultsApi array to be passed to Api
 
     protected $_sFormObject;
     protected $_sFormDisplayAdd;
@@ -61,10 +68,13 @@ class BxDolFavorite extends BxDolObject
 
         $this->_oQuery = new BxDolFavoriteQuery($this);
 
+        $this->_sType = 'favorites';
         $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
-        
+
+        $this->_aFavorite = [];
+
         $this->_sFormObject = 'sys_favorite';
         $this->_sFormDisplayAdd = 'sys_favorite_add';
         $this->_sFormDisplayListEdit = 'sys_favorite_list_edit';
@@ -155,7 +165,7 @@ class BxDolFavorite extends BxDolObject
      */
     public function actionFavorite()
     {
-        return echoJson($this->_getFavorite());
+        return echoJson($this->favorite());
     }
     
     public function actionEditList()
@@ -261,10 +271,88 @@ class BxDolFavorite extends BxDolObject
         return (int)$this->_aSystem['is_public'] == 1;
     }
 
-	/**
+    /**
      * Internal functions
      */
-	
+    public function doFavorite()
+    {
+        if(!$this->isEnabled())
+            return ['code' => 1, 'message' => _t('_feature_err_not_enabled')];
+
+        $iObjectId = $this->getId();
+        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
+        $iAuthorId = $this->_getAuthorId();
+
+        $bUndo = $this->isUndo();
+        $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
+        $bPerformUndo = $bPerformed && $bUndo ? true : false;
+
+        if(!$bPerformUndo && !$this->isAllowedFavorite())
+            return ['code' => 2, 'message' => $this->msgErrAllowedFavorite()];
+
+        if($bPerformed && !$bUndo)
+            return ['code' => 3, 'message' => _t('_favorite_err_duplicate_favorite')];
+
+        if(!$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId))
+            return ['code' => 4, 'message' => _t('_favorite_err_cannot_perform_action')];
+
+        if(!$bPerformUndo)
+            $this->isAllowedFavorite(true);
+
+        $this->_triggerValue($bPerformUndo ? -1 : 1);
+
+        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, ['favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId]);
+        /**
+         * @hooks
+         * @hookdef hook-report-undo 'favorite', 'favorite' - hook on add new object to favorites lists or remove object from favorites lists 
+         * - $unit_name - equals `favorite`
+         * - $action - can be  do/undo 
+         * - $object_id - not used
+         * - $sender_id - profile_id for favorite's author
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_system` - [string] system name, ex: bx_posts
+         *      - `object_id` - [int] reported object id 
+         *      - `object_author_id` - [int] author's profile_id for reported object_id 
+         * @hook @ref hook-favorite-undo
+         */
+        bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, ['object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId]);
+
+        $aFavorite = $this->_oQuery->getFavorite($iObjectId);
+
+        $aResult = [
+            'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
+            'code' => 0, 
+            'count' => $aFavorite['count'],
+            'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
+            'label_icon' => $this->_getIconDoFavorite(!$bPerformed),
+            'label_title' => _t($this->_getTitleDoFavorite(!$bPerformed)),
+            'favorited' => !$bPerformed,
+            'disabled' => !$bPerformed && !$bUndo
+        ];
+
+        $aResult['api'] = [
+            'is_favorited' => $aResult['favorited'],
+            'is_disabled' => $aResult['disabled'],
+            'icon' => $aResult['label_icon'],
+            'title' => $aResult['label_title'],
+            'counter' => $aFavorite
+        ];
+
+        return $aResult;
+    }
+
+    protected function _getFavorite($iObjectId = 0, $bForceGet = false)
+    {
+        if(!empty($this->_aFavorite) && !$bForceGet)
+            return $this->_aFavorite;
+
+        if(empty($iObjectId))
+            $iObjectId = $this->getId();
+
+        $this->_aFavorite = $this->_oQuery->getFavorite($iObjectId);
+        return $this->_aFavorite;
+    }
+
     protected function _getIconDoFavorite($bPerformed)
     {
     	return $bPerformed && $this->isUndo() ?  'far fa-bookmark' : 'fas fa-bookmark';

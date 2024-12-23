@@ -20,8 +20,6 @@ class BxBaseFavorite extends BxDolFavorite
 
     protected $_aHtmlIds;
 
-    protected $_aElementDefaults;
-
     public function __construct($sSystem, $iId, $iInit = 1, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
@@ -29,27 +27,32 @@ class BxBaseFavorite extends BxDolFavorite
         $this->_bCssJsAdded = false;
 
         $this->_sJsObjClass = 'BxDolFavorite';
-        $this->_sJsObjName = 'oFavorite' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
+        $this->_sJsObjName = 'oFavorite' . bx_gen_method_name($sSystem, ['_' , '-']) . $iId;
         $this->_sStylePrefix = 'bx-favorite';
 
-        $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sSystem) . '-' . $iId;
-        $this->_aHtmlIds = array(
+        $sHtmlId = str_replace(['_' , ' '], ['-', '-'], $sSystem) . '-' . $iId;
+        $this->_aHtmlIds = [
             'main' => 'bx-favorite-' . $sHtmlId,
             'counter' => 'bx-favorite-counter-' . $sHtmlId,
             'do_link' => 'bx-favorite-do-link-' . $sHtmlId,
             'by_popup' => 'bx-favorite-by-popup-' . $sHtmlId,
             'do_popup' => 'bx-favorite-do-popup-' . $sHtmlId,
             'do_form' => 'bx-favorite-do-form-' . $sHtmlId,
-        );
+        ];
 
-        $this->_aElementDefaults = array(
+        $this->_aElementDefaults = [
             'show_do_favorite_as_button' => false,
             'show_do_favorite_as_button_small' => false,
             'show_do_favorite_icon' => true,
             'show_do_favorite_label' => false,
             'show_counter' => true,
             'show_counter_only' => true
-        );
+        ];
+
+        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+            'show_do_feature_as_button' => true,
+        ]);
+        $this->_aElementParamsApi = ['is_favorited'];
 
         $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('favorite_element_block.html');
         $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('favorite_element_inline.html');
@@ -89,7 +92,7 @@ class BxBaseFavorite extends BxDolFavorite
         $bShowDoFavoriteAsButtonSmall = isset($aParams['show_do_favorite_as_button_small']) && $aParams['show_do_favorite_as_button_small'] == true;
         $bShowDoFavoriteAsButton = !$bShowDoFavoriteAsButtonSmall && isset($aParams['show_do_favorite_as_button']) && $aParams['show_do_favorite_as_button'] == true;
 
-        $aFavorite = $this->_oQuery->getFavorite($this->getId());
+        $aFavorite = $this->_getFavorite();
 
         $sClass = 'sys-action-counter';
         if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
@@ -107,6 +110,13 @@ class BxBaseFavorite extends BxDolFavorite
             'class' => $sClass,
             'onclick' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)'
         ));
+    }
+
+    public function getCounterAPI($aParams = [])
+    {
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        return $this->_getFavorite();
     }
 
     public function getElementBlock($aParams = array())
@@ -167,28 +177,96 @@ class BxBaseFavorite extends BxDolFavorite
         ));
     }
 
+    public function getElementAPI($aParams = [])
+    {
+        if(!($this->_bApi = bx_is_api()))
+            return;
+
+        if(!$this->isEnabled())
+            return bx_api_get_msg('_favorite_err_not_enabled');
+
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+
+        $aFavorite = $this->_oQuery->getFavorite($iObjectId);
+
+        $bCount = (int)$aFavorite['count'] != 0;
+        $isAllowedFavorite = $this->isAllowedFavorite();
+        $isAllowedFavoriteView = $this->isAllowedFavoriteView();
+        $aParams['is_favorited'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
+
+        //--- Do Favorite
+        $bDoFavorite = $this->_isShowDoFavorite($aParams, $isAllowedFavorite, $bCount);
+        $aDoFavorite = $bDoFavorite ? $this->_getDoFavorite($aParams, $isAllowedFavorite) : [];
+
+        //--- Counter
+        $bCounter = $this->_isShowCounter($aParams, $isAllowedFavorite, $isAllowedFavoriteView, $bCount);
+        $aCounter = $bCounter ? $this->getCounterAPI(array_merge($aParams, [
+            'show_counter_only' => false, 
+            'show_script' => false
+        ])) : [];
+
+        if(!$bDoFavorite && !$bCounter)
+            return bx_api_get_msg('');
+
+        return [
+            'type' => $this->_sType,
+            'system' => $this->_sSystem,
+            'object_id' => $this->_iId,
+            'params' => array_intersect_key($aParams, array_flip($this->_aElementParamsApi)),
+            'action' => $aDoFavorite,
+            'counter' => $aCounter
+        ];
+    }
+
+    public function getPerformedByAPI($aParams = [])
+    {
+        $aValues = $this->_oQuery->getPerformedBy($this->getId());
+
+        $aTmplUsers = [];
+        foreach($aValues as $mValue) {
+            $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
+
+            $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+        }
+
+        return [
+            'performed_by' => $aTmplUsers
+        ];
+    }
+
     protected function _getDoFavorite($aParams = array(), $bAllowedFavorite = true)
     {
-    	$bFavorited = isset($aParams['is_favorited']) && $aParams['is_favorited'] === true;
+        $bFavorited = isset($aParams['is_favorited']) && $aParams['is_favorited'] === true;
         $bShowDoFavoriteAsButtonSmall = isset($aParams['show_do_favorite_as_button_small']) && $aParams['show_do_favorite_as_button_small'] == true;
         $bShowDoFavoriteAsButton = !$bShowDoFavoriteAsButtonSmall && isset($aParams['show_do_favorite_as_button']) && $aParams['show_do_favorite_as_button'] == true;
-		$bDisabled = !$bAllowedFavorite || ($bFavorited  && !$this->isUndo());
+        $bDisabled = !$bAllowedFavorite || ($bFavorited  && !$this->isUndo());
 
         $sClass = '';
-		if($bShowDoFavoriteAsButton)
-			$sClass = 'bx-btn';
-		else if ($bShowDoFavoriteAsButtonSmall)
-			$sClass = 'bx-btn bx-btn-small';
+        if($bShowDoFavoriteAsButton)
+            $sClass = 'bx-btn';
+        else if ($bShowDoFavoriteAsButtonSmall)
+            $sClass = 'bx-btn bx-btn-small';
 
-		if($bDisabled)
-			$sClass .= $bShowDoFavoriteAsButton || $bShowDoFavoriteAsButtonSmall ? ' bx-btn-disabled' : 'bx-favorite-disabled';
+        if($bDisabled)
+            $sClass .= $bShowDoFavoriteAsButton || $bShowDoFavoriteAsButtonSmall ? ' bx-btn-disabled' : 'bx-favorite-disabled';
 
-        return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDoFavorite($aParams), array(
-        	'id' => $this->_aHtmlIds['do_link'],
+        if($this->_bApi)
+            return [
+                'is_undo' => $this->isUndo(),
+                'is_favorited' => $bFavorited,
+                'is_disabled' => $bDisabled,
+                'title' => _t($this->_getTitleDoFavorite($bFavorited)),
+            ];
+
+        return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDoFavorite($aParams), [
+            'id' => $this->_aHtmlIds['do_link'],
             'class' => $this->_sStylePrefix . '-do-favorite ' . $sClass,
             'title' => _t($this->_getTitleDoFavorite($bFavorited)),
-        	'onclick' => !$bDisabled ? $this->getJsClick() : ''
-        ));
+            'onclick' => !$bDisabled ? $this->getJsClick() : ''
+        ]);
     }
 
     protected function _getCounterLabel($iCount)
@@ -218,63 +296,18 @@ class BxBaseFavorite extends BxDolFavorite
         ));
     }
     
-    protected function _getFavorite()
+    public function favorite()
     {
-        if (!$this->isEnabled())
+        if(!$this->isEnabled())
            return array('code' => 1, 'message' => _t('_favorite_err_not_enabled'));
 
         $iAuthorId = $this->_getAuthorId();
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
-        
-        
-        if (!isset($this->_aSystem['table_lists']) || $this->_aSystem['table_lists'] == ''){
-            $bUndo = $this->isUndo();
-            $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
-            $bPerformUndo = $bPerformed && $bUndo ? true : false;
 
-            if(!$bPerformUndo && !$this->isAllowedFavorite())
-                return array('code' => 2, 'message' => $this->msgErrAllowedFavorite());
+        if(!isset($this->_aSystem['table_lists']) || $this->_aSystem['table_lists'] == '')
+            return $this->doFavorite();
 
-            if($bPerformed && !$bUndo)
-                return array('code' => 3, 'message' => _t('_favorite_err_duplicate_favorite'));
-
-            if(!$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId))
-                return array('code' => 4, 'message' => _t('_favorite_err_cannot_perform_action'));
-
-            if(!$bPerformUndo)
-                $this->isAllowedFavorite(true);
-
-            $this->_triggerValue($bPerformUndo ? -1 : 1);
-
-            bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, array('favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-            /**
-             * @hooks
-             * @hookdef hook-report-undo 'favorite', 'favorite' - hook on add new object to favorites lists or remove object from favorites lists 
-             * - $unit_name - equals `favorite`
-             * - $action - can be  do/undo 
-             * - $object_id - not used
-             * - $sender_id - profile_id for favorite's author
-             * - $extra_params - array of additional params with the following array keys:
-             *      - `object_system` - [string] system name, ex: bx_posts
-             *      - `object_id` - [int] reported object id 
-             *      - `object_author_id` - [int] author's profile_id for reported object_id 
-             * @hook @ref hook-favorite-undo
-             */
-            bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
-
-            $aFavorite = $this->_oQuery->getFavorite($iObjectId);
-            return array(
-                'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
-                'code' => 0, 
-                'count' => $aFavorite['count'],
-                'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
-                'label_icon' => $this->_getIconDoFavorite(!$bPerformed),
-                'label_title' => _t($this->_getTitleDoFavorite(!$bPerformed)),
-                'disabled' => !$bPerformed && !$bUndo
-            );
-        }
-        
         $oForm = $this->_getFormObject($this->_sFormDisplayAdd);
         $oForm->setId($this->_aHtmlIds['do_form']);
         $oForm->setName($this->_aHtmlIds['do_form']);
@@ -342,10 +375,10 @@ class BxBaseFavorite extends BxDolFavorite
             $bPerformed = count($aList) > 0;
             $aFavorite = $this->_oQuery->getFavorite($iObjectId);
             return array(
-        	    'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
-        	    'code' => 0, 
-        	    'count' => $aFavorite['count'],
-        	    'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
+                'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
+                'code' => 0, 
+                'count' => $aFavorite['count'],
+                'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
                 'label_icon' => $this->_getIconDoFavorite($bPerformed), 
                 'label_title' => _t($this->_getTitleDoFavorite($bPerformed)), 
                 'disabled' => false
@@ -435,6 +468,16 @@ class BxBaseFavorite extends BxDolFavorite
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:list' => $aTmplFavorites
         ));
+    }
+
+    protected function _isShowDoFavorite($aParams, $isAllowedFavorite, $bCount)
+    {
+        return (!isset($aParams['show_do_favorite']) || (bool)$aParams['show_do_favorite'] === true) && $isAllowedFavorite;
+    }
+
+    protected function _isShowCounter($aParams, $isAllowedFavorite, $isAllowedFavoriteView, $bCount)
+    {
+        return isset($aParams['show_counter']) && (bool)$aParams['show_counter'] === true && $isAllowedFavoriteView && ($isAllowedFavorite || $bCount);
     }
 }
 

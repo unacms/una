@@ -23,13 +23,13 @@ class BxBaseFeatureServices extends BxDol
      * @subsection bx_system_general-features Features
      * @subsubsection bx_system_general-perform perform
      * 
-     * @code bx_srv('system', 'perform', [[...]], 'TemplServiceFeatures'); @endcode
-     * @code {{~system:perform:TemplServiceFeatures[[...]]~}} @endcode
+     * @code bx_srv('system', 'perform', [[...]], 'TemplFeatureServices'); @endcode
+     * @code {{~system:perform:TemplFeatureServices[[...]]~}} @endcode
      * 
      * Performs Perform action (featured, unfeatured, etc) with features object.
      * @param $aParams an array with necessary parameters 
      * 
-     * @see BxBaseServiceFeatures::servicePerform
+     * @see BxBaseFeatureServices::servicePerform
      */
     /** 
      * @ref bx_system_general-perform "perform"

@@ -128,7 +128,7 @@ class BxBaseFeature extends BxDolFeature
             return;
 
         if(!$this->isEnabled())
-            return bx_api_get_msg('_vote_err_not_enabled');
+            return bx_api_get_msg('_feature_err_not_enabled');
 
         $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
 
