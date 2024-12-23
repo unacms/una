@@ -16,7 +16,7 @@ if (getParam('sys_embed_default') != 'sys_oembed')
 $aLinks = bx_get('l');
 
 bx_import('BxDolEmbed');
-if(($oEmbed = BxDolEmbed::getObjectInstance('sys_system')) !== false) {
+if(($oEmbed = BxDolEmbed::getObjectInstance('sys_oembed')) !== false) {
     if(bx_get('html'))
         echo '<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"" /><style>body, html {margin:0px} A{text-decoration:none; color:#222}</style><div style=" margin:0px auto; justify-content: center;" id="ifr">' . $oEmbed->getLinkHTML($aLinks) . '</div>';
     else

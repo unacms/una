@@ -69,9 +69,6 @@ class BxBaseEmbedSystem extends BxDolEmbed
             'icon2' => ['tag' => 'link', 'name_attr' => 'rel', 'name' => 'icon', 'content_attr' => 'href'],
             'icon3' => ['tag' => 'link', 'name_attr' => 'rel', 'name' => 'apple-touch-icon', 'content_attr' => 'href'],
         ]);
-
-
-        
         
         $a = array_merge($a, [
            'image' => $a['OGImage'] ? $a['OGImage'] : $a['thumbnailUrl'],
@@ -80,8 +77,6 @@ class BxBaseEmbedSystem extends BxDolEmbed
         ]);
 
         unset($a['OGImage'], $a['thumbnailUrl'], $a['icon'], $a['icon2'], $a['icon3']);
-
-        
 
         if($a['image'] == '') {
             $c = [];
@@ -116,23 +111,6 @@ class BxBaseEmbedSystem extends BxDolEmbed
         $a['domain'] = $aUrl['host'];
 
         return json_encode($a);
-    }
-
-    public function parseLinks(&$aLinks)
-    {
-        $aResult = [];
-
-        if($aLinks && is_array($aLinks)) {
-            $oEmbera = $this->getEmberaInstance();
-
-            foreach ($aLinks as $sLink) {
-                $sHtml = $oEmbera->autoEmbed($sLink);
-                //if nothing to change/embed then return empty string to not replace anything on a frontend
-                $aResult[] = ['html' => $sHtml != $sLink ? $sHtml : ''];
-            }
-        }
-
-        return $aResult;
     }
 }
 
