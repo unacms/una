@@ -958,6 +958,8 @@ BxTimelineView.prototype.initFormEdit = function(sFormId, iEventId)
     var sContent = oTextarea.val();
     if(sContent && sContent.length > 0)
         this.parseContent(oForm, iEventId, sContent, false);
+
+    oForm.bxConvertEmbeds();
 };
 
 BxTimelineView.prototype.beforeFormEditSubmit = function(oForm)

@@ -1056,6 +1056,20 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
             }
         });
     };
+
+    $.fn.bxConvertEmbeds = function() {
+        return this.each(function() {
+            $(this).find(".bx-embed-link").each(function() {
+                var oItem = $(this);
+                oItem.html(oItem.attr('source'));
+                $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: oItem.attr('source')}, function(oData) {
+                    oItem.html(oData.code)
+                    if(oItem.find('a').length > 0)
+                        bx_embed_link(oItem.find('a')[0]);
+                });
+            });
+        });
+    };
 } (jQuery));
 
 

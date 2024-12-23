@@ -36,23 +36,11 @@ BxDolPage.prototype.init = function() {
     }
 
     // process embeds
-    $(".bx-embed-link").each(function() {
-        $(this).html($(this).attr('source'));
-        $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: $(this).attr('source')}, $this.embededCallback($(this)));
-    });
-    
+    $(document).bxConvertEmbeds();
+
+    // process links
     bx_process_links();
 };
-
-BxDolPage.prototype.embededCallback = function(item)
-{
-    return function(oData) {
-        item.html(oData.code)
-        if (item.find('a').length > 0){
-            bx_embed_link(item.find('a')[0]);
-        }
-    };
-}
 
 BxDolPage.prototype.share = function(oLink, sUrl)
 {
