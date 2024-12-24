@@ -1116,6 +1116,7 @@
 	<string name="_adm_lmi_cpt_injections"><![CDATA[Вставки]]></string>
 	<string name="_adm_lmi_cpt_images"><![CDATA[Изображения]]></string>
 	<string name="_adm_lmi_cpt_items"><![CDATA[Элементы]]></string>
+        <string name="_adm_lmi_cpt_keys"><![CDATA[Ключи]]></string>
         <string name="_adm_lmi_cpt_pgt_settings"><![CDATA[Настройки (i18n)]]></string>
 	<string name="_adm_lmi_cpt_pgt_keys"><![CDATA[Текстовые ключи]]></string>
         <string name="_adm_lmi_cpt_labels"><![CDATA[Метки]]></string>

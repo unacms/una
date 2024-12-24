@@ -13,12 +13,15 @@ bx_import('BxDolStudioUtils');
 
 class BxHelpToursGridTours extends BxTemplGrid
 {
+    protected $_sModule;
+    protected $_oModule;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
-        $this->MODULE = 'bx_help_tours';
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+        $this->_sModule = 'bx_help_tours';
+    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
     	if(!$oTemplate)
-			$oTemplate = $this->_oModule->_oTemplate;
+            $oTemplate = $this->_oModule->_oTemplate;
 
         parent::__construct ($aOptions, $oTemplate);
     }
@@ -88,7 +91,7 @@ class BxHelpToursGridTours extends BxTemplGrid
             echoJson($aRes);
         } else {
             $s = '
-                <div class="bx-def-color-bg-block">' . $oForm->getCode(true) . '</div>                
+                <div>' . $oForm->getCode(true) . '</div>                
                 <script>                    
                     $(document).ready(function () {
                         $("#'.$oForm->aFormAttrs['id'].'").ajaxForm({
@@ -140,7 +143,7 @@ class BxHelpToursGridTours extends BxTemplGrid
         }
 
         echoJson(array(
-            'redirect' => BX_DOL_URL_STUDIO.'module.php?name='.$this->MODULE.'&tour='.$iTourId.'&page=items',
+            'redirect' => BX_DOL_URL_STUDIO.'module.php?name=' . $this->_sModule . '&tour=' . $iTourId . '&page=items',
         ));
     }
 

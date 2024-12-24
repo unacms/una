@@ -1132,6 +1132,7 @@
     <string name="_adm_lmi_cpt_injections"><![CDATA[Injections]]></string>
     <string name="_adm_lmi_cpt_images"><![CDATA[Images]]></string>
     <string name="_adm_lmi_cpt_items"><![CDATA[Items]]></string>
+    <string name="_adm_lmi_cpt_keys"><![CDATA[Keys]]></string>
     <string name="_adm_lmi_cpt_pgt_settings"><![CDATA[i18n Settings]]></string>
     <string name="_adm_lmi_cpt_pgt_keys"><![CDATA[Text Keys]]></string>
     <string name="_adm_lmi_cpt_labels"><![CDATA[Labels]]></string>

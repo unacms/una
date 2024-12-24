@@ -55,7 +55,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         return parent::getPageMenu($aMenu);
     }
 
-    protected function getGeneral()
+    protected function getReports()
     {
         return $this->getGrid();
     }

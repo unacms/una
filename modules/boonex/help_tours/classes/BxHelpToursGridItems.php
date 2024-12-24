@@ -11,15 +11,18 @@
 
 class BxHelpToursGridItems extends BxTemplGrid
 {
+    protected $_sModule;
+    protected $_oModule;
+
     protected $_iTourId;
     protected $_aTourPageBlocks;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
-        $this->MODULE = 'bx_help_tours';
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+        $this->_sModule = 'bx_help_tours';
+    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
     	if(!$oTemplate)
-			$oTemplate = $this->_oModule->_oTemplate;
+            $oTemplate = $this->_oModule->_oTemplate;
 
     	parent::__construct ($aOptions, $oTemplate);
 
@@ -84,7 +87,7 @@ class BxHelpToursGridItems extends BxTemplGrid
             echoJson($aRes);
         } else {
             $s = '
-                <div class="bx-def-color-bg-block">' . $oForm->getCode(true) . '</div>                
+                <div>' . $oForm->getCode(true) . '</div>                
                 <script>                    
                     $(document).ready(function () {
                         $("#'.$oForm->aFormAttrs['id'].'").ajaxForm({
@@ -361,7 +364,7 @@ class BxHelpToursGridItems extends BxTemplGrid
             'js_object' => $this->getJsObject(),
             'grid_object' => $this->_sObject,
             'tour' => $this->_iTourId,
-            'page_url' => BX_DOL_URL_STUDIO.'module.php?name='.$this->MODULE.'&page=items',
+            'page_url' => BX_DOL_URL_STUDIO.'module.php?name=' . $this->_sModule . '&page=items',
         ]);
     }
 }

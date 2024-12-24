@@ -19,11 +19,10 @@ class BxOAuthStudioPage extends BxTemplStudioModule
 
         $this->oModule = BxDolModule::getInstance('bx_oauth');
 
-        $this->aMenuItems = array(
-            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            'keys' => array('name' => 'keys', 'icon' => 'key', 'title' => '_adm_lmi_cpt_keys'),
-            'help' => array('name' => 'help', 'icon' => 'question', 'title' => '_bx_oauth_help'),
-        );
+        $this->aMenuItems = array_merge($this->aMenuItems, [
+            'keys' => ['name' => 'keys', 'icon' => 'key', 'title' => '_bx_oauth_lmi_cpt_keys'],
+            'help' => ['name' => 'help', 'icon' => 'question', 'title' => '_bx_oauth_help']
+        ]);
     }
 
     function getKeys ()

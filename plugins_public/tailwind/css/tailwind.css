@@ -839,11 +839,14 @@
     }
     
     /* Common elements: Forms: Checkbox/Radio Set Input */
-    .bx-std .bx-form-input-wrapper-checkbox_set,
-    .bx-std .bx-form-input-wrapper-radio_set,
     .bx-artificer .bx-form-input-wrapper-checkbox_set,
     .bx-artificer .bx-form-input-wrapper-radio_set {
         @apply relative block w-full py-2 px-3;
+    }
+    .bx-std .bx-form-input-checkbox_set,
+    .bx-std .bx-form-input-radio_set,
+    .bx-artificer .bx-form-input-wrapper-checkbox_set,
+    .bx-artificer .bx-form-input-wrapper-radio_set {
         @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
         @apply leading-6 text-base font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
