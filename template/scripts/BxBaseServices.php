@@ -1249,6 +1249,19 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetOptionsPushDefault()
+    {
+        $aResults = [
+            '' => _t('_None')
+        ];
+
+        $aObjects = BxDolPushQuery::getObjects();
+        foreach($aObjects as $aObject)
+            $aResults[$aObject['object']] = $aObject['title'];
+
+        return $aResults;
+    }
+
     public function serviceGetOptionsSocketsFieldDefault()
     {
         $aResults = [];

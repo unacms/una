@@ -7,42 +7,34 @@
  * @{
  */
 
-class BxDolPush extends BxDolFactory implements iBxDolSingleton
+class BxDolPush extends BxDolFactoryObject
 {
-    protected $_sAppId;
-    protected $_sRestApi;
+    protected $_sApiUrlRootPush;
+    protected $_sApiUrlRootEmail;
 
-    protected function __construct()
+    protected function __construct($aObject, $oTemplate = null, $sDbClassName = 'BxDolPushQuery')
     {
-        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
-            trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
+        parent::__construct($aObject, $oTemplate, $sDbClassName);
 
-        parent::__construct();
-
-        $this->_sAppId = getParam('sys_push_app_id');
-        $this->_sRestApi = getParam('sys_push_rest_api');
+        $this->_sApiUrlRootEmail = $this->_getUrlRoot('email');
+        $this->_sApiUrlRootPush = $this->_getUrlRoot('push');
     }
 
     /**
-     * Prevent cloning the instance
+     * Get embed provider object instance by object name
+     * @param $sObject object name
+     * @return object instance or false on error
      */
-    public function __clone()
+    static public function getObjectInstance($sObject = false, $oTemplate = false)
     {
-        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
-            trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
+        if(!$sObject)
+            $sObject = getParam('sys_push_default');
+        if(!$sObject)
+            return false;
+
+        return parent::getObjectInstanceByClassNames($sObject, $oTemplate, 'BxDolPush', 'BxDolPushQuery');
     }
 
-    /**
-     * Get singleton instance of the class
-     */
-    public static function getInstance()
-    {
-        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
-            $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolPush();
-
-        return $GLOBALS['bxDolClasses'][__CLASS__];
-    }
-    
     /**
      * Get tags to send to PUSH server
      * @param $iProfileId - profile ID
@@ -139,90 +131,26 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         return $iBubbles;
     }
 
-    public function send($iProfileId, $aMessage, $bAddToQueue = false)
+    public function getCode($sFor = '')
     {
-        if(empty($this->_sAppId) || empty($this->_sRestApi))
+        if($sFor && ($sMethod = '_getCode' . bx_gen_method_name($sFor)) && method_exists($this, $sMethod))
+            return $this->$sMethod();
+
+        return '';
+    }
+
+    public function send($iProfileId, $aMessage, $bAddToQueue = false) {}
+
+    protected function _getUrlRoot($sType)
+    {
+        $sRootUrl = getParam('sys_api_url_root_' . $sType);
+        if(!$sRootUrl)
             return false;
+            
+        if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
+            $sRootUrl .= '/';
 
-        if($bAddToQueue && BxDolQueuePush::getInstance()->add($iProfileId, $aMessage))
-            return true;
-
-        $sUrlWeb = $sUrlApp = !empty($aMessage['url']) ? $aMessage['url'] : '';
-
-        if(($sRootUrl = getParam('sys_api_url_root_email')) !== '') {
-            if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
-                $sRootUrl .= '/';
-
-            if($sUrlWeb)
-                $sUrlWeb = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sUrlWeb);
-
-            if(empty($aMessage['contents']) && is_array($aMessage['contents']))
-                foreach($aMessage['contents'] as $sKey => $sValue)
-                    $aMessage['contents'][$sKey] = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sValue);
-        }
-
-        if(($sRootUrl = getParam('sys_api_url_root_push')) !== '') {
-            if(substr(BX_DOL_URL_ROOT, -1) == '/' && substr($sRootUrl, -1) != '/')
-                $sRootUrl .= '/';
-
-            if($sUrlApp)
-                $sUrlApp = str_replace(BX_DOL_URL_ROOT, $sRootUrl, $sUrlApp);
-        }
-        else
-            $sUrlApp = $sUrlWeb;
-
-        $aFields = [
-            'app_id' => $this->_sAppId,
-            'filters' => [
-                ['field' => 'tag', 'key' => 'user_hash', 'relation' => '=', 'value' => encryptUserId($iProfileId)]
-            ],
-            'contents' => !empty($aMessage['contents']) && is_array($aMessage['contents']) ? $aMessage['contents'] : [],
-            'headings' => !empty($aMessage['headings']) && is_array($aMessage['headings']) ? $aMessage['headings'] : [],
-            'web_url' => $sUrlWeb,
-            'app_url' => $sUrlApp,
-            'data' => [
-                'url' => $sUrlWeb
-            ],
-        ];
-        
-        if (empty($aMessage['icon'])){
-            $aMessage['icon'] = BxTemplFunctions::getInstance()->getMainLogoUrl();
-        }
-        if (!empty($aMessage['icon'])){
-            $aFields['chrome_web_icon'] = $aMessage['icon'];
-            $aFields['large_icon'] = $aMessage['icon'];
-            $aFields['ios_attachments'] = ['id'=> $aMessage['icon']];
-        }
-        
-        if ('on' == getParam('bx_nexus_option_push_notifications_count')) {
-            $iBadgeCount = $this->getNotificationsCount($iProfileId);
-            $aFields['ios_badgeType'] = 'SetTo';
-            $aFields['ios_badgeCount'] = $iBadgeCount;
-        }
-
-        $oChannel = curl_init();
-        curl_setopt($oChannel, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-        curl_setopt($oChannel, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json; charset=utf-8',
-                'Authorization: Basic ' . $this->_sRestApi
-        ]);
-        curl_setopt($oChannel, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($oChannel, CURLOPT_HEADER, false);
-        curl_setopt($oChannel, CURLOPT_POST, true);
-        curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
-        if (getParam('sys_curl_ssl_allow_untrusted') == 'on')
-            curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
-
-        $sResult = curl_exec($oChannel);
-        curl_close($oChannel);
-
-        $oResult = @json_decode($sResult, true);
-        if(isset($oResult['errors']))
-            foreach($oResult['errors'] as $sError) {  
-                bx_log('sys_push', $sError . " Message:" . json_encode($aMessage));
-            }
-
-        return $sResult;
+        return $sRootUrl;
     }
 }
 

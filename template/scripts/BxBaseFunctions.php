@@ -818,52 +818,12 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
     protected function getInjHeaderPushNotifications() 
     {
-        $iProfileId = bx_get_logged_profile_id();
-        if(empty($iProfileId))
-            return '';
+        $sResult = '';
 
-        $sAppId = getParam('sys_push_app_id');
-        if(empty($sAppId))
-            return '';
+        if(($oPush = BxDolPush::getObjectInstance()) !== false)
+            $sResult = $oPush->getCode('page_header');
 
-        $aTags = BxDolPush::getTags($iProfileId);
-        if (!$aTags)
-            return '';
-
-        $sShortName = getParam('sys_push_short_name');
-        $sSafariWebId = getParam('sys_push_safari_id');
-
-        $sSubfolder = '/plugins_public/onesignal/';
-        $aUrl = parse_url(BX_DOL_URL_ROOT);
-        if(!empty($aUrl['path'])) {
-            $sPath = trim($aUrl['path'], '/');
-            if(!empty($sPath))
-                $sSubfolder = '/' . $sPath . $sSubfolder;
-        }
-
-        $this->_oTemplate->addJs(array(
-            'https://cdn.onesignal.com/sdks/OneSignalSDK.js',
-            'BxDolPush.js',
-        ));
-
-        $sJsClass = 'BxDolPush';
-        $sJsObject = 'oBxDolPush';
-
-        $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode(array(
-            'sObjName' => $sJsObject,
-            'sSiteName' => getParam('site_title'),
-            'aTags' => $aTags,
-            'sAppId' => $sAppId,
-            'sShortName' => $sShortName,
-            'sSafariWebId' => $sSafariWebId,
-            'sSubfolder' => $sSubfolder,
-            'sNotificationUrl' => BX_DOL_URL_ROOT,
-            'sTxtNotificationRequest' => _t('_sys_push_notification_request', getParam('site_title')),
-            'sTxtNotificationRequestYes' => _t('_sys_push_notification_request_yes'),
-            'sTxtNotificationRequestNo' => _t('_sys_push_notification_request_no'),
-        )) . ");";
-
-        return $this->_oTemplate->_wrapInTagJsCode($sContent);
+        return $sResult;
     }
 
     protected function getInjHeaderPopupLoading() 

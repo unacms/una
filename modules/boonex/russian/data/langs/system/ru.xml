@@ -1651,6 +1651,7 @@
     <string name="_adm_stg_inf_option_sys_per_page_search_keyword_single"><![CDATA[Установите максимальное количество результатов, отображаемых на странице при поиске по ключевому слову.]]></string>
     <string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Результаты поиска по сайту]]></string>
     <string name="_adm_stg_inf_option_sys_per_page_search_keyword_plural"><![CDATA[Установите максимальное количество результатов, отображаемых на странице поиска по сайту.]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_default"><![CDATA[Поставщик]]></string>
     <string name="_adm_stg_cpt_option_sys_push_app_id"><![CDATA[OneSignal App ID]]></string>
     <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
     <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
