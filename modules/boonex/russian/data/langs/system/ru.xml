@@ -1652,10 +1652,10 @@
     <string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Результаты поиска по сайту]]></string>
     <string name="_adm_stg_inf_option_sys_per_page_search_keyword_plural"><![CDATA[Установите максимальное количество результатов, отображаемых на странице поиска по сайту.]]></string>
     <string name="_adm_stg_cpt_option_sys_push_default"><![CDATA[Поставщик]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_app_id"><![CDATA[OneSignal App ID]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID в натройках Web Push]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_onesignal_app_id"><![CDATA[OneSignal: App ID]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_onesignal_rest_api"><![CDATA[OneSignal: REST API Key]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_onesignal_short_name"><![CDATA[OneSignal: Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_onesignal_safari_id"><![CDATA[OneSignal: Apple Safari Web ID в натройках Web Push]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_time"><![CDATA[Флаг выполнения Push очереди]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Количество сообщенией, отправляемое из Push очереди при каждом запуске]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из Push очереди одному и тому же получателю при каждом запуске]]></string>

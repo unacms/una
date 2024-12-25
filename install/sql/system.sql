@@ -721,10 +721,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_push_queue_send_per_start', '_adm_stg_cpt_option_sys_push_queue_send_per_start', '500',  'digit', '', '', '', 10),
 (@iCategoryId, 'sys_push_queue_send_per_start_to_recipient', '_adm_stg_cpt_option_sys_push_queue_send_per_start_to_recipient', '2',  'digit', '', '', '', 11),
 
-(@iCategoryId, 'sys_push_onesignal_app_id', '_adm_stg_cpt_option_sys_push_app_id', '', 'digit', '', '', '', 21),
-(@iCategoryId, 'sys_push_onesignal_rest_api', '_adm_stg_cpt_option_sys_push_rest_api', '', 'digit', '', '', '', 22),
-(@iCategoryId, 'sys_push_onesignal_short_name', '_adm_stg_cpt_option_sys_push_short_name', '', 'digit', '', '', '', 23),
-(@iCategoryId, 'sys_push_onesignal_safari_id', '_adm_stg_cpt_option_sys_push_safari_id', '', 'digit', '', '', '', 24);
+(@iCategoryId, 'sys_push_onesignal_app_id', '_adm_stg_cpt_option_sys_push_onesignal_app_id', '', 'digit', '', '', '', 21),
+(@iCategoryId, 'sys_push_onesignal_rest_api', '_adm_stg_cpt_option_sys_push_onesignal_rest_api', '', 'digit', '', '', '', 22),
+(@iCategoryId, 'sys_push_onesignal_short_name', '_adm_stg_cpt_option_sys_push_onesignal_short_name', '', 'digit', '', '', '', 23),
+(@iCategoryId, 'sys_push_onesignal_safari_id', '_adm_stg_cpt_option_sys_push_onesignal_safari_id', '', 'digit', '', '', '', 24);
 
 
 --

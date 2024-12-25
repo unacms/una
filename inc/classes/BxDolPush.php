@@ -21,7 +21,7 @@ class BxDolPush extends BxDolFactoryObject
     }
 
     /**
-     * Get embed provider object instance by object name
+     * Get Push Notification provider object instance by object name
      * @param $sObject object name
      * @return object instance or false on error
      */
