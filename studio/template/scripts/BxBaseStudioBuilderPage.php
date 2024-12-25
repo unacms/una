@@ -1822,19 +1822,19 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $oForm = new BxTemplStudioFormView(array());
 
-        $aInputCheckbox = array(
+        $aInputCheckbox = [
             'type' => 'checkbox',
             'name' => 'blocks[]',
-            'attrs' => array(
+            'attrs' => [
                 'onChange' => 'javascript:' . $sJsObject . '.onSelectBlock(this);'
-            ),
+            ],
             'value' => ''
-        );
+        ];
 
-        $aTmplParams = array(
+        $aTmplParams = [
             'html_block_list_id' => $this->aHtmlIds['block_list_id'] . $sModule,
-            'bx_repeat:blocks' => array()
-        );
+            'bx_repeat:blocks' => []
+        ];
 
         $aBlocks = $this->getBlocks($sModule);
         foreach($aBlocks as $aBlock) {
@@ -1842,44 +1842,48 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
             $aInputCheckbox['value'] = $aBlock['id'];
 
-            $aTmplParams['bx_repeat:blocks'][] = array(
+            $aTmplParams['bx_repeat:blocks'][] = [
                 'js_object' => $sJsObject,
                 'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
                 'bx_if:is_inactive' => array(
                     'condition' => false,
-                    'content' => array()
+                    'content' => [true]
                 ),
-                'bx_if:show_link' => array(
+                'bx_if:show_link' => [
                     'condition' => false,
-                    'content' => array()
-                ),
-                'bx_if:show_text' => array(
+                    'content' => [true]
+                ],
+                'bx_if:show_text' => [
                     'condition' => true,
-                    'content' => array(
+                    'content' => [
                         'title' => _t(!empty($aBlock['title_system']) ? $aBlock['title_system'] : $aBlock['title']),
-                    )
-                ),
-                'bx_if:image' => array (
-	                'condition' => (bool)$sIconUrl,
-	                'content' => array('icon_url' => $sIconUrl),
-	            ),
-				'bx_if:icon' => array (
-	                'condition' => (bool)$sIcon,
-	                'content' => array('icon' => $sIcon),
-	            ),
+                    ]
+                ],
+                'bx_if:show_api' => [
+                    'condition' => false,
+                    'content' => [true]
+                ],
+                'bx_if:image' => [
+                    'condition' => (bool)$sIconUrl,
+                    'content' => array('icon_url' => $sIconUrl),
+                ],
+                'bx_if:icon' => [
+                    'condition' => (bool)$sIcon,
+                    'content' => ['icon' => $sIcon],
+                ],
                 'module' => $this->getModuleTitle($aBlock['module']),
                 'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
-                'bx_if:show_checkbox' => array(
+                'bx_if:show_checkbox' => [
                     'condition' => true,
-                    'content' => array(
+                    'content' => [
                         'content' => $oForm->genRow($aInputCheckbox)
-                    )
-                ),
-                'bx_if:show_drag_handle' => array(
+                    ]
+                ],
+                'bx_if:show_drag_handle' => [
                     'condition' => false,
-                    'content' => array()
-                )
-            );
+                    'content' => []
+                ]
+            ];
         }
 
         return $oTemplate->parseHtmlByName('bp_blocks_list.html', $aTmplParams);
