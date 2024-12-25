@@ -922,7 +922,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 return array('msg' => _t('_adm_bp_err_block_edit'));
         }
 
-        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_block_popup_id'], _t('_adm_bp_txt_edit_block_popup', _t($aBlock['title'])), $oTemplate->parseHtmlByName('bp_add_block.html', array(
+        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_block_popup_id'], _t('_adm_bp_txt_edit_block_popup', _t($aBlock['title_system'])), $oTemplate->parseHtmlByName('bp_add_block.html', array(
         	'action' => 'edit',
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
