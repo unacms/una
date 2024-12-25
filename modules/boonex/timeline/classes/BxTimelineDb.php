@@ -1127,7 +1127,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 //--- Select All System posts
                 $mixedWhereSubclause = "`{$sTableAlias}`.`system`='1'";
 
-                //--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
+                //--- Select Public (created on Home Page Timeline (Public Feed)) updates 
                 $mixedWhereSubclause .= $this->prepareAsString(" OR `{$sTableAlias}`.`owner_id`=?", 0);
 
                 //--- Select Promoted posts.
@@ -1333,8 +1333,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 if($bForYou && in_array(BX_TIMELINE_FYFS_PUBLIC, $aForYouSources)) {
                     //--- Select All System posts
                     $sWhereSubclause = "`{$sTableAlias}`.`system`='1'";
-                    //--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
-                    $sWhereSubclause .= $this->prepareAsString(" OR `{$sTableAlias}`.`owner_id`=?", 0);
+
+                    //--- Select Public (created on Home Page Timeline (Public Feed)) updates or all if 'showAll' setting is enabled
+                    if(!$this->_oConfig->isShowAll())
+                        $sWhereSubclause .= $this->prepareAsString(" OR `{$sTableAlias}`.`owner_id`=?", 0);
+                    else
+                        $sWhereSubclause .= $this->prepareAsString(" OR `{$sTableAlias}`.`owner_id`<>?", $aParams['owner_id']);
 
                     $mixedWhereSubclause['p9'] = "(" . $sWhereSubclause . ")";
                 }
