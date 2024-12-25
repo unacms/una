@@ -505,6 +505,12 @@ class BxFilesModule extends BxBaseModFilesModule
 
                 if ($iFolder != 0 && !empty($aFiles))
                     $this->_oDb->moveFilesToFolder($aFiles, $iFolder);
+
+                if (!empty($aFiles))
+                foreach ($aFiles as $iContentId) {
+                    $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+                    $this->alertAfterAdd($aContentInfo);
+                }
             }
         }
 
