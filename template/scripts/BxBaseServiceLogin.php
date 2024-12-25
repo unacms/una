@@ -264,8 +264,8 @@ class BxBaseServiceLogin extends BxDol
                 $oAccount->updatePhone($sNewPhoneNumber);
             $sActivationCode = rand(1000, 9999);
             $sActivationText =_t('_sys_txt_login_2fa_sms_text', $sActivationCode);
-            $ret = null;
-            
+
+            $mixedOverrideResult = null;
             /**
              * @hooks
              * @hookdef hook-account-before_2fa_send_sms 'account', 'before_2fa_send_sms' - hook after user performed login
@@ -279,18 +279,20 @@ class BxBaseServiceLogin extends BxDol
              *      - `override_result` - [string] the password after encription, to save in db
              * @hook @ref hook-account-before_2fa_send_sms
              */
-            bx_alert('account', 'before_2fa_send_sms', $oAccount->id(), false, array('phone_number' => $sPhoneNumber, 'sms_text' => $sActivationText, 'override_result' => &$ret));
-            if ($ret === null) 
-            {
-                $oTwilio = BxDolTwilio::getInstance();
-                if(!$oTwilio->sendSms($sNewPhoneNumber, $sActivationText)){
-                    return MsgBox(_t('_sys_txt_login_2fa_sms_error_occured'));
-                }
-            }
+            bx_alert('account', 'before_2fa_send_sms', $oAccount->id(), false, [
+                'phone_number' => &$sPhoneNumber, 
+                'sms_text' => &$sActivationText, 
+                'override_result' => &$mixedOverrideResult
+            ]);
+
+            if($mixedOverrideResult === null && ($oSms = BxDolSms::getObjectInstance()) !== false && !$oSms->sendSms($sNewPhoneNumber, $sActivationText))
+                return MsgBox(_t('_sys_txt_login_2fa_sms_error_occured'));
+
             $oSession = BxDolSession::getInstance();
             $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE, $sActivationCode);
             header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=login-step3')));
         }
+
         return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_login_2fa_description") . '</div>' .$oForm->getCode();
     }
     

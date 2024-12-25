@@ -76,6 +76,24 @@ CREATE TABLE `sys_objects_push` (
 INSERT INTO `sys_objects_push` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
 ('sys_onesignal', 'OneSignal', 'BxTemplPushOneSignal', '');
 
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE `sys_objects_sms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object` varchar(64) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `override_class_name` varchar(255) NOT NULL,
+  `override_class_file` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object` (`object`)
+);
+
+INSERT INTO `sys_objects_sms` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
+('sys_twilio', 'Twilio', 'BxDolSmsTwilio', '');
+
+
 -- --------------------------------------------------------
 
 
@@ -712,13 +730,15 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 --
 -- CATEGORY: Twilio gate settings
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'twilio_gate', '_adm_stg_cpt_category_twilio_gate', 0, 18);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'sms', '_adm_stg_cpt_category_sms', 0, 18);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_twilio_gate_sid', '_adm_stg_cpt_option_sys_twilio_gate_sid', '', 'digit', '', '', '', 1),
-(@iCategoryId, 'sys_twilio_gate_token', '_adm_stg_cpt_option_sys_twilio_gate_token', '', 'digit', '', '', '', 2),
-(@iCategoryId, 'sys_twilio_gate_from_number', '_adm_stg_cpt_option_sys_twilio_gate_from_number', '', 'digit', '', '', '', 3);
+(@iCategoryId, 'sys_sms_default', '_adm_stg_cpt_option_sys_sms_default', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_options_sms_default";s:5:"class";s:13:"TemplServices";}', '', '', 1),
+
+(@iCategoryId, 'sys_sms_twilio_sid', '_adm_stg_cpt_option_sys_sms_twilio_sid', '', 'digit', '', '', '', 11),
+(@iCategoryId, 'sys_sms_twilio_token', '_adm_stg_cpt_option_sys_sms_twilio_token', '', 'digit', '', '', '', 12),
+(@iCategoryId, 'sys_sms_twilio_from_number', '_adm_stg_cpt_option_sys_sms_twilio_from_number', '', 'digit', '', '', '', 13);
 
 
 --
@@ -6299,7 +6319,7 @@ CREATE TABLE `sys_objects_logs` (
 
 INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `active`, `class_name`, `class_file`) VALUES
 ('sys_debug', 'system', 'Auto', '_sys_log_debug', 1, '', ''),
-('sys_twilio', 'system', 'Auto', '_sys_log_twilio', 1, '', ''),
+('sys_sms', 'system', 'Auto', '_sys_log_sms', 1, '', ''),
 ('sys_push', 'system', 'Auto', '_sys_log_push', 1, '', ''),
 ('sys_payments', 'system', 'Auto', '_sys_log_payments', 1, '', ''),
 ('sys_cron_jobs', 'system', 'Auto', '_sys_log_cron_jobs', 0, '', ''),

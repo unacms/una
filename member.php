@@ -51,9 +51,8 @@ if (isset($_POST['ID'])) { // login form is submitted
         $sId = trim($oForm->getCleanValue('ID'));
         $oAccount = BxDolAccount::getInstance($sId);
         $aAccountInfo = $oAccount->getInfo();
-        if (
-            (getParam('sys_account_activation_2fa_enable') == 'on' && getParam('sys_twilio_gate_sid') != '' && getParam('sys_twilio_gate_token') != '' && getParam('sys_twilio_gate_from_number') != '') 
-            && (getParam('sys_account_activation_2fa_lifetime') == 0 || (time() - $aAccountInfo['logged'] > getParam('sys_account_activation_2fa_lifetime')))){
+        if((getParam('sys_account_activation_2fa_enable') == 'on' && getParam('sys_sms_default') != '') 
+            && (getParam('sys_account_activation_2fa_lifetime') == 0 || (time() - $aAccountInfo['logged'] > getParam('sys_account_activation_2fa_lifetime')))) {
             $oSession = BxDolSession::getInstance();
             $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID, trim($oForm->getCleanValue('ID')));
             $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_IS_REMEMBER, $oForm->getRememberMe());

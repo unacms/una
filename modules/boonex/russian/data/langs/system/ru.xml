@@ -1506,7 +1506,7 @@
     <string name="_adm_stg_cpt_category_storage"><![CDATA[Дисковое пространство]]></string>
     <string name="_adm_stg_cpt_category_system"><![CDATA[Система]]></string>
     <string name="_adm_stg_cpt_category_templates"><![CDATA[Темы]]></string>
-    <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
+    <string name="_adm_stg_cpt_category_sms"><![CDATA[Отправка СМС]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Местоположение]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Социальные]]></string>
     <string name="_adm_stg_cpt_category_api_general"><![CDATA[Общие]]></string>
@@ -1659,9 +1659,10 @@
     <string name="_adm_stg_cpt_option_sys_push_queue_time"><![CDATA[Флаг выполнения Push очереди]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Количество сообщенией, отправляемое из Push очереди при каждом запуске]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из Push очереди одному и тому же получателю при каждом запуске]]></string>
-    <string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
-    <string name="_adm_stg_cpt_option_sys_twilio_gate_token"><![CDATA[Auth token]]></string>
-    <string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Номер для отправки SMS по умолчанию]]></string>
+    <string name="_adm_stg_cpt_option_sys_sms_default"><![CDATA[Поставщик]]></string>
+    <string name="_adm_stg_cpt_option_sys_sms_twilio_sid"><![CDATA[Twilio: SID учетной записи]]></string>
+    <string name="_adm_stg_cpt_option_sys_sms_twilio_token"><![CDATA[Twilio: Токен аутентификации]]></string>
+    <string name="_adm_stg_cpt_option_sys_sms_twilio_from_number"><![CDATA[Twilio: Номер для отправки SMS по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_nominatim_server"><![CDATA[Nominatim сервер (URL)]]></string>    
     <string name="_adm_stg_cpt_option_sys_nominatim_email"><![CDATA[Nominatim Email адрес (чтобы идентифицировать запросы)]]></string>
     <string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA/hCaptcha - приватный ключ]]></string>
@@ -3092,7 +3093,7 @@
     <string name="_sys_location_status_ok"><![CDATA[Адрес найден]]></string>
     <string name="_sys_location_status_fail"><![CDATA[Адрес не найден]]></string>
     <string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
-    <string name="_sys_log_twilio"><![CDATA[Система: Twilio]]></string>
+    <string name="_sys_log_sms"><![CDATA[Система: SMS]]></string>
     <string name="_sys_log_push"><![CDATA[Система: PUSH]]></string>
     <string name="_sys_log_payments"><![CDATA[Система: Платежи]]></string>
     <string name="_sys_log_cron_jobs"><![CDATA[System: Задания Cron]]></string>

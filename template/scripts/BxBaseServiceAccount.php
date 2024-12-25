@@ -459,12 +459,12 @@ class BxBaseServiceAccount extends BxDol
                      * @hook @ref hook-account-before_confirm_phone_send_sms
                      */
                     bx_alert('account', 'before_confirm_phone_send_sms', $oAccount->id(), bx_get_logged_profile_id(), [
-                        'phone_number' => $sPhoneNumber, 
-                        'sms_text' => $sActivationText, 
+                        'phone_number' => &$sPhoneNumber, 
+                        'sms_text' => &$sActivationText, 
                         'override_result' => &$mixedResult
                     ]);
 
-                    if ($mixedResult === null && !BxDolTwilio::getInstance()->sendSms($sPhoneNumber,  $sActivationText))
+                    if ($mixedResult === null && ($oSms = BxDolSms::getObjectInstance()) !== false && !$oSms->send($sPhoneNumber,  $sActivationText))
                         return MsgBox(_t("_sys_txt_confirm_phone_send_sms_error_occured"));
 
                     $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE, $sActivationCode);
@@ -652,6 +652,7 @@ class BxBaseServiceAccount extends BxDol
             $oForm->setValid(false);
         }
 
+        $sResultMsg = '';
         if ($oForm->isSubmittedAndValid()) {
             $sEmail = $oForm->getCleanValue('email');
             $sPhone = $oForm->getCleanValue('phone');
@@ -690,10 +691,14 @@ class BxBaseServiceAccount extends BxDol
                  *      - `override_result` - [mixed] by ref, can be object, can be overridden in hook processing
                  * @hook @ref hook-account-before_forgot_password_send_sms
                  */
-                bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => &$sPhone, 'sms_text' => &$sSmsText, 'override_result' => &$mixedOverrideResult));
+                bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, [
+                    'phone_number' => &$sPhone, 
+                    'sms_text' => &$sSmsText, 
+                    'override_result' => &$mixedOverrideResult
+                ]);
+
                 if ($mixedOverrideResult === null) {
-                    $oTwilio = BxDolTwilio::getInstance();
-                    if($oTwilio->sendSms($sPhone,  $sSmsText))
+                    if(($oSms = BxDolSms::getObjectInstance()) !== false && $oSms->send($sPhone,  $sSmsText))
                         $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_phone"));
                     else
                         $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_error_occured"));
