@@ -289,7 +289,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         $oAccount = BxDolAccount::getInstance($iAccountId);
         $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
         if (!$aAccountInfo)
-            return $sLKey = '_sys_txt_error_account_is_not_defined' && $bIsApi ? _t($sLKey) : MsgBox(_t($sLKey));
+            return ($sLKey = '_sys_txt_error_account_is_not_defined') && $bIsApi ? _t($sLKey) : MsgBox(_t($sLKey));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = BxDolAccount::isAllowedEdit ($this->_iProfileId, $aAccountInfo)))
