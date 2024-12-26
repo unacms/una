@@ -46,11 +46,9 @@ class BxReputationTemplate extends BxBaseModNotificationsTemplate
         else
             $aItems = $this->_oDb->getProfiles(['sample' => 'stats', 'limit' => $iLimit]);
 
-        $oProfile = BxDolProfile::getInstance();
-
         $aTmplVarsProfiles = [];
         foreach($aItems as $iProfileId => $iPoints)
-            if($iProfileId)
+            if(($iProfileId = abs($iProfileId)) && ($oProfile = BxDolProfile::getInstance($iProfileId)) !== false)
                 $aTmplVarsProfiles[] = [
                     'unit' => $oProfile->getUnit($iProfileId),
                     'sign' => $bGrowth ? ($iPoints > 0 ? '+' : '-') : '',

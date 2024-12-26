@@ -50,7 +50,7 @@ class BxReputationAlertsResponse extends BxBaseModNotificationsResponse
             return;
 
         $iOwnerId = $oAlert->iSender;
-        $iObjectOwnerId = $this->_getObjectOwnerId($oAlert->aExtras);
+        $iObjectOwnerId = abs($this->_getObjectOwnerId($oAlert->aExtras));
 
         $aEvent = [
             'owner_id' => 0,
