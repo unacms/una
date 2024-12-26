@@ -1350,8 +1350,13 @@
         @apply text-gray-800 dark:text-gray-200;
     }
 
+    .bx-std .bx-def-color-bg-block,
     .bx-std .bx-popup-color-bg {
-        @apply bg-white dark:bg-gray-900 shadow;
+        @apply bg-white dark:bg-gray-900;
+    }
+
+    .bx-std .bx-popup-color-bg {
+        @apply shadow;
     }
     .bx-std .bx-popup-border {
         @apply m-px ring-1 ring-gray-300 dark:ring-gray-700 rounded-2xl;
