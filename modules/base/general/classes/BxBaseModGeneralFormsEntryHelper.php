@@ -429,6 +429,60 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $this->redirectAfterEdit($aContentInfo);
     }
 
+    /**
+     * @return empty string on success or error message string on error
+     */
+    public function editData ($iContentId, $aValues, $sDisplay = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        // get content data and profile info
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        if (!$aContentInfo)
+            return _t('_sys_txt_error_entry_is_not_defined');
+
+        // get display form
+        $oForm = $this->getObjectFormEdit($sDisplay);
+        if (!$oForm)
+            return _t('_sys_txt_error_occured');
+
+        foreach ($aValues as $k => $v) {
+            if (!isset($oForm->aInputs[$k]))
+                return _t('_sys_txt_forms_unknown_field_err', $k);
+        }
+
+        $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+        $oForm->initChecker($aContentInfo, $aContentInfo);
+
+        // before edit hook
+        $aTrackTextFieldsChanges = null;
+        $this->onDataEditBefore ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
+
+        // update data in the DB
+        if (!$oForm->update ($aContentInfo[$CNF['FIELD_ID']], $aValues, $aTrackTextFieldsChanges)) {
+            return _t('_sys_txt_error_entry_update');
+        }
+
+        // after edit hook
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
+        if ($sResult)
+            return $sResult;
+
+        /*
+         * Process metas.
+         * Note. It's essential to process metas a the very end, 
+         * because all data related to an entry should be already
+         * processed and are ready to be passed to alert. 
+         */
+        $this->_oModule->processMetasEdit($iContentId, $oForm);
+
+        // Create alert about the completed action.
+        $this->_oModule->alertAfterEdit($aContentInfo);
+
+        return '';
+    }
+
     protected function redirectAfterEdit($aContentInfo, $sUrl = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

@@ -322,6 +322,16 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $this->_call('get_search_result_extended', $aParams, $iStart, $iPerPage, $bFilterMode);
     }
 
+    public function deleteContent ($iContentId)
+    {
+        return $this->_call('delete_entity', $iContentId);
+    }
+
+    public function updateContent ($iContentId, $aValues)
+    {
+        return $this->_call('edit_entity', $iContentId, $aValues);
+    }
+
     protected function _call($sMethod)
     {
         if(!BxDolRequest::serviceExists($this->_sSystem, $sMethod))
