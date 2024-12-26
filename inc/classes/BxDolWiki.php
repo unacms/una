@@ -831,24 +831,28 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
         foreach ($aLangs as $sKey => $sLang) {
             $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sKey, false, false);
-            $sMainLang = $aWikiVer && $aWikiVer['main_lang'] ? '★' : '';
+
+            $bMainLang = $aWikiVer && $aWikiVer['main_lang'];
+            $sMainLang = $bMainLang ? '★' : '';
+
             $sComment = !$aWikiVer ? _t('_sys_wiki_lang_missing') : bx_time_js($aWikiVer['added']);
-            if (!$aWikiVer || $iUpdatedMainLang > $aWikiVer['added'])
+            if(!$aWikiVer || $iUpdatedMainLang > $aWikiVer['added'])
                 $aLangs[$sKey] = _t('_sys_wiki_lang_mask_warn', $sLang, $sMainLang, $sComment);
             else
                 $aLangs[$sKey] = _t('_sys_wiki_lang_mask', $sLang, $sMainLang, $sComment);
 
+            if($bTranslateForm) {
+                if(!$bMainLang && !$sLangForTranslate)
+                    $sLangForTranslate = $sKey;
 
-            if ($bTranslateForm && !$aWikiVer['main_lang'] && !$sLangForTranslate) {
-                $sLangForTranslate = $sKey;
+                if($bMainLang) {
+                    $sMainLangLabel = $aLangs[$sKey];
+                    unset($aLangs[$sKey]);
+                    continue;
+                }
             }
-
-            if ($bTranslateForm && $aWikiVer['main_lang']) {
-                $sMainLangLabel = $aLangs[$sKey];
-                unset($aLangs[$sKey]);
-                continue;
-            }            
         }
+
         return $aLangs;
     }    
 
