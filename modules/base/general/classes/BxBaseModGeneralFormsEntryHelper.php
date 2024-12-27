@@ -452,6 +452,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         }
 
         $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+        $oForm->aParams['csrf']['disable'] = true;
         $oForm->initChecker($aContentInfo, $aContentInfo);
 
         // before edit hook

@@ -332,6 +332,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $this->_call('edit_entity', $iContentId, $aValues);
     }
 
+    public function addContent ($aValues)
+    {
+        return $this->_call('entity_add', bx_get_logged_profile_id(), $aValues);
+    }
+
     protected function _call($sMethod)
     {
         if(!BxDolRequest::serviceExists($this->_sSystem, $sMethod))

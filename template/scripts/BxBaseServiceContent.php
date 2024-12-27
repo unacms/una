@@ -19,13 +19,13 @@ class BxBaseServiceContent extends BxDol
      * @subsubsection bx_system_general-get_info Get content info
      * 
      * @code bx_srv('system', 'get_info', [$sContentObject, $iContentId], 'TemplServiceContent'); @endcode
-     * @code {{~system:get:TemplServiceContent["bx_posts", 123]~}} @endcode
+     * @code {{~system:get_info:TemplServiceContent["bx_posts", 123]~}} @endcode
      * 
      * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @param $bRawInfo if true - raw info return data directly from DB, if false - returns strutured array
-     * @return content info array on success or false of error
+     * @return content info array on success or empty array on error
      * 
      * @see BxBaseServiceContent::serviceGetInfo
      */
@@ -48,6 +48,34 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general-get_link Get content link
+     * 
+     * @code bx_srv('system', 'get_link', [$sContentObject, $iContentId], 'TemplServiceContent'); @endcode
+     * @code {{~system:get_link:TemplServiceContent["bx_posts", 123]~}} @endcode
+     * 
+     * Content
+     * @param $sContentObject content object name
+     * @param $iContentId content id
+     * @return string with link on success or empty string on error
+     * 
+     * @see BxBaseServiceContent::serviceGetLink
+     */
+    /** 
+     * @ref bx_system_general-get_link "Get content link"
+     */
+    public function serviceGetLink ($sContentObject, $iContentId)
+    {
+        $o = BxDolContentInfo::getObjectInstance($sContentObject);
+        if (!$o)
+            return false;
+
+        return $o->getContentLink($iContentId);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-delete Delete content
      * 
      * @code bx_srv('system', 'delete', [$sContentObject, $iContentId], 'TemplServiceContent'); @endcode
@@ -56,7 +84,7 @@ class BxBaseServiceContent extends BxDol
      * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
-     * @return empty string on success or error message on error
+     * @return array with code = 0 on success, or array with code != 0 and error message
      * 
      * @see BxBaseServiceContent::serviceDelete
      */
@@ -68,7 +96,10 @@ class BxBaseServiceContent extends BxDol
         $o = BxDolContentInfo::getObjectInstance($sContentObject);
         if (!$o)
             return false;
-        return $o->deleteContent($iContentId);
+        if ($sErrorMsg = $o->deleteContent($iContentId))
+            return ['code' => 500, 'error' => $sErrorMsg];
+        else
+            return ['code' => 0];
     }
 
     /**
@@ -84,7 +115,7 @@ class BxBaseServiceContent extends BxDol
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @param $aValues key value pairs to update
-     * @return empty string on success or error message on error
+     * @return array with code = 0 on success, or array with code != 0 and error message
      * 
      * @see BxBaseServiceContent::serviceUpdate
      */
@@ -96,7 +127,45 @@ class BxBaseServiceContent extends BxDol
         $o = BxDolContentInfo::getObjectInstance($sContentObject);
         if (!$o)
             return false;
-        return $o->updateContent($iContentId, $aValues);
+        if ($sErrorMsg = $o->updateContent($iContentId, $aValues))
+            return ['code' => 500, 'error' => $sErrorMsg];
+        else
+            return ['code' => 0];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general-add Add content
+     * 
+     * @code bx_srv('system', 'add', [$sContentObject, $aValues], 'TemplServiceContent'); @endcode
+     * @code {{~system:get:TemplServiceContent["bx_posts", ["title" => "new title", "text" => "new text"]]~}} @endcode
+     * 
+     * Content
+     * @param $sContentObject content object name
+     * @param $aValues key value pairs to add
+     * @return array with code = 0 on success, or array with code != 0 and error message
+     * 
+     * @see BxBaseServiceContent::serviceAdd
+     */
+    /** 
+     * @ref bx_system_general-add "Add content"
+     */
+    public function serviceAdd ($sContentObject, $aValues)
+    {
+        $o = BxDolContentInfo::getObjectInstance($sContentObject);
+        if (!$o)
+            return false;
+        $a = $o->addContent($aValues);
+        if (isset($a['code']) && !$a['code'] && isset($a['content'])) {
+            return $a;
+        } else {
+            $a['code'] = 500 + $a['code'];
+            $a['error'] = $a['message'];
+            $a['data'] = $a['errors'];
+            return $a;
+        }
     }
 }
 
