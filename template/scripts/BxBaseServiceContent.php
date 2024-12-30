@@ -34,6 +34,13 @@ class BxBaseServiceContent extends BxDol
      */
     public function serviceGetInfo ($sContentObject, $iContentId, $bRawInfo = false)
     {
+        if ('sys_account' == $sContentObject) {
+            $o = BxDolAccount::getInstance($iContentId);
+            if (!$o)
+                return false;
+            return $o->getInfo();
+        }
+
         $o = BxDolContentInfo::getObjectInstance($sContentObject);
         if (!$o)
             return false;
@@ -65,6 +72,10 @@ class BxBaseServiceContent extends BxDol
      */
     public function serviceGetLink ($sContentObject, $iContentId)
     {
+        if ('sys_account' == $sContentObject) {
+            return false;
+        }
+
         $o = BxDolContentInfo::getObjectInstance($sContentObject);
         if (!$o)
             return false;
@@ -84,6 +95,10 @@ class BxBaseServiceContent extends BxDol
      * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
+     * @param $aParams array of params: 
+     *          'with_content' - true|false: for sys_account, bx_persons, bx_organizations; 
+     *          'force' - true|false: for bx_persons, bx_organizations; 
+     *          'scheduled' - true|false: for sys_account;
      * @return array with code = 0 on success, or array with code != 0 and error message
      * 
      * @see BxBaseServiceContent::serviceDelete
@@ -91,8 +106,21 @@ class BxBaseServiceContent extends BxDol
     /** 
      * @ref bx_system_general-delete "Delete content"
      */
-    public function serviceDelete ($sContentObject, $iContentId)
+    public function serviceDelete ($sContentObject, $iContentId, $aParams = [])
     {
+        if ('sys_account' == $sContentObject) {
+            $o = BxDolAccount::getInstance($iContentId);
+            if (!$o)
+                return false;
+            return $o->delete(isset($aParams['with_content']) ? $aParams['with_content'] : true, isset($aParams['scheduled']) ? $aParams['scheduled'] : false);
+        }
+        if (in_array($sContentObject, ['bx_persons', 'bx_organizations'])) {
+            $o = BxDolProfile::getInstanceByContentAndType($iContentId, $sContentObject);
+            if (!$o)
+                return false;
+            return $o->delete(false, isset($aParams['with_content']) ? $aParams['with_content'] : true, isset($aParams['force']) ? $aParams['force'] : false);
+        }
+
         $o = BxDolContentInfo::getObjectInstance($sContentObject);
         if (!$o)
             return false;
@@ -124,6 +152,22 @@ class BxBaseServiceContent extends BxDol
      */
     public function serviceUpdate ($sContentObject, $iContentId, $aValues)
     {
+        if ('sys_account' == $sContentObject) {
+            $o = BxDolAccount::getInstance($iContentId);
+            if (!$o)
+                return false;
+            $oQuery = BxDolAccountQuery::getInstance();
+            foreach ($aValues as $k => $v) {
+                if (!$oQuery->isFieldExists('sys_accounts', $k))
+                    return ['code' => 500, 'error' => _t('_sys_txt_forms_unknown_field_err', $k)];
+            }
+            foreach ($aValues as $k => $v) {
+                if (!$oQuery->_updateField($o->id(), $k, $v))
+                    return ['code' => 500, 'error' => _t('_error occured')];
+            }
+            return true;
+        }
+
         $o = BxDolContentInfo::getObjectInstance($sContentObject);
         if (!$o)
             return false;
@@ -154,6 +198,24 @@ class BxBaseServiceContent extends BxDol
      */
     public function serviceAdd ($sContentObject, $aValues)
     {
+        if ('sys_account' == $sContentObject) {
+            $o = new BxTemplAccountForms();
+            $a = $o->createAccount ($aValues);
+            if (isset($a['account_id']) && isset($aValues['email_confirmed'])) {
+                $o = BxDolAccount::getInstance($a['account_id']);
+                if ($o) {
+                    $o->updateEmailConfirmed($aValues['email_confirmed'], isset($aValues['auto_send_confrmation_email']) ? $aValues['auto_send_confrmation_email'] : false);
+                }
+            }
+            if (isset($a['account_id']) && isset($aValues['phone_confirmed'])) {
+                $o = BxDolAccount::getInstance($a['account_id']);
+                if ($o) {
+                    $o->updatePhoneConfirmed($aValues['phone_confirmed']);
+                }
+            }
+            return $a;
+        }
+
         $o = BxDolContentInfo::getObjectInstance($sContentObject);
         if (!$o)
             return false;

@@ -187,6 +187,35 @@ class BxBaseAccountForms extends BxDolProfileForms
 
     }
 
+    public function createAccount ($aValues)
+    {
+        $oForm = $this->getObjectFormAdd ();
+        if (!$oForm)
+            return array('code' => 500, 'error' => _t('_sys_txt_error_occured'));
+
+        if (empty($aValues['email']))
+            return array('code' => 500, 'error' => _t('_Incorrect Email'));
+
+        if (BxDolAccount::getInstance($aValues['email']))
+            return array('code' => 500, 'error' => _t('_sys_form_account_input_email_uniq_error_loggedin'));
+
+        $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+        $oForm->aParams['csrf']['disable'] = true;
+ 
+        $oForm->initChecker(array(), $aValues);
+
+        $iAccountId = $oForm->insert ([]);
+        if (!$iAccountId)
+            return array('code' => 500, 'error' => _t('_sys_txt_error_account_creation'));
+
+        $iProfileId = $this->onAccountCreated($iAccountId, $oForm->isSetPendingApproval());
+
+        return [
+            'account_id' => $iAccountId,
+            'profile_id' => $iProfileId,
+        ];
+    }
+
     public function onAccountCreated ($iAccountId, $isSetPendingApproval, $iAction = BX_PROFILE_ACTION_MANUAL, $bNeedToLogin = true)
     {
         bx_alert('account', 'add', $iAccountId);
