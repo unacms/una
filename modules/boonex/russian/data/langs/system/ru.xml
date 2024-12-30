@@ -3896,6 +3896,7 @@
     <string name="_sys_txt_error_profile_is_not_defined"><![CDATA[Профиль не определён]]></string>
     <string name="_sys_txt_error_profile_update"><![CDATA[Не удалось обновить профиль]]></string>
     <string name="_sys_txt_err_sound_not_transcoded_yet"><![CDATA[Аудиофайл в обработке]]></string>
+    <string name="_sys_txt_forms_unknown_field_err"><![CDATA[Неизвестное поле '{0}']]></string>
     <string name="_sys_txt_forgot_pasword"><![CDATA[Забыли пароль?]]></string>
     <string name="_sys_txt_forgot_pasword_check_email"><![CDATA[Email отослан, пожалуйста, следуйте инструкциям в нём.]]></string>
     <string name="_sys_txt_forgot_pasword_check_phone"><![CDATA[SMS отослано, пожалуйста, следуйте инструкциям в нём.]]></string>

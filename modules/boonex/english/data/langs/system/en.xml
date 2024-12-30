@@ -3963,6 +3963,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_error_profile_is_not_defined"><![CDATA[Profile is not defined]]></string>
     <string name="_sys_txt_error_profile_update"><![CDATA[Profile update failed]]></string>
     <string name="_sys_txt_err_sound_not_transcoded_yet"><![CDATA[Sound file isn't transcoded yet]]></string>
+    <string name="_sys_txt_forms_unknown_field_err"><![CDATA['{0}' field is unknown]]></string>
     <string name="_sys_txt_field_created"><![CDATA[Created:]]></string>
     <string name="_sys_txt_field_updated"><![CDATA[Updated:]]></string>
     <string name="_sys_txt_forgot_pasword"><![CDATA[Forgot password?]]></string>

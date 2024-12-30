@@ -1901,6 +1901,18 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
+     * Edit content entry
+     * @param $iContentId content id 
+     * @param $aValues key value pairs to update
+     * @return error message or empty string on success
+     */
+    public function serviceEditEntity ($iContentId, $aValues)
+    {
+        $oFormsHelper = $this->getFormsHelper();
+        return $oFormsHelper->editData($iContentId, $aValues);
+    }
+
+    /**
      * @page service Service Calls
      * @section bx_base_general Base General
      * @subsection bx_base_general-menu Menu
