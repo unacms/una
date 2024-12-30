@@ -2576,8 +2576,8 @@ function bx_api_check_access()
 
     $aHeaders = function_exists('getallheaders') ? getallheaders() : false;
     if ($aHeaders) {
-        $sOriginHeader = isset($aHeaders['Origin']) ? $aHeaders['Origin'] : false;
-        $sAuthHeader = isset($aHeaders['Authorization']) ? $aHeaders['Authorization'] : false;
+        $sOriginHeader = isset($aHeaders['Origin']) ? $aHeaders['Origin'] : (isset($aHeaders['origin']) ? $aHeaders['origin'] : false);
+        $sAuthHeader = isset($aHeaders['Authorization']) ? $aHeaders['Authorization'] : (isset($aHeaders['authorization']) ? $aHeaders['authorization'] : false);
     }
     else {
         $sOriginHeader = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : false;
