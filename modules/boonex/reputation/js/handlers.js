@@ -8,12 +8,12 @@
  * @{
  */
 
-function BxReputationManage(oOptions)
+function BxReputationHandlers(oOptions)
 {
     this._iSearchTimeoutId = false;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjNameGrid = oOptions.sObjNameGrid;
-    this._sObjName = oOptions.sObjName == undefined ? 'oBxReputationManage' : oOptions.sObjName;
+    this._sObjName = oOptions.sObjName == undefined ? 'oBxReputationHandlers' : oOptions.sObjName;
 
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
@@ -23,7 +23,7 @@ function BxReputationManage(oOptions)
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxReputationManage.prototype.onChangeFilter = function(oFilter) {
+BxReputationHandlers.prototype.onChangeFilter = function(oFilter) {
     var $this = this;
     var oFilter1 = $('#bx-grid-filter1-' + this._sObjNameGrid);
     var sValueFilter1 = oFilter1.length > 0 ? oFilter1.val() : '';

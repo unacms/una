@@ -1,7 +1,8 @@
 SET @sName = 'bx_reputation';
 
 
-DROP TABLE IF EXISTS `bx_reputation_handlers`, `bx_reputation_events`, `bx_reputation_profiles`;
+-- TABLES
+DROP TABLE IF EXISTS `bx_reputation_handlers`, `bx_reputation_events`, `bx_reputation_levels`, `bx_reputation_profiles`, `bx_reputation_profiles_levels`;
 
 
 -- FORMS

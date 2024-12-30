@@ -12,7 +12,8 @@ VALUES (@iTypeId, @sName, '_bx_reputation', 10);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_reputation_leaderboard_limit', '10', @iCategId, '_bx_reputation_option_leaderboard_limit', 'digit', '', '', '', 1);
+('bx_reputation_enable_multilevel', '', @iCategId, '_bx_reputation_option_enable_multilevel', 'checkbox', '', '', '', 1),
+('bx_reputation_leaderboard_limit', '10', @iCategId, '_bx_reputation_option_leaderboard_limit', 'digit', '', '', '', 11);
 
 
 -- PAGE: leaderboard
@@ -45,21 +46,40 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- GRIDS: administration tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_reputation_manage', 'Sql', 'SELECT * FROM `bx_reputation_handlers` WHERE 1 ', 'bx_reputation_handlers', 'id', '', 'active', '', 20, NULL, 'start', '', 'type,alert_unit,alert_action', '', 'like', 'reports', '', 192, 'BxReputationGridManage', 'modules/boonex/reputation/classes/BxReputationGridManage.php');
+('bx_reputation_handlers', 'Sql', 'SELECT * FROM `bx_reputation_handlers` WHERE 1 ', 'bx_reputation_handlers', 'id', '', 'active', '', 20, NULL, 'start', '', 'type,alert_unit,alert_action', '', 'like', 'reports', '', 192, 'BxReputationGridHandlers', 'modules/boonex/reputation/classes/BxReputationGridHandlers.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_reputation_manage', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_reputation_manage', 'switcher', '_bx_reputation_grid_column_title_active', '8%', 0, 0, '', 2),
-('bx_reputation_manage', 'alert_unit', '_bx_reputation_grid_column_title_alert_unit', '25%', 0, 0, '', 3),
-('bx_reputation_manage', 'alert_action', '_bx_reputation_grid_column_title_alert_action', '21%', 0, 0, '', 4),
-('bx_reputation_manage', 'points_active', '_bx_reputation_grid_column_title_points_active', '12%', 0, 0, '', 5),
-('bx_reputation_manage', 'points_passive', '_bx_reputation_grid_column_title_points_passive', '12%', 0, 0, '', 6),
-('bx_reputation_manage', 'actions', '', '20%', 0, 0, '', 7);
+('bx_reputation_handlers', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
+('bx_reputation_handlers', 'switcher', '_bx_reputation_grid_column_title_hdr_active', '8%', 0, 0, '', 2),
+('bx_reputation_handlers', 'alert_unit', '_bx_reputation_grid_column_title_hdr_alert_unit', '25%', 0, 0, '', 3),
+('bx_reputation_handlers', 'alert_action', '_bx_reputation_grid_column_title_hdr_alert_action', '21%', 0, 0, '', 4),
+('bx_reputation_handlers', 'points_active', '_bx_reputation_grid_column_title_hdr_points_active', '12%', 0, 0, '', 5),
+('bx_reputation_handlers', 'points_passive', '_bx_reputation_grid_column_title_hdr_points_passive', '12%', 0, 0, '', 6),
+('bx_reputation_handlers', 'actions', '', '20%', 0, 0, '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_reputation_manage', 'bulk', 'activate', '_bx_reputation_grid_action_title_activate', '', 0, 0, 1),
-('bx_reputation_manage', 'bulk', 'deactivate', '_bx_reputation_grid_action_title_deactivate', '', 0, 0, 2),
-('bx_reputation_manage', 'single', 'edit', '_bx_reputation_grid_action_title_edit', 'pencil-alt', 1, 0, 1);
+('bx_reputation_handlers', 'bulk', 'activate', '_bx_reputation_grid_action_title_hdr_activate', '', 0, 0, 1),
+('bx_reputation_handlers', 'bulk', 'deactivate', '_bx_reputation_grid_action_title_hdr_deactivate', '', 0, 0, 2),
+('bx_reputation_handlers', 'single', 'edit', '_bx_reputation_grid_action_title_hdr_edit', 'pencil-alt', 1, 0, 1);
+
+-- GRIDS: levels
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
+('bx_reputation_levels', 'Sql', 'SELECT * FROM `bx_reputation_levels` WHERE 1 ', 'bx_reputation_levels', 'id', 'order', 'active', '', 20, NULL, 'start', '', 'name', 'title', 'like', '', '', 'BxReputationGridLevels', 'modules/boonex/reputation/classes/BxReputationGridLevels.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_reputation_levels', 'order', '', '1%', 0, 0, '', 1),
+('bx_reputation_levels', 'switcher', '', '9%', 0, 0, '', 2),
+('bx_reputation_levels', 'icon', '_bx_reputation_grid_column_title_lvl_icon', '5%', 0, 0, '', 3),
+('bx_reputation_levels', 'title', '_bx_reputation_grid_column_title_lvl_title', '35%', 1, 16, '', 4),
+('bx_reputation_levels', 'points_in', '_bx_reputation_grid_column_title_lvl_points_in', '10%', 0, 0, '', 5),
+('bx_reputation_levels', 'points_out', '_bx_reputation_grid_column_title_lvl_points_out', '10%', 0, 0, '', 6),
+('bx_reputation_levels', 'date', '_bx_reputation_grid_column_title_lvl_date', '10%', 0, 0, '', 7),
+('bx_reputation_levels', 'actions', '', '20%', 0, 0, '', 8);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_reputation_levels', 'independent', 'add', '_bx_reputation_grid_action_title_lvl_add', '', 0, 0, 1),
+('bx_reputation_levels', 'single', 'edit', '_bx_reputation_grid_action_title_lvl_edit', 'pencil-alt', 1, 0, 1),
+('bx_reputation_levels', 'single', 'delete', '_bx_reputation_grid_action_title_lvl_delete', 'remove', 1, 1, 2);
 
 
 -- ALERTS

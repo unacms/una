@@ -2,4 +2,17 @@
     <div class="bx-reputation-s-profile-icon">__profile_image__</div>
     <div class="bx-reputation-s-profile-name mt-2 text-xl">__profile_name__</div>
     <div class="bx-reputation-s-points mt-2"><span class="mr-2 text-2xl font-bold">__points__</span><span><bx_text:_bx_reputation_txt_points /></span></div>
+    <div class="bx-reputation-s-levels flex mt-2 space-x-4">
+        <bx_repeat:levels>
+            <div class="bx-reputation-s-level flex items-center">
+                <bx_if:icon>
+                    <div class="bx-reputation-sl-icon mr-1">
+                        <bx_if:icon_font><i class="sys-icon __icon__"></i></bx_if:icon_font>
+                        <bx_if:icon_html>__icon__</bx_if:icon_html>
+                    </div>
+                </bx_if:icon>
+                <div class="bx-reputation-sl-title">__level_title__</div>
+            </div>
+        </bx_repeat:levels>
+    </div>
 </div>

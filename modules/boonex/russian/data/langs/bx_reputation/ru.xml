@@ -2,8 +2,11 @@
 <resources name="ru" flag="ru" title="Russian">
     <string name="_bx_reputation"><![CDATA[Репутация]]></string>
 
+    <!-- Options -->
+    <string name="_bx_reputation_option_enable_multilevel"><![CDATA[Включить возможность иметь несколько уровней одновременно]]></string>
     <string name="_bx_reputation_option_leaderboard_limit"><![CDATA[Количество элементов в таблице лидеров]]></string>
 
+    <!-- Forms -->
     <string name="_bx_reputation_form_handler"><![CDATA[Обработчик]]></string>
     <string name="_bx_reputation_form_handler_display_edit"><![CDATA[Редактировать обработчик]]></string>
     <string name="_bx_reputation_form_handler_input_sys_points_active"><![CDATA[Баллы (активные)]]></string>
@@ -15,10 +18,34 @@
     <string name="_bx_reputation_form_handler_input_sys_controls"><![CDATA[Управление]]></string>
     <string name="_bx_reputation_form_handler_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_reputation_form_handler_input_do_submit"><![CDATA[Выполнить]]></string>
-    <string name="_bx_reputation_form_handler_input_do_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_reputation_form_handler_input_sys_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_reputation_form_handler_input_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_reputation_popup_title_handler_edit"><![CDATA[Редактировать обработчик]]></string>
 
+    <string name="_bx_reputation_form_level"><![CDATA[Уровень]]></string>
+    <string name="_bx_reputation_form_level_display_add"><![CDATA[Добавить уровень]]></string>
+    <string name="_bx_reputation_form_level_display_edit"><![CDATA[Редактировать уровень]]></string>
+    <string name="_bx_reputation_form_level_input_sys_name"><![CDATA[Имя]]></string>
+    <string name="_bx_reputation_form_level_input_name"><![CDATA[Имя]]></string>
+    <string name="_bx_reputation_form_level_input_sys_title"><![CDATA[Название]]></string>
+    <string name="_bx_reputation_form_level_input_title"><![CDATA[Название]]></string>
+    <string name="_bx_reputation_form_level_input_sys_icon"><![CDATA[Изображение]]></string>
+    <string name="_bx_reputation_form_level_input_icon"><![CDATA[Изображение]]></string>
+    <string name="_bx_reputation_form_level_input_icon_info"><![CDATA[Здесь можно использовать значок шрифта, код SVG или эмодзи.]]></string>
+    <string name="_bx_reputation_form_level_input_sys_points_in"><![CDATA[Баллы: Вкл]]></string>
+    <string name="_bx_reputation_form_level_input_points_in"><![CDATA[Баллы: Вкл]]></string>
+    <string name="_bx_reputation_form_level_input_points_in_info"><![CDATA[Количество баллов для получения этого уровня.]]></string>
+    <string name="_bx_reputation_form_level_input_sys_points_out"><![CDATA[Баллы: Выкл]]></string>
+    <string name="_bx_reputation_form_level_input_points_out"><![CDATA[Баллы: Выкл]]></string>
+    <string name="_bx_reputation_form_level_input_points_out_info"><![CDATA[Количество баллов для выхода с этого уровня. Оставьте пустым, если уровень пожизненный, что может быть полезно в многоуровневом режиме.]]></string>
+    <string name="_bx_reputation_form_level_input_sys_controls"><![CDATA[Управление]]></string>
+    <string name="_bx_reputation_form_level_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_reputation_form_level_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_reputation_form_level_input_sys_do_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_reputation_form_level_input_do_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_reputation_form_input_err"><![CDATA[Поле обязательно. Пожалуйста, заполните его.]]></string>
+
+    <!-- Pages -->
     <string name="_bx_reputation_page_title_sys_leaderboard"><![CDATA[Таблица лидеров]]></string>
     <string name="_bx_reputation_page_title_leaderboard"><![CDATA[Таблица лидеров]]></string>
     <string name="_bx_reputation_page_block_title_leaderboard_week"><![CDATA[Таблица лидеров (7 дней)]]></string>
@@ -27,36 +54,51 @@
     <string name="_bx_reputation_page_block_title_system_summary"><![CDATA[Сводка]]></string>
     <string name="_bx_reputation_page_block_title_summary"><![CDATA[Сводка]]></string>
 
+    <!-- Menus -->
     <string name="_bx_reputation_menu_item_title_system_leaderboard"><![CDATA[Таблица лидеров]]></string>
     <string name="_bx_reputation_menu_item_title_leaderboard"><![CDATA[Таблица лидеров]]></string>
-    <string name="_bx_reviews_menu_item_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_reviews_menu_item_title_handlers"><![CDATA[Обработчики]]></string>
+    <string name="_bx_reviews_menu_item_title_levels"><![CDATA[Уровни]]></string>
 
-    <string name="_bx_reputation_grid_column_title_active"><![CDATA[Активные]]></string>
-    <string name="_bx_reputation_grid_column_title_alert_unit"><![CDATA[Раздел]]></string>
-    <string name="_bx_reputation_grid_column_title_alert_action"><![CDATA[Действие]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_added"><![CDATA[Добавить]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_post_common"><![CDATA[Написать пост]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_repost"><![CDATA[Сдулать репост]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_deleted"><![CDATA[Удалить]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_delete"><![CDATA[Удалить пост]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_delete_repost"><![CDATA[Удалить репост]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_commentPost"><![CDATA[Оставить комментарий]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_commentRemoved"><![CDATA[Удалить комментарий]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_doVote"><![CDATA[Проголосовать]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_undoVote"><![CDATA[Отменить голосование]]></string>
-    <string name="_bx_reputation_grid_column_value_aa_doVoteUp"><![CDATA[Проголосовать 'за']]></string>
-    <string name="_bx_reputation_grid_column_value_aa_undoVoteUp"><![CDATA[Отменить голосование 'за']]></string>
-    <string name="_bx_reputation_grid_column_value_aa_doVoteDown"><![CDATA[Проголосовать 'против']]></string>
-    <string name="_bx_reputation_grid_column_value_aa_undoVoteDown"><![CDATA[Отменить голосование 'против']]></string>
-    <string name="_bx_reputation_grid_column_title_points_active"><![CDATA[Баллы (активные)]]></string>
-    <string name="_bx_reputation_grid_column_title_points_passive"><![CDATA[Баллы (пассивные)]]></string>
-    <string name="_bx_reputation_grid_action_title_activate"><![CDATA[Активировать]]></string>
-    <string name="_bx_reputation_grid_action_title_deactivate"><![CDATA[Деактивировать]]></string>
-    <string name="_bx_reputation_grid_action_title_edit"><![CDATA[Редактировать]]></string>
+    <!-- Grids -->
+    <string name="_bx_reputation_grid_column_title_hdr_active"><![CDATA[Активные]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_alert_unit"><![CDATA[Раздел]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_alert_action"><![CDATA[Действие]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_added"><![CDATA[Добавить]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_post_common"><![CDATA[Написать пост]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_repost"><![CDATA[Сдулать репост]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_deleted"><![CDATA[Удалить]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_delete"><![CDATA[Удалить пост]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_delete_repost"><![CDATA[Удалить репост]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_commentPost"><![CDATA[Оставить комментарий]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_commentRemoved"><![CDATA[Удалить комментарий]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_doVote"><![CDATA[Проголосовать]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_undoVote"><![CDATA[Отменить голосование]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_doVoteUp"><![CDATA[Проголосовать 'за']]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_undoVoteUp"><![CDATA[Отменить голосование 'за']]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_doVoteDown"><![CDATA[Проголосовать 'против']]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_undoVoteDown"><![CDATA[Отменить голосование 'против']]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_points_active"><![CDATA[Баллы (активные)]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_points_passive"><![CDATA[Баллы (пассивные)]]></string>
+    <string name="_bx_reputation_grid_action_title_hdr_activate"><![CDATA[Активировать]]></string>
+    <string name="_bx_reputation_grid_action_title_hdr_deactivate"><![CDATA[Деактивировать]]></string>
+    <string name="_bx_reputation_grid_action_title_hdr_edit"><![CDATA[Редактировать]]></string>
+    <string name="_bx_reputation_grid_filter_item_title_hdr_select_one_filter1"><![CDATA[Все разделы]]></string>
+
+    <string name="_bx_reputation_grid_column_title_lvl_icon"><![CDATA[Иконка]]></string>
+    <string name="_bx_reputation_grid_column_title_lvl_title"><![CDATA[Название]]></string>
+    <string name="_bx_reputation_grid_column_title_lvl_points_in"><![CDATA[Баллы: Вкл]]></string>
+    <string name="_bx_reputation_grid_column_title_lvl_points_out"><![CDATA[Баллы: Выкл]]></string>
+    <string name="_bx_reputation_grid_column_title_lvl_date"><![CDATA[Дата]]></string>
+    <string name="_bx_reputation_grid_action_title_lvl_add"><![CDATA[Добавить уровень]]></string>
+    <string name="_bx_reputation_grid_action_title_lvl_edit"><![CDATA[Редактировать уровень]]></string>
+    <string name="_bx_reputation_grid_action_title_lvl_delete"><![CDATA[Удалить уровень]]></string>
+
     <string name="_bx_reputation_grid_action_err_perform"><![CDATA[Невозможно выполнить действие для выбранного(ых) элементов.]]></string>
-    <string name="_bx_reputation_grid_filter_item_title_select_one_filter1"><![CDATA[Все разделы]]></string>
 
+    <!-- Errors, Warnings, Messages -->
     <string name="_bx_reputation_err_cannot_perform"><![CDATA[Произошла ошибка. Пожалуйста, сообщите.]]></string>
 
+    <!-- Other -->
     <string name="_bx_reputation_txt_points"><![CDATA[баллов]]></string>
 </resources>

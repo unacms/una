@@ -30,10 +30,34 @@ CREATE TABLE IF NOT EXISTS `bx_reputation_events` (
   KEY `object_id` (`object_id`)
 );
 
+-- TABLE: levels
+CREATE TABLE IF NOT EXISTS `bx_reputation_levels` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(32) NOT NULL default '',
+  `title` varchar(64) NOT NULL default '',
+  `icon` text NOT NULL,
+  `points_in` int(11) NOT NULL DEFAULT '0',
+  `points_out` int(11) NOT NULL DEFAULT '0',
+  `date` int(11) NOT NULL default '0',
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `order` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+);
+
 -- TABLE: profiles
 CREATE TABLE IF NOT EXISTS `bx_reputation_profiles` (
   `id` int(11) NOT NULL DEFAULT '0',
   `points` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+);
+
+-- TABLE: profiles' levels
+CREATE TABLE IF NOT EXISTS `bx_reputation_profiles_levels` (
+  `id` int(11) NOT NULL auto_increment,
+  `profile_id` int(11) NOT NULL DEFAULT '0',
+  `level_id` int(11) NOT NULL DEFAULT '0',
+  `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`)
 );
 
@@ -50,7 +74,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_reputation_handler', @sName, 'points_passive', '', '', 0, 'text', '_bx_reputation_form_handler_input_sys_points_passive', '_bx_reputation_form_handler_input_points_passive', '_bx_reputation_form_handler_input_points_passive_info', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_reputation_handler', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '_bx_reputation_form_handler_input_sys_controls', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_reputation_handler', @sName, 'do_submit', '_bx_reputation_form_handler_input_do_submit', '', 0, 'submit', '_bx_reputation_form_handler_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_reputation_handler', @sName, 'do_cancel', '_bx_reputation_form_handler_input_do_cancel', '', 0, 'button', '_bx_reputation_form_handler_input_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
+('bx_reputation_handler', @sName, 'do_cancel', '_bx_reputation_form_handler_input_do_cancel', '', 0, 'button', '_bx_reputation_form_handler_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_reputation_handler_edit', 'points_active', 2147483647, 1, 1),
@@ -58,6 +82,42 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_reputation_handler_edit', 'controls', 2147483647, 1, 3),
 ('bx_reputation_handler_edit', 'do_submit', 2147483647, 1, 4),
 ('bx_reputation_handler_edit', 'do_cancel', 2147483647, 1, 5);
+
+-- FORMS: level
+INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_reputation_level', @sName, '_bx_reputation_form_level', '', '', 'do_submit', 'bx_reputation_levels', 'id', '', '', '', 0, 1, 'BxReputationFormLevel', 'modules/boonex/reputation/classes/BxReputationFormLevel.php');
+
+INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
+('bx_reputation_level_add', @sName, 'bx_reputation_level', '_bx_reputation_form_level_display_add', 0);
+('bx_reputation_level_edit', @sName, 'bx_reputation_level', '_bx_reputation_form_level_display_edit', 0);
+
+INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+('bx_reputation_level', @sName, 'name', '', '', 0, 'text', '_bx_reputation_form_level_input_sys_name', '_bx_reputation_form_level_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_reputation_form_input_err', 'Xss', '', 1, 0),
+('bx_reputation_level', @sName, 'title', '', '', 0, 'text_translatable', '_bx_reputation_form_level_input_sys_title', '_bx_reputation_form_level_input_title', '', 1, 0, 0, '', '', '', 'AvailTranslatable', 'a:1:{i:0;s:5:"title";}', '_bx_reputation_form_input_err', 'Xss', '', 1, 0),
+('bx_reputation_level', @sName, 'icon', '', '', 0, 'textarea', '_bx_reputation_form_level_input_sys_icon', '_bx_reputation_form_level_input_icon', '_bx_reputation_form_level_input_icon_info', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_reputation_level', @sName, 'points_in', '', '', 0, 'text', '_bx_reputation_form_level_input_sys_points_in', '_bx_reputation_form_level_input_points_in', '_bx_reputation_form_level_input_points_in_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_reputation_form_input_err', 'Int', '', 1, 0),
+('bx_reputation_level', @sName, 'points_out', '', '', 0, 'text', '_bx_reputation_form_level_input_sys_points_out', '_bx_reputation_form_level_input_points_out', '_bx_reputation_form_level_input_points_out_info', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_reputation_level', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '_bx_reputation_form_level_input_sys_controls', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_reputation_level', @sName, 'do_submit', '_bx_reputation_form_level_input_do_submit', '', 0, 'submit', '_bx_reputation_form_level_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_reputation_level', @sName, 'do_cancel', '_bx_reputation_form_level_input_do_cancel', '', 0, 'button', '_bx_reputation_form_level_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
+
+INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('bx_reputation_level_add', 'name', 2147483647, 1, 1),
+('bx_reputation_level_add', 'title', 2147483647, 1, 2),
+('bx_reputation_level_add', 'icon', 2147483647, 1, 3),
+('bx_reputation_level_add', 'points_in', 2147483647, 1, 4),
+('bx_reputation_level_add', 'points_out', 2147483647, 1, 5),
+('bx_reputation_level_add', 'controls', 2147483647, 1, 6),
+('bx_reputation_level_add', 'do_submit', 2147483647, 1, 7),
+('bx_reputation_level_add', 'do_cancel', 2147483647, 1, 8),
+
+('bx_reputation_level_edit', 'title', 2147483647, 1, 1),
+('bx_reputation_level_edit', 'icon', 2147483647, 1, 2),
+('bx_reputation_level_edit', 'points_in', 2147483647, 1, 3),
+('bx_reputation_level_edit', 'points_out', 2147483647, 1, 4),
+('bx_reputation_level_edit', 'controls', 2147483647, 1, 5),
+('bx_reputation_level_edit', 'do_submit', 2147483647, 1, 6),
+('bx_reputation_level_edit', 'do_cancel', 2147483647, 1, 7);
 
 
 -- STUDIO PAGE & WIDGET

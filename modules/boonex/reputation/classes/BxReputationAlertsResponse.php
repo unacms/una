@@ -68,7 +68,7 @@ class BxReputationAlertsResponse extends BxBaseModNotificationsResponse
                 'points' => $iPoints
             ]));
 
-            $this->_oModule->_oDb->insertProfile($iOwnerId, $iPoints);
+            $this->_oModule->assignPoints($iOwnerId, $iPoints);
         }
 
         if(($iPoints = (int)$aHandler['points_passive']) != 0 && $iOwnerId != $iObjectOwnerId) {
@@ -77,7 +77,7 @@ class BxReputationAlertsResponse extends BxBaseModNotificationsResponse
                 'points' => $iPoints
             ]));
 
-            $this->_oModule->_oDb->insertProfile($iObjectOwnerId, $iPoints);
+            $this->_oModule->assignPoints($iObjectOwnerId, $iPoints);
         }
     }
 

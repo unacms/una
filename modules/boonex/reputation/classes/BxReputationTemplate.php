@@ -24,11 +24,46 @@ class BxReputationTemplate extends BxBaseModNotificationsTemplate
 
         $aProfileInfo = $this->_oDb->getProfiles(['sample' => 'id', 'id' => $iProfileId]);
         $bProfileInfo = !empty($aProfileInfo) && is_array($aProfileInfo);
+        $aProfileLevels = $this->_oDb->getLevels([
+            'sample' => 'profile_id', 
+            'profile_id' => $iProfileId
+        ]);
+
+        $oFunctions = BxTemplFunctions::getInstance();
+
+        $aTmplVarsLevels = [];
+        foreach($aProfileLevels as $aProfileLevel) {
+            list($sIconFont, $sIconUrl, $sIconA, $sIconHtml) = $oFunctions->getIcon($aProfileLevel['icon']);
+            $bIconFont = !empty($sIconFont);
+            $bIconHtml = !empty($sIconHtml);
+
+            $aTmplVarsLevels[] = [
+                'bx_if:icon' => [
+                    'condition' => $bIconFont || $bIconHtml,
+                    'content' => [
+                        'bx_if:icon_font' => [
+                            'condition' => $bIconFont,
+                            'content' => [
+                                'icon' => $sIconFont
+                            ]
+                        ],
+                        'bx_if:icon_html' => [
+                            'condition' => $bIconHtml,
+                            'content' => [
+                                'icon' => $sIconHtml
+                            ]
+                        ],
+                    ]
+                ],
+                'level_title' => _t($aProfileLevel['title'])
+            ];
+        }
 
         return $this->parseHtmlByName('block_summary.html', [
             'profile_image' => $oProfile->getUnit($iProfileId, ['template' => ['name' => 'unit_wo_info', 'size' => 'ava']]),
             'profile_name' => $oProfile->getDisplayName(),
             'points' => $bProfileInfo ? $aProfileInfo['points'] : 0,
+            'bx_repeat:levels' => $aTmplVarsLevels
         ]);
     }
 

@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxReputationGridManage extends BxTemplGrid
+class BxReputationGridHandlers extends BxTemplGrid
 {
     protected $_sModule;
     protected $_oModule;
@@ -50,13 +50,14 @@ class BxReputationGridManage extends BxTemplGrid
             $this->_aQueryAppend['filter1'] = $this->_sFilter1Value;
         }
     }
+
     public function getCode($isDisplayHeader = true)
     {
         $mixedResult = parent::getCode($isDisplayHeader);
         if(!$mixedResult)
             return $mixedResult;
 
-        return $this->_oModule->_oTemplate->getJsCode('manage', ['sObjNameGrid' => $this->_sObject]) . $mixedResult;
+        return $this->_oModule->_oTemplate->getJsCode('handlers', ['sObjNameGrid' => $this->_sObject]) . $mixedResult;
     }   
 
     public function performActionEdit()
@@ -128,7 +129,7 @@ class BxReputationGridManage extends BxTemplGrid
     
     protected function _getCellAlertAction($mixedValue, $sKey, $aField, $aRow)
     {
-        return self::_getCellDefault(_t('_bx_reputation_grid_column_value_aa_' . $mixedValue), $sKey, $aField, $aRow);
+        return self::_getCellDefault(_t('_bx_reputation_grid_column_value_hdr_aa_' . $mixedValue), $sKey, $aField, $aRow);
     }
 
     protected function _getFilterControls()
@@ -146,7 +147,7 @@ class BxReputationGridManage extends BxTemplGrid
             return '';
 
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $sJsObject = $this->_oModule->_oConfig->getJsObject('manage');
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('handlers');
 
         $aInputValues = [];
         if($bAddSelectOne)
@@ -172,7 +173,7 @@ class BxReputationGridManage extends BxTemplGrid
 
     protected function _getSearchInput()
     {
-        $sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('handlers');
 
         $aInputSearch = [
             'type' => 'text',
