@@ -229,6 +229,70 @@ class BxBaseServiceContent extends BxDol
             return $a;
         }
     }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general-upload_from_url Upload file from URL
+     * 
+     * @code bx_srv('system', 'upload_from_url', [$sContentObject, $sFileUrl], 'TemplServiceContent'); @endcode
+     * @code {{~system:upload_from_url:TemplServiceContent["bx_persons", ['https://example.com/a.jpg']]~}} @endcode
+     * 
+     * Content
+     * @param $sStorageObject storage object name
+     * @param $sFileUrl URL to file to store in the storage
+     * @param $aParams array of params, possible array keys:
+     *          'private' - true|false: set file as private or not, if omitted file is uploaded as public
+     *          'profile_id' - int: set owner of file to this user, of omitted, then currently logged in user is becoming file owner
+     *          'content_id' - int: associate file with this content
+     * @return uploaded file Id on success, or array with code != 0 and error message
+     * 
+     * @see BxBaseServiceContent::serviceUploadFromUrl
+     */
+    /** 
+     * @ref bx_system_general-upload_from_url "Upload file from URL"
+     */
+    public function serviceUploadFromUrl ($sStorageObject, $sFileUrl, $aParams = [])
+    {
+        $oStorage = BxDolStorage::getObjectInstance($sStorageObject);
+        if (!$oStorage)
+            return ['code' => 404, 'error' => _t('_sys_txt_not_found')];
+
+        $iFileId = $oStorage->storeFileFromUrl($sFileUrl, isset($aParams['private']) && $aParams['private'] ? true : false, isset($aParams['profile_id']) ? $aParams['profile_id'] : 0, isset($aParams['content_id']) ? $aParams['content_id'] : 0);
+
+        return $iFileId ? $iFileId : ['code' => $oStorage->getErrorCode(), 'error' => $oStorage->getErrorString()];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general-delete_file Delete file
+     * 
+     * @code bx_srv('system', 'delete_file', [$iFileId], 'TemplServiceContent'); @endcode
+     * @code {{~system:delete_file:TemplServiceContent["bx_persons", ['https://example.com/a.jpg']]~}} @endcode
+     * 
+     * Content
+     * @param $sStorageObject storage object name
+     * @param $iFileId file id
+     * @return true on success, or array with code != 0 and error message
+     * 
+     * @see BxBaseServiceContent::serviceUploadFromUrl
+     */
+    /** 
+     * @ref bx_system_general-upload_from_url "Upload file from URL"
+     */
+    public function serviceDeleteFile ($sStorageObject, $iFileId)
+    {
+        $oStorage = BxDolStorage::getObjectInstance($sStorageObject);
+        if (!$oStorage)
+            return ['code' => 404, 'error' => _t('_sys_txt_not_found')];
+
+        $b = $oStorage->deleteFile($iFileId);
+
+        return $b ? $b : ['code' => $oStorage->getErrorCode(), 'error' => $oStorage->getErrorString()];
+    }
 }
 
 /** @} */
