@@ -18,6 +18,8 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-login Login user and get user session
      * 
+     * Login user with account id = 12 and get session id back, session id can be used
+     * as cookie header to perform other API calls under logged id user:
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/login/TemplServiceContent&params[]=12" @endcode
      * 
      * Content
@@ -51,7 +53,10 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-get_user_ids Get user's IDs
      * 
-     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_user_ids/TemplServiceContent&params[]=123" @endcode
+     * Get user's account id, profile id and profile module content id by account id.
+     *
+     * Get user's IDs by user's account id(12):
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_user_ids/TemplServiceContent&params[]=12" @endcode
      * 
      * Content
      * @param $iAccountId account id, or account email
@@ -79,7 +84,10 @@ class BxBaseServiceContent extends BxDol
      * 
      * @code bx_srv('system', 'get_info', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      * @code {{~system:get_info:TemplServiceContent["bx_posts", 123]~}} @endcode
+     *
+     * Get post info by post id(123):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_info/TemplServiceContent&params[]=bx_posts&params[]=123" @endcode
+     * Get account info by account id(12):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_info/TemplServiceContent&params[]=sys_account&params[]=12" @endcode
      * 
      * Content
@@ -120,6 +128,8 @@ class BxBaseServiceContent extends BxDol
      * 
      * @code bx_srv('system', 'get_link', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      * @code {{~system:get_link:TemplServiceContent["bx_posts", 123]~}} @endcode
+     *
+     * Get post link by post id(123):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_link/TemplServiceContent&params[]=bx_posts&params[]=123" @endcode
      * 
      * Content
@@ -152,8 +162,10 @@ class BxBaseServiceContent extends BxDol
      * @subsubsection bx_system_general-delete Delete content
      * 
      * @code bx_srv('system', 'delete', ["bx_posts", 123], 'TemplServiceContent'); @endcode
-     * @code {{~system:get:TemplServiceContent["bx_posts", 123]~}} @endcode
+     *
+     * Delete post by post id(123):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/delete/TemplServiceContent&params[]=bx_posts&params[]=123" @endcode
+     * Delete account with all its content by account id(12):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/delete/TemplServiceContent&params[]=sys_account&params[]=12" @endcode
      * 
      * Content
@@ -201,8 +213,10 @@ class BxBaseServiceContent extends BxDol
      * @subsubsection bx_system_general-update Update content
      * 
      * @code bx_srv('system', 'update', ["bx_posts", 123, ["title" => "new title"]], 'TemplServiceContent'); @endcode
-     * @code {{~system:get:TemplServiceContent["bx_posts", 123, ["title" => "new title"]]~}} @endcode
+     *
+     * Update post text by post id(123):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/update/TemplServiceContent&params=%5B%22bx_posts%22%2C123%2C%7B%22text%22%3A%22new%20text%22%7D%5D" @endcode
+     * Update account email by account id(4):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/update/TemplServiceContent&params=%5B%22sys_account%22%2C4%2C%7B%22email%22%3A%22new%40email.com%22%7D%5D" @endcode
      * 
      * Content
@@ -250,8 +264,10 @@ class BxBaseServiceContent extends BxDol
      * @subsubsection bx_system_general-add Add content
      * 
      * @code bx_srv('system', 'add', [$sContentObject, $aValues], 'TemplServiceContent'); @endcode
-     * @code {{~system:get:TemplServiceContent["bx_posts", ["title" => "new title", "text" => "new text"]]~}} @endcode
+     *
+     * Add new post with specified title, text and privacy, post authour is identified by memberSession cookie:
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/add/TemplServiceContent&params=%5B%22bx_posts%22%2C%7B%22title%22%3A%22Post%20title%22%2C%22text%22%3A%22Some%20text%22%2C%22cat%22%3A2%2C%22allow_view_to%22%3A3%7D%5D" @endcode
+     * Add new account with specified name, email and password, also mark email as confirmed:
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/add/TemplServiceContent&params=%5B%22sys_account%22%2C%20%7B%22name%22%3A%22Vasya%22%2C%22email%22%3A%22vasya%40vasya.com%22%2C%22email_confirmed%22%3A%221%22%2C%22password%22%3A%221234%22%7D%5D" @endcode
      * 
      * Content
@@ -306,7 +322,10 @@ class BxBaseServiceContent extends BxDol
      * 
      * Upload file and associate with content:
      * @code bx_srv('system', 'upload_from_url', [$sContentObject, $sFileUrl, ['content_id' => 123]], 'TemplServiceContent'); @endcode
-     * @code {{~system:upload_from_url:TemplServiceContent["bx_persons", 'https://example.com/a.jpg', ['content_id' => 123]]~}} @endcode
+     *
+     * Upload photo from `http://example.com/a.jpg` URL to `bx_persons_pictures` storage and associate
+     * uploaded file with person by content id (123), returned value is newly uploaded file id, 
+     * it can be used in conetnt update API cann to set profile picture.
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params=%5B%22bx_persons_pictures%22%2C%22http%3A%2F%2Fexample.com%2Fa.jpg%22%2C%20%7B%22content_id%22%3A123%7D%5D" @endcode
      * 
      * Content
@@ -341,8 +360,11 @@ class BxBaseServiceContent extends BxDol
      * @subsubsection bx_system_general-delete_file Delete file
      * 
      * @code bx_srv('system', 'delete_file', ["bx_persons", 123], 'TemplServiceContent'); @endcode
-     * @code {{~system:delete_file:TemplServiceContent["bx_persons", 123]~}} @endcode
-     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params[]=bx_persons&params[]=123" @endcode
+     *
+     * Delete file with id = 123 from `bx_persons_pictures` storage engine. 
+     * <b>Please note</b> that associated with this file id content need to be updated by setting 
+     * respective field to new file id or 0.
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params[]=bx_persons_pictures&params[]=123" @endcode
      * 
      * Content
      * @param $sStorageObject storage object name
