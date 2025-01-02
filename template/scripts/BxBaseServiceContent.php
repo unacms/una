@@ -16,7 +16,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-login Login user and get user session
+     * @subsubsection bx_system_general_cnt-login Login user and get user session
      * 
      * Login user with account id = 12 and get session id back, session id can be used
      * as cookie header to perform other API calls under logged id user:
@@ -51,7 +51,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-get_user_ids Get user's IDs
+     * @subsubsection bx_system_general_cnt-get_user_ids Get user's IDs
      * 
      * Get user's account id, profile id and profile module content id by account id.
      *
@@ -80,7 +80,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-get_info Get content info
+     * @subsubsection bx_system_general_cnt-get_info Get content info
      * 
      * @code bx_srv('system', 'get_info', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      * @code {{~system:get_info:TemplServiceContent["bx_posts", 123]~}} @endcode
@@ -124,7 +124,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-get_link Get content link
+     * @subsubsection bx_system_general_cnt-get_link Get content link
      * 
      * @code bx_srv('system', 'get_link', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      * @code {{~system:get_link:TemplServiceContent["bx_posts", 123]~}} @endcode
@@ -159,7 +159,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-delete Delete content
+     * @subsubsection bx_system_general_cnt-delete Delete content
      * 
      * @code bx_srv('system', 'delete', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      *
@@ -210,7 +210,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-update Update content
+     * @subsubsection bx_system_general_cnt-update Update content
      * 
      * @code bx_srv('system', 'update', ["bx_posts", 123, ["title" => "new title"]], 'TemplServiceContent'); @endcode
      *
@@ -261,7 +261,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-add Add content
+     * @subsubsection bx_system_general_cnt-add Add content
      * 
      * @code bx_srv('system', 'add', [$sContentObject, $aValues], 'TemplServiceContent'); @endcode
      *
@@ -318,7 +318,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-upload_from_url Upload file from URL
+     * @subsubsection bx_system_general_cnt-upload_from_url Upload file from URL
      * 
      * Upload file and associate with content:
      * @code bx_srv('system', 'upload_from_url', [$sContentObject, $sFileUrl, ['content_id' => 123]], 'TemplServiceContent'); @endcode
@@ -357,7 +357,7 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
-     * @subsubsection bx_system_general-delete_file Delete file
+     * @subsubsection bx_system_general_cnt-delete_file Delete file
      * 
      * @code bx_srv('system', 'delete_file', ["bx_persons", 123], 'TemplServiceContent'); @endcode
      *
