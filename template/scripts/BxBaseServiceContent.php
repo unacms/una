@@ -16,10 +16,71 @@ class BxBaseServiceContent extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general-login Login user and get user session
+     * 
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/login/TemplServiceContent&params[]=12" @endcode
+     * 
+     * Content
+     * @param $iAccountId account id, or account email
+     * @param $bRememberMe remeber session
+     * @return array with session and user ids on success or false on error
+     * 
+     * @see BxBaseServiceContent::serviceLogin
+     */
+    /** 
+     * @ref bx_system_general-login "Login user and get user's session"
+     */
+    function serviceLogin($iAccountId, $bRememberMe = false)
+    {
+        $oAccount = BxDolAccount::getInstance($iAccountId);
+        if (!$oAccount)
+            return false;
+
+        bx_login($oAccount->id(), $bRememberMe);
+        $aRet = $this->getUserIds($oAccount);
+        if ($aRet)
+            $aRet['session'] = BxDolSession::getInstance()->getId();
+        else
+            $aRet = ['session' => BxDolSession::getInstance()->getId()];
+        return $aRet;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general-get_user_ids Get user's IDs
+     * 
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_user_ids/TemplServiceContent&params[]=123" @endcode
+     * 
+     * Content
+     * @param $iAccountId account id, or account email
+     * @return array with user ids on success or false on error
+     * 
+     * @see BxBaseServiceContent::serviceGetUserIds
+     */
+    /** 
+     * @ref bx_system_general-get_user_ids "Get user's IDs"
+     */
+    function serviceGetUserIds($iAccountId)
+    {
+        $oAccount = BxDolAccount::getInstance($iAccountId);
+        if (!$oAccount)
+            return false;
+
+        return $this->getUserIds($oAccount);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-get_info Get content info
      * 
-     * @code bx_srv('system', 'get_info', [$sContentObject, $iContentId], 'TemplServiceContent'); @endcode
+     * @code bx_srv('system', 'get_info', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      * @code {{~system:get_info:TemplServiceContent["bx_posts", 123]~}} @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_info/TemplServiceContent&params[]=bx_posts&params[]=123" @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_info/TemplServiceContent&params[]=sys_account&params[]=12" @endcode
      * 
      * Content
      * @param $sContentObject content object name
@@ -30,7 +91,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceGetInfo
      */
     /** 
-     * @ref bx_system_general-get_info "Get content"
+     * @ref bx_system_general-get_info "Get content info"
      */
     public function serviceGetInfo ($sContentObject, $iContentId, $bRawInfo = false)
     {
@@ -57,8 +118,9 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-get_link Get content link
      * 
-     * @code bx_srv('system', 'get_link', [$sContentObject, $iContentId], 'TemplServiceContent'); @endcode
+     * @code bx_srv('system', 'get_link', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      * @code {{~system:get_link:TemplServiceContent["bx_posts", 123]~}} @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_link/TemplServiceContent&params[]=bx_posts&params[]=123" @endcode
      * 
      * Content
      * @param $sContentObject content object name
@@ -89,16 +151,18 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-delete Delete content
      * 
-     * @code bx_srv('system', 'delete', [$sContentObject, $iContentId], 'TemplServiceContent'); @endcode
+     * @code bx_srv('system', 'delete', ["bx_posts", 123], 'TemplServiceContent'); @endcode
      * @code {{~system:get:TemplServiceContent["bx_posts", 123]~}} @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/delete/TemplServiceContent&params[]=bx_posts&params[]=123" @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/delete/TemplServiceContent&params[]=sys_account&params[]=12" @endcode
      * 
      * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @param $aParams array of params: 
-     *          'with_content' - true|false: for sys_account, bx_persons, bx_organizations; 
-     *          'force' - true|false: for bx_persons, bx_organizations; 
-     *          'scheduled' - true|false: for sys_account;
+     *          'with_content' - true(default)|false: for sys_account, bx_persons, bx_organizations; 
+     *          'force' - true|false(default): for bx_persons, bx_organizations; 
+     *          'scheduled' - true|false(default): for sys_account;
      * @return array with code = 0 on success, or array with code != 0 and error message
      * 
      * @see BxBaseServiceContent::serviceDelete
@@ -136,8 +200,10 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-update Update content
      * 
-     * @code bx_srv('system', 'update', [$sContentObject, $iContentId, $aValues], 'TemplServiceContent'); @endcode
+     * @code bx_srv('system', 'update', ["bx_posts", 123, ["title" => "new title"]], 'TemplServiceContent'); @endcode
      * @code {{~system:get:TemplServiceContent["bx_posts", 123, ["title" => "new title"]]~}} @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/update/TemplServiceContent&params=%5B%22bx_posts%22%2C123%2C%7B%22text%22%3A%22new%20text%22%7D%5D" @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/update/TemplServiceContent&params=%5B%22sys_account%22%2C4%2C%7B%22email%22%3A%22new%40email.com%22%7D%5D" @endcode
      * 
      * Content
      * @param $sContentObject content object name
@@ -185,6 +251,8 @@ class BxBaseServiceContent extends BxDol
      * 
      * @code bx_srv('system', 'add', [$sContentObject, $aValues], 'TemplServiceContent'); @endcode
      * @code {{~system:get:TemplServiceContent["bx_posts", ["title" => "new title", "text" => "new text"]]~}} @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/add/TemplServiceContent&params=%5B%22bx_posts%22%2C%7B%22title%22%3A%22Post%20title%22%2C%22text%22%3A%22Some%20text%22%2C%22cat%22%3A2%2C%22allow_view_to%22%3A3%7D%5D" @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/add/TemplServiceContent&params=%5B%22sys_account%22%2C%20%7B%22name%22%3A%22Vasya%22%2C%22email%22%3A%22vasya%40vasya.com%22%2C%22email_confirmed%22%3A%221%22%2C%22password%22%3A%221234%22%7D%5D" @endcode
      * 
      * Content
      * @param $sContentObject content object name
@@ -236,8 +304,10 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-upload_from_url Upload file from URL
      * 
-     * @code bx_srv('system', 'upload_from_url', [$sContentObject, $sFileUrl], 'TemplServiceContent'); @endcode
-     * @code {{~system:upload_from_url:TemplServiceContent["bx_persons", ['https://example.com/a.jpg']]~}} @endcode
+     * Upload file and associate with content:
+     * @code bx_srv('system', 'upload_from_url', [$sContentObject, $sFileUrl, ['content_id' => 123]], 'TemplServiceContent'); @endcode
+     * @code {{~system:upload_from_url:TemplServiceContent["bx_persons", 'https://example.com/a.jpg', ['content_id' => 123]]~}} @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params=%5B%22bx_persons_pictures%22%2C%22http%3A%2F%2Fexample.com%2Fa.jpg%22%2C%20%7B%22content_id%22%3A123%7D%5D" @endcode
      * 
      * Content
      * @param $sStorageObject storage object name
@@ -270,18 +340,19 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general-delete_file Delete file
      * 
-     * @code bx_srv('system', 'delete_file', [$iFileId], 'TemplServiceContent'); @endcode
-     * @code {{~system:delete_file:TemplServiceContent["bx_persons", ['https://example.com/a.jpg']]~}} @endcode
+     * @code bx_srv('system', 'delete_file', ["bx_persons", 123], 'TemplServiceContent'); @endcode
+     * @code {{~system:delete_file:TemplServiceContent["bx_persons", 123]~}} @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params[]=bx_persons&params[]=123" @endcode
      * 
      * Content
      * @param $sStorageObject storage object name
      * @param $iFileId file id
      * @return true on success, or array with code != 0 and error message
      * 
-     * @see BxBaseServiceContent::serviceUploadFromUrl
+     * @see BxBaseServiceContent::serviceDeleteFile
      */
     /** 
-     * @ref bx_system_general-upload_from_url "Upload file from URL"
+     * @ref bx_system_general-delete_file "Delete file"
      */
     public function serviceDeleteFile ($sStorageObject, $iFileId)
     {
@@ -292,6 +363,19 @@ class BxBaseServiceContent extends BxDol
         $b = $oStorage->deleteFile($iFileId);
 
         return $b ? $b : ['code' => $oStorage->getErrorCode(), 'error' => $oStorage->getErrorString()];
+    }
+
+    protected function getUserIds($oAccount)
+    {
+        $oProfile = BxDolProfile::getInstanceByAccount($oAccount->id());
+        if (!$oProfile)
+            return false;
+        return [
+            'account_id' => $oProfile->getAccountId(),
+            'profile_id' => $oProfile->id(),
+            'content_id' => $oProfile->getContentId(),
+            'content_module' => $oProfile->getModule(),
+        ];
     }
 }
 
