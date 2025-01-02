@@ -167,9 +167,9 @@ class BxBaseServiceContent extends BxDol
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @param $aParams array of params:   
-     *          - `with_content` - true(default)|false: for `sys_account`, `bx_persons`, `bx_organizations`;
-     *          - `force` - true|false(default): for `bx_persons`, `bx_organizations`;
-     *          - `scheduled` - true|false(default): for `sys_account`;
+     *          - `with_content` - true(default) | false: for `sys_account`, `bx_persons`, `bx_organizations`;
+     *          - `force` - true | false(default): for `bx_persons`, `bx_organizations`;
+     *          - `scheduled` - true | false(default): for `sys_account`;
      * @return array with code = 0 on success, or array with code != 0 and error message
      * 
      * @see BxBaseServiceContent::serviceDelete
@@ -317,16 +317,16 @@ class BxBaseServiceContent extends BxDol
      * @code bx_srv('system', 'upload_from_url', [$sContentObject, $sFileUrl, ['content_id' => 123]], 'TemplServiceContent'); @endcode
      *
      * Upload photo from `http://example.com/a.jpg` URL to `bx_persons_pictures` storage and associate
-     * uploaded file with person by content id (123), returned value is newly uploaded file id, 
-     * it can be used in conetnt update API cann to set profile picture.
+     * uploaded file to a person with content id (123), returned value is newly uploaded file id, 
+     * it can be used in content update API/Service call to set profile picture.
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params=%5B%22bx_persons_pictures%22%2C%22http%3A%2F%2Fexample.com%2Fa.jpg%22%2C%20%7B%22content_id%22%3A123%7D%5D" @endcode
      * 
      * @param $sStorageObject storage object name
      * @param $sFileUrl URL to file to store in the storage
      * @param $aParams array of params, possible array keys:
-     *          - 'private' - true|false: set file as private or not, if omitted file is uploaded as public
-     *          - 'profile_id' - int: set owner of file to this user, of omitted, then currently logged in user is becoming file owner
-     *          - 'content_id' - int: associate file with this content
+     *          - `private` - true | false: set file as private or not, if omitted file is uploaded as public
+     *          - `profile_id` - int: set owner of file to this user, of omitted, then currently logged in user is becoming file owner
+     *          - `content_id` - int: associate file with this content
      * @return uploaded file Id on success, or array with code != 0 and error message
      * 
      * @see BxBaseServiceContent::serviceUploadFromUrl
