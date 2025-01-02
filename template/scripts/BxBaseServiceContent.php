@@ -19,10 +19,9 @@ class BxBaseServiceContent extends BxDol
      * @subsubsection bx_system_general_cnt-login Login user and get user session
      * 
      * Login user with account id = 12 and get session id back, session id can be used
-     * as cookie header to perform other API calls under logged id user:
+     * as cookie header to perform other API calls under logged user:
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/login/TemplServiceContent&params[]=12" @endcode
      * 
-     * Content
      * @param $iAccountId account id, or account email
      * @param $bRememberMe remeber session
      * @return array with session and user ids on success or false on error
@@ -30,7 +29,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceLogin
      */
     /** 
-     * @ref bx_system_general-login "Login user and get user's session"
+     * @ref bx_system_general_cnt-login "Login user and get user's session"
      */
     function serviceLogin($iAccountId, $bRememberMe = false)
     {
@@ -58,14 +57,13 @@ class BxBaseServiceContent extends BxDol
      * Get user's IDs by user's account id(12):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_user_ids/TemplServiceContent&params[]=12" @endcode
      * 
-     * Content
      * @param $iAccountId account id, or account email
      * @return array with user ids on success or false on error
      * 
      * @see BxBaseServiceContent::serviceGetUserIds
      */
     /** 
-     * @ref bx_system_general-get_user_ids "Get user's IDs"
+     * @ref bx_system_general_cnt-get_user_ids "Get user's IDs"
      */
     function serviceGetUserIds($iAccountId)
     {
@@ -90,7 +88,6 @@ class BxBaseServiceContent extends BxDol
      * Get account info by account id(12):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_info/TemplServiceContent&params[]=sys_account&params[]=12" @endcode
      * 
-     * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @param $bRawInfo if true - raw info return data directly from DB, if false - returns strutured array
@@ -99,7 +96,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceGetInfo
      */
     /** 
-     * @ref bx_system_general-get_info "Get content info"
+     * @ref bx_system_general_cnt-get_info "Get content info"
      */
     public function serviceGetInfo ($sContentObject, $iContentId, $bRawInfo = false)
     {
@@ -132,7 +129,6 @@ class BxBaseServiceContent extends BxDol
      * Get post link by post id(123):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/get_link/TemplServiceContent&params[]=bx_posts&params[]=123" @endcode
      * 
-     * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @return string with link on success or empty string on error
@@ -140,7 +136,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceGetLink
      */
     /** 
-     * @ref bx_system_general-get_link "Get content link"
+     * @ref bx_system_general_cnt-get_link "Get content link"
      */
     public function serviceGetLink ($sContentObject, $iContentId)
     {
@@ -168,7 +164,6 @@ class BxBaseServiceContent extends BxDol
      * Delete account with all its content by account id(12):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/delete/TemplServiceContent&params[]=sys_account&params[]=12" @endcode
      * 
-     * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @param $aParams array of params: 
@@ -180,7 +175,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceDelete
      */
     /** 
-     * @ref bx_system_general-delete "Delete content"
+     * @ref bx_system_general_cnt-delete "Delete content"
      */
     public function serviceDelete ($sContentObject, $iContentId, $aParams = [])
     {
@@ -219,7 +214,6 @@ class BxBaseServiceContent extends BxDol
      * Update account email by account id(4):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/update/TemplServiceContent&params=%5B%22sys_account%22%2C4%2C%7B%22email%22%3A%22new%40email.com%22%7D%5D" @endcode
      * 
-     * Content
      * @param $sContentObject content object name
      * @param $iContentId content id
      * @param $aValues key value pairs to update
@@ -228,7 +222,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceUpdate
      */
     /** 
-     * @ref bx_system_general-update "Update content"
+     * @ref bx_system_general_cnt-update "Update content"
      */
     public function serviceUpdate ($sContentObject, $iContentId, $aValues)
     {
@@ -270,7 +264,6 @@ class BxBaseServiceContent extends BxDol
      * Add new account with specified name, email and password, also mark email as confirmed:
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/add/TemplServiceContent&params=%5B%22sys_account%22%2C%20%7B%22name%22%3A%22Vasya%22%2C%22email%22%3A%22vasya%40vasya.com%22%2C%22email_confirmed%22%3A%221%22%2C%22password%22%3A%221234%22%7D%5D" @endcode
      * 
-     * Content
      * @param $sContentObject content object name
      * @param $aValues key value pairs to add
      * @return array with code = 0 on success, or array with code != 0 and error message
@@ -278,7 +271,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceAdd
      */
     /** 
-     * @ref bx_system_general-add "Add content"
+     * @ref bx_system_general_cnt-add "Add content"
      */
     public function serviceAdd ($sContentObject, $aValues)
     {
@@ -328,7 +321,6 @@ class BxBaseServiceContent extends BxDol
      * it can be used in conetnt update API cann to set profile picture.
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params=%5B%22bx_persons_pictures%22%2C%22http%3A%2F%2Fexample.com%2Fa.jpg%22%2C%20%7B%22content_id%22%3A123%7D%5D" @endcode
      * 
-     * Content
      * @param $sStorageObject storage object name
      * @param $sFileUrl URL to file to store in the storage
      * @param $aParams array of params, possible array keys:
@@ -340,7 +332,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceUploadFromUrl
      */
     /** 
-     * @ref bx_system_general-upload_from_url "Upload file from URL"
+     * @ref bx_system_general_cnt-upload_from_url "Upload file from URL"
      */
     public function serviceUploadFromUrl ($sStorageObject, $sFileUrl, $aParams = [])
     {
@@ -366,7 +358,6 @@ class BxBaseServiceContent extends BxDol
      * respective field to new file id or 0.
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params[]=bx_persons_pictures&params[]=123" @endcode
      * 
-     * Content
      * @param $sStorageObject storage object name
      * @param $iFileId file id
      * @return true on success, or array with code != 0 and error message
@@ -374,7 +365,7 @@ class BxBaseServiceContent extends BxDol
      * @see BxBaseServiceContent::serviceDeleteFile
      */
     /** 
-     * @ref bx_system_general-delete_file "Delete file"
+     * @ref bx_system_general_cnt-delete_file "Delete file"
      */
     public function serviceDeleteFile ($sStorageObject, $iFileId)
     {
