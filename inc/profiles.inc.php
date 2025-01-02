@@ -273,7 +273,7 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
     if ($oAccount->isLocked()){
         bx_import('BxDolLanguages');
 		if (bx_is_api()){
-            return [strip_tags(_t("_sys_txt_login_locked", bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))),''), bx_api_get_relative_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))];
+            return strip_tags(_t("_sys_txt_login_locked", bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))),'');
         }
         return _t("_sys_txt_login_locked", bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')));
 	}
@@ -318,7 +318,7 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
                 $oAccountQuery->lockAccount($aAccountInfo['id'], 1);
                 bx_import('BxDolLanguages');
                 if (bx_is_api()){
-                    return [strip_tags(_t("_sys_txt_login_locked", bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))),''), bx_api_get_relative_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))];
+                    return strip_tags(_t("_sys_txt_login_locked", bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))),'');
                 }
             }
             else{
