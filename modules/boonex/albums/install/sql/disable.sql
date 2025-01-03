@@ -50,7 +50,7 @@ DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_albums_administration', 'b
 
 
 -- UPLOADERS
-DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_albums_simple', 'bx_albums_html5', 'bx_albums_crop', 'bx_albums_record_video');
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_albums_html5', 'bx_albums_crop', 'bx_albums_record_video');
 
 
 -- ALERTS

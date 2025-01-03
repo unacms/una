@@ -143,7 +143,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_albums_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_albums_administration',
             'OBJECT_GRID_COMMON' => 'bx_albums_common',
-            'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5', 'bx_albums_crop'),
+            'OBJECT_UPLOADERS' => array('bx_albums_html5', 'bx_albums_crop'),
             
             'FUNCTION_FOR_GET_ITEM_INFO' => 'getMediaInfoById',
 

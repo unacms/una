@@ -792,11 +792,18 @@ class BxAlbumsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $sUploader = reset($CNF['OBJECT_UPLOADERS']);
         $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
-        $oUploader = BxDolUploader::getObjectInstance($CNF['OBJECT_UPLOADERS'][0], $CNF['OBJECT_STORAGE'], '');
+        if(!$sUploader || empty($aMediaInfo) || !is_array($aMediaInfo))
+            return echoJson([]);
+
+        $oUploader = BxDolUploader::getObjectInstance($sUploader, $CNF['OBJECT_STORAGE'], '');
+        if($oUploader === false) 
+            return echoJson(['msg' => _t('_sys_txt_error_occured')]);
+
         $oUploader->deleteGhost($aMediaInfo['file_id'], bx_get_logged_profile_id());
-        
-        echoJson(['redirect' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aMediaInfo['content_id']))]);
+
+        return echoJson(['redirect' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aMediaInfo['content_id']))]);            
     }
 
     public function actionMoveMedia($iMediaId)
