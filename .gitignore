@@ -6,6 +6,7 @@ tmp/*
 logs/*
 plugins/*
 node_modules/*
+bower_components/*
 
 # Exclude main config file
 inc/header*

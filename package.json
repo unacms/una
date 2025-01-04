@@ -1,0 +1,20 @@
+{
+  "name": "una-js-libs",
+  "homepage": "https://github.com/unacms/una",
+  "dependencies": {
+    "at.js": "^1.5.4",
+    "codemirror": "^5.65.18"
+  },
+  "scripts": {
+    "build:bower-components": "bower install",
+    "build:at.js": "mkdir -p plugins_public/at.js; cd node_modules/at.js; cp -r dist/* ../../plugins_public/at.js",
+    "build:codemirror": "mkdir -p plugins_public/codemirror; cd node_modules/codemirror; cp -r lib/* ../../plugins_public/codemirror; uglifyjs lib/codemirror.js mode/clike/clike.js mode/coffeescript/coffeescript.js mode/commonlisp/commonlisp.js mode/css/css.js mode/diff/diff.js mode/dtd/dtd.js mode/fortran/fortran.js mode/go/go.js mode/htmlembedded/htmlembedded.js mode/htmlmixed/htmlmixed.js mode/javascript/javascript.js mode/lua/lua.js mode/markdown/markdown.js mode/pascal/pascal.js mode/perl/perl.js mode/php/php.js mode/properties/properties.js mode/python/python.js mode/ruby/ruby.js mode/sass/sass.js mode/shell/shell.js mode/sql/sql.js mode/sparql/sparql.js mode/turtle/turtle.js mode/vb/vb.js mode/vbscript/vbscript.js mode/xml/xml.js mode/xquery/xquery.js mode/yaml/yaml.js addon/edit/matchbrackets.js -c -m > ../../plugins_public/codemirror/codemirror-ext.min.js; uglifyjs lib/codemirror.js -c -m > ../../plugins_public/codemirror/codemirror.min.js",
+    "build:combodate": "mkdir -p plugins_public/combodate; cp bower_components/combodate/src/combodate.js plugins_public/combodate",
+    "build": "npm-run-all --parallel build:*"
+  },
+  "devDependencies": {
+    "bower": "^1.8.14",
+    "npm-run-all": "^4.1.5",
+    "uglify-js": "^3.19.3"
+  }
+}
