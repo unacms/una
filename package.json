@@ -16,7 +16,12 @@
     "filepond-plugin-image-transform": "^3.8.7",
     "flag-icons": "^7.2.3",
     "flatpickr": "^4.6.13",
-    "flickity": "^3.0.0"
+    "flickity": "^3.0.0",
+    "grapesjs": "^0.22.4",
+    "grapesjs-blocks-basic": "^1.0.2",
+    "grapesjs-preset-newsletter": "^1.0.2",
+    "grapesjs-preset-webpage": "^1.0.3",
+    "grapesjs-style-bg": "^2.0.2"
   },
   "scripts": {
     "install-bower-components": "bower install",
@@ -30,6 +35,7 @@
     "build:flatpickr": "mkdir -p plugins_public/flatpickr; cd node_modules/flatpickr; cp -r dist ../../plugins_public/flatpickr",
     "build:flickity": "mkdir -p plugins_public/flickity; cd node_modules/flickity; cp -r dist/flickity.css ../../plugins_public/flickity; cp -r dist/flickity.pkgd.min.js ../../plugins_public/flickity",
     "build:fullcalendar": "mkdir -p plugins_public/fullcalendar/locales; cd node_modules/@fullcalendar/core; cp index.global.min.js ../../../plugins_public/fullcalendar; cp locales/*.min.js ../../../plugins_public/fullcalendar/locales",
+    "build:grapesjs": "mkdir -p plugins_public/grapesjs; cd plugins_public/grapesjs; cp ../../node_modules/grapesjs/dist/grapes.min.js .; cp ../../node_modules/grapesjs/dist/css/grapes.min.css .; cp ../../node_modules/grapesjs-blocks-basic/dist/index.js grapesjs-blocks-basic.js; cp ../../node_modules/grapesjs-preset-newsletter/dist/index.js grapesjs-preset-newsletter.min.js; cp ../../node_modules/grapesjs-preset-webpage/dist/index.js grapesjs-preset-webpage.min.js; cp ../../node_modules/grapesjs-style-bg/dist/index.js grapesjs-style-bg.js",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
