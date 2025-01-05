@@ -29,7 +29,9 @@
     "jquery-migrate": "^3.5.2",
     "jquery-ui": "1.13.3",
     "jstree": "^3.3.17",
-    "jush": "^1.11.0-2"
+    "jush": "^1.11.0-2",
+    "leaflet": "^1.9.4",
+    "leaflet-providers": "^2.0.0"
   },
   "scripts": {
     "install-bower-components": "bower install",
@@ -51,6 +53,8 @@
     "build:jquery-ui": "mkdir -p plugins_public/jquery-ui; cd plugins_public/jquery-ui; cp ../../node_modules/jquery-ui/dist/jquery-ui.min.js .",
     "build:jstree": "mkdir -p plugins_public/jstree; cd plugins_public/jstree; cp -r ../../node_modules/jstree/dist/* .",
     "build:jush": "mkdir -p plugins_public/jush; cd plugins_public/jush; cp -r ../../node_modules/jush/jush.* .",
+    "build:leaflet": "mkdir -p plugins_public/leaflet; cd plugins_public/leaflet; cp -r ../../node_modules/leaflet/dist/* .",
+    "build:leaflet-providers": "mkdir -p plugins_public/leaflet-providers; cd plugins_public/leaflet-providers; cp ../../node_modules/leaflet-providers/leaflet-providers.js .",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
