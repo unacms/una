@@ -2,6 +2,7 @@
   "name": "una-js-libs",
   "homepage": "https://github.com/unacms/una",
   "dependencies": {
+    "@fullcalendar/core": "^6.1.15",
     "at.js": "^1.5.4",
     "codemirror": "^5.65.18",
     "croppie": "^2.6.5",
@@ -28,6 +29,7 @@
     "build:flag-icons": "mkdir -p plugins_public/flag-icons; cd node_modules/flag-icons; cp -r css ../../plugins_public/flag-icons; cp -r flags ../../plugins_public/flag-icons",
     "build:flatpickr": "mkdir -p plugins_public/flatpickr; cd node_modules/flatpickr; cp -r dist ../../plugins_public/flatpickr",
     "build:flickity": "mkdir -p plugins_public/flickity; cd node_modules/flickity; cp -r dist/flickity.css ../../plugins_public/flickity; cp -r dist/flickity.pkgd.min.js ../../plugins_public/flickity",
+    "build:fullcalendar": "mkdir -p plugins_public/fullcalendar/locales; cd node_modules/@fullcalendar/core; cp index.global.min.js ../../../plugins_public/fullcalendar; cp locales/*.min.js ../../../plugins_public/fullcalendar/locales",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
