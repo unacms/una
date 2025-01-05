@@ -2,6 +2,7 @@
   "name": "una-js-libs",
   "homepage": "https://github.com/unacms/una",
   "dependencies": {
+    "@claviska/jquery-minicolors": "^2.3.6",
     "@fullcalendar/core": "^6.1.15",
     "at.js": "^1.5.4",
     "codemirror": "^5.65.18",
@@ -23,7 +24,10 @@
     "grapesjs-preset-webpage": "^1.0.3",
     "grapesjs-style-bg": "^2.0.2",
     "highlight.js": "github:highlightjs/highlight.js",
-    "htmx.org": "^1.9.12"
+    "htmx.org": "^1.9.12",
+    "jquery": "^3.7.1",
+    "jquery-migrate": "^3.5.2",
+    "jquery-ui": "1.13.3"
   },
   "scripts": {
     "install-bower-components": "bower install",
@@ -40,6 +44,9 @@
     "build:grapesjs": "mkdir -p plugins_public/grapesjs; cd plugins_public/grapesjs; cp ../../node_modules/grapesjs/dist/grapes.min.js .; cp ../../node_modules/grapesjs/dist/css/grapes.min.css .; cp ../../node_modules/grapesjs-blocks-basic/dist/index.js grapesjs-blocks-basic.js; cp ../../node_modules/grapesjs-preset-newsletter/dist/index.js grapesjs-preset-newsletter.min.js; cp ../../node_modules/grapesjs-preset-webpage/dist/index.js grapesjs-preset-webpage.min.js; cp ../../node_modules/grapesjs-style-bg/dist/index.js grapesjs-style-bg.js",
     "build:highlight.js": "mkdir -p plugins_public/highlight; cd node_modules/highlight.js; npm i; npm run build-browser; cp build/highlight.min.js ../../plugins_public/highlight; npm run build-cdn; cp build/styles/default.min.css ../../plugins_public/highlight",
     "build:htmx": "mkdir -p plugins_public/htmx; cd plugins_public/htmx; cp ../../node_modules/htmx.org/dist/htmx.min.js .; cp ../../node_modules/htmx.org/dist/ext/head-support.js .; cp ../../node_modules/htmx.org/dist/ext/preload.js .",
+    "build:jquery-minicolors": "mkdir -p plugins_public/jquery-minicolors; cd node_modules/@claviska/jquery-minicolors; cp jquery.minicolors.* ../../../plugins_public/jquery-minicolors",
+    "build:jquery": "mkdir -p plugins_public/jquery; cd plugins_public/jquery; cp ../../node_modules/jquery/dist/jquery.min.* .; cp ../../node_modules/jquery-migrate/dist/jquery-migrate.min.* .",
+    "build:jquery-ui": "mkdir -p plugins_public/jquery-ui; cd plugins_public/jquery-ui; cp ../../node_modules/jquery-ui/dist/jquery-ui.min.js .",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
