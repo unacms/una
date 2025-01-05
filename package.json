@@ -27,7 +27,9 @@
     "htmx.org": "^1.9.12",
     "jquery": "^3.7.1",
     "jquery-migrate": "^3.5.2",
-    "jquery-ui": "1.13.3"
+    "jquery-ui": "1.13.3",
+    "jstree": "^3.3.17",
+    "jush": "^1.11.0-2"
   },
   "scripts": {
     "install-bower-components": "bower install",
@@ -47,6 +49,8 @@
     "build:jquery-minicolors": "mkdir -p plugins_public/jquery-minicolors; cd node_modules/@claviska/jquery-minicolors; cp jquery.minicolors.* ../../../plugins_public/jquery-minicolors",
     "build:jquery": "mkdir -p plugins_public/jquery; cd plugins_public/jquery; cp ../../node_modules/jquery/dist/jquery.min.* .; cp ../../node_modules/jquery-migrate/dist/jquery-migrate.min.* .",
     "build:jquery-ui": "mkdir -p plugins_public/jquery-ui; cd plugins_public/jquery-ui; cp ../../node_modules/jquery-ui/dist/jquery-ui.min.js .",
+    "build:jstree": "mkdir -p plugins_public/jstree; cd plugins_public/jstree; cp -r ../../node_modules/jstree/dist/* .",
+    "build:jush": "mkdir -p plugins_public/jush; cd plugins_public/jush; cp -r ../../node_modules/jush/jush.* .",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
