@@ -22,7 +22,8 @@
     "grapesjs-preset-newsletter": "^1.0.2",
     "grapesjs-preset-webpage": "^1.0.3",
     "grapesjs-style-bg": "^2.0.2",
-    "highlight.js": "github:highlightjs/highlight.js"
+    "highlight.js": "github:highlightjs/highlight.js",
+    "htmx.org": "^1.9.12"
   },
   "scripts": {
     "install-bower-components": "bower install",
@@ -38,6 +39,7 @@
     "build:fullcalendar": "mkdir -p plugins_public/fullcalendar/locales; cd node_modules/@fullcalendar/core; cp index.global.min.js ../../../plugins_public/fullcalendar; cp locales/*.min.js ../../../plugins_public/fullcalendar/locales",
     "build:grapesjs": "mkdir -p plugins_public/grapesjs; cd plugins_public/grapesjs; cp ../../node_modules/grapesjs/dist/grapes.min.js .; cp ../../node_modules/grapesjs/dist/css/grapes.min.css .; cp ../../node_modules/grapesjs-blocks-basic/dist/index.js grapesjs-blocks-basic.js; cp ../../node_modules/grapesjs-preset-newsletter/dist/index.js grapesjs-preset-newsletter.min.js; cp ../../node_modules/grapesjs-preset-webpage/dist/index.js grapesjs-preset-webpage.min.js; cp ../../node_modules/grapesjs-style-bg/dist/index.js grapesjs-style-bg.js",
     "build:highlight.js": "mkdir -p plugins_public/highlight; cd node_modules/highlight.js; npm i; npm run build-browser; cp build/highlight.min.js ../../plugins_public/highlight; npm run build-cdn; cp build/styles/default.min.css ../../plugins_public/highlight",
+    "build:htmx": "mkdir -p plugins_public/htmx; cd plugins_public/htmx; cp ../../node_modules/htmx.org/dist/htmx.min.js .; cp ../../node_modules/htmx.org/dist/ext/head-support.js .; cp ../../node_modules/htmx.org/dist/ext/preload.js .",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
