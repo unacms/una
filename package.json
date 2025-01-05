@@ -7,6 +7,7 @@
     "at.js": "^1.5.4",
     "codemirror": "^5.65.18",
     "croppie": "^2.6.5",
+    "dashjs": "^4.7.4",
     "fancybox": "^3.0.1",
     "filepond": "^4.32.6",
     "filepond-plugin-file-validate-size": "^2.2.8",
@@ -24,6 +25,7 @@
     "grapesjs-preset-webpage": "^1.0.3",
     "grapesjs-style-bg": "^2.0.2",
     "highlight.js": "github:highlightjs/highlight.js",
+    "hls.js": "^1.5.18",
     "htmx.org": "^1.9.12",
     "jquery": "^3.7.1",
     "jquery-migrate": "^3.5.2",
@@ -32,7 +34,8 @@
     "jush": "^1.11.0-2",
     "leaflet": "^1.9.4",
     "leaflet-providers": "^2.0.0",
-    "marka": "github:fians/marka"
+    "marka": "github:fians/marka",
+    "ovenplayer": "^0.10.37"
   },
   "scripts": {
     "install-bower-components": "bower install",
@@ -58,6 +61,7 @@
     "build:leaflet-providers": "mkdir -p plugins_public/leaflet-providers; cd plugins_public/leaflet-providers; cp ../../node_modules/leaflet-providers/leaflet-providers.js .",
     "build:marka": "mkdir -p plugins_public/marka; cd plugins_public/marka; cp ../../node_modules/marka/dist/css/* .; cp ../../node_modules/marka/dist/js/* .",
     "build:onesignal": "mkdir -p plugins_public/onesignal; cd plugins_public/onesignal; echo '<?php\\nheader(\"Service-Worker-Allowed: /\");\\nheader(\"Content-Type: application/javascript\");\\n?>\\nimportScripts(\"https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js\");' > OneSignalSDKUpdaterWorker.js.php; echo '<?php\\nheader(\"Service-Worker-Allowed: /\");\\nheader(\"Content-Type: application/javascript\");\\nheader(\"X-Robots-Tag: none\");\\n?>\\nimportScripts(\"https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js\");' > OneSignalSDKWorker.js.php",
+    "build:ovenplayer": "mkdir -p plugins_public/ovenplayer; cd plugins_public/ovenplayer; cp ../../node_modules/ovenplayer/dist/* .; cp ../../node_modules/dashjs/dist/dash.all.min.* .; cp ../../node_modules/hls.js/dist/hls.min.* .",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
