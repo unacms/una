@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: '拖放檔案，或者 <span class="filepond--label-action"> 瀏覽 </span>',
     labelInvalidField: '不支援此檔案',
     labelFileWaitingForSize: '正在計算檔案大小',

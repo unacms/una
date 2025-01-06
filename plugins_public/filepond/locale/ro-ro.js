@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Trage și plasează fișiere sau <span class="filepond--label-action"> Caută-le </span>',
     labelInvalidField: 'Câmpul conține fișiere care nu sunt valide',
     labelFileWaitingForSize: 'În așteptarea dimensiunii',

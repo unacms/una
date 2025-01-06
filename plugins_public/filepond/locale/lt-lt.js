@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Įdėkite failus čia arba <span class="filepond--label-action"> Ieškokite </span>',
     labelInvalidField: 'Laukelis talpina netinkamus failus',
     labelFileWaitingForSize: 'Laukiama dydžio',

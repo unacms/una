@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Vedä ja pudota tiedostoja tai <span class="filepond--label-action"> Selaa </span>',
     labelInvalidField: 'Kentässä on virheellisiä tiedostoja',
     labelFileWaitingForSize: 'Odotetaan kokoa',

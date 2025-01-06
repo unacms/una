@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Kéo thả tệp của bạn hoặc <span class="filepond--label-action"> Tìm kiếm </span>',
     labelInvalidField: 'Trường chứa các tệp không hợp lệ',
     labelFileWaitingForSize: 'Đang chờ kích thước',

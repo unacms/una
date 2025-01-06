@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Dateien ablegen oder <span class="filepond--label-action"> auswählen </span>',
     labelInvalidField: 'Feld beinhaltet ungültige Dateien',
     labelFileWaitingForSize: 'Dateigröße berechnen',

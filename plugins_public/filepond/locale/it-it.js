@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Trascina e rilascia i tuoi file oppure <span class = "filepond--label-action"> Carica <span>',
     labelInvalidField: "Il campo contiene dei file non validi",
     labelFileWaitingForSize: "Aspettando le dimensioni",

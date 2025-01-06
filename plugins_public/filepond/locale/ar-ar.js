@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'اسحب و ادرج ملفاتك أو <span class="filepond--label-action"> تصفح </span>',
     labelInvalidField: 'الحقل يحتوي على ملفات غير صالحة',
     labelFileWaitingForSize: 'بانتظار الحجم',

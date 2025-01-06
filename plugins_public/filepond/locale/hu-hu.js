@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Mozgasd ide a fájlt a feltöltéshez, vagy <span class="filepond--label-action"> tallózás </span>',
     labelInvalidField: 'A mező érvénytelen fájlokat tartalmaz',
     labelFileWaitingForSize: 'Fáljméret kiszámolása',

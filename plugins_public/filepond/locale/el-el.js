@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Σύρετε τα αρχεία σας στο πλαίσιο ή <span class="filepond--label-action"> Επιλέξτε </span>',
     labelInvalidField: 'Το πεδίο περιέχει μη έγκυρα αρχεία',
     labelFileWaitingForSize: 'Σε αναμονή για το μέγεθος',

@@ -1,5 +1,5 @@
-glFilepondLocale = {
-    labelIdle: 'Faites glisser vos fichiers ou <span class = "filepond--label-action"> Parcourir <span>',
+export default {
+    labelIdle: 'Faites glisser vos fichiers ou <span class = "filepond--label-action"> Parcourir </span>',
     labelInvalidField: "Le champ contient des fichiers invalides",
     labelFileWaitingForSize: "En attente de taille",
     labelFileSizeNotAvailable: "Taille non disponible",

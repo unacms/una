@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Natiahnúť súbor (drag&drop) alebo <span class="filepond--label-action"> Vyhľadať </span>',
     labelInvalidField: 'Pole obsahuje chybné súbory',
     labelFileWaitingForSize: 'Zisťuje sa veľkosť',

@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Ovdje "ispusti" datoteku ili <span class="filepond--label-action"> Pretraži </span>',
     labelInvalidField: 'Polje sadrži neispravne datoteke',
     labelFileWaitingForSize: 'Čekanje na veličinu datoteke',

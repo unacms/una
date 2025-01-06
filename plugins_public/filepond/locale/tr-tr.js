@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Dosyanızı Sürükleyin & Bırakın ya da <span class="filepond--label-action"> Seçin </span>',
     labelInvalidField: 'Alan geçersiz dosyalar içeriyor',
     labelFileWaitingForSize: 'Boyut hesaplanıyor',

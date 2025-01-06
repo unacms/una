@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Przeciągnij i upuść lub <span class="filepond--label-action">wybierz</span> pliki',
     labelInvalidField: 'Nieprawidłowe pliki',
     labelFileWaitingForSize: 'Pobieranie rozmiaru',

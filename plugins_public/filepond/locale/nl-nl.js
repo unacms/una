@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Drag & Drop je bestanden of <span class="filepond--label-action"> Bladeren </span>',
     labelInvalidField: 'Veld bevat ongeldige bestanden',
     labelFileWaitingForSize: 'Wachten op grootte',

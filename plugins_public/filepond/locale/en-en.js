@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Drag & Drop your files or <span class="filepond--label-action"> Browse </span>',
     labelInvalidField: 'Field contains invalid files',
     labelFileWaitingForSize: 'Waiting for size',

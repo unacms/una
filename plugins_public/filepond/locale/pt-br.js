@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Arraste e solte os arquivos ou <span class="filepond--label-action"> Clique aqui </span>',
     labelInvalidField: 'Arquivos inválidos',
     labelFileWaitingForSize: 'Calculando o tamanho do arquivo',

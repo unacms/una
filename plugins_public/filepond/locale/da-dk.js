@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle:
         'Træk & slip filer eller <span class = "filepond - label-action"> Gennemse </span>',
     labelInvalidField: 'Felt indeholder ugyldige filer',

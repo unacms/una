@@ -1,4 +1,4 @@
-glFilepondLocale = {
+export default {
     labelIdle: 'Перетягніть файли або <span class="filepond--label-action"> виберіть </span>',
     labelInvalidField: 'Поле містить недопустимі файли',
     labelFileWaitingForSize: 'Вкажіть розмір',

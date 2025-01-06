@@ -17,6 +17,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
     protected $_sDivId; ///< div id where upload button will be placed
     protected $_sFocusDivId;
     protected $_sProgressDivId;
+    protected $_sLangJsUrl;
 
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
@@ -35,15 +36,16 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         if (!isset($aUploaderLangs[$sUploaderLang]))
             $sUploaderLang = 'en-en';
 
+        $this->_sLangJsUrl = $this->_oTemplate->getJsUrlWithRevision('filepond/locale/' . $sUploaderLang . '.js');
+
         $this->addJs([
-            'filepond/locale/' . $sUploaderLang . '.js',
             'filepond/filepond.min.js',
             'filepond/filepond-plugin-image-preview.min.js',
             'filepond/filepond-plugin-image-transform.min.js',
             'filepond/filepond-plugin-image-crop.min.js',
             'filepond/filepond-plugin-image-resize.min.js',
             'filepond/filepond-plugin-file-validate-size.min.js',
-            'filepond/filepond-plugin-file-validate-type.js',
+            'filepond/filepond-plugin-file-validate-type.min.js',
         ]);
 
         $this->addCss([
@@ -52,6 +54,17 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         ]);
     }
 
+    public function getUploaderJs($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false)
+    {
+        $s = parent::getUploaderJs($mixedGhostTemplate, $isMultiple, $aParams, $bDynamic);
+        $s .= '
+            <script type="module">
+                import locale from "' . $this->_sLangJsUrl . '";
+                window.glFilepondLocale = locale;
+                FilePond.setOptions(locale);
+            </script>';
+        return $s;
+    }
     /**
      * Get uploader button title
      */
