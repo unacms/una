@@ -31,14 +31,17 @@
     "jquery-migrate": "^3.5.2",
     "jquery-ui": "1.13.3",
     "jstree": "^3.3.17",
-    "jush": "^1.11.0-2",
     "leaflet": "^1.9.4",
     "leaflet-providers": "^2.0.0",
     "marka": "github:fians/marka",
     "ovenplayer": "^0.10.37",
     "pdfjs-dist": "^4.10.38"
   },
+  "napa": {
+    "jush": "git+https://github.com/vrana/jush.git"
+  },
   "scripts": {
+    "install-napa-components": "napa",
     "install-bower-components": "bower install",
     "build:at.js": "mkdir -p plugins_public/at.js; cd node_modules/at.js; cp -r dist/* ../../plugins_public/at.js",
     "build:codemirror": "mkdir -p plugins_public/codemirror; cd node_modules/codemirror; cp -r lib/* ../../plugins_public/codemirror; uglifyjs lib/codemirror.js mode/clike/clike.js mode/coffeescript/coffeescript.js mode/commonlisp/commonlisp.js mode/css/css.js mode/diff/diff.js mode/dtd/dtd.js mode/fortran/fortran.js mode/go/go.js mode/htmlembedded/htmlembedded.js mode/htmlmixed/htmlmixed.js mode/javascript/javascript.js mode/lua/lua.js mode/markdown/markdown.js mode/pascal/pascal.js mode/perl/perl.js mode/php/php.js mode/properties/properties.js mode/python/python.js mode/ruby/ruby.js mode/sass/sass.js mode/shell/shell.js mode/sql/sql.js mode/sparql/sparql.js mode/turtle/turtle.js mode/vb/vb.js mode/vbscript/vbscript.js mode/xml/xml.js mode/xquery/xquery.js mode/yaml/yaml.js addon/edit/matchbrackets.js -c -m > ../../plugins_public/codemirror/codemirror-ext.min.js; uglifyjs lib/codemirror.js -c -m > ../../plugins_public/codemirror/codemirror.min.js",
@@ -64,10 +67,11 @@
     "build:onesignal": "mkdir -p plugins_public/onesignal; cd plugins_public/onesignal; echo '<?php\\nheader(\"Service-Worker-Allowed: /\");\\nheader(\"Content-Type: application/javascript\");\\n?>\\nimportScripts(\"https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js\");' > OneSignalSDKUpdaterWorker.js.php; echo '<?php\\nheader(\"Service-Worker-Allowed: /\");\\nheader(\"Content-Type: application/javascript\");\\nheader(\"X-Robots-Tag: none\");\\n?>\\nimportScripts(\"https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js\");' > OneSignalSDKWorker.js.php",
     "build:ovenplayer": "mkdir -p plugins_public/ovenplayer; cd plugins_public/ovenplayer; cp ../../node_modules/ovenplayer/dist/* .; cp ../../node_modules/dashjs/dist/dash.all.min.* .; cp ../../node_modules/hls.js/dist/hls.min.* .",
     "build:pdfjs": "mkdir -p plugins_public/pdfjs; cd plugins_public/pdfjs; cp ../../node_modules/pdfjs-dist/legacy/build/pdf.min.mjs pdf.min.mjs.js; cp ../../node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs pdf.worker.min.mjs.js",
-    "build": "npm run install-bower-components; npm-run-all --parallel build:*"
+    "build": "npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
     "bower": "^1.8.14",
+    "napa": "^3.0.0",
     "npm-run-all": "^4.1.5",
     "uglify-js": "^3.19.3"
   }
