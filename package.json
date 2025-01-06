@@ -35,7 +35,8 @@
     "leaflet": "^1.9.4",
     "leaflet-providers": "^2.0.0",
     "marka": "github:fians/marka",
-    "ovenplayer": "^0.10.37"
+    "ovenplayer": "^0.10.37",
+    "pdfjs-dist": "^4.10.38"
   },
   "scripts": {
     "install-bower-components": "bower install",
@@ -62,6 +63,7 @@
     "build:marka": "mkdir -p plugins_public/marka; cd plugins_public/marka; cp ../../node_modules/marka/dist/css/* .; cp ../../node_modules/marka/dist/js/* .",
     "build:onesignal": "mkdir -p plugins_public/onesignal; cd plugins_public/onesignal; echo '<?php\\nheader(\"Service-Worker-Allowed: /\");\\nheader(\"Content-Type: application/javascript\");\\n?>\\nimportScripts(\"https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js\");' > OneSignalSDKUpdaterWorker.js.php; echo '<?php\\nheader(\"Service-Worker-Allowed: /\");\\nheader(\"Content-Type: application/javascript\");\\nheader(\"X-Robots-Tag: none\");\\n?>\\nimportScripts(\"https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js\");' > OneSignalSDKWorker.js.php",
     "build:ovenplayer": "mkdir -p plugins_public/ovenplayer; cd plugins_public/ovenplayer; cp ../../node_modules/ovenplayer/dist/* .; cp ../../node_modules/dashjs/dist/dash.all.min.* .; cp ../../node_modules/hls.js/dist/hls.min.* .",
+    "build:pdfjs": "mkdir -p plugins_public/pdfjs; cd plugins_public/pdfjs; cp ../../node_modules/pdfjs-dist/legacy/build/pdf.min.mjs pdf.min.mjs.js; cp ../../node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs pdf.worker.min.mjs.js",
     "build": "npm run install-bower-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
