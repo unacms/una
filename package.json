@@ -50,11 +50,13 @@
     "select2": "^4.1.0-rc.0",
     "shepherd.js": "^11.2.0",
     "skrollr": "github:Prinzhorn/skrollr",
-    "spin.js": "4.1.1"
+    "spin.js": "4.1.1",
+    "stackedit-js": "^1.0.7"
   },
   "napa": {
     "jush": "git+https://github.com/vrana/jush.git",
-    "select2-to-tree": "git+https://github.com/clivezhg/select2-to-tree.git"
+    "select2-to-tree": "git+https://github.com/clivezhg/select2-to-tree.git",
+    "zzz": "https://cdn.tailwindcss.com"
   },
   "scripts": {
     "install-napa-components": "napa",
@@ -91,12 +93,19 @@
     "build:shepherd": "mkdir -p plugins_public/shepherd; cd plugins_public/shepherd; cp -r ../../node_modules/shepherd.js/dist/* .",
     "build:skrollr": "mkdir -p plugins_public/skrollr; cd plugins_public/skrollr; cp -r ../../node_modules/skrollr/dist/* .",
     "build:spin.js": "mkdir -p plugins_public/spin.js; cd plugins_public/spin.js; cp -r ../../node_modules/spin.js/spin.* .; grep -v 'export { Spinner };' spin.js > tmp && mv tmp spin.js",
+    "build:stackedit.js": "mkdir -p plugins_public/stackedit.js; cd plugins_public/stackedit.js; cp -r ../../node_modules/stackedit-js/docs/lib/* .",
+    "build:tailwind-max": "NODE_ENV=production tailwindcss -i ./template/css/tailwind.css -c ./tailwind.config.full.js -o ./plugins_public/tailwind/css/tailwind.max.css --minify",
+    "build:tailwind-min": "NODE_ENV=production tailwindcss -i ./template/css/tailwind.css -c ./tailwind.config.js -o ./plugins_public/tailwind/css/tailwind.min.css --minify",
     "build": "npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.16",
     "bower": "^1.8.14",
     "napa": "^3.0.0",
     "npm-run-all": "^4.1.5",
+    "tailwindcss": "^3.4.17",
     "uglify-js": "^3.19.3"
   }
 }
