@@ -46,7 +46,7 @@
     "quill-html-edit-button": "^2.2.15",
     "quill-image-resize-module": "^3.0.0",
     "quill-image-uploader": "^1.3.0",
-    "quill-mention": "^3.4.1"
+    "quill-mention": "^4.0.0"
   },
   "napa": {
     "jush": "git+https://github.com/vrana/jush.git"
