@@ -55,8 +55,7 @@
   },
   "napa": {
     "jush": "git+https://github.com/vrana/jush.git",
-    "select2-to-tree": "git+https://github.com/clivezhg/select2-to-tree.git",
-    "zzz": "https://cdn.tailwindcss.com"
+    "select2-to-tree": "git+https://github.com/clivezhg/select2-to-tree.git"
   },
   "scripts": {
     "install-napa-components": "napa",
