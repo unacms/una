@@ -36,7 +36,8 @@
     "marka": "github:fians/marka",
     "ovenplayer": "^0.10.37",
     "pdfjs-dist": "^4.10.38",
-    "photoswipe": "github:dimsemenov/PhotoSwipe#v4.1.3"
+    "photoswipe": "github:dimsemenov/PhotoSwipe#v4.1.3",
+    "prismjs": "^1.29.0"
   },
   "napa": {
     "jush": "git+https://github.com/vrana/jush.git"
@@ -69,6 +70,7 @@
     "build:ovenplayer": "mkdir -p plugins_public/ovenplayer; cd plugins_public/ovenplayer; cp ../../node_modules/ovenplayer/dist/* .; cp ../../node_modules/dashjs/dist/dash.all.min.* .; cp ../../node_modules/hls.js/dist/hls.min.* .",
     "build:pdfjs": "mkdir -p plugins_public/pdfjs; cd plugins_public/pdfjs; cp ../../node_modules/pdfjs-dist/legacy/build/pdf.min.mjs pdf.min.mjs.js; cp ../../node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs pdf.worker.min.mjs.js",
     "build:photoswipe": "mkdir -p plugins_public/photo-swipe; cd plugins_public/photo-swipe; cp -r ../../node_modules/photoswipe/dist/* .",
+    "build:prismjs": "mkdir -p plugins_public/prism; cd plugins_public/prism; echo '/* https://prismjs.com/download.html?#themes=prism&languages=markup+css+clike+javascript+markup-templating+php */' > prism.js; cd ../../node_modules/prismjs/components; echo '' > nl; cat prism-core.min.js nl prism-markup.min.js nl prism-css.min.js nl prism-clike.min.js nl prism-javascript.min.js nl prism-markup-templating.min.js nl prism-php.min.js >> ../../../plugins_public/prism/prism.js; cp ../themes/prism.min.css ../../../plugins_public/prism/prism.css",
     "build": "npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
