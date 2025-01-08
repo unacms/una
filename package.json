@@ -5,6 +5,9 @@
     "@claviska/jquery-minicolors": "^2.3.6",
     "@fullcalendar/core": "^6.1.15",
     "at.js": "^1.5.4",
+    "autosize": "^6.0.1",
+    "chart.js": "^3.9.1",
+    "clipboard": "^2.0.11",
     "codemirror": "^5.65.18",
     "croppie": "^2.6.5",
     "dashjs": "^4.7.4",
@@ -98,6 +101,9 @@
     "build:tailwind-min": "NODE_ENV=production tailwindcss -i ./template/css/tailwind.css -c ./tailwind.config.js -o ./plugins_public/tailwind/css/tailwind.min.css --minify",
     "build:theia-sticky-sidebar": "mkdir -p plugins_public/theia-sticky-sidebar; cd plugins_public/theia-sticky-sidebar; cp -r ../../node_modules/theia-sticky-sidebar/dist/* .",
     "build:timepicker-addon": "mkdir -p plugins_public/timepicker-addon; cd plugins_public/timepicker-addon; cp -r ../../node_modules/jquery-ui-timepicker-addon/dist/* .",
+    "build:autosize": "mkdir -p plugins_public; cp -r node_modules/autosize/dist/autosize.min.js plugins_public",
+    "build:chart.js": "mkdir -p plugins_public; cp -r node_modules/chart.js/dist/chart.min.js plugins_public",
+    "build:clipboard": "mkdir -p plugins_public; cp -r node_modules/clipboard/dist/clipboard.min.js plugins_public",
     "build": "npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
