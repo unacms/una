@@ -141,7 +141,7 @@
     "build:jekyll-toc": "cp node_modules/jekyll-toc/toc.js plugins_public; patch -p1 < patches/plugins_public_toc-js.txt",
     "build:urijs": "cp node_modules/urijs/src/URI.min.js plugins_public",
     "build": "mkdir -p plugins_public; npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*",
-    "postinstall": "build"
+    "postinstall": "npm run build"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
