@@ -27,10 +27,10 @@
     "highlight.js": "github:highlightjs/highlight.js",
     "hls.js": "^1.5.18",
     "htmx.org": "^1.9.12",
-    "i": "^0.3.7",
     "jquery": "^3.7.1",
     "jquery-migrate": "^3.5.2",
     "jquery-ui": "1.13.3",
+    "jquery-ui-timepicker-addon": "^1.6.3",
     "jstree": "^3.3.17",
     "leaflet": "^1.9.4",
     "leaflet-providers": "^2.0.0",
@@ -51,7 +51,8 @@
     "shepherd.js": "^11.2.0",
     "skrollr": "github:Prinzhorn/skrollr",
     "spin.js": "4.1.1",
-    "stackedit-js": "^1.0.7"
+    "stackedit-js": "^1.0.7",
+    "theia-sticky-sidebar": "^1.7.0"
   },
   "napa": {
     "jush": "git+https://github.com/vrana/jush.git",
@@ -95,6 +96,8 @@
     "build:stackedit.js": "mkdir -p plugins_public/stackedit.js; cd plugins_public/stackedit.js; cp -r ../../node_modules/stackedit-js/docs/lib/* .",
     "build:tailwind-max": "NODE_ENV=production tailwindcss -i ./template/css/tailwind.css -c ./tailwind.config.full.js -o ./plugins_public/tailwind/css/tailwind.max.css --minify",
     "build:tailwind-min": "NODE_ENV=production tailwindcss -i ./template/css/tailwind.css -c ./tailwind.config.js -o ./plugins_public/tailwind/css/tailwind.min.css --minify",
+    "build:theia-sticky-sidebar": "mkdir -p plugins_public/theia-sticky-sidebar; cd plugins_public/theia-sticky-sidebar; cp -r ../../node_modules/theia-sticky-sidebar/dist/* .",
+    "build:timepicker-addon": "mkdir -p plugins_public/timepicker-addon; cd plugins_public/timepicker-addon; cp -r ../../node_modules/jquery-ui-timepicker-addon/dist/* .",
     "build": "npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
