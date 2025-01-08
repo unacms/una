@@ -61,7 +61,8 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             <script type="module">
                 import locale from "' . $this->_sLangJsUrl . '";
                 window.glFilepondLocale = locale;
-                FilePond.setOptions(locale);
+                if ("undefined" !== typeof(FilePond))
+                    FilePond.setOptions(locale);
             </script>';
         return $s;
     }
