@@ -47,6 +47,7 @@
     "leaflet-providers": "^2.0.0",
     "lottie-web": "^5.12.2",
     "marka": "github:fians/marka",
+    "masonry-layout": "^4.2.2",
     "npm": "^11.0.0",
     "ovenplayer": "^0.10.37",
     "pdfjs-dist": "^4.10.38",
@@ -129,6 +130,7 @@
     "build:jquery-touch-punch": "cp bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js plugins_public",
     "build:loadcss": "cp node_modules/fg-loadcss/dist/loadCSS.js plugins_public",
     "build:lottie": "cp node_modules/lottie-web/build/player/lottie.min.js plugins_public",
+    "build:masonry": "cp node_modules/masonry-layout/dist/masonry.pkgd.min.js plugins_public",
     "build": "mkdir -p plugins_public; npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
