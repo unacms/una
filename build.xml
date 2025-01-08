@@ -118,6 +118,7 @@
     <!-- ============================================  -->
     <target name="prepare">
         <echo msg="Prepage: installing necessary components" />
+        <exec command="npm install" dir="${project.basedir}" checkreturn="true" />
         <exec command="${php} ${composer} install" dir="${project.basedir}" checkreturn="true" />
         <exec command="${php} ${composer} install" dir="${project.basedir}/tests" checkreturn="true" />
     </target>
