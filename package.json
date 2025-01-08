@@ -70,7 +70,8 @@
     "spin.js": "4.1.1",
     "stackedit-js": "^1.0.7",
     "tablesorter": "^2.32.0",
-    "theia-sticky-sidebar": "^1.7.0"
+    "theia-sticky-sidebar": "^1.7.0",
+    "urijs": "^1.19.11"
   },
   "napa": {
     "jush": "git+https://github.com/vrana/jush.git",
@@ -138,7 +139,9 @@
     "build:moment": "cp node_modules/moment/min/moment-with-locales.min.js plugins_public; cp node_modules/moment-timezone/builds/moment-timezone-with-data-1970-2030.js plugins_public",
     "build:recordrtc": "cp node_modules/recordrtc/RecordRTC.min.js plugins_public",
     "build:jekyll-toc": "cp node_modules/jekyll-toc/toc.js plugins_public; patch -p1 < patches/plugins_public_toc-js.txt",
-    "build": "mkdir -p plugins_public; npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
+    "build:urijs": "cp node_modules/urijs/src/URI.min.js plugins_public",
+    "build": "mkdir -p plugins_public; npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*",
+    "postinstall": "build"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
