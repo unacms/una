@@ -74,10 +74,10 @@
     "urijs": "^1.19.11"
   },
   "napa": {
-    "jush": "git+https://github.com/vrana/jush.git",
-    "select2-to-tree": "git+https://github.com/clivezhg/select2-to-tree.git",
-    "jquery-jfeed": "git+https://github.com/jfhovinne/jFeed.git",
-    "jekyll-toc": "git+https://github.com/ghiculescu/jekyll-table-of-contents"
+    "jush": "https://github.com/vrana/jush",
+    "select2-to-tree": "https://github.com/clivezhg/select2-to-tree",
+    "jquery-jfeed": "https://github.com/jfhovinne/jFeed",
+    "jekyll-toc": "https://github.com/ghiculescu/jekyll-table-of-contents"
   },
   "scripts": {
     "install-napa-components": "napa",
