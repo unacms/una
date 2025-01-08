@@ -3,6 +3,7 @@
   "homepage": "https://github.com/unacms/una",
   "dependencies": {
     "@claviska/jquery-minicolors": "^2.3.6",
+    "@egjs/hammerjs": "^2.0.17",
     "@fullcalendar/core": "^6.1.15",
     "at.js": "^1.5.4",
     "autosize": "^6.0.1",
@@ -42,6 +43,7 @@
     "ovenplayer": "^0.10.37",
     "pdfjs-dist": "^4.10.38",
     "photoswipe": "github:dimsemenov/PhotoSwipe#v4.1.3",
+    "player.js": "^0.1.0",
     "prismjs": "^1.29.0",
     "pusher-js": "^8.4.0-rc2",
     "quill": "^1.3.7",
@@ -101,9 +103,11 @@
     "build:tailwind-min": "NODE_ENV=production tailwindcss -i ./template/css/tailwind.css -c ./tailwind.config.js -o ./plugins_public/tailwind/css/tailwind.min.css --minify",
     "build:theia-sticky-sidebar": "mkdir -p plugins_public/theia-sticky-sidebar; cd plugins_public/theia-sticky-sidebar; cp -r ../../node_modules/theia-sticky-sidebar/dist/* .",
     "build:timepicker-addon": "mkdir -p plugins_public/timepicker-addon; cd plugins_public/timepicker-addon; cp -r ../../node_modules/jquery-ui-timepicker-addon/dist/* .",
-    "build:autosize": "mkdir -p plugins_public; cp -r node_modules/autosize/dist/autosize.min.js plugins_public",
-    "build:chart.js": "mkdir -p plugins_public; cp -r node_modules/chart.js/dist/chart.min.js plugins_public",
-    "build:clipboard": "mkdir -p plugins_public; cp -r node_modules/clipboard/dist/clipboard.min.js plugins_public",
+    "build:autosize": "mkdir -p plugins_public; cp node_modules/autosize/dist/autosize.min.js plugins_public",
+    "build:chart.js": "mkdir -p plugins_public; cp node_modules/chart.js/dist/chart.min.js plugins_public",
+    "build:clipboard": "mkdir -p plugins_public; cp node_modules/clipboard/dist/clipboard.min.js plugins_public",
+    "build:embedly-player": "mkdir -p plugins_public; cp node_modules/player.js/dist/player-0.1.0.min.js plugins_public/embedly-player.min.js",
+    "build:hammerjs": "mkdir -p plugins_public; cp node_modules/@egjs/hammerjs/dist/hammer.min.js plugins_public",
     "build": "npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
