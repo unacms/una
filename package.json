@@ -13,6 +13,7 @@
     "croppie": "^2.6.5",
     "dashjs": "^4.7.4",
     "fancybox": "^3.0.1",
+    "fg-loadcss": "^3.1.0",
     "filepond": "^4.32.6",
     "filepond-plugin-file-validate-size": "^2.2.8",
     "filepond-plugin-file-validate-type": "^1.2.9",
@@ -125,6 +126,7 @@
     "build:jquery-jfeed": "cp node_modules/jquery-jfeed/build/dist/jquery.jfeed.pack.js plugins_public",
     "build:jquery-tablestorter": "cp node_modules/tablesorter/dist/js/jquery.tablesorter.min.js plugins_public",
     "build:jquery-touch-punch": "cp bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js plugins_public",
+    "build:loadcss": "cp node_modules/fg-loadcss/dist/loadCSS.js plugins_public",
     "build": "mkdir -p plugins_public; npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*"
   },
   "devDependencies": {
