@@ -68,6 +68,9 @@
         <exclude name="phing.phar" />
         <exclude name="CODE_OF_CONDUCT.md" />
         <exclude name="docker-compose.yml" />
+        <exclude name="package.json" />
+        <exclude name="package-lock.json" />
+        <exclude name="tailwind.config*" />
         <exclude name="patches/**" />
         <exclude name="storage/**/*" />
         <exclude name="samples/**" />
@@ -75,6 +78,8 @@
         <exclude name="tests/**" />
         <exclude name="packages/**" />
         <exclude name="upgrade/**" />
+        <exclude name="node_modules/**" />
+        <exclude name="bower_components/**" />
     </fileset>
 
     <fileset dir="${project.basedir}" defaultexcludes="true" id="doc_files">
