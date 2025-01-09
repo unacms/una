@@ -26,7 +26,7 @@ class BxOktaConCustom
         if (!empty($aRemoteProfileInfo['communities']))
            $this->syncCommunities($iProfileId, explode(',', $aRemoteProfileInfo['communities']));
 
-        $this->syncLocation($iProfileId, $aRemoteProfileInfo);
+        // $this->syncLocation($iProfileId, $aRemoteProfileInfo);
     }
 
     function onLogin ($oProfile, $aRemoteProfileInfo)
@@ -36,7 +36,7 @@ class BxOktaConCustom
         if (!empty($aRemoteProfileInfo['communities']))
            $this->syncCommunities($oProfile ? $oProfile->id() : bx_get_logged_profile_id(), explode(',', $aRemoteProfileInfo['communities']));
 
-        $this->syncLocation($oProfile->id(), $aRemoteProfileInfo);
+        // $this->syncLocation($oProfile->id(), $aRemoteProfileInfo);
     }
 
     function onConvertRemoteFields($aProfileInfo, &$aProfileFields)

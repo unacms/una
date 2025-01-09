@@ -205,6 +205,38 @@ class BxOktaConModule extends BxBaseModConnectModule
             return BxDolAccount::getInstance($aFieldsAccount['email']);
         }
     }
+
+    function serviceLogin($sRemoteId)
+    {
+        $iProfileId = $this->_oDb->getProfileId($sRemoteId);
+        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+
+        $bRememberMe = false;
+        bx_login($oProfile->getAccountId(), $bRememberMe);
+        $aRet = $this->getUserIds($oProfile);
+        $aRet['session'] = BxDolSession::getInstance()->getId();
+        return $aRet;
+    }
+
+    function serviceGetUserIds($sRemoteId)
+    {
+        $iProfileId = $this->_oDb->getProfileId($sRemoteId);
+        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+
+        return $this->getUserIds($oProfile);
+    }
+
+    protected function getUserIds($oProfile)
+    {
+        return [
+            'account_id' => $oProfile->getAccountId(),
+            'profile_id' => $oProfile->id(),
+            'content_id' => $oProfile->getContentId(),
+            'content_module' => $oProfile->getModule(),
+        ];
+    }
 }
 
 /** @} */
