@@ -636,7 +636,9 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             document.querySelector('#' + this._sDivId),
             $.extend({}, _options, o)
         );
-        this._uploader.setOptions(glFilepondLocale);
+
+        if (typeof(glFilepondLocale) !== 'undefined');
+            this._uploader.setOptions(glFilepondLocale);
 
         // need to be activated if catch paste needed
         //this.initPasteEditor();

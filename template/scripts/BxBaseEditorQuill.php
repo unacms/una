@@ -193,7 +193,7 @@ class BxBaseEditorQuill extends BxDolEditor
         $aJs = array(
             $sJsPrefix . 'highlight/' . $sJsSuffix . 'highlight.min.js',
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.min.js', 
-            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.mention.js',  
+            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.mention.min.js',
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.imageUploader.min.js', 
             $sJsPrefix . 'quill/' . $sJsSuffix . 'image-resize.min.js', 
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill-emoji.js', 

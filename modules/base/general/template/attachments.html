@@ -31,13 +31,14 @@
 		imagesLoaded: true
             });
         }
-
+    </script>
+    <script type="module">
         // pdf previews
-        if ('undefined' !== typeof(window['pdfjs-dist/build/pdf'])) {
+        if ('undefined' !== typeof(window['pdfjsLib'])) {
             $('.bx-base-general-attachment a[href$=".pdf"]').each(function () {
                 var sUrl = $(this).attr('href');
                 var e = $(this);
-                var oPdfjsLib = window['pdfjs-dist/build/pdf'];
+                var oPdfjsLib = window['pdfjsLib'];
                 oPdfjsLib.GlobalWorkerOptions.workerSrc = '__pdfjs_worker_url__';
 
                 var oLoadingTask = pdfjsLib.getDocument(sUrl);

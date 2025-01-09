@@ -673,9 +673,9 @@ function genFlag($sLang = '', $oTemplate = null)
 {
     if (!$oTemplate)
         $oTemplate = BxDolTemplate::getInstance();
-    $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icon-css/css/|flag-icon.min.css');
+    $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icons/css/|flag-icons.min.css');
     $sFlag = BxDolLanguages::getInstance()->getLangFlag($sLang);
-    return '<span title="' . $sFlag . '" class="flag-icon flag-icon-' . $sFlag . '"></span>';
+    return '<span title="' . $sFlag . '" class="fi fi-' . $sFlag . '"></span>';
 }
 
 // print debug information ( e.g. arrays )

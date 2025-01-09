@@ -5,7 +5,9 @@ cache_public/*
 tmp/*
 logs/*
 plugins/*
+plugins_public/*
 node_modules/*
+bower_components/*
 
 # Exclude main config file
 inc/header*

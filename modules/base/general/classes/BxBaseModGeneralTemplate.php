@@ -496,12 +496,12 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css');
     	$this->addJs(array(
             'flickity/flickity.pkgd.min.js',
-            'pdfjs/build/pdf.min.js',
         ));
 
-    	return $this->parseHtmlByName('attachments.html', array(
+    	$s = $this->addJs('pdfjs/pdf.min.mjs.js', true);
+    	return $s . $this->parseHtmlByName('attachments.html', array(
             'bx_repeat:attachments' => $aResult,
-            'pdfjs_worker_url' => $this->getJsUrl('pdfjs/build/pdf.worker.min.js'),
+            'pdfjs_worker_url' => $this->getJsUrl('pdfjs/pdf.worker.min.mjs.js'),
         ));
     }
     

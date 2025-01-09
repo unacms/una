@@ -2437,6 +2437,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _wrapInTagJs($sFile)
     {
+        if (false !== strpos($sFile, '.mjs.js'))
+            return "<script type=\"module\" src=\"" . $sFile . "\"></script>";
         return "<script language=\"javascript\" src=\"" . $sFile . "\"></script>";
     }
 

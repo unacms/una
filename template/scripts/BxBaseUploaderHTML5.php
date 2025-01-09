@@ -17,6 +17,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
     protected $_sDivId; ///< div id where upload button will be placed
     protected $_sFocusDivId;
     protected $_sProgressDivId;
+    protected $_sLangJsUrl;
 
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
@@ -30,20 +31,21 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         $this->_sJsTemplate = 'uploader_button_html5_js.html';
         $this->_sUploaderFormTemplate = 'uploader_form_html5.html';
 
-        $aUploaderLangs = array('ar-ar' => 1, 'cs-cz' => 1, 'da-dk' => 1, 'de-de' => 1, 'el-el' => 1, 'en-en' => 1, 'es-es' => 1, 'fa-ir' => 1, 'fi-fi' => 1, 'fr-fr' => 1, 'he-he' => 1, 'hr-hr' => 1, 'hu-hu' => 1, 'id-id' => 1, 'it-it' => 1, 'ja-ja' => 1, 'lt-lt' => 1, 'nl-nl' => 1, 'no-nb' => 1, 'pl-pl' => 1, 'pt-br' => 1, 'ro-ro' => 1, 'ru-ru' => 1, 'sk-sk' => 1, 'sv-se' => 1, 'tr-tr' => 1, 'uk-ua' => 1, 'vi-vi' => 1, 'zh-cn' => 1, 'zh-tw' => 1);
+        $aUploaderLangs = array('am-et' => 1, 'ar-ar' => 1, 'az-az' => 1, 'ca-ca' => 1, 'cs-cz' => 1, 'da-dk' => 1, 'de-de' => 1, 'el-el' => 1, 'en-en' => 1, 'es-es' => 1, 'et-ee' => 1, 'fa_ir' => 1, 'fi-fi' => 1, 'fr-fr' => 1, 'he-he' => 1, 'hr-hr' => 1, 'hu-hu' => 1, 'id-id' => 1, 'it-it' => 1, 'ja-ja' => 1, 'km-km' => 1, 'ko-kr' => 1, 'ku-ckb' => 1, 'lt-lt' => 1, 'lv-lv' => 1, 'nl-nl' => 1, 'no_nb' => 1, 'pl-pl' => 1, 'pt-br' => 1, 'pt-pt' => 1, 'ro-ro' => 1, 'ru-ru' => 1, 'sk-sk' => 1, 'sv_se' => 1, 'tr-tr' => 1, 'uk-ua' => 1, 'vi-vi' => 1, 'zh-cn' => 1, 'zh-tw' => 1);
         $sUploaderLang = BxDolLanguages::getInstance()->getCurrentLanguage() . '-' . BxDolLanguages::getInstance()->getLangFlag();
         if (!isset($aUploaderLangs[$sUploaderLang]))
             $sUploaderLang = 'en-en';
 
+        $this->_sLangJsUrl = $this->_oTemplate->getJsUrlWithRevision('filepond/locale/' . $sUploaderLang . '.js');
+
         $this->addJs([
-            'filepond/locale/' . $sUploaderLang . '.js',
             'filepond/filepond.min.js',
             'filepond/filepond-plugin-image-preview.min.js',
             'filepond/filepond-plugin-image-transform.min.js',
             'filepond/filepond-plugin-image-crop.min.js',
             'filepond/filepond-plugin-image-resize.min.js',
             'filepond/filepond-plugin-file-validate-size.min.js',
-            'filepond/filepond-plugin-file-validate-type.js',
+            'filepond/filepond-plugin-file-validate-type.min.js',
         ]);
 
         $this->addCss([
@@ -52,6 +54,18 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         ]);
     }
 
+    public function getUploaderJs($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false)
+    {
+        $s = parent::getUploaderJs($mixedGhostTemplate, $isMultiple, $aParams, $bDynamic);
+        $s .= '
+            <script type="module">
+                import locale from "' . $this->_sLangJsUrl . '";
+                window.glFilepondLocale = locale;
+                if ("undefined" !== typeof(FilePond))
+                    FilePond.setOptions(locale);
+            </script>';
+        return $s;
+    }
     /**
      * Get uploader button title
      */
