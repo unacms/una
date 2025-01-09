@@ -84,6 +84,15 @@ class BxDolSessionQuery extends BxDolDb
         return $iRet;
     }
     
+    function deleteByAccountId($iAccountId)
+    {
+        $iDate = $this->getOne("SELECT `date` FROM `" . $this->sTable . "` WHERE `user_id` = :id ORDER BY `date` DESC", ['id' => $iAccountId]);
+        if ($iDate)
+            $this->updateLastActivityAccount($iAccountId, $iDate);
+        
+        return (int)$this->query("DELETE FROM `" . $this->sTable . "` WHERE `user_id` = :id", ['id' => $iAccountId]);
+    }
+
     function updateLastActivity($iId)
     {
         if (defined('BX_DOL_SESSION_UPDATE_ACTIVE') && ($aRow = $this->getRow("SELECT `date`, `user_id` FROM `" . $this->sTable . "` WHERE `id` = :id AND `date` < UNIX_TIMESTAMP() - " . BX_DOL_SESSION_UPDATE_ACTIVE, ['id' => $iId]))) {
@@ -91,10 +100,13 @@ class BxDolSessionQuery extends BxDolDb
         }
     }
 
-    function updateLastActivityAccount($iId, $iDate)
+    function updateLastActivityAccount($iAccountId, $iDate)
     {
-        if ($iDate > 0)
-            BxDolAccountQuery::getInstance()->_updateField($iId, 'active', $iDate);
+        if ($iDate > 0) {
+            $a = BxDolAccountQuery::getInstance()->getInfoById($iAccountId);
+            if ($iDate > $a['active'])
+                BxDolAccountQuery::getInstance()->_updateField($iAccountId, 'active', $iDate);
+        }
     }
 
     function getLastActivityAccount($iUserId)

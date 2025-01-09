@@ -72,12 +72,18 @@ class BxBaseServiceContent extends BxDol
     /** 
      * @ref bx_system_general_cnt-logout "Logout current user"
      */
-    function serviceLogout()
+    function serviceLogout($bAllSessions = false)
     {
         if (!isLogged())
             return false;
         
-        bx_logout();
+        if ($bAllSessions) {
+            $o = new BxDolSessionQuery();
+            $o->deleteByAccountId(getLoggedId());
+        }
+        else {
+            bx_logout();
+        }
 
         return true;
     }
