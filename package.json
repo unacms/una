@@ -79,6 +79,9 @@
     "jquery-jfeed": "https://github.com/jfhovinne/jFeed",
     "jekyll-toc": "https://github.com/ghiculescu/jekyll-table-of-contents"
   },
+  "napa-config": {
+    "cache": false
+  },
   "scripts": {
     "install-napa-components": "napa",
     "install-bower-components": "bower install",
