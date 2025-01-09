@@ -12,6 +12,17 @@
  */
 class BxBaseServiceContent extends BxDol
 {
+    function serviceCheckLogged()
+    {
+        $oAccount = BxDolAccount::getInstance();
+        $aRet = $oAccount ? $this->getUserIds($oAccount) : null;
+        if ($aRet)
+            $aRet['session'] = BxDolSession::getInstance()->getId();
+        else
+            $aRet = ['session' => BxDolSession::getInstance()->getId()];
+        return $aRet;
+    }
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
@@ -44,6 +55,31 @@ class BxBaseServiceContent extends BxDol
         else
             $aRet = ['session' => BxDolSession::getInstance()->getId()];
         return $aRet;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general_cnt-logout Logout current user
+     * 
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/logout/TemplServiceContent" @endcode
+     * 
+     * @return boolean
+     * 
+     * @see BxBaseServiceContent::serviceLogout
+     */
+    /** 
+     * @ref bx_system_general_cnt-logout "Logout current user"
+     */
+    function serviceLogout()
+    {
+        if (!isLogged())
+            return false;
+        
+        bx_logout();
+
+        return true;
     }
 
     /**
@@ -213,6 +249,8 @@ class BxBaseServiceContent extends BxDol
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/update/TemplServiceContent&params=%5B%22bx_posts%22%2C123%2C%7B%22text%22%3A%22new%20text%22%7D%5D" @endcode
      * Update account email by account id(4):
      * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/update/TemplServiceContent&params=%5B%22sys_account%22%2C4%2C%7B%22email%22%3A%22new%40email.com%22%7D%5D" @endcode
+     * To replace existing picture (for example profile avatar) delete previous picture first, 
+     * then set new one.
      * 
      * @param $sContentObject content object name
      * @param $iContentId content id
