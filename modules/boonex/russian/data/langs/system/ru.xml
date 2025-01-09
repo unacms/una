@@ -1737,6 +1737,7 @@
     <string name="_adm_stg_cpt_option_sys_metatags_hashtags_max"><![CDATA[Максимальное число хэш-тагов в одной публикации]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_mentions_max"><![CDATA[Максимальное число упоминаний кого-либо в одной публикации]]></string>
     <string name="_adm_stg_cpt_option_sys_attach_links_max"><![CDATA[Максимальное число присоединенных ссылок к одной публикации (0 - без ограничений)]]></string>
+    <string name="_adm_stg_cpt_option_sys_enable_post_to_context_for_privacy"><![CDATA[Включить возможность добавления контента в контекст, используя поле "Конфиденциальность"]]></string>
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Скрыть из поля "Конфиденциальность" возможность добавления контента в контекст модулей]]></string>
     <string name="_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt"><![CDATA[Рассматривать контекст, размещенный в контексте, как контент]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Минимальная длина слова в поиске по сайту]]></string>
@@ -3663,7 +3664,7 @@
         <string name="_sys_pre_lists_content_filter_pg13"><![CDATA[PG-13]]></string>
         <string name="_sys_pre_lists_content_filter_r"><![CDATA[R]]></string>
         <string name="_sys_pre_lists_content_filter_x"><![CDATA[X]]></string>
-        <string name="_sys_pre_lists_relations"><![CDATA[Отношения]]></string>
+        <string name="_sys_pre_lists_relations"><![CDATA[Связи]]></string>
         <string name="_sys_pre_lists_relations_husband"><![CDATA[муж]]></string>
         <string name="_sys_pre_lists_relations_wife"><![CDATA[жена]]></string>
         <string name="_sys_pre_lists_relations_father"><![CDATA[отец]]></string>
@@ -3732,9 +3733,9 @@
     <string name="_sys_ps_group_title_custom"><![CDATA[Индивидуально]]></string>
     <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
     <string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>
-    <string name="_sys_ps_group_title_friends_selected"><![CDATA[Избранные друзья...]]></string>
-    <string name="_sys_ps_group_title_relations"><![CDATA[Отношения]]></string>
-    <string name="_sys_ps_group_title_relations_selected"><![CDATA[Избранные отношения...]]></string>
+    <string name="_sys_ps_group_title_friends_selected"><![CDATA[Определенные друзья...]]></string>
+    <string name="_sys_ps_group_title_relations"><![CDATA[Связи]]></string>
+    <string name="_sys_ps_group_title_relations_selected"><![CDATA[Определенные связи...]]></string>
     <string name="_sys_ps_group_title_me_only"><![CDATA[Только я]]></string>
     <string name="_sys_ps_group_title_members"><![CDATA[Пользователи]]></string>
     <string name="_sys_ps_group_title_public"><![CDATA[Все]]></string>

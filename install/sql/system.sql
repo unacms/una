@@ -394,7 +394,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_search_keyword_min_len', '_adm_stg_cpt_option_sys_search_keyword_min_len', '1', 'digit', '', '', '', '', 80),
 
-(@iCategoryId, 'sys_relations_enable', '_adm_stg_cpt_option_sys_relations_enable', 'on', 'checkbox', '', '', '', '', 90),
+(@iCategoryId, 'sys_relations_enable', '_adm_stg_cpt_option_sys_relations_enable', '', 'checkbox', '', '', '', '', 90),
 (@iCategoryId, 'sys_relations', '_adm_stg_cpt_option_sys_relations', '', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"get_options_relations";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', '', '', '', 91),
 
 (@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', '', 100),
@@ -531,8 +531,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `info`, `value`, `ty
 
 (@iCategoryId, 'sys_profile_bot', '_adm_stg_cpt_option_sys_profile_bot', '_adm_stg_inf_option_sys_profile_bot', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_options_profile_bot";s:5:"class";s:13:"TemplServices";}', '', '', 40),
 
-(@iCategoryId, 'sys_hide_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy', '', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_module_list_for_privacy_selector";s:5:"class";s:13:"TemplServices";}', '', '', 50),
-(@iCategoryId, 'sys_treat_cxt_in_cxt_as_cnt', '_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt', '', 'on', 'checkbox', '', '', '', 51),
+(@iCategoryId, 'sys_enable_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_enable_post_to_context_for_privacy', '', '', 'checkbox', '', '', '', 50),
+(@iCategoryId, 'sys_hide_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy', '', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_module_list_for_privacy_selector";s:5:"class";s:13:"TemplServices";}', '', '', 51),
+(@iCategoryId, 'sys_treat_cxt_in_cxt_as_cnt', '_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt', '', 'on', 'checkbox', '', '', '', 52),
 
 (@iCategoryId, 'sys_vote_reactions_quick_mode', '_adm_stg_cpt_option_sys_vote_reactions_quick_mode', '', 'on', 'checkbox', '', '', '', 60),
 
@@ -2405,20 +2406,21 @@ CREATE TABLE `sys_privacy_groups` (
   `check` text NOT NULL default '',
   `active` tinyint(4) NOT NULL default '1',
   `visible` tinyint(4) NOT NULL default '1',
+  `order` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 );
 
-INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VALUES
-('1', '', '', 1, 0),
-('2', '_sys_ps_group_title_me_only', '@me_only', 1, 1),
-('3', '_sys_ps_group_title_public', '@public', 1, 1),
-('4', '_sys_ps_group_title_members', '@members', 0, 0),
-('5', '_sys_ps_group_title_friends', '@friends', 1, 1),
-('6', '_sys_ps_group_title_friends_selected', '@friends_selected_by_object', 1, 1),
-('7', '_sys_ps_group_title_relations', '@relations', 1, 1),
-('8', '_sys_ps_group_title_relations_selected', '@relations_selected_by_object', 1, 1),
-('9', '_sys_ps_group_title_memberships_selected', '@memberships_selected_by_object', 1, 1),
-('99', '_sys_ps_group_title_custom', '@custom_by_object', 0, 0);
+INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`, `order`) VALUES
+('1', '', '', 1, 0, 0),
+('2', '_sys_ps_group_title_me_only', '@me_only', 1, 1, 7),
+('3', '_sys_ps_group_title_public', '@public', 1, 1, 1),
+('4', '_sys_ps_group_title_members', '@members', 0, 0, 0),
+('5', '_sys_ps_group_title_friends', '@friends', 1, 1, 2),
+('6', '_sys_ps_group_title_friends_selected', '@friends_selected_by_object', 1, 1, 3),
+('7', '_sys_ps_group_title_relations', '@relations', 1, 1, 4),
+('8', '_sys_ps_group_title_relations_selected', '@relations_selected_by_object', 1, 1, 5),
+('9', '_sys_ps_group_title_memberships_selected', '@memberships_selected_by_object', 1, 1, 6),
+('99', '_sys_ps_group_title_custom', '@custom_by_object', 0, 0, 0);
 
 CREATE TABLE `sys_privacy_groups_custom` (
   `id` int(11) unsigned NOT NULL auto_increment,

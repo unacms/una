@@ -80,7 +80,7 @@ class BxDolPrivacyQuery extends BxDolDb
     function getGroupsBy($aParams)
     {
         $sSelectClause = "`id`, `title`, `check`, `active`";
-        $sWhereClause = "";
+        $sWhereClause = $sOrderClause = "";
 
         switch($aParams['type']) {
             case 'id':
@@ -95,6 +95,7 @@ class BxDolPrivacyQuery extends BxDolDb
                 $sCacheName = $this->_sCacheGroupsActVis;
                 $sMethod = 'getAll';
                 $sWhereClause = "`active`='1' AND `visible`='1'";
+                $sOrderClause = "`order` ASC";
                 break;
 
             case 'active_list':
@@ -106,10 +107,13 @@ class BxDolPrivacyQuery extends BxDolDb
                 break;
         }
 
+        if($sOrderClause)
+            $sOrderClause = "ORDER BY " . $sOrderClause;
+
         $sSql = "SELECT
                     " . $sSelectClause . "
                 FROM `sys_privacy_groups`
-                WHERE " . $sWhereClause;
+                WHERE " . $sWhereClause . " " . $sOrderClause;
 
         return !empty($sCacheFunction) && !empty($sCacheName) ? $this->$sCacheFunction($sCacheName, $sMethod, $sSql) : $this->$sMethod($sSql);
     }

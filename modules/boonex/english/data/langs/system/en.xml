@@ -1761,6 +1761,7 @@
     <string name="_adm_stg_cpt_option_sys_metatags_hashtags_max"><![CDATA[Max number of hashtags per post]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_mentions_max"><![CDATA[Max number of mentions per post]]></string>
     <string name="_adm_stg_cpt_option_sys_attach_links_max"><![CDATA[Max number of attached links per post (0 - no limit)]]></string>
+    <string name="_adm_stg_cpt_option_sys_enable_post_to_context_for_privacy"><![CDATA[Allow to post to context using Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Hide post to context for modules in Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt"><![CDATA[Treat context posted in context as content]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Keyword min length in site search]]></string>
@@ -3793,14 +3794,14 @@ If it is not enabled then please consider implement this optimization, since it 
             <li><b>{0}</b> total</li>
             <li><b>{1}</b> deleted</li>
         </ul>]]></string>
-    <string name="_sys_ps_group_title_memberships_selected"><![CDATA[Selected Membership Levels...]]></string>
+    <string name="_sys_ps_group_title_memberships_selected"><![CDATA[Specific membership levels...]]></string>
     <string name="_sys_ps_group_title_custom"><![CDATA[Custom]]></string>
     <string name="_sys_ps_group_title_followers"><![CDATA[Followers]]></string>
     <string name="_sys_ps_group_title_friends"><![CDATA[Friends]]></string>
-    <string name="_sys_ps_group_title_friends_selected"><![CDATA[Selected Friends...]]></string>
+    <string name="_sys_ps_group_title_friends_selected"><![CDATA[Specific friends...]]></string>
     <string name="_sys_ps_group_title_relations"><![CDATA[Relationships]]></string>
-    <string name="_sys_ps_group_title_relations_selected"><![CDATA[Selected Relationships...]]></string>
-    <string name="_sys_ps_group_title_me_only"><![CDATA[Me only]]></string>
+    <string name="_sys_ps_group_title_relations_selected"><![CDATA[Specific relationships...]]></string>
+    <string name="_sys_ps_group_title_me_only"><![CDATA[Only me]]></string>
     <string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
     <string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>
     <string name="_sys_ps_group_title_participants"><![CDATA[Participants]]></string>

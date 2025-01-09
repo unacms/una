@@ -184,7 +184,8 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
         $aValues = $oPrivacy->addDynamicGroups($aValues, $iOwnerId, $aParams);
 
-        $aValues = $oPrivacy->addSpaces($aValues, $iOwnerId, $aParams);
+        if(getParam('sys_enable_post_to_context_for_privacy') == 'on')
+            $aValues = $oPrivacy->addSpaces($aValues, $iOwnerId, $aParams);
 
         $sName = $oPrivacy->convertActionToField($sAction);
 
