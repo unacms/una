@@ -14,7 +14,10 @@
         if ($.cookie('devicePixelRatio') == dpr || dpr < 2 || (typeof(bIgnorePixelRatio) != "undefined" && bIgnorePixelRatio) || !navigator.cookieEnabled) 
             return;
         $.cookie('devicePixelRatio', dpr, {expires: 365, path: '/'});
-        window.location.reload();
+        if (1 != localStorage.getItem("dpr")) {
+            localStorage.setItem("dpr", 1);
+            window.location.reload();
+        }
     })(window);
 
     var oMediaPhone = window.matchMedia('__css_media_phone__');
