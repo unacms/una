@@ -32,9 +32,9 @@ BxDolVoteReactions.prototype.init = function()
     BxDolVote.prototype.init.call(this);
 
     var $this = this;
-    var bMobile = bx_check_mq() == 'mobile';
+    var bMouse = !bx_is_mouse();
     
-    if(!this._bQuickMode || !bMobile)
+    if(!this._bQuickMode || !bMouse)
         $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).hover(function() {
             $this.onVoteIn(this);
         }, function() {
