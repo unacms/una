@@ -1487,6 +1487,10 @@ function bx_set_color_scheme_html()
  */
 function bx_check_mq()
 {
+    if (typeof glOnCheckMq === 'function') {
+        return glOnCheckMq();
+    }
+
     return window.getComputedStyle(document.querySelector('body'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
 }
 
