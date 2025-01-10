@@ -575,13 +575,9 @@ class BxDolSearchResult implements iBxDolReplaceable
             'type' => $this->_sMode,
         ];
 
-        if (isset($this->_aParams['author'])){
-            $aParams['author'] = $this->_aParams['author'];
-        }
-
-        if (isset($this->_aParams['category'])){
-            $aParams['category'] = $this->_aParams['category'];
-        }
+        foreach(['author', 'category', 'context'] as $sParamAdd)
+            if(isset($this->_aParams[$sParamAdd]))
+                $aParams[$sParamAdd] = $this->_aParams[$sParamAdd];
 
         return [
             'module' => $sModule,
