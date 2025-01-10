@@ -1482,6 +1482,16 @@ function bx_set_color_scheme_html()
         $('html').removeClass('dark')
 }
 
+function bx_is_mouse()
+{
+    return matchMedia('(pointer:fine)').matches;
+}
+
+function bx_is_touch_device()
+{
+    return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+}
+
 /**
  * Check if mobile or desktop device.
  */
