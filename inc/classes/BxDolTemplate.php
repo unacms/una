@@ -3736,7 +3736,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         bx_alert('system', 'design_before_output', 0, 0, ['page' => &$this->aPage, 'page_content' => &$this->aPageContent]);
 
         header( 'Content-type: text/html; charset=utf-8' );
-        header( 'X-Frame-Options: sameorigin' );
+        $sXFrameOpts = getParam('sys_x_frame_options');
+        if ('Off' !== $sXFrameOpts)
+            header( 'X-Frame-Options: ' . $sXFrameOpts );
         if (BX_PAGE_EMBED == $oTemplate->getPageNameIndex())
             header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors'));
 
