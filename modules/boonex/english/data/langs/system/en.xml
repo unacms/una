@@ -1735,6 +1735,7 @@
     <string name="_adm_stg_cpt_option_sys_default_socket_timeout"><![CDATA[HTTP context read timeout (in seconds, -1 - unlimit)]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - trust unsigned certificates or not verified hosts]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
+    <string name="_adm_stg_cpt_option_sys_x_frame_options"><![CDATA['X-Frame-Options' header value (Off - don't send this header)]]></string>
     <string name="_adm_stg_cpt_option_sys_samesite_cookies"><![CDATA[SameSite value for sensitive cookies]]></string>
     <string name="_adm_stg_cpt_option_sys_notify_to_approve_by_role"><![CDATA[Notify context member with necessary role to approve content in the context]]></string>
     <string name="_adm_stg_cpt_option_sys_fixed_header"><![CDATA[Fixed header]]></string>

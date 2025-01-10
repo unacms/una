@@ -1711,6 +1711,7 @@
     <string name="_adm_stg_cpt_option_sys_default_socket_timeout"><![CDATA[Таймаут чтения HTTP контекста (в секундах, -1 - неограниченно)]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - доверять неподписанным сертификатам или неподтвержденным хостам]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA[Значение заголовка 'Content-Security-Policy: frame-ancestors']]></string>
+    <string name="_adm_stg_cpt_option_sys_x_frame_options"><![CDATA[Значение заголовка 'X-Frame-Options' (Off - отключить заголовок)]]></string>
     <string name="_adm_stg_cpt_option_sys_samesite_cookies"><![CDATA[Значение "SameSite" для конфиденциальных Cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_notify_to_approve_by_role"><![CDATA[Оповещать участников контекста с определенной ролью о необходимости одобрять контент в контексте]]></string>
     <string name="_adm_stg_cpt_option_sys_fixed_header"><![CDATA[Статический заголовок]]></string>
