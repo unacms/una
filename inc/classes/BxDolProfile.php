@@ -164,6 +164,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             $oProfile = $mixedProfileId;
 
         $iId = $oProfile->id();
+        $sUrl = bx_api_get_relative_url($oProfile->getUrl());
+
         $oAccount = BxDolAccount::getInstance(getLoggedId());
 
         $aMembershipInfo = BxDolAcl::getInstance()->getMemberMembershipInfo($iId);
@@ -173,7 +175,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'account_id' => $oAccount->id(),
             'email' => $oAccount->getEmail(),
             'display_name' => $oProfile->getDisplayName(),
-            'url' => bx_api_get_relative_url($oProfile->getUrl()),
+            'url' => $sUrl,
+            'url_postfix' => substr($sUrl, strrpos($sUrl, '/') + 1),
             'avatar' => $oProfile->getAvatar(),
             'settings' => $oProfile->getSettings(),
             'membership' => $aMembershipInfo['id'],
