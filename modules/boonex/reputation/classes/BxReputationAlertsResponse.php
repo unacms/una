@@ -3,8 +3,8 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defdroup    Reputation Reputation
- * @indroup     UnaModules
+ * @defgroup    Reputation Reputation
+ * @ingroup     UnaModules
  *
  * @{
  */
