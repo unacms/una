@@ -247,7 +247,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     {
         $bResult = false;
 
-        foreach($this->_aTablesMedia as $sType) {
+        foreach(array_keys($this->_aTablesMedia) as $sType) {
             $aMedia = $this->getMedia($sType, $iEventId);
             if(!empty($aMedia) && is_array($aMedia)) {
                 $bResult = true;
