@@ -314,7 +314,7 @@ VALUES (@iTypeId, 'bx_timeline_browse', '_bx_timeline_options_category_browse', 
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
-('bx_timeline_enable_show_all', '', @iCategId, '_bx_timeline_option_enable_show_all', 'checkbox', '', '', '', '', 1),
+('bx_timeline_enable_show_all', 'on', @iCategId, '_bx_timeline_option_enable_show_all', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_enable_jump_to_switcher', '', @iCategId, '_bx_timeline_option_enable_jump_to_switcher', 'checkbox', '', '', '', '', 2),
 ('bx_timeline_enable_sort_by_reaction', '', @iCategId, '_bx_timeline_option_enable_sort_by_reaction', 'checkbox', '', '', '', '', 3),
 ('bx_timeline_enable_sort_by_unread', '', @iCategId, '_bx_timeline_option_enable_sort_by_unread', 'checkbox', '', '', '', '', 4),
