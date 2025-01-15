@@ -76,6 +76,12 @@
     font-size: 1.5rem;
 }
 
+@media (any-pointer: fine) {
+	.bx-popup-vote-reactions .bx-popup-close-wrapper {
+		display:none;  
+	}
+}
+
 /*----------------------------------*/
 /*--- Stars based Element Styles ---*/
 /*----------------------------------*/
