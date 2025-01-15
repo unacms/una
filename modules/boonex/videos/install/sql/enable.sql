@@ -45,22 +45,22 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_videos_view_entry', '_bx_videos_page_title_sys_view_entry', '_bx_videos_page_title_view_entry', 'bx_videos', 12, 2147483647, 1, 'view-video', '', '', '', '', 0, 1, 0, 'BxVideosPageEntry', 'modules/boonex/videos/classes/BxVideosPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_video', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_video_block";}', 0, 0, 0, 0),
-('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 1),
-('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 3),
-('bx_videos_view_entry', 3, 'bx_videos', '_bx_videos_page_block_title_sys_entry_context', '_bx_videos_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
-('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_rating', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"entity_rating";}', 0, 0, 0, 0),
-('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 2),
-('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
-('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 2),
-('bx_videos_view_entry', 4, 'bx_videos', '', '_bx_videos_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 0),
-('bx_videos_view_entry', 4, 'bx_videos', '', '_bx_videos_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0),
-('bx_videos_view_entry', 4, 'bx_videos', '', '_bx_videos_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_attachments";}', 0, 0, 0, 0),
-('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 4),
-('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:9:"bx_videos";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 3),
-('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 4),
-('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 6);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `active_api`, `order`) VALUES
+('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_video', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_video_block";}', 0, 0, 0, 0, 0),
+('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 1, 1),
+('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 1, 3),
+('bx_videos_view_entry', 3, 'bx_videos', '_bx_videos_page_block_title_sys_entry_context', '_bx_videos_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1, 1),
+('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_rating', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"entity_rating";}', 0, 0, 0, 0, 0),
+('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 1, 2),
+('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0, 0),
+('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 1, 2),
+('bx_videos_view_entry', 4, 'bx_videos', '', '_bx_videos_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 0, 0),
+('bx_videos_view_entry', 4, 'bx_videos', '', '_bx_videos_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0, 0),
+('bx_videos_view_entry', 4, 'bx_videos', '', '_bx_videos_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_attachments";}', 0, 0, 0, 0, 0),
+('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 1, 4),
+('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:9:"bx_videos";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 0, 3),
+('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 0, 4),
+('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 0, 6);
 
 
 -- PAGE: view entry comments
