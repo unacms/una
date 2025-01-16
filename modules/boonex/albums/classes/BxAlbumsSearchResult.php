@@ -15,8 +15,12 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
     {
         $this->aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html',);
     
-        if (empty($aParams['unit_view']))
+        if(empty($aParams['unit_view'])) {
+            if(!is_array($aParams))
+                $aParams = [];
+
             $aParams['unit_view'] = 'extended';
+        }
 
         parent::__construct($sMode, $aParams);
 
