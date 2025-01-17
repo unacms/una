@@ -422,6 +422,64 @@ class BxBaseServiceContent extends BxDol
         return $b ? $b : ['code' => $oStorage->getErrorCode(), 'error' => $oStorage->getErrorString()];
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-content-objects Content Objects
+     * @subsubsection bx_system_general_cnt-replace_file Replace file
+     * 
+     * @code bx_srv('system', 'replace_file', ["bx_persons", 123, 'picture', 'http://a.me/i.png'], 'TemplServiceContent'); @endcode
+     *
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params[]=bx_persons&params[]=123&params[]=picture&params[]=http://a.me/i.png" @endcode
+     * 
+     * @param $sContentObject content object name
+     * @param $iContentId content id
+     * @param $sField field name
+     * @param $sFileUrl file URL
+     * @return true on success, or array with code != 0 and error message
+     * 
+     * @see BxBaseServiceContent::serviceReplaceFile
+     */
+    /** 
+     * @ref bx_system_general_cnt-replace_file "Replace file"
+     */
+    public function serviceReplaceFile ($sContentObject, $iContentId, $sField, $sFileUrl)
+    {
+        // some checks
+        if (!isLogged())
+            return ['code' => 500, 'error' => _t('_sys_txt_not_found')];
+
+        $a = $this->serviceGetInfo ($sContentObject, $iContentId, true);
+        if (!$a)
+            return ['code' => 404, 'error' => _t('_sys_txt_not_found')];
+
+        $oForm = bx_srv($sContentObject, 'get_object_form', ['edit']);
+        if (!$oForm)
+            return ['code' => 404, 'error' => _t('_sys_request_module_not_found_cpt')];
+
+        if (!isset($oForm->aInputs[$sField]))
+            return ['code' => 404, 'error' => 'Unknown field'];
+
+        if (!isset($oForm->aInputs[$sField]['storage_object']))
+            return ['code' => 404, 'error' =>  "'$sField' field isn't file field (storage object isn't found in the specified field)"];
+
+        // delete previous file
+        $sStorageObject = $oForm->aInputs[$sField]['storage_object'];
+        if ($a[$sField]) {
+            $a = $this->serviceDeleteFile($sStorageObject, $a[$sField]);
+            if (is_array($a) && isset($a['code']) && $a['code'])
+                return $a;
+        }
+
+        // upload new file
+        $iFileId = $a = $this->serviceUploadFromUrl($sStorageObject, $sFileUrl, ['content_id' => $iContentId, 'profile_id' => bx_get_logged_profile_id()]);
+        if (is_array($a) && isset($a['code']) && $a['code'])
+            return $a;
+
+        // assign uploaded file id to the field
+        return $this->serviceUpdate($sContentObject, $iContentId, [$sField => $iFileId]);
+    }
+
     protected function getUserIds($oAccount)
     {
         $oProfile = BxDolProfile::getInstanceByAccount($oAccount->id());
