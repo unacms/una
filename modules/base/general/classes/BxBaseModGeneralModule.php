@@ -879,18 +879,6 @@ class BxBaseModGeneralModule extends BxDolModule
                 'pass' => ''
             );
 
-        if(!empty($CNF['FIELD_LABELS']) && !in_array($CNF['FIELD_LABELS'], $this->_aSearchableNamesExcept))
-            $aResult[$CNF['FIELD_LABELS']] = array(
-                'type' => 'checkbox_set', 
-                'caption' => isset($CNF['T']['form_field_labels']) ? $CNF['T']['form_field_author'] : '_sys_form_input_labels',
-                'info' => '',
-            	'value' => '',
-                'values' => '',
-                'pass' => '',
-                'search_operator' => 'like'
-            );
-        
-
         $aInputs = array();
         if(!empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])) {
             $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
@@ -905,6 +893,17 @@ class BxBaseModGeneralModule extends BxDolModule
 
         if(!empty($aInputsAdd) && is_array($aInputsAdd))
             $aInputs = array_merge($aInputs, $aInputsAdd);
+
+        if(!empty($CNF['FIELD_LABELS']) && array_key_exists($CNF['FIELD_LABELS'], $aInputs) && !in_array($CNF['FIELD_LABELS'], $this->_aSearchableNamesExcept))
+            $aResult[$CNF['FIELD_LABELS']] = [
+                'type' => 'checkbox_set', 
+                'caption' => isset($CNF['T']['form_field_labels']) ? $CNF['T']['form_field_author'] : '_sys_form_input_labels',
+                'info' => '',
+            	'value' => '',
+                'values' => '',
+                'pass' => '',
+                'search_operator' => 'like'
+            ];
 
         foreach($aInputs as $aInput){
             if(in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept)) {
