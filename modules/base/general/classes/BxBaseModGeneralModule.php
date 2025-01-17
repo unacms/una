@@ -380,8 +380,8 @@ class BxBaseModGeneralModule extends BxDolModule
             if($oView && $oView->isEnabled())
                 $oView->doView();
         }
-        
-        $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate) . $sAddCode);
+
+        $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate, ['embed' => true]) . $sAddCode);
     }
    
     public function subactionDelete()

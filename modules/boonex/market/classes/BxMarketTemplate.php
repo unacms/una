@@ -197,7 +197,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	));    	
     }
 
-    protected function getUnit ($aData, $aParams = array())
+    protected function getUnit ($aData, $aParams = [])
     {
         $bTmplVarsSectionAuthor = true;
         $bTmplVarsSectionPricing = false;
@@ -209,6 +209,8 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	$aUnit = parent::getUnit($aData, $aParams);
         $oPayment = BxDolPayments::getInstance();
         $oPermalinks = BxDolPermalinks::getInstance();
+
+        $bEmbed = isset($aParams['embed']) && $aParams['embed'] === true;
 
         $iAuthorId = (int)$aData[$CNF['FIELD_AUTHOR']];
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($iAuthorId);
@@ -230,8 +232,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
             //--- Actions
             $sActions = '';
-            $oActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_SNIPPET']);
-            if($oActions) {
+            if(!$bEmbed && ($oActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_SNIPPET'])) !== false) {
                 $oActions->setContentId($aData[$CNF['FIELD_ID']]);
                 $sActions = $oActions->getCode();
             }
@@ -348,9 +349,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $aTmplVarsSectionVoting = array();
         if($bTmplVarsSectionVoting) {
             $sVoting = '';
-            $oVoting = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData[$CNF['FIELD_ID']]);
-            if($oVoting)
-                $sVoting = $oVoting->getElementBlock(array('show_counter' => false));
+            if(($oVoting = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData[$CNF['FIELD_ID']])) !== false)
+                $sVoting = $oVoting->getElementBlock([
+                    'show_counter' => false,
+                    'read_only' => $bEmbed
+                ]);
 
             $sPricing = "";
             if((float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0) {

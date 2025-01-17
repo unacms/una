@@ -31,7 +31,8 @@ class BxBaseVoteStars extends BxDolVoteStars
             'show_counter' => true,
             'show_counter_empty' => false,
             'show_legend' => false,
-            'show_script' => true
+            'show_script' => true,
+            'read_only' => false
         ];
         $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
             'show_counter' => true,
@@ -112,6 +113,7 @@ class BxBaseVoteStars extends BxDolVoteStars
         $iMinValue = $this->getMinValue();
         $iMaxValue = $this->getMaxValue();
 
+        $bReadOnly = isset($aParams['read_only']) && (bool)$aParams['read_only'] === true;
         $bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
         $bDisabled = !$isAllowedVote || ($bVoted && !$this->isUndo());
 
@@ -141,7 +143,7 @@ class BxBaseVoteStars extends BxDolVoteStars
                 'style_prefix' => $this->_sStylePrefix
             );
 
-            if($isAllowedVote)
+            if($isAllowedVote && !$bReadOnly)
                 $aTmplVarsButtons[] = array(
                     'style_prefix' => $this->_sStylePrefix,
                     'js_object' => $sJsObject,
