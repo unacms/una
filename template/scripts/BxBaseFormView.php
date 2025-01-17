@@ -436,8 +436,46 @@ class BxBaseFormView extends BxDolForm
                 }
 
                 if(isset($aInput['name']) && $aInput['name'] == 'allow_view_to') {
-                    //--- Preselect Context ID if available
-                    if(($aParams = bx_get('params')) !== false && isset($aParams['context_id']) && ($iContextId = (int)$aParams['context_id']) < 0)
+                    $aParams = bx_get('params');
+                    if(empty($aParams) || !is_array($aParams))
+                        $aParams = [];
+
+                    if(!isset($aParams['context_id']) || ($iContextId = (int)$aParams['context_id']) >= 0) {
+                        $oProfile = BxDolProfile::getInstance();
+
+                        foreach($aInput['values'] as $aValue) {
+                            //--- Selected friends
+                            if(isset($aValue['key']) && (int)$aValue['key'] == BX_DOL_PG_FRIENDS_SELECTED) {
+                                $aIds = BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContent($oProfile->id(), true, 0, 20);
+                                if(!empty($aIds) && is_array($aIds)) {
+                                    $aInput['values_friends'] = [];
+                                    foreach($aIds as $iId)
+                                        $aInput['values_friends'][] = ['key' => $iId, 'value' => $oProfile->getDisplayName($iId)];
+                                }
+                            }
+
+                            //--- Selected relations
+                            if(isset($aValue['key']) && (int)$aValue['key'] == BX_DOL_PG_RELATIONS_SELECTED) {
+                                $aIds = BxDolConnection::getObjectInstance('sys_profiles_relations')->getConnectedContent($oProfile->id(), true, 0, 20);
+                                if(!empty($aIds) && is_array($aIds)) {
+                                    $aInput['values_relations'] = [];
+                                    foreach($aIds as $iId)
+                                        $aInput['values_friends'][] = ['key' => $iId, 'value' => $oProfile->getDisplayName($iId)];
+                                }
+                            }
+
+                            //--- Selected memberships
+                            if(isset($aValue['key']) && (int)$aValue['key'] == BX_DOL_PG_MEMBERSHIPS_SELECTED) {
+                                $aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
+                                if(!empty($aLevels) && is_array($aLevels)) {
+                                    $aInput['values_memberships'] = [];
+                                    foreach($aLevels as $iId => $sTitle)
+                                        $aInput['values_memberships'][] = ['key' => $iId, 'value' => $sTitle];
+                                }
+                            }
+                        }
+                    }
+                    else
                         $aInput = array_merge($aInput, [
                             'type' => 'hidden',
                             'value' => $iContextId
