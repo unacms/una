@@ -434,6 +434,15 @@ class BxBaseFormView extends BxDolForm
                         return ['key' => $sKey, 'value' => $aInput['values'][$sKey]];
                     }, array_keys($aInput['values']));
                 }
+
+                if(isset($aInput['name']) && $aInput['name'] == 'allow_view_to') {
+                    //--- Preselect Context ID if available
+                    if(($aParams = bx_get('params')) !== false && isset($aParams['context_id']) && ($iContextId = (int)$aParams['context_id']) < 0)
+                        $aInput = array_merge($aInput, [
+                            'type' => 'hidden',
+                            'value' => $iContextId
+                        ]);
+                }
             }
             else{
                 $keysToRemove[] = $key;

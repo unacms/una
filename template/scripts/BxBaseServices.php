@@ -714,8 +714,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         if(bx_is_api()) {
             return [
                 'title' => $sTitle,
-                'content' => '',
-                'menu' => $oMenu->getCodeAPI()
+                'content' =>  [
+                    bx_api_get_block('get_create_post_form', [
+                        'menu' => $oMenu->getCodeAPI(),
+                        'params' => ['context_id' => $mixedContextId]])
+                ]
             ];
         }
 
