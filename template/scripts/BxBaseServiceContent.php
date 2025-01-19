@@ -430,7 +430,7 @@ class BxBaseServiceContent extends BxDol
      * 
      * @code bx_srv('system', 'replace_file', ["bx_persons", 123, 'picture', 'http://a.me/i.png'], 'TemplServiceContent'); @endcode
      *
-     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params[]=bx_persons&params[]=123&params[]=picture&params[]=http://a.me/i.png" @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/replace_file/TemplServiceContent&params[]=bx_persons&params[]=123&params[]=picture&params[]=http://a.me/i.png" @endcode
      * 
      * @param $sContentObject content object name
      * @param $iContentId content id
