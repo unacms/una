@@ -395,12 +395,12 @@ class BxBaseServiceContent extends BxDol
      * @subsection bx_system_general-content-objects Content Objects
      * @subsubsection bx_system_general_cnt-delete_file Delete file
      * 
-     * @code bx_srv('system', 'delete_file', ["bx_persons", 123], 'TemplServiceContent'); @endcode
+     * @code bx_srv('system', 'delete_file', ["bx_persons_pictures", 123], 'TemplServiceContent'); @endcode
      *
      * Delete file with id = 123 from `bx_persons_pictures` storage engine. 
      * <b>Please note</b> that associated with this file id content need to be updated by setting 
      * respective field to new file id or 0.
-     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/upload_from_url/TemplServiceContent&params[]=bx_persons_pictures&params[]=123" @endcode
+     * @code curl -s --cookie "memberSession=SESSIONIDHERE" -H "Authorization: Bearer APIKEYHERE" "http://example.com/api.php?r=system/delete_file/TemplServiceContent&params[]=bx_persons_pictures&params[]=123" @endcode
      * 
      * @param $sStorageObject storage object name
      * @param $iFileId file id
