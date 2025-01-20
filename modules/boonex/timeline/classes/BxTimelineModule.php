@@ -3955,6 +3955,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId, true);
                 $this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId, true);
 
+                //--- Process Privacy
+                $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
+                if(($sKey = 'FIELD_OBJECT_PRIVACY_VIEW') && !empty($aEvent[$CNF[$sKey]]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+                    $oPrivacy->associateGroupCustomWithContent($iUserId, $iId, (int)$aEvent[$CNF[$sKey]]);
+
                 $this->onPost($iId);
 
                 if($this->_bIsApi)
@@ -4126,6 +4131,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId);
             $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId);
             $this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId);
+
+            //--- Process Privacy
+            $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
+            if(($sKey = 'FIELD_OBJECT_PRIVACY_VIEW') && !empty($aEvent[$CNF[$sKey]]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+                $oPrivacy->reassociateGroupCustomWithContent($iUserId, $iId, (int)$aEvent[$CNF[$sKey]]);
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
 
