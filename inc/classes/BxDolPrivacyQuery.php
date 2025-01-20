@@ -230,11 +230,17 @@ class BxDolPrivacyQuery extends BxDolDb
                 break;
 
             case 'profile_id':
-            	$aMethod['params'][1] = array(
+            	$aMethod['params'][1] = [
                     'profile_id' => $aParams['profile_id']
-                );
+                ];
 
                 $sWhereClause = " AND `tg`.`profile_id`=:profile_id";
+
+                if(isset($aParams['content_id'])) {
+                    $aMethod['params'][1]['content_id'] = $aParams['content_id'];
+
+                    $sWhereClause .= " AND `tg`.`content_id`=:content_id";
+                }
                 break;
         }
 

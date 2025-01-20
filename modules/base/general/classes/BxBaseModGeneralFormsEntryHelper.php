@@ -275,10 +275,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         // check and display form
         $oForm->initChecker();
-        if (!$oForm->isSubmittedAndValid())
+        if (!$oForm->isSubmittedAndValid()) {
+            if(!$oForm->isSubmitted() && isset($CNF['FIELD_ALLOW_VIEW_TO']) && ($oProfile = BxDolProfile::getInstance()) !== false && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+                $oPrivacy->deleteGroupCustomByProfileIdUnused($oProfile->id());
+
             return $this->_bIsApi ? $this->prepareResponseAPI('form', $oForm->getCodeAPI(), ['request_uri' => 'entity_create']) : $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $bAsJson, 'form', [
             	'form_id' => $oForm->getId()
             ]);
+        }
 
         // insert data into database
         $aValsToAdd = array ();

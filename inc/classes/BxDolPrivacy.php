@@ -408,9 +408,13 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         return $this->_oDb->deleteGroupCustom(array('content_id' => $iContentId, 'object' => $this->_sObject));
     }
 
-    public function deleteGroupCustomByProfileId($iProfileId)
+    public function deleteGroupCustomByProfileId($iProfileId, $mixedContentId = false)
     {
-        $aGroups = $this->_oDb->getGroupCustom(array('type' => 'profile_id', 'profile_id' => $iProfileId));
+        $aParams = ['type' => 'profile_id', 'profile_id' => $iProfileId];
+        if($mixedContentId !== false)
+            $aParams['content_id'] = (int)$mixedContentId;
+
+        $aGroups = $this->_oDb->getGroupCustom($aParams);
         if(empty($aGroups) || !is_array($aGroups))
             return true;
 
@@ -418,6 +422,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             $this->_oDb->deleteGroupCustom(array('id' => $aGroup['id']));
 
         return true;
+    }
+
+    public function deleteGroupCustomByProfileIdUnused($iProfileId)
+    {
+        return $this->deleteGroupCustomByProfileId($iProfileId, 0);
     }
 
     public function addDynamicGroups($aValues, $iOwnerId, $aParams)

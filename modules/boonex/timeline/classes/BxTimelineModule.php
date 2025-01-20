@@ -3968,13 +3968,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return $this->_prepareResponse(['message' => _t('_bx_timeline_txt_err_cannot_perform_action')], $bAjaxMode);
         }
 
-        if(bx_is_api())
+        $bSubmitted = $oForm->isSubmitted();
+        if(!$bSubmitted && ($oProfile = BxDolProfile::getInstance()) !== false && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+            $oPrivacy->deleteGroupCustomByProfileIdUnused($oProfile->id());
+
+        if($this->_bIsApi)
             return ['form_object' => $oForm];
 
         $mixedResult = $this->_prepareResponse([
             'form' => $oForm->getCode($bDynamicMode), 
             'form_id' => $oForm->id
-        ], $bAjaxMode && $oForm->isSubmitted());
+        ], $bAjaxMode && $bSubmitted);
 
         if(is_array($mixedResult))
             $mixedResult['form_object'] = $oForm;
