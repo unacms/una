@@ -720,6 +720,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $LOCATION_INDEXES = array ('lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number');
     static $LOCATION_INDEXES_MANDATORY = array ('lat', 'lng');
 
+    protected $_bIsApi;
+
     protected $_aMarkers = array ();
 
     protected $oTemplate;
@@ -747,6 +749,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     public function __construct ($aInfo, $oTemplate)
     {
         parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
 
         if ($oTemplate)
             $this->oTemplate = $oTemplate;
@@ -1018,16 +1022,16 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
         $oRv = null;
-        
+
         if ($a && isset($a['db']['pass']))
             $oRv = $oChecker->get ($sName, $a['db']['pass'], isset($a['db']['params']) && $a['db']['params'] ? $a['db']['params'] : array());
         else
             $oRv =  $oChecker->get ($sName);
-        
+
         // process comma separated string for api values
-        if (bx_is_api() && isset($this->aInputs[$sName]['type']) && !empty($oRv) && (in_array($this->aInputs[$sName]['type'], ['checkbox_set', 'files', 'select_multiple']) || in_array($sName, ['labels'])))
+        if ($this->_bIsApi && isset($this->aInputs[$sName]['type']) && !empty($oRv) && (in_array($this->aInputs[$sName]['type'], ['checkbox_set', 'files', 'select_multiple']) || in_array($sName, ['labels'])))
             $oRv = explode(',', $oRv);
-            
+
         return $oRv;
     }
 

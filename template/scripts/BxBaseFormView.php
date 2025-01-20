@@ -435,7 +435,7 @@ class BxBaseFormView extends BxDolForm
                     }, array_keys($aInput['values']));
                 }
 
-                if(isset($aInput['name']) && $aInput['name'] == 'allow_view_to') {
+                if(isset($aInput['name']) && in_array($aInput['name'], ['allow_view_to', 'object_privacy_view'])) {
                     $aParams = bx_get('params');
                     if(empty($aParams) || !is_array($aParams))
                         $aParams = [];
@@ -460,7 +460,7 @@ class BxBaseFormView extends BxDolForm
                                 if(!empty($aIds) && is_array($aIds)) {
                                     $aInput['values_relations'] = [];
                                     foreach($aIds as $iId)
-                                        $aInput['values_friends'][] = ['key' => $iId, 'value' => BxDolProfile::getData($iId)];
+                                        $aInput['values_relations'][] = ['key' => $iId, 'value' => BxDolProfile::getData($iId)];
                                 }
                             }
 

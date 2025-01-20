@@ -148,7 +148,23 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
         $aValsToAdd[$CNF['FIELD_STATUS']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']] ? BX_TIMELINE_STATUS_AWAITING : BX_TIMELINE_STATUS_ACTIVE;
 
-        return parent::insert ($aValsToAdd, $isIgnore);
+        $iContentId = parent::insert ($aValsToAdd, $isIgnore);
+        if(empty($iContentId))
+            return $iContentId;
+
+        if($this->_bIsApi && ($mixedAllowViewTo = $this->getCleanValue($CNF['FIELD_OBJECT_PRIVACY_VIEW'])) !== false && ($mixedAllowViewToItems = $this->getCleanValue($CNF['FIELD_OBJECT_PRIVACY_VIEW'] . '_items')) !== false) {
+            $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
+
+            if(($sKey = 'OBJECT_PRIVACY_VIEW') && ($sObject = $CNF[$sKey]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false)
+                $oPrivacy->insertGroupCustom([
+                    'profile_id' => $aValsToAdd['object_owner_id'],
+                    'content_id' => 0,
+                    'object' => $sObject,
+                    'group_id' => (int)$mixedAllowViewTo
+                ], $aAllowViewToItems);
+        }
+
+        return $iContentId;
     }
 
     function update($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)

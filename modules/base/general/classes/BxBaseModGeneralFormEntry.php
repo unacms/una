@@ -530,6 +530,18 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             }
         }
 
+        if($this->_bIsApi && isset($CNF['FIELD_ALLOW_VIEW_TO']) && ($mixedAllowViewTo = $this->getCleanValue($CNF['FIELD_ALLOW_VIEW_TO'])) !== false && ($mixedAllowViewToItems = $this->getCleanValue($CNF['FIELD_ALLOW_VIEW_TO'] . '_items')) !== false) {
+            $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
+
+            if(($sKey = 'OBJECT_PRIVACY_VIEW') && isset($CNF[$sKey]) && ($sObject = $CNF[$sKey]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false)
+                $oPrivacy->insertGroupCustom([
+                    'profile_id' => $iAuthor,
+                    'content_id' => 0,
+                    'object' => $sObject,
+                    'group_id' => (int)$mixedAllowViewTo
+                ], $aAllowViewToItems);
+        }
+
         if($bMulticatEnabled)
             $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
 
@@ -965,16 +977,23 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
         $iGroupId = !empty($aValues[$sField]) ? $aValues[$sField] : 0;
 
-        if(!isset($this->aInputs[$sField]['content']))
-            $this->aInputs[$sField]['content'] = '';
+        if(!$this->_bIsApi) {
+            if(!isset($this->aInputs[$sField]['content']))
+                $this->aInputs[$sField]['content'] = '';
 
-        $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacyObject, $iProfileId, array(
-            'content_id' => $iContentId,
-            'group_id' => $iGroupId,
-            'html_ids' => array(
-                'form' => $this->getId()
-            )
-        ));
+            $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacyObject, $iProfileId, [
+                'content_id' => $iContentId,
+                'group_id' => $iGroupId,
+                'html_ids' => [
+                    'form' => $this->getId()
+                ]
+            ]);
+        }
+        else 
+            $this->aInputs[$sField]['subvalue'] = $oPrivacy->initGroupChooserAPI($sPrivacyObject, $iProfileId, [
+                'content_id' => $iContentId,
+                'group_id' => $iGroupId,
+            ]);
     }
     
     protected function _validatePrivacyField($sField, $sPrivacyObject, $aValues)

@@ -237,6 +237,36 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         return $oPrivacy->getJsScript($sJsCodeAdd, $bDynamicMode);
     }
     
+    public static function initGroupChooserAPI($sObject, $iOwnerId = 0, $aParams = [])
+    {
+        $sResult = '';
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sObject);
+        if(empty($oPrivacy))
+            return $sResult;
+
+        $iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : bx_get_logged_profile_id();
+        $iContentId = !empty($aParams['content_id']) ? (int)$aParams['content_id'] : 0;
+        $iGroupId = !empty($aParams['group_id']) ? (int)$aParams['group_id'] : 0;
+
+        if($oPrivacy->isGroupsCustom() && ($aGroupsSettings = $oPrivacy->getGroupSettings($iGroupId)) !== false) {
+            $aGroupCustom = $oPrivacy->getGroupCustom([
+                'type' => 'pcog_ext', 
+                'profile_id' => $iOwnerId, 
+                'content_id' => $iContentId, 
+                'object' => $sObject, 
+                'group_id' => $iGroupId,
+                'group_items_table' => $aGroupsSettings['db_table_items'],
+                'group_items_field' => $aGroupsSettings['db_field_item']
+            ]);
+
+            if(is_array($aGroupCustom) && !empty($aGroupCustom['items']) && is_array($aGroupCustom['items']))
+                $sResult = implode(',', $aGroupCustom['items']);
+        }
+
+        return $sResult;
+    }
+    
     public static function getIcon($iVisibility)
     {
         $aIcons =array(
@@ -365,6 +395,28 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     public function getGroupCustom($aParams)
     {
         return $this->_oDb->getGroupCustom($aParams);
+    }
+
+    public function insertGroupCustom($aGroup, $aItems = [])
+    {
+        $iGroupId = (int)$aGroup['group_id'];
+
+        $this->deleteGroupCustom([
+            'profile_id' => $aGroup['profile_id'],
+            'content_id' => $aGroup['content_id'],
+            'object' => $aGroup['object']
+        ]);
+
+        $iGroupCustomId = $this->_oDb->insertGroupCustom($aGroup);
+        if($iGroupCustomId !== false && !empty($aItems) && is_array($aItems)) {
+            $bMembers = $iGroupId == BX_DOL_PG_FRIENDS_SELECTED || $iGroupId == BX_DOL_PG_RELATIONS_SELECTED;
+            $bMemberships = $iGroupId == BX_DOL_PG_MEMBERSHIPS_SELECTED;
+            if(($bMembers || $bMemberships) && ($sType = $bMembers ? 'member' : ($bMemberships ? 'membership' : '')) !== '')
+                foreach($aItems as $iItem)
+                    $this->_oDb->{'insertGroupCustom' . ucfirst($sType)}(['group_id' => $iGroupCustomId, $sType . '_id' => $iItem]);
+        }
+
+        return $iGroupCustomId;
     }
 
     public function updateGroupCustom($aParamsSet, $aParamsWhere)
