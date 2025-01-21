@@ -228,6 +228,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                         $sSelectClause = 'DISTINCT ' . $sSelectClause;
                 }
 
+                $sWhereClause .= $this->prepareAsString("AND `" . $this->_sTable . "`.`date` <= ? ", time());
                 break;
         }
 

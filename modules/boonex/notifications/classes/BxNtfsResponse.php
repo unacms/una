@@ -145,6 +145,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 'content' => $this->_getContent($oAlert->aExtras),
                 'source' => $this->_getSource($oAlert->aExtras),
                 'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
+                'date' => $this->_getDate($oAlert->aExtras),
                 'processed' => 0
     	    );
 
@@ -384,6 +385,11 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
     protected function _getSource($aExtras)
     {
         return isset($aExtras['source']) ? $aExtras['source'] : '';
+    }
+
+    protected function _getDate($aExtras)
+    {
+        return isset($aExtras['date']) ? $aExtras['date'] : time();
     }
 }
 
