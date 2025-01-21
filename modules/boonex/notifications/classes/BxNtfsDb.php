@@ -216,6 +216,10 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                 $sLimitClause = "LIMIT 1";
                 break;
 
+            case 'first':
+                $sWhereClause .= $this->prepareAsString("AND `" . $this->_sTable . "`.`date` <= ? ", time());
+                break;
+
             case 'list':
                 if(!empty($aParams['count_only'])) {
                     $sMethod = 'getOne';
