@@ -397,16 +397,21 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         return $this->_oDb->getGroupCustom($aParams);
     }
 
-    public function insertGroupCustom($aGroup, $aItems = [])
+    /**
+     * Note. Is used when privacy group is processing after the main form submit.
+     */
+    public function addGroupCustom($aGroup, $aItems = [])
     {
-        $iGroupId = (int)$aGroup['group_id'];
-
         $this->deleteGroupCustom([
             'profile_id' => $aGroup['profile_id'],
             'content_id' => $aGroup['content_id'],
             'object' => $aGroup['object']
         ]);
 
+        if(empty($aItems) || !is_array($aItems))
+            return 0;
+
+        $iGroupId = (int)$aGroup['group_id'];
         $iGroupCustomId = $this->_oDb->insertGroupCustom($aGroup);
         if($iGroupCustomId !== false && !empty($aItems) && is_array($aItems)) {
             $bMembers = $iGroupId == BX_DOL_PG_FRIENDS_SELECTED || $iGroupId == BX_DOL_PG_RELATIONS_SELECTED;
@@ -414,6 +419,41 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             if(($bMembers || $bMemberships) && ($sType = $bMembers ? 'member' : ($bMemberships ? 'membership' : '')) !== '')
                 foreach($aItems as $iItem)
                     $this->_oDb->{'insertGroupCustom' . ucfirst($sType)}(['group_id' => $iGroupCustomId, $sType . '_id' => $iItem]);
+        }
+
+        return $iGroupCustomId;
+    }
+
+    /**
+     * Note. Is used when privacy group is processing after the main form submit.
+     */
+    public function editGroupCustom($aGroup, $aItems = [])
+    {
+        $aGroupCustom = $this->getGroupCustom([
+            'type' => 'pco',
+            'profile_id' => $aGroup['profile_id'],
+            'content_id' => $aGroup['content_id'],
+            'object' => $this->_sObject
+        ]);
+        if(empty($aGroupCustom) || !is_array($aGroupCustom))
+            return $this->addGroupCustom($aGroup, $aItems);
+
+        $iGroupId = (int)$aGroupCustom['group_id'];
+        $iGroupCustomId = (int)$aGroupCustom['id'];
+
+        if($iGroupId != (int)$aGroup['group_id'])
+            return $this->addGroupCustom($aGroup, $aItems);
+
+        $bMembers = $iGroupId == BX_DOL_PG_FRIENDS_SELECTED || $iGroupId == BX_DOL_PG_RELATIONS_SELECTED;
+        $bMemberships = $iGroupId == BX_DOL_PG_MEMBERSHIPS_SELECTED;
+        if(($bMembers || $bMemberships) && ($sType = $bMembers ? 'member' : ($bMemberships ? 'membership' : '')) !== '') {
+            $sTypeUc = ucfirst($sType);
+
+            $this->_oDb->{'deleteGroupCustom' . $sTypeUc}(['group_id' => $iGroupCustomId]);
+
+            if(!empty($aItems) && is_array($aItems))
+                foreach($aItems as $iItemId)
+                    $this->_oDb->{'insertGroupCustom' . $sTypeUc}(['group_id' => $iGroupCustomId, $sType . '_id' => $iItemId]);
         }
 
         return $iGroupCustomId;

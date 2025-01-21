@@ -152,11 +152,13 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if(empty($iContentId))
             return $iContentId;
 
-        if($this->_bIsApi && ($mixedAllowViewTo = $this->getCleanValue($CNF['FIELD_OBJECT_PRIVACY_VIEW'])) !== false && ($mixedAllowViewToItems = $this->getCleanValue($CNF['FIELD_OBJECT_PRIVACY_VIEW'] . '_items')) !== false) {
-            $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
+        if($this->_bIsApi && ($sKeyF = 'FIELD_OBJECT_PRIVACY_VIEW') && ($mixedAllowViewTo = $this->getCleanValue($CNF[$sKeyF])) !== false) {
+            $aAllowViewToItems = [];
+            if(($mixedAllowViewToItems = $this->getCleanValue($CNF[$sKeyF] . '_items')) !== false)
+                $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
 
-            if(($sKey = 'OBJECT_PRIVACY_VIEW') && ($sObject = $CNF[$sKey]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false)
-                $oPrivacy->insertGroupCustom([
+            if(($sKeyO = 'OBJECT_PRIVACY_VIEW') && ($sObject = $CNF[$sKeyO]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false)
+                $oPrivacy->addGroupCustom([
                     'profile_id' => $aValsToAdd['object_owner_id'],
                     'content_id' => 0,
                     'object' => $sObject,
@@ -185,7 +187,25 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
         }
 
-        return parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        $mixedResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        if($mixedResult !== false) {
+            if($this->_bIsApi && ($sKeyF = 'FIELD_OBJECT_PRIVACY_VIEW') && ($mixedAllowViewTo = $this->getCleanValue($CNF[$sKeyF])) !== false) {
+                $aAllowViewToItems = [];
+                if(($mixedAllowViewToItems = $this->getCleanValue($CNF[$sKeyF] . '_items')) !== false)
+                    $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
+
+                if(($sKeyO = 'OBJECT_PRIVACY_VIEW') && ($sObject = $CNF[$sKeyO]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false) {
+                    $oPrivacy->editGroupCustom([
+                        'profile_id' => $iAuthor,
+                        'content_id' => $iContentId,
+                        'object' => $sObject,
+                        'group_id' => (int)$mixedAllowViewTo
+                    ], $aAllowViewToItems);
+                }
+            }
+        }
+
+        return $mixedResult;
     }
 
     public function addHtmlEditor($iViewMode, &$aInput, $sUniq)

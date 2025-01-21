@@ -530,11 +530,13 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             }
         }
 
-        if($this->_bIsApi && isset($CNF['FIELD_ALLOW_VIEW_TO']) && ($mixedAllowViewTo = $this->getCleanValue($CNF['FIELD_ALLOW_VIEW_TO'])) !== false && ($mixedAllowViewToItems = $this->getCleanValue($CNF['FIELD_ALLOW_VIEW_TO'] . '_items')) !== false) {
-            $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
+        if($this->_bIsApi && ($sKeyF = 'FIELD_ALLOW_VIEW_TO') && isset($CNF[$sKeyF]) && ($mixedAllowViewTo = $this->getCleanValue($CNF[$sKeyF])) !== false) {
+            $aAllowViewToItems = [];
+            if(($mixedAllowViewToItems = $this->getCleanValue($CNF[$sKeyF] . '_items')) !== false)
+                $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
 
-            if(($sKey = 'OBJECT_PRIVACY_VIEW') && isset($CNF[$sKey]) && ($sObject = $CNF[$sKey]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false)
-                $oPrivacy->insertGroupCustom([
+            if(($sKeyO = 'OBJECT_PRIVACY_VIEW') && isset($CNF[$sKeyO]) && ($sObject = $CNF[$sKeyO]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false)
+                $oPrivacy->addGroupCustom([
                     'profile_id' => $iAuthor,
                     'content_id' => 0,
                     'object' => $sObject,
@@ -636,9 +638,25 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName());
             }
         }
-		
-        if($mixedResult !== false)
+
+        if($mixedResult !== false) {
             $this->_processTrackFields($iContentId);
+
+            if($this->_bIsApi && ($sKeyF = 'FIELD_ALLOW_VIEW_TO') && isset($CNF[$sKeyF]) && ($mixedAllowViewTo = $this->getCleanValue($CNF[$sKeyF])) !== false) {
+                $aAllowViewToItems = [];
+                if(($mixedAllowViewToItems = $this->getCleanValue($CNF[$sKeyF] . '_items')) !== false)
+                    $aAllowViewToItems = explode(',', $mixedAllowViewToItems);
+
+                if(($sKeyO = 'OBJECT_PRIVACY_VIEW') && isset($CNF[$sKeyO]) && ($sObject = $CNF[$sKeyO]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($sObject)) !== false) {
+                    $oPrivacy->editGroupCustom([
+                        'profile_id' => $iAuthor,
+                        'content_id' => $iContentId,
+                        'object' => $sObject,
+                        'group_id' => (int)$mixedAllowViewTo
+                    ], $aAllowViewToItems);
+                }
+            }
+        }
 
         return $mixedResult;
     }
