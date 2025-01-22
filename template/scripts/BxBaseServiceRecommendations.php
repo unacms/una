@@ -21,6 +21,13 @@ class BxBaseServiceRecommendations extends BxDol
     {
         $aResults = [];
 
+        if(!$iProfileId) {
+            if(isLogged())
+                $iProfileId = bx_get_logged_profile_id();
+            else
+                return $aResults;
+        }
+
         $aObjects = BxDolRecommendationQuery::getObjects();
         foreach($aObjects as $aObject)
             if(($oRecommendation = BxDolRecommendation::getObjectInstance($aObject['name'])) !== false)

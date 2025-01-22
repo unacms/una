@@ -66,14 +66,20 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
     public static function updateData($iProfileId = 0)
     {
-        if(!$iProfileId)
-            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId) {
+            if(isLogged())
+                $iProfileId = bx_get_logged_profile_id();
+            else
+                return false;
+        }
 
         $oCronQuery = BxDolCronQuery::getInstance();
 
         $sName = 'recommendations_for_' . $iProfileId;
         if(!$oCronQuery->isTransientJobService($sName))
             $oCronQuery->addTransientJobService($sName, ['system', 'update_data', [$iProfileId], 'TemplServiceRecommendations']);
+        
+        return true;
     }
 
     public function getConnection()
@@ -161,6 +167,9 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
     public function processCriteria($iProfileId, $iLimit = 100)
     {
+        if(!$iProfileId)
+            return 0;
+
         $aWeights = array_map(function($fValue) use ($iLimit) { return $fValue * $iLimit; } , $this->_aObject['weights']);
 
         $aCriterionItems = [];
