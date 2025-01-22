@@ -56,7 +56,7 @@ class BxBaseModTextGridCommon extends BxBaseModTextGridAdministration
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `author`=?", bx_get_logged_profile_id());
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND ABS(`author`)=?", bx_get_logged_profile_id());
 
         return $this->__getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
