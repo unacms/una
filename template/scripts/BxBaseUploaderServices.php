@@ -76,9 +76,17 @@ class BxBaseUploaderServices extends BxDol
                 break;
 
             case 'upload':
-                return $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId, $isPrivate);
+                $iProfileId = (int)bx_get_logged_profile_id();
+
+                $aResult = $oUploader->handleUploads($iProfileId, isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId, $isPrivate);
+                if(isset($aResult['id']) && ($iId = (int)$aResult['id']) && ($sImagesTranscoder = bx_get('img_trans')) !== false) {
+                    $aGhosts = $oUploader->getGhosts($iProfileId, 'array', bx_process_input($sImagesTranscoder), $iContentId);
+                    if(isset($aGhosts[$iId]))
+                        $aResult['ghost'] = $aGhosts[$iId];
+                }
+                return $aResult;
                 break;
-                
+
             case 'upload_inline':
                 $sStorageObject = bx_process_input(bx_get('o'));
                 $sFile = bx_process_input(bx_get('f'));
