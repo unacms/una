@@ -35,7 +35,7 @@
     <script type="module">
         // pdf previews
         if ('undefined' !== typeof(window['pdfjsLib'])) {
-            $('.bx-base-general-attachment a[href$=".pdf"]').each(function () {
+            $('.bx-base-general-attachment a[href$=".pdf"],.bx-base-general-attachment a[href*=".pdf?"]').each(function () {
                 var sUrl = $(this).attr('href');
                 var e = $(this);
                 var oPdfjsLib = window['pdfjsLib'];
