@@ -385,7 +385,7 @@ class BxForumGrid extends BxTemplGrid
             $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVABLE'] . "` = 1 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVE'] . "` = " . ($this->_sFilter1Value == BX_FORUM_FILTER_STATUS_RESOLVED ? 1 : 0);
 
         // filter out posts of suspended members
-        $sJoinClause .= " INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}` AND `p`.`status` = 'active') ";
+        $sJoinClause .= " INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = ABS(`{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}`) AND `p`.`status` = 'active') ";
 
         // filter out posts by content filter
         $oCf = BxDolContentFilter::getInstance();
