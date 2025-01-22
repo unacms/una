@@ -1997,6 +1997,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['author_data'] = BxDolProfile::getData($aEvent['object_owner_id']);
         $aEvent['author_actions'] = [];
 
+        $aEvent['context_data'] = (int)$aEvent['object_privacy_view'] < 0 ? BxDolProfile::getData(abs($aEvent['object_privacy_view'])) : [];
+
         if(($iInitiatorProfile = (int)bx_get_logged_profile_id()) != 0) {
             $iContentProfile = (int)$aEvent['object_owner_id'];
 
@@ -2080,8 +2082,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         /**
-         * 
-         * Disabled because it wilter out non-standard fields, 
+         * Disabled because it filter out non-standard fields, 
          * like price from Ads or dates from Events.
          * 
         $aEvent['content'] = array_intersect_key($aEvent['content'], array_flip([
@@ -2090,7 +2091,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
          */
 
         return array_intersect_key($aEvent, array_flip([
-            'id', 'type', 'object_privacy_view', 'content', 'labels', 'date', 'menu_actions', 'menu_counters', 'menu_manage', 'author_data', 'author_actions', 'url', 'owners', 'cmts'
+            'id', 'type', 'object_privacy_view', 'content', 'labels', 'date', 'menu_actions', 'menu_counters', 'menu_manage', 'author_data', 'author_actions', 'context_data', 'url', 'owners', 'cmts'
         ]));
     }
 
