@@ -241,6 +241,14 @@ div.bx-std-menu-top ul li.bx-menu-tab-search .bx-form-input-text {
     font-weight: 500;
 }
 
+div.bx-std-menu-top ul li.bx-menu-tab-search .bx-form-input-text:focus {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+    filter: none;
+    transition: all 0s ease 0s;
+}
+
 
 /*--- Toolbar (Right) ---*/
 div.bx-std-menu-top .bx-menu-toolbar {
