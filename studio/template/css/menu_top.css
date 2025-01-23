@@ -317,8 +317,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-help .bx-popup,
 #bx-std-pcap-menu-popup-actions .bx-popup,
 .bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
-    border-width: 0; 
-    background-color: #ffffff;
+    border-width: 0;
 }
 #bx-std-pcap-menu-popup-actions .bx-popup-content,
 #bx-std-pmenu-popup-actions .bx-popup-content {

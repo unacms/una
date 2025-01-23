@@ -263,7 +263,7 @@ body.bx-popup-lock {
     display: none;
 }
 .bx-popup-menu .bx-popup-content-indent {
-    padding: 0px !important;
+    padding: 0.5rem 0 !important;
 }
 .bx-popup-menu ul.bx-menu-ver,
 .bx-popup-menu ul.bx-menu-verlit,
