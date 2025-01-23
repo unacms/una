@@ -476,12 +476,12 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 ('bx_payment_grid_commissions', 'independent', 'add', '_bx_payment_grid_action_title_cms_add', '', 0, 0, 1),
 ('bx_payment_grid_commissions', 'bulk', 'delete', '_bx_payment_grid_action_title_cms_delete', '', 0, 1, 1),
-('bx_payment_grid_commissions', 'single', 'edit', '_bx_payment_grid_action_title_cms_edit', 'pencil', 1, 0, 1),
+('bx_payment_grid_commissions', 'single', 'edit', '_bx_payment_grid_action_title_cms_edit', 'pencil-alt', 1, 0, 1),
 ('bx_payment_grid_commissions', 'single', 'delete', '_bx_payment_grid_action_title_cms_delete', 'remove', 1, 1, 2),
 
 ('bx_payment_grid_invoices', 'bulk', 'delete', '_bx_payment_grid_action_title_inv_delete', '', 0, 1, 1),
 ('bx_payment_grid_invoices', 'single', 'pay', '_bx_payment_grid_action_title_inv_pay', 'credit-card', 1, 0, 1),
-('bx_payment_grid_invoices', 'single', 'edit', '_bx_payment_grid_action_title_inv_edit', 'pencil', 1, 0, 2),
+('bx_payment_grid_invoices', 'single', 'edit', '_bx_payment_grid_action_title_inv_edit', 'pencil-alt', 1, 0, 2),
 ('bx_payment_grid_invoices', 'single', 'delete', '_bx_payment_grid_action_title_inv_delete', 'remove', 1, 1, 3);
 
 
