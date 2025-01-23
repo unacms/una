@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_classes' OR `object` IN('bx_
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_classes';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_classes';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_classes' OR `set_name` IN('bx_classes_create_post_attachments', 'bx_classes_view', 'bx_classes_view_actions', 'bx_classes_view_submenu', 'bx_classes_snippet_meta', 'bx_classes_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_classes' OR `set_name` IN('bx_classes_entry_attachments', 'bx_classes_view', 'bx_classes_view_actions', 'bx_classes_view_submenu', 'bx_classes_snippet_meta', 'bx_classes_menu_manage_tools');
 
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_classes_allow_view_to';

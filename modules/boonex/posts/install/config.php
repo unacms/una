@@ -19,11 +19,11 @@ $aConfig = array(
     'title' => 'Posts',
     'note' => 'Basic blogging module.',
     'version' => '14.0.1.DEV',
-    'vendor' => 'BoonEx',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '14.0.x'
     ),
 
     /**
