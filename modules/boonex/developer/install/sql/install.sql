@@ -436,6 +436,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_nav_menu', @sName, 'title', '', '', 0, 'text', '_bx_dev_nav_txt_sys_menus_title', '_bx_dev_nav_txt_menus_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_nav_err_menus_title', 'Xss', '', 0, 0),
 ('bx_developer_nav_menu', @sName, 'set_name', '', '', 0, 'select', '_bx_dev_nav_txt_sys_menus_set_name', '_bx_dev_nav_txt_menus_set_name', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_nav_menu', @sName, 'template_id', '', '', 0, 'select', '_bx_dev_nav_txt_sys_menus_template_id', '_bx_dev_nav_txt_menus_template_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_nav_err_menus_template_id', 'Int', '', 0, 0),
+('bx_developer_nav_menu', @sName, 'config_api', '', '', 0, 'textarea', '_bx_dev_nav_txt_sys_menus_config_api', '_bx_dev_nav_txt_menus_config_api', '', 0, 0, 0, '', '', '', '', '', '', 'XssHtml', '', 0, 0),
 ('bx_developer_nav_menu', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_menus_deletable', '_bx_dev_nav_txt_menus_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_menu', @sName, 'override_class_name', '', '', 0, 'text', '_bx_dev_nav_txt_sys_menus_override_class_name', '_bx_dev_nav_txt_menus_override_class_name', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_nav_menu', @sName, 'override_class_file', '', '', 0, 'text', '_bx_dev_nav_txt_sys_menus_override_class_file', '_bx_dev_nav_txt_menus_override_class_file', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
@@ -449,24 +450,27 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_menu_add', 'title', 2147483647, 1, 3),
 ('bx_developer_nav_menu_add', 'set_name', 2147483647, 1, 4),
 ('bx_developer_nav_menu_add', 'template_id', 2147483647, 1, 5),
-('bx_developer_nav_menu_add', 'deletable', 2147483647, 1, 6),
-('bx_developer_nav_menu_add', 'override_class_name', 2147483647, 1, 7),
-('bx_developer_nav_menu_add', 'override_class_file', 2147483647, 1, 8),
-('bx_developer_nav_menu_add', 'controls', 2147483647, 1, 9),
-('bx_developer_nav_menu_add', 'do_submit', 2147483647, 1, 10),
-('bx_developer_nav_menu_add', 'cancel', 2147483647, 1, 11),
+('bx_developer_nav_menu_add', 'config_api', 2147483647, 1, 6),
+('bx_developer_nav_menu_add', 'deletable', 2147483647, 1, 7),
+('bx_developer_nav_menu_add', 'override_class_name', 2147483647, 1, 8),
+('bx_developer_nav_menu_add', 'override_class_file', 2147483647, 1, 9),
+('bx_developer_nav_menu_add', 'controls', 2147483647, 1, 10),
+('bx_developer_nav_menu_add', 'do_submit', 2147483647, 1, 11),
+('bx_developer_nav_menu_add', 'cancel', 2147483647, 1, 12),
+
 ('bx_developer_nav_menu_edit', 'id', 2147483647, 1, 1),
 ('bx_developer_nav_menu_edit', 'object', 2147483647, 1, 2),
 ('bx_developer_nav_menu_edit', 'module', 2147483647, 1, 3),
 ('bx_developer_nav_menu_edit', 'title', 2147483647, 1, 4),
 ('bx_developer_nav_menu_edit', 'set_name', 2147483647, 1, 5),
 ('bx_developer_nav_menu_edit', 'template_id', 2147483647, 1, 6),
-('bx_developer_nav_menu_edit', 'deletable', 2147483647, 1, 7),
-('bx_developer_nav_menu_edit', 'override_class_name', 2147483647, 1, 8),
-('bx_developer_nav_menu_edit', 'override_class_file', 2147483647, 1, 9),
-('bx_developer_nav_menu_edit', 'controls', 2147483647, 1, 10),
-('bx_developer_nav_menu_edit', 'do_submit', 2147483647, 1, 11),
-('bx_developer_nav_menu_edit', 'cancel', 2147483647, 1, 12);
+('bx_developer_nav_menu_edit', 'config_api', 2147483647, 1, 7),
+('bx_developer_nav_menu_edit', 'deletable', 2147483647, 1, 8),
+('bx_developer_nav_menu_edit', 'override_class_name', 2147483647, 1, 9),
+('bx_developer_nav_menu_edit', 'override_class_file', 2147483647, 1, 10),
+('bx_developer_nav_menu_edit', 'controls', 2147483647, 1, 11),
+('bx_developer_nav_menu_edit', 'do_submit', 2147483647, 1, 12),
+('bx_developer_nav_menu_edit', 'cancel', 2147483647, 1, 13);
 
 --
 -- Navigation Builder -> Sets.
@@ -532,6 +536,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_nav_item', @sName, 'hidden_on_pt', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on_pt', '_bx_dev_nav_txt_items_hidden_on_pt', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'hidden_on_col', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on_col', '_bx_dev_nav_txt_items_hidden_on_col', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'hidden_on_cxt', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_hidden_on_cxt', '_bx_dev_nav_txt_items_hidden_on_cxt', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_developer_nav_item', @sName, 'config_api', '', '', 0, 'textarea', '_bx_dev_nav_txt_sys_items_config_api', '_bx_dev_nav_txt_items_config_api', '', 0, 0, 0, '', '', '', '', '', '', 'XssHtml', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'primary', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_primary', '_bx_dev_nav_txt_items_primary', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'collapsed', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_collapsed', '_bx_dev_nav_txt_items_collapsed', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'copyable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_copyable', '_bx_dev_nav_txt_items_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
@@ -558,13 +563,14 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_add', 'hidden_on_pt', 2147483647, 1, 15),
 ('bx_developer_nav_item_add', 'hidden_on_col', 2147483647, 1, 16),
 ('bx_developer_nav_item_add', 'hidden_on_cxt', 2147483647, 1, 17),
-('bx_developer_nav_item_add', 'primary', 2147483647, 1, 18),
-('bx_developer_nav_item_add', 'collapsed', 2147483647, 1, 19),
-('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 20),
-('bx_developer_nav_item_add', 'active_api', 2147483647, 1, 21),
-('bx_developer_nav_item_add', 'controls', 2147483647, 1, 22),
-('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 23),
-('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 24),
+('bx_developer_nav_item_add', 'config_api', 2147483647, 1, 18),
+('bx_developer_nav_item_add', 'primary', 2147483647, 1, 19),
+('bx_developer_nav_item_add', 'collapsed', 2147483647, 1, 20),
+('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 21),
+('bx_developer_nav_item_add', 'active_api', 2147483647, 1, 22),
+('bx_developer_nav_item_add', 'controls', 2147483647, 1, 23),
+('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 24),
+('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 25),
 
 ('bx_developer_nav_item_edit', 'id', 2147483647, 1, 1),
 ('bx_developer_nav_item_edit', 'module', 2147483647, 1, 2),
@@ -584,13 +590,14 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_edit', 'hidden_on_pt', 2147483647, 1, 16),
 ('bx_developer_nav_item_edit', 'hidden_on_col', 2147483647, 1, 17),
 ('bx_developer_nav_item_edit', 'hidden_on_cxt', 2147483647, 1, 18),
-('bx_developer_nav_item_edit', 'primary', 2147483647, 1, 19),
-('bx_developer_nav_item_edit', 'collapsed', 2147483647, 1, 20),
-('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 21),
-('bx_developer_nav_item_edit', 'active_api', 2147483647, 1, 22),
-('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 23),
-('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 24),
-('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 25);
+('bx_developer_nav_item_edit', 'config_api', 2147483647, 1, 19),
+('bx_developer_nav_item_edit', 'primary', 2147483647, 1, 20),
+('bx_developer_nav_item_edit', 'collapsed', 2147483647, 1, 21),
+('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 22),
+('bx_developer_nav_item_edit', 'active_api', 2147483647, 1, 23),
+('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 24),
+('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 25),
+('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 26);
 
 --
 -- Page Builder -> Page.
@@ -609,6 +616,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_bp_page', @sName, 'uri', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_uri', '_bx_dev_bp_txt_page_uri', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_bp_page', @sName, 'url', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_url', '_bx_dev_bp_txt_page_url', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_bp_page', @sName, 'layout_id', '', '', 0, 'select', '_bx_dev_bp_txt_sys_page_layout_id', '_bx_dev_bp_txt_page_layout_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_bp_err_page_layout_id', 'Int', '', 0, 0),
+('bx_developer_bp_page', @sName, 'config_api', '', '', 0, 'textarea', '_bx_dev_bp_txt_sys_page_config_api', '_bx_dev_bp_txt_page_config_api', '', 0, 0, 0, '', '', '', '', '', '', 'XssHtml', '', 0, 0),
 ('bx_developer_bp_page', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_page_deletable', '_bx_dev_bp_txt_page_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_bp_page', @sName, 'override_class_name', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_override_class_name', '_bx_dev_bp_txt_page_override_class_name', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_bp_page', @sName, 'override_class_file', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_override_class_file', '_bx_dev_bp_txt_page_override_class_file', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
@@ -624,12 +632,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_bp_page_add', 'uri', 2147483647, 1, 5),
 ('bx_developer_bp_page_add', 'url', 2147483647, 1, 6),
 ('bx_developer_bp_page_add', 'layout_id', 2147483647, 1, 7),
-('bx_developer_bp_page_add', 'deletable', 2147483647, 1, 8),
-('bx_developer_bp_page_add', 'override_class_name', 2147483647, 1, 9),
-('bx_developer_bp_page_add', 'override_class_file', 2147483647, 1, 10),
-('bx_developer_bp_page_add', 'controls', 2147483647, 1, 11),
-('bx_developer_bp_page_add', 'do_submit', 2147483647, 1, 12),
-('bx_developer_bp_page_add', 'cancel', 2147483647, 1, 13);
+('bx_developer_bp_page_add', 'config_api', 2147483647, 1, 8),
+('bx_developer_bp_page_add', 'deletable', 2147483647, 1, 9),
+('bx_developer_bp_page_add', 'override_class_name', 2147483647, 1, 10),
+('bx_developer_bp_page_add', 'override_class_file', 2147483647, 1, 11),
+('bx_developer_bp_page_add', 'controls', 2147483647, 1, 12),
+('bx_developer_bp_page_add', 'do_submit', 2147483647, 1, 13),
+('bx_developer_bp_page_add', 'cancel', 2147483647, 1, 14);
 
 --
 -- Page Builder -> Block.
@@ -648,6 +657,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_bp_block', @sName, 'title', '', '', 0, 'text', '_bx_dev_bp_txt_sys_block_title', '_bx_dev_bp_txt_block_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_bp_err_block_title', 'Xss', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'designbox_id', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_designbox_id', '_bx_dev_bp_txt_block_designbox_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_bp_err_block_designbox_id', 'Xss', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'class', '', '', 0, 'text', '_bx_dev_bp_txt_sys_block_class', '_bx_dev_bp_txt_block_class', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_developer_bp_block', @sName, 'config_api', '', '', 0, 'textarea', '_bx_dev_bp_txt_sys_block_config_api', '_bx_dev_bp_txt_block_config_api', '', 0, 0, 0, '', '', '', '', '', '', 'XssHtml', '', 0, 0),
 
 ('bx_developer_bp_block', @sName, 'async', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_async', '_bx_dev_bp_txt_block_async', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'submenu', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_submenu', '_bx_dev_bp_txt_block_submenu', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
@@ -679,14 +689,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_bp_block_edit', 'visible_for', 2147483647, 1, 11),
 ('bx_developer_bp_block_edit', 'visible_for_levels', 2147483647, 1, 12),
 ('bx_developer_bp_block_edit', 'class', 2147483647, 1, 13),
-('bx_developer_bp_block_edit', 'deletable', 2147483647, 1, 14),
-('bx_developer_bp_block_edit', 'copyable', 2147483647, 1, 15),
-('bx_developer_bp_block_edit', 'active', 2147483647, 1, 16),
-('bx_developer_bp_block_edit', 'active_api', 2147483647, 1, 17),
-('bx_developer_bp_block_edit', 'controls', 2147483647, 1, 18),
-('bx_developer_bp_block_edit', 'do_submit', 2147483647, 1, 19),
-('bx_developer_bp_block_edit', 'cancel', 2147483647, 1, 20),
-('bx_developer_bp_block_edit', 'delete', 2147483647, 1, 21);
+('bx_developer_bp_block_edit', 'config_api', 2147483647, 1, 14),
+('bx_developer_bp_block_edit', 'deletable', 2147483647, 1, 15),
+('bx_developer_bp_block_edit', 'copyable', 2147483647, 1, 16),
+('bx_developer_bp_block_edit', 'active', 2147483647, 1, 17),
+('bx_developer_bp_block_edit', 'active_api', 2147483647, 1, 18),
+('bx_developer_bp_block_edit', 'controls', 2147483647, 1, 19),
+('bx_developer_bp_block_edit', 'do_submit', 2147483647, 1, 20),
+('bx_developer_bp_block_edit', 'cancel', 2147483647, 1, 21),
+('bx_developer_bp_block_edit', 'delete', 2147483647, 1, 22);
 
 --
 -- Polyglot -> Grid descriptors

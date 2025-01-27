@@ -85,6 +85,7 @@ class BxBaseMenu extends BxDolMenu
 
         return [
             'object' => $this->_sObject, 
+            'config' => $this->_aObject['config_api'],
             'persistent' => $this->_aObject['persistent'],
             'params' => $this->getContentParams(),
             'items' => $aItems
@@ -204,6 +205,7 @@ class BxBaseMenu extends BxDolMenu
                 'image' => $sIconUrl ? $sIconUrl : '',
                 'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : '',
                 'addon' => $this->_bDisplayAddons ? $this->_getMenuAddon($a) : '',
+                'config' => $a['config_api'],
                 'primary' => isset($a['primary']) ? $a['primary'] : 0,
             ];
 

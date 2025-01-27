@@ -341,6 +341,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
             unset($oForm->aInputs['visible_for']);
 
+            $this->onSavePage($oForm);
+
             $iId = (int)$oForm->insert(array('author' => bx_get_logged_profile_id(), 'added' => time(), 'object' => $sObject, 'url' => $this->sPageBaseUrl . $sUri));
             if($iId != 0)
                 return array('eval' => $sJsObject . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
@@ -401,6 +403,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
                 unset($oForm->aInputs['visible_for']);
             }
+
+            $this->onSavePage($oForm, $this->aPageRebuild);
 
             if($oForm->update($this->aPageRebuild['id'])) {
                 $iLevelId = $oForm->getCleanValue('layout_id');

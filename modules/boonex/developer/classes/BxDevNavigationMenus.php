@@ -43,6 +43,8 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
             $sObject = uriGenerate($oForm->getCleanValue('object'), 'sys_objects_menu', 'object', ['empty' => 'object']);
             BxDolForm::setSubmittedValue('object', $sObject, $oForm->aFormAttrs['method']);
 
+            $this->onSave($oForm);
+
             if(($iId = (int)$oForm->insert()) != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
@@ -80,6 +82,8 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
 
         $oForm->initChecker($aMenu);
         if($oForm->isSubmittedAndValid()) {
+            $this->onSave($oForm, $aMenu);
+
             if($oForm->update($aMenu['id']) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $aMenu['id']);
             else
@@ -220,6 +224,12 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
             'msg' => _t('_bx_dev_msg_imported', $iData), 
             'eval' => $this->oModule->_oConfig->getJsObject('main') . '.onImport(oData);'
         ]);
+    }
+
+    protected function onSave(&$oForm, &$aMenu) 
+    {
+        if(($sConfigApi = $oForm->getCleanValue('config_api')) && !$this->oModule->isValidJson($sConfigApi))
+            BxDolForm::setSubmittedValue('config_api', '', $oForm->aFormAttrs['method']);
     }
 
     private function fillInSelects(&$aInputs)

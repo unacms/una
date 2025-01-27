@@ -101,6 +101,9 @@ class BxDolStudioBuilderPage extends BxTemplStudioWidget
             return array('code' => 1, 'message' => _t('_adm_bp_err_cannot_process_action'));
     }
 
+    protected function onSavePage(&$oForm, &$aPage) 
+    {}
+
     protected function onSaveBlock(&$oForm, &$aBlock)
     {
         $iDesignboxId = (int)str_replace($this->sSelectKeyPrefix, '', $oForm->getCleanValue('designbox_id'));

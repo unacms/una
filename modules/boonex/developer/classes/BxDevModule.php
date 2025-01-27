@@ -267,6 +267,14 @@ class BxDevModule extends BxDolModule
         ];
     }
 
+    public function isValidJson($s)
+    {
+        //--- Validation is disabled for now.         
+        //--- return json_decode($s, true) !== null;
+
+        return true;
+    }
+
     /**
      * 
      * Methods for Export/Import feature.

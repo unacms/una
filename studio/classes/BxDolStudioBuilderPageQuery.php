@@ -83,6 +83,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
             `tp`.`inj_head` AS `inj_head`,
             `tp`.`inj_footer` AS `inj_footer`,
             `tp`.`sticky_columns` AS `sticky_columns`,
+            `tp`.`config_api` AS `config_api`,
             `tp`.`deletable` AS `deletable`,
             `tp`.`override_class_name` AS `override_class_name`,
             `tp`.`override_class_file` AS `override_class_file`";
@@ -388,6 +389,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
             `tpb`.`content` AS `content`,
             `tpb`.`content_empty` AS `content_empty`,
             `tpb`.`help` AS `help`,
+            `tpb`.`config_api` AS `config_api`,
             `tpb`.`deletable` AS `deletable`,
             `tpb`.`copyable` AS `copyable`,
             `tpb`.`active` AS `active`,

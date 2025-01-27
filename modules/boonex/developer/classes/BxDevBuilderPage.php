@@ -239,6 +239,21 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         );
         unset($aForm['inputs']['url']['attrs']['disabled']);
 
+        $aConfigApi = array(
+            'config_api'  => array(
+                'type' => 'textarea',
+                'name' => 'config_api',
+                'caption' => _t('_bx_dev_bp_txt_page_config_api'),
+                'info' => '',
+                'value' => $this->aPageRebuild['config_api'],
+                'required' => '',
+                'db' => array (
+                    'pass' => 'XssHtml',
+                ),
+            )
+        );
+        $aForm['inputs'] = bx_array_insert_before($aConfigApi, $aForm['inputs'], 'sticky_columns');
+
         $aForm['inputs']['deletable'] = array(
             'type' => 'switcher',
             'name' => 'deletable',
@@ -437,12 +452,21 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         $aBlock['designbox_id'] = $this->sSelectKeyPrefix . $aBlock['designbox_id'];
     }
 
+    protected function onSavePage(&$oForm, &$aPage) 
+    {
+        if(($sConfigApi = $oForm->getCleanValue('config_api')) && !$this->oModule->isValidJson($sConfigApi))
+            BxDolForm::setSubmittedValue('config_api', '', $oForm->aFormAttrs['method']);
+    }
+
     protected function onSaveBlock(&$oForm, &$aBlock)
     {
         parent::onSaveBlock($oForm, $aBlock);
 
         if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_SERVICE && isset($oForm->aInputs['content']))
             $this->onSaveBlockService($oForm, $aBlock);
+
+        if(($sConfigApi = $oForm->getCleanValue('config_api')) && !$this->oModule->isValidJson($sConfigApi))
+            BxDolForm::setSubmittedValue('config_api', '', $oForm->aFormAttrs['method']);
     }
 
     protected function onSaveBlockLang(&$oForm, &$aBlock)

@@ -283,6 +283,8 @@
     <string name="_bx_dev_nav_txt_menus_template_id"><![CDATA[Стиль]]></string>
     <string name="_bx_dev_nav_txt_menus_template_id_select"><![CDATA[Выбрать стиль...]]></string>
     <string name="_bx_dev_nav_err_menus_template_id"><![CDATA[Нужно выбрать стиль]]></string>
+    <string name="_bx_dev_nav_txt_sys_menus_config_api"><![CDATA[Конфигурация (для приложения)]]></string>
+    <string name="_bx_dev_nav_txt_menus_config_api"><![CDATA[Конфигурация (для приложения в формате JSON)]]></string>
     <string name="_bx_dev_nav_txt_sys_menus_deletable"><![CDATA[Можно удалять]]></string>
     <string name="_bx_dev_nav_txt_menus_deletable"><![CDATA[Можно удалять]]></string>
     <string name="_bx_dev_nav_txt_sys_menus_override_class_name"><![CDATA[Имя класса]]></string>
@@ -373,6 +375,8 @@
     <string name="_bx_dev_nav_txt_items_hidden_on_col_full"><![CDATA[Полная]]></string>
     <string name="_bx_dev_nav_txt_sys_items_hidden_on_cxt"><![CDATA[Скрыть в контекстах]]></string>
     <string name="_bx_dev_nav_txt_items_hidden_on_cxt"><![CDATA[Скрыть в контекстах]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_config_api"><![CDATA[Конфигурация (для приложения)]]></string>
+    <string name="_bx_dev_nav_txt_items_config_api"><![CDATA[Конфигурация (для приложения в формате JSON)]]></string>
     <string name="_bx_dev_nav_txt_sys_items_primary"><![CDATA[Основной]]></string>
     <string name="_bx_dev_nav_txt_items_primary"><![CDATA[Основной]]></string>
     <string name="_bx_dev_nav_txt_sys_items_collapsed"><![CDATA[Свёрнутый]]></string>
@@ -412,6 +416,8 @@
     <string name="_bx_dev_bp_txt_page_layout_id"><![CDATA[Дизайн]]></string>
     <string name="_bx_dev_bp_txt_page_layout_id_select"><![CDATA[Выбрать дизайн...]]></string>
     <string name="_bx_dev_bp_err_page_layout_id"><![CDATA[Нужно выбрать дизайн]]></string>
+    <string name="_bx_dev_bp_txt_sys_page_config_api"><![CDATA[Конфигурация (для приложения)]]></string>
+    <string name="_bx_dev_bp_txt_page_config_api"><![CDATA[Конфигурация (для приложения в формате JSON)]]></string>
     <string name="_bx_dev_bp_txt_page_cache_editable"><![CDATA[Можно редактировать]]></string>
     <string name="_bx_dev_bp_txt_sys_page_deletable"><![CDATA[Можно удалять]]></string>
     <string name="_bx_dev_bp_txt_page_deletable"><![CDATA[Можно удалять]]></string>
@@ -451,6 +457,8 @@
     <string name="_bx_dev_bp_err_block_designbox_id"><![CDATA[Нужно выбрать дизайн]]></string>
     <string name="_bx_dev_bp_txt_sys_block_class"><![CDATA[CSS класс]]></string>
     <string name="_bx_dev_bp_txt_block_class"><![CDATA[CSS класс]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_config_api"><![CDATA[Конфигурация (для приложения)]]></string>
+    <string name="_bx_dev_bp_txt_block_config_api"><![CDATA[Конфигурация (для приложения в формате JSON)]]></string>
     <string name="_bx_dev_bp_txt_sys_block_async"><![CDATA[Асинхронный режим]]></string>
     <string name="_bx_dev_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
     <string name="_bx_dev_bp_txt_sys_block_submenu"><![CDATA[Подменю блока]]></string>

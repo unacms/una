@@ -46,6 +46,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
+            $this->onSave($oForm);
+
             if(($iId = (int)$oForm->insert()) != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
@@ -88,6 +90,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
         if($oForm->isSubmittedAndValid()) {
             $this->_prepareServiceSave('addon', $oForm);
             $this->_prepareServiceSave('visibility_custom', $oForm);
+
+            $this->onSave($oForm, $aItem);
 
             if($oForm->update($aItem['id']) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
@@ -132,9 +136,15 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
     	return true;
     }
 
-	protected function _isDeletable(&$aRow)
+    protected function _isDeletable(&$aRow)
     {
     	return true;
+    }
+
+    protected function onSave(&$oForm, &$aItem) 
+    {
+        if(($sConfigApi = $oForm->getCleanValue('config_api')) && !$this->oModule->isValidJson($sConfigApi))
+            BxDolForm::setSubmittedValue('config_api', '', $oForm->aFormAttrs['method']);
     }
 
     private function fillInSelects(&$aInputs)

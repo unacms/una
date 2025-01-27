@@ -283,6 +283,8 @@
     <string name="_bx_dev_nav_txt_menus_template_id"><![CDATA[Style]]></string>
     <string name="_bx_dev_nav_txt_menus_template_id_select"><![CDATA[Select Style...]]></string>
     <string name="_bx_dev_nav_err_menus_template_id"><![CDATA[You need to select a style]]></string>
+    <string name="_bx_dev_nav_txt_sys_menus_config_api"><![CDATA[Config (for App)]]></string>
+    <string name="_bx_dev_nav_txt_menus_config_api"><![CDATA[Config (for App in JSON format)]]></string>
     <string name="_bx_dev_nav_txt_sys_menus_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_nav_txt_menus_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_nav_txt_sys_menus_override_class_name"><![CDATA[Class Name]]></string>
@@ -373,6 +375,8 @@
     <string name="_bx_dev_nav_txt_items_hidden_on_col_full"><![CDATA[Full]]></string>
     <string name="_bx_dev_nav_txt_sys_items_hidden_on_cxt"><![CDATA[Hidden in contexts]]></string>
     <string name="_bx_dev_nav_txt_items_hidden_on_cxt"><![CDATA[Hidden in contexts]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_config_api"><![CDATA[Config (for App)]]></string>
+    <string name="_bx_dev_nav_txt_items_config_api"><![CDATA[Config (for App in JSON format)]]></string>
     <string name="_bx_dev_nav_txt_sys_items_primary"><![CDATA[Primary]]></string>
     <string name="_bx_dev_nav_txt_items_primary"><![CDATA[Primary]]></string>
     <string name="_bx_dev_nav_txt_sys_items_collapsed"><![CDATA[Collapsed]]></string>
@@ -412,6 +416,8 @@
     <string name="_bx_dev_bp_txt_page_layout_id"><![CDATA[Layout]]></string>
     <string name="_bx_dev_bp_txt_page_layout_id_select"><![CDATA[Select Layout...]]></string>
     <string name="_bx_dev_bp_err_page_layout_id"><![CDATA[You need to select a layout]]></string>
+    <string name="_bx_dev_bp_txt_sys_page_config_api"><![CDATA[Config (for App)]]></string>
+    <string name="_bx_dev_bp_txt_page_config_api"><![CDATA[Config (for App in JSON format)]]></string>
     <string name="_bx_dev_bp_txt_page_cache_editable"><![CDATA[Editable]]></string>
     <string name="_bx_dev_bp_txt_sys_page_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_bp_txt_page_deletable"><![CDATA[Deletable]]></string>
@@ -451,6 +457,8 @@
     <string name="_bx_dev_bp_err_block_designbox_id"><![CDATA[You need to select a layout]]></string>
     <string name="_bx_dev_bp_txt_sys_block_class"><![CDATA[CSS class]]></string>
     <string name="_bx_dev_bp_txt_block_class"><![CDATA[CSS class]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_config_api"><![CDATA[Config (for App)]]></string>
+    <string name="_bx_dev_bp_txt_block_config_api"><![CDATA[Config (for App in JSON format)]]></string>
     <string name="_bx_dev_bp_txt_sys_block_async"><![CDATA[Asynchronous Mode]]></string>
     <string name="_bx_dev_bp_txt_block_async"><![CDATA[Asynchronous Mode]]></string>
     <string name="_bx_dev_bp_txt_sys_block_submenu"><![CDATA[Block submenu]]></string>
