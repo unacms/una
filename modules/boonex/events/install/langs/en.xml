@@ -547,6 +547,7 @@
     <string name="_bx_events_alert_action_join_request"><![CDATA[join request]]></string>
     <string name="_bx_events_alert_action_reminder"><![CDATA[reminder]]></string>
     <string name="_bx_events_alert_action_reminder_follow_context"><![CDATA[New reminders]]></string>
+    <string name="_bx_events_alert_action_info_reminder_follow_context"><![CDATA[New reminders were posted in a space you follow.]]></string>
     <string name="_bx_events_txt_ntfs_join_invitation"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> event's representative invites <b class="bx-ntfs-content-entry">{subentry_sample}</b> to join event]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[Event <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_events_txt_ntfs_reminder_1"><![CDATA[Event <b class="bx-ntfs-content-profile">{owner_name}</b> starts in an hour]]></string>

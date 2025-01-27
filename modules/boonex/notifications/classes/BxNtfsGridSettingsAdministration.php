@@ -178,17 +178,34 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
                 $this->_updateSettingTitle($mixedValueKey, $aRow);
         }
 
+        $sTitle = $mixedValue;
         if($this->_bGrouped) {
-            $sValueKey = '_bx_ntfs_alert_action_group_' . $aRow['group'];
-            $sValue = _t($sValueKey);
-            if(strcmp($sValueKey, $sValue) !== 0)
-                $mixedValue = $sValue;
+            if(($sKey = '_bx_ntfs_alert_action_group_' . $aRow['group']) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
+                $sTitle = $_sKey;
             else if($aRow['type'] == BX_NTFS_STYPE_OTHER)
-                $mixedValue = sprintf($this->_sTitleMask, _t($this->_oModule->_oConfig->getHandlersUnitTitle($aRow['unit'])), $mixedValue);
+                $sTitle = sprintf($this->_sTitleMask, _t($this->_oModule->_oConfig->getHandlersUnitTitle($aRow['unit'])), $sTitle);
+        }
 
-            if(!$this->_isSettingsGroupValid($aRow))
-                $mixedValue = $this->_oTemplate->parseIcon('exclamation-triangle', array('class' => 'bx-def-margin-sec-right', 'title' => _t('_bx_ntfs_grid_column_title_title_warning'))) . $mixedValue;
-        }            
+        $iInfo = '';
+        if(($sKey = '_bx_ntfs_alert_action_group_info_' . $aRow['group']) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
+            $iInfo = $_sKey;
+        else if(($sKey = '_bx_ntfs_alert_action_group_info_' . $aRow['group'] . '_' . $aRow['type']) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
+            $iInfo = $_sKey;
+        else
+            $iInfo = $this->_oModule->_oConfig->getHandlersActionInfo($aRow['unit'], $aRow['action'], $aRow['type'], true);
+
+        $sStylePrefix = $this->_oModule->_oConfig->getPrefix('style');
+        $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('setting_title.html', [
+            'style_prefix' => $sStylePrefix,
+            'bx_if:show_warning' => [
+                'condition' => $this->_bGrouped && !$this->_isSettingsGroupValid($aRow),
+                'content' => [
+                    'style_prefix' => $sStylePrefix
+                ]
+            ],
+            'title' => $sTitle,
+            'info' => $iInfo
+        ]);      
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

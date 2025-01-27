@@ -655,9 +655,11 @@
     <string name="_bx_ads_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
     <string name="_bx_ads_alert_action_doInterest_personal"><![CDATA[Кто-то заинтересовался вашим объявлением]]></string>
+    <string name="_bx_ads_alert_action_info_doInterest_personal"><![CDATA[Участник проявил интерес к вашей рекламе.]]></string>
     <string name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 
     <string name="_bx_ads_alert_action_license_register_personal"><![CDATA[Ваш товар был куплен]]></string>
+    <string name="_bx_ads_alert_action_info_license_register_personal"><![CDATA[Участник приобрел рекламируемый вами товар или услугу.]]></string>
     <string name="_bx_ads_txt_ntfs_object_license_register"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> купил ваш товар <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 
     <string name="_bx_ads_alert_action_shipped_personal"><![CDATA[Товар отправлен]]></string>

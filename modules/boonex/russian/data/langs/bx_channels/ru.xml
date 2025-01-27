@@ -255,4 +255,5 @@
     <string name="_bx_channels_ntfs_txt_subobject_added_profile"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> был добавлен в <b class="bx-ntfs-content-profile">{owner_name}</b> канал]]></string>
     <string name="_bx_channels_alert_action_hashtag_added"><![CDATA[Новые хештеги]]></string>
     <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[Новые хештеги]]></string>
+    <string name="_bx_channels_alert_action_info_hashtag_added_notif_follow_context"><![CDATA[В пространстве, на которое вы подписаны, были добавлены или использованы новые хэштеги.]]></string>
 </resources>

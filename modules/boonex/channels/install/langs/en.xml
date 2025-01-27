@@ -256,4 +256,5 @@
     <string name="_bx_channels_ntfs_txt_subobject_added_profile"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> was added to <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string>
     <string name="_bx_channels_alert_action_hashtag_added"><![CDATA[New hashtags]]></string>
     <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[New hashtags]]></string>
+    <string name="_bx_channels_alert_action_info_hashtag_added_notif_follow_context"><![CDATA[New hashtags were added or used in a space you follow.]]></string>
 </resources>

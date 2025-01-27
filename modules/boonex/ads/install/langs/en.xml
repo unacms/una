@@ -668,9 +668,11 @@
     <string name="_bx_ads_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
     <string name="_bx_ads_alert_action_doInterest_personal"><![CDATA[Someone interested in your ad]]></string>
+    <string name="_bx_ads_alert_action_info_doInterest_personal"><![CDATA[A member has shown interest in your advertisement.]]></string>
     <string name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 
     <string name="_bx_ads_alert_action_license_register_personal"><![CDATA[Your ad was purchased]]></string>
+    <string name="_bx_ads_alert_action_info_license_register_personal"><![CDATA[A member purchased the item or service you advertised.]]></string>
     <string name="_bx_ads_txt_ntfs_object_license_register"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> purchased your ad <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 
     <string name="_bx_ads_alert_action_shipped_personal"><![CDATA[Ad was shipped]]></string>

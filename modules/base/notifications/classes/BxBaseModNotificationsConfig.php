@@ -125,6 +125,19 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 
         return $sKey;
     }
+    
+    public function getHandlersActionInfo($sUnit, $sAction, $sType = '', $bTranslation = false)
+    {
+        $sKeyMask = '_%s_alert_action_info_%s' . (!empty($sType) ? '_%s' : '');
+
+        $sKey = sprintf($sKeyMask, $sUnit, $sAction, $sType);
+        if(($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
+            return !$bTranslation ? $sKey : $_sKey;
+
+        $sKey = sprintf($sKeyMask, trim($this->getPrefix('language'), '_'), $sAction, $sType);
+
+        return !$bTranslation ? $sKey : (($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0 ? $_sKey : '');
+    }
 
     public function getHandler(&$aEvent)
     {

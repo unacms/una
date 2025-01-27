@@ -484,6 +484,8 @@
     <string name="_bx_events_alert_action_join_request"><![CDATA[запрос на присоединение к событию]]></string>
     <string name="_bx_events_alert_action_reminder"><![CDATA[напоминание]]></string>
     <string name="_bx_events_alert_action_reminder_follow_context"><![CDATA[Новые напоминания]]></string>
+    <string name="_bx_events_alert_action_info_reminder_follow_context"><![CDATA[В пространстве, на которое вы подписаны, опубликованы новые напоминания.]]></string>
+
     <string name="_bx_events_txt_ntfs_join_invitation"><![CDATA[Представитель события <b class="bx-ntfs-content-profile">{owner_name}</b> пригласил <b class="bx-ntfs-content-entry">{subentry_sample}</b> присоединиться к событию]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[У события <b class="bx-ntfs-content-profile">{owner_name}</b> новый запрос на присоединение от <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_events_txt_ntfs_reminder_1"><![CDATA[Событие <b class="bx-ntfs-content-profile">{owner_name}</b> начнется через час]]></string>
