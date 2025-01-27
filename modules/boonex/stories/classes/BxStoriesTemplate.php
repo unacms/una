@@ -114,6 +114,7 @@ class BxStoriesTemplate extends BxBaseModTextTemplate
             'summary' => $sSummary,
             'author' => $oProfile->getDisplayName(),
             'author_url' => $oProfile->getUrl(),
+            'author_icon' => $oProfile->getUnit(0, ['template' => 'unit_wo_info']),
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],

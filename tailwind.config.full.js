@@ -75,6 +75,7 @@ module.exports = {
           auto: 'auto',
           square: '1 / 1',
           video: '16 / 9',
+          portrait: '9 / 16',
           1: '1',
           2: '2',
           3: '3',
