@@ -155,7 +155,6 @@
     -moz-appearance: none;
     appearance: none;
 
-    padding:7px 3px 7px 3px;
     padding:0.2rem 0.4rem;
 
     vertical-align:middle;
@@ -200,7 +199,7 @@
     transition: all 0.2s linear;
 }
 .bx-form-input-wrapper-password {
-    padding: 0 2.125rem 0 0;
+    padding: 0;
 }
 .bx-form-input-wrapper-password > a {
     position: absolute;
@@ -231,10 +230,13 @@
     height: 100%;
 
     margin: 0;
-    padding: 7px 3px 7px 3px;
-    padding: 0.2rem 0.4rem;
+    padding: 0.2rem 2.125rem 0.2rem 0.4rem;
 
     border: 0;
+    -webkit-border-radius:0.3rem;
+    -moz-border-radius:0.3rem;	
+    border-radius:0.3rem;
+
     background-color: transparent;
 }
 .bx-form-input-password:focus {
