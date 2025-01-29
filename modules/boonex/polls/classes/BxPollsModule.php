@@ -184,7 +184,9 @@ class BxPollsModule extends BxBaseModTextModule
 
         list($iContentId, $aContentInfo) = $mixedContent;
 
-        return $this->_oTemplate->entryTextAndSubentries($aContentInfo, $bForceDisplaySubentries);
+        $mixedResult = $this->_oTemplate->entryTextAndSubentries($aContentInfo, $bForceDisplaySubentries);
+
+        return $this->_bIsApi ? [bx_api_get_block('entity_poll', $mixedResult)] : $mixedResult;
     }
     
     /**
