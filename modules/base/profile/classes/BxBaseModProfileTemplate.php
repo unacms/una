@@ -181,13 +181,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.svg');
         
-        $sThumbUrl = $bPublicThumb ? $this->_getUnitThumbUrl($sTemplateSize, $aData, false) : '';
+        $sThumbUrl = $this->_isUnitThumb($aData, $sTemplate) && $bPublicThumb ? $this->_getUnitThumbUrl($sTemplateSize, $aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
-
-        if(substr($sTemplate, 0, 13) == 'unit_wo_cover' && !$bThumbUrl && $bCoverUrl) {
-            $bThumbUrl = true;
-            $sThumbUrl = $sCoverUrl;
-        }
 
         $aTmplVarsThumbnail = array(
             'class_size' => '',
@@ -816,6 +811,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         return $sResult;
+    }
+
+    protected function _isUnitThumb($aData, $sTemplateName = 'unit.html')
+    {
+        return true;
     }
 
     protected function _getUnitThumbUrl($sSize, $aData, $bSubstituteNoImage = true)

@@ -53,7 +53,7 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $aVars['title'] = (boolean)$aVars['public'] ? bx_process_output($aData[$CNF['FIELD_NAME']]) : _t($CNF['T']['txt_private_group']);
         $aVars['description'] = '';
         if(!empty($CNF['FIELD_TEXT']) && !empty($aData[$CNF['FIELD_TEXT']]) && (boolean)$aVars['public'])
-        	$aVars['description'] = strmaxtextlen(strip_tags($aData[$CNF['FIELD_TEXT']]), $this->_iUnitCharsSummary);
+            $aVars['description'] = strmaxtextlen(strip_tags($aData[$CNF['FIELD_TEXT']]), $this->_iUnitCharsSummary);
 
         $aVars['author'] = $oProfile->getDisplayName();
         $aVars['author_url'] = $oProfile->getUrl();
@@ -63,6 +63,14 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
 
         return $aVars;
     }
+
+    function prepareCover($aData, $aParams = [])
+    {
+        if($this->_oConfig->isUseCoverAsThumb())
+            $aParams['show_avatar'] = false;
+
+        return parent::prepareCover($aData, $aParams);
+    }     
 
     public function getPopupSetRole($aRoles, $iProfileId, $iProfileRole)
     {
@@ -140,6 +148,29 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         }
 
         return $sResult;
+    }
+    
+    protected function _isUnitThumb($aData, $sTemplateName = 'unit.html')
+    {
+        $bResult = true;
+        
+        switch($sTemplateName) {
+            case 'unit.html':
+            case 'unit_with_cover.html':
+                $bResult = !$this->_oConfig->isUseCoverAsThumb();
+                break;
+        }
+
+        return $bResult;
+    }
+
+    function _image ($sField, $sTranscodeObject, $sNoImage, $aData, $bSubstituteNoImage = true)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if($sField == $CNF['FIELD_PICTURE'] && $this->_oConfig->isUseCoverAsThumb())
+            $sField = $CNF['FIELD_COVER'];
+
+        return parent::_image($sField, $sTranscodeObject, $sNoImage, $aData, $bSubstituteNoImage);
     }
 }
 

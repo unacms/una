@@ -324,6 +324,11 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
     }
+
+    protected function _initUseCoverAsThumb()
+    {
+        return false;
+    }
 }
 
 /** @} */

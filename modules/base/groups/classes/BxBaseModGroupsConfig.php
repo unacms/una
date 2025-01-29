@@ -14,6 +14,8 @@ bx_import('BxDolInformer');
 class BxBaseModGroupsConfig extends BxBaseModProfileConfig
 {
     protected $_aHtmlIds;
+    
+    protected $_bUseCoverAsThumb;
 
     protected $_aCurrency;
 
@@ -35,6 +37,8 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
         $this->_aHtmlIds = array(
             'popup_price' => $sHtmlPrefix . '-popup-price'
         );
+
+        $this->_bUseCoverAsThumb = $this->_initUseCoverAsThumb();
 
         $oPayments = BxDolPayments::getInstance();
         $this->_aCurrency = array(
@@ -76,9 +80,25 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
         return !isset($this->CNF['PARAM_USE_IN']) || getParam($this->CNF['PARAM_USE_IN']) == 'on';
     }
 
+    public function isUseCoverAsThumb()
+    {
+        return $this->_bUseCoverAsThumb;
+    }
+
     public function getPriceName($sName)
     {
         return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_PRICE_NAME'], ['lowercase' => false]);
+    }
+    
+    protected function _initUseCoverAsThumb()
+    {
+        if(($sKey = 'PARAM_USE_COVER_AS_THUMB') && !empty($this->CNF[$sKey]))
+            return getParam($this->CNF[$sKey]) == 'on';
+
+        if(($sParam = $this->_sName . '_use_cover_as_thumb') && ($mixedValue = getParam($sParam)) !== false)
+            return $mixedValue == 'on';
+
+        return true;
     }
 }
 
