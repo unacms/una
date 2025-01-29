@@ -478,7 +478,8 @@ class BxBaseFormView extends BxDolForm
                     else
                         $aInput = array_merge($aInput, [
                             'type' => 'hidden',
-                            'value' => $iContextId
+                            'value' => $iContextId,
+                            'owner_info' => BxDolProfile::getData(abs($iContextId))
                         ]);
                 }
             }
