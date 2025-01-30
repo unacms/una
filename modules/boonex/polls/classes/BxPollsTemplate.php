@@ -66,24 +66,30 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     public function entrySubentries ($aData, $bDynamic = false)
     {
-        $sContent = $this->_getGetBlockContentSubentries($aData, $bDynamic);
-        if(empty($sContent))
+        $mixedContent = $this->_getGetBlockContentSubentries($aData, $bDynamic);
+        if($this->_bIsApi)
+            return $mixedContent;
+
+        if(empty($mixedContent))
             return '';
 
     	return array(
-            'content' => $sContent,
+            'content' => $mixedContent,
             'menu' => $this->_getGetBlockMenu($aData, 'subentries')
         );
     }
 
     public function entryResults($aData, $bDynamic = false)
     {
-        $sContent = $this->_getGetBlockContentResults($aData, $bDynamic);
-        if(empty($sContent))
+        $mixedContent = $this->_getGetBlockContentResults($aData, $bDynamic);
+        if($this->_bIsApi)
+            return $mixedContent;
+
+        if(empty($mixedContent))
             return '';
 
         return array(
-            'content' => $sContent,
+            'content' => $mixedContent,
             'menu' => $this->_getGetBlockMenu($aData, 'results')
         );
     }
@@ -93,12 +99,23 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $oModule = $this->getModule();
         $CNF = &$oModule->_oConfig->CNF;
 
-        if($this->_bIsApi)
+        $aTmplVars = parent::getTmplVarsText($aData);
+
+        if($this->_bIsApi) {
+            $bPerformed = $oModule->isPerformed($aData['id']);
+
             return [
+                'id' => $aData['id'],
+                'title' => $this->_oConfig->getTitle($aData),
+                'image' => !empty($aTmplVars['image']) ? $aTmplVars['image'] : '',
                 'object' => $CNF['OBJECT_VOTES_SUBENTRIES'],
                 'subentries' => $this->_getGetBlockContentSubentries($aData),
-                'results' => $this->_getGetBlockContentResults($aData)
+                'results' => $this->_getGetBlockContentResults($aData),
+                'is_hidden_results' => (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 1,
+                'is_performed' => $bPerformed,
+                'value' => $bPerformed ? $oModule->getPerformedValue($aData['id']) : 0
             ];
+        }
 
         $sMethod = '_getGetBlockContent';
         $sMenuItem = '';
@@ -127,7 +144,6 @@ class BxPollsTemplate extends BxBaseModTextTemplate
              ]]);
         }
 
-        $aTmplVars = parent::getTmplVarsText($aData);
         $aTmplVars = array_merge($aTmplVars, array(
             'menu' => $sTmplVarsMenu,
             'bx_if:show_subentries' => array(
@@ -255,7 +271,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $aSubentries = $this->_oDb->getSubentries(array('type' => 'entry_id', 'entry_id' => $aData[$CNF['FIELD_ID']]));
-        if($this->_bIsApi)
+		if($this->_bIsApi)
             return $aSubentries;
 
         if(empty($aSubentries) || !is_array($aSubentries))

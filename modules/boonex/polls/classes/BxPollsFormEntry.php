@@ -13,7 +13,7 @@ class BxPollsFormEntryCheckerHelper extends BxDolFormCheckerHelper
 {
     static public function checkAvailSubentries ($s)
     {
-        return !self::_isEmptyArray($s) && count($s) >= 2;
+        return bx_is_api() ? self::checkAvail($s) : !self::_isEmptyArray($s) && count($s) >= 2;
     }
 }
 /**
@@ -79,6 +79,16 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
         $this->processSubentriesUpdate($CNF['FIELD_SUBENTRIES'], $iContentId);
 
         return $iResult;
+    }
+
+    public function getCleanValue ($sName)
+    {
+        $mixedValue = parent::getCleanValue($sName);
+        
+        if($this->_bIsApi && !empty($mixedValue) && in_array($sName, ['subentries', 'subentries_ids']))
+            $mixedValue = explode(',', $mixedValue);
+
+        return $mixedValue;
     }
 
     public function processSubentriesAdd ($sField, $iContentId = 0)

@@ -71,7 +71,14 @@ class BxPollsModule extends BxBaseModTextModule
     /**
      * SERVICE METHODS
      */
-    
+    public function serviceGetSafeServices()
+    {
+        return array_merge(parent::serviceGetSafeServices(), [
+            'GetBlockSubentries' => '',
+            'GetBlockResults' => '',
+        ]);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_polls Polls
@@ -210,6 +217,14 @@ class BxPollsModule extends BxBaseModTextModule
 
         return $this->_oDb->isPerformed($iObjectId, $iAuthorId, $iAuthorIp);
     }
+    
+    public function getPerformedValue($iObjectId, $iAuthorId = 0)
+    {
+        if(empty($iAuthorId))
+            $iAuthorId = bx_get_logged_profile_id();
+
+        return $this->_oDb->getPerformedValue($iObjectId, $iAuthorId);
+    }
 
 
     /**
@@ -231,6 +246,11 @@ class BxPollsModule extends BxBaseModTextModule
 
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+
+        if($this->_bIsApi) 
+            return array_merge($aResult, $this->_oTemplate->entryTextAndSubentries($aContentInfo));
+
         $CNF = &$this->_oConfig->CNF;
         $bDynamic = isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true;
 
@@ -239,7 +259,6 @@ class BxPollsModule extends BxBaseModTextModule
 
         $aBlock = $this->_oTemplate->{$this->isPerformed($aContentInfo[$CNF['FIELD_ID']]) ? 'entryResults' : 'entrySubentries'}($aContentInfo, $bDynamic);
 
-        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
         $aResult['title'] = $this->_oConfig->getTitle($aContentInfo);
         $aResult['text'] = '';
         $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('unit_embed.html', array(
