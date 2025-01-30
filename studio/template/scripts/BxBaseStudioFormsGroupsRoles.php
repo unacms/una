@@ -384,12 +384,19 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
         foreach ($aModules as $sModuleUri => $sModuleName) {
             $oModule = BxDolModule::getInstance($sModuleUri);
             if ($oModule) {
-                if (bx_srv('system', 'is_module_content', [$sModuleUri]) && !BxDolRequest::serviceExists($sModuleUri, 'act_as_profile')) {
-                    $aDefaultActions[$sModuleUri] = [
+                if ((bx_srv('system', 'is_module_content', [$sModuleUri]) || bx_srv('system', 'is_module_context', [$sModuleUri])) && (!BxDolRequest::serviceExists($sModuleUri, 'act_as_profile') || !bx_srv($sModuleUri, 'act_as_profile'))) {
+                    $aActions = [
                         'post' => 1,
                         'edit_any' => $bAdminOrModerator,
                         'delete_any' => $bAdminOrModerator,
                     ];
+
+                    if (isset($aDefaultActions[$sModuleUri])) {
+                        $aDefaultActions[$sModuleUri] = array_merge($aDefaultActions[$sModuleUri], $aActions);
+                    } else {
+                        $aDefaultActions[$sModuleUri] = $aActions;
+                    }
+
                 }
             }
         }
