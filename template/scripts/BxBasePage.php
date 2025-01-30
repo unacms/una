@@ -551,6 +551,16 @@ class BxBasePage extends BxDolPage
                 $oMenuSubmenu->setObjectSubmenu($sSubmenu, []);
 
             $a['menu'] = $oMenuSubmenu->getCodeAPI();
+            if ($sModuleName && $sModuleName != 'system'){
+                $oModule = BxDolModule::getInstance($sModuleName);
+                if ($oModule){
+                    $CNF = &$oModule->_oConfig->CNF;
+                    $a['menu']['name'] = $oModule->getName();
+                    $a['menu']['title'] = $oModule->getModuleTitle();
+                    $a['menu']['icon'] = $CNF['ICON'];
+                    $a['menu']['add_url'] = $CNF['URI_ADD_ENTRY'] ? $CNF['URI_ADD_ENTRY']: str_replace('edit-', 'create-',$CNF['URI_EDIT_ENTRY']);
+                }    
+            }
         }
 
         /**
