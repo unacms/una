@@ -66,24 +66,30 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     public function entrySubentries ($aData, $bDynamic = false)
     {
-        $sContent = $this->_getGetBlockContentSubentries($aData, $bDynamic);
-        if(empty($sContent))
+        $mixedContent = $this->_getGetBlockContentSubentries($aData, $bDynamic);
+        if($this->_bIsApi)
+            return $mixedContent;
+
+        if(empty($mixedContent))
             return '';
 
     	return array(
-            'content' => $sContent,
+            'content' => $mixedContent,
             'menu' => $this->_getGetBlockMenu($aData, 'subentries')
         );
     }
 
     public function entryResults($aData, $bDynamic = false)
     {
-        $sContent = $this->_getGetBlockContentResults($aData, $bDynamic);
-        if(empty($sContent))
+        $mixedContent = $this->_getGetBlockContentResults($aData, $bDynamic);
+        if($this->_bIsApi)
+            return $mixedContent;
+
+        if(empty($mixedContent))
             return '';
 
         return array(
-            'content' => $sContent,
+            'content' => $mixedContent,
             'menu' => $this->_getGetBlockMenu($aData, 'results')
         );
     }
@@ -92,6 +98,24 @@ class BxPollsTemplate extends BxBaseModTextTemplate
     {
         $oModule = $this->getModule();
         $CNF = &$oModule->_oConfig->CNF;
+
+        $aTmplVars = parent::getTmplVarsText($aData);
+
+        if($this->_bIsApi) {
+            $bPerformed = $oModule->isPerformed($aData['id']);
+
+            return [
+                'id' => $aData['id'],
+                'title' => $this->_oConfig->getTitle($aData),
+                'image' => !empty($aTmplVars['image']) ? $aTmplVars['image'] : '',
+                'object' => $CNF['OBJECT_VOTES_SUBENTRIES'],
+                'subentries' => $this->_getGetBlockContentSubentries($aData),
+                'results' => $this->_getGetBlockContentResults($aData),
+                'is_hidden_results' => (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 1,
+                'is_performed' => $bPerformed,
+                'value' => $bPerformed ? $oModule->getPerformedValue($aData['id']) : 0
+            ];
+        }
 
         $sMethod = '_getGetBlockContent';
         $sMenuItem = '';
@@ -120,7 +144,6 @@ class BxPollsTemplate extends BxBaseModTextTemplate
              ]]);
         }
 
-        $aTmplVars = parent::getTmplVarsText($aData);
         $aTmplVars = array_merge($aTmplVars, array(
             'menu' => $sTmplVarsMenu,
             'bx_if:show_subentries' => array(
@@ -248,6 +271,9 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $aSubentries = $this->_oDb->getSubentries(array('type' => 'entry_id', 'entry_id' => $aData[$CNF['FIELD_ID']]));
+		if($this->_bIsApi)
+            return $aSubentries;
+
         if(empty($aSubentries) || !is_array($aSubentries))
             return '';
 
@@ -284,10 +310,10 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $iContentId = (int)$aData[$CNF['FIELD_ID']];
         $aSubentries = $this->_oDb->getSubentries(['type' => 'entry_id', 'entry_id' => $iContentId]);
         if(empty($aSubentries) || !is_array($aSubentries))
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if($bHiddenResults && !$oModule->isPerformed($iContentId))
-            return '';
+            return $this->_bIsApi ? [] : '';
         
         $iTotal = 0;
         foreach($aSubentries as $aSubentry)
@@ -299,16 +325,19 @@ class BxPollsTemplate extends BxBaseModTextTemplate
             $oVotes->setEntry($aData);
 
             $fPercent = $iTotal > 0 ? 100 * (float)$aSubentry['votes']/$iTotal : 0;
-            $aTmplVarsSubentries[] = array(
+            $aTmplVarsSubentries[] = array_merge([
                 'title' => bx_process_output($aSubentry['title']),
                 'width' => (int)round($fPercent) . '%',
-                'votes' => $oVotes->getCounter(array('show_counter_empty' => true, 'show_counter_in_brackets' => false)),
                 'percent' => _t('_bx_polls_txt_subentry_vote_percent', $iTotal > 0 ? round($fPercent, 2) : 0),
-                'js_code' => $oVotes->getJsScript(array('dynamic_mode' => $bDynamic))
-            );
+            ], ($this->_bIsApi ? [
+                'votes' => $oVotes->getCounterAPI(['show_counter_empty' => true, 'show_counter_in_brackets' => false]),
+            ] : [
+                'votes' => $oVotes->getCounter(['show_counter_empty' => true, 'show_counter_in_brackets' => false]),
+                'js_code' => $oVotes->getJsScript(['dynamic_mode' => $bDynamic])
+            ]));
         }
 
-        return $this->parseHtmlByName('subentries_results.html', array(
+        return $this->_bIsApi ? $aTmplVarsSubentries : $this->parseHtmlByName('subentries_results.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('content') . $iContentId,
             'bx_repeat:subentries' => $aTmplVarsSubentries,
         ));

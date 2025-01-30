@@ -45,6 +45,21 @@ class BxPollsDb extends BxBaseModTextDb
         $aSubentries = $this->getSubentries(array('type' => 'entry_id_pairs', 'entry_id' => $iEntryId));
         return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_VOTES_SUBENTRIES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aSubentries)) . ") " . $sWhereClause . " LIMIT 1", $aBindings) != 0;
     }
+    
+    public function getPerformedValue($iEntryId, $iAuthorId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aBindings = ['author_id' => $iAuthorId];
+        $sWhereClause = "AND `author_id`=:author_id";
+
+        $aSubentries = $this->getSubentries([
+            'type' => 'entry_id_pairs', 
+            'entry_id' => $iEntryId
+        ]);
+
+        return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_VOTES_SUBENTRIES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aSubentries)) . ") " . $sWhereClause . " LIMIT 1", $aBindings);
+    }
 
     public function getContentInfoBySubentryId ($iSubentryId)
     {

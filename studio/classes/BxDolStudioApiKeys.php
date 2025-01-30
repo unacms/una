@@ -32,7 +32,7 @@ class BxDolStudioApiKeys extends BxTemplStudioGrid
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
-            $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', '', $oForm->getCode() . '
+            $s = BxTemplStudioFunctions::getInstance()->popupBox($oForm->getId() . '_form', '', $oForm->getCode() . '
                 <script>
                     $(document).ready(function () {
                         $("#' . $oForm->getId() . '").ajaxForm({
