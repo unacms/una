@@ -274,10 +274,13 @@ class BxPollsModule extends BxBaseModTextModule
     public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = $this->_oConfig->CNF;
+
         $aResult = parent::decodeDataAPI($aData, $aParams);
-        $aResult = array_merge($aResult, [
-            'title' => strip_tags($aData['text']),
-        ]);
+        if(is_array($aResult))
+            $aResult = array_merge($aResult, [
+                'title' => strip_tags($aData[$CNF['FIELD_TEXT']]),
+            ]);
+
         return $aResult;
     }
 }

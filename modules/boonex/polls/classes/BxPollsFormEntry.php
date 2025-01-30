@@ -155,6 +155,12 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomInputSubentries(&$aInput)
     {
+        if($this->_bIsApi)
+            return array_merge($aInput, [
+                'type' => 'multi_field',
+                'subtype' => 'text'
+            ]);
+
         $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
 
         if(!empty($aInput['value']) && is_array($aInput['value'])) {
@@ -172,12 +178,6 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
                 array('js_object' => $sJsObject, 'input_text' => $this->genCustomInputSubentriesText($aInput)),
                 array('js_object' => $sJsObject, 'input_text' => $this->genCustomInputSubentriesText($aInput))
             );
-        
-        if (bx_is_api()){
-            $aInput['type'] = 'multi_field';
-            $aInput['subtype'] = 'text';
-            return $aInput;
-        }
 
         return $this->_oModule->_oTemplate->parseHtmlByName('form_subentries.html', array(
             'bx_repeat:subentries' => $aTmplVarsSubentries,
