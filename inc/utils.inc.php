@@ -2645,7 +2645,10 @@ function bx_api_get_base_url()
     
 function bx_api_get_relative_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
 {
-    return '/' . bx_ltrim_str($sUrl, $sPrefix);
+    $a = '/' . bx_ltrim_str($sUrl, $sPrefix);
+    if ($a == '/studio/')
+        return BX_DOL_URL_ROOT . 'studio/';
+    return $a;
 }
 
 function bx_api_get_block($sType, $sData, $aParams = [])

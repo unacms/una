@@ -215,6 +215,9 @@ class BxBaseMenu extends BxDolMenu
 
             if(!empty($aResult['link']))
                 $aResult['link'] = $this->_oPermalinks->permalink($aResult['link']);
+            
+            if ($this->_bIsApi)
+                $aResult['link'] = bx_api_get_relative_url($aResult['link']);
 
             return $aResult;
         }
