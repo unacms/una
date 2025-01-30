@@ -129,12 +129,13 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceProfileMenu ($iProfileId = 0)
     {
-        if(($oMenu = BxDolMenu::getObjectInstance('sys_profile_stats')) !== false) {
-            if(bx_is_api())
+        if(bx_is_api()){
+            $oMenu = BxDolMenu::getObjectInstance('sys_site');
                 return [
                     bx_api_get_block ('profile_menu', $oMenu->getCodeAPI())
                 ];
-
+        }
+        if(($oMenu = BxDolMenu::getObjectInstance('sys_profile_stats')) !== false) {
             return $oMenu->getCode();
         }
         else
