@@ -13,7 +13,7 @@ class BxPollsFormEntryCheckerHelper extends BxDolFormCheckerHelper
 {
     static public function checkAvailSubentries ($s)
     {
-        return !self::_isEmptyArray($s) && count($s) >= 2;
+        return bx_is_api() ? self::checkAvail($s) : !self::_isEmptyArray($s) && count($s) >= 2;
     }
 }
 /**
@@ -81,6 +81,16 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
         return $iResult;
     }
 
+    public function getCleanValue ($sName)
+    {
+        $mixedValue = parent::getCleanValue($sName);
+        
+        if($this->_bIsApi && !empty($mixedValue) && in_array($sName, ['subentries', 'subentries_ids']))
+            $mixedValue = explode(',', $mixedValue);
+
+        return $mixedValue;
+    }
+
     public function processSubentriesAdd ($sField, $iContentId = 0)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -145,6 +155,12 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomInputSubentries(&$aInput)
     {
+        if($this->_bIsApi)
+            return array_merge($aInput, [
+                'type' => 'multi_field',
+                'subtype' => 'text'
+            ]);
+
         $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
 
         if(!empty($aInput['value']) && is_array($aInput['value'])) {
@@ -162,12 +178,6 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
                 array('js_object' => $sJsObject, 'input_text' => $this->genCustomInputSubentriesText($aInput)),
                 array('js_object' => $sJsObject, 'input_text' => $this->genCustomInputSubentriesText($aInput))
             );
-        
-        if (bx_is_api()){
-            $aInput['type'] = 'multi_field';
-            $aInput['subtype'] = 'text';
-            return $aInput;
-        }
 
         return $this->_oModule->_oTemplate->parseHtmlByName('form_subentries.html', array(
             'bx_repeat:subentries' => $aTmplVarsSubentries,
