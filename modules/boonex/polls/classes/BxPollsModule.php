@@ -251,6 +251,16 @@ class BxPollsModule extends BxBaseModTextModule
 
         return $aResult;
     }
+    
+    public function decodeDataAPI($aData, $aParams = [])
+    {
+        $CNF = $this->_oConfig->CNF;
+        $aResult = parent::decodeDataAPI($aData, $aParams);
+        $aResult = array_merge($aResult, [
+            'title' => strip_tags($aData['text']),
+        ]);
+        return $aResult;
+    }
 }
 
 /** @} */
