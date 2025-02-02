@@ -21,7 +21,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_groups_searchable_fields', 'group_name,group_desc', @iCategId, '_bx_groups_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
 ('bx_groups_members_mode', '', @iCategId, '_bx_groups_option_members_mode', 'select', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:24:"get_options_members_mode";}', '', '', 40),
 ('bx_groups_enable_subscribe_wo_join', '', @iCategId, '_bx_groups_option_enable_subscribe_wo_join', 'checkbox', '', '', '', 45),
-('bx_groups_internal_notifications', '', @iCategId, '_bx_groups_option_internal_notifications', 'checkbox', '', '', '', 50);
+('bx_groups_internal_notifications', '', @iCategId, '_bx_groups_option_internal_notifications', 'checkbox', '', '', '', 50),
+('bx_groups_allow_in_contexts', 'bx_events,bx_spaces', @iCategId, '_bx_groups_option_allow_in_contexts', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:29:"get_modules_by_subtype_simple";s:6:"params";a:1:{i:0;s:7:"context";}s:5:"class";s:13:"TemplServices";}', '', '', 60);
 
 -- PAGES
 

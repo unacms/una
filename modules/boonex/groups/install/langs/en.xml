@@ -13,6 +13,7 @@
     <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
     <string name="_bx_groups_option_enable_subscribe_wo_join"><![CDATA[Allow to follow without join]]></string>
     <string name="_bx_groups_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
+    <string name="_bx_groups_option_allow_in_contexts"><![CDATA[Allow posting groups in the following contexts (requires additional setup)]]></string>
 
     <string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
     <string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>
