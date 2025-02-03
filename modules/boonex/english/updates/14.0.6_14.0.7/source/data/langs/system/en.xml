@@ -1765,6 +1765,7 @@
     <string name="_adm_stg_cpt_option_sys_enable_post_to_context_for_privacy"><![CDATA[Allow to post to context using Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Hide post to context for modules in Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_treat_cxt_in_cxt_as_cnt"><![CDATA[Treat context posted in context as content]]></string>
+    <string name="_adm_stg_cpt_option_sys_check_fan_in_parent_context"><![CDATA[Only parent group(space, event, etc) members can join]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Keyword min length in site search]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[System Bot profile]]></string>
     <string name="_adm_stg_inf_option_sys_profile_bot"><![CDATA[Choose profile which will be used as an author of system actions.]]></string>

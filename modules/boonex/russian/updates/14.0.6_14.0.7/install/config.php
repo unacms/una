@@ -50,6 +50,7 @@ $aConfig = array(
         array('name' => 'Courses', 'path' => 'bx_courses/'),
         array('name' => 'BoonEx Developer', 'path' => 'bx_developer/'),
         array('name' => 'Events', 'path' => 'bx_events/'),
+        array('name' => 'Groups', 'path' => 'bx_groups/'),
         array('name' => 'Notifications', 'path' => 'bx_notifications/'),
         array('name' => 'OAuth2 Server', 'path' => 'bx_oauth/'),
         array('name' => 'Timeline', 'path' => 'bx_timeline/'),
