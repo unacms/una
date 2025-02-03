@@ -104,7 +104,7 @@ UPDATE `sys_menu_items` SET `active` = 1 WHERE `set_name` = 'sys_studio_account_
 ALTER TABLE `sys_pages_blocks` CHANGE `content` `content` MEDIUMTEXT NOT NULL;
 
 DELETE FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `title` = '_sys_page_block_title_create_account' AND `active_api` = 1 AND `content` = 'a:4:{s:6:"module";s:6:"system";s:6:"method"s:19:"create_account_form";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}';
-DELETE FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `title` = '_sys_page_block_system_title_login' AND `active_api` = 1 AND `content` = 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:10:"login_form";s:5:"class";s:17:"TemplServiceLogin";}';
+DELETE FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `title` = '_sys_page_block_title_login' AND `active_api` = 1 AND `content` = 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:10:"login_form";s:5:"class";s:17:"TemplServiceLogin";}';
 DELETE FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `title` = '_sys_page_block_title_forgot_password' AND `active_api` = 1 AND `content` = 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"forgot_password";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}';
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `tabs`, `async`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `active_api`, `order`) VALUES
