@@ -261,6 +261,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
             'main' => $this->CNF['OBJECT_GRID'],
         );
+
+        $this->_bAttachmentsInTimeline = true;
     }
 }
 
