@@ -540,6 +540,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetModulesBySubtypeSimple($sType)
+    {
+        $a = $this->serviceGetModulesByType($sType, ['name_as_key' => true]);
+        return array_map(function ($r) {
+            return $r['title'];
+        }, $a);
+    }
+
     public function serviceProfileUnit ($iContentId, $aParams = array())
     {
         return $this->_serviceProfileFunc('getUnit', $iContentId, $aParams);

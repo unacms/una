@@ -13,6 +13,7 @@
     <string name="_bx_groups_option_enable_subscribe_wo_join"><![CDATA[Разрешить подписываться не членам группы]]></string>
     <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
     <string name="_bx_groups_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
+    <string name="_bx_groups_option_allow_in_contexts"><![CDATA[Разрешить публиковать группы в контекстах (требует дополнительной настройки)]]></string>
 
     <string name="_bx_groups_form_profile"><![CDATA[Группы]]></string>
     <string name="_bx_groups_form_profile_display_add"><![CDATA[Добавление группы]]></string>

@@ -980,6 +980,11 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             'display' => $this->aParams['display']
         ));
 
+        if (bx_get('context') && isset($aGroupChooser['values']) && isset($aGroupChooser['values'][bx_get('context')])) {
+            $aSave['type'] = 'hidden';
+            $aSave['value'] = -bx_get('context');
+        }
+
         $this->aInputs[$sField] = array_merge($this->aInputs[$sField], $aGroupChooser, $aSave);
     }
 

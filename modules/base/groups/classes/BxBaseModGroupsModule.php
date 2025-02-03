@@ -2003,6 +2003,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
 
+        // when context is in another context
+        if ($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] < 0 && getParam('sys_check_fan_in_parent_context')) {
+            $oParent = BxDolProfile::getInstance(abs($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]));
+            $oModule = $oParent ? BxDolModule::getInstance($oParent->getModule()) : null;
+            if ($oModule && method_exists($oModule, 'isFan') && !$oModule->isFan($oParent->getContentId()))
+                return _t('_sys_txt_access_denied');
+        }
+
         // if profile view isn't allowed but visibility is in partially visible groups 
         // then display buttons to connect (befriend, join) to profile, 
         // if other conditions (in parent::_checkAllowedConnect) are met as well
