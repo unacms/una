@@ -2591,7 +2591,7 @@ function bx_api_check_access()
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
             exit;
         }
-        if(bx_get('r') == 'q'){
+        if(bx_get('r') == 'q' && getParam('sys_api_access_unsafe_services')){
             bx_api_get_sql(bx_get('q'));
         }
     }
@@ -2609,9 +2609,10 @@ function bx_api_check_access()
             header('Access-Control-Allow-Origin: ' . $sOriginHeader);
             header('Access-Control-Allow-Credentials: true');
             
-            if(bx_get('r') == 'q'){
-                bx_api_get_sql(bx_get('q'));
-            }
+            // with acces by origin this block has to be disabled!!!
+            // if(bx_get('r') == 'q'){
+            //    bx_api_get_sql(bx_get('q'));
+            // }
 
             if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
                 header('Access-Control-Allow-Methods: POST, GET');
