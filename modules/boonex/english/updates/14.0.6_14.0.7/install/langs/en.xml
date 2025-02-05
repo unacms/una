@@ -17,6 +17,7 @@
 	<string_add name="_adm_stg_cpt_option_sys_sms_twilio_from_number"><![CDATA[Twilio: Default 'From' number for SMS]]></string_add>
 	<string_add name="_adm_stg_cpt_option_sys_x_frame_options"><![CDATA['X-Frame-Options' header value (Off - don't send this header)]]></string_add>
 	<string_add name="_adm_stg_cpt_option_sys_enable_post_to_context_for_privacy"><![CDATA[Allow to post to context using Privacy field]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_check_fan_in_parent_context"><![CDATA[Only parent group(space, event, etc) members can join]]></string_add>
 	<string_add name="_adm_tmi_cpt_scheme"><![CDATA[Color Scheme]]></string_add>
 	<string_add name="_sys_inst_conf_desc_db_engine"><![CDATA[MySQL database engine, some DB engines may require custom MYSQL configuration.]]></string_add>
 	<string_add name="_sys_inst_conf_field_db_engine"><![CDATA[Database engine]]></string_add>
