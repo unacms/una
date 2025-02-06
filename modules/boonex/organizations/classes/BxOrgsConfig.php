@@ -23,6 +23,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-organization-profile' => 'checkAllowedView',
             'edit-organization-profile' => 'checkAllowedEdit',
+            'organization-manage' => 'checkAllowedEdit',
             'edit-organization-cover' => 'checkAllowedChangeCover',
             'invite-to-organization' => 'checkAllowedInvite',
             'delete-organization-profile' => 'checkAllowedDelete',
