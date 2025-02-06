@@ -136,7 +136,7 @@ div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu
     height: 2.5rem;
 }
 .bx-tl-item-content video,
-.bx-tl-item-attachment img{
+.bx-tl-item-attachment:not(.flickity-cell) img{
     border-radius: .25rem;
 }
 
@@ -217,22 +217,13 @@ div.bx-tl-view div.bx-tl-item-attachments {
     white-space: nowrap;
     overflow-x: auto;
 }
-div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment {
-    position: relative;
-    display: -webkit-inline-flex;
-    display: inline-flex;
-    -webkit-justify-content: center;
-    justify-content: center;  
 
-    width: 100%;
-    vertical-align: middle;
+div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment {
+    display: inline-block;
 }
+div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment,
 div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment img {
-    position: relative;
-    display: block;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    height: 11.25rem;
 }
 div.bx-tl-view-outline div.bx-tl-item-attachment img {
     max-width: 100%;
@@ -313,17 +304,6 @@ div.bx-tl-item-attachments.bx-tl-ia-showcase .bx-tl-item-more {
 div.bx-tl-item-attachments.bx-tl-ia-showcase .bx-tl-item-more,
 div.bx-tl-item-attachments.bx-tl-ia-showcase .bx-tl-item-more a {
     color: #ffffff;
-}
-
-
-/*+++ Slider Styles  +++*/
-div.bx-tl-item-images .flickity-slider,
-div.bx-tl-item-videos .flickity-slider,
-div.bx-tl-item-attachments .flickity-slider {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
 }
 
 /*+++ Item Link +++*/

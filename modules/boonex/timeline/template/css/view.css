@@ -758,21 +758,11 @@ div.bx-tl-view div.bx-tl-item-attachments {
     overflow-x: auto;
 }
 div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment {
-    position: relative;
-    display: -webkit-inline-flex;
-    display: inline-flex;
-    -webkit-justify-content: center;
-    justify-content: center;  
-
-    width: 100%;
-    vertical-align: middle;
+    display: inline-block;
 }
+div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment,
 div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment img {
-    position: relative;
-    display: block;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    height: 11.25rem;
 }
 div.bx-tl-view-outline div.bx-tl-item-attachment img {
     max-width: 100%;
@@ -781,14 +771,6 @@ div.bx-tl-view-outline div.bx-tl-item-attachment img {
 }
 
 /*+++ Video +++*/
-div.bx-tl-view-timeline div.bx-tl-item-attachment video,
-div.bx-tl-view-outline div.bx-tl-item-attachment video,
-div.bx-tl-view-item div.bx-tl-item-attachment video {
-    display: block;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-}
 div.bx-tl-item-attachment .bx-tl-item-video {
     position: relative;
 }
