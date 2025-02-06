@@ -129,7 +129,7 @@
     "build:embedly-player": "cp node_modules/player.js/dist/player-0.1.0.min.js plugins_public/embedly-player.min.js",
     "build:hammerjs": "cp node_modules/@egjs/hammerjs/dist/hammer.min.js plugins_public",
     "build:headroom": "cp node_modules/headroom.js/dist/headroom.min.js plugins_public",
-    "build:historyjs": "cp node_modules/historyjs/scripts/compressed/history.js plugins_public",
+    "build:historyjs": "cp node_modules/historyjs/scripts/compressed/history.js node_modules/historyjs/scripts/compressed/history.adapter.jquery.js plugins_public",
     "build:jquery-resize": "cp node_modules/jquery-resize-benalman/jquery.ba-resize.min.js plugins_public",
     "build:jquery-cookie": "uglifyjs --compress --mangle -- node_modules/jquery.cookie/jquery.cookie.js > plugins_public/jquery.cookie.min.js",
     "build:jquery-easing": "cp node_modules/jquery.easing/jquery.easing.js plugins_public",
