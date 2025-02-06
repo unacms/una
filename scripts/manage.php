@@ -108,13 +108,13 @@ class BxDolManageCmd
         $s .= str_pad("\t -h", 35) . "Print this help\n";
         $s .= str_pad("\t -q", 35) . "Quiet\n";
         $s .= str_pad("\t -u", 35) . "Path to UNA\n";
-        $s .= str_pad("\t -c", 35) . "Command to run:\n";
         $s .= str_pad("\t -i", 35) . "Skip files oprations, such copying and deleting when performing update commands\n";
+        $s .= str_pad("\t -c", 35) . "Command to run:\n";
         $s .= str_pad("\t", 39) . "- update - options:\n";
         $s .= str_pad("\t", 43) . "'ignore_version_check' to ignore version comparison in DB and files\n";
         $s .= str_pad("\t", 39) . "- check_update - no options\n";
         $s .= str_pad("\t", 39) . "- update_modules - options:\n";
-        $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
+        $s .= str_pad("\t", 43) . "comma separated list of modules (ex: 'bx_nexus,bx_albums')\n";
         $s .= str_pad("\t", 39) . "- check_modules_updates - no options\n";
         $s .= str_pad("\t", 39) . "- install_modules - options:\n";
         $s .= str_pad("\t", 43) . "comma separated list of modules paths (ex: 'boonex/ads,boonex/wiki')\n";
