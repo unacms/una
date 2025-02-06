@@ -237,7 +237,13 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
 		);
     }
 
-    public function genCustomRowVideoEmbed(&$aInput) {
+    public function genCustomRowVideoEmbed(&$aInput) 
+    {
+        if (bx_is_api()){
+            $aInput['type'] = 'embed';
+            return $aInput;
+        }
+        
         $sSource = isset($this->aInputs['video_source']) && $this->aInputs['video_source']['value'] == 'embed' ? 'embed' : 'upload';
         if ($sSource != 'embed') {
             if (!is_array($aInput['tr_attrs']))
