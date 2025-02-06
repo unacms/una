@@ -4886,7 +4886,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_notifications', 'system', 'cart', '_sys_menu_item_title_system_cart', '_sys_menu_item_title_cart', 'cart.php', '', '', 'cart-plus col-red3', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"get_cart_items_count";s:6:"params";a:0:{}s:5:"class";s:21:"TemplPaymentsServices";}', '', 2147483646, 1, 1, 6),
 ('sys_account_notifications', 'system', 'orders', '_sys_menu_item_title_system_orders', '_sys_menu_item_title_orders', 'orders.php', '', '', 'cart-arrow-down col-green3', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"get_orders_count";s:6:"params";a:1:{i:0;s:3:"new";}s:5:"class";s:21:"TemplPaymentsServices";}', '', 2147483646, 0, 1, 7),
 ('sys_account_notifications', 'system', 'invoices', '_sys_menu_item_title_system_invoices', '_sys_menu_item_title_invoices', 'invoices.php', '', '', 'file-invoice col-green3', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"get_invoices_count";s:6:"params";a:1:{i:0;s:6:"unpaid";}s:5:"class";s:21:"TemplPaymentsServices";}', '', 2147483646, 0, 1, 8),
-('sys_account_notifications', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', 'sign-out-alt', '', '', 2147483646, 1, 1, 9999);
+('sys_account_notifications', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'page.php?i=logout', '', '', 'sign-out-alt', '', '', 2147483646, 1, 1, 9999);
 
 -- account settings menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
