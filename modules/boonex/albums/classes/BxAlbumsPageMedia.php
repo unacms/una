@@ -112,17 +112,18 @@ class BxAlbumsPageMedia extends BxTemplPage
     {
         parent::_addJsCss();
 
-        $this->_oModule->_oTemplate->addCss(array(
+        $this->_oModule->_oTemplate->addCss([
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/|photoswipe.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/default-skin/|default-skin.css',
-        ));
+        ]);
 
-        $this->_oModule->_oTemplate->addJs(array(
-            'media_view.js',
+        $this->_oModule->_oTemplate->addJs([
             'history.js',
+            'history.adapter.jquery.js',
             'photo-swipe/photoswipe.min.js',
             'photo-swipe/photoswipe-ui-default.min.js',
-        ));
+            'media_view.js',
+        ]);
     }
 }
 
