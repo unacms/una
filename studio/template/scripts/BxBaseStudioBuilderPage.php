@@ -333,21 +333,28 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
             $sUri = $oForm->getCleanValue('uri');
             
-            $aPage = $this->oDb->getPages(array('type' => 'by_uri', 'value' => $sUri));
+            $aPage = $this->oDb->getPages(['type' => 'by_uri', 'value' => $sUri]);
             if(!empty($aPage) && is_array($aPage)) 
-            	return array('msg' => _t('_adm_bp_err_page_uri'));
+            	return ['msg' => _t('_adm_bp_err_page_uri')];
 
             $iVisibleFor = BxDolStudioUtils::getVisibilityValue($oForm->getCleanValue('visible_for'), $oForm->getCleanValue('visible_for_levels'));
             BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
             unset($oForm->aInputs['visible_for']);
 
-            $this->onSavePage($oForm);
+            $aValsToAdd = [
+                'author' => bx_get_logged_profile_id(), 
+                'object' => $sObject, 
+                'url' => $this->sPageBaseUrl . $sUri, 
+                'added' => time()
+            ];
 
-            $iId = (int)$oForm->insert(array('author' => bx_get_logged_profile_id(), 'added' => time(), 'object' => $sObject, 'url' => $this->sPageBaseUrl . $sUri));
+            $this->onSavePage($oForm, $aValsToAdd);
+
+            $iId = (int)$oForm->insert($aValsToAdd);
             if($iId != 0)
-                return array('eval' => $sJsObject . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
+                return ['eval' => $sJsObject . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')'];
             else
-                return array('msg' => _t('_adm_bp_err_page_create'));
+                return ['msg' => _t('_adm_bp_err_page_create')];
         }
 
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['add_popup_id'], _t('_adm_bp_txt_create_popup'), $oTemplate->parseHtmlByName('bp_add_page.html', array(
