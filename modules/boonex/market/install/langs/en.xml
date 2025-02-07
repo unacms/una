@@ -32,9 +32,10 @@
     <string name="_bx_market_form_entry_input_sys_title"><![CDATA[Title]]></string>
     <string name="_bx_market_form_entry_input_title"><![CDATA[Title]]></string>
     <string name="_bx_market_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
-    <string name="_bx_market_form_entry_input_sys_name"><![CDATA[Name]]></string>
-    <string name="_bx_market_form_entry_input_name"><![CDATA[Name]]></string>
-    <string name="_bx_market_form_entry_input_name_err"><![CDATA[Name should be unique and is needed for internal usage. Please, fill in this field]]></string>
+    <string name="_bx_market_form_entry_input_sys_name"><![CDATA[Identifier]]></string>
+    <string name="_bx_market_form_entry_input_name"><![CDATA[Identifier]]></string>
+    <string name="_bx_market_form_entry_input_name_inf"><![CDATA[Unique name for payment identification.]]></string>
+    <string name="_bx_market_form_entry_input_name_err"><![CDATA[Identifier should be unique and is needed for internal usage. Please, fill in this field]]></string>
     <string name="_bx_market_form_entry_input_sys_cat"><![CDATA[Category]]></string>
     <string name="_bx_market_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_market_form_entry_input_cat_err"><![CDATA[Please select category]]></string>

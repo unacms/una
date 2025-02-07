@@ -137,17 +137,21 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         return parent::initChecker($aValues, $aSpecificValues);
     }
 
-	public function insert ($aValsToAdd = array(), $isIgnore = false)
+    public function insert ($aValsToAdd = [], $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(isset($this->aInputs[$CNF['FIELD_NAME']])) {
             $sName = BxDolForm::getSubmittedValue($CNF['FIELD_NAME'], $this->aFormAttrs['method'], $this->_aSpecificValues);
+            if(!$sName && isset($this->aInputs[$CNF['FIELD_TITLE']]))
+                $sName = BxDolForm::getSubmittedValue($CNF['FIELD_TITLE'], $this->aFormAttrs['method'], $this->_aSpecificValues);
+
             $sName = $this->_oModule->_oConfig->getEntryName($sName);
+
             BxDolForm::setSubmittedValue($CNF['FIELD_NAME'], $sName, $this->aFormAttrs['method'], $this->_aSpecificValues);
         }
 
-	    if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
+        if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
             $aCover = isset($_POST[$CNF['FIELD_COVER']]) ? bx_process_input ($_POST[$CNF['FIELD_COVER']], BX_DATA_INT) : false;
 
             $aValsToAdd[$CNF['FIELD_COVER']] = 0;
@@ -156,9 +160,9 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         }
 
         $aPackage = bx_process_input(bx_get($CNF['FIELD_PACKAGE']), BX_DATA_INT);
-		$aValsToAdd[$CNF['FIELD_PACKAGE']] = 0;
-		if(!empty($aPackage) && is_array($aPackage) && ($iFilePackage = array_pop($aPackage)))
-			$aValsToAdd[$CNF['FIELD_PACKAGE']] = $iFilePackage;
+        $aValsToAdd[$CNF['FIELD_PACKAGE']] = 0;
+        if(!empty($aPackage) && is_array($aPackage) && ($iFilePackage = array_pop($aPackage)))
+            $aValsToAdd[$CNF['FIELD_PACKAGE']] = $iFilePackage;
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
@@ -171,10 +175,21 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sNameKey = $CNF['FIELD_NAME'];
-        if(isset($this->aInputs[$sNameKey])) {
-            $sName = $this->getCleanValue($sNameKey);
+        if(($sNameKey = $CNF['FIELD_NAME']) && isset($this->aInputs[$sNameKey])) {
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+            $bContentInfo = !empty($aContentInfo) && is_array($aContentInfo);
+
+            $sName = $this->getCleanValue($sNameKey);
+            if(!$sName) {
+                if($bContentInfo && !empty($aContentInfo[$sNameKey])) {
+                    $sName = $aContentInfo[$sNameKey];
+                    BxDolForm::setSubmittedValue($sNameKey, $sName, $this->aFormAttrs['method'], $this->_aSpecificValues);
+                }
+                else if(($sTitleKey = $CNF['FIELD_TITLE']) && isset($this->aInputs[$sTitleKey]))
+                    $sName = $this->getCleanValue($sTitleKey);
+                else
+                    $sName = 'ID' . time();
+            }
 
             if($aContentInfo[$sNameKey] != $sName) {
                 $sName = $this->_oModule->_oConfig->getEntryName($sName);

@@ -31,9 +31,10 @@
     <string name="_bx_market_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_market_form_entry_input_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_market_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
-    <string name="_bx_market_form_entry_input_sys_name"><![CDATA[Имя]]></string>
-    <string name="_bx_market_form_entry_input_name"><![CDATA[Имя]]></string>
-    <string name="_bx_market_form_entry_input_name_err"><![CDATA[Имя должно быть уникально и будет использоваться для внутренних целей. Пожалуйста, заполните это поле]]></string>
+    <string name="_bx_market_form_entry_input_sys_name"><![CDATA[Идентификатор]]></string>
+    <string name="_bx_market_form_entry_input_name"><![CDATA[Идентификатор]]></string>
+    <string name="_bx_market_form_entry_input_name_inf"><![CDATA[Уникальное имя для идентификации платежа.]]></string>
+    <string name="_bx_market_form_entry_input_name_err"><![CDATA[Идентификатор должен быть уникален и будет использоваться для внутренних целей. Пожалуйста, заполните это поле.]]></string>
     <string name="_bx_market_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
     <string name="_bx_market_form_entry_input_cat"><![CDATA[Категория]]></string>
     <string name="_bx_market_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
