@@ -197,6 +197,30 @@ class BxDevFormsFieldNumber extends BxTemplStudioFormsFieldNumber
     }
 }
 
+class BxDevFormsFieldPrice extends BxTemplStudioFormsFieldPrice
+{
+    public function init()
+    {
+        parent::init();
+
+        BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+    }
+
+    protected function getFormAdd($sAction, $sObject)
+    {
+        $aForm = parent::getFormAdd($sAction, $sObject);
+        BxDevFunctions::changeForm($sAction, $aForm, $this);
+        return $aForm;
+    }
+
+    protected function getFormEdit($sAction, $sObject)
+    {
+        $aForm = parent::getFormEdit($sAction, $sObject);
+        BxDevFunctions::changeForm($sAction, $aForm, $this);
+        return $aForm;
+    }
+}
+
 class BxDevFormsFieldDatepicker extends BxTemplStudioFormsFieldDatepicker
 {
     public function init()

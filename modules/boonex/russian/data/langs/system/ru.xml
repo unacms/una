@@ -978,6 +978,7 @@
 	<string name="_adm_form_txt_field_type_location"><![CDATA[местонахождение]]></string>
         <string name="_adm_form_txt_field_type_location_radius"><![CDATA[радиус местонахождения]]></string>
 	<string name="_adm_form_txt_field_type_number"><![CDATA[число]]></string>
+        <string name="_adm_form_txt_field_type_price"><![CDATA[цена]]></string>
 	<string name="_adm_form_txt_field_type_password"><![CDATA[пароль]]></string>
 	<string name="_adm_form_txt_field_type_radio_set"><![CDATA[набор переключателей]]></string>
 	<string name="_adm_form_txt_field_type_reset"><![CDATA[сброс]]></string>

@@ -986,6 +986,7 @@
 	<string name="_adm_form_txt_field_type_location"><![CDATA[location]]></string>
   <string name="_adm_form_txt_field_type_location_radius"><![CDATA[location radius]]></string>
   <string name="_adm_form_txt_field_type_number"><![CDATA[number]]></string>
+  <string name="_adm_form_txt_field_type_price"><![CDATA[price]]></string>
 	<string name="_adm_form_txt_field_type_password"><![CDATA[password]]></string>
 	<string name="_adm_form_txt_field_type_radio_set"><![CDATA[radio set]]></string>
 	<string name="_adm_form_txt_field_type_reset"><![CDATA[reset]]></string>

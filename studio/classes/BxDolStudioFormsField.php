@@ -38,6 +38,7 @@ class BxDolStudioFormsField extends BxDol
         	'datepicker' => array('add' => 1), 
         	'datetime' => array('add' => 1), 
         	'number' => array('add' => 1), 
+                'price' => array('add' => 1), 
             'time' => array('add' => 1), 
         	'checkbox' => array('add' => 1), 
         	'password' => array('add' => 1), 

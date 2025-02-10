@@ -1688,6 +1688,27 @@ class BxBaseStudioFormsFieldNumber extends BxBaseStudioFormsFieldText
     }
 }
 
+class BxBaseStudioFormsFieldPrice extends BxBaseStudioFormsFieldText
+{
+    protected $sType = 'price';
+    protected $aCheckFunctions = ['avail', 'length', 'preg'];
+    protected $sDbPass = 'Float';
+
+    public function init() 
+    {
+        parent::init();
+
+        $this->aParams['table_field_type'] = 'float';
+
+        $this->aForm['inputs']['value']['db']['pass'] = 'Float';
+        $this->aForm['inputs']['value']['checker'] = [
+            'func' => 'preg',
+            'params' => array('/^\d*?$/'),
+            'error' => _t('_adm_form_err_field_value_number'),
+        ];
+    }
+}
+
 class BxBaseStudioFormsFieldNestedForm extends BxBaseStudioFormsField
 {
     protected $sType = 'nested_form';
