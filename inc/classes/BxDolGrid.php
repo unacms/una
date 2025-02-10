@@ -500,8 +500,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 $sCondFields = rtrim($sCondFields, ' OR ');
 
                 if ($sCondFields) {
-                    $sJoin .= " INNER JOIN `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) ";
-                    $sCond .= $oDb->prepareAsString("`s`.`string` LIKE ? AND ($sCondFields) ", '%' . $sFilter . '%');
+                    $sJoin .= " INNER JOIN `sys_localization_keys` AS `k` ON " . $sCondFields . " INNER JOIN `sys_localization_strings` AS `s` ON `k`.`ID` = `s`.`IDKey` ";
+                    $sCond .= $oDb->prepareAsString("`s`.`string` LIKE ? ", '%' . $sFilter . '%');
                 }
             }
 
