@@ -125,23 +125,32 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
     
     static function getMention($sSymbol)
     {
-        $a = bx_get_base_url_inline();
+        $bIsApi = bx_is_api();
+
         $aResult = [];
-        
-        if($sSymbol == '@'){
-            $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
-            foreach ($aResult as &$aItem) {
-                $aItem['symbol'] = bx_get('symbol');
-                $aItem['url'] = bx_api_get_relative_url($aItem['url']);
-            }
+        switch($sSymbol) {
+            case '@':
+                $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
+                foreach ($aResult as &$aItem) {
+                    $aItem['symbol'] = bx_get('symbol');
+                    $aItem['url'] = $bIsApi ? bx_api_get_relative_url($aItem['url']) : $aItem['url'];
+                }
+                break;
+
+            case '#':
+                $aData = BxDolMetatags::getMetatagsDataByTerm('keywords', 'keyword', bx_get('term'));
+                foreach ($aData as $aItem)
+                    $aResult[] = [
+                        'label' => $aItem['meta'], 
+                        'value' => $aItem['id'], 
+                        'url' => $bIsApi ? bx_api_get_relative_url($aItem['url']) : $aItem['url'], 
+                        'symbol' => bx_get('symbol')
+                    ];
+                break;
+            
         }
 
-        if($sSymbol == '#'){
-            $aData = BxDolMetatags::getMetatagsDataByTerm('keywords', 'keyword', bx_get('term'));
-            foreach ($aData as $aItem) {
-                $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => bx_api_get_relative_url($aItem['url']), 'symbol' => bx_get('symbol')];
-            }
-        }
+        $a = bx_get_base_url_inline();
 
         /**
          * @hooks
