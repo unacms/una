@@ -30,7 +30,7 @@ INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `repl
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `show_total_count`, `override_class_name`, `override_class_file`) VALUES
-('bx_editor_toolbar', 'Sql', 'SELECT `ta`.* FROM `bx_editor_toolbar_buttons` AS `ta` WHERE 1 ', 'bx_editor_toolbar_buttons', 'id', 'order', 'active', '', 100, NULL, 'start', '', '', '', 'like', '', '', 2147483647, 1, 'BxEditorGridToolbar', 'modules/boonex/editor/classes/BxEditorGridToolbar.php');
+('bx_editor_toolbar', 'Sql', 'SELECT `ta`.* FROM `bx_editor_toolbar_buttons` AS `ta` WHERE 1 ', 'bx_editor_toolbar_buttons', 'id', 'order', 'active', '', 100, NULL, 'start', '', '', '', 'like', '', '', 2147483647, 0, 'BxEditorGridToolbar', 'modules/boonex/editor/classes/BxEditorGridToolbar.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_editor_toolbar', 'order', '', '2%', 0, '0', '', 1),
