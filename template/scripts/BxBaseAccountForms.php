@@ -308,7 +308,8 @@ class BxBaseAccountForms extends BxDolProfileForms
             bx_logout();
 
         // redirect to homepage
-        $this->_redirectAndExit('', false);
+        if(!$bIsApi)
+            $this->_redirectAndExit('', false);
     }
 
     protected function _editAccountForm ($iAccountId, $sDisplayName)
