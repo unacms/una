@@ -2000,14 +2000,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                     if(isset($aMix['dark']) && (int)$aMix['dark'] == 1)
                         $sRet .= ' dark';
                 }
+
+                $sRet .= ' bx-dir-' . strtolower(bx_lang_direction());
                 break;
-			case 'css_media_phone':
-			case 'css_media_phone2':
-			case 'css_media_tablet':
-			case 'css_media_tablet2':
-			case 'css_media_desktop':
+            case 'css_media_phone':
+            case 'css_media_phone2':
+            case 'css_media_tablet':
+            case 'css_media_tablet2':
+            case 'css_media_desktop':
                 $aData = json_decode(getParam('sys_css_media_classes'), true);
-				$sKey = str_replace('css_media_', '', $sKey);
+                $sKey = str_replace('css_media_', '', $sKey);
                 $sRet = $aData[$sKey];
                 break;
             case 'service_worker':

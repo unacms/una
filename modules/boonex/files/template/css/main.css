@@ -60,21 +60,9 @@
     max-width: 33.25%;
 }
 
-
-
-.bx-files-text-unit .bx-base-text-unit-text {
-    position:relative;
-}
-
 .bx-files-text-unit .bx-base-text-unit-text .sys-icon {
-    position: absolute;
     line-height: normal;
     font-size: 3.2rem;
-}
-
-.bx-files-text-unit .bx-base-text-unit-text h2,
-.bx-files-text-unit .bx-base-text-unit-text > div {
-    margin-left:3.5rem;
 }
 
 /*--- View page ---*/

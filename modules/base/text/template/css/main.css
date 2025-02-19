@@ -29,17 +29,13 @@
 }
 
 .bx-base-text-unit-cover {
-	position: relative;
+    position: relative;
 }
 .bx-base-text-unit-text {
-	width: 100%;
-	overflow: hidden;
+    width: 100%;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
-.bx-base-text-unit-ext .bx-base-text-unit-text {
-	text-align: left;
-}
-
 .bx-base-text-unit-title {
     display: flex;
     white-space: nowrap;

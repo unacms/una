@@ -88,7 +88,7 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('bx_reputation_level', @sName, '_bx_reputation_form_level', '', '', 'do_submit', 'bx_reputation_levels', 'id', '', '', '', 0, 1, 'BxReputationFormLevel', 'modules/boonex/reputation/classes/BxReputationFormLevel.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('bx_reputation_level_add', @sName, 'bx_reputation_level', '_bx_reputation_form_level_display_add', 0);
+('bx_reputation_level_add', @sName, 'bx_reputation_level', '_bx_reputation_form_level_display_add', 0),
 ('bx_reputation_level_edit', @sName, 'bx_reputation_level', '_bx_reputation_form_level_display_edit', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES

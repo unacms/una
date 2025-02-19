@@ -3,7 +3,7 @@
     width: 100%;
 }
 .bx-base-text-unit-cover {
-	position: relative;
+    position: relative;
 }
 .bx-base-text-unit-cover img {
     position: relative;
@@ -12,9 +12,6 @@
     width: 100%;
     min-height: 300px;
     object-fit: cover;
-}
-.bx-base-text-unit-ext .bx-base-text-unit-text {
-    text-align: left;
 }
 
 /*-- Browsing: Search results --*/
