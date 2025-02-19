@@ -257,11 +257,11 @@ class BxBaseServiceAccount extends BxDol
                     ])];
                 }
                 else{
-                return [bx_api_get_block('form', $mixedResult, [
-                    'ext' => [
-                        'request' => ['url' => '/api.php?r=system/account_settings_del_account/TemplServiceAccount', 'immutable' => true]
-                    ]
-                ])];
+                    return [bx_api_get_block('form', $mixedResult, [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_del_account/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
                 }
             }
             else if(is_string($mixedResult))
@@ -269,7 +269,9 @@ class BxBaseServiceAccount extends BxDol
                     bx_api_get_msg($mixedResult)
                 ];
             else
-                return [];
+                return [
+                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/']],
+                ];
         }
 
         return $mixedResult;
