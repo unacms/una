@@ -198,13 +198,24 @@ import url(../../../../../../../template/css/forms.css);
     align-items: center;
 
     width: auto;
+}
+.bx-dir-ltr .bx-form-element .bx-form-value .bx-form-input-wrapper-price span {
     border-right-width: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-.bx-form-element .bx-form-value .bx-form-input-price:not(:first-child) {
+.bx-dir-rtl .bx-form-element .bx-form-value .bx-form-input-wrapper-price span {
+    border-left-width: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+.bx-dir-ltr .bx-form-element .bx-form-value .bx-form-input-price:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.bx-dir-rtl .bx-form-element .bx-form-value .bx-form-input-price:not(:first-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 
@@ -275,7 +286,12 @@ import url(../../../../../../../template/css/forms.css);
 .bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-country {
     margin-left: 0.25rem;
 }
-
+.bx-dir-rtl .bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-street,
+.bx-dir-rtl .bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-state,
+.bx-dir-rtl .bx-form-element .bx-form-input-location-cont:not(.minimized) .bx-form-input-location-country {
+    margin-left: 0;
+    margin-right: 0.25rem;
+}
 .bx-form-element .bx-form-input-location-cont .bx-form-input-location-status-cont {
     float:none;
     width:98%;
@@ -326,6 +342,10 @@ import url(../../../../../../../template/css/forms.css);
     font-weight: normal;    
     cursor: pointer;
 }
+.bx-dir-rtl .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b {
+    padding-left: 1.5rem;
+    padding-right: 0;
+}
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b.val-wo-icon {
     padding-left: 1.5rem;
 }
@@ -337,9 +357,13 @@ import url(../../../../../../../template/css/forms.css);
     content: "\f00d";    
     position:absolute;    
     padding:0 0.5em;
-    margin-left: 0.5em;
+    margin-left: 0.125em;
     font-size:0.7em;
     font-weight:bold;
+}
+.bx-dir-rtl .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b:after {
+    margin-left: 0;
+    margin-right: 0.125em;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels).bx-form-input-disabled b {
     cursor: default;
@@ -362,9 +386,12 @@ import url(../../../../../../../template/css/forms.css);
 
     margin-right: 0.5rem;
 }
-.sys-labels .bx-form-input-text.bx-form-input-autotoken b:first-child {
-    margin-left: 2px !important;
+.bx-dir-rtl .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-account-unit-wo-info,
+.bx-dir-rtl .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-base-pofile-unit-wo-info {
+    margin-left: 0.5rem;
+    margin-right: 0;
 }
+
 .sys-labels .bx-form-input-text.bx-form-input-autotoken.bx-form-input-disabled b {
     height: 2rem;
     line-height: 2rem;

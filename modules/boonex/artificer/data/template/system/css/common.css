@@ -99,10 +99,14 @@ import url(../../../../../../../template/css/common.css);
     max-width: 65%;
 }
 
+/*-- START FROM HERE --*/
 .bx-db-menu-tab {
     margin-left: 5px;
     text-align: right;
     overflow-x: auto;
+}
+.bx-dir-rtl .bx-db-menu-tab {
+    text-align: left;
 }
 .bx-db-menu-tab.bx-db-menu-tab-more-auto {
     overflow-x: visible;

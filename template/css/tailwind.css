@@ -907,7 +907,7 @@
         @apply bg-white dark:bg-gray-800;
     }
     .bx-switcher-cont.on button span {
-        @apply bg-green-500 dark:bg-green-500 translate-x-5;
+        @apply bg-green-500 dark:bg-green-500 ltr:translate-x-5 rtl:-translate-x-5;
     }
     .bx-switcher-cont.off button {
         @apply bg-gray-200 dark:bg-gray-900;

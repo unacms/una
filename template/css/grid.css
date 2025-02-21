@@ -111,6 +111,11 @@
     padding-right:5px;
     text-align:left;
 }
+.bx-dir-rtl .bx-grid-table th,
+.bx-dir-rtl .bx-grid-table td {
+    text-align:right;
+}
+
 .bx-grid-table th:first-child,
 .bx-grid-table td:first-child {
     padding-left:10px;
@@ -140,7 +145,6 @@ div.bx-grid-drag-handle {
 
 
 .bx-grid-gragging-row {    
-
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -160,9 +164,11 @@ div.bx-grid-drag-handle {
     padding-left:0;
 }
 
-
 td:last-child .bx-grid-cell-single-actions-wrapper {
     float:right;
+}
+.bx-dir-rtl td:last-child .bx-grid-cell-single-actions-wrapper {
+    float:left;
 }
 
 .bx-grid-table-wrapper td .bx-def-unit {

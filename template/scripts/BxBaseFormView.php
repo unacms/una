@@ -1056,7 +1056,7 @@ BLAH;
         $sClassOneLineCaption = '';
         $sClassOneLineValue = '';
         if ($isOneLine) {
-            $sClassOneLineCaption = ' bx-form-caption-oneline bx-form-caption-oneline-' . $aInput['type'] . ' bx-def-margin-left';
+            $sClassOneLineCaption = ' bx-form-caption-oneline bx-form-caption-oneline-' . $aInput['type'] . ' ltr:ml-4 rtl:mr-4';
             $sClassOneLineValue = ' bx-form-value-oneline bx-form-value-oneline-' . $aInput['type'];
             if (!isset($aInput['attrs']) || !is_array($aInput['attrs']))
                 $aInput['attrs'] = [];
