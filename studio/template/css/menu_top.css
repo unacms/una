@@ -365,18 +365,13 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-help .bx-popup,
 #bx-std-pcap-menu-popup-help .bx-popup a,
 #bx-std-pcap-menu-popup-help .bx-popup .sys-icon,
-#bx-std-pcap-menu-popup-assistant .bx-popup,
-#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header h2,
-#bx-std-pcap-menu-popup-assistant .bx-popup .bx-popup-header .bx-icon,
-#bx-std-pcap-menu-popup-assistant .bx-popup a,
 #bx-std-pcap-menu-popup-actions .bx-popup {
     color: rgba(0, 0, 0, 0.7);
 }
 #bx-std-pcap-menu-popup-account .bx-popup li svg g {
     opacity: 0.7;
 }
-#bx-std-pcap-menu-popup-help .bx-popup a:hover,
-#bx-std-pcap-menu-popup-assistant .bx-popup a:hover {
+#bx-std-pcap-menu-popup-help .bx-popup a:hover {
     color: rgba(0, 0, 0, 0.85);
 }
 #bx-std-pcap-menu-popup-account .bx-popup li.bx-menu-tab-active,
@@ -429,6 +424,5 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     margin: 0 0 0 1rem;
 }
 .bx-std-pcap-assistant .bx-form-value .bx-form-input-textarea {
-    height: 2.5rem;
-    background-color: rgb(229, 231, 235);
+    height: 4.0rem;
 }
