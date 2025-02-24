@@ -66,6 +66,9 @@ class BxDolLogsStorageFolder extends BxDolFactory implements iBxDolSingleton
         if ($bIncludeObjectName)
             $s .= ' ' . $oObject->getObjectName();
 
+        if (!function_exists('bx_get_logged_profile_id'))
+            require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
+
         $s .= ' [' . (int)bx_get_logged_profile_id() . '] ';
 
         if (!empty($_SERVER['REQUEST_URI']))
