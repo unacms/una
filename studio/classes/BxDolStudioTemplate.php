@@ -122,6 +122,9 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             case 'copyright':
                 $sRet = _t( '_copyright',   date('Y') ) . getVersionComment();
                 break;
+            case 'class_name':
+                $sRet = 'bx-dir-' . strtolower(bx_lang_direction());
+                break;
             default:
                 $sRet = parent::parseSystemKey($sKey, $mixedKeyWrapperHtml, false);
         }

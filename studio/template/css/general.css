@@ -162,6 +162,11 @@ div.bx-std-pmen-item .bx-std-pmen-ic-icon {
 
     text-align: center;
 }
+.bx-dir-rtl div.bx-std-pmen-item .bx-std-pmen-ic-icon {
+    margin-left: 1rem;
+    margin-right: 0;
+}
+
 div.bx-std-pmen-item .bx-std-pmen-ic-icon.block {
     display: block;
 }

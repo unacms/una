@@ -222,6 +222,10 @@ div.bx-std-menu-top ul li.bx-menu-tab-search > div {
 
     border-radius: 0.5rem;
 }
+.bx-dir-rtl div.bx-std-menu-top ul li.bx-menu-tab-search > div {
+    left: 0;
+    right: auto;
+}
 div.bx-std-menu-top ul.bx-menu-breadcrumb li.bx-menu-tab-search > div {
     left: 0.5rem;
     right: auto;
@@ -360,6 +364,11 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-scheme .bx-popup li svg {
     margin-right: 0.75rem;
 }
+.bx-dir-rtl #bx-std-pcap-menu-popup-account .bx-popup li svg,
+.bx-dir-rtl #bx-std-pcap-menu-popup-scheme .bx-popup li svg {
+    margin-left: 0.75rem;
+    margin-right: 0;
+}
 
 .bx-std-mod-popup-settings-wrapper,
 #bx-std-pcap-menu-popup-help .bx-popup,
@@ -422,6 +431,9 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 .bx-std-pcap-assistant .bx-form-section-content > .bx-form-element-wrapper:last-child {
     flex: 0 0 auto;
     margin: 0 0 0 1rem;
+}
+.bx-dir-rtl .bx-std-pcap-assistant .bx-form-section-content > .bx-form-element-wrapper:last-child {
+    margin: 0 1rem 0 0;
 }
 .bx-std-pcap-assistant .bx-form-value .bx-form-input-textarea {
     height: 4.0rem;
