@@ -26,19 +26,33 @@
     -moz-transition: -moz-transform 0.5s 0s;
     transition: transform 0.5s 0s;
 }
-.bx-sidebar.bx-sidebar-site .bx-sidebar-cnt {
+.bx-dir-ltr .bx-sidebar.bx-sidebar-site .bx-sidebar-cnt {
     -webkit-transform: translateX(-100%);
     -moz-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
     -o-transform: translateX(-100%);
     transform: translateX(-100%);
 }
-.bx-sidebar.bx-sidebar-account .bx-sidebar-cnt {
+.bx-dir-rtl .bx-sidebar.bx-sidebar-site .bx-sidebar-cnt {
     -webkit-transform: translateX(100%);
     -moz-transform: translateX(100%);
     -ms-transform: translateX(100%);
     -o-transform: translateX(100%);
     transform: translateX(100%);
+}
+.bx-dir-ltr .bx-sidebar.bx-sidebar-account .bx-sidebar-cnt {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+}
+.bx-dir-rtl .bx-sidebar.bx-sidebar-account .bx-sidebar-cnt {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
 }
 .bx-sidebar.bx-sidebar-site.bx-sidebar-active,
 .bx-sidebar.bx-sidebar-account.bx-sidebar-active {
