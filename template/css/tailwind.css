@@ -269,6 +269,9 @@
     .bx-artificer .bx-def-margin-sec-left-auto {
         @apply ml-2 first:ml-0;
     }
+    .bx-artificer .bx-def-margin-sec-left-auto.bx-dir {
+        @apply ltr:ml-2 ltr:first:ml-0 rtl:mr-2 rtl:first:mr-0;
+    }
     .bx-artificer .bx-def-margin-sec-right {
         @apply mr-2;
     }

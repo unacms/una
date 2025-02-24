@@ -33,6 +33,10 @@ form.cmt-post-reply .bx-form-input-files-uploaders a.cmts-uploader-button {
     transform: translateY(-100%);  
     margin-top: 0px;
 }
+.bx-dir-rtl form.cmt-post-reply .bx-form-input-files-uploaders a.cmts-uploader-button {
+    left: 0px;
+    right: auto;
+}
 
 /*--- Comment ---*/
 span.cmt-reply-to a {
