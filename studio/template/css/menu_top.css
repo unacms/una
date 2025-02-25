@@ -406,6 +406,12 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
 }
+.bx-std-pcap-assistant div.cmts .cmt .bx-agents-loading {
+    padding: 0;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
 .bx-std-pcap-assistant div.cmts > ul.cmts {
     margin-top: 1rem;
 }

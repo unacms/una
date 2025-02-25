@@ -225,8 +225,15 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         if(!$bLoad && !$bRetrieve)
             $sText = nl2br($this->_prepareTextForOutput($sText, $iId));
 
-        if($bLoad)
-            $sText = _t('_sys_loading') . $this->_oTemplate->_wrapInTagJsCode("var " . $this->_sJsObjName . "_interval = setInterval(function() {if(window['" . $this->_sJsObjName . "'] == undefined) return; clearInterval(" . $this->_sJsObjName . "_interval); " . $this->getJsObjectName() . "._getCmt('#cmt" . $iId . "', " . $iId . ");}, 200)");
+        if($bLoad) {
+            $sLoadingId = 'cmt' . $iId . '-loading';
+            $sText = $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_loading'), [
+                'id' => $sLoadingId, 
+                'class' => 'bx-btn bx-btn-small bx-agents-loading'
+            ]);
+
+            $sText .= $this->_oTemplate->_wrapInTagJsCode("bx_loading('" . $sLoadingId . "', true); var " . $this->_sJsObjName . "_interval = setInterval(function() {if(window['" . $this->_sJsObjName . "'] == undefined) return; clearInterval(" . $this->_sJsObjName . "_interval); " . $this->getJsObjectName() . "._getCmt('#cmt" . $iId . "', " . $iId . ");}, 200)");
+        }
         
         if($bRetrieve)
             $sText = _t('_sys_agents_assistants_chats_err_no_response');

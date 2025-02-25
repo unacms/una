@@ -190,6 +190,12 @@ blockquote {
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
 }
+.bx-agents-popup .cmts .cmt .bx-agents-loading {
+    padding: 0;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
 .bx-acl-err-msg {
     padding: 0 10%;
 }
