@@ -699,7 +699,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
 
-        return BxDolPush::getInstance()->send($iProfile, array(
+        return BxDolPush::getObjectInstance()->send($iProfile, array(
             'contents' => array(
                 'en' => $aContent['message']
             ),

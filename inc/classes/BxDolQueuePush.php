@@ -55,7 +55,7 @@ class BxDolQueuePush extends BxDolQueue implements iBxDolSingleton
         if(isset($this->_aSentTo[$iProfileId]) && (int)$this->_aSentTo[$iProfileId] >= $this->_iLimitSendPerRecipient)
             return false;
 
-        if(!BxDolPush::getInstance()->send($iProfileId, unserialize($sMessage)))
+        if(!BxDolPush::getObjectInstance()->send($iProfileId, unserialize($sMessage)))
             return false;
 
         if(!isset($this->_aSentTo[$iProfileId]))
