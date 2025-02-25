@@ -20,7 +20,7 @@ define('BX_PDO_STATE_SUCCESS', '00000');
 class BxDolDb extends BxDolFactory implements iBxDolSingleton
 {	
     protected static $_rLink;
-    protected static $_aDbCacheData;
+    protected static $_aDbCacheData = [];
 
     protected static $_aParams;
     protected static $_sParamsCacheName = 'sys_options';
