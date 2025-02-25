@@ -126,9 +126,15 @@
     -webkit-align-items: center;
     align-items: center;
 }
-.sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li {
+.bx-dir-ltr .sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li {
     margin-left: 1rem;
 }
-.sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li:first-child {
+.bx-dir-ltr .sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li:first-child {
     margin-left: 0;
+}
+.bx-dir-rtl .sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li {
+    margin-right: 1rem;
+}
+.bx-dir-rtl .sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li:first-child {
+    margin-right: 0;
 }
