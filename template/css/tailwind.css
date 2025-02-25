@@ -589,7 +589,8 @@
         flex-shrink: 2 !important;
     }
 
-    .bx-layout-cell{
+    .bx-layout-cell, 
+    .bx-search-results-container {
         @apply flex flex-col gap-4 lg:gap-6;
     }
     .bx-layout-gap{

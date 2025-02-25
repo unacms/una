@@ -1032,8 +1032,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         $bKeyword = $sKeyword !== false;
 
         if(bx_is_api())
-            return $this->serviceGetDataSearchApi(['params' => 
-                [
+            return $this->serviceGetDataSearchApi(['params' => [
                     'keyword' => $sKeyword,
                     'section' => bx_process_input(bx_get('section')),
                     'cat' => bx_process_input(bx_get('cat'))
@@ -1044,8 +1043,21 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         if($bKeyword) {
             $oSearch = $this->_getSearchObject();
 
-            $sCode = $oSearch->response();
-            if(!$sCode)
+            if(($sCode = $oSearch->response()))
+                $sCode = BxDolTemplate::getInstance()->parseHtmlByName('search_result_block.html', [
+                    'html_id' => 'bx-search-results-keyword',
+                    'class' => 'bx-search-results-container',
+                    'attrs' => '',
+                    'content' => $sCode,
+                    'bx_if:do_center' => [
+                        'condition' => false,
+                        'content' => [
+                            'html_id' => '',
+                            'selector_content' => ''
+                        ]
+                    ]
+                ]);
+            else
                 $sCode = $oSearch->getEmptyResult();
         }
 

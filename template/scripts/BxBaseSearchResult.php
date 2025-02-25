@@ -120,45 +120,44 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function displaySearchBox ($sContent, $sPaginate = '')
     {
-        $sContent = BxDolTemplate::getInstance()->parseHtmlByName('paginate_block.html', array(
-            'bx_if:paginate_top' => array(
+        $oTemplate = BxDolTemplate::getInstance();
+
+        $sContent = $oTemplate->parseHtmlByName('paginate_block.html', [
+            'bx_if:paginate_top' => [
                 'condition' => (isset($this->aCurrent['paginate']['on_top']) && $this->aCurrent['paginate']['on_top'] == true) && $sPaginate != '',
-                'content' => array(
+                'content' => [
                     'paginate' => $sPaginate
-                ),
-            ),
-            'bx_if:paginate_bottom' => array(
+                ],
+            ],
+            'bx_if:paginate_bottom' => [
                 'condition' => (!isset($this->aCurrent['paginate']['on_bottom']) || $this->aCurrent['paginate']['on_bottom'] != false) && $sPaginate != '',
-                'content' => array(
+                'content' => [
                     'paginate' => $sPaginate
-                ),
-            ),
+                ],
+            ],
             'content' => $sContent
-        ));
-	
+        ]);
+
         $sMenu = $this->getDesignBoxMenu();
 
-        if ($this->id) {
-            $sTitle = _t($this->aCurrent['title']);
-            $sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
-            return BxDolTemplate::getInstance()->parseHtmlByName('designbox_container.html', array(
+        if($this->id)
+            return $oTemplate->parseHtmlByName('designbox_container.html', [
                 'class_add' => ' bx-search-results',
-                'bx_if:show_html_id' => array(
+                'bx_if:show_html_id' => [
                     'condition' => true,
-                    'content' => array(
+                    'content' => [
                         'html_id' => 'bx-page-block-' . $this->id
-                    ),
-                ),
-                'content' => $sCode
-            ));
-        }
+                    ],
+                ],
+                'content' => $this->oFunctions->designBoxContent(_t($this->aCurrent['title']), $sContent, $this->iDesignBoxTemplate, $sMenu)
+            ]);
 
-        $this->addPageRssLink ();
+        $this->addPageRssLink();
 
-        return array(        	
+        return [
             'content' => $sContent,
             'menu' => $sMenu,
-        );
+        ];
     }
 
     function displaySearchUnit ($aData)
