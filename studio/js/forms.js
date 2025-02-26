@@ -46,7 +46,8 @@ function fvtTogglePopup(sName, oLink) {
     oPopup.dolPopup({
     	moveToDocRoot: false,
         pointer:{
-            el:$(oLink)
+            el:$(oLink),
+            align: $('body').hasClass('bx-dir-rtl') ? 'left' : 'right'
         }
     });
 };

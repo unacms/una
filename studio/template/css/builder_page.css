@@ -60,6 +60,12 @@ div.adm-bpb-icon i.sys-icon {
     max-width: none;
     margin-right: 0.75rem;
 }
+.bx-dir-rtl div.adm-bpb-icon,
+.bx-dir-rtl div.adm-bpb-icon-bg,
+.bx-dir-rtl div.adm-bpb-icon img {
+    margin-left: 0.75rem;
+    margin-right: 0;
+}
 div.adm-bpb-icon {
     position: relative;
 }
@@ -106,6 +112,10 @@ div.adm-bpb-title {
 }
 div.adm-bpb-title .bx-std-api {
     margin-left: 0.25rem;
+}
+.bx-dir-rtl div.adm-bpb-title .bx-std-api {
+    margin-left: 0;
+    margin-right: 0.25rem;
 }
 div.adm-bpb-description {
     font-size: 0.75rem;

@@ -392,8 +392,14 @@
     .bx-artificer .bx-def-padding-sec-left {
         @apply pl-2;
     }
+    .bx-artificer .bx-def-padding-sec-left.bx-dir {
+        @apply pl-0 ltr:pl-2 rtl:pr-2;
+    }
     .bx-artificer .bx-def-padding-sec-left-auto {
         @apply pl-2 first:pl-0;
+    }
+    .bx-artificer .bx-def-padding-sec-left-auto.bx-dir {
+        @apply pl-0 ltr:pl-2 ltr:first:pl-0 rtl:pr-2 rtl:first:pr-0;
     }
     .bx-artificer .bx-def-padding-sec-right {
         @apply pr-2;
@@ -1379,7 +1385,7 @@
     }
 
     .bx-std .bx-popup-color-bg {
-        @apply shadow;
+        @apply shadow dark:shadow-gray-500;
     }
     .bx-std .bx-popup-border {
         @apply m-px ring-1 ring-gray-300 dark:ring-gray-700 rounded-2xl;

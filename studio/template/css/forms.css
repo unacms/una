@@ -32,7 +32,12 @@ div.bx-form-input-wrapper-textarea {
 div.bx-form-input-translator {
     position: absolute;
     top: -22px;
+}
+.bx-dir-ltr div.bx-form-input-translator {
     right: 0px;
+}
+.bx-dir-rtl div.bx-form-input-translator {
+    left: 0px;
 }
 
 div.bx-form-input-language,
