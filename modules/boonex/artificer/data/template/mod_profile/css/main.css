@@ -177,8 +177,15 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li {
     margin-right: 1.25rem;
 }
+.bx-dir-rtl .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li {
+    margin-left: 1.25rem;
+    margin-right: 0;
+}
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li:last-child {
     margin-right: 0;
+}
+.bx-dir-rtl .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li:last-child {
+    margin-left: 0;
 }
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li .sys-meta-div {
     display: none;

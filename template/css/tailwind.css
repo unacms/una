@@ -270,7 +270,7 @@
         @apply ml-2 first:ml-0;
     }
     .bx-artificer .bx-def-margin-sec-left-auto.bx-dir {
-        @apply ltr:ml-2 ltr:first:ml-0 rtl:mr-2 rtl:first:mr-0;
+        @apply rtl:ml-0 rtl:mr-2 rtl:first:mr-0;
     }
     .bx-artificer .bx-def-margin-sec-right {
         @apply mr-2;
@@ -1127,18 +1127,18 @@
     .bx-stl-mil-sm .sys-action-do-icon:last-child > *,
     .bx-stl-mil-wo-gaps .sys-action-do-icon:last-child > *,
     .bx-stl-mil-wo-gaps-sm .sys-action-do-icon:last-child > * {
-        @apply mr-0;
+        @apply ltr:mr-0 rtl:ml-0;
     }
     .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text,
     .bx-stl-mil-sm .sys-action-do-icon ~ .sys-action-do-text,
     .bx-stl-mil-wo-gaps .sys-action-do-icon ~ .sys-action-do-text,
     .bx-stl-mil-wo-gaps-sm .sys-action-do-icon ~ .sys-action-do-text {
-        @apply ml-0; 
+        @apply ltr:ml-0 rtl:mr-0;
     }
     .bx-stl-mii-sm > *,
     .bx-stl-mil-sm .sys-action-do-icon > *,
     .bx-stl-mil-wo-gaps-sm .sys-action-do-icon > * {
-        @apply h-5 w-5 mr-1.5 text-sm;
+        @apply h-5 w-5 ltr:mr-1.5 rtl:ml-1.5 text-sm;
     }
     .bx-stl-mit {
         @apply truncate;
