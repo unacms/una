@@ -1758,6 +1758,25 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             }
         }
 
+        // in case current user is not allowed to edit/delete this group then
+        // if it is a subgroup inside a context then give to the admin roles of a parent context the ability to edit/delete that subgroup.
+        if (
+            !$bResult &&
+            ($sAction == BX_BASE_MOD_GROUPS_ACTION_EDIT || $sAction == BX_BASE_MOD_GROUPS_ACTION_DELETE) &&
+            isset($this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']) &&
+            $this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'] &&
+            isset($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]) &&
+            $aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] < 0)
+        {
+            $iParentContextProfileId = -$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']];
+            $oParentContext = BxDolProfile::getInstance($iParentContextProfileId);
+            if ($oParentContext) {
+                $sCheckAction = $sAction == BX_BASE_MOD_GROUPS_ACTION_EDIT ? BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT : BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT;
+                $aParentDataEntry = bx_srv($oParentContext->getModule(), 'get_info', [$oParentContext->getContentId(), false]);
+                return $this->isAllowedActionByRole(['action' => $sCheckAction, 'module' => $oParentContext->getModule()], $aParentDataEntry, $iParentContextProfileId, $iProfileId);
+            }
+        }
+
         /**
          * @hooks
          * @hookdef hook-system-check_allowed_action_by_role 'system', 'check_allowed_action_by_role' - hook to override the result of checking whether an action is allowed or not to context member by his role in the context
