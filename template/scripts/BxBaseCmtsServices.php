@@ -586,12 +586,11 @@ class BxBaseCmtsServices extends BxDol
             $aForm = $oForm['form']->getCodeAPI();
             $aForm['inputs']['cmt_text']['numLines'] = 1;
             $aForm['inputs']['cmt_text']['autoheight'] = true;
-            $aForm['inputs']['cmt_submit'] = $aForm['inputs']['cmt_controls'][0];
-            unset($aForm['inputs']['cmt_controls']);
+            if (isset($aForm['inputs']['cmt_controls'])){
+                $aForm['inputs']['cmt_submit'] = $aForm['inputs']['cmt_controls'][0];
+                unset($aForm['inputs']['cmt_controls']);
+            }
             
-            $aForm['inputs']['cmt_submit']['icon'] = 'contact';
-            $aForm['inputs']['cmt_submit']['variant'] = 'text';
-            $aForm['inputs']['cmt_submit']['icon_only'] = true;
             $aRv['form'] = ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $aForm, 'request' => ['immutable' => true]];
             return $aRv;
         }
