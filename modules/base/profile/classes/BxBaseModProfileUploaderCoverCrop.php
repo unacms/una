@@ -71,7 +71,7 @@ class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderHTML5
 
             // for cover image show only unassigned ghosts and currently set covers
             if ($aFile['file_id'] == $aContentInfo[$CNF['FIELD_COVER']] || $aFile['file_id'] != $aContentInfo[$CNF['FIELD_PICTURE']])
-                $aResult[$aFile['file_id'] = $aFile;
+                $aResult[$aFile['file_id']] = $aFile;
 
         }
 
