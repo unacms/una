@@ -49,12 +49,13 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
             if(!isset($aModules[$sModule]))
                 continue;
 
-            if(BxDolRequest::serviceExists($sModule, 'act_as_profile'))
-                continue;
+            if($this->_mixedContextId !== false && ($aContextInfo = BxDolProfileQuery::getInstance()->getInfoById(abs($this->_mixedContextId)))) {
+                if(BxDolRequest::serviceExists($sModule, 'act_as_profile'))
+                    continue;
 
-            if($this->_mixedContextId !== false && ($aContextInfo = BxDolProfileQuery::getInstance()->getInfoById(abs($this->_mixedContextId))))
                 if(bx_srv($aContextInfo['type'], 'check_allowed_post_in_profile', [$aContextInfo['content_id'], $sModule]) !== CHECK_ACTION_RESULT_ALLOWED)
                     continue;
+            }
 
             $aResult[$iKey] = array_merge($aMenuItem, array(
                 'id' => $sModule,
