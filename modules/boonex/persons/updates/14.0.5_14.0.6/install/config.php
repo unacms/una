@@ -8,10 +8,10 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Organizations',
-    'version_from' => '14.0.7',
-    'version_to' => '14.0.8',
-    'vendor' => 'UNA INC',
+    'title' => 'Persons',
+    'version_from' => '14.0.5',
+    'version_to' => '14.0.6',
+    'vendor' => 'BoonEx',
 
     'compatible_with' => array(
         '14.0.0-RC4'
@@ -20,14 +20,14 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/organizations/updates/update_14.0.7_14.0.8/',
-    'home_uri' => 'orgs_update_1407_1408',
+    'home_dir' => 'boonex/persons/updates/update_14.0.5_14.0.6/',
+    'home_uri' => 'persons_update_1405_1406',
 
-    'module_dir' => 'boonex/organizations/',
-    'module_uri' => 'orgs',
+    'module_dir' => 'boonex/persons/',
+    'module_uri' => 'persons',
 
-    'db_prefix' => 'bx_organizations_',
-    'class_prefix' => 'BxOrgs',
+    'db_prefix' => 'bx_persons_',
+    'class_prefix' => 'BxPersons',
 
     /**
      * Installation/Uninstallation Section.
@@ -42,7 +42,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Organizations',
+    'language_category' => 'Persons',
 
     /**
      * Files Section
