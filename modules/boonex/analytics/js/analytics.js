@@ -62,6 +62,9 @@ BxAnalytics.prototype.reloadData = function () {
     $sUrl = $this._sActionsUri + 'GetReportsData/' + $($this._sModuleSelector).val() + '/' + $($this._sReportSelector).val() + '/' + $($this._sDatePickerSelector).data('daterangepicker').startDate.format('YYYY-MM-DD') + '/' + $($this._sDatePickerSelector).data('daterangepicker').endDate.format('YYYY-MM-DD') + '/';
     $($this._sExportUrlSelector).attr('href', $sUrl + 'csv/');
     $.getJSON($sUrl, function (oData) {
+        if(Chart.defaults.global == undefined)
+            Chart.defaults.global = {};
+
         Chart.defaults.global.layout = {
             padding: {
                 left: 0,
@@ -110,7 +113,7 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
     
     oData.datasets[0].data.forEach(function (oItemData, iDx) {
         var sTxt = "";
-        if (oDataIn.options.scales.xAxes[0].type == 'time')
+        if (oDataIn.options.scales.x.type == 'time')
             sTxt = oData.datasets[0].data[iDx].x;
         else{
             sTxt = oData.labels[iDx];
@@ -139,7 +142,7 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
     $('.bx_analytics_table').html(sHtml);
 
     var $aOrder = [];
-    if (oDataIn.options.scales.xAxes[0].type == 'time') {
+    if (oDataIn.options.scales.x.type == 'time') {
         $aOrder = [[0, 'desc']];
     }
     $this._oTable = $('.bx_analytics_table').DataTable({ "stripeClasses": ['bx-def-color-bg-hl', ''], dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: $aOrder });

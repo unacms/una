@@ -473,17 +473,15 @@ class BxAnalyticsModule extends BxDolModule
                     )
                 ),
                 'scales' => array(
-                    'yAxes' => array(
-                        array(
-                            'ticks' => array(
-                                'max' => $iMaxValueY, 
-                                'min' => $iMinValueY, 
-                                'stepSize' => $this->getStep($iMinValueY, $iMaxValueY), 
-                                'autoSkip' => true
-                            )
+                    'y' => array(
+                        'ticks' => array(
+                            'max' => $iMaxValueY, 
+                            'min' => $iMinValueY, 
+                            'stepSize' => $this->getStep($iMinValueY, $iMaxValueY), 
+                            'autoSkip' => true
                         )
                     ),
-                    'xAxes' => array($aDataForChartXAxes)
+                    'x' => $aDataForChartXAxes
                 )
             ),
             'links' => $aValues['links'],
