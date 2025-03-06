@@ -590,6 +590,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get connected content IDs for specified type
+     * @param $iInitiator initiator of the connection
+     * @param $iDate get connections appeared since this date 
+     * @param $isMutual get mutual connections only
+     * @return array of available connections
+     */
+    public function getConnectedContentSince ($iInitiator, $iDate, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        return $this->_oQuery->getConnectedContentSince($iInitiator, $iDate, $isMutual, $iStart, $iLimit, $iOrder);
+    }
+
+    /**
      * Get connected initiators IDs
      * @param $iContent content of the connection
      * @param $isMutual get mutual connections only
@@ -610,6 +622,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     public function getConnectedInitiatorsByType ($iContent, $mixedType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
         return $this->_oQuery->getConnectedInitiatorsByType($iContent, $mixedType, $isMutual, $iStart, $iLimit, $iOrder);
+    }
+
+    /**
+     * Get connected initiators IDs
+     * @param $iContent content of the connection
+     * @param $iDate get connections appeared since this date 
+     * @param $isMutual get mutual connections only
+     * @return array of available connections
+     */
+    public function getConnectedInitiatorsSince ($iContent, $iDate, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        return $this->_oQuery->getConnectedInitiatorsSince($iContent, $iDate, $isMutual, $iStart, $iLimit, $iOrder);
     }
 
     /**

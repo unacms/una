@@ -43,7 +43,7 @@ DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_organizations%';
 DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_organizations%';
 
 -- LIVE UPDATES
-DELETE FROM `sys_objects_live_updates` WHERE `name` = 'bx_organizations_friend_requests';
+DELETE FROM `sys_objects_live_updates` WHERE `name` LIKE 'bx_organizations%';
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_organizations' LIMIT 1);

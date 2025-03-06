@@ -193,6 +193,20 @@ class BxDolConnectionQuery extends BxDolDb
             'initiator' => $iInitiator,
         ));
     }
+    
+    public function getConnectedContentSince ($iInitiator, $iDate, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        $sWhere = " AND `c`.`initiator` = :initiator AND `c`.`added` >= :date";
+
+        $sJoin = $this->_aObject['profile_content'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`status` = \'active\'' : '';
+
+        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        return $this->getColumn($sQuery, [
+            'initiator' => $iInitiator,
+            'date' => $iDate
+        ]);
+    }
 
     public function getConnectedInitiators ($iContent, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
@@ -220,6 +234,20 @@ class BxDolConnectionQuery extends BxDolDb
         return $this->getColumn($sQuery, array(
             'content' => $iContent,
         ));
+    }
+
+    public function getConnectedInitiatorsSince ($iContent, $iDate, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        $sWhere = " AND `c`.`content` = :content AND `c`.`added` >= :date";
+
+        $sJoin = $this->_aObject['profile_initiator'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`initiator` AND `p`.`status` = \'active\'' : ''; 
+
+        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        return $this->getColumn($sQuery, [
+            'content' => $iContent,
+            'date' => $iDate
+        ]);
     }
 
     protected function _getConnectionsQuery ($sWhere, $sJoin = '', $sFields = '*', $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)

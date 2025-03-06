@@ -744,6 +744,8 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
+        BxDolProfileQuery::getInstance()->updateProfileTrack($iProfileId, 'view_friend_requests');
+
         return $this->_serviceBrowseConnections('friend_requests', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 

@@ -82,10 +82,15 @@ class BxBaseUploaderCrop extends BxDolUploader
 
     public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false, $bPrivate = true)
     {
-        ob_start();
-        parent::handleUploads ($iProfileId, $mixedFiles, $isMultiple, $iContentId, $bPrivate);
-        $s = ob_get_clean();
-        echo strip_tags(str_replace('window.parent.', 'window.', $s));
+        if (bx_is_api()){
+             return parent::handleUploads ($iProfileId, $mixedFiles, $isMultiple, $iContentId, $bPrivate);;
+         }
+         else{
+            ob_start();
+            parent::handleUploads ($iProfileId, $mixedFiles, $isMultiple, $iContentId, $bPrivate);
+            $s = ob_get_clean();
+            echo strip_tags(str_replace('window.parent.', 'window.', $s));
+        }
     }
 
 }

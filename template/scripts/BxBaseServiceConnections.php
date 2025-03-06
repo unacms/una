@@ -143,9 +143,10 @@ class BxBaseServiceConnections extends BxDol
      * get number of received unconfirmed connections (friend requests)
      * @param $sConnectionsObject connections object to get unconfirmed connections from
      * @param $mixedId id to get connections for, if omitted then logged-in profile id is used
+     * @param $bNew return all or only new (appeared since last check) unconfirmed connections
      * @return number
      */
-    public function serviceGetUnconfirmedConnectionsNum ($sConnectionsObject, $mixedId = 0)
+    public function serviceGetUnconfirmedConnectionsNum ($sConnectionsObject, $mixedId = 0, $bNew = false)
     {
         $oConnection = BxDolConnection::getObjectInstance($sConnectionsObject);
         if (!$oConnection)
@@ -154,10 +155,17 @@ class BxBaseServiceConnections extends BxDol
         if (!$mixedId)
             $mixedId = bx_get_logged_profile_id();
 
+        $sMethodName = 'getConnectedInitiators';
+        $aMethodParams = [$mixedId, 0];
+        if($bNew) {
+            $sMethodName .= 'Since';
+            $aMethodParams = [$mixedId, BxDolProfileQuery::getInstance()->getProfileTrack($mixedId, 'view_friend_requests'), 0];
+        }
+
         $i = 0;
-        $a = $oConnection->getConnectedInitiators($mixedId, 0); // get received friend requests
-        foreach ($a as $iId)
-            if (BxDolProfile::getInstance($iId))
+        $a = call_user_func_array([$oConnection, $sMethodName], $aMethodParams); // get received friend requests
+        foreach($a as $iId)
+            if(BxDolProfile::getInstance($iId))
                 ++$i;
 
         return $i;
@@ -172,19 +180,43 @@ class BxBaseServiceConnections extends BxDol
 
         $iCountNew = (int)$this->serviceGetUnconfirmedConnectionsNum($sConnectionsObject, $iProfile);
         if($iCountNew == (int)$iCount)
-			return false;
+            return false;
 
         return array(
-    		'count' => $iCountNew, // required
-    		'method' => 'bx_menu_show_live_update(oData)', // required
-    		'data' => array(
-    			'code' => BxDolTemplate::getInstance()->parseHtmlByTemplateName('menu_item_addon', array(
-    				'content' => '{count}'
+            'count' => $iCountNew, // required
+            'method' => 'bx_menu_show_live_update(oData)', // required
+            'data' => array(
+                'code' => BxDolTemplate::getInstance()->parseHtmlByTemplateName('menu_item_addon', array(
+                    'content' => '{count}'
                 )),
                 'mi_parent' => $aMenuItemParent,
                 'mi_child' => $aMenuItemChild
-    		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+            ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
     	);
+    }
+    
+    public function serviceGetLiveUpdatesUnconfirmedConnectionsNew($sModule, $sConnectionsObject, $aMenuItemParent, $aMenuItemChild, $iCount = 0)
+    {
+        $iProfile = bx_get_logged_profile_id();
+        $oProfile = BxDolProfile::getInstance($iProfile);
+        if(!$oProfile || $oProfile->getModule() != $sModule)
+            return false;
+
+        $iCountNew = (int)$this->serviceGetUnconfirmedConnectionsNum($sConnectionsObject, $iProfile, true);
+        if($iCountNew == (int)$iCount)
+            return false;
+
+        return [
+            'count' => $iCountNew, // required
+            'method' => 'bx_menu_show_live_update(oData)', // required
+            'data' => [
+                'code' => BxDolTemplate::getInstance()->parseHtmlByTemplateName('menu_item_addon', [
+                    'content' => '{count}'
+                ]),
+                'mi_parent' => $aMenuItemParent,
+                'mi_child' => $aMenuItemChild
+            ],  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+    	];
     }
 
     /**

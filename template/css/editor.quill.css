@@ -49,3 +49,8 @@
 .dark .ql-picker-options .ql-picker-item{
     color: rgb(209, 213, 219);
 }
+
+.bx-dir-rtl .ql-editor {
+    direction: rtl;
+    text-align: right;
+}

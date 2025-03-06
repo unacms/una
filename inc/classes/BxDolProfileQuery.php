@@ -505,6 +505,23 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
 
         return $bResult;
     }
+    
+    public function updateProfileTrack($iProfileId, $sAction)
+    {
+        return $this->query("INSERT INTO `sys_profiles_track` SET `profile_id`=:profile_id, `action`=:action, `date`=:now ON DUPLICATE KEY UPDATE `date`=:now", [
+            'profile_id' => $iProfileId,
+            'action' => $sAction,
+            'now' => time()
+        ]);
+    }
+
+    public function getProfileTrack($iProfileId, $sAction)
+    {
+        return (int)$this->getOne("SELECT `date` FROM `sys_profiles_track` WHERE `profile_id`=:profile_id AND `action`=:action LIMIT 1", [
+            'profile_id' => $iProfileId,
+            'action' => $sAction
+        ]);
+    }
 }
 
 /** @} */
