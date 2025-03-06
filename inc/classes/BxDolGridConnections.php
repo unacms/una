@@ -15,6 +15,7 @@ class BxDolGridConnections extends BxTemplGrid
     protected $_bOwner = false;
     protected $_sObjectConnections = 'sys_profiles_friends';
     protected $_oProfile;
+    protected $_sProfileTrackAction = 'view_friend_requests';
     protected $_oConnection;
 
     public function __construct ($aOptions, $oTemplate = false)
@@ -64,6 +65,8 @@ class BxDolGridConnections extends BxTemplGrid
     {
         if(!$this->_bInit)
             return '';
+
+        BxDolProfileQuery::getInstance()->updateProfileTrack($this->_oProfile->id(), $this->_sProfileTrackAction);
 
         return parent::getCode($isDisplayHeader);        
     }
