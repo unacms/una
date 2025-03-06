@@ -159,9 +159,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             $aResult['members_count'] = $oConnection->getConnectedInitiatorsCount($oProfile->id(), false);
             $aResult['members_list'] = $oConnection->getConnectedListAPI($oProfile->id(), false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
         }
-        $aResult['visibility'] = $aData[$CNF['FIELD_ALLOW_VIEW_TO']];
 
-        return $aResult;
+        return array_merge($aResult, [
+            'author_data' => BxDolProfile::getData($aData[$CNF['FIELD_AUTHOR']]),
+            'visibility' => $aData[$CNF['FIELD_ALLOW_VIEW_TO']]
+        ]);
     }
 
     public function serviceGetMenuAddonManageTools()
