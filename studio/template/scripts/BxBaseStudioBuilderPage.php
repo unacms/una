@@ -187,7 +187,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
                 $aTmplVarsCell = array('id' => $i, 'bx_repeat:blocks' => array());
                 foreach($aBlocks as $aBlock) {
-                    $sTitle = !empty($aBlock['title_system']) ? _t($aBlock['title_system']) : $oPage->getBlockTitle($aBlock);
+                    $sTitle = strip_tags(!empty($aBlock['title_system']) ? _t($aBlock['title_system']) : $oPage->getBlockTitle($aBlock));
                     list($sIcon, $sIconUrl) = $this->getBlockIcon($aBlock);
 
                     $aTmplVarsCell['bx_repeat:blocks'][] = array(
