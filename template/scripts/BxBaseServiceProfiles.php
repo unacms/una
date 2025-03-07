@@ -1196,6 +1196,14 @@ class BxBaseServiceProfiles extends BxDol
         if(bx_is_api() && ($oLiveUpdates = BxDolLiveUpdates::getInstance()) !== false)
             return $oLiveUpdates->performApi();
     }
+    
+    public function serviceProfileInfo()
+    {
+        if (isLogged()) {
+            $o = BxDolProfile::getInstance();
+            return BxDolProfile::getDataForPage($o);
+        }
+    }
 
     public function serviceUpdateSettings($iProfileId = false, $sSettings = '')
     {
