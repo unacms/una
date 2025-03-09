@@ -169,6 +169,11 @@ class BxDolService extends BxDol
             $aModule = $oDb->getModuleById($mixed);
         return $aModule;
     }
+
+    public static function cleanMemoryCache()
+    {
+        self::$_aMemoryCache = [];
+    }
 }
 
 /** @} */
