@@ -70,13 +70,13 @@ class BxDolSessionQuery extends BxDolDb
     function deleteExpired()
     {
         $iTime = time() - BX_DOL_SESSION_LIFETIME;
-        $sSql = $this->prepare("SELECT `user_id`, `date` FROM `" . $this->sTable . "` WHERE `date` < ?", $iTime);
+        $sSql = $this->prepare("SELECT `user_id`, `date` FROM `" . $this->sTable . "` WHERE `date` < ? AND `user_id` != 0 ORDER BY `date` DESC LIMIT 50000", $iTime);
         $aRows = $this->getAll($sSql);
-        
+
         foreach ($aRows as $aRow) {
             $this->updateLastActivityAccount($aRow['user_id'], $aRow['date']);
         }
-        
+
         $sSql = $this->prepare("DELETE FROM `" . $this->sTable . "` WHERE `date` < ?", $iTime);
         $iRet = (int)$this->query($sSql);
         if ($iRet)
@@ -104,7 +104,7 @@ class BxDolSessionQuery extends BxDolDb
     {
         if ($iDate > 0) {
             $a = BxDolAccountQuery::getInstance()->getInfoById($iAccountId);
-            if ($iDate > $a['active'])
+            if ($a && $iDate > $a['active'])
                 BxDolAccountQuery::getInstance()->_updateField($iAccountId, 'active', $iDate);
         }
     }
