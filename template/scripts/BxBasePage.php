@@ -519,6 +519,7 @@ class BxBasePage extends BxDolPage
 
         $sMetaTitle = $this->_getPageMetaTitle();
         $sName = $this->_getPageTitle();
+        $sModule = $this->getModule();
         $a = [
             'id' => $this->_aObject['id'],
             'title' => $sMetaTitle ? $sMetaTitle : $sName,
@@ -530,7 +531,7 @@ class BxBasePage extends BxDolPage
             'url' =>  ((bx_get('params')[0] ? bx_get('params')[0] : $this->_aObject['uri'] ) . ($query_string != '' ? '?' . $query_string : '')),
             'author' => $this->_aObject['author'],
             'added' => $this->_aObject['added'],
-            'module' => $this->getModule(),
+            'module' => $sModule,
             'type' => $this->getType (),
             'layout' => str_replace('.html', '', $this->_aObject['template']),
             'cover_block' => '',
@@ -551,15 +552,12 @@ class BxBasePage extends BxDolPage
                 $oMenuSubmenu->setObjectSubmenu($sSubmenu, []);
 
             $a['menu'] = $oMenuSubmenu->getCodeAPI();
-            if ($sModuleName && $sModuleName != 'system'){
-                $oModule = BxDolModule::getInstance($sModuleName);
-                if ($oModule){
-                    $CNF = &$oModule->_oConfig->CNF;
-                    $a['menu']['name'] = $oModule->getName();
-                    $a['menu']['title'] = $oModule->getModuleTitle();
-                    $a['menu']['icon'] = $CNF['ICON'];
-                    $a['menu']['add_url'] = $CNF['URI_ADD_ENTRY'] ? $CNF['URI_ADD_ENTRY']: str_replace('edit-', 'create-',$CNF['URI_EDIT_ENTRY']);
-                }    
+            if($sModule && $sModule != 'system' && ($oModule = BxDolModule::getInstance($sModule))) {
+                $CNF = &$oModule->_oConfig->CNF;
+                $a['menu']['name'] = $oModule->getName();
+                $a['menu']['title'] = BxDolModule::getTitle($oModule->_oConfig->getUri());
+                $a['menu']['icon'] = $CNF['ICON'];
+                $a['menu']['add_url'] = isset($CNF['URI_ADD_ENTRY']) ? $CNF['URI_ADD_ENTRY'] : str_replace('edit-', 'create-', $CNF['URI_EDIT_ENTRY']);
             }
         }
 

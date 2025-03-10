@@ -205,7 +205,7 @@ class BxBaseMenu extends BxDolMenu
                 'image' => $sIconUrl ? $sIconUrl : '',
                 'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : '',
                 'addon' => $this->_bDisplayAddons ? $this->_getMenuAddon($a) : '',
-                'config' => $a['config_api'],
+                'config' => isset($a['config_api']) ? $a['config_api'] : '',
                 'primary' => isset($a['primary']) ? $a['primary'] : 0,
             ];
 
