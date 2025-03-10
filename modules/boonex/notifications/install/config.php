@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_notifications',
     'title' => 'Notifications',
     'note' => 'Notifications module.',
-    'version' => '14.0.7.DEV',
+    'version' => '14.0.8.DEV',
     'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

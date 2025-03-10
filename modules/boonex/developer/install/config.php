@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_developer',
     'title' => 'Developer',
     'note' => 'Developer tools...',
-    'version' => '14.0.5.DEV',
+    'version' => '14.0.6.DEV',
     'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
