@@ -30,21 +30,21 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         $bType = isset($this->aInputs[$sName]['type']);
 
         //--- Process field with 'Location' type. 
-        if($bType && $this->aInputs[$sName]['type'] == 'location')
-            return array(
-                'string' => parent::getCleanValue($sName), 
+        if($bType && $this->aInputs[$sName]['type'] == 'location' && ($sValue = parent::getCleanValue($sName)) !== false)
+            return [
+                'string' => $sValue, 
                 'array' => BxDolMetatags::locationsRetrieveFromForm($sName, $this)
-            );
+            ];
 
         //--- Process field with 'Location Radius' type. 
-        if($bType && $this->aInputs[$sName]['type'] == 'location_radius') {
+        if($bType && $this->aInputs[$sName]['type'] == 'location_radius' && ($sValue = parent::getCleanValue($sName)) !== false) {
             $aLocation = BxDolMetatags::locationsRetrieveFromForm($sName, $this);
             $aLocation[] = (int)$this->getLocationVal($this->aInputs[$sName], 'rad');
 
-            return array(
-                'string' => parent::getCleanValue($sName), 
+            return [
+                'string' => $sValue, 
                 'array' => $aLocation
-            );
+            ];
         }
 
         //--- Process field with 'Date Range Age' and 'Date-Time Range Age' type.
