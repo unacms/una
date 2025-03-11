@@ -157,6 +157,8 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
     protected function balancer()
     {
+        self::$_bMultuServersMode = false;
+
         // regular mode - one DB server
         if (!is_array($this->_sHost))
             return array($this->_sHost, $this->_sPort, $this->_sSocket, $this->_sUser, $this->_sPassword, $this->_sDbname);
