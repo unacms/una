@@ -520,7 +520,7 @@ class BxForumModule extends BxBaseModTextModule
             unset($aParams['ajax_paginate']);
         }
         
-        if(isset($aParams['unit_view']) && $aParams['unit_view'] != 'table')
+        if($this->_bIsApi || (isset($aParams['unit_view']) && $aParams['unit_view'] != 'table'))
             return $this->_serviceBrowse('author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
         return $this->_serviceBrowseTable(array(

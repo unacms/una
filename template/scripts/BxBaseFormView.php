@@ -665,7 +665,7 @@ BLAH;
         foreach ($this->aInputs as &$aInput) {
     
             if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput)) {
-                if ('block_header' == $aInput['type'] && !$this->_bShowEmptySections) {
+                if ((isset($aInput['type']) && 'block_header' == $aInput['type']) && !$this->_bShowEmptySections) {
                     // don't show section with no fields or with empty fields
                     if ($sContHeader) {                        
                         if ($sContFields)

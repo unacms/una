@@ -554,10 +554,19 @@ class BxBasePage extends BxDolPage
             $a['menu'] = $oMenuSubmenu->getCodeAPI();
             if($sModule && $sModule != 'system' && ($oModule = BxDolModule::getInstance($sModule))) {
                 $CNF = &$oModule->_oConfig->CNF;
-                $a['menu']['name'] = $oModule->getName();
-                $a['menu']['title'] = BxDolModule::getTitle($oModule->_oConfig->getUri());
-                $a['menu']['icon'] = $CNF['ICON'];
-                $a['menu']['add_url'] = isset($CNF['URI_ADD_ENTRY']) ? $CNF['URI_ADD_ENTRY'] : str_replace('edit-', 'create-', $CNF['URI_EDIT_ENTRY']);
+
+                $sUrlAdd = '';
+                if(($sKey = 'URI_ADD_ENTRY') && !empty($CNF[$sKey]))
+                    $sUrlAdd = $CNF[$sKey];
+                if(!$sUrlAdd && ($sKey = 'URI_EDIT_ENTRY') && !empty($CNF[$sKey]))
+                    $sUrlAdd = str_replace('edit-', 'create-', $CNF[$sKey]);
+
+                $a['menu'] = array_merge($a['menu'], [
+                    'name' => $oModule->getName(),
+                    'title' => BxDolModule::getTitle($oModule->_oConfig->getUri()),
+                    'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
+                    'add_url' => $sUrlAdd 
+                ]);
             }
         }
 

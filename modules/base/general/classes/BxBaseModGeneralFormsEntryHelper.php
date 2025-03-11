@@ -822,7 +822,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 if(!empty($aParams['request_params']) && is_array($aParams['request_params']))
                     $sRequestUrl = bx_append_url_params($sRequestUrl, $aParams['request_params']);
 
-                bx_append_url_params($sUrl, $mixedParams);
                 $aResult = bx_api_get_block('form', $mixedData, [
                     'ext' => [
                         'name' => $sModule, 
