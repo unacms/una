@@ -186,26 +186,30 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
                 $sTitle = sprintf($this->_sTitleMask, _t($this->_oModule->_oConfig->getHandlersUnitTitle($aRow['unit'])), $sTitle);
         }
 
-        $iInfo = '';
-        if(($sKey = '_bx_ntfs_alert_action_group_info_' . $aRow['group']) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
-            $iInfo = $_sKey;
-        else if(($sKey = '_bx_ntfs_alert_action_group_info_' . $aRow['group'] . '_' . $aRow['type']) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
-            $iInfo = $_sKey;
-        else
-            $iInfo = $this->_oModule->_oConfig->getHandlersActionInfo($aRow['unit'], $aRow['action'], $aRow['type'], true);
+        if(!$this->_bIsApi) {
+            $iInfo = '';
+            if(($sKey = '_bx_ntfs_alert_action_group_info_' . $aRow['group']) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
+                $iInfo = $_sKey;
+            else if(($sKey = '_bx_ntfs_alert_action_group_info_' . $aRow['group'] . '_' . $aRow['type']) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) !== 0)
+                $iInfo = $_sKey;
+            else
+                $iInfo = $this->_oModule->_oConfig->getHandlersActionInfo($aRow['unit'], $aRow['action'], $aRow['type'], true);
 
-        $sStylePrefix = $this->_oModule->_oConfig->getPrefix('style');
-        $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('setting_title.html', [
-            'style_prefix' => $sStylePrefix,
-            'bx_if:show_warning' => [
-                'condition' => $this->_bGrouped && !$this->_isSettingsGroupValid($aRow),
-                'content' => [
-                    'style_prefix' => $sStylePrefix
-                ]
-            ],
-            'title' => $sTitle,
-            'info' => $iInfo
-        ]);      
+            $sStylePrefix = $this->_oModule->_oConfig->getPrefix('style');
+            $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('setting_title.html', [
+                'style_prefix' => $sStylePrefix,
+                'bx_if:show_warning' => [
+                    'condition' => $this->_bGrouped && !$this->_isSettingsGroupValid($aRow),
+                    'content' => [
+                        'style_prefix' => $sStylePrefix
+                    ]
+                ],
+                'title' => $sTitle,
+                'info' => $iInfo
+            ]);
+        }
+        else
+            $mixedValue = $sTitle;
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
