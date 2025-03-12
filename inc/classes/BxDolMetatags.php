@@ -366,7 +366,10 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAdd($iId, $s) 
     {
-        //--- Remove <a> tags WITH their content first.
+        /**
+         * First of all remove <a> HTML tags which don't have 'bx-mention-link' class WITH their content.
+         * It's needed because hashtags cannot be used inside links, otherwise we'll get link inside link.
+         */
         $s = preg_replace("/<a\b((?!bx-mention-link)[^>])*>(.*?)<\/a>/si", '', $s);
 
         //--- Strip the other HTML tags.
@@ -483,6 +486,12 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $a = $this->keywordsGet($iId);
         if (empty($a))
             return $s;
+
+        /**
+         * Replace <a> tags, which have 'bx-mention-link' class, with their content. 
+         * It's needed to avoid link inside link after hashtags parsing.
+         */
+        $s = preg_replace('/<a\b[^>]*\bbx-mention-link\b[^>]*>(.*?)<\/a>/si', '$1', $s);
 
         foreach ($a as $sKeyword) {
             $f = function ($a) use ($sKeyword, $iId) {
