@@ -1426,6 +1426,7 @@ CREATE TABLE `sys_accounts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`(191)),
   KEY `added` (`added`),
+  KEY `logged` (`logged`),
   KEY `profile_id` (`profile_id`)
 );
 
