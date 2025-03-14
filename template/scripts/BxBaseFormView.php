@@ -390,24 +390,22 @@ class BxBaseFormView extends BxDolForm
                     $oStorage = BxDolStorage::getObjectInstance($aInput['storage_object']);
                     $aInput['ext_allow'] = $oStorage->getObjectData()['ext_allow'];
                     $aInput['ext_deny'] = $oStorage->getObjectData()['ext_deny'];
-                    
                     $aInput['ghost_template'] = '';
                     $aInput['value'] = '';
                     $aInput['values'] = '';
                     $aInput['values_src'] = '';
-                    if (!empty($aInput['content_id'])){
-                        $oUploader = BxDolUploader::getObjectInstance($aInput['uploaders'][0], $aInput['storage_object'], genRndPwd(8));
-                        $oData = $oUploader->getGhostsWithOrder((int)bx_get_logged_profile_id(), 'json', $aInput['images_transcoder'], $aInput['content_id']);
-                        if ($oData){
-                            $aData = json_decode($oData, true);
+                    if(!empty($aInput['content_id']) && ($sUpr = reset($aInput['uploaders'])) && isset($aInput['storage_object']) && ($sStg = $aInput['storage_object']) && ($oUploader = BxDolUploader::getObjectInstance($sUpr, $sStg, genRndPwd(8))) !== false){
+                        $sData = $oUploader->getGhostsWithOrder((int)bx_get_logged_profile_id(), 'json', $aInput['images_transcoder'], $aInput['content_id']);
+                        if($sData && ($aData = json_decode($sData, true)) && !empty($aData['g']) && is_array($aData['g'])) {
                             $aInput['values_src'] = array_values($aData['g']);
+
                             $aGhostIds = [];
-                            foreach ($aData['g'] as &$aGhost) {
+                            array_walk($aData['g'], function($aGhost) use (&$aGhostIds) {
                                 $aGhostIds[] = $aGhost['file_id'];
-                            }
+                            });
+
                             $aInput['value'] = implode(',', $aGhostIds);
                         }
-                      
                     }
                 }
                 

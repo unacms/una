@@ -504,13 +504,16 @@ class BxBasePage extends BxDolPage
     public function getPageAPI ($aBlocks = [])
     {
         define('BX_API_PAGE', true);
-        $query_string  = '';
 
-        if (isset(bx_get('params')[2]) && bx_get('params')[2] != ''){
-            $array = json_decode(bx_get('params')[2], true);
-            $query_string = http_build_query($array);
-            parse_str($query_string, $a);
-            $_GET = array_merge($_GET, $a);
+        $aGetParams = bx_get('params');
+        $bGetParams = $aGetParams !== false;
+
+        $sQueryString = '';
+        if($bGetParams && !empty($aGetParams[2]) && ($_aGetParams = json_decode($aGetParams[2], true)) && is_array($_aGetParams)) {
+            $sQueryString = http_build_query($_aGetParams);
+
+            parse_str($sQueryString, $aQueryString);
+            $_GET = array_merge($_GET, $aQueryString);
         }
 
         $bIsAvailable = $this->_isAvailablePage($this->_aObject);
@@ -528,7 +531,7 @@ class BxBasePage extends BxDolPage
             'keywords' => $this->_getPageMetaKeywords(),
             'image' => '',
             'uri' => $this->_aObject['uri'],
-            'url' =>  ((bx_get('params')[0] ? bx_get('params')[0] : $this->_aObject['uri'] ) . ($query_string != '' ? '?' . $query_string : '')),
+            'url' => ($bGetParams && !empty($aGetParams[0]) ? $aGetParams[0] : $this->_aObject['uri']) . ($sQueryString != '' ? '?' . $sQueryString : ''),
             'author' => $this->_aObject['author'],
             'added' => $this->_aObject['added'],
             'module' => $sModule,

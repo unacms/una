@@ -80,10 +80,18 @@ class BxBaseDashboardServices extends BxDol
         foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
             $CNF = &$oModule->_oConfig->CNF;
-            if (method_exists($oModule->_oDb, 'getStatByProfile')){
+            if(method_exists($oModule->_oDb, 'getStatByProfile')) {
                 $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
-                $aIcon = explode($CNF['ICON'], ' ');
-                $aData[] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'add_url' => $CNF['URI_ADD_ENTRY'], 'url' => $oPermalink->permalink($CNF['URL_HOME']), 'action' => 'views', 'icon' => $CNF['ICON'], 'type' => 'simple'], $a);
+
+                $aData[] = array_merge([
+                    'key' => $aModule['name'], 
+                    'title' => $aModule['title'], 
+                    'add_url' => $CNF['URI_ADD_ENTRY'], 
+                    'url' => $oPermalink->permalink($CNF['URL_HOME']), 
+                    'action' => 'views', 
+                    'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '', 
+                    'type' => 'simple'
+                ], $a);
             }
         }
        
@@ -93,21 +101,25 @@ class BxBaseDashboardServices extends BxDol
             $CNF = &$oModule->_oConfig->CNF;
             if (method_exists($oModule->_oDb, 'getStatByProfile')){
                 $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
-                $aIcon = explode($CNF['ICON'], ' ');
 
-                $aContexts = $oModule->_oDb->getEntriesBy(['type' => 'author', 'author' => $iProfileId]);
                 $iMembers = 0;
-                if (!$bEmpty){
-                    foreach($aContexts as $aContext) {
-                        $oProfile = BxDolProfile::getInstanceByContentAndType($aContext[$CNF['FIELD_ID']], $aModule['name']);
-
-                        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
-                        if($oConnection){
+                if(!$bEmpty && isset($CNF['OBJECT_CONNECTIONS']) && ($sConnection = $CNF['OBJECT_CONNECTIONS'])) {
+                    $aContexts = $oModule->_oDb->getEntriesBy(['type' => 'author', 'author' => $iProfileId]);
+                    foreach($aContexts as $aContext)
+                        if(($oProfile = BxDolProfile::getInstanceByContentAndType($aContext[$CNF['FIELD_ID']], $aModule['name'])) !== false && ($oConnection = BxDolConnection::getObjectInstance($sConnection)) !== false)
                             $iMembers += $oConnection->getConnectedInitiatorsCount($oProfile->id(), true);
-                        }
-                    }
-                } 
-                $aData[] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'url' => $oPermalink->permalink($CNF['URL_HOME']), 'add_url' => str_replace('edit-', 'create-',$CNF['URI_EDIT_ENTRY']), 'action' => 'member',  'icon' => $CNF['ICON'], 'type' => 'simple', 'members' => $iMembers], $a);
+                }
+
+                $aData[] = array_merge([
+                    'key' => $aModule['name'], 
+                    'title' => ($_sTitle = '_' . $aModule['name']) && ($sTitle = _t($_sTitle)) && $_sTitle != $sTitle ? $sTitle : $aModule['title'], 
+                    'url' => $oPermalink->permalink($CNF['URL_HOME']), 
+                    'add_url' => str_replace('edit-', 'create-',$CNF['URI_EDIT_ENTRY']), 
+                    'action' => 'member',  
+                    'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '', 
+                    'type' => 'simple', 
+                    'members' => $iMembers
+                ], $a);
             }
         }
         
