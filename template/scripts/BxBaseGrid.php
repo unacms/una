@@ -420,15 +420,47 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getRowHeadAPI()
     {
+        $bResize = false;
         $aHeader = [];
 
         foreach($this->_aOptions['fields'] as $sKey => $aField) {
+            if($sKey == 'checkbox' && (int)$aField['width'] < 8)
+                $bResize = true;
+
             $sMethod = '_getCellHeader' . $this->_genMethodName($sKey);
             if(($aHeaderItem = $this->{method_exists($this, $sMethod) ? $sMethod : '_getCellHeaderDefault'}($sKey, $aField)))
                 $aHeader[] = $aHeaderItem;
         }
 
+        if(($sKey = 'checkbox') && $bResize)
+            $this->_resizeCellAPI($sKey, $this->_aOptions['fields'][$sKey], $aHeader);
+
         return $aHeader;
+    }
+
+    protected function _resizeCellAPI($sKey, $aField, &$aHeader)
+    {
+        $iMin = 8;
+        $iAdd = $iMin - (int)$aField['width'];
+        $iThreshold = $iMin + $iAdd;
+
+        $iReduce = 0;
+        array_walk($aHeader, function($aItem) use ($iThreshold, &$iReduce) {
+            if((int)$aItem['width'] >= $iThreshold)
+                $iReduce += 1;
+        });
+
+        $fSub = round($iAdd / $iReduce, 2);
+        array_walk($aHeader, function(&$aItem) use ($sKey, $iThreshold, $iAdd, $fSub) {
+            if($aItem['name'] == $sKey)
+                $aItem['width'] = (float)$aItem['width'] + $iAdd;
+            else if((int)$aItem['width'] >= $iThreshold)
+                $aItem['width'] = (float)$aItem['width'] - $fSub;
+            else
+                return;
+
+            $aItem['width'] .= '%';
+        });
     }
 
     protected function _getCellHeaderDefault ($sKey, $aField)
