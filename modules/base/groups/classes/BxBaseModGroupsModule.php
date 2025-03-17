@@ -248,19 +248,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     public function serviceIsEnableForContext($iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
+        $bRet = true;
 
         $sCnfKey = 'ENABLE_FOR_CONTEXT_IN_MODULES';
         if(empty($iProfileId) || empty($CNF[$sCnfKey]) || !is_array($CNF[$sCnfKey]))
-            return false;
+            $bRet = false;
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if(!$oProfile)
-            return false;
+        if($bRet && !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            $bRet = false;
 
-        if(!in_array($oProfile->getModule(), $CNF[$sCnfKey]))
-            return false;
+        if($bRet && !in_array($oProfile->getModule(), $CNF[$sCnfKey]))
+            $bRet = false;
 
-        return true;
+        bx_alert($this->getName(), 'is_enabled_for_context', $iProfileId, false, [
+            'cnf' => $CNF,
+            'module' => $this,
+            'context_profile' => $oProfile,
+            'result' => &$bRet
+        ]);
+
+        return $bRet;
     }
 
     /**
