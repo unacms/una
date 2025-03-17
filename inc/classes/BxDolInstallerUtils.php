@@ -7,7 +7,9 @@
  * @{
  */
 
-define('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT', 0.05);
+if (!defined('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT'))
+    define('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT', 0.05);
+
 define('BX_FORCE_USE_FTP_FILE_TRANSFER', false);
 
 class BxDolInstallerUtils extends BxDolIO
