@@ -1764,7 +1764,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'per_page' => -1, 
             'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_OWNER), 
             'timeline' => -1, 
-            'filter' => BX_TIMELINE_FILTER_PANEL, 
+            'filter' => '', 
             'modules' => array()
         ));
     }
