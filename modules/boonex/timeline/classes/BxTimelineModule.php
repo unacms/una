@@ -46,6 +46,8 @@ define('BX_TIMELINE_FILTER_ALL', 'all');
 define('BX_TIMELINE_FILTER_OWNER', 'owner');
 define('BX_TIMELINE_FILTER_OTHER', 'other');
 define('BX_TIMELINE_FILTER_OTHER_VIEWER', 'other_viewer');
+define('BX_TIMELINE_FILTER_PANEL', 'panel');
+define('BX_TIMELINE_FILTER_DEFAULT', BX_TIMELINE_FILTER_ALL);
 
 define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
 define('BX_TIMELINE_PARSE_TYPE_REPOST', 'repost');
@@ -549,8 +551,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return echoJson(['code' => 1, 'msg' => $mixedResult]);
 
-        $sContent = $this->_oTemplate->getViewBlock($aParams);
-        if(empty($sContent))
+        $aContent = $this->_oTemplate->getViewBlock($aParams);
+        if(empty($aContent['content']))
             return echoJson([]);
 
         if(!empty($aParams['type']))
@@ -558,7 +560,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         echoJson([
             'code' => 0, 
-            'content' => $sContent,
+            'content' => $aContent['content'],
         ]);
     }
 
@@ -1762,7 +1764,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'per_page' => -1, 
             'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_OWNER), 
             'timeline' => -1, 
-            'filter' => '', 
+            'filter' => BX_TIMELINE_FILTER_PANEL, 
             'modules' => array()
         ));
     }
@@ -5364,7 +5366,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             ]));
     }
 
-    public function getParams($sView = '', $sType = '', $iOwnerId = 0, $iStart = 0, $iPerPage = 0, $sFilter = BX_TIMELINE_FILTER_ALL, $aModules = array(), $iTimeline = 0)
+    public function getParams($sView = '', $sType = '', $iOwnerId = 0, $iStart = 0, $iPerPage = 0, $sFilter = BX_TIMELINE_FILTER_DEFAULT, $aModules = array(), $iTimeline = 0)
     {
         return $this->_prepareParams(array(
             'view' => $sView,
@@ -5813,7 +5815,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',
             'params' => $aParams,
             'data' => $aResult
-        ])] : ['content' => $aResult];
+        ])] : $aResult;
     }
 
     protected function _getBlockPost($iProfileId, $aParams = array())
@@ -5870,7 +5872,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             array('id' => $sView . '-get-rss', 'name' => $sView . '-get-rss', 'class' => '', 'link' => $sRssUrl, 'onclick' => '', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
         );
 
-        $sContent = '';
+        $mixedContent = '';
 
         /**
          * @hooks
@@ -5888,26 +5890,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $this->_iOwnerId, $this->getUserId(), [
             'params' => &$aParams,
             'menu' => &$aMenu,
-            'override_content' => &$sContent,
+            'override_content' => &$mixedContent,
         ]);
 
         $oMenu = new BxTemplMenuInteractive(['template' => 'menu_interactive_vertical.html', 'menu_id'=> $sView . '-view-all', 'menu_items' => $aMenu]);
         $oMenu->setSelected('', $sView . '-view-all');
 
-        if (!$sContent)
-            $sContent = $this->_oTemplate->getViewBlock($aParams);
-        
+        if(!$mixedContent)
+            $mixedContent = $this->_oTemplate->getViewBlock($aParams);
+
         if($this->_bIsApi)
             return [bx_api_get_block('browse', [
                 'unit' => 'feed',  
                 'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',
                 'params' => $aParams,
-                'data' => $sContent
+                'data' => $mixedContent
             ])];
 
         BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view'), $sRssUrl);
 
-        return array('content' => $sContent, 'menu' => $oMenu);
+        if(is_string($mixedContent))
+            $mixedContent = ['content' => $mixedContent];
+
+        return array_merge($mixedContent, [
+            'menu' => $oMenu
+        ]);
     }
     
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
@@ -6237,7 +6244,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aParams['timeline'] = 0;
 
         if(empty($aParams['filter']))
-            $aParams['filter'] = BX_TIMELINE_FILTER_ALL;
+            $aParams['filter'] = BX_TIMELINE_FILTER_DEFAULT;
 
         if(empty($aParams['modules']) || !is_array($aParams['modules']))
             $aParams['modules'] = array();
@@ -6290,7 +6297,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams['per_page'] = $aParams['per_page'] !== false ? bx_process_input($aParams['per_page'], BX_DATA_INT) : $this->_oConfig->getPerPage($aParams['type']);
         $aParams['per_page_default'] = $aParams['per_page_default'] !== false ? bx_process_input($aParams['per_page_default'], BX_DATA_INT) : $this->_oConfig->getPerPage($aParams['type']);
         $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline']) : '';
-        $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_ALL;
+        $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_DEFAULT;
         $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : [];
         $aParams['media'] = $aParams['media'] !== false ? $this->_oConfig->processParam($aParams['media']) : '';
         $aParams['context'] = $aParams['context'] !== false ? $this->_oConfig->processParam($aParams['context']) : '';
@@ -6402,7 +6409,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
         $sView = BX_TIMELINE_VIEW_DEFAULT;
-        $sFilter = BX_TIMELINE_FILTER_ALL;
+        $sFilter = BX_TIMELINE_FILTER_DEFAULT;
 
         $aModules = array();
 

@@ -329,12 +329,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aJsClasses = array(
             'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',
+            'view_filters' => 'BxTimelineViewFilters',
             'post' => 'BxTimelinePost',
             'repost' => 'BxTimelineRepost',
             'manage_tools' => 'BxTimelineManageTools'
         );
         $this->_aJsObjects = array(
             'view' => 'oTimelineView',
+            'view_filters' => 'oTimelineViewFilters',
             'post' => 'oTimelinePost',
             'repost' => 'oTimelineRepost',
             'manage_tools' => 'oBxTimelineManageTools'
@@ -1103,7 +1105,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function processParam($sValue, $sPattern = "/^[\d\w_]+$/")
     {
-        return bx_process_url_param($sValue, $sPattern);
+        if(!is_array($sValue))
+            return bx_process_url_param($sValue, $sPattern);
+
+        foreach($sValue as $_iKey => $_sValue)
+            $sValue[$_iKey] = bx_process_url_param($_sValue, $sPattern);
+
+        return $sValue;
     }
 
     public function processParamWithDefault($sValue, $sDefault, $sPattern = "/^[\d\w_]+$/")

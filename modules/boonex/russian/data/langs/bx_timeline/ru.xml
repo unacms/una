@@ -157,6 +157,19 @@
     <string name="_bx_timeline_form_repost_input_sys_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_timeline_form_repost_input_do_cancel"><![CDATA[Отмена]]></string>
 
+    <string name="_bx_timeline_form_filters_input_by_hashtags"><![CDATA[Хэштеги:]]></string>
+    <string name="_bx_timeline_form_filters_input_by_hashtags_any"><![CDATA[Любой]]></string>
+    <string name="_bx_timeline_form_filters_input_by_modules"><![CDATA[Содержимое:]]></string>
+    <string name="_bx_timeline_form_filters_input_by_modules_all"><![CDATA[Всё]]></string>
+    <string name="_bx_timeline_form_filters_input_by_modules_selected"><![CDATA[Выборочно]]></string>
+    <string name="_bx_timeline_form_filters_input_by_media"><![CDATA[Прикрепленные медиа:]]></string>
+    <string name="_bx_timeline_form_filters_input_by_media_all"><![CDATA[Все]]></string>
+    <string name="_bx_timeline_form_filters_input_by_media_selected"><![CDATA[Выборочно]]></string>
+    <string name="_bx_timeline_form_filters_input_by_media_images"><![CDATA[изображения]]></string>
+    <string name="_bx_timeline_form_filters_input_by_media_videos"><![CDATA[видео]]></string>
+    <string name="_bx_timeline_form_filters_input_by_media_files"><![CDATA[файлы]]></string>
+    <string name="_bx_timeline_form_filters_input_do_apply"><![CDATA[Применить]]></string>
+
     <string name="_bx_timeline_privacy_view"><![CDATA[Просматривать события]]></string>
 
     <string name="_bx_timeline_acl_action_post"><![CDATA[Писать сообщения]]></string>

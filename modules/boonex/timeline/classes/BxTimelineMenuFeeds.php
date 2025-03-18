@@ -30,7 +30,7 @@ class BxTimelineMenuFeeds extends BxTemplMenu
 
     public function setBrowseParams($aParams = [])
     {
-        $this->_sJsObject = $this->_oModule->_oConfig->getJsObjectView($aParams);
+        $this->_sJsObject = $this->_oModule->_oConfig->getJsObject('view_filters');
         $this->_sStylePrefix = $this->_oModule->_oConfig->getPrefix('style');
 
         $aMarkers = array();
