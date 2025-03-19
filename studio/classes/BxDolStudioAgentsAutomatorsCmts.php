@@ -25,6 +25,10 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolStudioTemplate::getInstance();
+
+        $this->_sFormObject = 'sys_agents_comment';
+        $this->_sFormDisplayPost = 'sys_agents_comment_post';
+        $this->_sFormDisplayEdit = 'sys_agents_comment_edit';
         
         $this->_sTmplNameItemContent = 'agents_comment_content.html';
         $this->_bLiveUpdates = false;

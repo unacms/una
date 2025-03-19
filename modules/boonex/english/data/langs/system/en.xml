@@ -2716,6 +2716,16 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Receive Site Updates]]></string>
 	<string name="_sys_form_account_input_submit"><![CDATA[Submit]]></string>
         <string name="_sys_form_account_input_publish"><![CDATA[Create]]></string>
+        <string name="_sys_form_agents_comment"><![CDATA[Agents: Message]]></string>
+        <string name="_sys_form_display_agents_comment_post"><![CDATA[Agents: Message Send]]></string>
+        <string name="_sys_form_agents_comment_input_caption_system_action"><![CDATA[Action]]></string>
+        <string name="_sys_form_agents_comment_input_caption_system_cmt_image"><![CDATA[Image]]></string>
+	<string name="_sys_form_agents_comment_input_caption_system_cmt_parent_id"><![CDATA[Parent ID]]></string>
+	<string name="_sys_form_agents_comment_input_caption_system_cmt_submit"><![CDATA[Send]]></string>
+        <string name="_sys_form_agents_comment_input_caption_cmt_submit"><![CDATA[Send]]></string>
+	<string name="_sys_form_agents_comment_input_caption_system_cmt_text"><![CDATA[Text]]></string>
+        <string name="_sys_form_agents_comment_input_caption_system_id"><![CDATA[Object ID]]></string>
+        <string name="_sys_form_agents_comment_input_caption_system_sys"><![CDATA[Object Type]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[No]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Yes]]></string>
         <string name="_sys_form_input_caption_author"><![CDATA[Author]]></string>

@@ -31,7 +31,11 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolStudioTemplate::getInstance();
-                
+
+        $this->_sFormObject = 'sys_agents_comment';
+        $this->_sFormDisplayPost = 'sys_agents_comment_post';
+        $this->_sFormDisplayEdit = 'sys_agents_comment_edit';
+
         $this->_sTmplNameItemContent = 'agents_comment_content.html';
         $this->_bLiveUpdates = false;
 
@@ -209,7 +213,7 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         $oForm->aInputs['cmt_text']['caption'] = '';
         $oForm->aInputs['cmt_text']['db']['pass'] = 'xss';
 
-        if(isset($aDp['mode']) && $aDp['mode'] == 'compact')
+        if(isset($aDp['mode']) && $aDp['mode'] == 'compact' && isset($oForm->aInputs['cmt_submit']))
             $oForm->aInputs['cmt_submit']['value'] = $this->_oTemplate->parseIcon('arrow-right');
 
         return $oForm;

@@ -1239,8 +1239,17 @@ class BxBaseCmts extends BxDolCmts
             else
                 $sSubmitName = $oForm->aParams['db']['submit_name'];
 
-            if($sSubmitName && isset($oForm->aInputs[$sSubmitName]))
-                $aValues[$sSubmitName] = $oForm->aInputs[$sSubmitName]['value'];
+            if($sSubmitName) {
+                if(isset($oForm->aInputs[$sSubmitName]))
+                    $aValues[$sSubmitName] = $oForm->aInputs[$sSubmitName]['value'];
+                else if(isset($oForm->aInputs['cmt_controls'])) {
+                    foreach($oForm->aInputs['cmt_controls'] as $mKey => $mValue)
+                        if(is_numeric($mKey) && is_array($mValue) && isset($mValue['name']) && $mValue['name'] == $sSubmitName) {
+                            $aValues[$sSubmitName] = $mValue['value'];
+                            break;
+                        }
+                }
+            }
         }
 
         $oForm->initChecker(array(), $aValues);
