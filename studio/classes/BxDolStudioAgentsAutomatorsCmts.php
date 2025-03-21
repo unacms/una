@@ -150,6 +150,11 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         ];
     }
 
+    public function getComment($mixedCmt, $aBp = [], $aDp = [])
+    {
+        return parent::getComment($mixedCmt, $aBp, array_merge($aDp, ['class_comment' => $this->_sStylePrefix . '-agents']));
+    }
+    
     public function getFormBoxPost($aBp = [], $aDp = [])
     {
         $aComments = $this->_oQuery->getCommentsBy(['type' => 'latest', 'object_id' => (int)$this->getId(), 'start' => 0, 'per_page' => 1]);
@@ -189,15 +194,12 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         if($aAutomator['type'] == BX_DOL_AI_AUTOMATOR_EVENT && !empty($aAutomator['params']['trigger']))
             $aComments[0]['cmt_text'] .= $aAutomator['params']['trigger'];
 
-        $aMessages = [];
+        $oMessages = new BxDolAIMessages();
         foreach($aComments as $aComment)
-            $aMessages[] = [
-                'ai' => (int)$aComment['cmt_author_id'] == $this->_iProfileIdAi,
-                'content' => $aComment['cmt_text']
-            ];
+            $oMessages->add((int)$aComment['cmt_author_id'] == $this->_iProfileIdAi ? 'ai' : 'hb', $aComment['cmt_text']);
 
         $oAIModel = $this->_oAI->getModelObject($aAutomator['model_id']);
-        if(($sResponse = $oAIModel->getResponse($aAutomator['type'], $aMessages, $aAutomator['params'])) !== false) {
+        if(($sResponse = $oAIModel->getResponse($aAutomator['type'], $oMessages, $aAutomator['params'])) !== false) {
             $mixedResultAuto = $this->addAuto([
                 'cmt_author_id' => $this->_iProfileIdAi,
                 'cmt_parent_id' => 0,
@@ -216,9 +218,9 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
         if((int)$aCmt['cmt_author_id'] != $this->_iProfileIdAi)
             return parent::_getActionsBox($aCmt, $aBp, array_merge($aDp, ['view_only' => true]));
 
-        return $this->_oTemplate->parseLink('javascript:void(0)', _t('_sys_agents_automators_btn_approve'), [
-            'class' => 'bx-btn bx-btn-small bx-btn-primary',
-            'onclick' => $this->getPageJsObject() . '.approveCode(this, ' . $aCmt['cmt_id'] . ')',
+        return $this->_oTemplate->parseHtmlByName('agents_comment_actions_automator.html', [
+            'js_object' => $this->getPageJsObject(),
+            'id' => $aCmt['cmt_id']
         ]);
     }
 
@@ -229,7 +231,10 @@ class BxDolStudioAgentsAutomatorsCmts extends BxTemplCmts
 
     protected function _getFormBox($sType, $aBp, $aDp)
     {
-        return parent::_getFormBox($sType, $aBp, array_merge($aDp, ['min_post_form' => false]));
+        return parent::_getFormBox($sType, $aBp, array_merge($aDp, [
+            'min_post_form' => false, 
+            'class_body' => $this->_sStylePrefix . '-body-agents'
+        ]));
     }
 
     protected function _getTmplVarsText($aCmt)

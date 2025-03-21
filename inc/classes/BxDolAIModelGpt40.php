@@ -76,9 +76,12 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         return $sResponse;
     }
 
-    public function getResponseInit($sType, $sMessage, $aParams = [])
+    public function getResponseInit($sType, $oMessage, $aParams = [])
     {
-        $aResponse = $this->call(['messages' => [['role' => 'user', 'content' => $sMessage]]]);
+        if(!is_a($oMessage, 'BxDolAIMessage'))
+            return false;
+
+        $aResponse = $this->call(['messages' => [['role' => 'user', 'content' => $oMessage->getContent()]]]);
         if(!isset($aResponse['id'], $aResponse['object']) || $aResponse['object'] != 'thread')
             return false;
 
@@ -127,16 +130,20 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         return $mixedResult;
     }
 
-    public function getResponse($sType, $sMessage, $aParams = [])
+    public function getResponse($sType, $mixedMessage, $aParams = [])
     {
+        $bMessages = false;
+        if(!(is_a($mixedMessage, 'BxDolAIMessage')) && !($bMessages = is_a($mixedMessage, 'BxDolAIMessages')))
+            return false;
+
         if(empty($aParams['thread_id']))
             return false;
 
-        if(is_array($sMessage))
-            $sMessage = end($sMessage)['content'];
+        if($bMessages)
+            $mixedMessage = $mixedMessage->getLast();
 
         $sThreadId = $aParams['thread_id'];
-        if(!$this->callMessages($sThreadId, ['role' => 'user', 'content' => $sMessage]))
+        if($mixedMessage->isAi() || !$this->callMessages($sThreadId, ['role' => 'user', 'content' => $mixedMessage->getContent()]))
             return false;
 
         $sAssistantId = isset($aParams['assistant_id']) ? $aParams['assistant_id'] : $this->_getAssistantId($sType);

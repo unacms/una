@@ -38,11 +38,14 @@ class BxDolAIModelGpt35 extends BxDolAIModel
         return $sResponse;
     }
     
-    public function getResponseInit($sType, $sMessage, $aParams = [])
+    public function getResponseInit($sType, $oMessage, $aParams = [])
     {
+        if(!is_a($oMessage, 'BxDolAIMessage'))
+            return false;
+
         $aMessages = [
             ['role' => 'system', 'content' => $this->_getInstructions($sType . '_init')],
-            ['role' => 'user', 'content' => $sMessage]
+            ['role' => 'user', 'content' => $oMessage->getContent()]
         ];
 
         $sResponse = $this->call($aMessages);
@@ -81,21 +84,28 @@ class BxDolAIModelGpt35 extends BxDolAIModel
 
     public function getResponse($sType, $mixedMessage, $aParams = [])
     {
-        $aMessages = [
+        $bMessage = is_a($mixedMessage, 'BxDolAIMessageString');
+        $bMessages = is_a($mixedMessage, 'BxDolAIMessages');
+        if(!$bMessage && !$bMessages)
+            return false;
+
+        $aCall = [
             ['role' => 'system', 'content' => $this->_getInstructions($sType, true)]
         ];
-        
-        if(is_array($mixedMessage)) {
-            foreach($mixedMessage as $aMessage)
-                $aMessages[] = [
-                    'role' => $aMessage['ai'] ? 'assistant' : 'user',
-                    'content' => $aMessage['content'] . (!$aMessage['ai'] ? ' return only function, without explanation or false if you havn`t enougth data' : '')
-                ];
-        }
-        else
-            $aMessages[] = ['role' => 'user', 'content' => $mixedMessage];
 
-        $sResponse = $this->call($aMessages);
+        if($bMessages && ($aMessages = $mixedMessage->getAll()))
+            foreach($aMessages as $oMessage)
+                $aCall[] = [
+                    'role' => $oMessage->isAi() ? 'assistant' : 'user',
+                    'content' => $oMessage->getContent() . (!$oMessage->isAi() ? ' return only function, without explanation or false if you havn`t enougth data' : '')
+                ];
+        else if($bMessage)
+            $aCall[] = [
+                'role' => $oMessage->isAi() ? 'assistant' : 'user', 
+                'content' => $mixedMessage->getContent()
+            ];
+
+        $sResponse = $this->call($aCall);
         if($sResponse == 'false')
             return false;
 

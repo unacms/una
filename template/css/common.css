@@ -186,18 +186,31 @@ blockquote {
     width: 100%;
     margin-bottom: 0.5rem;
 }
+.bx-acl-err-msg {
+    padding: 0 10%;
+}
+
+/* --------------- Agents: Assistants */
 .bx-agents-popup .cmts {
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
 }
-.bx-agents-popup .cmts .cmt .bx-agents-loading {
-    padding: 0;
-    background-color: transparent;
-    border-color: transparent;
-    box-shadow: none;
+.cmt.cmt-agents .cmt-body .cmt-agents-loading .bx-loading-ajax {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 2.0rem;
+    height: 2.0rem;
+    left: 0 !important;
+    top: 0 !important;
+    margin-left: 0.5rem;
 }
-.bx-acl-err-msg {
-    padding: 0 10%;
+.cmt-body.cmt-body-agents .bx-form-value .bx-form-input-files-uploaders .bx-btn {
+    margin: 0 0.5rem 0 0;
+}
+.cmt-body.cmt-body-agents .bx-form-value .bx-form-input-textarea {
+    height: 2.5rem;
+    line-height: 1.25rem;
 }
 
 /* --------------- design boxes */

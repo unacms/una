@@ -2082,14 +2082,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         $sDisplayName = '_sFormDisplay' . ucfirst($sAction);
 
-        return BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName, false, $this->_sSystem);
+        return BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName, $this->_oTemplate, $this->_sSystem);
     }
     
     protected function _unsetFormObject($sAction = BX_CMT_ACTION_POST)
     {
         $sDisplayName = '_sFormDisplay' . ucfirst($sAction);
 
-        return BxDolForm::unsetObjectInstance($this->_sFormObject, $this->$sDisplayName, false, $this->_sSystem);
+        return BxDolForm::unsetObjectInstance($this->_sFormObject, $this->$sDisplayName, $this->_oTemplate, $this->_sSystem);
     }
 
     protected function _getParams(&$aBp, &$aDp)

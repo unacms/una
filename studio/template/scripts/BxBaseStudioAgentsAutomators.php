@@ -87,7 +87,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             $aResponseInit = [];
             switch($sType) {
                 case BX_DOL_AI_AUTOMATOR_EVENT:
-                    if(($aResponseInit = $oAIModel->getResponseInit($sType, $sMessage)) !== false) {
+                    if(($oMessage = new BxDolAIMessageString('hb', $sMessage)) && ($aResponseInit = $oAIModel->getResponseInit($sType, $oMessage)) !== false) {
                         $oAIModel->setParams($aResponseInit['params']);
 
                         $sMessageAdd = $aResponseInit['params']['trigger'];
@@ -104,7 +104,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
 
                 case BX_DOL_AI_AUTOMATOR_SCHEDULER:
                 case BX_DOL_AI_AUTOMATOR_WEBHOOK:
-                    if(($aResponseInit = $oAIModel->getResponseInit($sType, $sMessage)) !== false) {
+                    if(($oMessage = new BxDolAIMessageString('hb', $sMessage)) && ($aResponseInit = $oAIModel->getResponseInit($sType, $oMessage)) !== false) {
                         $oAIModel->setParams($aResponseInit['params']);
 
                         $aValsToAdd = array_merge($aValsToAdd, $aResponseInit);
@@ -119,7 +119,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
             }
 
             if($bIsValid) {
-                if(($sResponse = $oAIModel->getResponse($sType, $sMessage . $sInstructions . $sMessageAdd, $oAIModel->getParams())) !== false) {
+                if(($oMessage = new BxDolAIMessageString('hb', $sMessage . $sInstructions . $sMessageAdd)) && ($sResponse = $oAIModel->getResponse($sType, $oMessage, $oAIModel->getParams())) !== false) {
                     $sMessageResponse = $sResponse;
                 }
                 else {
@@ -349,7 +349,7 @@ class BxBaseStudioAgentsAutomators extends BxDolStudioAgentsAutomators
                         'cmt_text' => $sInstructions
                     ]);
 
-                    if(($sResponse = $oAI->getModelObject($aAutomator['model_id'])->getResponse($aAutomator['type'], $sInstructions, $aAutomator['params'])) !== false) {
+                    if(($oMessage = new BxDolAIMessageString('hb', $sInstructions)) && ($sResponse = $oAI->getModelObject($aAutomator['model_id'])->getResponse($aAutomator['type'], $oMessage, $aAutomator['params'])) !== false) {
                         sleep(1);
                         $oCmts->addAuto([
                             'cmt_author_id' => $this->_iProfileIdAi,

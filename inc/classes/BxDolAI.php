@@ -419,3 +419,99 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
         eval($sCode);
     }
 }
+
+class BxDolAIMessage
+{
+    /**
+     * @var string - message Type with following values: hb, ai 
+     */
+    protected $_sType;
+    
+    /**
+     * @var mixed - an array of message parts (text, image_url) or a string.
+     */
+    protected $_mixedContent;
+
+    public function __construct($sType)
+    {
+        $this->_sType = $sType;
+    }
+
+    public function isAi()
+    {
+        return $this->_sType == 'ai';
+    }
+
+    public function getContent()
+    {
+        return $this->_mixedContent;
+    }
+}
+
+class BxDolAIMessageString extends BxDolAIMessage
+{
+    public function __construct($sType, $sContent)
+    {
+        parent::__construct($sType);
+
+        $this->_mixedContent = is_string($sContent) ? $sContent : '';
+    }
+}
+
+class BxDolAIMessageArray extends BxDolAIMessage
+{
+    public function __construct($sType, $aContent = '')
+    {
+        parent::__construct($sType);
+
+        $this->_mixedContent = is_array($aContent) ? $aContent : [];
+    }
+
+    public function addText($sText)
+    {
+        $this->_mixedContent[] = [
+            'type' => 'text',
+            'text' => $sText
+        ];
+    }
+
+    public function addImageUrl($sUrl, $sDetail = 'high')
+    {
+        $this->_mixedContent[] = [
+            'type' => 'image_url',
+            'image_url' => [
+                'url' => $sUrl,
+                'detail' => $sDetail
+            ]
+        ];
+    }
+}
+
+class BxDolAIMessages
+{
+    /**
+     * @var array - an array of items (messages)
+     */
+    protected $_aItems;
+
+    public function __construct($aItems = [])
+    {
+        $this->_aItems = !empty($aItems) && is_array($aItems) ? $aItems : [];
+    }
+
+    public function add($sType, $mixedMessage)
+    {
+        $sClass = 'BxDolAIMessage' . (is_string($mixedMessage) ? 'String' : 'Array');
+        $this->_aItems[] = new $sClass($sType, $mixedMessage);
+    }
+
+    public function getAll()
+    {
+        return $this->_aItems;
+    }
+
+    public function getLast()
+    {
+        return end($this->_aItems);
+    }
+}

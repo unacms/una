@@ -406,12 +406,6 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
 }
-.bx-std-pcap-assistant div.cmts .cmt .bx-agents-loading {
-    padding: 0;
-    background-color: transparent;
-    border-color: transparent;
-    box-shadow: none;
-}
 .bx-std-pcap-assistant div.cmts > ul.cmts {
     margin-top: 1rem;
 }
@@ -422,25 +416,22 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     margin-right: 0;
     color: rgb(156 163 175);
 }
-.bx-std-pcap-assistant .cmt .cmt-head ul li:first-child .bx-base-general-unit-meta-div {
+.cmt.cmt-agents .cmt-head ul li:first-child .bx-base-general-unit-meta-div {
   display: none;
 }
-.bx-std-pcap-assistant .cmt-reply.cmt-reply-bottom {
-    margin-bottom: 0;
+.cmt.cmt-agents .cmt-body .cmt-agents-loading .bx-loading-ajax {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 2.0rem;
+    height: 2.0rem;
+    left: 0 !important;
+    top: 0 !important;
+    margin-left: 0.5rem;
 }
-.bx-std-pcap-assistant .bx-form-section-content {
-    display: flex;
+.cmt-body.cmt-body-agents .bx-form-value .bx-form-input-files-uploaders .bx-btn {
+    margin: 0 0.5rem 0 0;
 }
-.bx-std-pcap-assistant .bx-form-section-content > .bx-form-element-wrapper:first-child {
-    flex: 1 1 auto;
-}
-.bx-std-pcap-assistant .bx-form-section-content > .bx-form-element-wrapper:last-child {
-    flex: 0 0 auto;
-    margin: 0 0 0 1rem;
-}
-.bx-dir-rtl .bx-std-pcap-assistant .bx-form-section-content > .bx-form-element-wrapper:last-child {
-    margin: 0 1rem 0 0;
-}
-.bx-std-pcap-assistant .bx-form-value .bx-form-input-textarea {
+.cmt-body.cmt-body-agents .bx-form-value .bx-form-input-textarea {
     height: 4.0rem;
 }

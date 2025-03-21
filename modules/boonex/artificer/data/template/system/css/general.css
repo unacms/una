@@ -58,6 +58,8 @@ import url(../../../../../../../template/css/general.css);
 .bx-toolbar-item.bx-ti-search .sys-search-results-quick .bx-btn.sys-agents-ask:last-child {
     margin-bottom: 0;
 }
+
+/*--- Agents: Assistants ---*/
 #bx_agents_assistants_ask .bx-popup.bx-popup-width {
     width: 42rem;
 }
@@ -65,33 +67,27 @@ import url(../../../../../../../template/css/general.css);
     max-height: calc(0.5 * 100vh);
     overflow-y: auto;
 }
-.bx-agents-popup .cmts .cmt .bx-agents-loading {
-    padding: 0;
-    background-color: transparent;
-    border-color: transparent;
-    box-shadow: none;
-}
 .bx-agents-popup .cmt-reply {
     margin-bottom: 0;
 }
-.bx-agents-popup .bx-form-section-content {
-    display: flex;
+.cmt.cmt-agents .cmt-body .cmt-agents-loading .bx-loading-ajax {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 2.0rem;
+    height: 2.0rem;
+    left: 0 !important;
+    top: 0 !important;
+    margin-left: 0.5rem;
 }
-.bx-agents-popup .bx-form-section-content > .bx-form-element-wrapper:first-child {
-    flex: 1 1 auto;
+.cmt-body.cmt-body-agents .bx-form-value .bx-form-input-files-uploaders .bx-btn {
+    margin: 0 0.5rem 0 0;
 }
-.bx-agents-popup .bx-form-section-content > .bx-form-element-wrapper:last-child {
-    flex: 0 0 auto;
-    margin: 0 0 0 1rem;
-}
-.bx-agents-popup .bx-form-value .bx-form-input-textarea {
+.cmt-body.cmt-body-agents .bx-form-value .bx-form-input-textarea {
     height: 2.5rem;
     line-height: 1.25rem;
 }
-.bx-agents-popup .bx-form-value .bx-btn i {
-    height: 1.375rem;
-    line-height: 1.375rem;
-}
+
 
 
 /*--- Page Content with Cover ---*/
