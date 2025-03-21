@@ -86,8 +86,8 @@ class BxBaseDashboardServices extends BxDol
                 $aData[] = array_merge([
                     'key' => $aModule['name'], 
                     'title' => $aModule['title'], 
-                    'add_url' => $CNF['URI_ADD_ENTRY'], 
-                    'url' => $oPermalink->permalink($CNF['URL_HOME']), 
+                    'add_url' => !empty($CNF['URI_ADD_ENTRY']) ? $CNF['URI_ADD_ENTRY'] : '', 
+                    'url' => !empty($CNF['URL_HOME']) ? $oPermalink->permalink($CNF['URL_HOME']) : '', 
                     'action' => 'views', 
                     'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '', 
                     'type' => 'simple'
