@@ -154,7 +154,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     
     public function performApi()
     {
-        $aRequested = $this->_getRequestedData();
+        $aRequested = $this->_getRequestedData(0, true);
 
         $aResult = [];
         foreach($aRequested as $sName => $aData) {
