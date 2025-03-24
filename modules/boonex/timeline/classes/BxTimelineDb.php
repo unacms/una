@@ -1340,6 +1340,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     else
                         $sWhereSubclause .= $this->prepareAsString(" OR `{$sTableAlias}`.`owner_id`<>?", $aParams['owner_id']);
 
+                    $mixedJoinSubclause['p9'] = "";
                     $mixedWhereSubclause['p9'] = "(" . $sWhereSubclause . ")";
                 }
                 break;
