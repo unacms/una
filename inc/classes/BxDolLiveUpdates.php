@@ -158,10 +158,10 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
         $aResult = [];
         foreach($aRequested as $sName => $aData) {
-            if (is_array($aData['count']))
-                $aResult[$sName] = $aData['count'];
+            if(is_array($aData))
+                $aResult[$sName] = isset($aData['count']) ? (int)$aData['count'] : 0;
             else
-                $aResult[$sName] = (int)$aData['count'];
+                $aResult[$sName] = (int)$aData;
         }
 
     	return $aResult;
