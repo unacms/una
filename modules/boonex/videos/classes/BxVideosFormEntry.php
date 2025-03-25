@@ -239,11 +239,6 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
 
     public function genCustomRowVideoEmbed(&$aInput) 
     {
-        if (bx_is_api()){
-            $aInput['type'] = 'embed';
-            return $aInput;
-        }
-        
         $sSource = isset($this->aInputs['video_source']) && $this->aInputs['video_source']['value'] == 'embed' ? 'embed' : 'upload';
         if ($sSource != 'embed') {
             if (!is_array($aInput['tr_attrs']))
@@ -253,13 +248,15 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
         return $this->genRowStandard($aInput);
     }
 
-    public function genCustomRowVideos(&$aInput) {
+    public function genCustomRowVideos(&$aInput)
+    {
         $sSource = isset($this->aInputs['video_source']) && $this->aInputs['video_source']['value'] == 'embed' ? 'embed' : 'upload';
         if ($sSource != 'upload') $aInput['tr_attrs']['style'] = 'display:none';
         return $this->genRowCustom($aInput, 'genInputFiles');
     }
 
-    public function genCustomInputVideoEmbed(&$aInput) {
+    public function genCustomInputVideoEmbed(&$aInput)
+    {
         $aEmbedInput = [
             'type' => 'text',
             'name' => $aInput['name'],
@@ -271,6 +268,11 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
                 'onkeydown' => $this->_oModule->_oConfig->getJsObject('embeds').'.onNewEmbedCodeTyping(500)',
             ],
         ];
+
+        if($this->_bIsApi) {
+            $aEmbedInput['type'] = 'embed';
+            return $aEmbedInput;
+        }
 
         $sEmbedCode = '';
         if (isset($aInput['value']) && !empty($aInput['value']) && $aEmbed = $this->_oModule->parseEmbedLink($aInput['value'])) {
@@ -287,9 +289,12 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
         ]);
     }
 
-    public function genInput(&$aInput) {
-        $sJsCode = '';
+    public function genInput(&$aInput)
+    {
+        if($this->_bIsApi)
+            return parent::genInput($aInput);
 
+        $sJsCode = '';
         if ($aInput['name'] == 'video_source' && $aInput['type'] == 'radio_set') {
             if (!is_array($aInput['attrs']))
                 $aInput['attrs'] = [];
