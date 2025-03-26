@@ -429,14 +429,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ];
         $oForm = new BxTemplFormView($aForm);
 
+        if($this->_bIsApi)
+            return $oForm->getCodeApi();
+
         $sViewFiltersPopupId = $this->_oConfig->getHtmlIdView('filters_popup', array_merge($aParams, ['name' => '']));
         $sViewFiltersPopupContent = $this->parseHtmlByName('block_view_filters.html', array(
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
             'content' => $oForm->genRows()
-    	));
+        ));
 
-    	return BxTemplFunctions::getInstance()->transBox($sViewFiltersPopupId, $sViewFiltersPopupContent, true);
+        return BxTemplFunctions::getInstance()->transBox($sViewFiltersPopupId, $sViewFiltersPopupContent, true);
     }
 
     public function getViewBlock($aParams)

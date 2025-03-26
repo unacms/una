@@ -5814,7 +5814,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'unit' => 'feed',  
             'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',
             'params' => $aParams,
-            'data' => $aResult
+            'data' => $aResult,
+            'filter_form' => $aParams['filter'] == 'panel' ? ['name' => 'filterform', 'data' => $this->_oTemplate->getViewFilters($aParams)]: null
         ])] : $aResult;
     }
 
