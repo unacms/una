@@ -6247,8 +6247,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['filter']))
             $aParams['filter'] = BX_TIMELINE_FILTER_DEFAULT;
 
-        if(empty($aParams['modules']) || !is_array($aParams['modules']))
-            $aParams['modules'] = array();
+        if(!empty($aParams['modules']))
+            $aParams['modules'] = is_array($aParams['modules']) ? $aParams['modules'] : explode(',', $aParams['modules']);
+        else
+            $aParams['modules'] = [];
 
         if(empty($aParams['media']))
             $aParams['media'] = '';
