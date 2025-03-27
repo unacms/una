@@ -45,6 +45,34 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return ($this->_sAutoApproval = $mValue);
     }
 
+    public function getObjectFormEdit ($sDisplay = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oForm = parent::getObjectFormEdit ($sDisplay);
+        if(!$oForm)
+            return $oForm;
+
+        switch($sDisplay) {
+            case $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_SETTINGS']:
+                //--- Fill in tabs list
+                if(($sField = 'FIELD_STG_TABS') && !empty($CNF[$sField]) && !empty($oForm->aInputs[$CNF[$sField]]) && is_array($oForm->aInputs[$CNF[$sField]])) 
+                    if(($sMenu = 'OBJECT_MENU_SUBMENU_VIEW_ENTRY') && !empty($CNF[$sMenu]) && ($oMenu = BxDolMenu::getObjectInstance($CNF[$sMenu])) !== false && ($aMenuItems = $oMenu->getQueryObject()->getMenuItems()))
+                        foreach($aMenuItems as $aMenuItem) {
+                            if($aMenuItem['name'] == 'more-auto' || (int)$aMenuItem['active'] == 0)
+                                continue;
+
+                            $oForm->aInputs[$CNF[$sField]]['values'][] = [
+                                'key' => $aMenuItem['name'],
+                                'value' => _t($aMenuItem['title'])
+                            ];
+                        }
+                break;
+        }
+
+        return $oForm;
+    }
+
     protected function _getProfileAndContentData ($iContentId)
     {
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);

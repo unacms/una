@@ -286,6 +286,11 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     	return $bVisible;
     }
 
+    public function getQueryObject()
+    {
+        return $this->_oQuery;
+    }
+
     public function getTemplateId()
     {
         return $this->_aObject['template_id'];

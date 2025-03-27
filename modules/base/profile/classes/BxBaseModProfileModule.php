@@ -1069,9 +1069,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         );
     }
 
-    public function serviceEntityEditCover ($iContentId = 0)
+    public function serviceEntityEditCover($iContentId = 0)
     {
-        return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
+        return $this->_serviceEntityForm('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
+    }
+    
+    public function serviceEntityEditSettings($iContentId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_SETTINGS']))
+            return false;
+
+        return $this->_serviceEntityForm('editDataForm', $iContentId, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_SETTINGS']);
     }
 
     /**
@@ -1822,6 +1832,26 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     /**
+     * Check if user can change settings
+     */
+    public function checkAllowedChangeSettings ($aDataEntry, $isPerformAction = false)
+    {
+        // moderator always has access
+        if ($this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // owner (checked by account instead of author!) always have access
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
+        if (!$oProfile)
+            return _t('_sys_txt_error_occured');
+
+        if ($oProfile->id() == $this->_iProfileId || $oProfile->getAccountId() == $this->_iAccountId)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return _t('_sys_txt_access_denied');
+    }
+
+    /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
     public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
@@ -2051,6 +2081,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     // ====== COMMON METHODS
+    public function isMenuItemVisible($sObject, &$aItem, &$aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $bResult = parent::isMenuItemVisible($sObject, $aItem, $aContentInfo);
+        if(!$bResult)
+            return $bResult;
+
+        if(($sField = 'FIELD_STG_TABS') && !empty($CNF[$sField]) && ($sTabs = $aContentInfo[$CNF[$sField]])) {
+            $aTabs = explode(',', $sTabs);
+            if(in_array($aItem['name'], $aTabs))
+                return false;
+        }
+
+        return $bResult;
+    }
+
     public function onUpdateImage($iContentId, $sFiledName, $sFiledValue, $iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;

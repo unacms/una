@@ -100,6 +100,22 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         }
 
         parent::initChecker($aValues, $aSpecificValues);
+
+        if(($sField = 'FIELD_STG_TABS') && !empty($CNF[$sField]) && !empty($this->aInputs[$CNF[$sField]]) && is_array($this->aInputs[$CNF[$sField]]) && ($sValue = $this->aInputs[$CNF[$sField]]['value']))
+            $this->aInputs[$CNF[$sField]]['value'] = !is_array($sValue) ? explode(',', $sValue) : [];
+    }
+
+    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(($sField = 'FIELD_STG_TABS') && !empty($CNF[$sField]) && empty($aValsToAdd[$CNF[$sField]])) {
+            $mixedValue = $this->getCleanValue($CNF[$sField]);
+            if(is_array($mixedValue))
+                self::setSubmittedValue($CNF[$sField], implode(',', $mixedValue), $this->aFormAttrs['method']);
+        }
+
+        return parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
     function delete ($iContentId, $aContentInfo = array())

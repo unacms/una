@@ -16,6 +16,7 @@ define('BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR', 1);
 define('BX_BASE_MOD_GROUPS_ROLE_MODERATOR', 2);
 
 define('BX_BASE_MOD_GROUPS_ACTION_EDIT', 'edit');
+define('BX_BASE_MOD_GROUPS_ACTION_CHANGE_SETTINGS', 'change_settings');
 define('BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER', 'change_cover');
 define('BX_BASE_MOD_GROUPS_ACTION_INVITE', 'invite');
 define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS', 'manage_fans');
@@ -977,7 +978,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $oGrid->getCode();
     }
-    
+
     public function serviceEntityInvite ($iContentId = 0, $bErrorMsg = true)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1746,6 +1747,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                 switch ($sAction) {
                     case BX_BASE_MOD_GROUPS_ACTION_DELETE:
                     case BX_BASE_MOD_GROUPS_ACTION_EDIT:
+                    case BX_BASE_MOD_GROUPS_ACTION_CHANGE_SETTINGS:
                     case BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER:
                     case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
                         if($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)) 
@@ -1919,13 +1921,21 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return parent::checkAllowedEdit($aDataEntry, $isPerformAction);
     }
-    
+
     public function checkAllowedChangeCover($aDataEntry, $isPerformAction = false)
     {
         if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return parent::checkAllowedChangeCover($aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedChangeSettings($aDataEntry, $isPerformAction = false)
+    {
+        if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_CHANGE_SETTINGS, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return parent::checkAllowedChangeSettings($aDataEntry, $isPerformAction);
     }
 
     public function checkAllowedDelete(&$aDataEntry, $isPerformAction = false)
