@@ -153,10 +153,17 @@ BxTimelineViewFilters.prototype.onFilterApply = function(oSource)
     var oFilters = $(oSource).parents('.bx-tl-view-filters:first');
 
     //--- Apply feed Types
-    var oContext = oFilters.find("select[name='by_hashtag']");
+    var oContext = oFilters.find("select[name='by_context']");
     if(oContext.length) {
-        var iContext = parseInt(oContext.val());
-        var sType = iContext ? 'bx_channels' : this._sType;
+        var sType = this._sType;
+        var iContext = 0;
+
+        var sContext = oContext.val();
+        if(sContext && sContext.indexOf('|') != -1) {
+            var aContext = sContext.split('|');
+            sType = aContext[0];
+            iContext = parseInt(aContext[1]);
+        }
 
         this._oRequestParams.type = sType;
 

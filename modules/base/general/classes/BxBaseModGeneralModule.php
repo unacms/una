@@ -503,6 +503,30 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== SERVICE METHODS
+
+    /**
+     * Checkes whether a content is active by status (status_admin).
+     * 
+     * @param type $iContentId
+     * @return boolean
+     */
+    public function serviceIsActive($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo))
+            return false;
+
+        if(($sKey = 'FIELD_STATUS') && isset($CNF[$sKey]) && $aContentInfo[$CNF[$sKey]] != 'active')
+            return false;
+
+        if(($sKey = 'FIELD_STATUS_ADMIN') && isset($CNF[$sKey]) && isset($aContentInfo[$CNF[$sKey]]) && $aContentInfo[$CNF[$sKey]] != 'active')
+            return false;
+
+        return true;
+    }
+
     public function serviceIsAllowedAddContentToContext($iContextPid)
     {
         $oContext = false;

@@ -78,6 +78,7 @@
     <string name="_bx_timeline_option_extenals_every_feed_preload"><![CDATA[Показывать внешнее событие как каждое N-е в ленте контекст (профиль) + подписки при включенной 'Бесконечной прокрутке']]></string>
     <string name="_bx_timeline_option_extenals_every_hot_preload"><![CDATA[Показывать внешнее событие как каждое N-е в hot timeline при включенной 'Бесконечной прокрутке']]></string>
     <string name="_bx_timeline_option_extenals_every_feed_and_hot_preload"><![CDATA[Показывать внешнее событие как каждое N-е в ленте 'Для тебя' при включенной 'Бесконечной прокрутке']]></string>
+    <string name="_bx_timeline_option_filters_contexts_hide"><![CDATA[Фильтры: По контекстам]]></string>
     <string name="_bx_timeline_option_for_you_sources"><![CDATA[Лента 'Для Вас' состоит из]]></string>
     <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[Для фида должен быть включен хотя бы один источник.]]></string>
     <string name="_bx_timeline_option_for_you_sources_public"><![CDATA[Публичная лента]]></string>
@@ -157,8 +158,8 @@
     <string name="_bx_timeline_form_repost_input_sys_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_timeline_form_repost_input_do_cancel"><![CDATA[Отмена]]></string>
 
-    <string name="_bx_timeline_form_filters_input_by_hashtags"><![CDATA[Хэштеги:]]></string>
-    <string name="_bx_timeline_form_filters_input_by_hashtags_any"><![CDATA[Любой]]></string>
+    <string name="_bx_timeline_form_filters_input_by_contexts"><![CDATA[Контексты:]]></string>
+    <string name="_bx_timeline_form_filters_input_by_contexts_any"><![CDATA[Любой]]></string>
     <string name="_bx_timeline_form_filters_input_by_modules"><![CDATA[Содержимое:]]></string>
     <string name="_bx_timeline_form_filters_input_by_modules_all"><![CDATA[Всё]]></string>
     <string name="_bx_timeline_form_filters_input_by_modules_selected"><![CDATA[Выборочно]]></string>

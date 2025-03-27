@@ -312,32 +312,48 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sJsObject = $this->_oConfig->getJsObject('view_filters');
 
         $iProfile = bx_get_logged_profile_id();
+        $oModuleQuery = BxDolModuleQuery::getInstance();
 
         $aInputs = [];
 
-        //--- by Hashtag
+        //--- by Context
         if($aParams['name'] != BX_TIMELINE_NAME_VIEWS_DB) {
-            $oModuleQuery = BxDolModuleQuery::getInstance();
+            //--- by contexts including Hashtags (Channels)
+            $aContexts = bx_srv('system', 'get_modules_by_type', ['context', ['name_as_key' => true]]);
+            if(!empty($aContexts) || is_array($aContexts)) {
+                $aContextsHide = $this->_oConfig->getFiltersContextsHide();
+                $bShowGrouped = count(array_diff(array_keys($aContexts), $aContextsHide)) > 1;
 
-            if(($sChannels = 'bx_channels') && $oModuleQuery->isEnabledByName($sChannels)) {
-                $aChannelsIds = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentByType($iProfile, [$sChannels]);
-                if(!empty($aChannelsIds) && is_array($aChannelsIds)) {
-                    $aInputs['by_hashtag'] = [
-                        'name' => 'by_hashtag',
-                        'type' => 'select',
-                        'caption' => _t('_bx_timeline_form_filters_input_by_hashtags'),
-                        'values' => [
-                            ['key' => 0, 'value' => _t('_bx_timeline_form_filters_input_by_hashtags_any')],
-                        ]
-                    ];
+                $aInputs['by_context'] = [
+                    'name' => 'by_context',
+                    'type' => 'select',
+                    'caption' => _t('_bx_timeline_form_filters_input_by_contexts'),
+                    'values' => [
+                        ['key' => 0, 'value' => _t('_bx_timeline_form_filters_input_by_contexts_any')],
+                    ]
+                ];
 
-                    foreach($aChannelsIds as $iChannelId) {
-                        $oContext = BxDolProfile::getInstance($iChannelId);
-                        if(!$oContext)
+                foreach($aContexts as $sContext => $aContext) {
+                    if(in_array($sContext, $aContextsHide))
+                        continue;
+
+                    $aContextsIds = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentByType($iProfile, [$sContext]);
+                    if(empty($aContextsIds) || !is_array($aContextsIds))
+                        continue;
+
+                    if($bShowGrouped)
+                        $aInputs['by_context']['values'][] = ['type' => 'group_header', 'value' => ($sLk = '_' . $sContext) && ($_sLk = _t($sLk)) && strcmp($sLk, $_sLk) != 0 ? $_sLk : $aContext['title']];
+
+                    foreach($aContextsIds as $iContextId) {
+                        $oContext = BxDolProfile::getInstance($iContextId);
+                        if(!$oContext || !$oContext->isActive() || !bx_srv($sContext, 'is_active', [$oContext->getContentId()]))
                             continue;
 
-                        $aInputs['by_hashtag']['values'][] = ['key' => $iChannelId, 'value' => $oContext->getDisplayName()];
+                        $aInputs['by_context']['values'][] = ['key' => $sContext . '|' . $iContextId, 'value' => $oContext->getDisplayName()];
                     }
+
+                    if($bShowGrouped)
+                        $aInputs['by_context']['values'][] = ['type' => 'group_end'];
                 }
             }
         }

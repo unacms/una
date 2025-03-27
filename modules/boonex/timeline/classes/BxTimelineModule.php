@@ -3409,6 +3409,37 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_options_filters_contexts get_options_filters_contexts
+     * 
+     * @code bx_srv('bx_timeline', 'get_options_filters_contexts', [...]); @endcode
+     * 
+     * Get an array with available options for '' setting.
+     *
+     * @return an array with available options represented as key => value pairs.
+     * 
+     * @see BxTimelineModule::serviceGetOptionsFiltersContexts
+     */
+    /** 
+     * @ref bx_timeline-get_options_filters_contexts "get_options_filters_contexts"
+     */
+    public function serviceGetOptionsFiltersContexts()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContexts = bx_srv('system', 'get_modules_by_type', ['context']);
+        
+        $aResult = array();
+        foreach($aContexts as $aContext)
+            if(($sContext = $aContext['name']) && BxDolModuleQuery::getInstance()->isEnabledByName($sContext))
+                $aResult[$aContext['name']] = ($sLk = '_' . $sContext) && ($_sLk = _t($sLk)) && strcmp($sLk, $_sLk) != 0 ? $_sLk : $aContext['title'];
+
+        return $aResult;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
      * @subsubsection bx_timeline-get_options_videos_preload get_options_videos_preload
      * 
      * @code bx_srv('bx_timeline', 'get_options_videos_preload', [...]); @endcode

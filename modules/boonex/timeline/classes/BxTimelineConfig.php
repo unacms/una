@@ -34,6 +34,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iInfScrollPerPreload;
     protected $_iInfScrollAutoPreloads;
 
+    protected $_aFiltersContextsHide;
+
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
     protected $_iCharsDisplayMinTitle;
@@ -488,7 +490,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bInfScroll = getParam($sOptionPrefix . 'enable_infinite_scroll') == 'on';
         $this->_iInfScrollPerPreload = (int)getParam($sOptionPrefix . 'events_per_preload');
         $this->_iInfScrollAutoPreloads = (int)getParam($sOptionPrefix . 'auto_preloads');
-        
+
+        $this->_aFiltersContextsHide = ($sValue = getParam($sOptionPrefix . 'filters_contexts_hide')) ? explode(',', $sValue) : [];        
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iLiveUpdateLength = (int)getParam($sOptionPrefix . 'live_updates_length');
@@ -850,6 +853,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getAutoPreloads()
     {
         return $this->_iInfScrollAutoPreloads;
+    }
+
+    public function getFiltersContextsHide()
+    {
+        return $this->_aFiltersContextsHide;
     }
 
     public function getRssLength()

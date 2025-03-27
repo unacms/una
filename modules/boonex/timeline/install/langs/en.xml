@@ -78,6 +78,7 @@
     <string name="_bx_timeline_option_extenals_every_feed_preload"><![CDATA[Show external event as every N-th in context (profile) + subscriptions timeline with Infinite Scroll enabled]]></string>
     <string name="_bx_timeline_option_extenals_every_hot_preload"><![CDATA[Show external event as every N-th in hot timeline with Infinite Scroll enabled]]></string>
     <string name="_bx_timeline_option_extenals_every_feed_and_hot_preload"><![CDATA[Show external event as every N-th in 'For You' timeline with Infinite Scroll enabled]]></string>
+    <string name="_bx_timeline_option_filters_contexts_hide"><![CDATA[Filters: By contexts]]></string>
     <string name="_bx_timeline_option_for_you_sources"><![CDATA['For You' feed consists of]]></string>
     <string name="_bx_timeline_option_for_you_sources_err"><![CDATA[At least one source should be enabled for the feed.]]></string>
     <string name="_bx_timeline_option_for_you_sources_public"><![CDATA[Public]]></string>
@@ -157,8 +158,8 @@
     <string name="_bx_timeline_form_repost_input_sys_do_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_timeline_form_repost_input_do_cancel"><![CDATA[Cancel]]></string>
 
-    <string name="_bx_timeline_form_filters_input_by_hashtags"><![CDATA[Hashtags:]]></string>
-    <string name="_bx_timeline_form_filters_input_by_hashtags_any"><![CDATA[Any]]></string>
+    <string name="_bx_timeline_form_filters_input_by_contexts"><![CDATA[Contexts:]]></string>
+    <string name="_bx_timeline_form_filters_input_by_contexts_any"><![CDATA[Any]]></string>
     <string name="_bx_timeline_form_filters_input_by_modules"><![CDATA[Content:]]></string>
     <string name="_bx_timeline_form_filters_input_by_modules_all"><![CDATA[All]]></string>
     <string name="_bx_timeline_form_filters_input_by_modules_selected"><![CDATA[Selected]]></string>
