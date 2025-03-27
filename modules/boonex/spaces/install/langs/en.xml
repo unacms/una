@@ -18,6 +18,7 @@
     <string name="_bx_spaces_form_profile_display_add"><![CDATA[Add Space]]></string>
     <string name="_bx_spaces_form_profile_display_edit"><![CDATA[Edit Space]]></string>
     <string name="_bx_spaces_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_spaces_form_profile_display_edit_settings"><![CDATA[Edit Settings]]></string>
     <string name="_bx_spaces_form_profile_display_delete"><![CDATA[Delete Space]]></string>
     <string name="_bx_spaces_form_profile_display_view"><![CDATA[View Space]]></string>
     <string name="_bx_spaces_form_profile_display_view_full"><![CDATA[Full View Space]]></string>
@@ -49,10 +50,12 @@
     <string name="_bx_spaces_form_profile_input_picture_err"><![CDATA[Space picture is mandatory.]]></string>
     <string name="_bx_spaces_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
     <string name="_bx_spaces_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_stg_tabs"><![CDATA[Hide tabs]]></string>
+    <string name="_bx_spaces_form_profile_input_stg_tabs"><![CDATA[Hide tabs]]></string>
     <string name="_bx_spaces_form_profile_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
     <string name="_bx_spaces_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this space]]></string>
     <string name="_bx_spaces_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
-    <string name="_bx_spaces_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete space.]]></string>
+    <string name="_bx_spaces_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete space.]]></string>   
 
     <string name="_bx_spaces_form_price"><![CDATA[Price]]></string>
     <string name="_bx_spaces_form_price_display_add"><![CDATA[Add]]></string>
@@ -94,6 +97,8 @@
 	<string name="_bx_spaces_page_title_edit_profile"><![CDATA[Edit Space]]></string>
 	<string name="_bx_spaces_page_title_sys_edit_profile_cover"><![CDATA[Edit Space Cover]]></string>
 	<string name="_bx_spaces_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+        <string name="_bx_spaces_page_title_sys_edit_profile_settings"><![CDATA[Edit Space Settings]]></string>
+	<string name="_bx_spaces_page_title_edit_profile_settings"><![CDATA[Edit Settings]]></string>
 	<string name="_bx_spaces_page_title_sys_delete_profile"><![CDATA[Delete Space]]></string>
 	<string name="_bx_spaces_page_title_delete_profile"><![CDATA[Delete Space]]></string>
         <string name="_bx_spaces_page_title_sys_join_profile"><![CDATA[Join Space]]></string>
@@ -151,6 +156,7 @@
   <string name="_bx_spaces_page_block_title_create_profile"><![CDATA[Create Space]]></string>
 	<string name="_bx_spaces_page_block_title_edit_profile"><![CDATA[Edit Space]]></string>
 	<string name="_bx_spaces_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+        <string name="_bx_spaces_page_block_title_edit_profile_settings"><![CDATA[Edit Settings]]></string>
 	<string name="_bx_spaces_page_block_title_delete_profile"><![CDATA[Delete Space]]></string>
         <string name="_bx_spaces_page_block_title_join_profile"><![CDATA[Join Space]]></string>
 	<string name="_bx_spaces_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
@@ -223,6 +229,8 @@
         <string name="_bx_spaces_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
 	<string name="_bx_spaces_menu_item_title_system_edit_profile"><![CDATA[Edit Space]]></string>
 	<string name="_bx_spaces_menu_item_title_edit_profile"><![CDATA[Edit Space]]></string>
+        <string name="_bx_spaces_menu_item_title_system_edit_settings"><![CDATA[Edit Settings]]></string>
+        <string name="_bx_spaces_menu_item_title_edit_settings"><![CDATA[Edit Settings]]></string>
 	<string name="_bx_spaces_menu_item_title_system_delete_profile"><![CDATA[Delete Space]]></string>
 	<string name="_bx_spaces_menu_item_title_delete_profile"><![CDATA[Delete Space]]></string>
 	<string name="_bx_spaces_menu_item_title_system_delete_account"><![CDATA[Delete Account]]></string>

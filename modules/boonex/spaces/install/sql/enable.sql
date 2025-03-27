@@ -71,8 +71,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_spaces_edit_profile', 1, 'bx_spaces', '_bx_spaces_page_block_title_edit_profile', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_spaces\";s:6:\"method\";s:11:\"entity_edit\";}', 0, 0, 0);
 
--- PAGE: invite members
+-- PAGE: edit profile settings
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_spaces_edit_profile_settings', 'edit-space-settings', '_bx_spaces_page_title_sys_edit_profile_settings', '_bx_spaces_page_title_edit_profile_settings', 'bx_spaces', 5, 2147483647, 1, 'page.php?i=edit-space-settings', '', '', '', 0, 1, 0, 'BxSpacesPageEntry', 'modules/boonex/spaces/classes/BxSpacesPageEntry.php');
 
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_spaces_edit_profile_settings', 1, 'bx_spaces', '_bx_spaces_page_block_title_edit_profile_settings', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:20:"entity_edit_settings";}', 0, 0, 1, 1);
+
+-- PAGE: invite members
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_spaces_invite', 'invite-to-space', '_bx_spaces_page_title_sys_invite_to_space', '_bx_spaces_page_title_invite_to_space', 'bx_spaces', 5, 2147483647, 1, 'page.php?i=invite-to-space', '', '', '', 0, 1, 0, 'BxSpacesPageEntry', 'modules/boonex/spaces/classes/BxSpacesPageEntry.php');
 
@@ -80,7 +86,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_spaces_invite', 1, 'bx_spaces', '_bx_spaces_page_block_title_invite_to_space', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_spaces\";s:6:\"method\";s:13:\"entity_invite\";}', 0, 0, 0);
 
 -- PAGE: delete profile
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_spaces_delete_profile', 'delete-space-profile', '_bx_spaces_page_title_sys_delete_profile', '_bx_spaces_page_title_delete_profile', 'bx_spaces', 5, 2147483647, 1, 'page.php?i=delete-space-profile', '', '', '', 0, 1, 0, 'BxSpacesPageEntry', 'modules/boonex/spaces/classes/BxSpacesPageEntry.php');
 
@@ -111,7 +116,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_spaces_profile_pricing', 1, 'bx_spaces', '_bx_spaces_page_block_title_system_profile_pricing', '_bx_spaces_page_block_title_profile_pricing_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:14:"entity_pricing";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
 
 -- PAGE: space fans
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_spaces_fans', 'space-fans', '_bx_spaces_page_title_sys_space_fans', '_bx_spaces_page_title_space_fans', 'bx_spaces', 5, 2147483647, 1, 'page.php?i=space-fans', '', '', '', 0, 1, 0, 'BxSpacesPageEntry', 'modules/boonex/spaces/classes/BxSpacesPageEntry.php');
 
@@ -260,7 +264,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_spaces_view_actions_more', 'bx_spaces', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_spaces&content_id={content_id}', '', '', 'history', '', 192, '', 1, 0, 30),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-profile', '_bx_spaces_menu_item_title_system_edit_profile', '_bx_spaces_menu_item_title_edit_profile', 'page.php?i=edit-space-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-pricing', '_bx_spaces_menu_item_title_system_edit_pricing', '_bx_spaces_menu_item_title_edit_pricing', 'page.php?i=edit-space-pricing&profile_id={profile_id}', '', '', 'money-check-alt', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:20:"is_pricing_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 41),
-('bx_spaces_view_actions_more', 'bx_spaces', 'invite-to-space', '_bx_spaces_menu_item_title_system_invite', '_bx_spaces_menu_item_title_invite', 'page.php?i=invite-to-space&id={content_id}', '', '', 'user-friends', '', 2147483647, '', 1, 0, 42),
+('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-settings', '_bx_spaces_menu_item_title_system_edit_settings', '_bx_spaces_menu_item_title_edit_settings', 'page.php?i=edit-space-settings&id={content_id}', '', '', 'toolbox', '', 2147483647, '', 1, 0, 42),
+('bx_spaces_view_actions_more', 'bx_spaces', 'invite-to-space', '_bx_spaces_menu_item_title_system_invite', '_bx_spaces_menu_item_title_invite', 'page.php?i=invite-to-space&id={content_id}', '', '', 'user-friends', '', 2147483647, '', 1, 0, 45),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'delete-space-profile', '_bx_spaces_menu_item_title_system_delete_profile', '_bx_spaces_menu_item_title_delete_profile', 'page.php?i=delete-space-profile&id={content_id}', '', '', 'remove', '', 2147483647, '', 1, 0, 50),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'approve-space-profile', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, '', 1, 0, 60);
 

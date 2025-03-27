@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `bx_spaces_data` (
   `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
+  `stg_tabs` text NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`space_name`, `space_desc`)
 );
@@ -324,6 +325,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_space', 'bx_space_delete', 'bx_spaces', 0, '_bx_spaces_form_profile_display_delete'),
 ('bx_space', 'bx_space_edit', 'bx_spaces', 0, '_bx_spaces_form_profile_display_edit'),
 ('bx_space', 'bx_space_edit_cover', 'bx_spaces', 0, '_bx_spaces_form_profile_display_edit_cover'),
+('bx_space', 'bx_space_edit_settings', 'bx_spaces', 0, '_bx_spaces_form_profile_display_edit_settings'),
 ('bx_space', 'bx_space_view', 'bx_spaces', 1, '_bx_spaces_form_profile_display_view'),
 ('bx_space', 'bx_space_view_full', 'bx_spaces', 1, '_bx_spaces_form_profile_display_view_full'),
 ('bx_space', 'bx_space_invite', 'bx_spaces', 0, '_bx_spaces_form_profile_display_invite');
@@ -343,7 +345,9 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_space', 'bx_spaces', 'cover', 'a:1:{i:0;s:20:"bx_spaces_cover_crop";}', 'a:1:{s:20:"bx_spaces_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_spaces_form_profile_input_sys_cover', '_bx_spaces_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_space', 'bx_spaces', 'picture', 'a:1:{i:0;s:22:"bx_spaces_picture_crop";}', 'a:1:{s:22:"bx_spaces_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_spaces_form_profile_input_sys_picture', '_bx_spaces_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_spaces_form_profile_input_picture_err', '', '', 1, 0),
 ('bx_space', 'bx_spaces', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_space', 'bx_spaces', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_space', 'bx_spaces', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+-- Settings
+('bx_space', 'bx_spaces', 'stg_tabs', 1, '', 0, 'checkbox_set', '_bx_spaces_form_profile_input_sys_stg_tabs', '_bx_spaces_form_profile_input_stg_tabs', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_space_add', 'initial_members', 2147483647, 1, 1),
@@ -377,6 +381,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 ('bx_space_edit_cover', 'cover', 2147483647, 1, 1),
 ('bx_space_edit_cover', 'do_submit', 2147483647, 1, 2),
+
+('bx_space_edit_settings', 'stg_tabs', 2147483647, 1, 1),
+('bx_space_edit_settings', 'do_submit', 2147483647, 1, 2),
 
 ('bx_space_view', 'space_name', 2147483647, 1, 1),
 ('bx_space_view', 'space_cat', 2147483647, 1, 2),

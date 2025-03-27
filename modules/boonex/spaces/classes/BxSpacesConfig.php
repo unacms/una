@@ -19,6 +19,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'view-space-profile' => 'checkAllowedView',
             'edit-space-profile' => 'checkAllowedEdit',
             'edit-space-cover' => 'checkAllowedChangeCover',
+            'edit-space-settings' => 'checkAllowedChangeSettings',
             'invite-to-space' => 'checkAllowedInvite',
             'delete-space-profile' => 'checkAllowedDelete',
             'approve-space-profile' => 'checkAllowedApprove',
@@ -64,6 +65,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELD_LABELS' => 'labels',
+            'FIELD_STG_TABS' => 'stg_tabs',
 
             'FIELD_PRICE_ROLE_ID' => 'role_id',
             'FIELD_PRICE_NAME' => 'name',
@@ -121,6 +123,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_space_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_space_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_space_edit_cover',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT_SETTINGS' => 'bx_space_edit_settings',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_space_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_space_invite',
             'OBJECT_FORM_PRICE' => 'bx_spaces_price',

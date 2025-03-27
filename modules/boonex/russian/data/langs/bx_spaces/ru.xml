@@ -18,6 +18,7 @@
     <string name="_bx_spaces_form_profile_display_add"><![CDATA[Добавление пространства]]></string>
     <string name="_bx_spaces_form_profile_display_edit"><![CDATA[Редактирование пространства]]></string>
     <string name="_bx_spaces_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
+    <string name="_bx_spaces_form_profile_display_edit_settings"><![CDATA[Редактирование настроек]]></string>
     <string name="_bx_spaces_form_profile_display_delete"><![CDATA[Удаление пространства]]></string>
     <string name="_bx_spaces_form_profile_display_view"><![CDATA[Просмотр пространства]]></string>
     <string name="_bx_spaces_form_profile_display_view_full"><![CDATA[Полный просмотр пространства]]></string>
@@ -49,6 +50,8 @@
     <string name="_bx_spaces_form_profile_input_picture_err"><![CDATA[Необходима картинка пространства.]]></string>
     <string name="_bx_spaces_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
     <string name="_bx_spaces_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_stg_tabs"><![CDATA[Скрыть вкладки]]></string>
+    <string name="_bx_spaces_form_profile_input_stg_tabs"><![CDATA[Скрыть вкладки]]></string>
     <string name="_bx_spaces_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
     <string name="_bx_spaces_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту пространство]]></string>
     <string name="_bx_spaces_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
@@ -94,6 +97,8 @@
 	<string name="_bx_spaces_page_title_edit_profile"><![CDATA[Редактировать пространство]]></string>
 	<string name="_bx_spaces_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку пространства]]></string>
 	<string name="_bx_spaces_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
+        <string name="_bx_spaces_page_title_sys_edit_profile_settings"><![CDATA[Редактировать настройки пространства]]></string>
+	<string name="_bx_spaces_page_title_edit_profile_settings"><![CDATA[Редактировать настройки]]></string>
 	<string name="_bx_spaces_page_title_sys_delete_profile"><![CDATA[Удалить пространство]]></string>
 	<string name="_bx_spaces_page_title_delete_profile"><![CDATA[Удалить пространство]]></string>
         <string name="_bx_spaces_page_title_sys_join_profile"><![CDATA[Присоединиться к пространству]]></string>
@@ -145,6 +150,7 @@
     <string name="_bx_spaces_page_block_title_create_profile"><![CDATA[Создать пространство]]></string>
     <string name="_bx_spaces_page_block_title_edit_profile"><![CDATA[Редактировать пространство]]></string>
     <string name="_bx_spaces_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_spaces_page_block_title_edit_profile_settings"><![CDATA[Редактировать настройки]]></string>
     <string name="_bx_spaces_page_block_title_delete_profile"><![CDATA[Удалить пространство]]></string>
     <string name="_bx_spaces_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
     <string name="_bx_spaces_page_block_title_profile_info"><![CDATA[Инфо]]></string>
@@ -219,6 +225,8 @@
     <string name="_bx_spaces_menu_item_title_edit_pricing"><![CDATA[Редактировать цены]]></string>
     <string name="_bx_spaces_menu_item_title_system_edit_profile"><![CDATA[Редактировать пространство]]></string>
     <string name="_bx_spaces_menu_item_title_edit_profile"><![CDATA[Редактировать пространство]]></string>
+    <string name="_bx_spaces_menu_item_title_system_edit_settings"><![CDATA[Редактировать настройки]]></string>
+    <string name="_bx_spaces_menu_item_title_edit_settings"><![CDATA[Редактировать настройки]]></string>
     <string name="_bx_spaces_menu_item_title_system_delete_profile"><![CDATA[Удалить пространство]]></string>
     <string name="_bx_spaces_menu_item_title_delete_profile"><![CDATA[Удалить пространство]]></string>
     <string name="_bx_spaces_menu_item_title_system_delete_account"><![CDATA[Удалить аккаунт]]></string>
