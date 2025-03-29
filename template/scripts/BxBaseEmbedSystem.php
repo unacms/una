@@ -48,12 +48,24 @@ class BxBaseEmbedSystem extends BxDolEmbed
                 $aAttrs['rel'] = 'nofollow';
         }
 
+        $oStorage = BxDolStorage::getObjectInstance('sys_images');
+
+        $sImage = $aData['image'];
+        if ($sImage && is_numeric($sImage) && $oStorage) {
+            $sImage = $oStorage->getFileUrlById($sImage);
+        }
+
+        $sLogo = $aData['logo'];
+        if ($sLogo && is_numeric($sLogo) && $oStorage) {
+            $sLogo = $oStorage->getFileUrlById($sLogo);
+        }
+
         return $this->_oTemplate->parseHtmlByName('embed_system_link.html', [
             'link' => $aData['url'],
             'attrs' => bx_convert_array2attrs($aAttrs),
             'width' => $sMaxWidth,
-            'image' => $aData['image'] ? $aData['image'] : $aData['logo'],
-            'logo' => $aData['logo'],
+            'image' => $sImage ? $sImage : $sLogo,
+            'logo' => $sLogo,
             'title' => $aData['title'],
             'description' => $aData['description'],
             'domain' => $aData['domain'],
@@ -99,12 +111,12 @@ class BxBaseEmbedSystem extends BxDolEmbed
 
         if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
             $iMediaId = $oStorage->storeFileFromUrl($a['image'], false);
-            $a['image'] = $iMediaId ? $oStorage->getFileUrlById($iMediaId) : '';
+            $a['image'] = $iMediaId;
         }
 
         if($a['logo'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
             $iMediaId = $oStorage->storeFileFromUrl($a['logo'], false);
-            $a['logo'] = $iMediaId ? $oStorage->getFileUrlById($iMediaId) : '';
+            $a['logo'] = $iMediaId;
         }
 
         $aUrl = parse_url($sUrl);
