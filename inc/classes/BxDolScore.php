@@ -574,14 +574,14 @@ class BxDolScore extends BxDolObject
         if(empty($aParams) || !is_array($aParams))
             return '';
 
-        return urlencode(base64_encode(serialize($aParams)));
+        return urlencode(base64_encode(json_encode($aParams)));
     }
 
     protected function _decodeElementParams($sParams, $bMergeWithDefaults = true)
     {
         $aParams = array();
         if(!empty($sParams))
-            $aParams = unserialize(base64_decode(urldecode($sParams)));
+            $aParams = json_decode(base64_decode(urldecode($sParams)), true);
 
         if(empty($aParams) || !is_array($aParams))
             $aParams = array();

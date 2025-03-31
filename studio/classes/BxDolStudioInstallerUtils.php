@@ -434,7 +434,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $aItem = $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_download_update', array(
             'key' => getParam('sys_oauth_key'),
             'version' => bx_get_ver(),
-            'product' => base64_encode(serialize(array(
+            'product' => base64_encode(json_encode(array(
                 'name' => $aModule['name'],
                 'version' => $aModule['version'],
                 'hash' => $aModule['hash'],
@@ -693,7 +693,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             );
         }
 
-        return base64_encode(serialize($aProducts));
+        return base64_encode(json_encode($aProducts));
     }
 
     protected function getUpdatesInfo($sModule = '', $bAuthorizedAccess = false)

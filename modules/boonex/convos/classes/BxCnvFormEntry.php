@@ -195,7 +195,7 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
         $sEt = bx_get('et');
         if($sEt !== false) { // if 'attachable email template' was specified, process it
-            $aEt = unserialize(base64_decode(urldecode($sEt)));
+            $aEt = json_decode(base64_decode(urldecode($sEt)), true);
 
             if(!empty($aEt) && is_array($aEt) && !empty($aEt['name'])) {
                 $sName = bx_process_input($aEt['name']);
