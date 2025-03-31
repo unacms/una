@@ -517,7 +517,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $aCustom = array();
         if(!empty($sCustom)) {
-            $aCustom = unserialize(base64_decode($sCustom));
+            $aCustom = json_decode(base64_decode($sCustom), true);
             if(empty($aCustom) || !is_array($aCustom))
                 $aCustom = array();
         }
@@ -557,7 +557,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $aCustom = array();
         if(!empty($sCustom)) {
-            $aCustom = unserialize(base64_decode($sCustom));
+            $aCustom = json_decode(base64_decode($sCustom), true);
             if(empty($aCustom) || !is_array($aCustom))
                 $aCustom = array();
         }
@@ -608,7 +608,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $aCustom = array();
         if(!empty($sCustom)) {
-            $aCustom = unserialize(base64_decode($sCustom));
+            $aCustom = json_decode(base64_decode($sCustom), true);
             if(empty($aCustom) || !is_array($aCustom))
                 $aCustom = array();
         }
@@ -1763,7 +1763,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 'iItemCount' => $iItemCount,
                 'sItemAddons' => $sItemAddons,
                 'sRedirect' => $sRedirect,
-                'sCustom' => base64_encode(serialize($aCustom))
+                'sCustom' => base64_encode(json_encode($aCustom))
             );
 
             $aCartInfo = $this->getObjectCart()->getInfo(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iSellerId, $this->_oConfig->descriptorA2S($aCartItem));

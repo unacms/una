@@ -68,7 +68,7 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             $sRepostToOnclick = $this->_oModule->serviceGetRepostToJsClick($iOwnerId, $sType, $sAction, $iObjectId);
 
             //--- Send item
-            $sAetSend = urlencode(base64_encode(serialize([
+            $sAetSend = urlencode(base64_encode(json_encode([
                 'name' => 'bx_timeline_send',
                 'params' => [
                     'ViewLink' => $this->_aEvent['url']

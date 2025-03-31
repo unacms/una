@@ -99,7 +99,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             'item_id' => $iItemId,
             'item_count' => $iItemCount,
             'need_redirect' => (int)$bNeedRedirect,
-            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
+            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(json_encode($aCustom)) : ''
         ));
 
         return array($sJsCode, $sJsMethod);
@@ -117,7 +117,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             'item_id' => $iItemId,
             'item_count' => $iItemCount,
             'need_redirect' => (int)$bNeedRedirect,
-            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
+            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(json_encode($aCustom)) : ''
         ));
     }
 
@@ -146,7 +146,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                 'item_id' => $iItemId,
                 'item_count' => $iItemCount,
                 'redirect' => !empty($sRedirect) ? $sRedirect : '',
-                'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
+                'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(json_encode($aCustom)) : ''
             ))
         );
     }
@@ -164,7 +164,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             'item_id' => $iItemId,
             'item_count' => $iItemCount,
             'redirect' => !empty($sRedirect) ? $sRedirect : '',
-            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
+            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(json_encode($aCustom)) : ''
         ));
     }
 

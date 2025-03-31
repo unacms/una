@@ -2720,4 +2720,48 @@ function bx_api_get_browse_params($sParams, $bParamsOnly = false)
 
     return $aParams['params'];
 }
+
+function bx_is_serialized_safe($str) 
+{
+    if (!is_string($str))
+        return false;
+    
+    $str = trim($str);
+    if ($str === 'N;')
+        return true; // null
+    
+    if (!preg_match('/^([adObis]):[0-9]+:/', $str, $matches))
+        return false;
+    
+    $type = $matches[1];
+    
+    // allow only base types, exclude objects (O) are references (r, R)
+    $allowedTypes = ['a', 's', 'i', 'd', 'b'];
+    if (!in_array($type, $allowedTypes))
+        return false;
+    
+    try {
+        $unserialized = unserialize($str);
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+
+function bx_is_serialized($string) 
+{
+    if (!is_string($string))
+        return false;
+    
+    $string = trim($string);
+
+    // base types    
+    if ($string === 'N;') return true; // null
+    if ($string === 'b:0;' || $string === 'b:1;') return true; // boolean
+    
+    // other types
+    return preg_match('/^([adObis]):[0-9]+:/', $string) === 1;
+}
+
 /** @} */
