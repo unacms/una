@@ -92,10 +92,23 @@ if (!$oStorage->download($sRemoteId, $sToken)) {
 
 function bx_storage_download_error_occured($sMethod = 'displayPageNotFound')
 {
-    require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
+    bx_import('BxDolLanguages');
 
-    $oTemplate = BxDolTemplate::getInstance();
-    $oTemplate->$sMethod ();
+    if ('displayPageNotFound' == $sMethod) {
+        header('HTTP/1.0 404 Not Found');
+        header('Status: 404 Not Found');
+        echo json_encode(['status' => 404, 'error' => _t("_sys_request_page_not_found_cpt")]);
+    }
+    if ('displayAccessDenied' == $sMethod) {
+        header('HTTP/1.0 403 Forbidden');
+        header('Status: 403 Forbidden');
+        echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
+    }
+    if ('displayErrorOccured' == $sMethod) {
+        header('HTTP/1.0 500 Internal Server Error');
+        header('Status: 500 Internal Server Error');
+        echo json_encode(['status' => 500, 'error' => _t("_error occured")]);
+    }
 }
 
 /** @} */
