@@ -103,7 +103,7 @@
     "build:jquery": "mkdir -p plugins_public/jquery; cd plugins_public/jquery; cp ../../node_modules/jquery/dist/jquery.min.* .; cp ../../node_modules/jquery-migrate/dist/jquery-migrate.min.* .",
     "build:jquery-ui": "mkdir -p plugins_public/jquery-ui; cd plugins_public/jquery-ui; cp ../../node_modules/jquery-ui/dist/jquery-ui.min.js .",
     "build:jstree": "mkdir -p plugins_public/jstree; cd plugins_public/jstree; cp -r ../../node_modules/jstree/dist/* .",
-    "build:jush": "mkdir -p plugins_public/jush; cd plugins_public/jush; cp -r ../../node_modules/jush/jush.* .",
+    "build:jush": "mkdir -p plugins_public/jush; cd node_modules/jush; php compile.php; cp -r jush.* ../../plugins_public/jush",
     "build:leaflet": "mkdir -p plugins_public/leaflet; cd plugins_public/leaflet; cp -r ../../node_modules/leaflet/dist/* .",
     "build:leaflet-providers": "mkdir -p plugins_public/leaflet-providers; cd plugins_public/leaflet-providers; cp ../../node_modules/leaflet-providers/leaflet-providers.js .",
     "build:marka": "mkdir -p plugins_public/marka; cd plugins_public/marka; cp ../../node_modules/marka/dist/css/* .; cp ../../node_modules/marka/dist/js/* .",
