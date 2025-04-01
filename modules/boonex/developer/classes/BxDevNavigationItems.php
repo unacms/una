@@ -46,9 +46,10 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $this->onSave($oForm);
+            $aValsToAdd = [];
+            $this->onSave($oForm, $aValsToAdd);
 
-            if(($iId = (int)$oForm->insert()) != 0)
+            if(($iId = (int)$oForm->insert($aValsToAdd)) != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_create'));
