@@ -30,21 +30,26 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         $bType = isset($this->aInputs[$sName]['type']);
 
         //--- Process field with 'Location' type. 
-        if($bType && $this->aInputs[$sName]['type'] == 'location' && ($sValue = parent::getCleanValue($sName)) !== false)
-            return [
-                'string' => $sValue, 
-                'array' => BxDolMetatags::locationsRetrieveFromForm($sName, $this)
-            ];
+        if($bType && $this->aInputs[$sName]['type'] == 'location') {
+            $aLocation = BxDolMetatags::locationsRetrieveFromForm($sName, $this);
+            if ($aLocation) {
+                return [
+                    'string' => parent::getCleanValue($sName),
+                    'array' => $aLocation,
+                ];
+            }
+        }
 
         //--- Process field with 'Location Radius' type. 
-        if($bType && $this->aInputs[$sName]['type'] == 'location_radius' && ($sValue = parent::getCleanValue($sName)) !== false) {
+        if($bType && $this->aInputs[$sName]['type'] == 'location_radius') {
             $aLocation = BxDolMetatags::locationsRetrieveFromForm($sName, $this);
-            $aLocation[] = (int)$this->getLocationVal($this->aInputs[$sName], 'rad');
-
-            return [
-                'string' => $sValue, 
-                'array' => $aLocation
-            ];
+            if ($aLocation) {
+                $aLocation[] = (int)$this->getLocationVal($this->aInputs[$sName], 'rad');
+                return [
+                    'string' => parent::getCleanValue($sName),
+                    'array' => $aLocation,
+                ];
+            }
         }
 
         //--- Process field with 'Date Range Age' and 'Date-Time Range Age' type.
