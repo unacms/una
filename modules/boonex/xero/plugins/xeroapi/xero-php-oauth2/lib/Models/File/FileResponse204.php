@@ -31,6 +31,8 @@ namespace XeroAPI\XeroPHP\Models\File;
 use \ArrayAccess;
 use \XeroAPI\XeroPHP\FileObjectSerializer;
 use \XeroAPI\XeroPHP\StringUtil;
+use ReturnTypeWillChange;
+
 /**
  * FileResponse204 Class Doc Comment
  *
@@ -236,6 +238,7 @@ class FileResponse204 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->container[$offset]);
@@ -248,6 +251,7 @@ class FileResponse204 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -261,6 +265,7 @@ class FileResponse204 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
@@ -277,6 +282,7 @@ class FileResponse204 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->container[$offset]);
