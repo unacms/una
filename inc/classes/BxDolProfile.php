@@ -201,13 +201,15 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
                 $aRv['informer'] = $sRet;
             }
 
-          /*  $oPayments = BxDolPayments::getInstance();
+            /*  
+            $oPayments = BxDolPayments::getInstance();
             if($oPayments->isActive())
                 $aRv['cart'] = $oPayments->getCartItemsCount();
-            
+
             $sModuleNotifications = 'bx_notifications';
             if(BxDolRequest::serviceExists($sModuleNotifications, 'get_unread_notifications_num'))
                 $aRv['notifications'] = bx_srv($sModuleNotifications, 'get_unread_notifications_num', [$iId]);
+            */
 
             if($oProfile !== false && BxDolAccount::isAllowedCreateMultiple($iId)) {
                 $oAccount = BxDolAccount::getInstance();
@@ -216,7 +218,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
                     if($oMenuProfileAdd !== false)
                         $aRv['menu'] = $oMenuProfileAdd->getCodeAPI();
                 }
-            }*/
+            }
         }
 
         bx_alert('system', 'get_profile_for_page_api', 0, 0, ['override_result' => &$aRv]);
