@@ -2089,7 +2089,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(!$bResult)
             return $bResult;
 
-        if(($sField = 'FIELD_STG_TABS') && !empty($CNF[$sField]) && ($sTabs = $aContentInfo[$CNF[$sField]])) {
+        if(($sField = 'FIELD_STG_TABS') && !empty($CNF[$sField]) && isset($aContentInfo[$CNF[$sField]]) && ($sTabs = $aContentInfo[$CNF[$sField]])) {
             $aTabs = explode(',', $sTabs);
             if(in_array($aItem['name'], $aTabs))
                 return false;
