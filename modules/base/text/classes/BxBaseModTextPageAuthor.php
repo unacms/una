@@ -74,6 +74,16 @@ class BxBaseModTextPageAuthor extends BxTemplPage
 
         return parent::getCode();
     }
+
+    protected function _isAvailablePage($a)
+    {
+        if (!$this->_aProfileInfo || !$this->_oProfile) {
+            $this->_aObject['cover'] = 0;
+            return false;
+        }
+        
+        return parent::_isAvailablePage($a);
+    }
 }
 
 /** @} */
