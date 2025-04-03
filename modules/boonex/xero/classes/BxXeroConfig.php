@@ -161,6 +161,8 @@ class BxXeroConfig extends BxBaseModGeneralConfig
     {
         $aData = $this->_oSession->getValue($this->_sSessionKey);
         if(empty($aData['data'])) {
+            if(!is_array($aData))
+                $aData = [];
             $aData['data'] = $this->_oDb->getData();
             if(empty($aData['data']))
                 return false;
