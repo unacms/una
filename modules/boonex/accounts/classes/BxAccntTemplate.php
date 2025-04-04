@@ -11,10 +11,14 @@
 
 class BxAccntTemplate extends BxBaseModGeneralTemplate
 {
+    protected $aAuthTypes = [];
+
     function __construct(&$oConfig, &$oDb)
     {
     	$this->MODULE = 'bx_accounts';
         parent::__construct($oConfig, $oDb);
+
+        $this->aAuthTypes = BxDolDb::getInstance()->fromCache('sys_objects_auths', 'getAll', 'SELECT * FROM `sys_objects_auths`');
     }
 
     public function getProfilesByAccount($aContentInfo, $iMaxVisible = 2, $iMaxInPopup = 20)
@@ -54,12 +58,23 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
 
             $iId = $oProfile->id();
             $sName = $oProfile->getDisplayName();
+
+            $sAuthAccountsIcons = '';
+            foreach ($this->aAuthTypes as $r) {
+                $oModule = BxDolModule::getInstance($r['Name']);
+                if (!$oModule)
+                    continue;
+                if ($oModule->_oDb->getRemoteProfileId($iId))
+                    $sAuthAccountsIcons .= '<i title="' . bx_html_attribute(_t($r['Title'])) . '" class="sys-icon ' . ($r['Icon'] ? $r['Icon'] : 'circle-user') . '"></i> ';
+            }
+
             $aTmplVarsProfile = [
                 'html_id' => $this->_oConfig->getHtmlIds('profile') . $iId,
                 'id' => $iId,
                 'url' => $oProfile->getUrl(),
                 'name' => strmaxtextlen($sName, $CNF['PARAM_PROFILE_NAME_LENGTH_MAX'], '...'),
-                'name_attr' => bx_html_attribute($sName)
+                'name_attr' => bx_html_attribute($sName),
+                'auth_accounts_icons' => $sAuthAccountsIcons,
             ];
 
             if($i < $iMaxVisible)
