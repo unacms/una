@@ -276,6 +276,10 @@ body.bx-popup-lock {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+.bx-popup-image-wrapper .bx-def-border-radius-block {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0
+}
 
 
 /*--- Loading indicator ---*/

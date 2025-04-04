@@ -539,9 +539,9 @@ body > .bx-popup-wrapper {
     position: relative;
     line-height: 1.2rem;
 }
-.bx-popup-image-wrapper .bx-popup-close-wrapper,
-.bx-popup-image-wrapper .bx-popup-element-close {
-    display:none;
+.bx-popup-image-wrapper .bx-def-border-radius-block {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
 }
 
 #bx-popup-alert,

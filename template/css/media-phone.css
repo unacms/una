@@ -79,15 +79,12 @@ html.bx-media-phone {
 }
 
 .bx-media-phone .bx-popup-responsive,
-.bx-media-phone .bx-popup-responsive .bx-popup-trans > div,
 .bx-media-phone .bx-popup-responsive .bx-popup-box > div {
     border-radius:0;
     -moz-border-radius:0;
     -webkit-border-radius:0;
 }
 
-.bx-media-phone .bx-popup-responsive.bx-popup-image-wrapper:not(.foo) .bx-popup-border,
-.bx-media-phone .bx-popup-responsive.bx-popup-trans-wrapper:not(.foo) .bx-popup-border,
 .bx-media-phone .bx-popup-responsive.bx-popup-box-wrapper:not(.foo) .bx-popup-border {
     border:none;
     border-radius:0;
@@ -98,8 +95,8 @@ html.bx-media-phone {
 .bx-media-phone .bx-popup-responsive.bx-popup-image-wrapper .bx-popup,
 .bx-media-phone .bx-popup-responsive.bx-popup-trans-wrapper .bx-popup,
 .bx-media-phone .bx-popup-responsive.bx-popup-box-wrapper .bx-popup {
-	-moz-box-shadow:none;
-	-webkit-box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
     box-shadow:none;
 }
 

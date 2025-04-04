@@ -520,17 +520,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'cover_settins' => isset($CNF['FIELD_PICTURE_POSITION']) ? $this->_getImageSettings($aData[$CNF['FIELD_PICTURE_POSITION']]) : '',
                 'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
             );
-            
+
             if($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
-                $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
+                $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', [
                     'image_url' => $sUrlPicture,
-                    'bx_if:owner' => array (
-                        'condition' => false,
-                        'content' => array (
-                            'change_image_url' => $sUrlPictureChange,
-                        ),
-                    ),
-                )), true, true);
+                ]), true, true);
             }
         }
 
