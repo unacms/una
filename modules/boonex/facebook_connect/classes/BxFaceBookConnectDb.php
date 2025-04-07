@@ -62,6 +62,12 @@ class BxFaceBookConnectDb extends BxBaseModConnectDb
         return $iProfileId;
     }
 
+    function getRemoteProfileId($iLocalId)
+    {
+        $sQuery = $this->prepare ("SELECT `fb_profile` FROM `{$this -> sTablePrefix}accounts` WHERE `id_profile` = ? LIMIT 1", (int)$iLocalId);
+        return $this->getOne($sQuery);
+    }
+
     /**
      *  Save new Fb uid
      *
