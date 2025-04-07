@@ -124,4 +124,24 @@ class UtilTest extends \PHPUnit\Framework\TestCase
             array('[backslash]test[backslash]', '\\test\\'),
         );
     }
+
+
+    /**
+     * @see bx_is_serialized
+     * @dataProvider providerForBxIsSerialized
+     */
+    function testBxIsSerialized($sIn, $sOut)
+    {
+        $this->assertEquals(bx_is_serialized($sIn), $sOut);
+    }
+    public function providerForBxIsSerialized()
+    {
+        return array(
+            array([], false),
+            array('serialized string', false),
+            array('N;', true),
+            array(serialize([]), true),
+            array(serialize([new stdClass()]), true),
+        );
+    }
 }
