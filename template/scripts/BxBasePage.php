@@ -647,32 +647,11 @@ class BxBasePage extends BxDolPage
             $o = BxDolProfile::getInstance();
             $a['user'] = BxDolProfile::getDataForPage($o);
         }
-        
-        $aExtras = [
-            'page' => $this,
-            'blocks' => $aBlocks,
-            'data' => &$a,
-        ];
 
         if(!$bIsAvailable)
             $a['page_status'] = 404;
         else if(!$bIsVisible)
             $a['page_status'] = 403;
-
-        /**
-         * @hooks
-         * @hookdef hook-system-get_page_api 'system', 'get_page_api' - hook to override page peremeters, is used in API calls
-         * - $unit_name - equals `system`
-         * - $action - equals `get_page_api`
-         * - $object_id - not used
-         * - $sender_id - not used
-         * - $extra_params - array of additional params with the following array keys:
-         *      - `page` - [object] an instance of page class, @see BxDolPage 
-         *      - `blocks` - [array] array with page blocks
-         *      - `data` - [array] by ref, page peremeters array as key&value pairs, can be overridden in hook processing
-         * @hook @ref hook-system-get_page_api
-         */
-        bx_alert('system', 'get_page_api', 0, 0, $aExtras);
 
         return $a;
     }

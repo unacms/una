@@ -54,18 +54,29 @@ class BxBaseServicePages extends BxDol
             }
             $mixed = BxDolPage::getPageBySeoLink($sRequest);
         }
-       
+
+        $aExtras = [
+            'request' => $sRequest,
+        ];
 
         if (($sUrl = $mixed) && is_string($sUrl)) {
             $aRes = ['redirect' => $sUrl];
+
+            $aExtras = array_merge($aExtras, [
+                'url' => $sUrl
+            ]);
         }
         elseif (($oPage = $mixed) && is_object($oPage)) {
-			
             $aBlocks = [];
             if(!empty($sBlocks))
                 $aBlocks = explode(',', $sBlocks);
 
-            return $oPage->getPageAPI($aBlocks);
+            $aRes = $oPage->getPageAPI($aBlocks);
+
+            $aExtras = array_merge($aExtras, [
+                'page' => $oPage,
+                'blocks' => $aBlocks
+            ]);
         }
         else {
             $aRes = ['code' => 404, 'error' => _t("_sys_request_page_not_found_cpt"), 'data' => ['page_status' => 404]];
@@ -73,6 +84,23 @@ class BxBaseServicePages extends BxDol
             if(isLogged())
                 $aRes['data']['user'] = BxDolProfile::getDataForPage();
         }
+
+        $aExtras['data'] = &$aRes;
+
+        /**
+         * @hooks
+         * @hookdef hook-system-get_page_api 'system', 'get_page_api' - hook to override page peremeters, is used in API calls
+         * - $unit_name - equals `system`
+         * - $action - equals `get_page_api`
+         * - $object_id - not used
+         * - $sender_id - not used
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `page` - [object] an instance of page class, @see BxDolPage 
+         *      - `blocks` - [array] array with page blocks
+         *      - `data` - [array] by ref, page peremeters array as key&value pairs, can be overridden in hook processing
+         * @hook @ref hook-system-get_page_api
+         */
+        bx_alert('system', 'get_page_api', 0, 0, $aExtras);
 
         return $aRes;
     }
