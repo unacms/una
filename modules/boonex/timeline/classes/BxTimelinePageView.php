@@ -18,6 +18,11 @@ class BxTimelinePageView extends BxBaseModTextPageAuthor
     {
         parent::__construct($aObject, $oTemplate);
     }
+
+    protected function _isAvailablePage($a)
+    {        
+        return BxDolPage::_isAvailablePage($a);
+    }
 }
 
 /** @} */
