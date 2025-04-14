@@ -759,9 +759,9 @@ UPDATE `sys_options` SET `value` = '' WHERE `name` = 'sys_std_show_header_right_
 
 SET @iCategoryId = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'site_settings');
 
-INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `info`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_enable_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_enable_post_to_context_for_privacy', '', '', 'checkbox', '', '', '', 50),
-(@iCategoryId, 'sys_check_fan_in_parent_context', '_adm_stg_cpt_option_sys_check_fan_in_parent_context', '', 'on', 'checkbox', '', '', '', 55);
+INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_enable_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_enable_post_to_context_for_privacy', '', 'checkbox', '', '', '', 50),
+(@iCategoryId, 'sys_check_fan_in_parent_context', '_adm_stg_cpt_option_sys_check_fan_in_parent_context', 'on', 'checkbox', '', '', '', 55);
 
 
 SET @iCategoryId = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'notifications_push');
