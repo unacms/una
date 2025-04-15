@@ -798,18 +798,31 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $iProfileId = $this->getContentOwnerProfileId($iContentId);
 
         $aGhostFiles = $oStorage->getGhosts ($iProfileId, $isAssociateWithContent ? 0 : $iContentId, true, $this->_isAdmin($iContentId));
-        if (!$aGhostFiles)
-            return true;
+        if(!empty($aGhostFiles) && is_array($aGhostFiles))
+            foreach($aGhostFiles as $aFile) {
+                if(is_array($mixedFileIds) && !in_array($aFile['id'], $mixedFileIds))
+                    continue;
 
-        foreach ($aGhostFiles as $aFile) {
-            if (is_array($mixedFileIds) && !in_array($aFile['id'], $mixedFileIds))
-                continue;
+                if($aFile['private'])
+                    $oStorage->setFilePrivate ($aFile['id'], 1);
 
-            if ($aFile['private'])
-                $oStorage->setFilePrivate ($aFile['id'], 1);
+                if($iContentId)
+                    $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
+            }
 
-            if ($iContentId)
-                $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
+        if($this->_bAllowChangeUserForAdmins && ($this->_oModule->_isModerator() || $this->_oModule->_isAdministrator()) && ($iLoggedId = bx_get_logged_profile_id()) != $iProfileId) {
+            $aGhostFiles = $oStorage->getGhosts($iLoggedId, $isAssociateWithContent ? 0 : $iContentId, true, $this->_isAdmin($iContentId));
+            if(!empty($aGhostFiles) && is_array($aGhostFiles))
+                foreach($aGhostFiles as $aFile) {
+                    if(is_array($mixedFileIds) && !in_array($aFile['id'], $mixedFileIds))
+                        continue;
+
+                    if($aFile['private'])
+                        $oStorage->setFilePrivate ($aFile['id'], 1);
+
+                    if($iContentId)
+                        $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
+                }
         }
 
         return true;
