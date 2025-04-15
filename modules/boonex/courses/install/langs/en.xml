@@ -104,6 +104,8 @@
     <string name="_bx_courses_acl_action_delete_any_profile"><![CDATA[Delete Any Course]]></string>
     <string name="_bx_courses_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 
+    <string name="_bx_courses_page_title_sys_entries_in_context"><![CDATA[Courses in context]]></string>
+    <string name="_bx_courses_page_title_entries_in_context"><![CDATA[Courses in {display_name}]]></string>
     <string name="_bx_courses_page_title_sys_joined_entries"><![CDATA[Profile Courses]]></string>
     <string name="_bx_courses_page_title_joined_entries"><![CDATA[Profile Courses]]></string>
     <string name="_bx_courses_page_title_sys_create_profile"><![CDATA[Create Course]]></string>
@@ -123,6 +125,7 @@
     <string name="_bx_courses_page_title_view_profile_node"><![CDATA[Lesson]]></string>
     <string name="_bx_courses_page_title_browse"><![CDATA[Courses]]></string>
     <string name="_bx_courses_page_title_browse_by_author"><![CDATA[Courses of {display_name}]]></string>
+    <string name="_bx_courses_page_title_browse_by_context"><![CDATA[Courses in {display_name}]]></string>
     <string name="_bx_courses_page_title_browse_featured"><![CDATA[Featured Courses]]></string>
     <string name="_bx_courses_page_title_browse_top"><![CDATA[Top Courses]]></string>
     <string name="_bx_courses_page_title_browse_recent"><![CDATA[New Courses]]></string>
@@ -158,6 +161,8 @@
     <string name="_bx_courses_page_title_entries_favorites"><![CDATA[Favorites Courses]]></string>
     <string name="_bx_courses_page_block_title_sys_entries_actions"><![CDATA[Courses actions]]></string>
     <string name="_bx_courses_page_block_title_entries_actions"><![CDATA[Courses actions]]></string>
+    <string name="_bx_courses_page_block_title_sys_entries_in_context"><![CDATA[Courses in context]]></string>
+    <string name="_bx_courses_page_block_title_entries_in_context"><![CDATA[Courses in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_sys_favorites_entries"><![CDATA[Favorite List]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
@@ -175,6 +180,7 @@
     <string name="_bx_courses_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_courses_page_block_title_delete_profile"><![CDATA[Delete Course]]></string>
     <string name="_bx_courses_page_block_title_join_profile"><![CDATA[Join Course]]></string>
+    <string name="_bx_courses_page_block_title_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_courses_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_courses_page_block_title_system_profile_info"><![CDATA[Info]]></string>
@@ -276,6 +282,8 @@
     <string name="_bx_courses_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_courses_menu_item_title_system_view_joined_entries"><![CDATA[Courses]]></string>
     <string name="_bx_courses_menu_item_title_view_joined_entries"><![CDATA[Courses]]></string>
+    <string name="_bx_courses_menu_item_title_system_view_entries_in_context"><![CDATA[Courses]]></string>
+    <string name="_bx_courses_menu_item_title_view_entries_in_context"><![CDATA[Courses]]></string>
     <string name="_bx_courses_menu_item_title_system_view_fans"><![CDATA[Students]]></string>
     <string name="_bx_courses_menu_item_title_view_fans"><![CDATA[Students]]></string>
     <string name="_bx_courses_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
@@ -416,6 +424,7 @@
     <string name="_bx_courses_search_extended"><![CDATA[Courses Search]]></string>
     <string name="_bx_courses_search_extended_cmts"><![CDATA[Courses Comments Search]]></string>
 
+    <string name="_bx_courses_txt_all_entries_in"><![CDATA[<a href="{0}">All Courses in {1} ({2})</a>]]></string>
     <string name="_bx_courses_txt_account_pending"><![CDATA[This course is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_courses_txt_account_suspended"><![CDATA[This course is suspended.]]></string>
     <string name="_bx_courses_txt_status_hidden"><![CDATA[This course is hidden.]]></string>

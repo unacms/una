@@ -81,6 +81,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'URI_VIEW_ENTRY_NODE' => 'view-course-profile-node',
             'URI_EDIT_ENTRY' => 'edit-course-profile',
             'URI_EDIT_ENTRY_CONTENT' => 'edit-course-content',
+            'URI_ENTRIES_BY_CONTEXT' => 'courses-context',
             'URI_JOIN_ENTRY' => 'join-course-profile',
             'URI_JOINED_ENTRIES' => 'joined-courses',
             'URI_MANAGE_COMMON' => 'courses-manage',
@@ -180,8 +181,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_courses_period_units',
 
             'BADGES_AVALIABLE' => true,
-            
             'INVITES_KEYS_LIFETIME' => 86400,
+            'ENABLE_FOR_CONTEXT_IN_MODULES' => ['bx_spaces'],
 
             'EMAIL_INVITATION' => 'bx_courses_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_courses_join_request',
@@ -265,6 +266,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'menu_item_title_sm_leave_cancel' => '_bx_courses_menu_item_title_sm_leave_cancel',
                 'menu_item_title_sm_leave_reject' => '_bx_courses_menu_item_title_sm_leave_reject',
                 'txt_all_entries_by_author' => '_bx_courses_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_courses_page_title_browse_by_context',
+                'txt_all_entries_in' => '_bx_courses_txt_all_entries_in',
                 'txt_invitation_popup_title' => '_bx_courses_txt_invite_popup_title',
                 'txt_invitation_popup_text' => '_bx_courses_txt_invite_popup_text',
                 'txt_invitation_popup_accept_button' => '_bx_courses_txt_invite_popup_button_accept',

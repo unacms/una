@@ -255,6 +255,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(empty($iProfileId) || empty($CNF[$sCnfKey]) || !is_array($CNF[$sCnfKey]))
             $bRet = false;
 
+        $oProfile = null;
         if($bRet && !($oProfile = BxDolProfile::getInstance($iProfileId)))
             $bRet = false;
 
