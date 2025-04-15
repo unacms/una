@@ -17,7 +17,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_event
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_events';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_events';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_events';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_event_add', 'bx_event_delete', 'bx_event_edit', 'bx_event_edit_cover', 'bx_event_view', 'bx_event_view_full', 'bx_event_invite', 'bx_events_price_add', 'bx_events_price_edit');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_event_add', 'bx_event_delete', 'bx_event_edit', 'bx_event_edit_cover', 'bx_event_view', 'bx_event_view_full', 'bx_event_invite', 'bx_events_question_add', 'bx_events_question_edit', 'bx_events_session_add', 'bx_events_session_edit', 'bx_events_price_add', 'bx_events_price_edit');
 
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_events';
