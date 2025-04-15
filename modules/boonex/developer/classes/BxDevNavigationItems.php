@@ -41,7 +41,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_item_add');
 
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet;
+        $oForm->setId($sFormDisplay);
+        $oForm->setAction(BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet);
         $this->fillInSelects($oForm->aInputs);
 
         $oForm->initChecker();
@@ -55,9 +56,10 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_create'));
 
             echoJson($aRes);
-        } else {
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-create-popup', _t('_bx_dev_nav_txt_items_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
-                'form_id' => $oForm->aFormAttrs['id'],
+                'form_id' => $oForm->getId(),
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -83,7 +85,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
         $this->_prepareServiceEdit('visibility_custom', $aItem);
 
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet;
+        $oForm->setId($sFormDisplay);
+        $oForm->setAction(BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet);
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_nav_btn_items_save');
         $this->fillInSelects($oForm->aInputs);
 
@@ -100,9 +103,10 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_edit'));
 
             echoJson($aRes);
-        } else {
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-edit-popup', _t('_bx_dev_nav_txt_items_edit_popup', _t($aItem['title_system'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_item.html', array(
-                'form_id' => $oForm->aFormAttrs['id'],
+                'form_id' => $oForm->getId(),
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction

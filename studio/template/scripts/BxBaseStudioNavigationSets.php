@@ -258,7 +258,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
 
             $aSet = array();
             $this->oDb->getSets(array('type' => 'by_name', 'value' => $sId), $aSet, false);
-            if(!is_array($aSet) || empty($aSet))
+            if(!is_array($aSet) || empty($aSet) || !$this->_isDeletable($aSet))
                 continue;
 
             $aMenus = array();
@@ -331,7 +331,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if ($sType == 'single' && (int)$aRow['deletable'] != 1)
+        if ($sType == 'single' && !$this->_isDeletable($aRow))
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
@@ -342,6 +342,11 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
         parent::_getFilterControls();
 
         return  $this->getModulesSelectAll('getSets') . $this->getSearchInput();
+    }
+
+    protected function _isDeletable(&$aRow)
+    {
+    	return (int)$aRow['deletable'] != 0;
     }
 }
 

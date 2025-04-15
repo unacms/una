@@ -35,7 +35,12 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_menu_add');
 
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
+        $oForm->setId($sFormDisplay);
+        $oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', [
+            'o' => $this->_sObject, 
+            'a' => $sAction,
+            $this->_aOptions['filter_get'] => $this->_sFilter
+        ]));
         $this->fillInSelects($oForm->aInputs);
 
         $oForm->initChecker();
@@ -52,9 +57,10 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
                 $aRes = array('msg' => _t('_bx_dev_nav_err_menus_create'));
 
             echoJson($aRes);
-        } else {
+        } 
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-create-popup', _t('_bx_dev_nav_txt_menus_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
-                'form_id' => $oForm->aFormAttrs['id'],
+                'form_id' => $oForm->getId(),
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -71,13 +77,16 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_menu_edit');
 
         $aMenu = $this->_getItem('getMenus');
-        if($aMenu === false) {
-            echoJson(array());
-            exit;
-        }
+        if($aMenu === false)
+            return echoJson([]);
 
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
+        $oForm->setId($sFormDisplay);
+        $oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', [
+            'o' => $this->_sObject, 
+            'a' => $sAction,
+            $this->_aOptions['filter_get'] => $this->_sFilter
+        ]));
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_nav_btn_menus_save');
         $this->fillInSelects($oForm->aInputs);
 
@@ -91,9 +100,10 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
                 $aRes = array('msg' => _t('_bx_dev_nav_err_menus_edit'));
 
             echoJson($aRes);
-        } else {
+        } 
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-edit-popup', _t('_bx_dev_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
-                'form_id' => $oForm->aFormAttrs['id'],
+                'form_id' => $oForm->getId(),
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -227,6 +237,11 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         ]);
     }
 
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
+    }
+
     protected function onSave(&$oForm, &$aMenu) 
     {
         if(($sConfigApi = $oForm->getCleanValue('config_api')) && !$this->oModule->isValidJson($sConfigApi))
@@ -253,6 +268,11 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         $this->oDb->getTemplates(array('type' => 'all'), $aTemplates, false);
         foreach($aTemplates as $aTemplate)
             $aInputs['template_id']['values'][] = array('key' => $aTemplate['id'], 'value' => _t($aTemplate['title']));
+    }
+
+    protected function _isDeletable(&$aRow)
+    {
+    	return true;
     }
 }
 /** @} */
