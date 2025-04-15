@@ -11,13 +11,14 @@
 
 class BxQuoteOfDayGridInternal extends BxTemplGrid
 {
-    protected $MODULE;
+    protected $_sModule;
     protected $_oModule;
     
     public function __construct ($aOptions, $oTemplate = false)
     {
-        $this->MODULE = 'bx_quoteofday';
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
+        $this->_sModule = 'bx_quoteofday';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
         parent::__construct ($aOptions, $oTemplate);
     }
     
@@ -30,10 +31,13 @@ class BxQuoteOfDayGridInternal extends BxTemplGrid
     public function performActionAdd()
     {
         $sAction = 'add';
-        $oForm = BxDolForm::getObjectInstance('bx_quoteofday', 'bx_quoteofday_entry_add'); // get form instance for specified form object and display
-        if (!$oForm)
-            return '';
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r'));
+        $sDisplay = 'bx_quoteofday_entry_add';
+        $oForm = BxDolForm::getObjectInstance('bx_quoteofday', $sDisplay);
+        if(!$oForm)
+            return echoJson([]);
+
+        $oForm->setId($sDisplay);
+        $oForm->setAction(BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction);
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
             $mixedResult = $oForm->insert(array('added' => time()));
@@ -44,7 +48,7 @@ class BxQuoteOfDayGridInternal extends BxTemplGrid
             echoJson($aRes);
         }
         else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx_quoteofday_form_add', _t('_bx_quoteofday_form_add_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
+            $sContent = BxTemplFunctions::getInstance()->popupBox('bx_quoteofday_form_add', _t('_bx_quoteofday_form_add_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
                 'form_id' => $oForm->id,
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
@@ -56,16 +60,20 @@ class BxQuoteOfDayGridInternal extends BxTemplGrid
     
     public function performActionEdit()
     {
+        $iId = $this->_getId();
+
         $sAction = 'edit';
-        $aIds = bx_get('ids');
-        $iId = $aIds[0];
-        $oForm = BxDolForm::getObjectInstance('bx_quoteofday', 'bx_quoteofday_entry_edit'); // get form instance for specified form object and display
-        if (!$oForm)
-            return '';
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
-        $aContentInfo = array();
+        $sDisplay = 'bx_quoteofday_entry_edit';
+        $oForm = BxDolForm::getObjectInstance('bx_quoteofday', $sDisplay); // get form instance for specified form object and display
+        if(!$oForm)
+            return echoJson([]);
+        
+        $oForm->setId($sDisplay);
+        $oForm->setAction(BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&id=' . $iId);
+
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
-        $oForm->initChecker($aContentInfo, array());
+
+        $oForm->initChecker($aContentInfo);
         if($oForm->isSubmittedAndValid()) {
             $mixedResult = $oForm->update($iId);
             if(is_numeric($mixedResult))
@@ -75,8 +83,7 @@ class BxQuoteOfDayGridInternal extends BxTemplGrid
             echoJson($aRes);
         }
         else {
-            
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx_quoteofday_form_edit', _t('_bx_quoteofday_form_edit_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
+            $sContent = BxTemplFunctions::getInstance()->popupBox('bx_quoteofday_form_edit', _t('_bx_quoteofday_form_edit_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
                 'form_id' => $oForm->id,
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
@@ -88,13 +95,20 @@ class BxQuoteOfDayGridInternal extends BxTemplGrid
     
     public function performActionPublish()
     {
-        $aIds = bx_get('ids');
-        $iId = $aIds[0];
+        $iId = $this->_getId();
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+
         $this->_oModule->removeQuoteFromCache();
         $this->_oModule->putQuoteToCache($aContentInfo["text"]);
-        $aRes = array('msg' => _t('_bx_quoteofday_grid_action_title_adm_publish_text'));
-        echoJson($aRes);
+        echoJson(['msg' => _t('_bx_quoteofday_grid_action_title_adm_publish_text')]);
+    }
+
+    protected function _getId()
+    {
+        if(($aIds = bx_get('ids')) && is_array($aIds))
+            return array_shift($aIds);
+        else
+            return ($iId = bx_get('id')) !== false ? (int)$iId : false;
     }
 }
 
