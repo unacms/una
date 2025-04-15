@@ -636,6 +636,63 @@ class BxBaseModGeneralModule extends BxDolModule
      * @page service Service Calls
      * @section bx_base_general Base General
      * @subsection bx_base_general-other Other
+     * @subsubsection bx_base_general-get_link_add get_link_add
+     * 
+     * @code bx_srv('bx_posts', 'get_link_add', [...]); @endcode
+     * 
+     * Get add entry URL.
+     * 
+     * @see BxBaseModGeneralModule::serviceGetLinkAdd
+     */
+    /** 
+     * @ref bx_base_general-get_link_add "get_link_add"
+     */
+    public function serviceGetLinkAdd ()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sUri = '';
+        if(!empty($CNF['URI_ADD_ENTRY']))
+            $sUri = $CNF['URI_ADD_ENTRY'];
+        else if(($sKeyUri = 'URI_EDIT_ENTRY') && !empty($CNF[$sKeyUri]))
+            $sUri = str_replace('edit', 'create', $CNF[$sKeyUri]);           
+
+        return $sUri ? bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUri)) : '';
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-other Other
+     * @subsubsection bx_base_general-get_link_edit get_link_edit
+     * 
+     * @code bx_srv('bx_posts', 'get_link_edit', [...]); @endcode
+     * 
+     * Get edit entry URL for the specified content.
+     * @param $iContentId content id
+     * 
+     * @see BxBaseModGeneralModule::serviceGetLinkEdit
+     */
+    /** 
+     * @ref bx_base_general-get_link_edit "get_link_edit"
+     */
+    public function serviceGetLinkEdit ($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['URI_EDIT_ENTRY']))
+            return '';
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo))
+            return '';
+
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-other Other
      * @subsubsection bx_base_general-get_link get_link
      * 
      * @code bx_srv('bx_posts', 'get_link', [...]); @endcode
