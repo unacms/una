@@ -2527,20 +2527,27 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $sCmtIndex = 'i' . $iCmtId;
 
         if($bItem) {
-            $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
-            $oMenuActions->setCmtsData($this, $iCmtId, $aBp);
+            $aMenuActions = [];
+            if(($oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions)) !== false) {
+                $oMenuActions->setCmtsData($this, $iCmtId, $aBp);
+                $aMenuActions = $oMenuActions->getCodeAPI();
+            }
 
-            $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
-            $oMenuManage->setCmtsData($this, $iCmtId, $aBp);
+            $aMenuManage = [];
+            if(($oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage)) !== false) {
+                $oMenuManage->setCmtsData($this, $iCmtId, $aBp);
+                if($oMenuManage->isVisible())
+                    $aMenuManage = $oMenuManage->getShortCodeAPI();
+            }
 
             $aData = $this->getCommentSimple($iCmtId);
-            
+
             bx_import('BxDolEmbed');
             $aData['embed'] = bx_linkify_embeded($aData['cmt_text']);
-            
+
             $aData = array_merge($this->getDataAPI($aData), [
-                'menu_actions' => $oMenuActions->getCodeAPI(),
-                'menu_manage' => $oMenuManage->getShortCodeAPI(),
+                'menu_actions' => $aMenuActions,
+                'menu_manage' => $aMenuManage,
             ]);
 
             $aStructure[$sCmtIndex] = [
