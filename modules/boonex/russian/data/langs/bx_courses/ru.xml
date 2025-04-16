@@ -104,6 +104,8 @@
     <string name="_bx_courses_acl_action_delete_any_profile"><![CDATA[Удалять любой курс]]></string>
     <string name="_bx_courses_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
+    <string name="_bx_courses_page_title_sys_entries_in_context"><![CDATA[Курсы в контексте]]></string>
+    <string name="_bx_courses_page_title_entries_in_context"><![CDATA[Курсы в {display_name}]]></string>
     <string name="_bx_courses_page_title_sys_joined_entries"><![CDATA[Курсы профиля]]></string>
     <string name="_bx_courses_page_title_joined_entries"><![CDATA[Курсы профиля]]></string>
     <string name="_bx_courses_page_title_sys_create_profile"><![CDATA[Создать курс]]></string>
@@ -123,6 +125,7 @@
     <string name="_bx_courses_page_title_view_profile_node"><![CDATA[Урок]]></string>
     <string name="_bx_courses_page_title_browse"><![CDATA[Курсы]]></string>
     <string name="_bx_courses_page_title_browse_by_author"><![CDATA[Курсы {display_name}]]></string>
+    <string name="_bx_courses_page_title_browse_by_context"><![CDATA[Курсы в {display_name}]]></string>
     <string name="_bx_courses_page_title_browse_featured"><![CDATA[Продвинутые курсы]]></string>
     <string name="_bx_courses_page_title_browse_top"><![CDATA[Популярные курсы]]></string>
     <string name="_bx_courses_page_title_browse_recent"><![CDATA[Новые курсы]]></string>
@@ -155,9 +158,10 @@
     <string name="_bx_courses_page_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_courses_page_title_sys_entries_favorites"><![CDATA[Избранные курсы]]></string>
     <string name="_bx_courses_page_title_entries_favorites"><![CDATA[Избранные курсы]]></string>
-
     <string name="_bx_courses_page_block_title_sys_entries_actions"><![CDATA[Курсы - Действия]]></string>
     <string name="_bx_courses_page_block_title_entries_actions"><![CDATA[Курсы - Действия]]></string>
+    <string name="_bx_courses_page_block_title_sys_entries_in_context"><![CDATA[Курсы в контексте]]></string>
+    <string name="_bx_courses_page_block_title_entries_in_context"><![CDATA[Курсы в <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_sys_favorites_entries"><![CDATA[Избранное]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
@@ -175,6 +179,7 @@
     <string name="_bx_courses_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_courses_page_block_title_delete_profile"><![CDATA[Удалить курс]]></string>
     <string name="_bx_courses_page_block_title_join_profile"><![CDATA[Посетить курс]]></string>
+    <string name="_bx_courses_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_courses_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
     <string name="_bx_courses_page_block_title_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_courses_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
@@ -275,6 +280,8 @@
     <string name="_bx_courses_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_courses_menu_item_title_system_view_joined_entries"><![CDATA[Курсы]]></string>
     <string name="_bx_courses_menu_item_title_view_joined_entries"><![CDATA[Курсы]]></string>
+    <string name="_bx_courses_menu_item_title_system_view_entries_in_context"><![CDATA[Курсы]]></string>
+    <string name="_bx_courses_menu_item_title_view_entries_in_context"><![CDATA[Курсы]]></string>
     <string name="_bx_courses_menu_item_title_system_view_fans"><![CDATA[Студенты]]></string>
     <string name="_bx_courses_menu_item_title_view_fans"><![CDATA[Студенты]]></string>
     <string name="_bx_courses_menu_item_title_system_view_profile_comments"><![CDATA[Комментарии]]></string>
@@ -415,6 +422,7 @@
     <string name="_bx_courses_search_extended"><![CDATA[Поиск курсов]]></string>
     <string name="_bx_courses_search_extended_cmts"><![CDATA[Поиск комментариев к курсам]]></string>
 
+    <string name="_bx_courses_txt_all_entries_in"><![CDATA[<a href="{0}">Все курсы в {1} ({2})</a>]]></string>
     <string name="_bx_courses_txt_account_pending"><![CDATA[Этот курс ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_courses_txt_account_suspended"><![CDATA[Этот курс заблокирован.]]></string>
     <string name="_bx_courses_txt_status_hidden"><![CDATA[Этот курс скрыт.]]></string>

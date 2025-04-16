@@ -128,19 +128,14 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
     {
         $iAffected = 0;
         $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        if(!$aIds || !is_array($aIds))
+            return echoJson([]);
 
-        $aIdsAffected = array ();
+        $aIdsAffected = [];
         foreach($aIds as $iId) {
             $aMenu = array();
             $iMenu = $this->oDb->getMenus(array('type' => 'by_id', 'value' => (int)$iId), $aMenu);
-            if($iMenu != 1 || empty($aMenu))
-                continue;
-
-            if((int)$aMenu['deletable'] != 1)
+            if($iMenu != 1 || empty($aMenu) || !$this->_isDeletable($aMenu))
                 continue;
 
             if((int)$this->_delete($iId) <= 0)
@@ -214,10 +209,10 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if ($sType == 'single' && (int)$aRow['deletable'] != 1)
+        if($sType == 'single' && !$this->_isDeletable($aRow))
             return '';
 
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
+        return parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
     protected function _getFilterControls ()
@@ -406,6 +401,11 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             unset($oForm->aInputs['set_title']['checker']);
         else
             unset($oForm->aInputs['set_title']['tr_attrs']['style']);
+    }
+
+    protected function _isDeletable(&$aRow)
+    {
+    	return (int)$aRow['deletable'] != 0;
     }
 }
 

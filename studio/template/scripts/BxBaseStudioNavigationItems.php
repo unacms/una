@@ -8,6 +8,8 @@
  * @{
  */
 
+bx_import('BxDolStudioUtils');
+
 class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 {
     protected $sUrlPage;
@@ -179,13 +181,16 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
     {
         $iAffected = 0;
         $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        if(!$aIds || !is_array($aIds))
+            return echoJson([]);
 
-        $aIdsAffected = array ();
+        $aIdsAffected = [];
         foreach($aIds as $iId) {
+            $aItem = [];
+            $iItem = $this->oDb->getItems(['type' => 'by_id', 'value' => $iId], $aItem);
+            if($iItem != 1 || empty($aItem) || !$this->_isDeletable($aItem))
+                continue;            
+
             if(!$this->deleteById($iId))
                 continue;
 
@@ -945,7 +950,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
     	return (int)$aRow['editable'] != 0;
     }
 
-	protected function _isDeletable(&$aRow)
+    protected function _isDeletable(&$aRow)
     {
     	return $aRow['module'] != BX_DOL_STUDIO_MODULE_SYSTEM;
     }

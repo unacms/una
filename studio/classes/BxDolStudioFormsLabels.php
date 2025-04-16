@@ -32,6 +32,11 @@ class BxDolStudioFormsLabels extends BxTemplStudioGrid
 
     protected function _delete ($mixedId)
     {
+        $aChildren = $this->_oLabel->getLabels(['type' => 'parent', 'parent' => $mixedId]);
+        if(!empty($aChildren) && is_array($aChildren))
+            foreach($aChildren as $aChild)
+                $this->_delete($aChild['id']);
+
         $this->_oLabel->onDelete($mixedId);
 
         return parent::_delete($mixedId);

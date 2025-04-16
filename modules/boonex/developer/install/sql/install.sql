@@ -500,7 +500,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_set_add', 'do_submit', 2147483647, 1, 6),
 ('bx_developer_nav_set_add', 'cancel', 2147483647, 1, 7),
 ('bx_developer_nav_set_edit', 'module', 2147483647, 1, 1),
-('bx_developer_nav_set_edit', 'set_name', 2147483647, 0, 2),
+('bx_developer_nav_set_edit', 'set_name', 2147483647, 1, 2),
 ('bx_developer_nav_set_edit', 'title', 2147483647, 1, 3),
 ('bx_developer_nav_set_edit', 'deletable', 2147483647, 1, 4),
 ('bx_developer_nav_set_edit', 'controls', 2147483647, 1, 5),

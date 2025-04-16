@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_facebook',
     'title' => 'Facebook connect',
     'note' => 'Join the site using Facebook account.',
-    'version' => '13.0.6.DEV',
+    'version' => '14.0.1.DEV',
     'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '14.0.x'
     ),
 
     /**

@@ -572,7 +572,7 @@ class BxBasePage extends BxDolPage
                 ]);
             }
         }
-
+    
         /**
          * Profile/Context view page.
          */
@@ -643,9 +643,50 @@ class BxBasePage extends BxDolPage
             }
         }
 
-        if (isLogged()) {
-            $o = BxDolProfile::getInstance();
+        if(isLogged() && ($o = BxDolProfile::getInstance()) !== false) {
+            $iLogged = $o->id();
+
             $a['user'] = BxDolProfile::getDataForPage($o);
+
+            if(($sContextSwitcher = getParam('sys_api_context_switcher'))) {
+                $aContexts = [];
+
+                $aCpIds = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentByType($iLogged, $sContextSwitcher);
+                foreach($aCpIds as $iCpId)
+                    $aContexts[] = BxDolProfile::getData($iCpId);
+
+                $aInfo = [];
+                if(($iId = bx_get('id')) !== false) {
+                    $aInfo = bx_srv($sModule, 'get_info', [(int)$iId, false]);
+                }
+                else if(($iPid = bx_get('profile_id')) !== false) {
+                    $aInfo = bx_srv($sModule, 'get_content_info_by_profile_id', [(int)$iPid]);
+                }
+
+                $aCurrent = [];
+                if($aInfo && ($sKey = 'allow_view_to') && isset($aInfo[$sKey]) && ($iValue = (int)$aInfo[$sKey])) {
+                    $mixedContext = false;
+                    if($iValue < 0) {
+                        $aContext = BxDolProfileQuery::getInstance()->getInfoById(abs($iValue));
+                        if($aContext && $aContext['type'] == $sContextSwitcher)
+                            $mixedContext = (int)$aContext['id'];
+                    }
+                    else if($sModule == $sContextSwitcher)
+                        $mixedContext = BxDolProfile::getInstanceByContentAndType((int)$aInfo['id'], $sModule);
+
+                    if($mixedContext !== false)
+                        $aCurrent = BxDolProfile::getData($mixedContext);
+                }
+
+                $a['context'] = [
+                    'list' => $aContexts,
+                    'current' => $aCurrent,
+                    'create' => [
+                        'title' => 'Create New', //TODO: translate it
+                        'url' => bx_srv($sContextSwitcher, 'get_link_add')
+                    ]
+                ];
+            }
         }
 
         if(!$bIsAvailable)
