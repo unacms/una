@@ -958,6 +958,15 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$oPayments->isAcceptingPayments($this->_iProfileId))
             $sNote = MsgBox(_t('_sys_payments_err_not_accept_payments', $oPayments->getDetailsUrl()));
 
+        if($this->_bIsApi) {
+            $aBlocks = [];
+            if(!empty($sNote))
+                $aBlocks[] = bx_api_get_msg($sNote);
+            $aBlocks[] = bx_api_get_block('grid', $oGrid->getCodeAPI());
+
+            return $aBlocks;
+        }
+
         return $sNote . $oGrid->getCode();
     }
 

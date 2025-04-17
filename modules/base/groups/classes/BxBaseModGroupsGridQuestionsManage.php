@@ -75,7 +75,7 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
     	$sAction = 'add';
 
         if(($mixedResult = $this->_oModule->checkAllowedEdit($this->_aGroupContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-             return bx_is_api() ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
+             return $this->_bIsApi ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
 
         $sForm = $CNF['OBJECT_FORM_QUESTION_DISPLAY_ADD'];
     	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_QUESTION'], $CNF['OBJECT_FORM_QUESTION_DISPLAY_ADD']);
@@ -91,10 +91,10 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
             else
                 $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return bx_is_api() ? [] : echoJson($aResult);
+            return $this->_bIsApi ? [] : echoJson($aResult);
         }
 
-        if (bx_is_api())
+        if($this->_bIsApi)
             return $this->getFormBlockAPI($oForm, $sAction);
         
         bx_import('BxTemplFunctions');
@@ -115,16 +115,16 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
         $sAction = 'edit';
 
         if(($mixedResult = $this->_oModule->checkAllowedEdit($this->_aGroupContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-             return bx_is_api() ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
+             return $this->_bIsApi ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
 
         $aIds = $this->_getIds();
         if($aIds === false)
-            return echoJson([]);
+            return $this->_bIsApi ? [] : echoJson([]);
 
         $iItem = array_shift($aIds);
         $aItem = $this->_oModule->_oDb->getQuestions(['sample' => 'id', 'id' => $iItem]);
         if(!is_array($aItem) || empty($aItem))
-            return echoJson([]);
+            return $this->_bIsApi ? [] : echoJson([]);
 
         $sForm = $CNF['OBJECT_FORM_QUESTION_DISPLAY_EDIT'];
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_QUESTION'], $CNF['OBJECT_FORM_QUESTION_DISPLAY_EDIT']);
@@ -139,10 +139,10 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
             else
                 $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return bx_is_api() ? [] : echoJson($aResult);
+            return $this->_bIsApi ? [] : echoJson($aResult);
         }
 
-        if (bx_is_api())
+        if($this->_bIsApi)
             return $this->getFormBlockAPI($oForm, $sAction, $iItem);
         
         bx_import('BxTemplFunctions');
