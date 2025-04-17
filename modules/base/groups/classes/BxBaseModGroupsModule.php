@@ -922,7 +922,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return [
                 bx_api_get_block('grid', $oGrid->getCodeAPI())
             ];
-            
         }
 
         return $oGrid->getCode();
@@ -935,20 +934,20 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if(!$iProfileId)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if(!$this->_oConfig->isPaidJoin())
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $oPayments = BxDolPayments::getInstance();
-    	if(!$oPayments->isActive())
-            return MsgBox(_t('_sys_payments_err_no_payments'));
+        if(!$oPayments->isActive())
+            return ($sMsg = _t('_sys_payments_err_no_payments')) && $this->_bIsApi ? [bx_api_get_msg($sMsg)] : MsgBox($sMsg);
 
         if($this->checkAllowedUsePaidJoin() !== CHECK_ACTION_RESULT_ALLOWED)
-            return MsgBox(_t('_Access denied'));
+            return ($sMsg = _t('_Access denied')) && $this->_bIsApi ? [bx_api_get_msg($sMsg)] : MsgBox($sMsg);
 
         if($this->checkAllowedManageAdmins($iProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
-            return MsgBox(_t('_Access denied'));
+            return ($sMsg = _t('_Access denied')) && $this->_bIsApi ? [bx_api_get_msg($sMsg)] : MsgBox($sMsg);
 
         $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_PRICES_MANAGE']);
         if(!$oGrid)
@@ -977,14 +976,20 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if(!$iProfileId)
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         if(!$this->_oConfig->isPaidJoin())
-            return '';
+            return $this->_bIsApi ? [] : '';
 
         $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_PRICES_VIEW']);
         if(!$oGrid)
-            return '';
+            return $this->_bIsApi ? [] : '';
+
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+        }
 
         return $oGrid->getCode();
     }
