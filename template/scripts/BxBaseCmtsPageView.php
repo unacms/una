@@ -46,7 +46,11 @@ class BxBaseCmtsPageView extends BxTemplPage
     
     protected function _isAvailablePage ($a)
     {
-        if (!$this->_iCmtId)
+        if(!$this->_iCmtId)
+            return false;
+
+        $aCmt = $this->_oCmts->getCommentSimple($this->_iCmtId);
+        if(empty($aCmt) || !is_array($aCmt))
             return false;
 
         return parent::_isAvailablePage($a);
@@ -54,6 +58,11 @@ class BxBaseCmtsPageView extends BxTemplPage
 
     public function getCode()
     {
+        if (!$this->_isAvailablePage($this->_aObject)) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+
         if($this->_oCmts)
             BxDolTemplate::getInstance()->setPageUrl($this->_oCmts->getViewUrl($this->_iCmtId));
 
