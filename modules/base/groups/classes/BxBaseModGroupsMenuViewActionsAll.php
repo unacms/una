@@ -36,10 +36,14 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         
+        $mixedResult = $this->_getMenuItemByNameActions($aItem);
+        if(!$mixedResult)
+            return $mixedResult;
+
         if($this->_bIsApi && $CNF['OBJECT_CONNECTIONS'])
             return $this->_getMenuItemConnectionApi($CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
 
-        return $this->_getMenuItemByNameActions($aItem);
+        return $mixedResult;
     }
 
     protected function _getMenuItemProfileFanAddPaid($aItem)
@@ -51,10 +55,14 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         
+        $mixedResult = $this->_getMenuItemByNameActions($aItem);
+        if(!$mixedResult)
+            return $mixedResult;
+
         if($this->_bIsApi && $CNF['OBJECT_CONNECTIONS'])
             return $this->_getMenuItemConnectionApi($CNF['OBJECT_CONNECTIONS'], 'remove', $aItem);
 
-        return $this->_getMenuItemByNameActions($aItem);
+        return $mixedResult;
     }
 }
 
