@@ -33,10 +33,10 @@ class BxTemplMenuSidebarSite extends BxTemplMenu
         $aResult = parent::_getMenuItem($a);
         if(empty($aResult) || !is_array($aResult))
             return $aResult;
-
+                
         $aTmplVarsSubmenu = [];
-        $bTmplVarsSubmenu = !empty($aResult['submenu_object']);
-        if($bTmplVarsSubmenu) {
+        $bTmplVarsSubmenu = false;
+        if(($bTmplVarsSubmenu = (!empty($aResult['submenu_object']) && ($oSubmenu = BxDolMenu::getObjectInstance($aResult['submenu_object'])) !== false))) {
             $aResult['bx_if:onclick'] = [
                 'condition' => true,
                 'content' => [
@@ -44,13 +44,11 @@ class BxTemplMenuSidebarSite extends BxTemplMenu
             ]];
             $aResult['class_add'] .= ' bx-si-dropdown-has';
 
-            if(($oSubmenu = BxDolMenu::getObjectInstance($aResult['submenu_object'])) !== false) {
-                $aSubmenuItems = $oSubmenu->getMenuItemsRaw();
-                if($oSubmenu->isHtmx() && !$this->_isSelected($a) && !array_key_exists($this->_sPageUri, $aSubmenuItems))
-                    $oSubmenu->setHtmx(false);
+            $aSubmenuItems = $oSubmenu->getMenuItemsRaw();
+            if($oSubmenu->isHtmx() && !$this->_isSelected($a) && !array_key_exists($this->_sPageUri, $aSubmenuItems))
+                $oSubmenu->setHtmx(false);
 
-                $aTmplVarsSubmenu['bx_repeat:submenu_items'] = $oSubmenu->getMenuItems();
-            }
+            $aTmplVarsSubmenu['bx_repeat:submenu_items'] = $oSubmenu->getMenuItems();
         }
 
         $aResult['bx_if:show_arrow'] = [
