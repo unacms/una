@@ -103,16 +103,18 @@ class BxBaseModGroupsGridAdministration extends BxBaseModProfileGridAdministrati
 
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
-    
+
     protected function _getCellName($mixedValue, $sKey, $aField, $aRow)
     {
         $oProfile = $this->_getProfileObject($aRow['id']);
-        
-        if (bx_is_api()){
-            return ['type' => 'profile', 'data' => BxDolProfile::getData($oProfile->id())];
-        }
 
-        return parent::_getCellDefault($oProfile->getUnit(0, array('template' => 'unit_wo_cover')), $sKey, $aField, $aRow);
+        if($this->_bIsApi)
+            return ['type' => 'profile', 'data' => BxDolProfile::getData($oProfile->id())];
+
+        return parent::_getCellDefault($oProfile->getUnit(0, [
+            'template' => 'unit_wo_cover', 
+            'link_target' => '_blank'
+        ]), $sKey, $aField, $aRow);
     }
 
     protected function _getFilterControls()

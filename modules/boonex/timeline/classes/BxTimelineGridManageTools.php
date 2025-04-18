@@ -57,12 +57,13 @@ class BxTimelineGridManageTools extends BxBaseModGeneralGridAdministration
         $iProfile = $this->_oModule->_oConfig->isSystem($aRow['type'], $aRow['action']) ? $aRow['owner_id'] : $aRow['object_id'];
         $oProfile = $this->_getProfileObject($iProfile);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('grid_link.html', array(
+        $mixedValue = $this->_oTemplate->parseHtmlByName('grid_link.html', [
             'href' => $this->_oModule->serviceGetLink($aRow['id']),
-            'title' => bx_replace_markers($aRow['description'], array(
+            'target' => '_blank',
+            'title' => bx_replace_markers($aRow['description'], [
                 'profile_name' => $oProfile->getDisplayName()
-            ))
-        ));
+            ])
+        ]);
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

@@ -238,6 +238,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             ),
             'content_url' => $bPublic ? $sUrl : 'javascript:void(0);',
             'content_click' => !$bPublic ? 'javascript:bx_alert(' . bx_js_string('"' . _t('_sys_access_denied_to_private_content') . '"') . ');' : '',
+            'content_target' => !empty($aParams['link_target']) ? $aParams['link_target'] : '_self',
             'title' => $sTitle,
             'title_attr' => bx_html_attribute($sTitle),
             'addon' => !empty($aData['addon']) ? $aData['addon'] : '',

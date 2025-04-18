@@ -252,19 +252,18 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     protected function _getCellFullname($mixedValue, $sKey, $aField, $aRow)
     {
     	$oProfile = $this->_getProfileObject($aRow['id']);
-        
-        if (bx_is_api()){
-            return ['type' => 'profile', 'data' => BxDolProfile::getData($oProfile->id())];
-        }
 
-        return parent::_getCellDefault($oProfile->getUnit(), $sKey, $aField, $aRow);
+        if($this->_bIsApi)
+            return ['type' => 'profile', 'data' => BxDolProfile::getData($oProfile->id())];
+
+        return parent::_getCellDefault($oProfile->getUnit(0, ['link_target' => '_blank']), $sKey, $aField, $aRow);
     }
 
     protected function _getCellLastOnline($mixedValue, $sKey, $aField, $aRow)
     {
-        if (bx_is_api()){
+        if($this->_bIsApi)
             return ['type' => 'time', 'data' => $mixedValue];
-        }
+
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
 
