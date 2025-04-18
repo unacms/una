@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string name="_ADM_PROFILE_SEND_MSG"><![CDATA[Сообщение было удачно отправлено]]></string>
-	<string name="_ATT_ACTIVE_E"><![CDATA[Вы полноправный член нашего Сообщества. Но Вы можете заблокировать свой профиль, чтобы он был временно недоступен для других.]]></string>
-	<string name="_ATT_APPROVAL_E"><![CDATA[Активация Вашего профиля в процессе. Обычно это занимает до 24 часов. Спасибо за Ваше терпение.]]></string>
-	<string name="_ATT_REJECTED_E"><![CDATA[Ваш профиль быт отвергнут системным администратором, потому что он содержит неразрешённую или недостаточную информацию. Если у Вас есть вопросы, пожалуйста, <a target=_blank href="contact.php">напишите нам</a>. Не забудьте указать ID своего профиля.]]></string>
-	<string name="_ATT_SUSPENDED_E"><![CDATA[Ваш профиль временно не обслуживается {0} системой. Вы можете его активировать <a target=_blank href="change_status.php">здесь</a>. Если у Вас есть вопросы, пожалуйста, <a target=_blank href="contact.php">напишите Администратору</a>.]]></string>
-	<string name="_ATT_UNCONFIRMED_E"><![CDATA[Вам нужно нажать на ссылку, присланную в эл. сообщении, чтобы запросить активацию своего аккаунта. <br />Прислать мне <a target=_blank href="activation_email.php">письмо с подтверждением</a>.]]></string>
-	<string name="_Access denied"><![CDATA[Доступ запрещён]]></string>
-	<string name="_Action"><![CDATA[Действие]]></string>
-	<string name="_all"><![CDATA[Все]]></string>
-	<string name="_Allowed Since"><![CDATA[Разрешено с]]></string>
-	<string name="_Allowed Until"><![CDATA[Разрешено до]]></string>
+    <string name="_api_create_context"><![CDATA[Create Context]]></string>
+    <string name="_ADM_PROFILE_SEND_MSG"><![CDATA[Сообщение было удачно отправлено]]></string>
+    <string name="_ATT_ACTIVE_E"><![CDATA[Вы полноправный член нашего Сообщества. Но Вы можете заблокировать свой профиль, чтобы он был временно недоступен для других.]]></string>
+    <string name="_ATT_APPROVAL_E"><![CDATA[Активация Вашего профиля в процессе. Обычно это занимает до 24 часов. Спасибо за Ваше терпение.]]></string>
+    <string name="_ATT_REJECTED_E"><![CDATA[Ваш профиль быт отвергнут системным администратором, потому что он содержит неразрешённую или недостаточную информацию. Если у Вас есть вопросы, пожалуйста, <a target=_blank href="contact.php">напишите нам</a>. Не забудьте указать ID своего профиля.]]></string>
+    <string name="_ATT_SUSPENDED_E"><![CDATA[Ваш профиль временно не обслуживается {0} системой. Вы можете его активировать <a target=_blank href="change_status.php">здесь</a>. Если у Вас есть вопросы, пожалуйста, <a target=_blank href="contact.php">напишите Администратору</a>.]]></string>
+    <string name="_ATT_UNCONFIRMED_E"><![CDATA[Вам нужно нажать на ссылку, присланную в эл. сообщении, чтобы запросить активацию своего аккаунта. <br />Прислать мне <a target=_blank href="activation_email.php">письмо с подтверждением</a>.]]></string>
+    <string name="_Access denied"><![CDATA[Доступ запрещён]]></string>
+    <string name="_Action"><![CDATA[Действие]]></string>
+    <string name="_all"><![CDATA[Все]]></string>
+    <string name="_Allowed Since"><![CDATA[Разрешено с]]></string>
+    <string name="_Allowed Until"><![CDATA[Разрешено до]]></string>
     <string name="_Allowed actions"><![CDATA[Разрешённые действия]]></string>
     <string name="_anonymous"><![CDATA[Аноним]]></string>
     <string name="_anonymous_f"><![CDATA[Аноним ({0})]]></string>

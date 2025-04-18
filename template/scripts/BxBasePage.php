@@ -682,8 +682,8 @@ class BxBasePage extends BxDolPage
                     'list' => $aContexts,
                     'current' => $aCurrent,
                     'create' => [
-                        'title' => 'Create New', //TODO: translate it
-                        'url' => bx_srv($sContextSwitcher, 'get_link_add')
+                        'title' => _t('_api_create_context'),
+                        'url' => bx_api_get_relative_url(bx_srv($sContextSwitcher, 'get_link_add'))
                     ]
                 ];
             }
