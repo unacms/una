@@ -125,7 +125,6 @@ class UtilTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-
     /**
      * @see bx_is_serialized
      * @dataProvider providerForBxIsSerialized
@@ -143,5 +142,39 @@ class UtilTest extends \PHPUnit\Framework\TestCase
             array(serialize([]), true),
             array(serialize([new stdClass()]), true),
         );
+    }
+
+    /**
+     * @see bx_process_output
+     * @dataProvider providerForBxProcessOutputHtml
+     */
+    function testBxProcessOutputHtml($sIn, $sOut)
+    {
+        $this->assertEquals(bx_process_output($sIn, BX_DATA_HTML), $sOut);
+    }
+    public function providerForBxProcessOutputHtml()
+    {
+        return [
+            ['<p>text</p><iframe src="https://example.com" /><p>text</p>', '<p>text</p><iframe src="https://example.com"></iframe><p>text</p>'],
+            ['<p>text</p><img src="https://example.com" /><p>text</p>', '<p>text</p><img src="https://example.com"><p>text</p>'],
+            ['<p>text</p><br/><br><br /><p>text</p>', '<p>text</p><br><p>text</p>'],
+            ['<p>text</p><p></p><p>  </p><p>text</p>', '<p>text</p><p>text</p>'],
+            ['<p>www.example.com</p>', '<p><a class="bx-link" target="_blank" rel="nofollow" href="http://www.example.com">www.example.com</a></p>'],
+        ];
+    }
+
+    /**
+     * @see bx_process_output
+     * @dataProvider providerForBxProcessOutputText
+     */
+    function testBxProcessOutputText($sIn, $sOut)
+    {
+        $this->assertEquals(bx_process_output($sIn, BX_DATA_TEXT), $sOut);
+    }
+    public function providerForBxProcessOutputText()
+    {
+        return [
+            ['text <script>alert(1);</script>', 'text &lt;script&gt;alert(1);&lt;/script&gt;'],
+        ];
     }
 }
