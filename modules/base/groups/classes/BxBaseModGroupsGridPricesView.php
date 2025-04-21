@@ -193,9 +193,10 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
         if($this->_bIsApi)
             return array_merge($a, [
                 'name' => $sKey, 
-                'type' => 'callback', 
-                'on_callback' => 'redirect',
-                'redirect_url' => bx_api_get_relative_url(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_iGroupContentId))
+                'type' => 'object', 
+                'object_name' => 'stripe_v3',
+                'seller_id' => $this->_iSeller,
+                'items' => [$this->_oPayment->getCartItemDescriptor($this->_iSeller, $this->_oModule->_oConfig->getId(), $aRow['id'], 1)],
             ]);
 
         $aJs = $this->_oPayment->getSubscribeJs($this->_iSeller, '', $this->_sModule, $aRow['id'], 1);

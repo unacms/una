@@ -211,8 +211,9 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
              */
             if($bProviderCredits && $bPayForCredits)
                 continue;
-            
+
             $aActions[$aProvider['name']] = [
+                'name' => $aProvider['name'],
                 'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
                 'icon' => '',
                 'icon_only' => 0,
