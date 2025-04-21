@@ -235,9 +235,9 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_HTML:
         $s = bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
 
-        // remove empty tags from html content: #4203, #4486, #4827
-        $s = preg_replace('/<([a-z]+)(?:\s[^>]*)?>((?:\s|<br\s*\/?>)*)<\/\1>/i', '', $s);
-        $s = preg_replace('/(<br\s*\/?>\s*){2,}/i', '<br>', $s);
+        // remove empty tags from html content: #4203, #4486, #4827, #4979
+        $s = preg_replace('/<(div|p|blockquote|pre|section|article)(?:\s[^>]*)?'.'>((?:\s|<br\s*\/?'.'>)*)<\/\1>/i', '', $s);
+        $s = preg_replace('/(<br\s*\/?'.'>\s*){2,}/i', '<br>', $s);
         return $mixedParams && is_array($mixedParams) && in_array('no_process_macro', $mixedParams) ? $s : bx_process_macros($s);
     case BX_DATA_TEXT_MULTILINE:
         $s = $mixedData;
