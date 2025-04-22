@@ -146,9 +146,16 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if($mixedMessage->isAi() || !$this->callMessages($sThreadId, ['role' => 'user', 'content' => $mixedMessage->getContent()]))
             return false;
 
-        $sAssistantId = isset($aParams['assistant_id']) ? $aParams['assistant_id'] : $this->_getAssistantId($sType);
-        if(!$this->callRuns($sThreadId, ['assistant_id' => $sAssistantId]))
+        $aResponse = $this->callRuns($sThreadId, [
+            'assistant_id' => isset($aParams['assistant_id']) ? $aParams['assistant_id'] : $this->_getAssistantId($sType)
+        ]);
+
+        if(!$aResponse || (isset($aResponse['status']) && $aResponse['status'] != 'completed')) {
+            if(!empty($aResponse['last_error']) && is_array($aResponse['last_error']))
+                return $aResponse['last_error']['message'];
+
             return false;
+        }
 
         return $this->getMessages($sThreadId);
     }
@@ -209,7 +216,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if($aResponse !== false && isset($aResponse['id'])) {
             $sRunId = $aResponse['id'];
 
-            while($aResponse['status'] != 'completed') {
+            while($aResponse['status'] == 'queued') {
                 sleep(2);
 
                 $aResponse = $this->_call(sprintf($this->_sEndpointRunsCheck, $sThreadId, $sRunId), [], 'get');
