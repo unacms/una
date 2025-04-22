@@ -690,7 +690,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-
         if (!$iContentId)
             return false;
 
@@ -700,6 +699,29 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
             return false;
+
+        if($this->_bIsApi) {
+            $aParams = bx_api_get_browse_params($bAsArray);
+
+            $iStart = isset($aParams['start']) ? (int)$aParams['start'] : 0;
+            $iLimit = isset($aParams['per_page']) ? (int)$aParams['per_page'] : 0;
+            $iLimit = !$iLimit && ($sKey = 'PARAM_NUM_CONNECTIONS_QUICK') && !empty($CNF[$sKey]) && ($iValue = (int)getParam($CNF[$sKey])) ? $iValue : 4;
+
+            $aData = [
+                'data' => [],
+                'request_url' => '/api.php?r=' . $this->_oConfig->getName() . '/fans/&params[]=' . $iContentId . '&params[]=',
+                'params' => [
+                    'start' => $iStart,
+                    'per_page' => $iLimit
+                ]
+            ];
+
+            $aProfiles = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true, $iStart, $iLimit);
+            foreach($aProfiles as $iProfileId)
+                $aData['data'][] = BxDolProfile::getData($iProfileId);
+
+            return [bx_api_get_block('profiles_list', $aData)];
+        }
 
         if(!$bAsArray) {
             bx_import('BxDolConnection');
@@ -745,7 +767,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_serviceBrowseQuick($aFans, $iStart, $iLimit);
     }
 
-    public function serviceAdmins ($iContentId = 0)
+    public function serviceAdmins ($iContentId = 0, $sParams = '')
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -759,13 +781,35 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         $iStart = (int)bx_get('start');
-        $iLimit = !empty($CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? getParam($CNF['PARAM_NUM_CONNECTIONS_QUICK']) : 4;
+        $iLimit = !empty($CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? (int)getParam($CNF['PARAM_NUM_CONNECTIONS_QUICK']) : 4;
         if(!$iLimit)
             $iLimit = 4;
-        
+
+        if($this->_bIsApi && ($aParams = bx_api_get_browse_params($sParams))) {
+            if(isset($aParams['start']))
+                $iStart = (int)$aParams['start'];
+            if(isset($aParams['per_page']))
+                $iLimit = (int)$aParams['per_page'];
+        }
+
         $aProfiles = $this->_oDb->getAdmins($oGroupProfile->id(), $iStart,  $iLimit+1);
         if(empty($aProfiles) || !is_array($aProfiles))
             return false;
+
+        if($this->_bIsApi) {
+            $aData = [
+                'data' => [],
+                'request_url' => '/api.php?r=' . $this->_oConfig->getName() . '/admins/&params[]=' . $iContentId . '&params[]=',
+                'params' => [
+                    'start' => $iStart,
+                    'per_page' => $iLimit
+                ]
+            ];
+            foreach($aProfiles as $iProfileId)
+                $aData['data'][] = BxDolProfile::getData($iProfileId);
+
+            return [bx_api_get_block('profiles_list', $aData)];
+        }
 
         return $this->_serviceBrowseQuick($aProfiles, $iStart, $iLimit);
     }
