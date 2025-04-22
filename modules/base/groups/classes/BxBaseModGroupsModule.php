@@ -707,6 +707,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             $iLimit = isset($aParams['per_page']) ? (int)$aParams['per_page'] : 0;
             $iLimit = !$iLimit && ($sKey = 'PARAM_NUM_CONNECTIONS_QUICK') && !empty($CNF[$sKey]) && ($iValue = (int)getParam($CNF[$sKey])) ? $iValue : 4;
 
+            $aProfiles = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true, $iStart, $iLimit);
+            if(empty($aProfiles) || !is_array($aProfiles))
+                return false;
+
             $aData = [
                 'data' => [],
                 'request_url' => '/api.php?r=' . $this->_oConfig->getName() . '/fans/&params[]=' . $iContentId . '&params[]=',
@@ -716,7 +720,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                 ]
             ];
 
-            $aProfiles = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true, $iStart, $iLimit);
             foreach($aProfiles as $iProfileId)
                 $aData['data'][] = BxDolProfile::getData($iProfileId);
 
