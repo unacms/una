@@ -270,3 +270,9 @@ div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
 }
+.bx-base-profile-entity-content.bx-def-vanilla-html:first-child {
+    margin-top: 0;
+}
+.bx-base-profile-entity-content.bx-def-vanilla-html:last-child {
+    margin-bottom: 0;
+}
