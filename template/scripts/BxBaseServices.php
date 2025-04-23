@@ -697,12 +697,25 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     	}
     	$oMenu->setSelected($sDefault, $sDefault);
 
+        $oContext = false;
         $bContext = $mixedContextId !== false;
-        if($bContext && ($aContextInfo = BxDolProfileQuery::getInstance()->getInfoById(abs($mixedContextId))))
-            if(bx_srv($aContextInfo['type'], 'check_allowed_post_in_profile', [$aContextInfo['content_id'], $sDefault]) !== CHECK_ACTION_RESULT_ALLOWED)
+        if($bContext && ($oContext = BxDolProfile::getInstance(abs($mixedContextId))) !== false)
+            if(bx_srv($oContext->getModule(), 'check_allowed_post_in_profile', [$oContext->getContentId(), $sDefault]) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';
 
-        $sTitle = _t('_sys_page_block_title_create_post' . (!$bContext ? '_public' : ($mixedContextId < 0 ? '_context' : '')));
+        $sTitle = '_sys_page_block_title_create_post';
+        if(!$bContext)
+            $sTitle = _t($sTitle . '_public');
+        else if($mixedContextId < 0) {
+            $sTitle = _t($sTitle . '_context');
+            if($oContext)
+                $sTitle = bx_replace_markers($sTitle, [
+                    'display_name' => $oContext->getDisplayName()
+                ]);
+        }
+        else
+            $sTitle = _t($sTitle);
+
         $sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
 
         $oDbModules = BxDolModuleQuery::getInstance();
