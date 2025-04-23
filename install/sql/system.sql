@@ -91,7 +91,8 @@ CREATE TABLE `sys_objects_sms` (
 );
 
 INSERT INTO `sys_objects_sms` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
-('sys_twilio', 'Twilio', 'BxDolSmsTwilio', '');
+('sys_twilio', 'Twilio', 'BxDolSmsTwilio', ''),
+('sys_smsru', 'SMS.RU', 'BxDolSmsSmsRu', '');
 
 
 -- --------------------------------------------------------
@@ -741,7 +742,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_sms_twilio_sid', '_adm_stg_cpt_option_sys_sms_twilio_sid', '', 'digit', '', '', '', 11),
 (@iCategoryId, 'sys_sms_twilio_token', '_adm_stg_cpt_option_sys_sms_twilio_token', '', 'digit', '', '', '', 12),
-(@iCategoryId, 'sys_sms_twilio_from_number', '_adm_stg_cpt_option_sys_sms_twilio_from_number', '', 'digit', '', '', '', 13);
+(@iCategoryId, 'sys_sms_twilio_from_number', '_adm_stg_cpt_option_sys_sms_twilio_from_number', '', 'digit', '', '', '', 13),
+
+(@iCategoryId, 'sys_sms_smsru_api_id', '_adm_stg_cpt_option_sys_sms_smsru_api_id', '', 'digit', '', '', '', 21),
+(@iCategoryId, 'sys_sms_smsru_from_number', '_adm_stg_cpt_option_sys_sms_smsru_from_number', '', 'digit', '', '', '', 22);
 
 
 --

@@ -1665,6 +1665,8 @@
     <string name="_adm_stg_cpt_option_sys_sms_twilio_sid"><![CDATA[Twilio: SID учетной записи]]></string>
     <string name="_adm_stg_cpt_option_sys_sms_twilio_token"><![CDATA[Twilio: Токен аутентификации]]></string>
     <string name="_adm_stg_cpt_option_sys_sms_twilio_from_number"><![CDATA[Twilio: Номер для отправки SMS по умолчанию]]></string>
+    <string name="_adm_stg_cpt_option_sys_sms_smsru_api_id"><![CDATA[SMS.RU: API ID]]></string>
+    <string name="_adm_stg_cpt_option_sys_sms_smsru_from_number"><![CDATA[SMS.RU: Номер для отправки SMS по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_nominatim_server"><![CDATA[Nominatim сервер (URL)]]></string>    
     <string name="_adm_stg_cpt_option_sys_nominatim_email"><![CDATA[Nominatim Email адрес (чтобы идентифицировать запросы)]]></string>
     <string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA/hCaptcha - приватный ключ]]></string>
