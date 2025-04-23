@@ -434,6 +434,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ]);
 
         $aForm = [
+            'form_attrs' => [
+                'name' => $this->_oConfig->getName() . '_filters',
+            ],
             'inputs' => array_merge($aInputs, [                
                 'apply' => [
                     'name' => 'apply',
