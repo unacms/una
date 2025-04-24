@@ -1132,17 +1132,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
 
         if (defined('BX_DOL_URL_ROOT') && 0 === strpos($sFileUrl, BX_DOL_URL_ROOT)) {
-            $sAllCookies = '';
-            foreach($_COOKIE as $sKey => $mValue){
-                if(is_array($mValue)){
-                    foreach ($mValue as $k => $v)
-                        $sAllCookies .= "{$sKey}[{$k}]={$v};";
-                }
-                else{
-                    $sAllCookies .= $sKey . '=' . $mValue . ';';
-                }
-            }
-            curl_setopt($rConnect, CURLOPT_COOKIE, $sAllCookies);
+            curl_setopt($rConnect, CURLOPT_COOKIE, http_build_query($_COOKIE, '', '; ', PHP_QUERY_RFC3986));
         }
 
         if ($aCustomCurlParams)
