@@ -101,16 +101,19 @@ class BxPaymentCart extends BxBaseModPaymentCart
                 'content' => MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']))
             ];
 
+        $aSeller = $this->_oModule->getProfileInfo($iSellerId);
+
+        $sTitle = _t($CNF['T']['BLOCK_TITLE_CART'], $aSeller['name']);
         $mixedContent = $this->_oModule->_oTemplate->displayBlockCart($iUserId, $iSellerId);
 
         if($this->_bIsApi)
             return [
-                bx_api_get_block('grid', $mixedContent)
+                'title' => $sTitle,
+                'content' => [bx_api_get_block('grid', $mixedContent)]
             ];
 
-        $aSeller = $this->_oModule->getProfileInfo($iSellerId);
         return [
-            'title' => _t($CNF['T']['BLOCK_TITLE_CART'], $aSeller['name']),
+            'title' => $sTitle,
             'content' => $mixedContent
         ];
     }
