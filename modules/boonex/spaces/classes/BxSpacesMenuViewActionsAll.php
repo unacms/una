@@ -55,6 +55,18 @@ class BxSpacesMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
+    
+    protected function _getMenuItemRate($aItem, $aParams = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!is_array($aParams))
+            $aParams = [];
+
+        return parent::_getMenuItemVote($aItem, array_merge($aParams, [
+            'object' => $CNF['OBJECT_VOTES_STARS']
+        ]));
+    }
 }
 
 /** @} */

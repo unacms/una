@@ -3284,6 +3284,7 @@
     <string name="_sys_menu_item_title_system_va_score"><![CDATA[Проголосовать (за/против)]]></string>
     <string name="_sys_menu_item_title_system_va_favorite"><![CDATA[В избранное]]></string>
     <string name="_sys_menu_item_title_system_va_feature"><![CDATA[В продвинутые]]></string>
+    <string name="_sys_menu_item_title_system_va_rate"><![CDATA[Оценить]]></string>
     <string name="_sys_menu_item_title_system_va_reaction"><![CDATA[Отреагировать]]></string>
     <string name="_sys_menu_item_title_system_va_repost"><![CDATA[Сделать репост]]></string>
     <string name="_sys_menu_item_title_system_va_repost_with_text"><![CDATA[Сделать репост с текстом]]></string>

@@ -72,6 +72,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-space-profile',
+            'URI_ADD_ENTRY' => 'create-space-profile',
             'URI_EDIT_ENTRY' => 'edit-space-profile',
             'URI_JOIN_ENTRY' => 'join-space-profile',
             'URI_JOINED_ENTRIES' => 'joined-spaces',
@@ -109,6 +110,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_spaces_gallery',
             'OBJECT_VIEWS' => 'bx_spaces',
             'OBJECT_VOTES' => 'bx_spaces',
+            'OBJECT_VOTES_STARS' => 'bx_spaces_stars',
             'OBJECT_SCORES' => 'bx_spaces',
             'OBJECT_FAVORITES' => 'bx_spaces',
             'OBJECT_FEATURED' => 'bx_spaces',

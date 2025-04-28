@@ -181,6 +181,7 @@
     <string name="_bx_spaces_page_block_title_joined_profiles"><![CDATA[Мои пространства]]></string>
     <string name="_bx_spaces_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_spaces_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
+    <string name="_bx_spaces_page_block_title_entry_rating"><![CDATA[Рейтинг]]></string>
     <string name="_bx_spaces_page_block_title_categories"><![CDATA[Категории пространств]]></string>
     <string name="_bx_spaces_page_block_title_invite_to_space"><![CDATA[Пригласить участников в пространство]]></string>
     <string name="_bx_spaces_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
@@ -370,6 +371,7 @@
     <string name="_bx_spaces_txt_n_unit"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_spaces_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
     <string name="_bx_spaces_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (пожизненно)]]></string>
+    <string name="_bx_spaces_txt_vote_starts_counter"><![CDATA[{0} голосов]]></string>
 
     <string name="_bx_spaces_msg_performed"><![CDATA[Действие было успешно выполнено.]]></string>
     <string name="_bx_spaces_err_price_duplicate"><![CDATA[Аналогичный ценовой план уже существует.]]></string>

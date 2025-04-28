@@ -86,7 +86,7 @@
     <string name="_bx_spaces_acl_action_delete_profile"><![CDATA[Delete Space]]></string>
     <string name="_bx_spaces_acl_action_view_profile"><![CDATA[View Space]]></string>
     <string name="_bx_spaces_acl_action_edit_any_profile"><![CDATA[Edit Any Space]]></string>
-	<string name="_bx_spaces_acl_action_delete_any_profile"><![CDATA[Delete Any Space]]></string>
+    <string name="_bx_spaces_acl_action_delete_any_profile"><![CDATA[Delete Any Space]]></string>
     <string name="_bx_spaces_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 	
 	<string name="_bx_spaces_page_title_sys_joined_entries"><![CDATA[Profile Spaces]]></string>
@@ -151,9 +151,9 @@
 	<string name="_bx_spaces_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_sys_joined_entries"><![CDATA[Joined Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_joined_entries"><![CDATA[Joined Spaces]]></string>
-  <string name="_bx_spaces_page_block_title_parent"><![CDATA[Parent Space]]></string>
-  <string name="_bx_spaces_page_block_title_childs"><![CDATA[Child Spaces]]></string>
-  <string name="_bx_spaces_page_block_title_create_profile"><![CDATA[Create Space]]></string>
+        <string name="_bx_spaces_page_block_title_parent"><![CDATA[Parent Space]]></string>
+        <string name="_bx_spaces_page_block_title_childs"><![CDATA[Child Spaces]]></string>
+        <string name="_bx_spaces_page_block_title_create_profile"><![CDATA[Create Space]]></string>
 	<string name="_bx_spaces_page_block_title_edit_profile"><![CDATA[Edit Space]]></string>
 	<string name="_bx_spaces_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
         <string name="_bx_spaces_page_block_title_edit_profile_settings"><![CDATA[Edit Settings]]></string>
@@ -173,8 +173,8 @@
 	<string name="_bx_spaces_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_spaces_page_block_title_system_fans"><![CDATA[Members]]></string>
-  <string name="_bx_spaces_page_block_title_fans_invites"><![CDATA[Invites]]></string>
-  <string name="_bx_spaces_page_block_title_system_invites"><![CDATA[Invites]]></string>
+        <string name="_bx_spaces_page_block_title_fans_invites"><![CDATA[Invites]]></string>
+        <string name="_bx_spaces_page_block_title_system_invites"><![CDATA[Invites]]></string>
         <string name="_bx_spaces_page_block_title_profile_location"><![CDATA[Location]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_spaces_page_block_title_entry_reports"><![CDATA[Reports]]></string>
@@ -189,6 +189,7 @@
         <string name="_bx_spaces_page_block_title_joined_profiles"><![CDATA[Joined Spaces]]></string>
         <string name="_bx_spaces_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_spaces_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
+        <string name="_bx_spaces_page_block_title_entry_rating"><![CDATA[Rating]]></string>
 	<string name="_bx_spaces_page_block_title_categories"><![CDATA[Spaces Categories]]></string>
 	<string name="_bx_spaces_page_block_title_invite_to_space"><![CDATA[Invite Members to the Space]]></string>
 	<string name="_bx_spaces_page_block_title_search_form"><![CDATA[Search Form]]></string>
@@ -199,9 +200,9 @@
 	<string name="_bx_spaces_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Recommended Spaces (Showcase View)]]></string>
 	<string name="_bx_spaces_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended Spaces]]></string>
-  <string name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Top Level Spaces]]></string>
-  <string name="_bx_spaces_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
-  <string name="_bx_spaces_page_block_title_cover_block"><![CDATA[Cover]]></string>
+        <string name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Top Level Spaces]]></string>
+        <string name="_bx_spaces_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
+        <string name="_bx_spaces_page_block_title_cover_block"><![CDATA[Cover]]></string>
 
         <string name="_bx_spaces_menu_title_submenu"><![CDATA[Spaces Submenu]]></string>
 	<string name="_bx_spaces_menu_set_title_submenu"><![CDATA[Spaces Submenu]]></string>
@@ -373,7 +374,8 @@
     <string name="_bx_spaces_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this space. This invitation cannot be used by you.]]></string>
     <string name="_bx_spaces_txt_n_unit"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_spaces_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
-    <string name="_bx_spaces_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (lifetime)]]></string>    
+    <string name="_bx_spaces_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (lifetime)]]></string>
+    <string name="_bx_spaces_txt_vote_starts_counter"><![CDATA[{0} ratings]]></string>
 
     <string name="_bx_spaces_msg_performed"><![CDATA[The action was successfully performed.]]></string>
     <string name="_bx_spaces_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>

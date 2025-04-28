@@ -52,7 +52,23 @@ class BxSpacesTemplate extends BxBaseModGroupsTemplate
             'content' => $this->getBrowseQuick([$aData[$CNF['FIELD_PARENT']]], $aParams['template'])
         ]);
     }
-    
+
+    public function entryRating($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $sVotes = '';
+        if(($oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $aData['id']))) {
+            $sVotes = $oVotes->getElementBlock(['show_counter' => true, 'show_legend' => true]);
+            if(!empty($sVotes))
+                $sVotes = $this->parseHtmlByName('entry-rating.html', [
+                    'content' => $sVotes,
+                ]);
+        }
+
+        return $sVotes; 
+    }
+
     private function getBrowseQuick($aProfiles, $sTemplate = 'unit_wo_cover')
     {
         $sRv = '';

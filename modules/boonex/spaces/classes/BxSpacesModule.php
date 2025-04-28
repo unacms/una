@@ -65,7 +65,30 @@ class BxSpacesModule extends BxBaseModGroupsModule
     {
         return $this->_serviceTemplateFuncEx ('entryChilds', $iContentId, $aParams);
     }
-    
+
+    /**
+     * @page service Service Calls
+     * @section bx_spaces Spaces
+     * @subsection bx_spaces-page_blocks Page Blocks
+     * @subsubsection bx_spaces-entity_rating entity_rating
+     * 
+     * @code bx_srv('bx_spaces', 'entity_rating', [...]); @endcode
+     * 
+     * Get page block with Stars based space's rating.
+     *
+     * @param $iContentId (optional) space's ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return HTML string with block content to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxSpacesModule::serviceEntityRating
+     */
+    /** 
+     * @ref bx_spaces-entity_rating "entity_rating"
+     */
+    public function serviceEntityRating($iContentId = 0)
+    {
+    	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
+    }
+
     public function serviceBrowseTopLevel ($bDisplayEmptyMsg = false)
     {
         return $this->_serviceBrowse ('top_level', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
