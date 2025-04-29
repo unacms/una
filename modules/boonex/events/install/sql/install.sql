@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `hashtag` varchar(32) NOT NULL,
   `date_start` int(11) DEFAULT NULL,
   `date_end` int(11) DEFAULT NULL,
+  `date_max` int(11) DEFAULT NULL,
   `timezone` varchar(255) DEFAULT NULL,
   `labels` text NOT NULL,
   `location` text NOT NULL,

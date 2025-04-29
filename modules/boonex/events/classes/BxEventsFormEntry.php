@@ -305,12 +305,21 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
 
+        $iDateMax = $aValsToAdd['date_end'];
+
         if (isset($this->aInputs['reoccurring']) && is_array($this->aInputs['reoccurring']['ghost_template']) && !isset($this->aInputs['reoccurring']['ghost_template']['inputs'])) {
             foreach ($this->aInputs['reoccurring']['ghost_template'] as $oFormNested) {
+
+                $iStopRepeating = bx_process_input($oFormNested->getSubmittedValue('repeat_stop', BX_DOL_FORM_METHOD_SPECIFIC, $aSpecificValues), BX_DATA_DATE_TS);
+                if ($iStopRepeating > $iDateMax || 0 == (int)$iStopRepeating)
+                    $iDateMax = (int)$iStopRepeating;
+
                 $oFormNested->insert(array('event_id' => $iContentId));
             }
         }
         
+        $this->_oModule->_oDb->updateEntriesBy(['date_max' => $iDateMax], ['id' => $iContentId]);
+
         return $iContentId;
     }
 
@@ -320,10 +329,17 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
         $iAffectedRows = parent::update($val, $aValsToAdd, $aTrackTextFieldsChanges);
 
+        $iDateMax = $aValsToAdd['date_end'];
+
         if (isset($this->aInputs['reoccurring']) && is_array($this->aInputs['reoccurring']['ghost_template']) && !isset($this->aInputs['reoccurring']['ghost_template']['inputs'])) {
             foreach ($this->aInputs['reoccurring']['ghost_template'] as $oFormNested) {
                 $aSpecificValues = $oFormNested->getSpecificValues();
                 $iIntervalId = $oFormNested->getSubmittedValue('interval_id', BX_DOL_FORM_METHOD_SPECIFIC, $aSpecificValues);
+
+                $iStopRepeating = bx_process_input($oFormNested->getSubmittedValue('repeat_stop', BX_DOL_FORM_METHOD_SPECIFIC, $aSpecificValues), BX_DATA_DATE_TS);
+                if ($iStopRepeating > $iDateMax || 0 == (int)$iStopRepeating)
+                    $iDateMax = (int)$iStopRepeating;
+
                 if ($iIntervalId) {
                     $oFormNested->update($iIntervalId);
                 } else {
@@ -331,7 +347,9 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
                 }
             }
         }
-        
+
+        $this->_oModule->_oDb->updateEntriesBy(['date_max' => $iDateMax], ['id' => $this->_iContentId]);
+
         return $iAffectedRows;
     }
     
