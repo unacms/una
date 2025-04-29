@@ -16,6 +16,9 @@ class BxDolAIModel extends BxDol
     protected $_sKey;
     protected $_aParams;
 
+    protected $_mixedError;
+    protected $_bError;
+
     public function __construct($aModel)
     {
         parent::__construct();
@@ -30,6 +33,9 @@ class BxDolAIModel extends BxDol
         $this->_sCaption = _t($aModel['title']);
         $this->_sKey = !empty($aModel['key']) ? $aModel['key'] : BxDolAI::getDefaultApiKey();
         $this->_aParams = !empty($aModel['params']) ? json_decode($aModel['params'], true) : [];
+
+        $this->_mixedError = null;
+        $this->_bError = false;
     }
 
     /**
@@ -70,6 +76,47 @@ class BxDolAIModel extends BxDol
             return;
 
         $this->_aParams = array_merge($this->_aParams, $aParams);
+    }
+
+    public function isError()
+    {
+        return $this->_bError;
+    }
+
+    public function getError()
+    {
+        return $this->_bError ? $this->_mixedError : false;
+    }
+
+    public function getErrorMessage()
+    {
+        if(!$this->_bError)
+            return false;
+
+        if(is_string($this->_mixedError))
+            return $this->_mixedError;
+
+        if(is_array($this->_mixedError) && !empty($this->_mixedError['message']))
+            return $this->_mixedError['message'];
+
+        return _t('_sys_agents_err_failed');
+    }
+
+    public function setError($mixedError)
+    {
+        if(empty($mixedError))
+            return false;
+
+        $this->_mixedError = $mixedError;
+        $this->_bError = true;
+
+        return true;
+    }
+
+    public function resetError()
+    {
+        $this->_mixedError = null;
+        $this->_bError = false;
     }
 
     public function getResponseInit($sType, $aMessage, $aParams = [])

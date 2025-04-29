@@ -2288,7 +2288,7 @@
         <string name="_sys_agents_assistants_chats_popup_add"><![CDATA[Добавить чат]]></string>
         <string name="_sys_agents_assistants_chats_popup_edit"><![CDATA[Редактировать чат]]></string>
         <string name="_sys_agents_assistants_chats_msg_loading"><![CDATA[Я думаю. Пожалуйста, подождите.]]></string>
-        <string name="_sys_agents_assistants_chats_err_no_response"><![CDATA[Невозможно получить ответ]]></string>
+        <string name="_sys_agents_assistants_chats_err_no_response"><![CDATA[Невозможно получить ответ. Проверьте файл журнала для получения дополнительной информации.]]></string>
         <string name="_sys_agents_assistants_files_txt_name"><![CDATA[Название]]></string>
         <string name="_sys_agents_assistants_files_txt_size"><![CDATA[Размер]]></string>
         <string name="_sys_agents_assistants_files_txt_status"><![CDATA[Статус]]></string>
@@ -2311,6 +2311,7 @@
         <string name="_sys_agents_assistants_popup_add_knowledge"><![CDATA[Добавить знания]]></string>
         <string name="_sys_agents_assistants_popup_ask"><![CDATA[Ask Assistant]]></string>
         <string name="_sys_agents_assistants_msg_knowledge_added"><![CDATA[Знания были добавлены.]]></string>
+        <string name="_sys_agents_err_failed"><![CDATA[Произошла ошибка. Попробуйте проверить файл журнала для получения дополнительной информации.]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Информация]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Контент изменен]]></string>

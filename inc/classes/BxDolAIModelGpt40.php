@@ -81,7 +81,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if(!is_a($oMessage, 'BxDolAIMessage'))
             return false;
 
-        $aResponse = $this->call(['messages' => [['role' => 'user', 'content' => $oMessage->getContent()]]]);
+        $aResponse = $this->call(['messages' => [['role' => 'user', 'content' => $oMessage->getContent(), 'attachments' => $oMessage->getAttachments()]]]);
         if(!isset($aResponse['id'], $aResponse['object']) || $aResponse['object'] != 'thread')
             return false;
 
@@ -143,7 +143,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             $mixedMessage = $mixedMessage->getLast();
 
         $sThreadId = $aParams['thread_id'];
-        if($mixedMessage->isAi() || !$this->callMessages($sThreadId, ['role' => 'user', 'content' => $mixedMessage->getContent()]))
+        if($mixedMessage->isAi() || !$this->callMessages($sThreadId, ['role' => 'user', 'content' => $mixedMessage->getContent(), 'attachments' => $mixedMessage->getAttachments()]))
             return false;
 
         $aResponse = $this->callRuns($sThreadId, [
@@ -465,7 +465,9 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         $aResponse = json_decode($sResponse, true);
         if(isset($aResponse['error'])) {
-            $this->_log($aResponse['error']);
+            $this->setError($aResponse['error']);
+
+            $this->_log(['endpoint' => $sEndpoint, 'method' => $sMethod, 'error' => $aResponse['error']]);
             return false;
         }
 

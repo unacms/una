@@ -431,6 +431,11 @@ class BxDolAIMessage
      * @var mixed - an array of message parts (text, image_url) or a string.
      */
     protected $_mixedContent;
+    
+    /**
+     * @var array - an array of of files attached to the message.
+     */
+    protected $_aAttachments;
 
     public function __construct($sType)
     {
@@ -445,6 +450,11 @@ class BxDolAIMessage
     public function getContent()
     {
         return $this->_mixedContent;
+    }
+
+    public function getAttachments()
+    {
+        return $this->_aAttachments;
     }
 }
 
@@ -484,6 +494,21 @@ class BxDolAIMessageArray extends BxDolAIMessage
                 'detail' => $sDetail
             ]
         ];
+    }
+
+    public function addAttachments($mixedAttachments, $mixedTools = false)
+    {
+        if(!is_array($mixedAttachments))
+            $mixedAttachments = [$mixedAttachments];
+
+        if(!$mixedTools)
+            $mixedTools = [['type' => 'file_search']];
+
+        foreach($mixedAttachments as $sAttachment)
+            $this->_aAttachments[] = [
+                'file_id' => $sAttachment,
+                'tools' => $mixedTools
+            ];
     }
 }
 

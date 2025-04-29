@@ -25,6 +25,8 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
+        $this->_sTableImages = 'sys_agents_assistants_chats_files';
+
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
         if ($oTemplate)
@@ -132,10 +134,26 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
                             $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
                             foreach($aFiles as $aFile) {
-                                if(!$oTranscoder || !$oTranscoder->isMimeTypeSupported($aFile['mime_type']))
+                                $sFileUrl = $oStorage->getFileUrlById($aFile['image_id']);
+                                if(!$sFileUrl)
                                     continue;
 
-                                $oMessage->addImageUrl($oStorage->getFileUrlById($aFile['image_id']));
+                                //--- Add image as part of message's content.
+                                if($oTranscoder && $oTranscoder->isMimeTypeSupported($aFile['mime_type'])) {
+                                    $oMessage->addImageUrl($sFileUrl);
+                                    continue;
+                                }
+
+                                //--- Add non-image file as attchment.
+                                if(($sFileContent = bx_file_get_contents($sFileUrl))) {
+                                    $aFile = $oAIModel->callFiles([
+                                        'content' => $sFileContent, 
+                                        'name' => $aFile['file_name'], 
+                                        'mime' => $aFile['mime_type']
+                                    ]);
+                                    if($aFile !== false)
+                                        $oMessage->addAttachments($aFile['id']);
+                                }
                             }
                         }
                     }
@@ -148,10 +166,20 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
                         ]);
                     }
 
-                    if(!empty($sThreadId) && ($sResponse = $oAIModel->getResponse(BX_DOL_AI_ASSISTANT, $oMessage, ['thread_id' => $sThreadId, 'assistant_id' => $sAssistantId])) !== false) {
-                        $this->_oQuery->updateComments(['cmt_text' => $sResponse], ['cmt_id' => $iCmtId]);
+                    if(!empty($sThreadId)) {
+                        $sResponse = $oAIModel->getResponse(BX_DOL_AI_ASSISTANT, $oMessage, [
+                            'thread_id' => $sThreadId, 
+                            'assistant_id' => $sAssistantId
+                        ]);
 
-                        $aCmt['cmt_text'] = $sResponse;
+                        if($sResponse === false && $oAIModel->isError())
+                            $sResponse = $oAIModel->getErrorMessage();
+
+                        if($sResponse) {
+                            $this->_oQuery->updateComments(['cmt_text' => $sResponse], ['cmt_id' => $iCmtId]);
+
+                            $aCmt['cmt_text'] = $sResponse;
+                        }
                     }
                 }
             }
@@ -205,6 +233,29 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
         return $mixedResult;
     }
 
+    public function registerTranscoders()
+    {
+        parent::registerTranscoders();
+
+        $aTranscoders = [
+            $this->getTranscoderPreviewName()
+        ];
+
+        BxDolTranscoderImage::registerHandlersArray($aTranscoders);
+    }
+
+    public function unregisterTranscoders()
+    {
+        parent::unregisterTranscoders();
+
+        $aTranscoders = [
+            $this->getTranscoderPreviewName()
+        ];
+
+        BxDolTranscoderImage::unregisterHandlersArray($aTranscoders);
+        BxDolTranscoderImage::cleanupObjectsArray($aTranscoders);
+    }
+
     protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
         if(!$this->isAllowDelete())
@@ -233,13 +284,30 @@ class BxDolStudioAgentsAsstChatsCmts extends BxTemplCmts
     {
         $oForm = parent::_getForm($sAction, $iId, $aDp);
 
-        $oForm->aInputs['cmt_text']['caption'] = '';
-        $oForm->aInputs['cmt_text']['db']['pass'] = 'xss';
+        if(isset($oForm->aInputs['cmt_text'])) {
+            $oForm->aInputs['cmt_text']['caption'] = '';
+            $oForm->aInputs['cmt_text']['db']['pass'] = 'xss';
+        }           
 
         if(isset($oForm->aInputs['cmt_submit']))
             $oForm->aInputs['cmt_submit']['value'] = $this->_oTemplate->parseIcon('arrow-right');
 
         return $oForm;
+    }
+
+    protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
+    {
+        $oResult = parent::_getFormObject($sAction);
+        if(!isset($oResult->aInputs['cmt_image']))
+            return $oResult;
+
+        $oResult->aInputs['cmt_image'] = array_merge($oResult->aInputs['cmt_image'], [
+            'storage_object' => 'sys_agents_assistants_chats_files',
+            'images_transcoder' => 'sys_agents_assistants_chats_files_preview',
+            'upload_buttons_titles' => ['HTML5' => 'paperclip']
+        ]);
+
+        return $oResult;
     }
 
     protected function _getTmplVarsText($aCmt)

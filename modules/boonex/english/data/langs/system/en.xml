@@ -2312,7 +2312,7 @@
     <string name="_sys_agents_assistants_chats_popup_add"><![CDATA[Add chat]]></string>
     <string name="_sys_agents_assistants_chats_popup_edit"><![CDATA[Edit chat]]></string>
     <string name="_sys_agents_assistants_chats_msg_loading"><![CDATA[I'm thinking. Please wait.]]></string>
-    <string name="_sys_agents_assistants_chats_err_no_response"><![CDATA[Cannot get response]]></string>
+    <string name="_sys_agents_assistants_chats_err_no_response"><![CDATA[Cannot get response. Check log file for more info.]]></string>
     <string name="_sys_agents_assistants_files_txt_name"><![CDATA[Name]]></string>
     <string name="_sys_agents_assistants_files_txt_size"><![CDATA[Size]]></string>
     <string name="_sys_agents_assistants_files_txt_status"><![CDATA[Status]]></string>
@@ -2335,6 +2335,7 @@
     <string name="_sys_agents_assistants_popup_add_knowledge"><![CDATA[Add Knowledge]]></string>
     <string name="_sys_agents_assistants_popup_ask"><![CDATA[Ask Assistant]]></string>
     <string name="_sys_agents_assistants_msg_knowledge_added"><![CDATA[Knowledge was added.]]></string>
+    <string name="_sys_agents_err_failed"><![CDATA[Error occurred. Try to check log file for more info.]]></string>
 
   <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>
