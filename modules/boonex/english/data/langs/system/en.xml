@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="en" title="English">
-    <string name="_api_create_context"><![CDATA[Create Context]]></string>
+    <string name="_api_create_context"><![CDATA[Create {0}]]></string>
     <string name="_ADM_PROFILE_SEND_MSG"><![CDATA[Message was successfully sent.]]></string>
     <string name="_ATT_ACTIVE_E"><![CDATA[You are a full-featured member of our community. You can, however, suspend your profile to become temporarily unavailable for others.]]></string>
     <string name="_ATT_APPROVAL_E"><![CDATA[Your profile activation is in progress. Usually it takes up to 24 hours. Thank you for your patience.]]></string>
@@ -29,6 +29,7 @@
 	<string name="_Cancel"><![CDATA[Cancel]]></string>
 	<string name="_Content"><![CDATA[Content]]></string>
         <string name="_Contents"><![CDATA[Contents]]></string>
+        <string name="_Context"><![CDATA[Context]]></string>
 	<string name="_Count"><![CDATA[Count]]></string>
 	<string name="_DELETE_SUCCESS"><![CDATA[You account was successfully deleted]]></string>
 	<string name="_DELETE_TEXT"><![CDATA[All your content will be deleted. Are you sure you want to delete your account?]]></string>
@@ -2721,7 +2722,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Receive Newsletters]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Receive Site Updates]]></string>
 	<string name="_sys_form_account_input_submit"><![CDATA[Submit]]></string>
-        <string name="_sys_form_account_input_publish"><![CDATA[Create]]></string>
+        <string name="_sys_form_account_input_publish"><![CDATA[Create new account]]></string>
         <string name="_sys_form_agents_comment"><![CDATA[Agents: Message]]></string>
         <string name="_sys_form_display_agents_comment_post"><![CDATA[Agents: Message Send]]></string>
         <string name="_sys_form_agents_comment_input_caption_system_action"><![CDATA[Action]]></string>

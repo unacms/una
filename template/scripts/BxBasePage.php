@@ -664,7 +664,7 @@ class BxBasePage extends BxDolPage
                 }
 
                 $aCurrent = [];
-                if($aInfo && ($sKey = 'allow_view_to') && isset($aInfo[$sKey]) && ($iValue = (int)$aInfo[$sKey])) {
+                if($aInfo && ((($sKey = 'allow_view_to') && isset($aInfo[$sKey]) && ($iValue = (int)$aInfo[$sKey])) || (($sKey = 'object_privacy_view') && isset($aInfo[$sKey]) && ($iValue = (int)$aInfo[$sKey])))) {
                     $mixedContext = false;
                     if($iValue < 0) {
                         $aContext = BxDolProfileQuery::getInstance()->getInfoById(abs($iValue));
@@ -678,11 +678,16 @@ class BxBasePage extends BxDolPage
                         $aCurrent = BxDolProfile::getData($mixedContext);
                 }
 
+                $_sSample = '_' . $sContextSwitcher . '_txt_sample_single';
+                $sSample = _t($_sSample);
+                if(strcmp($_sSample, $sSample) == 0)
+                    $sSample = _t('_Context');
+                        
                 $a['context'] = [
                     'list' => $aContexts,
                     'current' => $aCurrent,
                     'create' => [
-                        'title' => _t('_api_create_context'),
+                        'title' => _t('_api_create_context', $sSample),
                         'url' => bx_api_get_relative_url(bx_srv($sContextSwitcher, 'get_link_add'))
                     ]
                 ];
