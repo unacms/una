@@ -212,21 +212,27 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
     }
 
-    protected function _getMenuItemRating($aItem)
+    protected function _getMenuItemRating($aItem, $aParams = [])
     {
-        if($this->_bIsApi) //--- API: Isn't supported
-            return false;
-
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_VOTES_STARS']))
             return false;
 
-        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
-        if(!$oVotes)
+        $oObject = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oObject || !$oObject->isEnabled())
             return false;
 
-        return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
+        $aObjectOptions = [
+            'show_counter' => true
+        ];
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementAPI($aItem, $oObject->getElementApi($aObjectOptions));
+
+        return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
     }
     
     protected function _getMenuItemReactions($aItem)
