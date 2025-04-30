@@ -121,8 +121,15 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_spaces_fans', 'space-fans', '_bx_spaces_page_title_sys_space_fans', '_bx_spaces_page_title_space_fans', 'bx_spaces', 5, 2147483647, 1, 'page.php?i=space-fans', '', '', '', 0, 1, 0, 'BxSpacesPageEntry', 'modules/boonex/spaces/classes/BxSpacesPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_spaces_fans', 1, 'bx_spaces', '_bx_spaces_page_block_title_system_fans', '_bx_spaces_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1),
-('bx_spaces_fans', 1, 'bx_spaces', '_bx_spaces_page_block_title_system_invites', '_bx_spaces_page_block_title_fans_invites', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:13:"invites_table";}', 0, 0, 1, 2);
+('bx_spaces_fans', 1, 'bx_spaces', '_bx_orgs_page_block_title_system_fans', '_bx_orgs_page_block_title_fans_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:14:"browse_members";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}}', 0, 0, 1, 1);
+
+-- PAGE: space manage
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_spaces_manage_item', 'space-manage', '_bx_spaces_page_title_sys_manage_profile', '_bx_spaces_page_title_manage_profile', 'bx_spaces', 5, 2147483647, 1, 'page.php?i=space-manage', '', '', '', 0, 1, 0, 'BxSpacesPageEntry', 'modules/boonex/spaces/classes/BxSpacesPageEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_spaces_manage_item', 1, 'bx_spaces', '_bx_spaces_page_block_title_system_fans', '_bx_spaces_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1),
+('bx_spaces_manage_item', 1, 'bx_spaces', '_bx_spaces_page_block_title_system_invites', '_bx_spaces_page_block_title_fans_invites', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:13:"invites_table";}', 0, 0, 1, 2);
 
 -- PAGE: view entry comments
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -261,6 +268,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_spaces_view_actions_more', 'bx_spaces', '_bx_spaces_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_spaces_view_actions_more', 'bx_spaces', 'space-manage', '_bx_spaces_menu_item_title_system_manage', '_bx_spaces_menu_item_title_manage', 'page.php?i=space-manage&profile_id={profile_id}', '', '', 'users', '', 2147483647, '', 1, 0, 10),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', 192, '', 1, 0, 20),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_spaces&content_id={content_id}', '', '', 'history', '', 192, '', 1, 0, 30),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-profile', '_bx_spaces_menu_item_title_system_edit_profile', '_bx_spaces_menu_item_title_edit_profile', 'page.php?i=edit-space-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),

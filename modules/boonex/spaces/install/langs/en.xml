@@ -99,6 +99,8 @@
 	<string name="_bx_spaces_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
         <string name="_bx_spaces_page_title_sys_edit_profile_settings"><![CDATA[Edit Space Settings]]></string>
 	<string name="_bx_spaces_page_title_edit_profile_settings"><![CDATA[Edit Settings]]></string>
+        <string name="_bx_spaces_page_title_manage_profile"><![CDATA[Manage]]></string>
+        <string name="_bx_spaces_page_title_sys_manage_profile"><![CDATA[Manage]]></string>
 	<string name="_bx_spaces_page_title_sys_delete_profile"><![CDATA[Delete Space]]></string>
 	<string name="_bx_spaces_page_title_delete_profile"><![CDATA[Delete Space]]></string>
         <string name="_bx_spaces_page_title_sys_join_profile"><![CDATA[Join Space]]></string>
@@ -173,8 +175,9 @@
 	<string name="_bx_spaces_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_spaces_page_block_title_system_fans"><![CDATA[Members]]></string>
-        <string name="_bx_spaces_page_block_title_fans_invites"><![CDATA[Invites]]></string>
-        <string name="_bx_spaces_page_block_title_system_invites"><![CDATA[Invites]]></string>
+        <string name="_bx_spaces_page_block_title_system_fans_manage"><![CDATA[Manage fans]]></string>
+        <string name="_bx_spaces_page_block_title_invites"><![CDATA[Invites]]></string>
+        <string name="_bx_spaces_page_block_title_system_invites_manage"><![CDATA[Invites]]></string>
         <string name="_bx_spaces_page_block_title_profile_location"><![CDATA[Location]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_spaces_page_block_title_entry_reports"><![CDATA[Reports]]></string>
@@ -244,6 +247,8 @@
 	<string name="_bx_spaces_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_spaces_menu_item_title_system_view_joined_spaces"><![CDATA[Spaces]]></string>
 	<string name="_bx_spaces_menu_item_title_view_joined_spaces"><![CDATA[Spaces]]></string>
+        <string name="_bx_spaces_menu_item_title_system_manage"><![CDATA[Manage]]></string>
+        <string name="_bx_spaces_menu_item_title_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_spaces_menu_item_title_system_view_fans"><![CDATA[Members]]></string>
 	<string name="_bx_spaces_menu_item_title_view_fans"><![CDATA[Members]]></string>
 	<string name="_bx_spaces_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
