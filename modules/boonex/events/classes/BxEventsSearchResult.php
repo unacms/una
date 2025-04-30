@@ -30,7 +30,6 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 'perofileType' => array('value' => 'bx_events', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_events_data'),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_events_data'),
-                'upcoming' => array('value' => '', 'field' => 'date_end', 'operator' => '>', 'table' => 'bx_events_data'),
                 'past' => array('value' => '', 'field' => 'date_end', 'operator' => '<', 'table' => 'bx_events_data'),
                 'date_start_from' => array('value' => '', 'field' => 'date_start', 'operator' => '>=', 'table' => 'bx_events_data'),
                 'date_start_to' => array('value' => '', 'field' => 'date_start', 'operator' => '<=', 'table' => 'bx_events_data'),
@@ -284,7 +283,23 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
             case 'upcoming':
                 $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_events_page_title_browse_upcoming');
-                $this->aCurrent['restriction']['upcoming']['value'] = time();
+
+                // $this->aCurrent['restriction_sql'] = BxDolDb::getInstance()->prepareAsString(" AND `date_max` IS NOT NULL AND (`date_max` = 0 OR `date_max` > ?) ", time());
+
+                // TODO: remake to use date_max (commented line above) in the future
+                $this->aCurrent['join']['intervals'] = array (
+                    'type' => 'LEFT',
+                    'table' => 'bx_events_intervals',
+                    'table_alias' => 'ei',
+                    'mainField' => 'id',
+                    'mainTable' => 'bx_events_data',
+                    'onField' => 'event_id',
+                    'groupTable' => 'bx_events_data',
+                    'groupField' => 'id',
+                    'groupHaving' => BxDolDb::getInstance()->prepareAsString(" (`date_end` > ? OR MIN(`repeat_stop`) = 0 OR MAX(`repeat_stop`) > ?) ", time(), time()),
+                    'joinFields' => ['MIN(`repeat_stop`) AS `repeat_min`, ', 'MAX(`repeat_stop`) AS `repeat_max`, '],
+                );
+
                 if(!empty($aParams['date_start_from']))
                     $this->aCurrent['restriction']['date_start_from']['value'] = $aParams['date_start_from'];
                 if(!empty($aParams['date_start_to']))
@@ -303,7 +318,23 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
 
                 $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/upcoming';
                 $this->aCurrent['title'] = _t('_bx_events_page_title_browse_upcoming');
-                $this->aCurrent['restriction']['upcoming']['value'] = time();
+
+                // $this->aCurrent['restriction_sql'] = BxDolDb::getInstance()->prepareAsString(" AND `date_max` IS NOT NULL AND (`date_max` = 0 OR `date_max` > ?) ", time());
+
+                // TODO: remake to use date_max (commented line above) in the future
+                $this->aCurrent['join']['intervals'] = array (
+                    'type' => 'LEFT',
+                    'table' => 'bx_events_intervals',
+                    'table_alias' => 'ei',
+                    'mainField' => 'id',
+                    'mainTable' => 'bx_events_data',
+                    'onField' => 'event_id',
+                    'groupTable' => 'bx_events_data',
+                    'groupField' => 'id',
+                    'groupHaving' => BxDolDb::getInstance()->prepareAsString(" (`date_end` > ? OR MIN(`repeat_stop`) = 0 OR MAX(`repeat_stop`) > ?) ", time(), time()),
+                    'joinFields' => ['MIN(`repeat_stop`) AS `repeat_min`, ', 'MAX(`repeat_stop`) AS `repeat_max`, '],
+                );
+
                 if(!empty($aParams['date_start_from']))
                     $this->aCurrent['restriction']['date_start_from']['value'] = $aParams['date_start_from'];
                 if(!empty($aParams['date_start_to']))
@@ -371,6 +402,14 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
             'author' => 'author',
             'picture' => 'picture',
         );
+    }
+
+    function setFieldUnit ($sFieldName, $sTableName, $sOperator = '', $bRenameMode = true)
+    {
+        if (0 === mb_strpos($sFieldName, 'MIN') || 0 === mb_strpos($sFieldName, 'MAX'))
+            return $sFieldName;
+
+        return parent::setFieldUnit ($sFieldName, $sTableName, $sOperator, $bRenameMode);
     }
 }
 
