@@ -118,6 +118,37 @@ class BxGoogleConModule extends BxBaseModConnectModule
         }
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array_merge(parent::serviceGetSafeServices(), [
+            'Handle' => '',
+        ]);
+    }
+
+    public function serviceHandle($aRemoteProfileInfo = [])
+    {
+        if(!$this->_bIsApi)
+            return;
+
+        if(is_string($aRemoteProfileInfo))
+            $aRemoteProfileInfo = bx_api_get_browse_params($aRemoteProfileInfo);
+
+        if(empty($aRemoteProfileInfo) || !is_array($aRemoteProfileInfo))
+            return [
+                bx_api_get_msg(_t('_sys_connect_profile_error_info'))
+            ];
+
+        if(empty($aRemoteProfileInfo['id']) && !empty($aRemoteProfileInfo['sub']))
+            $aRemoteProfileInfo['id'] = $aRemoteProfileInfo['sub'];
+        
+        // check if user logged in before
+        $iProfileId = $this->_oDb->getProfileId($aRemoteProfileInfo['id']);
+        if($iProfileId && $oProfile = BxDolProfile::getInstance($iProfileId))
+            return $this->setLogged($oProfile->id());
+        else
+            return $this->_createProfile($aRemoteProfileInfo);
+    }
+
     /**
      * @param $aProfileInfo - remote profile info
      * @param $sAlternativeName - suffix to add to NickName to make it unique

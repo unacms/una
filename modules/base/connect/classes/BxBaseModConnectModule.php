@@ -59,9 +59,10 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         bx_login($oProfile->getAccountId(), $bRememberMe);
 
         if ($bRedirect) {
-            $sCallbackUrl = $sCallbackUrl
-                ? $sCallbackUrl
-                : $this -> _oConfig -> sDefaultRedirectUrl;
+            $sCallbackUrl = $sCallbackUrl ? $sCallbackUrl : $this -> _oConfig -> sDefaultRedirectUrl;
+            
+            if($this->_bIsApi)
+                return [bx_api_get_block('redirect', ['uri' => bx_api_get_relative_url($sCallbackUrl)])];
 
             header('Location: ' . $sCallbackUrl);
         }
@@ -97,12 +98,18 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         
         // display error
         if (is_string($mixed)) {
+            if($this->_bIsApi)
+                return [bx_api_get_msg($mixed)];
+
             $this->_oTemplate->getPage(_t($this->_oConfig->sDefaultTitleLangKey), DesignBoxContent(_t($this->_oConfig->sDefaultTitleLangKey), MsgBox($mixed)));
             exit;
         } 
 
         // display join page
         if (is_array($mixed) && isset($mixed['join_page_redirect'])) {
+            if($this->_bIsApi)
+                return []; //--- Isn't currently supported for API.
+            
             $this->_getJoinPage($mixed['profile_fields'], $mixed['remote_profile_info']['id']);
             exit;
         } 
@@ -111,10 +118,17 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         if (is_array($mixed) && isset($mixed['profile_id'])) {
             $iProfileId = (int)$mixed['profile_id'];
 
+            $sRedirectUrl = $this->_getRedirectUrl($iProfileId, $mixed['existing_profile']);
+            if($this->_bIsApi)
+                return [bx_api_get_block('redirect', ['uri' => bx_api_get_relative_url($sRedirectUrl)])];
+
             //redirect to other page
-            header('location:' . $this->_getRedirectUrl($iProfileId, $mixed['existing_profile']));
+            header('location:' . $sRedirectUrl);
             exit;
         }
+
+        if($this->_bIsApi)
+            return [bx_api_get_msg(_t('_Error Occured'))];
 
         $this->_oTemplate->getPage( _t($this->_oConfig->sDefaultTitleLangKey), MsgBox(_t('_Error Occured')) );
         exit;
