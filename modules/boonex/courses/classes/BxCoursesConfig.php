@@ -79,6 +79,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-course-profile',
             'URI_VIEW_ENTRY_NODE' => 'view-course-profile-node',
+            'URI_ADD_ENTRY' => 'create-course-profile',
             'URI_EDIT_ENTRY' => 'edit-course-profile',
             'URI_EDIT_ENTRY_CONTENT' => 'edit-course-content',
             'URI_ENTRIES_BY_CONTEXT' => 'courses-context',

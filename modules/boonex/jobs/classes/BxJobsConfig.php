@@ -78,6 +78,7 @@ class BxJobsConfig extends BxBaseModGroupsConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-job-profile',
             'URI_VIEW_MEMBERS' => 'job-fans',
+            'URI_ADD_ENTRY' => 'create-job-profile',
             'URI_EDIT_ENTRY' => 'edit-job-profile',
             'URI_JOIN_ENTRY' => 'join-job-profile',
             'URI_JOINED_ENTRIES' => 'joined-jobs',
