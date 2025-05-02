@@ -18,7 +18,7 @@ $aConfig = array(
     'title' => 'Google connect',
     'note' => 'Join the site using LinkedIn account.',
     'version' => '13.0.2.DEV',
-    'vendor' => 'Boonex',
+    'vendor' => 'UNA INC',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
