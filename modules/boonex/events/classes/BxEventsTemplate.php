@@ -32,6 +32,7 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         foreach($aSessions as $aSession) {
             $aTmplVarsSession[] = [
                 'title' => bx_process_output($aSession['title']),
+                'description' => bx_process_output($aSession['description'], BX_DATA_HTML),
                 'date_start' => $this->_bIsApi ? $aSession['date_start'] : bx_time_js($aSession['date_start'], BX_FORMAT_DATE_TIME, true),
                 'date_end' => $this->_bIsApi ? $aSession['date_end'] : bx_time_js($aSession['date_end'], BX_FORMAT_DATE_TIME, true),
             ];
