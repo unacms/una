@@ -10,6 +10,7 @@ function BxDolVoteReactions(oOptions)
 {
     BxDolVote.call(this, oOptions);
     this._bQuickMode = oOptions.bQuickMode === undefined ? 0 : oOptions.bQuickMode; // enable 'quick' mode - vote with default reaction when clicked.
+    this._bSingleMode = oOptions.bSingleMode === undefined ? 0 : oOptions.bSingleMode; // enable 'single' mode - vote with the only one available reaction when clicked.
 
     this._iTimeoutShowId = 0;
     this._iTimeoutShowDelay = 750;
@@ -32,18 +33,19 @@ BxDolVoteReactions.prototype.init = function()
     BxDolVote.prototype.init.call(this);
 
     var $this = this;
-    var bMouse = !bx_is_mouse();
-    
-    if(!this._bQuickMode || !bMouse)
-        $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).hover(function() {
-            $this.onVoteIn(this);
-        }, function() {
-            $this.onVoteOut(this);
-        });
-    else
-        $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).onLongTouch(function(oElement) {
-            $this.onTouch(oElement);
-        });
+
+    if(this._bQuickMode && !this._bSingleMode) {
+        if(bx_is_mouse())
+            $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).hover(function() {
+                $this.onVoteIn(this);
+            }, function() {
+                $this.onVoteOut(this);
+            });
+        else
+            $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).onLongTouch(function(oElement) {
+                $this.onTouch(oElement);
+            });
+    }
 };
 
 BxDolVoteReactions.prototype.vote = function(oLink, iValue, sReaction, onComplete)

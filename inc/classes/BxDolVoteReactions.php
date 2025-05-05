@@ -24,6 +24,7 @@ class BxDolVoteReactions extends BxTemplVote
     protected $_sDefault; //--- Default reaction name.
 
     protected $_bQuickMode; //--- Give 'default' reaction when clicked.
+    protected $_bSingleMode; //--- Auto enabled when only one item in Reactions list.
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -35,7 +36,7 @@ class BxDolVoteReactions extends BxTemplVote
         $this->_sMenuDoVote = 'sys_vote_reactions_do';
 
         $this->_sDataList = 'sys_vote_reactions';
-        $this->_aDataList = array();
+        $this->_aDataList = [];
 
         $this->_sDefault = 'default';
 
@@ -70,12 +71,14 @@ class BxDolVoteReactions extends BxTemplVote
             );
         }
 
+        $this->_bSingleMode = count($this->_aDataList) == 1;
+
         if(empty($sDefault) && !empty($this->_aDataList))
             $sDefault = current(array_keys($this->_aDataList));
 
         if(!empty($sDefault)) {
             $aDefault = $this->_aDataList[$sDefault];
-            if((!$this->_bQuickMode || $this->_bApi) && isset($aDefault['default'])) {
+            if(((!$this->_bQuickMode && !$this->_bSingleMode) || $this->_bApi) && isset($aDefault['default'])) {
                 if(is_array($aDefault['default']))
                     $aDefault = array_merge ($aDefault, $aDefault['default']);
                 else
