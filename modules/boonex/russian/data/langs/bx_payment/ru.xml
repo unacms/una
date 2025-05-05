@@ -175,6 +175,8 @@
     <string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Продолжить оплату]]></string>
     <string name="_bx_payment_grid_action_title_crt_checkout"><![CDATA[Оплатить через {0}]]></string>
     <string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_payment_grid_action_title_crt_quantity_sub"><![CDATA[Уменьшить количество]]></string>
+    <string name="_bx_payment_grid_action_title_crt_quantity_add"><![CDATA[Увеличить количество]]></string>
     <string name="_bx_payment_grid_action_title_cms_add"><![CDATA[Добавить]]></string>
     <string name="_bx_payment_grid_action_title_cms_edit"><![CDATA[Изменить]]></string>
     <string name="_bx_payment_grid_action_title_cms_delete"><![CDATA[Удалить]]></string>

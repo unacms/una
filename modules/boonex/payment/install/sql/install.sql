@@ -452,6 +452,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 ('bx_payment_grid_cart', 'bulk', 'checkout', '_bx_payment_grid_action_title_crt_checkout', '', 0, 0, 1),
 ('bx_payment_grid_cart', 'single', 'delete', '_bx_payment_grid_action_title_crt_delete', 'remove', 1, 1, 1),
+('bx_payment_grid_cart', 'single', 'quantity_sub', '_bx_payment_grid_action_title_crt_quantity_sub', 'minus', 1, 0, 2),
+('bx_payment_grid_cart', 'single', 'quantity_add', '_bx_payment_grid_action_title_crt_quantity_add', 'plus', 1, 0, 3),
 
 ('bx_payment_grid_sbs_list_my', 'single', 'view_order', '_bx_payment_grid_action_title_sbs_view_order', 'ellipsis-h', 1, 0, 1),
 ('bx_payment_grid_sbs_list_my', 'single', 'actions', '_bx_payment_grid_action_title_sbs_actions', 'cog', 1, 0, 2),

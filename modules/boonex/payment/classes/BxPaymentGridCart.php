@@ -34,6 +34,33 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
         return $aData;
     }
 
+    public function performActionQuantitySub()
+    {
+        $sId = $this->_getItemId();
+        list($iVendorId, $iModuleId, $iItemId, $iItemCount) = $this->_oModule->_oConfig->descriptorS2A($sId);
+
+        if($iItemCount == 1)
+            return echoJson([]);
+        
+        $aResult = $this->_oModule->getObjectCart()->serviceAddToCart($iVendorId, $iModuleId, $iItemId, -1);
+        if($aResult['code'] != 0 && isset($aResult['message']))
+            return echoJson(['msg' => $aResult['message']]);
+
+        return echoJson(['grid' => $this->getCode(false), 'blink' => $sId]);
+    }
+
+    public function performActionQuantityAdd()
+    {
+        $sId = $this->_getItemId();
+        list($iVendorId, $iModuleId, $iItemId, $iItemCount) = $this->_oModule->_oConfig->descriptorS2A($sId);
+
+        $aResult = $this->_oModule->getObjectCart()->serviceAddToCart($iVendorId, $iModuleId, $iItemId, 1);
+        if($aResult['code'] != 0 && isset($aResult['message']))
+            return echoJson(['msg' => $aResult['message']]);
+
+        return echoJson(['grid' => $this->getCode(false), 'blink' => $sId]);
+    }
+
     public function performActionCheckout()
     {
     	$aParams = array(
@@ -75,6 +102,40 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     protected function _getCellPriceSingle($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(_t_format_currency_ext($mixedValue, ['sign' => $this->_sCurrencySign]), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellQuantity($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('cart_quantity.html', [
+            'sub' => $this->_getActionQuantity('sub', $aRow),
+            'quantity' => $mixedValue,
+            'add' => $this->_getActionQuantity('add', $aRow)
+        ]);
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getActionQuantitySub ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        return '';
+    }
+
+    protected function _getActionQuantityAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        return '';
+    }
+
+    protected function _getActionQuantity($sAction, &$aRow)
+    {
+        $sAction = 'quantity_' . $sAction;
+        $aAction = array_merge($this->_aOptions['actions_single'][$sAction], ['attr' => [
+            'bx_grid_action_single' => $sAction,
+            'bx_grid_action_data' => $aRow[$this->_aOptions['field_id']],
+            'bx_grid_action_confirm' => $this->_aOptions['actions_single'][$sAction]['confirm'],
+            'bx_grid_action_reset_paginate' => 0
+        ]]);
+
+        return $this->_getActionDefault('single', $sAction, $aAction, false, false, $aRow);
     }
 
     protected function _getActionCheckout ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -252,6 +313,17 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
             return false;
 
     	return $this->_oCart->serviceDeleteFromCart($iVendorId, $iModuleId, $iItemId);
+    }
+
+    protected function _getItemId()
+    {
+        if(($aIds = bx_get('ids')) && is_array($aIds)) 
+            return array_shift($aIds);
+
+        if(($sId = bx_get('id')))
+            return $sId;
+
+        return false;
     }
 }
 
