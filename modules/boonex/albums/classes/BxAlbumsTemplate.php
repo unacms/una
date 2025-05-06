@@ -90,12 +90,16 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             }
         }
 
+        $bBadgesSingle = isset($aParams['badges_single']) ? $aParams['badges_single'] : false;
+        $bBadgesCompact = isset($aParams['badges_compact']) ? $aParams['badges_compact'] : false;
+
         // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
-        	'summary' => $sSummary,
+            'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']], $bBadgesSingle, $bBadgesCompact),
+            'summary' => $sSummary,
             'author' => $oProfile->getDisplayName(),
             'author_url' => $oProfile->getUrl(),
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
