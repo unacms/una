@@ -641,6 +641,13 @@ class BxAdsDb extends BxBaseModTextDb
         return (int)$this->query("INSERT INTO `" . $CNF['TABLE_COMMODITIES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()") > 0;
     }
 
+    public function updateCommodity($aSet, $aWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->query("UPDATE `" . $CNF['TABLE_COMMODITIES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
+    }
+
     public function deleteCommodity($aWhere)
     {
         $CNF = &$this->_oConfig->CNF;

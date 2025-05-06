@@ -240,6 +240,8 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_UPLOADERS' => array('bx_ads_simple', 'bx_ads_html5'),
             'OBJECT_PROMOTION_CHARTS' => ['bx_ads_promotion_growth', 'bx_ads_promotion_growth_speed'],
 
+            'BADGES_AVALIABLE' => true,
+
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_ads_my' => array (
