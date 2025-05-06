@@ -124,6 +124,8 @@ class BxPhotosConfig extends BxBaseModTextConfig
             
             'FUNCTION_FOR_GET_ITEM_INFO' => 'getContentInfoById',
 
+            'BADGES_AVALIABLE' => true,
+
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_photos_my' => array (
