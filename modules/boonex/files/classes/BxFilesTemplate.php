@@ -190,7 +190,8 @@ class BxFilesTemplate extends BxBaseModTextTemplate
                 'condition' => !empty($aVars['entry_title']) || !empty($aVars['entry_text']),
                 'content' => array(
                     'entry_title' => $aVars['entry_title'],
-                    'entry_text' => $aVars['entry_text']
+                    'entry_text' => $aVars['entry_text'],
+                    'badges' => $aVars['badges']
                 )
             )
         ));

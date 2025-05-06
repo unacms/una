@@ -26,8 +26,6 @@
 .bx-files-text-unit-gallery .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
     align-items: center;
     -webkit-align-items: center;
-    justify-content: center;
-    -webkit-justify-content: center;
 }
 
 .bx-files-text-unit-gallery .bx-files-inline-menu ul.bx-menu-object-bx_files_view_inline li.bx-menu-item span.bx-base-general-entity-action {
@@ -60,7 +58,7 @@
     max-width: 33.25%;
 }
 
-.bx-files-text-unit .bx-base-text-unit-text .sys-icon {
+.bx-files-text-unit .bx-base-text-unit-text .bx-base-text-unit-icon .sys-icon {
     line-height: normal;
     font-size: 3.2rem;
 }

@@ -135,6 +135,8 @@ class BxFilesConfig extends BxBaseModTextConfig
             'OBJECT_GRID_COMMON' => 'bx_files_common',
             'OBJECT_UPLOADERS' => array('sys_html5'),
 
+            'BADGES_AVALIABLE' => true,
+
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_files_my' => array (
