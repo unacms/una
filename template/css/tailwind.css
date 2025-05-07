@@ -1533,7 +1533,7 @@
         @apply opacity-90 hover:opacity-100 active:translate-y-0.5
     }
     .bx-badge img{
-        @apply max-h-4;
+        @apply max-h-4 m-0 p-0;
     }
     .sys-icon-image.bx-badge-icon,
     .sys-icon-svg.bx-badge-icon{

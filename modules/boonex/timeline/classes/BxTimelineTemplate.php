@@ -2567,6 +2567,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sTitle = '';
         if(isset($aContent['title']))
             $sTitle = bx_process_output($aContent['title']);
+        
+        $sBadges = '';
+        if($sTitle && ($sMethod = 'get_badges') && bx_is_srv($aEvent['type'], $sMethod)) {
+            $bBadgesSingle = isset($aBrowseParams['badges_single']) ? $aBrowseParams['badges_single'] : false;
+            $bBadgesCompact = isset($aBrowseParams['badges_compact']) ? $aBrowseParams['badges_compact'] : false;
+
+            $sBadges = bx_srv($aEvent['type'], $sMethod, [$aEvent['object_id'], $bBadgesSingle, $bBadgesCompact]);
+        }
 
         if(!empty($sUrl) && !empty($sTitle)) {
             $aTitleParams = [
@@ -2759,6 +2767,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => [
                     'style_prefix' => $sStylePrefix,
                     'title' => $sTitle,
+                    'badges' => $sBadges,
                 ]
             ],
             'bx_if:show_content' => [
