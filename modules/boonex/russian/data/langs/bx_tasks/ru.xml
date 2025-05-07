@@ -26,6 +26,10 @@
     <string name="_bx_tasks_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
     <string name="_bx_tasks_form_entry_input_sys_do_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_tasks_form_entry_input_do_cancel"><![CDATA[Отменить]]></string>
+    <string name="_bx_tasks_form_entry_input_sys_do_cancel_edit"><![CDATA[Отменить (Форма редактирования)]]></string>
+    <string name="_bx_tasks_form_entry_input_do_cancel_edit"><![CDATA[Отменить]]></string>
+    <string name="_bx_tasks_form_entry_input_sys_controls"><![CDATA[Управление]]></string>
+    <string name="_bx_tasks_form_entry_input_sys_controls_edit"><![CDATA[Управление (Форма редактирования)]]></string>
     <string name="_bx_tasks_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_tasks_form_entry_input_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_tasks_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>

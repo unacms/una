@@ -124,7 +124,9 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
         if(!$bDynamicMode && bx_is_dynamic_request())
             $bDynamicMode = true;
-       
+
+        $this->_replaceMarkersInControls();
+
         $sResult = parent::getCode($bDynamicMode);
 
         $aPrivacyFields = $this->_getPrivacyFields();
@@ -375,7 +377,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $bValues = $aValues && !empty($aValues['id']);
         
         $this->_iContentId = isset($aValues['id']) ? $aValues['id'] : false;
-        
+
+        if (!empty($CNF['URI_VIEW_ENTRY']) && $this->_iContentId)
+            $this->addMarkers([
+                'edit_cancel_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_iContentId))
+            ]);
+
         if (!empty($CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && isset($aValues[$CNF['FIELD_ID']]) && !empty($CNF['OBJECT_METATAGS']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->locationsIsEnabled())
             $this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]['value'] = $oMetatags->locationsString($aValues[$CNF['FIELD_ID']], false);
 
@@ -1278,6 +1285,20 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     protected function _isMulticatEnabled(){
         $CNF = $this->_oModule->_oConfig->CNF;
         return isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true && isset($CNF['FIELD_MULTICAT']);
+    }
+
+    protected function _replaceMarkersInControls($sKey = 'controls')
+    {
+        if(!isset($this->aInputs[$sKey]) || !is_array($this->aInputs[$sKey])) 
+            return;
+
+        array_walk($this->aInputs[$sKey], function(&$aItem, $mKey) {
+            if(!is_int($mKey))
+                return;
+
+            if(!empty($aItem['attrs']) && is_array($aItem['attrs']))
+                $aItem['attrs'] = $this->_replaceMarkers($aItem['attrs']);
+        });
     }
 }
 

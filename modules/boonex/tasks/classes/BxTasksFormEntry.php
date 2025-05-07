@@ -85,13 +85,13 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
         }
     }
 
-	function getCode($bDynamicMode = false)
+    function getCode($bDynamicMode = false)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        $this->_replaceMarkersInControls('controls_edit');
 
         $sResult = parent::getCode($bDynamicMode);
-		$sInclude = $this->_oModule->_oTemplate->addJs(array('tasks.js'), $bDynamicMode);
-		$sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('tasks');
+        $sInclude = $this->_oModule->_oTemplate->addJs(array('tasks.js'), $bDynamicMode);
+        $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('tasks');
     	return $sResult;
     }
 	

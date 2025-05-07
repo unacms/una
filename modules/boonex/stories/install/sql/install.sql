@@ -283,6 +283,8 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_stories', 'bx_stories', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_stories_form_entry_input_sys_delete_confirm', '_bx_stories_form_entry_input_delete_confirm', '_bx_stories_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_stories_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_stories', 'bx_stories', 'do_submit', '_bx_stories_form_entry_input_do_submit', '', 0, 'submit', '_bx_stories_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_stories', 'bx_stories', 'do_cancel', '_sys_form_input_cancel', '', 0, 'button', '_sys_form_input_sys_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:41:"window.open(''{edit_cancel_url}'', ''_self'')";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+('bx_stories', 'bx_stories', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '_sys_form_input_sys_controls', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_stories', 'bx_stories', 'title', '', '', 0, 'text', '_bx_stories_form_entry_input_sys_title', '_bx_stories_form_entry_input_title', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_stories_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_stories', 'bx_stories', 'text', '', '', 0, 'textarea', '_bx_stories_form_entry_input_sys_text', '_bx_stories_form_entry_input_text', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_stories', 'bx_stories', 'pictures', 'a:1:{i:0;s:16:"bx_stories_html5";}', 'a:3:{s:16:"bx_stories_html5";s:25:"_sys_uploader_html5_title";s:23:"bx_stories_record_video";s:32:"_sys_uploader_record_video_title";s:15:"bx_stories_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_stories_form_entry_input_sys_pictures', '_bx_stories_form_entry_input_pictures', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_stories_form_entry_input_pictures_err', '', '', 1, 0),
@@ -300,7 +302,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 ('bx_stories_entry_edit', 'pictures', 2147483647, 1, 1),
 ('bx_stories_entry_edit', 'allow_view_to', 2147483647, 1, 2),
-('bx_stories_entry_edit', 'do_submit', 2147483647, 1, 3),
+('bx_stories_entry_edit', 'controls', 2147483647, 1, 3),
+('bx_stories_entry_edit', 'do_submit', 2147483647, 1, 4),
+('bx_stories_entry_edit', 'do_cancel', 2147483647, 1, 5),
 
 ('bx_stories_entry_view', 'added', 2147483647, 1, 1),
 ('bx_stories_entry_view', 'changed', 2147483647, 1, 2),

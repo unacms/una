@@ -26,6 +26,10 @@
     <string name="_bx_tasks_form_entry_input_do_publish"><![CDATA[Publish]]></string>
     <string name="_bx_tasks_form_entry_input_sys_do_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_tasks_form_entry_input_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_tasks_form_entry_input_sys_do_cancel_edit"><![CDATA[Cancel (Edit form)]]></string>
+    <string name="_bx_tasks_form_entry_input_do_cancel_edit"><![CDATA[Cancel]]></string>
+    <string name="_bx_tasks_form_entry_input_sys_controls"><![CDATA[Controls]]></string>
+    <string name="_bx_tasks_form_entry_input_sys_controls_edit"><![CDATA[Controls (Edit form)]]></string>
     <string name="_bx_tasks_form_entry_input_sys_title"><![CDATA[Title]]></string>
     <string name="_bx_tasks_form_entry_input_title"><![CDATA[Title]]></string>
     <string name="_bx_tasks_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>

@@ -2787,10 +2787,13 @@
 	<string name="_sys_form_input_sys_location"><![CDATA[Расположение]]></string>
         <string name="_sys_form_input_location"><![CDATA[Местоположение]]></string>
         <string name="_sys_form_input_location_radius_label"><![CDATA[Радиус (в км)]]></string>
-  <string name="_sys_form_input_nested_form_button_add_new_item"><![CDATA[Добавить новый]]></string>
-  <string name="_sys_form_input_nested_form_button_delete_item"><![CDATA[Удалить]]></string>
+        <string name="_sys_form_input_nested_form_button_add_new_item"><![CDATA[Добавить новый]]></string>
+        <string name="_sys_form_input_nested_form_button_delete_item"><![CDATA[Удалить]]></string>
         <string name="_sys_form_input_sys_anonymous"><![CDATA[Анонимная публикация]]></string>
         <string name="_sys_form_input_anonymous"><![CDATA[Анонимная публикация]]></string>
+        <string name="_sys_form_input_sys_cancel"><![CDATA[Отмена]]></string>
+        <string name="_sys_form_input_cancel"><![CDATA[Отмена]]></string>
+        <string name="_sys_form_input_sys_controls"><![CDATA[Управление]]></string>
         <string name="_sys_form_input_sys_labels"><![CDATA[Метки]]></string>
         <string name="_sys_form_input_labels"><![CDATA[Метки]]></string>
 	<string name="_sys_form_input_labels_placeholder"><![CDATA[Добавить метку]]></string>
