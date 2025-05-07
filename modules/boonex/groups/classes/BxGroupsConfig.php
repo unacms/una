@@ -70,6 +70,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-group-profile',
             'URI_VIEW_MEMBERS' => 'group-fans',
+            'URI_ADD_ENTRY' => 'create-group-profile',
             'URI_EDIT_ENTRY' => 'edit-group-profile',
             'URI_JOIN_ENTRY' => 'join-group-profile',
             'URI_JOINED_ENTRIES' => 'joined-groups',

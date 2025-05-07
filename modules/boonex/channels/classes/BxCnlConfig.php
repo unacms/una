@@ -54,6 +54,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-channel-profile',
+            'URI_ADD_ENTRY' => 'create-channel-profile',
             'URI_EDIT_ENTRY' => 'edit-channel-profile',
             'URI_JOINED_ENTRIES' => 'channels-author',
 

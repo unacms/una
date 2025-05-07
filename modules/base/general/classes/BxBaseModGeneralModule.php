@@ -649,15 +649,11 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceGetLinkAdd ()
     {
-        $CNF = &$this->_oConfig->CNF;
+        $sUri = $this->_oConfig->getEntryUri('add');
+        if(!$sUri)
+            return '';         
 
-        $sUri = '';
-        if(!empty($CNF['URI_ADD_ENTRY']))
-            $sUri = $CNF['URI_ADD_ENTRY'];
-        else if(($sKeyUri = 'URI_EDIT_ENTRY') && !empty($CNF[$sKeyUri]))
-            $sUri = str_replace('edit', 'create', $CNF[$sKeyUri]);           
-
-        return $sUri ? bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUri)) : '';
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUri));
     }
 
     /**
@@ -679,14 +675,16 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetLinkEdit ($iContentId)
     {
         $CNF = &$this->_oConfig->CNF;
-        if(empty($CNF['URI_EDIT_ENTRY']))
+
+        $sUri = $this->_oConfig->getEntryUri('edit');        
+        if(!$sUri)
             return '';
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo))
             return '';
 
-        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUri . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
     }
 
     /**
@@ -708,14 +706,16 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetLink ($iContentId)
     {
         $CNF = &$this->_oConfig->CNF;
-        if(empty($CNF['URI_VIEW_ENTRY']))
+
+        $sUri = $this->_oConfig->getEntryUri('view');        
+        if(!$sUri)
             return '';
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo))
             return '';
 
-        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUri . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
     }
 
     public function serviceGetTitle ($iContentId)

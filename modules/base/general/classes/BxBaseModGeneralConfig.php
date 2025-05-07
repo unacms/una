@@ -131,6 +131,18 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_ENTRY'] . '&id=' . $iId));
     }
 
+    public function getEntryUri($sAction)
+    {
+        $sUri = '';
+
+        if(($sKeyUri = 'URI_' . strtoupper($sAction) . '_ENTRY') && !empty($this->CNF[$sKeyUri]))
+            $sUri = $this->CNF[$sKeyUri];
+        if(!$sUri && $sAction == 'add' && ($sKeyUri = 'URI_EDIT_ENTRY') && !empty($this->CNF[$sKeyUri]))
+            $sUri = str_replace('edit', 'create', $this->CNF[$sKeyUri]);
+
+        return $sUri;
+    }
+
     /*
      * Note. The first Transcoder in the array $aTranscoders has the highest priority. 
      */

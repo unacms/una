@@ -82,6 +82,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'URI_VIEW_FRIENDS' => 'organization-profile-friends',
             'URI_VIEW_FRIEND_REQUESTS' => 'organization-friend-requests',
             'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
+            'URI_ADD_ENTRY' => 'create-organization-profile',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_JOIN_ENTRY' => 'join-organization-profile',
             'URI_JOINED_ENTRIES' => 'joined-organizations',

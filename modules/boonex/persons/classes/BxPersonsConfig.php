@@ -66,6 +66,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'URI_VIEW_FRIENDS' => 'persons-profile-friends',
             'URI_VIEW_FRIEND_REQUESTS' => 'persons-friend-requests',
             'URI_VIEW_FAVORITES' => 'persons-profile-favorites',
+            'URI_ADD_ENTRY' => 'create-persons-profile',
             'URI_EDIT_ENTRY' => 'edit-persons-profile',
             'URI_MANAGE_COMMON' => 'persons-manage',
             'URI_VIEW_SUBSCRIPTIONS' => 'persons-profile-subscriptions',

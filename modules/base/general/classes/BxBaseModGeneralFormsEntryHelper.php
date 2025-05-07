@@ -836,13 +836,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     protected function _setAbsoluteActionUrl($sType, &$oForm)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $sUri = '';
-        if(($sKeyUri = 'URI_' . strtoupper($sType) . '_ENTRY') && !empty($CNF[$sKeyUri]))
-            $sUri = $CNF[$sKeyUri];
-        if(!$sUri && $sType == 'add' && ($sKeyUri = 'URI_EDIT_ENTRY') && !empty($CNF[$sKeyUri]))
-            $sUri = str_replace('edit', 'create', $CNF[$sKeyUri]);
+        $sUri = $this->_oModule->_oConfig->getEntryUri($sType);
         if(!$sUri)
             return;
 
