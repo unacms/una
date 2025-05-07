@@ -23,12 +23,6 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    public function entryText ($aData, $sTemplateName = 'entry-text.html')
-    {
-        $aTmplVars = BxBaseModGeneralTemplate::getTmplVarsText($aData);
-        return $this->_bIsApi ? $aTmplVars : $this->parseHtmlByName($sTemplateName, $aTmplVars);
-    }
-
     public function entryPhoto ($aContentInfo, $bAsArray = false)
     {
         $aTmplVars = BxBaseModGeneralTemplate::getTmplVarsText($aContentInfo);
@@ -65,13 +59,11 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
             'content_description_after' => ''
         ));
 
-        if(!empty($CNF['OBJECT_REACTIONS'])) {
-            $oReactions = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aContentInfo[$CNF['FIELD_ID']]);
-            if($oReactions)
-                $aTmplVars['content_description_after'] .= $oReactions->getCounter(array(
-                    'show_counter' => true
-                ));
-        }
+        if(($sKey = 'OBJECT_REACTIONS') && !empty($CNF[$sKey]) && ($oReactions = BxDolVote::getObjectInstance($CNF[$sKey], $aContentInfo[$CNF['FIELD_ID']])))
+            $aTmplVars['content_description_after'] .= $oReactions->getCounter([
+                'show_counter' => true,
+                'show_counter_empty' => false
+            ]);
 
         return $bAsArray ? $aTmplVars : $this->parseHtmlByName('entry-photo.html', $aTmplVars);
     }
