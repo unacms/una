@@ -986,6 +986,63 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         return $s;
     }
 
+    public function isValidFieldName($s) 
+    {
+        $inner = $s;
+
+        // Disallow trailing space
+        if ($inner === '' || preg_match('/\s$/u', $inner)) {
+            return false;
+        }
+
+        // Disallow all-numeric content (even if quoted)
+        if (preg_match('/^\d+$/u', $inner)) {
+            return false;
+        }
+
+        $i = 0;
+        $len = mb_strlen($inner, 'UTF-8');
+
+        while ($i < $len) {
+            $char = mb_substr($inner, $i, 1, 'UTF-8');
+
+            // Allow escaped backtick (``)
+            if ($char === '`') {
+                if ($i + 1 >= $len || mb_substr($inner, $i + 1, 1, 'UTF-8') !== '`') {
+                    return false; // Single backtick is invalid
+                }
+                $i += 2;
+                continue;
+            }
+
+            // Convert to UTF-8 bytes to check for supplementary chars
+            $utf8 = mb_convert_encoding($char, 'UTF-8');
+            $byteLen = strlen($utf8);
+
+            // 1-byte to 3-byte UTF-8 sequences = BMP (valid)
+            // 4-byte UTF-8 sequences = Supplementary chars (invalid)
+            if ($byteLen === 4) {
+                return false;
+            }
+
+            // Disallow ASCII NUL (0x00)
+            if ($utf8 === "\x00") {
+                return false;
+            }
+
+            $i++;
+        }
+
+        return true;
+/*
+        // alternative quick checking without checking BMP range
+        if (preg_match('/^[0-9]+$/', $s))
+            return false;
+
+        return preg_match('/^(?:(?!`)[\x01-\x7F\x{0080}-\x{FFFF}]|``)*[^[:space:]]$/u', $s);
+*/
+    }
+
     /**
      * This function is usefull when you need to form array of parameters to pass to IN(...) SQL construction.
      * Example:
@@ -1123,6 +1180,8 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         $sOperator = in_array($sOperator, $aOperators) ? $sOperator : '=';
         $s = '';
         foreach($a as $k => $v) {
+            if (!$this->isValidFieldName($k))
+                throw new Exception('Invalid field name in arrayToSQL method');
             if ($bWildcardSpaceChars)
                 $v = preg_replace('/[\p{Zs}\p{Cc}\p{Pd}]/', '_', $v);
             $s .= "`{$k}` {$sOperator} " . $this->escape($v) . $sDiv;
