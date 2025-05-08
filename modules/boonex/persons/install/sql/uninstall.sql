@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_persons_data`,`bx_persons_pictures`, `bx_persons_pictures_resized`, `bx_persons_cmts`, `bx_persons_cmts_notes`, `bx_persons_views_track`, `bx_persons_votes`, `bx_persons_votes_track`, `bx_persons_favorites_track`, `bx_persons_reports`, `bx_persons_reports_track`, `bx_persons_meta_keywords`, `bx_persons_meta_locations`, `bx_persons_meta_mentions`, `bx_persons_scores`, `bx_persons_scores_track`, `bx_persons_skills`;
+DROP TABLE IF EXISTS `bx_persons_data`,`bx_persons_pictures`, `bx_persons_pictures_resized`, `bx_persons_cmts`, `bx_persons_cmts_notes`, `bx_persons_views_track`, `bx_persons_votes`, `bx_persons_votes_track`, `bx_persons_reactions`, `bx_persons_reactions_track`, `bx_persons_favorites_track`, `bx_persons_reports`, `bx_persons_reports_track`, `bx_persons_meta_keywords`, `bx_persons_meta_locations`, `bx_persons_meta_mentions`, `bx_persons_scores`, `bx_persons_scores_track`, `bx_persons_skills`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_persons';
@@ -26,7 +26,7 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_persons%';
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_persons';
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_persons';
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_persons', 'bx_persons_reactions');
 
 -- SCORES
 DELETE FROM `sys_objects_score` WHERE `name` = 'bx_persons';

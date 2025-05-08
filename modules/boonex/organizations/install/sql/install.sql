@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `rrate` float NOT NULL default '0',
+  `rvotes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
   `sc_up` int(11) NOT NULL default '0',
   `sc_down` int(11) NOT NULL default '0',
@@ -136,6 +138,28 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_votes_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_organizations_reactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reaction` (`object_id`, `reaction`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_organizations_reactions_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
   `value` tinyint(4) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
@@ -510,6 +534,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_organizations_period_units', 'month', 3, '_bx_orgs_period_unit_month', ''),
 ('bx_organizations_period_units', 'year', 4, '_bx_orgs_period_unit_year', '');
 
+
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_organizations', 'bx_organizations', 'bx_organizations_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-organization-profile&id={object_id}', '', 'bx_organizations_data', 'id', 'author', 'org_name', 'comments', 'BxOrgsCmts', 'modules/boonex/organizations/classes/BxOrgsCmts.php'),
@@ -523,12 +548,13 @@ INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_o
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_organizations', 'bx_organizations', 'bx_organizations_votes', 'bx_organizations_votes_track', '604800', '1', '1', '0', '1', 'bx_organizations_data', 'id', '', 'rate', 'votes', 'BxOrgsVote', 'modules/boonex/organizations/classes/BxOrgsVote.php');
+('bx_organizations', 'bx_organizations', 'bx_organizations_votes', 'bx_organizations_votes_track', '604800', '1', '1', '0', '1', 'bx_organizations_data', 'id', '', 'rate', 'votes', 'BxOrgsVote', 'modules/boonex/organizations/classes/BxOrgsVote.php'),
+('bx_organizations_reactions', 'bx_organizations', 'bx_organizations_reactions', 'bx_organizations_reactions_track', '604800', '1', '1', '1', '1', 'bx_organizations_data', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
-('bx_organizations', 'bx_organizations', 'bx_organizations_scores', 'bx_organizations_scores_track', '604800', '0', 'bx_organizations_data', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
+('bx_organizations', 'bx_organizations', 'bx_organizations_scores', 'bx_organizations_scores_track', '604800', '1', 'bx_organizations_data', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 
 -- FAFORITES
