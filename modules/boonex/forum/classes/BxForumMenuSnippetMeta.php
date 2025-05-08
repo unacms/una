@@ -101,9 +101,9 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         return $this->getUnitMetaItemExtended($sTitle, (isset($aCategoryData['icon']) ? $aCategoryData['icon'] : 'folder'), $sLink);
     }
 
-    protected function _getMenuItemScore($aItem, $aParams = [])
+    protected function _getMenuItemScores($aItem, $aParams = [])
     {
-        return parent::_getMenuItemScore($aItem, [
+        return parent::_getMenuItemScores($aItem, [
             'show_as_object' => true
         ]);
     }
