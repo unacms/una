@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_jobs_data`, `bx_jobs_qnr_questions`, `bx_jobs_qnr_answers`, `bx_jobs_pics`, `bx_jobs_pics_resized`, `bx_jobs_cmts`, `bx_jobs_cmts_notes`, `bx_jobs_views_track`, `bx_jobs_meta_keywords`, `bx_jobs_meta_locations`, `bx_jobs_meta_mentions`, `bx_jobs_fans`, `bx_jobs_admins`, `bx_jobs_votes`, `bx_jobs_votes_track`, `bx_jobs_reports`, `bx_jobs_reports_track`, `bx_jobs_favorites_track`, `bx_jobs_favorites_lists`, `bx_jobs_scores`, `bx_jobs_scores_track`, `bx_jobs_invites`, `bx_jobs_prices`;
+DROP TABLE IF EXISTS `bx_jobs_data`, `bx_jobs_qnr_questions`, `bx_jobs_qnr_answers`, `bx_jobs_pics`, `bx_jobs_pics_resized`, `bx_jobs_cmts`, `bx_jobs_cmts_notes`, `bx_jobs_views_track`, `bx_jobs_meta_keywords`, `bx_jobs_meta_locations`, `bx_jobs_meta_mentions`, `bx_jobs_fans`, `bx_jobs_admins`, `bx_jobs_votes`, `bx_jobs_votes_track`, `bx_jobs_reactions`, `bx_jobs_reactions_track`, `bx_jobs_reports`, `bx_jobs_reports_track`, `bx_jobs_favorites_track`, `bx_jobs_favorites_lists`, `bx_jobs_scores`, `bx_jobs_scores_track`, `bx_jobs_invites`, `bx_jobs_prices`;
 
 -- PROFILES
 

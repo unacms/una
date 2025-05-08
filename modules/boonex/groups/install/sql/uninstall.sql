@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_groups_data`, `bx_groups_pics`, `bx_groups_pics_resized`, `bx_groups_cmts`, `bx_groups_cmts_notes`, `bx_groups_views_track`, `bx_groups_meta_keywords`, `bx_groups_meta_locations`, `bx_groups_meta_mentions`, `bx_groups_fans`, `bx_groups_admins`, `bx_groups_votes`, `bx_groups_votes_track`, `bx_groups_reports`, `bx_groups_reports_track`, `bx_groups_favorites_track`, `bx_groups_favorites_lists`, `bx_groups_scores`, `bx_groups_scores_track`, `bx_groups_invites`, `bx_groups_prices`;
+DROP TABLE IF EXISTS `bx_groups_data`, `bx_groups_pics`, `bx_groups_pics_resized`, `bx_groups_cmts`, `bx_groups_cmts_notes`, `bx_groups_views_track`, `bx_groups_meta_keywords`, `bx_groups_meta_locations`, `bx_groups_meta_mentions`, `bx_groups_fans`, `bx_groups_admins`, `bx_groups_votes`, `bx_groups_votes_track`, `bx_groups_reactions`, `bx_groups_reactions_track`, `bx_groups_reports`, `bx_groups_reports_track`, `bx_groups_favorites_track`, `bx_groups_favorites_lists`, `bx_groups_scores`, `bx_groups_scores_track`, `bx_groups_invites`, `bx_groups_prices`;
 
 -- PROFILES
 
@@ -36,7 +36,7 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_groups%';
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_groups';
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_groups';
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_groups', 'bx_groups_reactions');
 
 -- SCORES
 DELETE FROM `sys_objects_score` WHERE `name` = 'bx_groups';
