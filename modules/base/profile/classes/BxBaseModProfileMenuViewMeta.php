@@ -225,8 +225,17 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
         
-        $oObject = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
-        return $oObject ? $oObject->getCounter(['show_counter_label_icon' => true, 'show_counter_empty' => false, 'dynamic_mode' => true, 'caption' => '_vote_n_votes', 'custom_icon' => $sIcon]) : '';
+        $oObject = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oObject || !$oObject->isEnabled())
+            return '';
+
+        return $oObject->getCounter([
+            'show_counter_label_icon' => true, 
+            'show_counter_empty' => false, 
+            'dynamic_mode' => true, 
+            'caption' => '_vote_n_votes', 
+            'custom_icon' => $sIcon
+        ]);
     }
 
     protected function _getMenuItemReactions($aItem)
@@ -236,16 +245,21 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if($this->_bIsApi)
             return false;
 
-        if(empty($CNF['OBJECT_REACTIONS']))
+        $sKo = 'OBJECT_REACTIONS';
+        if(($sKf = 'FIELD_REACTIONS') && (empty($CNF[$sKo]) || empty($CNF[$sKf]) || (empty($this->_aContentInfo[$CNF[$sKf]]) && !$this->_bShowZeros)))
             return false;
 
-        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
-        if(!$oVotes)
+        $oObject = BxDolVote::getObjectInstance($CNF[$sKo], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oObject || !$oObject->isEnabled())
             return false;
 
-        return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => false)));
+        return $oObject->getCounter([
+            'show_counter_style' => 'compound',
+            'show_counter_empty' => false, 
+            'dynamic_mode' => true
+        ]);
     }
-    
+
     protected function _getMenuItemScores($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -253,14 +267,19 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if($this->_bIsApi)
             return false;
 
-        if(empty($CNF['OBJECT_SCORES']))
+        $sKo = 'OBJECT_SCORES';
+        if(($sKfu = 'FIELD_SCORE_UP') && ($sKfd = 'FIELD_SCORE_DOWN') && (empty($CNF[$sKo]) || empty($CNF[$sKfu]) || empty($CNF[$sKfd]) || (empty($this->_aContentInfo[$CNF[$sKfu]]) && empty($this->_aContentInfo[$CNF[$sKfd]]) && !$this->_bShowZeros)))
             return false;
 
-        $oScores = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $this->_aContentInfo[$CNF['FIELD_ID']]);
-        if(!$oScores)
+        $oObject = BxDolScore::getObjectInstance($CNF[$sKo], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oObject || !$oObject->isEnabled())
             return false;
 
-        return $this->getUnitMetaItemCustom($oScores->getElementInline(array('show_counter' => false)));
+        return $oObject->getCounter([
+            'show_counter_label_icon' => true,
+            'show_counter_empty' => false,
+            'dynamic_mode' => true,
+        ]);
     }
 
     protected function _getMenuItemComments($aItem)

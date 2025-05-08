@@ -46,6 +46,11 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_CF' => 'cf',
             'FIELD_VIEWS' => 'views',
+            'FIELD_VOTES' => 'votes',
+            'FIELD_REACTIONS' => 'rvotes',
+            'FIELD_SCORE' => 'score',
+            'FIELD_SCORE_UP' => 'sc_up',
+            'FIELD_SCORE_DOWN' => 'sc_down',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
@@ -85,6 +90,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_channels_gallery',
             'OBJECT_VIEWS' => 'bx_channels',
             'OBJECT_VOTES' => 'bx_channels',
+            'OBJECT_REACTIONS' => 'bx_channels_reactions',
             'OBJECT_SCORES' => 'bx_channels',
             'OBJECT_FAVORITES' => 'bx_channels',
             'OBJECT_FEATURED' => 'bx_channels',
@@ -107,6 +113,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'channels-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_MANAGE_VIEW_ENTRY' => '',
+            'OBJECT_MENU_VIEW_ENTRY_META' => 'bx_channels_view_meta', // meta menu on view entry page
             'OBJECT_MENU_SNIPPET_META' => 'bx_channels_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_channels_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_channels_view_profile',

@@ -242,17 +242,30 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($CNF['OBJECT_REACTIONS']))
+        $sKo = 'OBJECT_REACTIONS';
+        if(empty($CNF[$sKo]))
             return false;
 
-        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
-        if(!$oVotes)
+        $oObject = BxDolVote::getObjectInstance($CNF[$sKo], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oObject || !$oObject->isEnabled())
             return false;
 
-        return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => false)));
+        return $this->getUnitMetaItemCustom($oObject->getCounter([
+            'show_counter_style' => 'compound',
+            'show_counter_empty' => false, 
+            'dynamic_mode' => true
+        ]));
     }
 
+    /**
+     * Note. Saved for backward compatibility.
+     */
     protected function _getMenuItemScore($aItem, $aParams = [])
+    {
+        return $this->_getMenuItemScores($aItem, $aParams);
+    }
+
+    protected function _getMenuItemScores($aItem, $aParams = [])
     {
         $bShowAsObject = isset($aParams['show_as_object']) && (bool)$aParams['show_as_object'] === true;
 
@@ -261,10 +274,11 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($CNF['FIELD_SCORE']) || (empty($this->_aContentInfo[$CNF['FIELD_SCORE']]) && !$this->_bShowZeros))
+        $sKf = 'FIELD_SCORE';
+        if(empty($CNF[$sKf]) || (empty($this->_aContentInfo[$CNF[$sKf]]) && !$this->_bShowZeros))
             return false;
 
-        $sTitle = _t('_sys_score_n_score', $this->_aContentInfo[$CNF['FIELD_SCORE']]);
+        $sTitle = _t('_sys_score_n_score', $this->_aContentInfo[$CNF[$sKf]]);
 
         if($this->_bIsApi)
             return $this->_getMenuItemAPI($aItem, 'text', [
@@ -272,7 +286,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             ]);
 
         return $this->getUnitMetaItemText($sTitle);
-    }
+    } 
 
     protected function _getMenuItemScoreObject($aItem, $aParams = [])
     {

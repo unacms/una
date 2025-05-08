@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS `bx_courses_data` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `rrate` float NOT NULL default '0',
+  `rvotes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
   `sc_up` int(11) NOT NULL default '0',
   `sc_down` int(11) NOT NULL default '0',
@@ -188,6 +190,28 @@ CREATE TABLE IF NOT EXISTS `bx_courses_votes_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_courses_reactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reaction` (`object_id`, `reaction`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_courses_reactions_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
   `value` tinyint(4) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
@@ -546,11 +570,12 @@ INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_o
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_courses', 'bx_courses', 'bx_courses_votes', 'bx_courses_votes_track', '604800', '1', '1', '0', '1', 'bx_courses_data', 'id', 'author', 'rate', 'votes', '', '');
+('bx_courses', 'bx_courses', 'bx_courses_votes', 'bx_courses_votes_track', '604800', '1', '1', '0', '1', 'bx_courses_data', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_courses_reactions', 'bx_courses', 'bx_courses_reactions', 'bx_courses_reactions_track', '604800', '1', '1', '1', '1', 'bx_courses_data', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
-('bx_courses', 'bx_courses', 'bx_courses_scores', 'bx_courses_scores_track', '604800', '0', 'bx_courses_data', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
+('bx_courses', 'bx_courses', 'bx_courses_scores', 'bx_courses_scores_track', '604800', '1', 'bx_courses_data', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 -- REPORTS
 INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
