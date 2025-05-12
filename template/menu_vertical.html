@@ -6,7 +6,9 @@
                     <span class="bx-menu-item-icon bx-stl-mii">
                         <bx_include_auto:menu_icon.html />
                     </span>
-                    <span class="bx-menu-item-title bx-stl-mit" sidebar-toggle-item>__title__</span>
+                    <bx_if:title>
+                        <span class="bx-menu-item-title bx-stl-mit" sidebar-toggle-item>__title__</span>
+                    </bx_if:title>
                 </div>
             </a>
         </li>

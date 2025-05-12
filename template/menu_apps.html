@@ -6,7 +6,9 @@
                 <div class="w-8 h-8 mx-auto mb-1 text-gray-500 dark:text-gray-400 text-2xl">
                     <bx_include_auto:menu_icon.html />
                 </div>
-                <div class="text-sm font-medium text-gray-900 dark:text-white">__title__</div>
+                <bx_if:title>
+                    <div class="text-sm font-medium text-gray-900 dark:text-white">__title__</div>
+                </bx_if:title>
             </a>
         </bx_repeat:menu_items>
     </div>

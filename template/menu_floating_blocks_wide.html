@@ -5,7 +5,9 @@
             <div class="bx-menu-floating-blocks-icon">
                 <bx_include_auto:menu_icon.html />
             </div>
-            <div class="bx-menu-floating-blocks-title bx-def-font-middle">__title__</div>
+            <bx_if:title>
+                <div class="bx-menu-floating-blocks-title bx-def-font-middle">__title__</div>
+            </bx_if:title>
         </a>
         <bx_if:addon>__addonf__</bx_if:addon>
     </li></bx_repeat:menu_items>
