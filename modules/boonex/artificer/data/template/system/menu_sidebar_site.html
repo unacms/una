@@ -17,7 +17,9 @@
                             <span class="bx-si-icon bx-stl-mii flex-shrink-0 group-hover:text-gray-700 dark:group-hover:text-gray-300">
                                 <bx_include_auto:menu_icon.html />
                             </span>
-                            <span class="bx-si-title bx-stl-mit flex-1">__title__</span>
+                            <bx_if:title>
+                                <span class="bx-si-title bx-stl-mit flex-1">__title__</span>
+                            </bx_if:title>
                         </a>
                     </li>
                 </bx_repeat:submenu_items>
