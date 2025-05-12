@@ -113,7 +113,7 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_JOINED_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_courses_page_title_joined_entries');
-                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode . '/' . $oJoinedProfile->id();
+                $this->aCurrent['rss']['link'] = 'modules/?r=courses/rss/' . $sMode . '/' . $oJoinedProfile->id();
                 break;
 
             case 'connections':
@@ -127,7 +127,7 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
                     elseif ((!isset($aParams['type']) || $aParams['type'] != 'common') && $oProfile)
                         $this->aCurrent['title'] = _t('_bx_courses_page_title_browse_connections', $oProfile->getDisplayName());
 
-                    $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode . '/' . $aParams['object'] . '/' . $aParams['type'] . '/' . (int)$aParams['profile'] . '/' . (int)$aParams['profile2'] . '/' . (int)$aParams['mutual'];
+                    $this->aCurrent['rss']['link'] = 'modules/?r=courses/rss/' . $sMode . '/' . $aParams['object'] . '/' . $aParams['type'] . '/' . (int)$aParams['profile'] . '/' . (int)$aParams['profile2'] . '/' . (int)$aParams['mutual'];
                 }
                 break;
 
@@ -139,17 +139,17 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
                 break;
 
             case 'recent':
-                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=courses/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_courses_page_title_browse_recent');
                 $this->aCurrent['sorting'] = 'last';
-                $this->sBrowseUrl = 'page.php?i=groups-home';
+                $this->sBrowseUrl = 'page.php?i=courses-home';
                 break;
 
             case 'featured':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
                 $this->aCurrent['title'] = _t('_bx_courses_page_title_browse_featured');
                 $this->aCurrent['restriction']['featured']['value'] = '0';
-                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=courses/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'featured';
                 break;
 
@@ -157,16 +157,16 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
                 $this->aCurrent['title'] = _t('_bx_courses_page_title_browse_recommended');
                 $this->aCurrent['restriction']['featured']['value'] = '0';
-                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=courses/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'recommended';
                 $this->_setConditionsForRecommended();
                 break;    
                 
             case 'top':
-                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=courses/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_courses_page_title_browse_top');
                 $this->aCurrent['sorting'] = 'top';
-                $this->sBrowseUrl = 'page.php?i=groups-top';
+                $this->sBrowseUrl = 'page.php?i=courses-top';
                 break;
 
             case '': // search results

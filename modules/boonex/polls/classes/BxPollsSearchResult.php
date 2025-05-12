@@ -100,7 +100,7 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
             case 'top':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
                 $this->aCurrent['title'] = _t('_bx_polls_page_title_browse_top');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=polls/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'top';
                 break;
 

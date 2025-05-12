@@ -223,8 +223,8 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['restriction']['followed'] = array('value' => $oJoinedProfile->id(), 'field' => 'initiator', 'operator' => '=', 'table' => 'sys_profiles_conn_subscriptions');
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_FOLLOWED_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_groups_page_title_followed_entries');
-                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode . '/' . $oJoinedProfile->id();
+                $this->aCurrent['title'] = _t('_bx_events_page_title_followed_entries');
+                $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode . '/' . $oJoinedProfile->id();
                 break;
 
             case 'connections':
