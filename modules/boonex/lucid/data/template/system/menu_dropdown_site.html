@@ -8,7 +8,7 @@
             <ul class="cd-secondary-dropdown is-hidden">
                 <li class="go-back"><a href="javascript:void(0)">Menu</a></li>
                 <bx_repeat:submenu_items>
-                    <li><a href="__link__" onclick="__onclick__"__attrs__>__title__</a></li>
+                    <li><a href="__link__" onclick="__onclick__"__attrs__><bx_if:title>__title__</bx_if:title></a></li>
                 </bx_repeat:submenu_items>
             </ul>
         </bx_if:show_submenu>

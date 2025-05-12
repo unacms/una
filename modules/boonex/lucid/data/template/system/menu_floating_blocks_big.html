@@ -4,7 +4,10 @@
         <a href="__link__" onclick="__onclick__"__attrs__>
             <div class="bx-menu-floating-blocks-icon">
                 <bx_include_auto:menu_icon.html />
-            </div><div class="bx-menu-floating-blocks-title">__title__</div>
+            </div>
+            <bx_if:title>
+                <div class="bx-menu-floating-blocks-title">__title__</div>
+            </bx_if:title>
             <bx_if:show_arrow>
                 <div class="bx-menu-floating-blocks-arrow bx-def-padding-sec-left">
                     <i class="sys-icon angle-down inactive"></i>

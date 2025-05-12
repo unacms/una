@@ -39,7 +39,7 @@
 
 /*--- Page Submenu bar ---*/
 .bx-menu-main-bar:not(.bx-menu-more-auto) {
-    overflow: hidden;
+    overflow: visible;
 }
 .bx-menu-main-bar-cnt {
     height: 3.125rem;
