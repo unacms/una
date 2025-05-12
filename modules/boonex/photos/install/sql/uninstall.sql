@@ -26,7 +26,7 @@ DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_photos_cats');
 
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_photos';
+DELETE FROM `sys_objects_cmts` WHERE `Name` IN ('bx_photos', 'bx_photos_notes');
 
 
 -- VOTES
