@@ -623,6 +623,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Xss',
                     ),
                 ),
+                'title_attr' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'title_attr',
+                    'caption' => _t('_adm_nav_txt_items_title_attr'),
+                    'info' => _t('_adm_nav_dsc_items_title_attr'),
+                    'value' => isset($aItem['title_attr']) ? $aItem['title_attr'] : '_adm_nav_txt_item',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
                 'parent_id' => array(
                     'type' => 'select',
                     'name' => 'parent_id',
@@ -714,6 +725,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'error' => _t('_adm_nav_err_items_onclick'),
                     ),
                 ),
+                'area_label' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'area_label',
+                    'caption' => _t('_adm_nav_txt_items_area_label'),
+                    'info' => _t('_adm_nav_dsc_items_area_label'),
+                    'value' => isset($aItem['area_label']) ? $aItem['area_label'] : '_adm_nav_txt_item',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
                 'hidden_on' => array(
                     'type' => 'select_multiple',
                     'name' => 'hidden_on',
@@ -758,7 +780,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'caption' => _t('_adm_nav_txt_items_icon'),
                     'info' => _t('_adm_nav_dsc_items_icon'),
                     'value' => '',
-					'code' => 1,
+                    'code' => 1,
                     'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
@@ -768,7 +790,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'params' => array(),
                         'error' => _t('_adm_nav_err_items_icon'),
                     ),
-					'attrs' => array('class' => 'bx-form-input-textarea-small'),
+                    'attrs' => array('class' => 'bx-form-input-textarea-small'),
                 ),
                 'icon_image' => array(
                     'type' => 'file',
@@ -787,6 +809,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'name' => 'icon_preview',
                     'caption' => _t('_adm_nav_txt_items_icon_image_old'),
                     'content' => ''
+                ),
+                'icon_only' => array(
+                    'type' => 'switcher',
+                    'name' => 'icon_only',
+                    'caption' => _t('_adm_nav_txt_items_icon_only'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => isset($aItem['icon_only']) && (int)$aItem['icon_only'] == 1,
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
                 ),
                 'primary' => array(
                     'type' => 'switcher',

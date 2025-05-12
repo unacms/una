@@ -1194,6 +1194,7 @@
 	<string name="_adm_nav_btn_sets_create"><![CDATA[Add New Set]]></string>
 	<string name="_adm_nav_btn_sets_delete"><![CDATA[Delete set]]></string>
 	<string name="_adm_nav_btn_sets_edit"><![CDATA[Edit set]]></string>
+        <string name="_adm_nav_dsc_items_area_label"><![CDATA[Accessible name for the link. It is useful when the visible text content of the link is not descriptive enough or absent.]]></string>
 	<string name="_adm_nav_dsc_items_icon"><![CDATA[You may use font icon, SVG or Emoji code here]]></string>
 	<string name="_adm_nav_dsc_items_icon_image"><![CDATA[or upload a small image to be displayed near the link.]]></string>
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
@@ -1203,6 +1204,7 @@
 	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Select if you want the link to use another menu as submenu.]]></string>
 	<string name="_adm_nav_dsc_items_target"><![CDATA[Select if you want the link to open as a new page or within current page.]]></string>
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Link name displayed in site menus. Use at least 3 characters.]]></string>
+        <string name="_adm_nav_dsc_items_title_attr"><![CDATA[A text which will be used in 'title' attribute of the link.]]></string>
 	<string name="_adm_nav_dsc_items_title_system"><![CDATA[Item name, displayed in Studio only.]]></string>
 	<string name="_adm_nav_dsc_items_visible_for_levels"><![CDATA[Select user levels that can see this menu item]]></string>
 	<string name="_adm_nav_dsc_menus_persistent"><![CDATA[Number of persistent menu items. Applicable for menus with 'Auto More' mechanism only.]]></string>
@@ -1236,6 +1238,7 @@
 	<string name="_adm_nav_err_sets_edit"><![CDATA[Cannot update set]]></string>
 	<string name="_adm_nav_err_sets_title"><![CDATA[A title with at least 3 characters is required.]]></string>
 	<string name="_adm_nav_txt_all_modules"><![CDATA[All Modules]]></string>
+        <string name="_adm_nav_txt_items_area_label"><![CDATA[Text for 'area-label' attribute]]></string>
         <string name="_adm_nav_txt_items_collapsed"><![CDATA[Collapsed]]></string>
 	<string name="_adm_nav_txt_items_create_popup"><![CDATA[Add New Item]]></string>
 	<string name="_adm_nav_txt_items_edit_popup"><![CDATA[Edit {0} Item]]></string>
@@ -1251,6 +1254,7 @@
 	<string name="_adm_nav_txt_items_icon_image"><![CDATA[]]></string>
 	<string name="_adm_nav_txt_items_icon_image_new"><![CDATA[]]></string>
 	<string name="_adm_nav_txt_items_icon_image_old"><![CDATA[Current Icon]]></string>
+        <string name="_adm_nav_txt_items_icon_only"><![CDATA[Icon only]]></string>
 	<string name="_adm_nav_txt_items_import_popup"><![CDATA[Import Items]]></string>
 	<string name="_adm_nav_txt_items_link"><![CDATA[URL]]></string>
 	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
@@ -1265,7 +1269,8 @@
 	<string name="_adm_nav_txt_items_target"><![CDATA[Target]]></string>
 	<string name="_adm_nav_txt_items_target_blank"><![CDATA[New Page]]></string>
 	<string name="_adm_nav_txt_items_target_self"><![CDATA[Same Page]]></string>
-	<string name="_adm_nav_txt_items_title"><![CDATA[Title]]></string>
+	<string name="_adm_nav_txt_items_title"><![CDATA[Name]]></string>
+        <string name="_adm_nav_txt_items_title_attr"><![CDATA[Title]]></string>
 	<string name="_adm_nav_txt_items_title_system"><![CDATA[System Name]]></string>
 	<string name="_adm_nav_txt_items_visible_for"><![CDATA[Visible For]]></string>
 	<string name="_adm_nav_txt_items_visible_for_all"><![CDATA[Anyone]]></string>

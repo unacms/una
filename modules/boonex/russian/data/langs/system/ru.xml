@@ -1177,6 +1177,7 @@
 	<string name="_adm_nav_btn_sets_create"><![CDATA[Добавить новый набор]]></string>
 	<string name="_adm_nav_btn_sets_delete"><![CDATA[Удалить набор]]></string>
 	<string name="_adm_nav_btn_sets_edit"><![CDATA[Редактировать набор]]></string>
+        <string name="_adm_nav_dsc_items_area_label"><![CDATA[Доступное имя для ссылки. Полезно, когда видимое текстовое содержимое ссылки недостаточно описательно или отсутствует.]]></string>
 	<string name="_adm_nav_dsc_items_icon"><![CDATA[Вы можете использовать здесь иконку для шрифта, SVG код или эмодзи]]></string>
 	<string name="_adm_nav_dsc_items_icon_image"><![CDATA[или загрузить маленькую картинку для отображения рядом со ссылкой.]]></string>
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[Картинка не загружена. В элементе меню будет использован текст.]]></string>
@@ -1186,6 +1187,7 @@
 	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Выберите, если пункт меню должен использовать другое меню в качестве подменю.]]></string>
 	<string name="_adm_nav_dsc_items_target"><![CDATA[Выберите, если ссылка должна открываться на новой или текущей странице.]]></string>
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Название ссылки для отображения в меню сайта. Используйте как минимум 3 символа.]]></string>
+        <string name="_adm_nav_dsc_items_title_attr"><![CDATA[Текст, который будет использоваться в атрибуте «title» ссылки.]]></string>
 	<string name="_adm_nav_dsc_items_title_system"><![CDATA[Имя элемента, отображаемое только в Студии.]]></string>
 	<string name="_adm_nav_dsc_items_visible_for_levels"><![CDATA[Выбрать членства, разрешённые для просмотра элемента данного меню]]></string>
         <string name="_adm_nav_dsc_menus_persistent"><![CDATA[Количество постоянных пунктов меню. Применимо только для авто-перестраиваемых меню.]]></string>
@@ -1219,6 +1221,7 @@
 	<string name="_adm_nav_err_sets_edit"><![CDATA[Невозможно обновить набор]]></string>
 	<string name="_adm_nav_err_sets_title"><![CDATA[Необходимо указать заголовок из как минимум 3 символов.]]></string>
 	<string name="_adm_nav_txt_all_modules"><![CDATA[Все модули]]></string>
+        <string name="_adm_nav_txt_items_area_label"><![CDATA[Текст для атрибута 'area-label']]></string>
         <string name="_adm_nav_txt_items_collapsed"><![CDATA[Свёрнуто]]></string>
 	<string name="_adm_nav_txt_items_create_popup"><![CDATA[Добавить новый элемент]]></string>
 	<string name="_adm_nav_txt_items_edit_popup"><![CDATA[Редактировать {0} элемент]]></string>
@@ -1234,6 +1237,7 @@
 	<string name="_adm_nav_txt_items_icon_image"><![CDATA[]]></string>
 	<string name="_adm_nav_txt_items_icon_image_new"><![CDATA[]]></string>
 	<string name="_adm_nav_txt_items_icon_image_old"><![CDATA[Текущая иконка]]></string>
+        <string name="_adm_nav_txt_items_icon_only"><![CDATA[Только иконка]]></string>
 	<string name="_adm_nav_txt_items_import_popup"><![CDATA[Импортировать элементы]]></string>
 	<string name="_adm_nav_txt_items_link"><![CDATA[URL]]></string>
 	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
@@ -1248,7 +1252,8 @@
 	<string name="_adm_nav_txt_items_target"><![CDATA[Цель]]></string>
 	<string name="_adm_nav_txt_items_target_blank"><![CDATA[Новая страница]]></string>
 	<string name="_adm_nav_txt_items_target_self"><![CDATA[Эта же страница]]></string>
-	<string name="_adm_nav_txt_items_title"><![CDATA[Заголовок]]></string>
+	<string name="_adm_nav_txt_items_title"><![CDATA[Имя]]></string>
+        <string name="_adm_nav_txt_items_title_attr"><![CDATA[Заголовок]]></string>
 	<string name="_adm_nav_txt_items_title_system"><![CDATA[Системное имя]]></string>
 	<string name="_adm_nav_txt_items_visible_for"><![CDATA[Видимо для]]></string>
 	<string name="_adm_nav_txt_items_visible_for_all"><![CDATA[Всех]]></string>

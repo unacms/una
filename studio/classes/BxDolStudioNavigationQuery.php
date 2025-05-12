@@ -265,36 +265,8 @@ class BxDolStudioNavigationQuery extends BxDolDb
 
     function getItems($aParams, &$aItems, $bReturnCount = true)
     {
-        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = "
-            `tmi`.`id` AS `id`,
-            `tmi`.`parent_id` AS `parent_id`,
-            `tmi`.`set_name` AS `set_name`,
-            `tmi`.`module` AS `module`,
-            `tmi`.`name` AS `name`,
-            `tmi`.`title_system` AS `title_system`,
-            `tmi`.`title` AS `title`,
-            `tmi`.`link` AS `link`,
-            `tmi`.`onclick` AS `onclick`,
-            `tmi`.`target` AS `target`,
-            `tmi`.`icon` AS `icon`,
-            `tmi`.`addon` AS `addon`,
-            `tmi`.`submenu_object` AS `submenu_object`,
-            `tmi`.`submenu_popup` AS `submenu_popup`,
-            `tmi`.`visible_for_levels` AS `visible_for_levels`,
-            `tmi`.`visibility_custom` AS `visibility_custom`,
-            `tmi`.`hidden_on` AS `hidden_on`,
-            `tmi`.`hidden_on_cxt` AS `hidden_on_cxt`,
-            `tmi`.`hidden_on_pt` AS `hidden_on_pt`,
-            `tmi`.`hidden_on_col` AS `hidden_on_col`,
-            `tmi`.`config_api` AS `config_api`,
-            `tmi`.`primary` AS `primary`,
-            `tmi`.`collapsed` AS `collapsed`,
-            `tmi`.`active` AS `active`,
-            `tmi`.`active_api` AS `active_api`,
-            `tmi`.`copyable` AS `copyable`,
-            `tmi`.`editable` AS `editable`,
-            `tmi`.`order` AS `order`";
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+        $sSelectClause = "*";
         $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
         if(!isset($aParams['order']) || empty($aParams['order']))

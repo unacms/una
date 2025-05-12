@@ -226,12 +226,7 @@ class BxBaseMenu extends BxDolMenu
         $a['object'] = $this->_sObject;
 
         $a['title'] = _t($a['title']);
-        $a['bx_if:title'] = array(
-            'condition' => !empty($a['title']),
-            'content' => array(
-                'title' => $a['title']
-            )
-        );
+        $a['title_attr'] = $this->_getMenuTitle($a);
 
         $this->removeMarker('addon');
 
@@ -258,7 +253,6 @@ class BxBaseMenu extends BxDolMenu
         $a['class_link'] = '';
 
         $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
-        $a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
 
         $a['attrs'] = $this->_getMenuAttrs($a);
         $a['attrs_wrp'] = '';
@@ -276,10 +270,13 @@ class BxBaseMenu extends BxDolMenu
                 ]);
         }
 
-        $a['bx_if:image'] = array (
+        $a['bx_if:image'] = [
             'condition' => (bool)$sIconUrl,
-            'content' => array('icon_url' => $sIconUrl),
-        );
+            'content' => [
+                'icon_url' => $sIconUrl,
+                'attrs' => $this->_getMenuIconAttrs('image', $a)
+            ],
+        ];
         $a['bx_if:image_inline'] = array (
             'condition' => false,
             'content' => array('image' => ''),
@@ -296,13 +293,13 @@ class BxBaseMenu extends BxDolMenu
             'condition' => (bool)$sIconA,
             'content' => array('icon-a' => $sIconA),
         );
-        $a['bx_if:title'] = array (
-            'condition' => (bool)$a['title'],
-            'content' => array(
+        $a['bx_if:title'] = [
+            'condition' => (bool)$a['title'] && (!isset($a['icon_only']) || (int)$a['icon_only'] == 0),
+            'content' => [
                 'title' => $a['title'],
                 'title_attr' => $a['title_attr']
-            ),
-        );
+            ],
+        ];
 
         $bOnClick = !empty($a['onclick']);
         $aOnClick = $bOnClick ? [
@@ -371,15 +368,33 @@ class BxBaseMenu extends BxDolMenu
     {
         return BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIcon(!empty($a['icon']) ? $a['icon'] : '');
     }
-    
+
+    protected function _getMenuIconAttrs ($sType, $a)
+    {
+        $sAttrs = '';
+
+        if($sType == 'image' && ($sTitleAttr = $this->_getMenuTitle($a)))
+            $sAttrs .= ' alt="' . $sTitleAttr . '"';
+
+        return $sAttrs;
+    }
+
+    protected function _getMenuTitle($a)
+    {
+        return bx_html_attribute(strip_tags(!empty($a['title_attr']) && ($sTitleAttr = _t($a['title_attr'])) ? $sTitleAttr : $a['title']));
+    }
+
     public function getMenuIconHtml($sIcon)
     {
         list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIcon($sIcon);
 
-        $a['bx_if:image'] = array (
+        $a['bx_if:image'] = [
             'condition' => (bool)$sIconUrl,
-            'content' => array('icon_url' => $sIconUrl),
-        );
+            'content' => [
+                'icon_url' => $sIconUrl,
+                'attrs' => ''
+            ],
+        ];
         $a['bx_if:icon'] = array (
             'condition' => (bool)$sIcon,
             'content' => array('icon' => $sIcon),
@@ -431,11 +446,17 @@ class BxBaseMenu extends BxDolMenu
     protected function _getMenuAttrs ($aMenuItem)
     {
         $sAttrs = '';
+        if(($sTitleAttr = $this->_getMenuTitle($aMenuItem)))
+            $sAttrs .= ' title="' . $sTitleAttr . '"';
+
         if(!empty($aMenuItem['target']))
             $sAttrs .= ' target="' . $aMenuItem['target'] . '"';
 
         if($this->_bAddNoFollow && !empty($aMenuItem['link']) && preg_match('@^https?://@', $aMenuItem['link']) && strncmp($aMenuItem['link'], BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) !== 0)
             $sAttrs .= ' rel="noreferrer"';
+
+        if(!empty($aMenuItem['area_label']))
+            $sAttrs .= ' area-label="' . bx_html_attribute(_t($aMenuItem['area_label'])) . '"';
 
         return $sAttrs;
     }
