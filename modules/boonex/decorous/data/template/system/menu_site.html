@@ -4,15 +4,16 @@
             <div class="bx-menu-floating-blocks-icon">
                 <bx_include_auto:menu_icon.html />
             </div>
-            <div class="bx-menu-floating-blocks-title bx-def-font-middle">__title__</div>
-			<bx_if:show_toggler>
+            <bx_if:title>
+                <div class="bx-menu-floating-blocks-title bx-def-font-middle">__title__</div>
+            </bx_if:title>
+            <bx_if:show_toggler>
                 <div class="bx-menu-floating-blocks-toggler">
                     <i class="bx-menu-fbt-opened sys-icon chevron-up"></i>
                     <i class="bx-menu-fbt-closed sys-icon chevron-down"></i>
                 </div>
-            </bx_if:show_toggler>
-			
+            </bx_if:show_toggler>		
         </a>
-		<bx_if:show_submenu>__submenu__</bx_if:show_submenu>
+        <bx_if:show_submenu>__submenu__</bx_if:show_submenu>
     </li></bx_repeat:menu_items>
 </ul>
