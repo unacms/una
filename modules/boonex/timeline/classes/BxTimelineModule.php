@@ -675,14 +675,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @ref bx_timeline-get_posts "get_posts"
      * @api @ref bx_timeline-get_posts "get_posts"
      */
-    
-    function serviceGetPosts($aParams)
+    public function serviceGetPosts($aParams)
     {
-        if(is_string($aParams)){
-            $aParams = json_decode($aParams, true);
-        }
+        if(is_string($aParams))
+            $aParams = bx_api_get_browse_params($aParams, true);
 
-        return $this->_serviceGetBlockViewByType($aParams['params']);
+        return $this->_serviceGetBlockViewByType($aParams);
     }
 
     public function actionGetPostForm()
@@ -5585,6 +5583,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aResult = [];
         foreach($aMediaIds as $iMediaId) {
             $aMediaFile = $oStorage->getFile($iMediaId);
+            if(!$aMediaFile)
+                continue;
 
             $bVideoFile = strncmp('video/', $aMediaFile['mime_type'], 6) === 0 && $oTranscoderPoster->isMimeTypeSupported($aMediaFile['mime_type']);
             if($bVideoFile) {
