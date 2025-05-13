@@ -523,8 +523,8 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_spaces', '_bx_spaces', @iSearchOrder + 1, 'BxSpacesSearchResult', 'modules/boonex/spaces/classes/BxSpacesSearchResult.php');
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_spaces_fans', 'bx_spaces_fans', 1, 1, 'mutual', 'BxSpacesConnectionFans', 'modules/boonex/spaces/classes/BxSpacesConnectionFans.php');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `override_class_name`, `override_class_file`) VALUES
+('bx_spaces_fans', 'bx_spaces_fans', 1, 1, 'mutual', 'bx_spaces_data', 'id', 'members', 'BxSpacesConnectionFans', 'modules/boonex/spaces/classes/BxSpacesConnectionFans.php');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

@@ -547,8 +547,8 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_courses', '_bx_courses', @iSearchOrder + 1, 'BxCoursesSearchResult', 'modules/boonex/courses/classes/BxCoursesSearchResult.php');
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_courses_fans', 'bx_courses_fans', 1, 1, 'mutual', 'BxCoursesConnectionFans', 'modules/boonex/courses/classes/BxCoursesConnectionFans.php');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `override_class_name`, `override_class_file`) VALUES
+('bx_courses_fans', 'bx_courses_fans', 1, 1, 'mutual', 'bx_courses_data', 'id', 'members', 'BxCoursesConnectionFans', 'modules/boonex/courses/classes/BxCoursesConnectionFans.php');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

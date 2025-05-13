@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `labels` text NOT NULL,
   `location` text NOT NULL,
   `threshold` int(11) unsigned NOT NULL default '0',
+  `members` int(11) NOT NULL default '0'
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

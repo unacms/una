@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `bx_courses_data` (
   `desc` text NOT NULL,
   `labels` text NOT NULL,
   `location` text NOT NULL,
+  `members` int(11) NOT NULL default '0'
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

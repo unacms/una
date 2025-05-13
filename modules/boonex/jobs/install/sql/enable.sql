@@ -552,8 +552,8 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_jobs', '_bx_jobs', @iSearchOrder + 1, 'BxJobsSearchResult', 'modules/boonex/jobs/classes/BxJobsSearchResult.php');
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_jobs_fans', 'bx_jobs_fans', 1, 1, 'mutual', 'BxJobsConnectionFans', 'modules/boonex/jobs/classes/BxJobsConnectionFans.php');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `override_class_name`, `override_class_file`) VALUES
+('bx_jobs_fans', 'bx_jobs_fans', 1, 1, 'mutual', 'bx_jobs_data', 'id', 'members', 'BxJobsConnectionFans', 'modules/boonex/jobs/classes/BxJobsConnectionFans.php');
 
 -- RECOMMENDATIONS
 INSERT INTO `sys_objects_recommendation` (`name`, `module`, `connection`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES

@@ -16,6 +16,10 @@ class BxDolConnectionQuery extends BxDolDb
     protected $_aObject;
     protected $_sTable;
     protected $_sType;
+    
+    protected $_sTriggerTable;
+    protected $_sTriggerFieldId;
+    protected $_sTriggerFieldCount;
 
     public function __construct($aObject)
     {
@@ -23,6 +27,10 @@ class BxDolConnectionQuery extends BxDolDb
         $this->_aObject = $aObject;
         $this->_sTable = $aObject['table'];
         $this->_sType = $aObject['type'];
+
+        $this->_sTriggerTable = $aObject['trigger_table'];
+        $this->_sTriggerFieldId = $aObject['trigger_field_id'];
+        $this->_sTriggerFieldCount = $aObject['trigger_field_count'];
     }
 
     static public function getConnectionObject ($sObject)
@@ -400,6 +408,14 @@ class BxDolConnectionQuery extends BxDolDb
         if ($bResult = $this->query($sQuery))
             $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . '_' . $iContent);
         return $bResult;
+    }
+
+    public function updateConnectionTriggerTableValue($iObjectId, $iValue)
+    {
+        return (int)$this->query("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = `{$this->_sTriggerFieldCount}` + :count WHERE `{$this->_sTriggerFieldId}` = :id", [
+            'id' => $iObjectId,
+            'count' => (int)$iValue
+        ]) > 0;
     }
 
     public function removeConnection ($iInitiator, $iContent)

@@ -204,7 +204,7 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         return parent::_checkAllowedConnectInitiator($oInitiator, $isPerformAction);
     }
 
-    public function _checkAllowedConnectContent ($oContent)
+    protected function _checkAllowedConnectContent ($oContent)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -220,6 +220,17 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         }
 
         return parent::_checkAllowedConnectContent($oContent);
+    }
+
+    protected function _getTriggerObject($iInitiator, $iContent)
+    {
+        if(($oInitiator = BxDolProfile::getInstance($iInitiator)) !== false && $oInitiator->getModule() == $this->_sModule)
+            return $oInitiator->getContentId();
+
+        if(($oContent = BxDolProfile::getInstance($iContent)) !== false && $oContent->getModule() == $this->_sModule)
+            return $oContent->getContentId();
+
+        return parent::_getTriggerObject($iInitiator, $iContent);
     }
 }
 
