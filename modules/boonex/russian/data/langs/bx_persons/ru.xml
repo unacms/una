@@ -20,6 +20,7 @@
     <string name="_bx_persons_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_persons_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_persons_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_persons_option_friends"><![CDATA[Дружба]]></string>
     <string name="_bx_persons_option_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
     <string name="_bx_persons_option_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
 

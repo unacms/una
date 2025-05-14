@@ -16,6 +16,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         parent::__construct($aModule);
 
         $this->_aMenuItems2MethodsSubmenu = array_merge($this->_aMenuItems2MethodsSubmenu, array(
+            'persons-profile-friends' => 'checkAllowedFriendsView',
             'persons-profile-relations' => 'checkAllowedRelationsView',
             'persons-profile-subscriptions' => 'checkAllowedSubscriptionsView'
         ));
@@ -89,6 +90,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'PARAM_NUM_RSS' => 'bx_persons_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_persons_num_connections_quick',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_persons_searchable_fields',
+            'PARAM_FRIENDS' => 'bx_persons_friends',
             'PARAM_PUBLIC_SBSN' => 'bx_persons_public_subscriptions',
             'PARAM_PUBLIC_SBSD' => 'bx_persons_public_subscribed_me',
             'PARAM_REDIRECT_AADD' => 'bx_persons_redirect_aadd',
