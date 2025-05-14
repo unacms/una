@@ -16,6 +16,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
         parent::__construct($aModule);
 
         $this->_aMenuItems2MethodsSubmenu = array_merge($this->_aMenuItems2MethodsSubmenu, array(
+            'organization-profile-friends' => 'checkAllowedFriendsView',
             'organization-profile-relations' => 'checkAllowedRelationsView',
             'organization-profile-subscriptions' => 'checkAllowedSubscriptionsView'
         ));
@@ -115,6 +116,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'PARAM_MMODE' => 'bx_organizations_members_mode',
             'PARAM_PAID_JOIN_ENABLED' => true,
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
+            'PARAM_FRIENDS' => 'bx_organizations_friends',
             'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
             'PARAM_SBS_WO_JOIN' => 'bx_organizations_enable_subscribe_wo_join',

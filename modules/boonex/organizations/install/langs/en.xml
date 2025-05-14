@@ -23,6 +23,7 @@
     <string name="_bx_orgs_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_orgs_option_members_mode"><![CDATA[Special mode for organization members]]></string>
     <string name="_bx_orgs_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
+    <string name="_bx_orgs_option_friends"><![CDATA[Friendship]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Public following list]]></string>
     <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Public followers list]]></string>
     <string name="_bx_orgs_option_enable_subscribe_wo_join"><![CDATA[Allow to follow without join]]></string>
