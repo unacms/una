@@ -107,7 +107,7 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!$this->_bContentPublic || !$this->_oContentProfile)
+        if(!$this->_oModule->_oConfig->isFriends() || !$this->_bContentPublic || !$this->_oContentProfile)
             return false;
         
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');

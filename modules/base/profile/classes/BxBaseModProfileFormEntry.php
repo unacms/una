@@ -70,6 +70,9 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             $this->aInputs[$sField]['ghost_template'] = '';
         }
 
+        if(($sField = 'friends_count') && isset($this->aInputs[$sField]) && !$this->_oModule->_oConfig->isFriends())
+            unset($this->aInputs[$sField]);
+
         $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
         if ($oAccountProfile)
             $this->_iAccountProfileId = $oAccountProfile->id();
@@ -150,38 +153,38 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     
     protected function genCustomViewRowValueFriendsCount($aInput)
     {
-        if (isset($this->_oModule->_oConfig->CNF['URI_VIEW_FRIENDS'])){
-            $oProfile = $this->_oModule->getProfileByCurrentUrl();
-            if ($oProfile){
-                $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
-                $iCount = $oConnection->getConnectedContentCount($oProfile->id(), true);
-                return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
-                    'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $oProfile->id())),
-                    'title' => '',
-                    'content' => $iCount
-                ));
-            }
-        }
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($CNF['URI_VIEW_FRIENDS']))
+            return '';
+
+        if(($oProfile = $this->_oModule->getProfileByCurrentUrl()) !== false)
+            return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', [
+                'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $oProfile->id())),
+                'title' => '',
+                'content' => BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($oProfile->id(), true)
+            ]);
+
         return '';
     }
-    
+
     protected function genCustomViewRowValueFollowersCount($aInput)
     {
-        if (isset($this->_oModule->_oConfig->CNF['URI_VIEW_SUBSCRIPTIONS'])){
-            $oProfile = $this->_oModule->getProfileByCurrentUrl();
-            if ($oProfile){
-                $oConnectionFollow = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-                $iCount = $oConnectionFollow->getConnectedInitiatorsCount($oProfile->id());
-                return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
-                    'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_SUBSCRIPTIONS'] . '&profile_id=' . $oProfile->id())),
-                    'title' => '',
-                    'content' => $iCount
-                ));
-            }
-        }
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($CNF['URI_VIEW_SUBSCRIPTIONS']))
+            return '';
+
+        if(($oProfile = $this->_oModule->getProfileByCurrentUrl()) !== false)
+            return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
+                'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_SUBSCRIPTIONS'] . '&profile_id=' . $oProfile->id())),
+                'title' => '',
+                'content' => BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedInitiatorsCount($oProfile->id())
+            ));
+
         return '';
     }
-    
+
     private function genCustomViewRowValueProfileEmailOrIp($aInput)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

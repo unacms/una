@@ -55,6 +55,11 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
         $this->_aRoles = false;
     }
 
+    public function isFriends()
+    {
+        return ($sKey = 'PARAM_FRIENDS') && (!isset($this->CNF[$sKey]) || getParam($this->CNF[$sKey]) == 'on');
+    }
+
     public function isRoles()
     {
         if($this->_aRoles === false)

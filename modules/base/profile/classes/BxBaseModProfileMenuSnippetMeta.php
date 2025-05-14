@@ -90,7 +90,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemFriends($aItem)
     {
-        if(!$this->_isVisibleInContext($aItem))
+        if(!$this->_oModule->_oConfig->isFriends() || !$this->_isVisibleInContext($aItem))
             return false;
 
         if(!$this->_bContentPublic || !$this->_oContentProfile)

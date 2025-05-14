@@ -109,6 +109,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'BrowseTopProfiles' => '',
             'BrowseOnlineProfiles' => '',
             'BrowseConnections' => '',
+            'BrowseConnectionsEverywhere' => '',
             'BrowseByAcl' => '',
         ));
     }
@@ -1205,6 +1206,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileFriends ($iContentId = 0)
     {
+        if(!$this->_oConfig->isFriends())
+            return false;
+
         $mixedContent = $this->_getContent($iContentId);
         if($mixedContent === false)
             return false;
@@ -1221,6 +1225,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileFriendsMutual ($iContentId = 0)
     {
+        if(!$this->_oConfig->isFriends())
+            return false;
+
         $mixedContent = $this->_getContent($iContentId);
         if($mixedContent === false)
             return false;
@@ -1324,6 +1331,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         $CNF = &$this->_oConfig->CNF;
         return isset($CNF['PARAM_ENABLE_ACTIVATION_LETTER']) ? (bool)getParam($CNF['PARAM_ENABLE_ACTIVATION_LETTER']) : true;
+    }
+
+    public function serviceIsEnableFriends()
+    {
+        return $this->_oConfig->isFriends();
     }
 
     public function serviceIsEnableRelations()
@@ -1900,11 +1912,26 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->checkAllowedContact($aDataEntry, $isPerformAction);
     }
 
+    public function checkAllowedFriendsView (&$aDataEntry, $isPerformAction = false)
+    {
+        $sResult = _t('_sys_txt_access_denied');
+        if(!$this->_oConfig->isFriends())
+            return $sResult;
+
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return $sResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
     public function checkAllowedFriendAdd (&$aDataEntry, $isPerformAction = false)
     {
+        if(!$this->_oConfig->isFriends() || ($oProfile = BxDolProfile::getInstance($this->_iProfileId)) === false || !bx_srv($oProfile->getModule(), 'is_enable_friends'))
+            return _t('_sys_txt_access_denied');
+
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, ['sys_profiles_friends', 'checkAllowedAddConnection'], false, false);
     }
 
@@ -1913,6 +1940,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedFriendRemove (&$aDataEntry, $isPerformAction = false)
     {
+        if(!$this->_oConfig->isFriends() || ($oProfile = BxDolProfile::getInstance($this->_iProfileId)) === false || !bx_srv($oProfile->getModule(), 'is_enable_friends'))
+            return _t('_sys_txt_access_denied');
+
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, ['sys_profiles_friends', 'checkAllowedRemoveConnection'], false, true, true))
             return CHECK_ACTION_RESULT_ALLOWED;
 

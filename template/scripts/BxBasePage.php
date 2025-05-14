@@ -682,7 +682,9 @@ class BxBasePage extends BxDolPage
                 $sSample = _t($_sSample);
                 if(strcmp($_sSample, $sSample) == 0)
                     $sSample = _t('_Context');
-                        
+
+                
+                
                 $a['context'] = [
                     'list' => $aContexts,
                     'current' => $aCurrent,
