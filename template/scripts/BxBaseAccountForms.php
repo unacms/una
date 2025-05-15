@@ -130,6 +130,9 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         $iProfileId = $this->onAccountCreated($iAccountId, $oForm->isSetPendingApproval());
 
+        if(($sField = 'picture') && isset($oForm->aInputs[$sField]))
+            $oForm->processFiles($sField, $iAccountId, true);
+
         // perform action
         BxDolAccount::isAllowedCreate ($iProfileId, true);
 
@@ -347,6 +350,9 @@ class BxBaseAccountForms extends BxDolProfileForms
             else
                 return $sLKey = '_sys_txt_error_account_update' && $bIsApi ? _t($sLKey) : MsgBox(_t($sLKey));
         }
+
+        if(($sField = 'picture') && isset($oForm->aInputs[$sField]))
+            $oForm->processFiles($sField, $iAccountId, false);
 
         // check if email was changed
         if (!empty($aTrackTextFieldsChanges['changed_fields']) && in_array('email', $aTrackTextFieldsChanges['changed_fields'])){

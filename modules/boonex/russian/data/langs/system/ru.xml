@@ -2706,6 +2706,8 @@
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Получать обновления сайта]]></string>
 	<string name="_sys_form_account_input_submit"><![CDATA[Отправить]]></string>
         <string name="_sys_form_account_input_publish"><![CDATA[Создать новую учетную запись]]></string>
+        <string name="_sys_form_account_input_caption_system_picture"><![CDATA[Изображение аккаунта]]></string>
+        <string name="_sys_form_account_input_picture"><![CDATA[Загрузить изображение аккаунта]]></string>
         <string name="_sys_form_agents_comment"><![CDATA[Агенты: Сообщение]]></string>
         <string name="_sys_form_display_agents_comment_post"><![CDATA[Агенты: Отправить сообщение]]></string>
         <string name="_sys_form_agents_comment_input_caption_system_action"><![CDATA[Действие]]></string>
