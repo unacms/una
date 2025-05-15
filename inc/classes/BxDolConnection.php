@@ -64,6 +64,18 @@ define('BX_CONNECTIONS_CONTENT_TYPE_INITIATORS', 'initiators');
 define('BX_CONNECTIONS_CONTENT_TYPE_COMMON', 'common');
 
 /**
+ * Connections trigger type: initiator. 
+ * It updates 'Initiator' data with a counter's value of connected 'Content'.
+ */
+define('BX_CONNECTIONS_TRIGGER_TYPE_INITIATOR', 'initiator');
+
+/**
+ * Connections trigger type: content. 
+ * It updates 'Content' data with a counter's value of connected 'Initiators'.
+ */
+define('BX_CONNECTIONS_TRIGGER_TYPE_CONTENT', 'content');
+
+/**
  * Connection is usefull when you need to organize some sorts of connections between different content,
  * for example: friends, contacts, favorites, block lists, subscriptions, etc.
  *
@@ -121,6 +133,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     protected $_aObject;
     protected $_oQuery;
     protected $_sType;
+    protected $_aTriggerTypes;
 
     /**
      * Constructor
@@ -135,6 +148,8 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         $this->_aObject['per_page_default'] = 20;
 
         $this->_sType = $aObject['type'];
+
+        $this->_aTriggerTypes = [BX_CONNECTIONS_TRIGGER_TYPE_INITIATOR, BX_CONNECTIONS_TRIGGER_TYPE_CONTENT];
 
         $this->_oQuery = new BxDolConnectionQuery($aObject);
     }
@@ -371,11 +386,8 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     {
         $this->checkAllowedConnect($iInitiator, $iContent, true, $iMutual, false);
 
-        $bOneWay = $this->_aObject['type'] == BX_CONNECTIONS_TYPE_ONE_WAY;
-        $bMutual = $this->_aObject['type'] == BX_CONNECTIONS_TYPE_MUTUAL && $iMutual;
-
-        if($bOneWay || $bMutual)
-            $this->_triggerValue($iInitiator, $iContent, 1);
+        if($this->_isTriggerable($iMutual))
+            $this->_updateTriggerValue($iInitiator, $iContent, 1);
 
         /**
          * Call socket.
@@ -400,7 +412,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode($aMessageContent));
         }
 
-        if($bOneWay || $bMutual) {
+        if($this->_aObject['type'] == BX_CONNECTIONS_TYPE_ONE_WAY || ($bMutual = ($this->_aObject['type'] == BX_CONNECTIONS_TYPE_MUTUAL && $iMutual))) {
             $oProfileQuery = BxDolProfileQuery::getInstance();
 
             /**
@@ -479,7 +491,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
 
     public function onRemoved($iInitiator, $iContent, $iMutual)
     {
-        $this->_triggerValue($iInitiator, $iContent, -1);
+        $this->_updateTriggerValue($iInitiator, $iContent, -1);
 
         /**
          * Call socket.
@@ -558,6 +570,9 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getConnectedContentCount ($iInitiator, $isMutual = false, $iFromDate = 0)
     {
+        if($this->_isTriggerable($isMutual) && ($iValue = $this->_getTriggerValueByContentType(BX_CONNECTIONS_CONTENT_TYPE_CONTENT, $iInitiator)) !== false)
+            return $iValue;
+
         return $this->_oQuery->getConnectedContentCount($iInitiator, $isMutual, $iFromDate);
     }
 
@@ -581,6 +596,9 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getConnectedInitiatorsCount ($iContent, $isMutual = false)
     {
+        if($this->_isTriggerable($isMutual) && ($iValue = $this->_getTriggerValueByContentType(BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, $iContent)) !== false)
+            return $iValue;
+
         return $this->_oQuery->getConnectedInitiatorsCount($iContent, $isMutual);
     }
 
@@ -1149,24 +1167,56 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         return $oContent->checkAllowedProfileView();
     }
 
-    protected function _triggerValue($iInitiator, $iContent, $iValue)
+    protected function _isTriggerable($mixedMutual)
     {
-        if(!$this->_aObject['trigger_table'])
+        return $this->_aObject['type'] == BX_CONNECTIONS_TYPE_ONE_WAY || ($this->_aObject['type'] == BX_CONNECTIONS_TYPE_MUTUAL && $mixedMutual);
+    }
+
+    protected function _updateTriggerValue($iInitiator, $iContent, $iValue)
+    {
+        foreach($this->_aTriggerTypes as $sType) {
+            if(empty($this->_aObject['tt_' . $sType]) || empty($this->_aObject['tf_id_' . $sType]) || empty($this->_aObject['tf_count_' . $sType]))
+                continue;
+
+            $iObjectId = $this->_getTriggerObject($sType, $iInitiator, $iContent);
+            if(!$iObjectId)
+                continue;
+
+            $this->_oQuery->updateTriggerValue($sType, $iObjectId, $iValue);
+        }
+    }
+
+    protected function _getTriggerValueByContentType($sContentType, $iParticipantId)
+    {
+        $aCt2Tt = [
+            BX_CONNECTIONS_CONTENT_TYPE_CONTENT => BX_CONNECTIONS_TRIGGER_TYPE_INITIATOR,
+            BX_CONNECTIONS_CONTENT_TYPE_INITIATORS => BX_CONNECTIONS_TRIGGER_TYPE_CONTENT
+        ];
+
+        if(!isset($aCt2Tt[$sContentType]))
             return false;
 
-        $iObjectId = $this->_getTriggerObject($iInitiator, $iContent);
-        if(!$iObjectId)
+        $sTriggerType = $aCt2Tt[$sContentType];
+        if(empty($this->_aObject['tt_' . $sTriggerType]) || empty($this->_aObject['tf_id_' . $sTriggerType]) || empty($this->_aObject['tf_count_' . $sTriggerType]))
             return false;
 
-        return $this->_oQuery->updateConnectionTriggerTableValue($iObjectId, $iValue);
+        $iObjectId = 0;
+        if((int)$this->_aObject['profile_' . $sTriggerType]) {
+            if(($oParticipant = BxDolProfile::getInstance($iParticipantId)) !== false)
+                $iObjectId = $oParticipant->getContentId();
+        }
+        else
+            $iObjectId = $iParticipantId;
+
+        return $iObjectId ? $this->_oQuery->getTriggerValue($sTriggerType, $iObjectId) : false;
     }
 
     /**
      * Should be overwritten in Connection class which uses triggerable fields.
      */
-    protected function _getTriggerObject($iInitiator, $iContent)
+    protected function _getTriggerObject($sType, $iInitiator, $iContent)
     {
-        return 0;
+        return false;
     }
 }
 

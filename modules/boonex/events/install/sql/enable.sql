@@ -603,7 +603,7 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_events', '_bx_events', @iSearchOrder + 1, 'BxEventsSearchResult', 'modules/boonex/events/classes/BxEventsSearchResult.php');
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `override_class_name`, `override_class_file`) VALUES
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `tt_content`, `tf_id_content`, `tf_count_content`, `override_class_name`, `override_class_file`) VALUES
 ('bx_events_fans', 'bx_events_fans', 1, 1, 'mutual', 'bx_events_data', 'id', 'members', 'BxEventsConnectionFans', 'modules/boonex/events/classes/BxEventsConnectionFans.php');
 
 -- STATS

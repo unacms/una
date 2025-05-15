@@ -222,15 +222,17 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         return parent::_checkAllowedConnectContent($oContent);
     }
 
-    protected function _getTriggerObject($iInitiator, $iContent)
+    protected function _getTriggerObject($sType, $iInitiator, $iContent)
     {
-        if(($oInitiator = BxDolProfile::getInstance($iInitiator)) !== false && $oInitiator->getModule() == $this->_sModule)
-            return $oInitiator->getContentId();
+        if(($oInitiator = BxDolProfile::getInstance($iInitiator)) !== false && ($sModule = $oInitiator->getModule()))
+            if(($sModule == $this->_sModule && $sType == BX_CONNECTIONS_TRIGGER_TYPE_CONTENT) || ($sModule != $this->_sModule && $sType == BX_CONNECTIONS_TRIGGER_TYPE_INITIATOR))
+                return $oInitiator->getContentId();
 
-        if(($oContent = BxDolProfile::getInstance($iContent)) !== false && $oContent->getModule() == $this->_sModule)
-            return $oContent->getContentId();
+        if(($oContent = BxDolProfile::getInstance($iContent)) !== false && ($sModule = $oContent->getModule())  == $this->_sModule)
+            if(($sModule == $this->_sModule && $sType == BX_CONNECTIONS_TRIGGER_TYPE_CONTENT) || ($sModule != $this->_sModule && $sType == BX_CONNECTIONS_TRIGGER_TYPE_INITIATOR))
+                return $oContent->getContentId();
 
-        return parent::_getTriggerObject($iInitiator, $iContent);
+        return false;
     }
 }
 

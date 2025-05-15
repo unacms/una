@@ -540,7 +540,7 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_groups', '_bx_groups', @iSearchOrder + 1, 'BxGroupsSearchResult', 'modules/boonex/groups/classes/BxGroupsSearchResult.php');
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `override_class_name`, `override_class_file`) VALUES
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `tt_content`, `tf_id_content`, `tf_count_content`, `override_class_name`, `override_class_file`) VALUES
 ('bx_groups_fans', 'bx_groups_fans', 1, 1, 'mutual', 'bx_groups_data', 'id', 'members', 'BxGroupsConnectionFans', 'modules/boonex/groups/classes/BxGroupsConnectionFans.php');
 
 -- RECOMMENDATIONS
