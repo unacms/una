@@ -29,6 +29,7 @@ class BxSpacesSearchResult extends BxBaseModGroupsSearchResult
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_spaces', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_spaces_data'),
+                'category' => array('value' => '', 'field' => 'space_cat', 'operator' => '=', 'table' => 'bx_spaces_data'),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_spaces_data'),
                 'status' => array('value' => 'active', 'field' => 'status', 'operator' => '=', 'table' => 'bx_spaces_data'),
                 'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '=', 'table' => 'bx_spaces_data'),
@@ -166,7 +167,21 @@ class BxSpacesSearchResult extends BxBaseModGroupsSearchResult
             case 'top_level':
                 $this->aCurrent['restriction']['level'] = array('value' => '0', 'field' => 'level', 'operator' => '=', 'table' => 'bx_spaces_data');
                 break;
-                
+
+            case 'category':
+                $iCategory = (int)$aParams['category'];
+                $this->addMarkers([
+                    'category_id' => $iCategory,
+                    'category_name' => BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
+                ]);
+
+                $this->aCurrent['restriction']['category']['value'] = $iCategory;
+
+                $this->sBrowseUrl = $CNF['URL_CATEGORY'] . '&category={category_id}';
+                $this->aCurrent['title'] = _t('_bx_spaces_page_title_browse_category');
+                $this->aCurrent['rss']['link'] = 'modules/?r=spaces/rss/' . $sMode . '/' . $iCategory;
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_spaces');

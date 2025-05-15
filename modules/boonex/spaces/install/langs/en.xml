@@ -115,6 +115,7 @@
 	<string name="_bx_spaces_page_title_browse_recent"><![CDATA[New Spaces]]></string>
 	<string name="_bx_spaces_page_title_browse_connections"><![CDATA[{0} connections]]></string>
 	<string name="_bx_spaces_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
+        <string name="_bx_spaces_page_title_browse_category"><![CDATA[Spaces by category: {0}]]></string>
 	<string name="_bx_spaces_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_spaces_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_spaces_page_title_sys_space_fans"><![CDATA[Members]]></string>
@@ -206,6 +207,10 @@
         <string name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Top Level Spaces]]></string>
         <string name="_bx_spaces_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
         <string name="_bx_spaces_page_block_title_cover_block"><![CDATA[Cover]]></string>
+        <string name="_bx_spaces_page_title_sys_entries_by_category"><![CDATA[Spaces in category]]></string>
+        <string name="_bx_spaces_page_title_entries_by_category"><![CDATA[Spaces in {category_name}]]></string>
+        <string name="_bx_spaces_page_block_title_sys_entries_by_category"><![CDATA[Spaces in category]]></string>
+        <string name="_bx_spaces_page_block_title_entries_by_category"><![CDATA[{category_name}]]></string>
 
         <string name="_bx_spaces_menu_title_submenu"><![CDATA[Spaces Submenu]]></string>
 	<string name="_bx_spaces_menu_set_title_submenu"><![CDATA[Spaces Submenu]]></string>

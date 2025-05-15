@@ -86,6 +86,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'URL_ENTRY_FANS' => 'page.php?i=space-fans',
             'URL_MANAGE_COMMON' => 'page.php?i=spaces-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=spaces-administration',
+            'URL_CATEGORY' => 'page.php?i=spaces-category',
 
             'PARAM_AUTO_APPROVE' => 'bx_spaces_enable_auto_approve',
             'PARAM_MULTILEVEL_HIERARCHY' => 'bx_spaces_enable_multilevel_hierarchy',
