@@ -32,7 +32,7 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         //--- Process field with 'Location' type. 
         if($bType && $this->aInputs[$sName]['type'] == 'location') {
             $aLocation = BxDolMetatags::locationsRetrieveFromForm($sName, $this);
-            if ($aLocation) {
+            if ($aLocation && !bx_is_empty_array($aLocation)) {
                 return [
                     'string' => parent::getCleanValue($sName),
                     'array' => $aLocation,
@@ -43,7 +43,7 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         //--- Process field with 'Location Radius' type. 
         if($bType && $this->aInputs[$sName]['type'] == 'location_radius') {
             $aLocation = BxDolMetatags::locationsRetrieveFromForm($sName, $this);
-            if ($aLocation) {
+            if ($aLocation && !bx_is_empty_array($aLocation)) {
                 $aLocation[] = (int)$this->getLocationVal($this->aInputs[$sName], 'rad');
                 return [
                     'string' => parent::getCleanValue($sName),
