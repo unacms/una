@@ -994,10 +994,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_ads_entry_price_year_edit', 'seg_age', 2147483647, 1, 25),
 ('bx_ads_entry_price_year_edit', 'seg_country', 2147483647, 1, 26),
 ('bx_ads_entry_price_year_edit', 'seg_header_end', 2147483647, 1, 27),
-('bx_ads_entry_price_year_edit', 'do_submit', 2147483647, 1, 28),
-('bx_ads_entry_price_year_edit', 'controls', 2147483647, 1, 29),
-('bx_ads_entry_price_year_edit', 'do_submit', 2147483647, 1, 30),
-('bx_ads_entry_price_year_edit', 'do_cancel', 2147483647, 1, 31),
+('bx_ads_entry_price_year_edit', 'controls', 2147483647, 1, 28),
+('bx_ads_entry_price_year_edit', 'do_submit', 2147483647, 1, 29),
+('bx_ads_entry_price_year_edit', 'do_cancel', 2147483647, 1, 30),
 
 ('bx_ads_entry_price_year_view', 'category_view', 2147483647, 1, 1),
 ('bx_ads_entry_price_year_view', 'price', 2147483647, 1, 2),
