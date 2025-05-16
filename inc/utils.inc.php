@@ -2711,6 +2711,28 @@ function bx_api_get_browse_params($sParams, $bParamsOnly = false)
     return $aParams['params'];
 }
 
+function bx_api_get_location_string($mixedValue)
+{
+    if(!is_array($mixedValue))
+        $aValue = bx_is_serialized($mixedValue) ? @unserialize($mixedValue) : json_decode($mixedValue, true);
+    else
+        $aValue = $mixedValue;
+
+    if(empty($aValue) || !is_array($aValue) || empty($aValue['country'])) 
+        return '';
+
+    $aCountries = BxDolFormQuery::getDataItems('Country');
+
+    $sResult = '';
+    $sResult .= $aValue['street_number'] ? $aValue['street_number'] . ', ' : '';
+    $sResult .= $aValue['street'] ? $aValue['street'] . ', ' : '';
+    $sResult .= $aValue['city'] ? $aValue['city'] . ', ' : '';
+    $sResult .= $aValue['state'] ? $aValue['state'] . ', ' : '';
+    $sResult .= $aCountries[$aValue['country']];
+
+    return $sResult;
+}
+    
 function bx_is_serialized($string) 
 {
     if (!is_string($string))

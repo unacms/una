@@ -424,16 +424,15 @@ class BxBaseFormView extends BxDolForm
                 }
 
                 if (isset($aInput['type']) && 'location' == $aInput['type']){
-                    $aLocationIndexes = BxDolForm::$LOCATION_INDEXES;
+                    $oLocation = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
+
                     $aVars = [];
-                    $o = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
-                    foreach ($aLocationIndexes as $sKey)
-                        $aVars[$sKey] = $o->getLocationVal($aInput, $sKey, $this);
-                    if ($aVars['country']) {
-                        $aCountries = BxDolFormQuery::getDataItems('Country');
-                        $sLocationString = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
+                    foreach(BxDolForm::$LOCATION_INDEXES as $sKey)
+                        $aVars[$sKey] = $oLocation->getLocationVal($aInput, $sKey, $this);
+
+                    if(($sLocationString = bx_api_get_location_string($aVars)))
                         $aVars['location_string'] = $sLocationString;
-                    }
+
                     $aInput['value'] = $aVars;
                 }
 

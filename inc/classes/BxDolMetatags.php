@@ -820,6 +820,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     {
         bx_import('BxDolForm');        
         $aLocation = $this->locationGet($iId);
+        if(bx_is_api())
+            return bx_api_get_location_string($aLocation);
+
         return $this->locationsStringFromArray($aLocation, $bHTML, $aParams);
     }
 
@@ -858,6 +861,31 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         }
 
         return $bHTML ? $s : trim(strip_tags($s));
+    }
+
+    public function locationsStringFromArrayAPI($mixedValue)
+    {
+        if(!is_array($mixedValue)) {
+            $aValue = @unserialize($mixedValue);
+            if(!$aValue)
+                $aValue = json_decode($mixedValue, true);
+        }
+        else
+            $aValue = $mixedValue;
+
+        if(empty($aValue) || !is_array($aValue) || empty($aValue['country'])) 
+            return '';
+
+        $aCountries = BxDolFormQuery::getDataItems('Country');
+
+        $sResult = '';
+        $sResult .= $aValue['street_number'] ? $aValue['street_number'] . ', ' : '';
+        $sResult .= $aValue['street'] ? $aValue['street'] . ', ' : '';
+        $sResult .= $aValue['city'] ? $aValue['city'] . ', ' : '';
+        $sResult .= $aValue['state'] ? $aValue['state'] . ', ' : '';
+        $sResult .= $aCountries[$aValue['country']];
+
+        return $sResult;
     }
 
     /**
