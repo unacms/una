@@ -15,6 +15,9 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     protected $_aInfo;
     protected $_oQuery;
 
+    protected $_sImageField;
+    protected $_aImageTranscoders;
+
     /**
      * Constructor
      */
@@ -29,6 +32,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
 
         $this->_iAccountID = $iAccountId; // since constructor is protected $iAccountId is always valid
         $this->_oQuery = BxDolAccountQuery::getInstance();
+
+        $this->_sImageField = 'picture';
+        $this->_aImageTranscoders = [
+            'icon' => 'sys_accounts_icon',
+            'thumb' => 'sys_accounts_thumb',
+            'ava' => 'sys_accounts_avatar',
+            'ava_big' => 'sys_accounts_avatar_big'
+        ];
     }
 
     /**
@@ -532,7 +543,6 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getUnit($iAccountId = false, $aParams = array())
     {
-        
         $sTemplate = 'unit';
         $sTemplateSize = false;
         $aTemplateVars = array();
@@ -550,24 +560,42 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
                     $aTemplateVars = $aParams['template']['vars'];
             }
         }
+
         $sTemplate = 'account_' . $sTemplate . '.html';
         if(empty($sTemplateSize))
             $sTemplateSize = 'thumb';
 
         $sTitle = $this->getDisplayName($iAccountId);
+        $aInfo = $this->getInfo($iAccountId);
 
-        $aTmplVars = array(
+        $sImageUrl = $this->_getImageUrl($sTemplateSize, $aInfo);
+        $bImageUrl = !empty($sImageUrl);
+
+        $aTmplVars = [
             'size' => $sTemplateSize,
-            'color' => implode(', ', BxDolTemplate::getColorCode(($iAccountId ? $iAccountId : $this->_iAccountID), 1.0)),
-            'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1)),
             'content_url' => $this->getUrl($iAccountId),
             'title' => $sTitle,
             'title_attr' => bx_html_attribute($sTitle),
-            'bx_if:show_online' => array(
+            'bx_if:show_thumb_image' => [
+                'condition' => $bImageUrl,
+                'content' => [
+                    'size' => $sTemplateSize,
+                    'url' => $sImageUrl
+                ]
+            ],
+            'bx_if:show_thumb_letter' => [
+                'condition' => !$bImageUrl,
+                'content' => [
+                    'size' => $sTemplateSize,
+                    'color' => implode(', ', BxDolTemplate::getColorCode(($iAccountId ? $iAccountId : $this->_iAccountID), 1.0)),
+                    'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1)),
+                ]
+            ],
+            'bx_if:show_online' => [
                 'condition' => $this->isOnline($iAccountId),
-                'content' => array()
-            )
-        );
+                'content' => []
+            ]
+        ];
 
         if(!empty($aTemplateVars) && is_array($aTemplateVars))
             $aTmplVars = array_merge ($aTmplVars, $aTemplateVars);
@@ -1069,6 +1097,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         return $iCount;
     }
 
+    protected function _getImageUrl($sSize, $aData)
+    {
+        $sImageUrl = '';
+        if(!empty($this->_aImageTranscoders[$sSize]) && ($oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($this->_aImageTranscoders[$sSize])) !== false)
+            $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$this->_sImageField]);
+
+        return $sImageUrl;
+    }
 }
 
 /** @} */

@@ -114,6 +114,7 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
  */
 class BxBaseFormAccount extends BxTemplFormView
 {
+    static $FIELD_PICTURE = 'picture';
     static $FIELD_EMAIL = 'email';
     static $FIELD_PASSWORD = 'password';
     static $FIELD_PASSWORD_CHANGED = 'password_changed';
@@ -246,7 +247,13 @@ class BxBaseFormAccount extends BxTemplFormView
 
         $_aValsToAdd = [
             self::$FIELD_CHANGED => $iNow
-        ];        
+        ];
+
+        if(($mixedPicture = $this->getCleanValue(self::$FIELD_PICTURE))) {
+            $iPicture = is_array($mixedPicture) ? array_pop($mixedPicture) : (int)$mixedPicture;
+            if($iPicture)
+                $_aValsToAdd[self::$FIELD_PICTURE] = $iPicture;
+        }
 
         if(($sPwd = $this->getCleanValue(self::$FIELD_PASSWORD))) {
             $oDb->logPassword($val);
