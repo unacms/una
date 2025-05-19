@@ -38,7 +38,8 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             'icon' => 'sys_accounts_icon',
             'thumb' => 'sys_accounts_thumb',
             'ava' => 'sys_accounts_avatar',
-            'ava_big' => 'sys_accounts_avatar_big'
+            'ava_big' => 'sys_accounts_avatar_big',
+            'picture' => 'sys_accounts_picture'
         ];
     }
 
@@ -608,7 +609,11 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getPicture($iAccountId = false)
     {
-        return BxDolTemplate::getInstance()->getImageUrl('account.svg');
+        $sImageUrl = $this->_getImageUrl('picture', $iAccountId);
+        if(!$sImageUrl)
+            $sImageUrl = BxDolTemplate::getInstance()->getImageUrl('account.svg');
+
+        return $sImageUrl;
     }
 
     /**
@@ -616,7 +621,11 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getAvatarBig($iAccountId = false)
     {
-        return BxDolTemplate::getInstance()->getImageUrl('account.svg');
+        $sImageUrl = $this->_getImageUrl('ava_big', $iAccountId);
+        if(!$sImageUrl)
+            $sImageUrl = BxDolTemplate::getInstance()->getImageUrl('account.svg');
+
+        return $sImageUrl;
     }
 
     /**
@@ -624,7 +633,11 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getAvatar($iAccountId = false)
     {
-        return BxDolTemplate::getInstance()->getImageUrl('account.svg');
+        $sImageUrl = $this->_getImageUrl('ava', $iAccountId);
+        if(!$sImageUrl)
+            $sImageUrl = BxDolTemplate::getInstance()->getImageUrl('account.svg');
+
+        return $sImageUrl;
     }
 
     /**
@@ -632,7 +645,11 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getThumb($iAccountId = false)
     {
-        return BxDolTemplate::getInstance()->getImageUrl('account.svg');
+        $sImageUrl = $this->_getImageUrl('thumb', $iAccountId);
+        if(!$sImageUrl)
+            $sImageUrl = BxDolTemplate::getInstance()->getImageUrl('account.svg');
+
+        return $sImageUrl;
     }
 
     /**
@@ -640,7 +657,11 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getIcon($iAccountId = false)
     {
-        return BxDolTemplate::getInstance()->getImageUrl('account.svg');
+        $sImageUrl = $this->_getImageUrl('icon', $iAccountId);
+        if(!$sImageUrl)
+            $sImageUrl = BxDolTemplate::getInstance()->getImageUrl('account.svg');
+
+        return $sImageUrl;
     }
 
     /**
@@ -1097,11 +1118,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         return $iCount;
     }
 
-    protected function _getImageUrl($sSize, $aData)
+    protected function _getImageUrl($sSize, $mixedData)
     {
+        if(!is_array($mixedData))
+            $mixedData = $this->getInfo((int)$mixedData);
+
         $sImageUrl = '';
-        if(!empty($this->_aImageTranscoders[$sSize]) && ($oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($this->_aImageTranscoders[$sSize])) !== false)
-            $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$this->_sImageField]);
+        if(!empty($mixedData[$this->_sImageField]) && !empty($this->_aImageTranscoders[$sSize]) && ($oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($this->_aImageTranscoders[$sSize])) !== false)
+            $sImageUrl = $oImagesTranscoder->getFileUrl($mixedData[$this->_sImageField]);
 
         return $sImageUrl;
     }

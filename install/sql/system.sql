@@ -5808,7 +5808,8 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('sys_accounts_icon', 'sys_accounts_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:21:"sys_accounts_pictures";}', 'no', '1', '2592000', '0', '', ''),
 ('sys_accounts_thumb', 'sys_accounts_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:21:"sys_accounts_pictures";}', 'no', '1', '2592000', '0', '', ''),
 ('sys_accounts_avatar', 'sys_accounts_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:21:"sys_accounts_pictures";}', 'no', '1', '2592000', '0', '', ''),
-('sys_accounts_avatar_big', 'sys_accounts_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:21:"sys_accounts_pictures";}', 'no', '1', '2592000', '0', '', '');
+('sys_accounts_avatar_big', 'sys_accounts_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:21:"sys_accounts_pictures";}', 'no', '1', '2592000', '0', '', ''),
+('sys_accounts_picture', 'sys_accounts_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:21:"sys_accounts_pictures";}', 'no', '1', '2592000', '0', '', '');
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
@@ -5881,7 +5882,8 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('sys_accounts_icon', 'Resize', 'a:3:{s:1:"w";s:2:"30";s:1:"h";s:2:"30";s:13:"square_resize";s:1:"1";}', '0'),
 ('sys_accounts_thumb', 'Resize', 'a:3:{s:1:"w";s:2:"50";s:1:"h";s:2:"50";s:13:"square_resize";s:1:"1";}', '0'),
 ('sys_accounts_avatar', 'Resize', 'a:3:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";}', '0'),
-('sys_accounts_avatar_big', 'Resize', 'a:3:{s:1:"w";s:3:"200";s:1:"h";s:3:"200";s:13:"square_resize";s:1:"1";}', '0');
+('sys_accounts_avatar_big', 'Resize', 'a:3:{s:1:"w";s:3:"200";s:1:"h";s:3:"200";s:13:"square_resize";s:1:"1";}', '0'),
+('sys_accounts_picture', 'Resize', 'a:3:{s:1:"w";s:4:"1024";s:1:"h";s:4:"1024";s:13:"square_resize";s:1:"0";}', '0');
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_queue` (
