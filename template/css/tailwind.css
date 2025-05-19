@@ -1114,7 +1114,6 @@
     }
     
     .bx-stl-mii > *,
-    .bx-std .bx-stl-mii > *,
     .bx-stl-mii-sm > *,
     .bx-stl-mil .sys-action-do-icon > *,
     .bx-stl-mil-sm .sys-action-do-icon > *,
@@ -1122,6 +1121,16 @@
     .bx-stl-mil-wo-gaps-sm .sys-action-do-icon > * {
         @apply flex items-center justify-center h-6 w-6 ltr:mr-3 rtl:ml-3;
     }
+    .bx-std .bx-stl-mii > * {
+        @apply flex items-center justify-center h-6 w-6 ltr:mr-3 rtl:ml-3 !important;
+    }
+    .bx-std .bx-stl-mii > svg {
+        @apply text-gray-500 !important;
+    }
+    .bx-std li:hover .bx-stl-mii > svg {
+        @apply text-gray-700 dark:text-gray-300 !important;
+    }
+
     .bx-stl-mii:last-child > *,
     .bx-stl-mii-sm:last-child > *,
     .bx-stl-mil .sys-action-do-icon:last-child > *,

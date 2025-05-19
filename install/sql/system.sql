@@ -5317,7 +5317,7 @@ CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
   `type` enum('bulk','single','independent') NOT NULL,
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `icon` varchar(255) NOT NULL,
+  `icon` text NOT NULL,
   `icon_only` tinyint(4) NOT NULL DEFAULT '0',
   `confirm` tinyint(4) NOT NULL DEFAULT '1',
   `active` tinyint(4) NOT NULL DEFAULT '1',

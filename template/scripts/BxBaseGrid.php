@@ -14,6 +14,7 @@
 class BxBaseGrid extends BxDolGrid
 {
     protected $_oTemplate;
+    protected $_oFunctions;
     protected $_aPopupOptions = false;
     protected $_aQueryAppend = [];
     protected $_aQueryAppendExclude = false; // an array of keys which shouldn't be pathed in http requests, but can be stored (used) in 'Query Append' array.
@@ -31,6 +32,8 @@ class BxBaseGrid extends BxDolGrid
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+        $this->_oFunctions = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate);
 
         $this->_aPopupOptions = [];
 
@@ -827,10 +830,15 @@ class BxBaseGrid extends BxDolGrid
         $sIcon = '';
         $sImage = '';
         if (!empty($a['icon'])) {
-            if (false === strpos($a['icon'], '.'))
-                $sIcon = '<i class="sys-icon ' . $a['icon'] . '"></i>';
-            elseif ($sIconUrl = $this->_oTemplate->getIconUrl($a['icon']))
+            list($sIconFont, $sIconUrl, $sIconA, $sIconHtml) = $this->_oFunctions->getIcon($a['icon']);
+            //var_dump($a['icon'], $sIconFont, $sIconUrl, $sIconA, $sIconHtml, $sIconFontWithHtml); 
+
+            if ($sIconFont)
+                $sIcon = '<i class="sys-icon ' . $sIconFont . '"></i>';
+            else if($sIconUrl)
                 $sImage = '<img style="background-image:url(' . $sIconUrl . ');" src="' . $this->_oTemplate->getIconUrl('spacer.gif') .'" />';
+            else if($sIconHtml)
+                $sImage = $sIconHtml;
         }
 
         return '<button ' . $sAttr . '>' . $sIcon . $sImage . ($a['icon_only'] || empty($a['title']) ? '' : '<u>' . $a['title'] . '</u>') . '</button>';
@@ -878,7 +886,7 @@ class BxBaseGrid extends BxDolGrid
     protected function _limitMaxLength ($mixedValue, $sKey, $aField, $aRow, $isDisplayPopupOnTextOverflow, $bReturnString = true)
     {
         if ($aField['chars_limit'] > 0)
-            $mixedValue = BxTemplFunctions::getInstance()->getStringWithLimitedLength($mixedValue, $aField['chars_limit'], $isDisplayPopupOnTextOverflow, $bReturnString);
+            $mixedValue = $this->_oFunctions->getStringWithLimitedLength($mixedValue, $aField['chars_limit'], $isDisplayPopupOnTextOverflow, $bReturnString);
         return $mixedValue;
     }
 
