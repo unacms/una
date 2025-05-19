@@ -531,12 +531,14 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     protected function _replaceMarkers ($a)
     {
-        if (empty($this->_aMarkers))
+        if(empty($this->_aMarkers))
             return $a;
-        $aReplacebleFields = array ('title', 'link', 'onclick');
-        foreach ($aReplacebleFields as $sField)
-            if (isset($a[$sField]))
+
+        $aReplacebleFields = ['title', 'title_attr', 'link', 'onclick'];
+        foreach($aReplacebleFields as $sField)
+            if(isset($a[$sField]))
                 $a[$sField] = bx_replace_markers($a[$sField], $this->_aMarkers);
+
         return $a;
     }
 
