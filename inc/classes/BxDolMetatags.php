@@ -717,7 +717,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $aResults = [];
         foreach(self::$_aLocationKeys as $sKey) {
             $sValue = $oForm->getCleanValue($sPrefix . $sKey);
-            if(!$sValue || $sValue == 'null')
+            if(!$sValue || in_array($sValue, ['null', 'false']))
                 $sValue = '';
 
             $aResults[] = $sValue;
