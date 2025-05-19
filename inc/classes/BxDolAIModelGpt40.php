@@ -216,8 +216,8 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         if($aResponse !== false && isset($aResponse['id'])) {
             $sRunId = $aResponse['id'];
 
-            while($aResponse['status'] == 'queued') {
-                sleep(2);
+            while(in_array($aResponse['status'], ['queued', 'in_progress'])) {
+                sleep(1);
 
                 $aResponse = $this->_call(sprintf($this->_sEndpointRunsCheck, $sThreadId, $sRunId), [], 'get');
             }
