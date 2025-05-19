@@ -846,7 +846,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
             }
 
             // profile is active get memebr level from profile
-            $aMemLevel = $this->oDb->getLevelCurrent((int)$iProfileId, $iTime);
+            $aMemLevel = $this->oDb->getLevelCurrent($oProfile ? (int)$oProfile->id() : (int)$iProfileId, $iTime);
 
             // There are no purchased/assigned memberships for the profile or all of them have expired.
             // In this case the profile is assumed to have Standard membership.
