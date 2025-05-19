@@ -2716,6 +2716,7 @@
 	<string name="_sys_form_agents_comment_input_caption_system_cmt_submit"><![CDATA[Отправить]]></string>
         <string name="_sys_form_agents_comment_input_caption_cmt_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_agents_comment_input_caption_system_cmt_text"><![CDATA[Текст]]></string>
+        <string name="_sys_form_agents_comment_input_caption_cmt_text_error"><![CDATA[Пустое сообщение не допускается. Напишите что-нибудь для отправки помощнику.]]></string>
         <string name="_sys_form_agents_comment_input_caption_system_id"><![CDATA[ID объекта]]></string>
         <string name="_sys_form_agents_comment_input_caption_system_sys"><![CDATA[Тип объекта]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[Нет]]></string>
