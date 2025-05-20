@@ -2013,6 +2013,31 @@ function bx_check_maintenance_mode ($bShowHttpError = false)
 }
 
 /**
+ * Check if site maintetance mode is enabled.
+ * Maintetance mode is enabled when '.bx_maintenance' file exists in the script root folder, 
+ * please note that this is hidden file and some file managers don't show it.
+ * @param $bShowHttpError show 503 HTTP error if site is in mainenance mode
+ * @return true if site is in maintenance mode, or false otherwise
+ */
+function bx_check_maintenance_mode_soft ()
+{
+    $sUrl = bx_proto() . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+    if (0 === strpos($sUrl, BX_DOL_URL_STUDIO)) // allow to view studio
+        return;
+    if (0 === strpos($sUrl, BX_DOL_URL_ROOT . 'member.php') && $_SERVER['REQUEST_METHOD'] === 'POST') // make studio login form to always work
+        return;
+    if (defined('BX_DOL_UPGRADING')) // allow upgrade
+        return;
+    if (!getParam('sys_maintenance_mode')) // check mainenance mode switcher
+        return;
+    if (isAdmin()) // always allow studio operators
+        return;
+
+    $sHtml = getParam('sys_maintenance_mode_html');
+    bx_show_service_unavailable_error_and_exit (trim($sHtml) ? $sHtml : 'Site is temporarily unavailable due to scheduled maintenance, please try again in a minute.', 600);
+}
+
+/**
  * Check for minimal requirements.
  * if BX_DISABLE_REQUIREMENTS_CHECK is defined then this requirements checking is skipped.
  * @param $bShowHttpError show 503 HTTP error if site doesn't meet minimal requirements
