@@ -2013,11 +2013,8 @@ function bx_check_maintenance_mode ($bShowHttpError = false)
 }
 
 /**
- * Check if site maintetance mode is enabled.
- * Maintetance mode is enabled when '.bx_maintenance' file exists in the script root folder, 
- * please note that this is hidden file and some file managers don't show it.
- * @param $bShowHttpError show 503 HTTP error if site is in mainenance mode
- * @return true if site is in maintenance mode, or false otherwise
+ * Check if site soft maintetance mode is enabled.
+ * Soft maintetance mode is enabled when maintenance mode is enabled via studio setting.
  */
 function bx_check_maintenance_mode_soft ()
 {
