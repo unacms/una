@@ -27,7 +27,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
         $sAction = 'add';
 
         if(!$this->canAdd()) {
-            echoJson(array());
+            echoJson([]);
             exit;
         }
 
@@ -83,6 +83,53 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                         'error' => _t('_adm_form_err_pre_values_lkey'),
                     ),
                 ),
+                'icon_type' => [
+                    'type' => 'select',
+                    'name' => 'icon_type',
+                    'caption' => _t('_adm_form_txt_pre_values_icon_type'),
+                    'info' => '',
+                    'values' => [
+                        ['key' => '', 'value' => _t('_sys_please_select')],
+                        ['key' => 'icon', 'value' => _t('_adm_form_txt_pre_values_icon_type_icon')],
+                        ['key' => 'emoji', 'value' => _t('_adm_form_txt_pre_values_icon_type_emoji')],
+                        ['key' => 'image', 'value' => _t('_adm_form_txt_pre_values_icon_type_image')]
+                    ],
+                    'value' => '',
+                    'required' => '0',
+                    'attrs' => [
+                        'onchange' => 'javascript:' . $this->getJsObject() . '.onChangeIconType(this)'
+                    ]
+                ],
+                'icon_icon' => [
+                    'type' => 'text',
+                    'name' => 'icon_icon',
+                    'caption' => _t('_adm_form_txt_pre_values_icon'),
+                    'info' => _t('_adm_form_dsc_pre_values_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'code' => 1,
+                    'tr_attrs' => ['class' => 'bx-pre-values-icon bx-pvi-icon', 'style' => 'display:none']
+                ],
+                'icon_emoji' => [
+                    'type' => 'textarea',
+                    'name' => 'icon_emoji',
+                    'caption' => _t('_adm_form_txt_pre_values_icon'),
+                    'info' => _t('_adm_form_dsc_pre_values_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'code' => 1,
+                    'tr_attrs' => ['class' => 'bx-pre-values-icon bx-pvi-emoji', 'style' => 'display:none']
+                ],
+                'icon_image' => [
+                    'type' => 'textarea',
+                    'name' => 'icon_image',
+                    'caption' => _t('_adm_form_txt_pre_values_icon'),
+                    'info' => _t('_adm_form_dsc_pre_values_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'code' => 1,
+                    'tr_attrs' => ['class' => 'bx-pre-values-icon bx-pvi-image', 'style' => 'display:none']
+                ],
                 'Empty' => array(
                     'type' => 'checkbox',
                     'name' => 'Empty',
@@ -116,6 +163,17 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
+            $aAdd = ['LKey2' => '', 'Order' => $this->oDb->getValuesOrderMax($this->sList) + 1];
+
+            if(($sIconType = $oForm->getCleanValue('icon_type'))) {
+                $aData['use'] = $sIconType;
+                foreach($this->aIconTypes as $sType)
+                    if(($sIcon = $oForm->getCleanValue('icon_' . $sType)))
+                        $aData[$sType] = $sIcon;
+
+                $aAdd['Data'] = serialize($aData);
+            }
+
             if($oForm->getCleanValue('Empty') == 'on')
                 BxDolForm::setSubmittedValue('Value', '', $oForm->aFormAttrs['method']);
 
@@ -131,7 +189,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                 }
             }
 
-            $iId = (int)$oForm->insert(array('LKey2' => '', 'Order' => $this->oDb->getValuesOrderMax($this->sList) + 1));
+            $iId = (int)$oForm->insert($aAdd);
             if($iId != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
@@ -157,11 +215,15 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 
         $aValue = $this->_getItem('getValues');
         if($aValue === false) {
-            echoJson(array());
+            echoJson([]);
             exit;
         }
 
         $bUseInSets = (int)$this->aList['use_for_sets'] == 1;
+
+        $aData = !empty($aValue['Data']) && bx_is_serialized($aValue['Data']) ? unserialize($aValue['Data']) : [];
+
+        $sIconType = !empty($aData['use']) ? $aData['use'] : '';
 
         bx_import('BxTemplStudioFormView');
 
@@ -205,6 +267,53 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                         'error' => _t('_adm_form_err_pre_values_lkey'),
                     ),
                 ),
+                'icon_type' => [
+                    'type' => 'select',
+                    'name' => 'icon_type',
+                    'caption' => _t('_adm_form_txt_pre_values_icon_type'),
+                    'info' => '',
+                    'values' => [
+                        ['key' => '', 'value' => _t('_sys_please_select')],
+                        ['key' => 'icon', 'value' => _t('_adm_form_txt_pre_values_icon_type_icon')],
+                        ['key' => 'emoji', 'value' => _t('_adm_form_txt_pre_values_icon_type_emoji')],
+                        ['key' => 'image', 'value' => _t('_adm_form_txt_pre_values_icon_type_image')]
+                    ],
+                    'value' => $sIconType,
+                    'required' => '0',
+                    'attrs' => [
+                        'onchange' => 'javascript:' . $this->getJsObject() . '.onChangeIconType(this)'
+                    ]
+                ],
+                'icon_icon' => [
+                    'type' => 'text',
+                    'name' => 'icon_icon',
+                    'caption' => _t('_adm_form_txt_pre_values_icon'),
+                    'info' => _t('_adm_form_dsc_pre_values_icon'),
+                    'value' => !empty($aData['icon']) ? $aData['icon'] : '',
+                    'required' => '0',
+                    'code' => 1,
+                    'tr_attrs' => ['class' => 'bx-pre-values-icon bx-pvi-icon', 'style' => $sIconType != 'icon' ? 'display:none' : '']
+                ],
+                'icon_emoji' => [
+                    'type' => 'textarea',
+                    'name' => 'icon_emoji',
+                    'caption' => _t('_adm_form_txt_pre_values_icon'),
+                    'info' => _t('_adm_form_dsc_pre_values_icon'),
+                    'value' => !empty($aData['emoji']) ? $aData['emoji'] : '',
+                    'required' => '0',
+                    'code' => 1,
+                    'tr_attrs' => ['class' => 'bx-pre-values-icon bx-pvi-emoji', 'style' => $sIconType != 'emoji' ? 'display:none' : '']
+                ],
+                'icon_image' => [
+                    'type' => 'textarea',
+                    'name' => 'icon_image',
+                    'caption' => _t('_adm_form_txt_pre_values_icon'),
+                    'info' => _t('_adm_form_dsc_pre_values_icon'),
+                    'value' => !empty($aData['image']) ? $aData['image'] : '',
+                    'required' => '0',
+                    'code' => 1,
+                    'tr_attrs' => ['class' => 'bx-pre-values-icon bx-pvi-image', 'style' => $sIconType != 'image' ? 'display:none' : '']
+                ],
                 'Empty' => array(
                     'type' => 'checkbox',
                     'name' => 'Empty',
@@ -239,7 +348,16 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $aAdd = array();
+            $aAdd = [];
+
+            if(($sIconType = $oForm->getCleanValue('icon_type'))) {
+                $aData['use'] = $sIconType;
+                foreach($this->aIconTypes as $sType)
+                    if(($sIcon = $oForm->getCleanValue('icon_' . $sType)))
+                        $aData[$sType] = $sIcon;
+
+                $aAdd['Data'] = serialize($aData);
+            }
 
             $bEmpty = $oForm->getCleanValue('Empty') == 'on';
             if($bEmpty && !empty($aValue['value']))

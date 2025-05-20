@@ -16,6 +16,8 @@ class BxDolStudioFormsPreValues extends BxTemplStudioGrid
     protected $sList;
     protected $aList;
 
+    protected $aIconTypes;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
@@ -36,6 +38,8 @@ class BxDolStudioFormsPreValues extends BxTemplStudioGrid
             $this->aList = array();
             $this->oDb->getLists(array('type' => 'by_key', 'value' => $this->sList), $this->aList, false);
         }
+
+        $this->aIconTypes = ['icon', 'emoji', 'image'];
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

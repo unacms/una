@@ -1245,6 +1245,15 @@
         @apply hover:bg-gray-100 dark:hover:bg-gray-600;
     }
 
+    /* Common elements: Categories */
+    .bx-cli-icon,
+    .bx-cli-icon > * {
+        @apply flex items-center justify-center h-6 w-6 text-gray-500 text-lg;
+    }
+    .bx-cli-icon {
+        @apply ltr:mr-3 rtl:ml-3;
+    }
+
     /* Common elements: Comments */
     .bx-artificer .cmt .bx-base-general-unit-meta-username {
         @apply text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;

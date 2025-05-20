@@ -1,8 +1,18 @@
 <div class="bx-category-list">
     <bx_if:show_all>
         <div class="bx-category-list-item"><a href="__url__">__name__</a></div>
-    </bx_if:show_all>    
+    </bx_if:show_all>
     <bx_repeat:cats>
-        <div class="bx-category-list-item __selected_class__"><a href="__url__">__name__</a> (__num__)</div>
+        <div class="bx-category-list-item __selected_class__">
+            <a class="flex items-center" href="__url__">
+                <bx_if:show_icon>
+                    <span class="bx-cli-icon">
+                        <bx_if:show_icon_font><i class="sys-icon __icon_name__"></i></bx_if:show_icon_font>
+                        <bx_if:show_icon_html>__icon_code__</bx_if:show_icon_html>
+                    </span>
+                </bx_if:show_icon>
+                <span class="bx-cli-text">__name__ (__num__)</span>
+            </a>
+        </div>
     </bx_repeat:cats>
 </div>

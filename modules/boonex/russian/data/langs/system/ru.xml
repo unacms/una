@@ -811,6 +811,7 @@
     <string name="_adm_form_dsc_pre_lists_title"><![CDATA[Название списка для использования только в Студии]]></string>
     <string name="_adm_form_dsc_pre_values_empty"><![CDATA[Вы можете использовать его для элементов, таких как "Пожалуйста, выберите...", которые не могут быть отправлены.]]></string>
     <string name="_adm_form_dsc_pre_values_lkey"><![CDATA[Название злемента, отображаемое на сайте]]></string>
+    <string name="_adm_form_dsc_pre_values_icon"><![CDATA[Значок для отображения в списке (если поддерживается)]]></string>
     <string name="_adm_form_dsc_search_forms_fields_search_type"><![CDATA[Тип элемента управления в форме поиска]]></string>
     <string name="_adm_form_dsc_search_forms_title"><![CDATA[Название Формы поиска. Отображается только в Студии.]]></string>
     <string name="_adm_form_err_cannot_process_action"><![CDATA[Невозможно выполнить действие. Отсутствует связанный обработчик.]]></string>
@@ -1062,6 +1063,11 @@
 	<string name="_adm_form_txt_pre_values_empty"><![CDATA[Использовать пустое значение для данного элемента]]></string>
 	<string name="_adm_form_txt_pre_values_gl_lkey"><![CDATA[Заголовок]]></string>
 	<string name="_adm_form_txt_pre_values_lkey"><![CDATA[Заголовок]]></string>
+        <string name="_adm_form_txt_pre_values_icon"><![CDATA[Иконка]]></string>
+        <string name="_adm_form_txt_pre_values_icon_type"><![CDATA[Тип иконки]]></string>
+        <string name="_adm_form_txt_pre_values_icon_type_emoji"><![CDATA[Emoji]]></string>
+        <string name="_adm_form_txt_pre_values_icon_type_icon"><![CDATA[Иконка]]></string>
+        <string name="_adm_form_txt_pre_values_icon_type_image"><![CDATA[Изображение (встроенный SVG)]]></string>
 	<string name="_adm_form_txt_search_forms_edit_popup"><![CDATA[Редактировать "{0}" форму поиска]]></string>
     <string name="_adm_form_txt_search_forms_sortable_fields"><![CDATA[Поля для сортировки]]></string>
     <string name="_adm_form_txt_search_forms_fields"><![CDATA[Поля]]></string>
