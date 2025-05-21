@@ -128,6 +128,8 @@ BxDolDb::getInstance()->cacheParams();
 
 require_once(BX_DIRECTORY_PATH_INC . 'profiles.inc.php');
 
+bx_check_maintenance_mode_soft();
+
 $o = new BxDolAlerts('system', 'begin', 0);
 $o->alert();
 
