@@ -96,7 +96,7 @@ class BxBaseCategory extends BxDolCategory
             'context' => isset($aParams['context_id']) ? '&context_id=' . $aParams['context_id'] : ''
         ]);
 
-        if (bx_is_api())
+        if($this->_bIsApi)
             return bx_api_get_relative_url($s);
 
         return $s;
@@ -156,11 +156,12 @@ class BxBaseCategory extends BxDolCategory
             $sIcon = $this->_getCategoryIcon($aData);
             $bIcon = !empty($sIcon);
 
-            $aVars['bx_repeat:cats'][] = [
+            $aVars['bx_repeat:cats'][] = array_merge([
                 'url' => $this->getCategoryUrl($sValue, ($mProfileContextId ? ['context_id' => $mProfileContextId] : [])),
                 'name' => _t($aCategory['LKey']),
                 'value' => $sValue,
-                'num' => $iNum,
+                'num' => $iNum
+            ], !$this->_bIsApi ? [
                 'bx_if:show_icon' => [
                     'condition' => $bIcon,
                     'content' => [
@@ -179,10 +180,13 @@ class BxBaseCategory extends BxDolCategory
                     ]
                 ],
                 'selected_class' => $sValue == bx_get('category') ? 'bx-category-list-item-selected' : '',
-            ];
+            ] : [
+                'icon_type' => $sIconType,
+                'icon' => $sIcon
+            ]);
         }
 
-        if(bx_is_api())
+        if($this->_bIsApi)
             return [bx_api_get_block('categories_list',  $aVars['bx_repeat:cats'])];
 
         if($bAsArray)
