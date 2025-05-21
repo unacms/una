@@ -412,6 +412,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             $oSockets->sendEvent('sys_connections', $iContent , 'changed', json_encode($aMessageContent));
         }
 
+        $bMutual = false;
         if($this->_aObject['type'] == BX_CONNECTIONS_TYPE_ONE_WAY || ($bMutual = ($this->_aObject['type'] == BX_CONNECTIONS_TYPE_MUTUAL && $iMutual))) {
             $oProfileQuery = BxDolProfileQuery::getInstance();
 
