@@ -23,6 +23,43 @@ class BxReputationStudioPage extends BxBaseModNotificationsStudioPage
         ]);
     }
 
+    public function checkAction()
+    {
+        $sAction = bx_get($this->sParamPrefix . '_action');
+        if($sAction === false)
+            return false;
+
+        if(empty($this->aModule) || !is_array($this->aModule))
+            return array('code' => 1, 'message' => _t('_sys_request_page_not_found_cpt'));
+
+        $sAction = bx_process_input($sAction);
+
+        $aResult = array('code' => 2, 'message' => _t('_adm_mod_err_cannot_process_action'));
+        switch($sAction) {
+            case 'assign_levels':
+                $iUpdated = 0;
+
+                $aLevels = $this->_oModule->_oDb->getLevels();
+                foreach($aLevels as $aLevel) {
+                    $aProfiles = $this->_oModule->_oDb->getProfiles(['sample' => 'points_range', 'points_in' => $aLevel['points_in'], 'points_out' => $aLevel['points_out']]);
+                    if(empty($aProfiles) || !is_array($aProfiles))
+                        continue;
+                    
+                    foreach($aProfiles as $aProfile)
+                        if($this->_oModule->_oDb->insertProfilesLevels(['profile_id' => $aProfile['id'], 'level_id' => $aLevel['id']]))
+                            $iUpdated++;
+                }
+
+                $aResult = ['code' => 0, 'message' => _t('_bx_reputation_msg_assign_levels', $iUpdated)];
+                break;
+
+            default:
+                $aResult = parent::checkAction();
+        }
+
+        return $aResult;
+    }
+
     protected function getHandlers()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

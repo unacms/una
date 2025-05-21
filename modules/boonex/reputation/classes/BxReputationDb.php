@@ -158,6 +158,22 @@ class BxReputationDb extends BxBaseModNotificationsDb
                 $sOrderClause = '`trp`.`points` DESC';
                 $sLimitClause = '0, ' . (int)$aParams['limit'];
                 break;
+
+            case 'points_range':
+                $aMethod['params'][1] = [];
+
+                if(!empty($aParams['points_in'])) {
+                    $aMethod['params'][1]['points_in'] = $aParams['points_in'];
+                    
+                    $sWhereClause .= "AND `trp`.`points` >= :points_in ";
+                }
+
+                if(!empty($aParams['points_out'])) {
+                    $aMethod['params'][1]['points_out'] = $aParams['points_out'];
+                    
+                    $sWhereClause .= "AND `trp`.`points` <= :points_out ";
+                }
+                break;
         }
 
         if($sOrderClause)

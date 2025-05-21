@@ -98,6 +98,7 @@
 
     <!-- Errors, Warnings, Messages -->
     <string name="_bx_reputation_err_cannot_perform"><![CDATA[Произошла ошибка. Пожалуйста, сообщите.]]></string>
+    <string name="_bx_reputation_msg_assign_levels"><![CDATA[Уровни репутации успешно назначены {0} профилям.]]></string>
 
     <!-- Other -->
     <string name="_bx_reputation_txt_points"><![CDATA[баллов]]></string>

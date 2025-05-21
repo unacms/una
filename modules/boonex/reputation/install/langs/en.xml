@@ -101,6 +101,7 @@
 
     <!-- Errors, Warnings, Messages -->
     <string name="_bx_reputation_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
+    <string name="_bx_reputation_msg_assign_levels"><![CDATA[Reputation levels ware successfully assigned to {0} profiles.]]></string>
 
     <!-- Other -->
     <string name="_bx_reputation_txt_points"><![CDATA[points]]></string>
