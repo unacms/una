@@ -5,6 +5,7 @@
     "@claviska/jquery-minicolors": "^2.3.6",
     "@egjs/hammerjs": "^2.0.17",
     "@fullcalendar/core": "^6.1.15",
+    "@stripe/connect-js": "^3.3.23",
     "at.js": "^1.5.4",
     "autosize": "^6.0.1",
     "chart.js": "^3.9.1",
@@ -144,6 +145,7 @@
     "build:recordrtc": "cp node_modules/recordrtc/RecordRTC.min.js plugins_public",
     "build:jekyll-toc": "cp node_modules/jekyll-toc/toc.js plugins_public; patch -p1 < patches/plugins_public_toc-js.txt",
     "build:urijs": "cp node_modules/urijs/src/URI.min.js plugins_public",
+    "build:stripe": "mkdir -p plugins_public/stripe; cp -r node_modules/@stripe/connect-js/dist/ plugins_public/stripe",
     "build": "mkdir -p plugins_public; rm -rf plugins_public/*; npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*",
     "postinstall": "npm run build"
   },
