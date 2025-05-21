@@ -15,6 +15,16 @@ CREATE TABLE IF NOT EXISTS `bx_reputation_handlers` (
   UNIQUE `alert` (`alert_unit`, `alert_action`)
 );
 
+-- Friendship
+INSERT INTO `bx_reputation_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `points_active`, `points_passive`, `active`) VALUES 
+('friendship', 'insert', 'sys_profiles_friends', 'connection_added', '2', '0', '1'),
+('friendship', 'delete', 'sys_profiles_friends', 'connection_removed', '-2', '0', '1');
+
+-- Subscription
+INSERT INTO `bx_reputation_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `points_active`, `points_passive`, `active`) VALUES 
+('subscription', 'insert', 'sys_profiles_subscriptions', 'connection_added', '1', '0', '1'),
+('subscription', 'delete', 'sys_profiles_subscriptions', 'connection_removed', '-1', '0', '1');
+
 -- TABLES: events
 CREATE TABLE IF NOT EXISTS `bx_reputation_events` (
   `id` int(11) NOT NULL auto_increment,

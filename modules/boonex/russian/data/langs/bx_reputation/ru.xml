@@ -78,6 +78,11 @@
     <string name="_bx_reputation_grid_column_value_hdr_aa_undoVoteUp"><![CDATA[Отменить голосование 'за']]></string>
     <string name="_bx_reputation_grid_column_value_hdr_aa_doVoteDown"><![CDATA[Проголосовать 'против']]></string>
     <string name="_bx_reputation_grid_column_value_hdr_aa_undoVoteDown"><![CDATA[Отменить голосование 'против']]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_connection_added"><![CDATA[Добавить соединение]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_connection_removed"><![CDATA[Удалить соединение]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_au_sys_profiles_friends"><![CDATA[Дружба]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_au_sys_profiles_subscriptions"><![CDATA[Подписка]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_au_module_fans"><![CDATA[{0}' пользователи]]></string>
     <string name="_bx_reputation_grid_column_title_hdr_points_active"><![CDATA[Баллы (активные)]]></string>
     <string name="_bx_reputation_grid_column_title_hdr_points_passive"><![CDATA[Баллы (пассивные)]]></string>
     <string name="_bx_reputation_grid_action_title_hdr_activate"><![CDATA[Активировать]]></string>

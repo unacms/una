@@ -45,6 +45,9 @@ class BxReputationAlertsResponse extends BxBaseModNotificationsResponse
             'alert' => &$oAlert,
         ]);
 
+        if(($sMethod = '_checkByAction' . bx_gen_method_name($oAlert->sAction)) && method_exists($this, $sMethod) && !$this->$sMethod($oAlert))
+            return;
+
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
         if(empty($aHandler) || !is_array($aHandler))
             return;
@@ -79,6 +82,14 @@ class BxReputationAlertsResponse extends BxBaseModNotificationsResponse
 
             $this->_oModule->assignPoints($iObjectOwnerId, $iPoints);
         }
+    }
+
+    protected function _checkByActionConnectionAdded($oAlert)
+    {
+        if(($sType = $oAlert->aExtras['object']->getType()) && ($sType == 'one-way' || ($sType == 'mutual' && $oAlert->aExtras['mutual'])))
+            return true;
+
+        return false;
     }
 
     protected function _processProfileDelete($oAlert)

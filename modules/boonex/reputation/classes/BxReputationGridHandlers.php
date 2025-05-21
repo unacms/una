@@ -41,8 +41,8 @@ class BxReputationGridHandlers extends BxTemplGrid
 
         $aUnits = $this->_oModule->_oDb->getHandlers(['type' => 'alert_units_list']);
         if(!empty($aUnits) && is_array($aUnits))
-            foreach($aUnits as $sUnit)
-                $this->_aFilter1Values[$sUnit] = _t('_' . $sUnit);
+            foreach($aUnits as $sUnit) 
+                $this->_aFilter1Values[$sUnit] = $this->_getTitleByUnit($sUnit);
 
     	$sFilter1 = bx_get($this->_sFilter1Name);
         if(!empty($sFilter1)) {
@@ -124,7 +124,7 @@ class BxReputationGridHandlers extends BxTemplGrid
 
     protected function _getCellAlertUnit($mixedValue, $sKey, $aField, $aRow)
     {
-        return self::_getCellDefault(_t('_' . $mixedValue), $sKey, $aField, $aRow);
+        return self::_getCellDefault($this->_getTitleByUnit($mixedValue), $sKey, $aField, $aRow);
     }
     
     protected function _getCellAlertAction($mixedValue, $sKey, $aField, $aRow)
@@ -234,6 +234,20 @@ class BxReputationGridHandlers extends BxTemplGrid
         }
 
         return $aIds;
+    }
+    
+    protected function _getTitleByUnit($sUnit)
+    {
+        if(($sKey = '_' . $sUnit) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) != 0)
+            return $_sKey;
+
+        if(($sKey = '_bx_reputation_grid_column_title_hdr_au_' . $sUnit) && ($_sKey = _t($sKey)) && strcmp($sKey, $_sKey) != 0)
+            return $_sKey;
+
+        if(($iPosition = strpos($sUnit, '_fans')) !== false)
+            return _t('_bx_reputation_grid_column_title_hdr_au_module_fans', _t('_' . substr($sUnit, 0, $iPosition)));
+
+        return $sUnit;
     }
 }
 

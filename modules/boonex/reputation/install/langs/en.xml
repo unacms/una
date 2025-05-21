@@ -81,6 +81,11 @@
     <string name="_bx_reputation_grid_column_value_hdr_aa_undoVoteUp"><![CDATA[Undo up vote]]></string>
     <string name="_bx_reputation_grid_column_value_hdr_aa_doVoteDown"><![CDATA[Do down vote]]></string>
     <string name="_bx_reputation_grid_column_value_hdr_aa_undoVoteDown"><![CDATA[Undo down vote]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_connection_added"><![CDATA[Add connection]]></string>
+    <string name="_bx_reputation_grid_column_value_hdr_aa_connection_removed"><![CDATA[Remove connection]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_au_sys_profiles_friends"><![CDATA[Friendship]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_au_sys_profiles_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_reputation_grid_column_title_hdr_au_module_fans"><![CDATA[{0}' members]]></string>
     <string name="_bx_reputation_grid_column_title_hdr_points_active"><![CDATA[Points (active)]]></string>
     <string name="_bx_reputation_grid_column_title_hdr_points_passive"><![CDATA[Points (passive)]]></string>
     <string name="_bx_reputation_grid_action_title_hdr_activate"><![CDATA[Activate]]></string>

@@ -1584,16 +1584,37 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function serviceGetReputationData()
     {
+        $sModule = $this->_aModule['name'];
+
         $aResult = parent::serviceGetReputationData();
 
-    	$sModule = $this->_aModule['name'];
+        $bHandlers = !empty($aResult['handlers']) && is_array($aResult['handlers']);
+        $bAlerts = !empty($aResult['alerts']) && is_array($aResult['alerts']);
 
-        if(!empty($aResult['handlers']) && is_array($aResult['handlers']))
+        /**
+         * Add Connections related handlers/alerts.
+         */
+        if($bHandlers)
+            $aResult['handlers'] = array_merge($aResult['handlers'], [
+                ['group' => $sModule . '_fan', 'type' => 'insert', 'alert_unit' => $sModule . '_fans', 'alert_action' => 'connection_added', 'points_active' => 1, 'points_passive' => 0],
+                ['group' => $sModule . '_fan', 'type' => 'delete', 'alert_unit' => $sModule . '_fans', 'alert_action' => 'connection_removed', 'points_active' => -1, 'points_passive' => 0]
+            ]);
+
+        if($bAlerts)
+            $aResult['alerts'] = array_merge($aResult['alerts'], [
+                ['unit' => $sModule . '_fans', 'action' => 'connection_added'],
+                ['unit' => $sModule . '_fans', 'action' => 'connection_removed']
+            ]);
+
+        /**
+         * Remove Comments and Reactions related handlers/alerts because these actions aren't available in Contexts for now.
+         */
+        if($bHandlers)
             foreach($aResult['handlers'] as $iKey => $aHandler)
                 if(in_array($aHandler['group'], [$sModule . '_comment', $sModule . '_reaction']))
                     unset($aResult['handlers'][$iKey]);
 
-        if(!empty($aResult['alerts']) && is_array($aResult['alerts']))
+        if($bAlerts)
             foreach($aResult['alerts'] as $iKey => $aAlert)
                 if($aAlert['unit'] == $sModule . '_reactions' || in_array($aAlert['action'], ['commentPost', 'commentRemoved']))
                     unset($aResult['alerts'][$iKey]);
