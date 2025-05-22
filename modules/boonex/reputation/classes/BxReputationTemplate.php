@@ -37,7 +37,9 @@ class BxReputationTemplate extends BxBaseModNotificationsTemplate
             $bIconFont = !empty($sIconFont);
             $bIconHtml = !empty($sIconHtml);
 
-            $aTmplVarsLevels[] = [
+            $sTitle = _t($aProfileLevel['title']);
+
+            $aTmplVarsLevels[] = !$this->_bIsApi ? [
                 'bx_if:icon' => [
                     'condition' => $bIconFont || $bIconHtml,
                     'content' => [
@@ -55,9 +57,20 @@ class BxReputationTemplate extends BxBaseModNotificationsTemplate
                         ],
                     ]
                 ],
-                'level_title' => _t($aProfileLevel['title'])
+                'title' => $sTitle
+            ] : [
+                'icon' => $bIconHtml ? $sIconHtml : '',
+                'title' => $sTitle
             ];
         }
+
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('reputation_summary', [
+                    'author_data' => BxDolProfile::getData($iProfileId),
+                    'levels' => $aTmplVarsLevels,
+                ])
+            ];
 
         return $this->parseHtmlByName('block_summary.html', [
             'profile_image' => $oProfile->getUnit($iProfileId, ['template' => ['name' => 'unit_wo_info', 'size' => 'ava']]),
@@ -83,12 +96,20 @@ class BxReputationTemplate extends BxBaseModNotificationsTemplate
 
         $aTmplVarsProfiles = [];
         foreach($aItems as $iProfileId => $iPoints)
-            if(($iProfileId = abs($iProfileId)) && ($oProfile = BxDolProfile::getInstance($iProfileId)) !== false)
+            if($iPoints != 0 && ($iProfileId = abs($iProfileId)) && ($oProfile = BxDolProfile::getInstance($iProfileId)) !== false)
                 $aTmplVarsProfiles[] = [
-                    'unit' => $oProfile->getUnit($iProfileId),
+                    'unit' => !$this->_bIsApi ? $oProfile->getUnit($iProfileId) : BxDolProfile::getData($oProfile),
                     'sign' => $bGrowth ? ($iPoints > 0 ? '+' : '-') : '',
                     'points' => $bGrowth ? abs($iPoints) : $iPoints
                 ];
+
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('reputation_leaderboard', [
+                    'days' => $iDays,
+                    'profiles' => $aTmplVarsProfiles
+                ])
+            ];
 
         $this->addCss(['main.css']);
         return $this->parseHtmlByName('block_leaderboard.html', [
