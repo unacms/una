@@ -59,12 +59,19 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         bx_login($oProfile->getAccountId(), $bRememberMe);
 
         if ($bRedirect) {
+            //set redirect from the session if it was added
+            $oSession = BxDolSession::getInstance();
+            $sSessionKey = $this->_oConfig->getName() . '_relocate';
+            if ($oSession->isValue($sSessionKey))
+                $sCallbackUrl = $sCallbackUrl ? $sCallbackUrl : $oSession->getValue($sSessionKey);
+
             $sCallbackUrl = $sCallbackUrl ? $sCallbackUrl : $this -> _oConfig -> sDefaultRedirectUrl;
             
             if($this->_bIsApi)
                 return [bx_api_get_block('redirect', ['uri' => bx_api_get_relative_url($sCallbackUrl)])];
 
             header('Location: ' . $sCallbackUrl);
+            exit;
         }
     }
 
