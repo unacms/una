@@ -699,6 +699,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             }
         }
 
+        $this->_oModule->_oDb->deletePolls(['content_id' => $iContentId]);
+
         bx_audit(
             $iContentId, 
             $this->_oModule->getName(), 

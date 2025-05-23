@@ -52,16 +52,14 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
         return $this->getAddedCss($sType, $bDynamic) . $this->getAddedJs($sType, $bDynamic);
     }
 
-    public function getJsCode($sType, $aParams = array(), $bWrap = true, $bDynamic = false)
+    public function getJsCode($sType, $aParams = [], $bWrap = true, $bDynamic = false)
     {
-        $oModule = $this->getModule();
-
-        $aParams = array_merge(array(
-            'iOwnerId' => $oModule->_iOwnerId,
+        $aParams = array_merge([
+            'iOwnerId' => $this->getModule()->_iOwnerId,
             'sAnimationEffect' => $this->_oConfig->getAnimationEffect(),
             'iAnimationSpeed' => $this->_oConfig->getAnimationSpeed(),
-            'aHtmlIds' => $this->_oConfig->getHtmlIds($sType)
-        ), $aParams);
+            'aHtmlIds' => $this->_oConfig->getHtmlIdsList($sType)
+        ], $aParams);
 
         return $this->getCssJs($sType, $bDynamic) . parent::getJsCode($sType, $aParams, $bWrap);
     }

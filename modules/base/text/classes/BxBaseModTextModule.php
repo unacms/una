@@ -30,78 +30,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
 
     // ====== ACTIONS METHODS
-
-    public function actionEmbedPoll($iPollId = 0)
-    {
-        if(empty($iPollId) && bx_get('poll_id') !== false)
-            $iPollId = (int)bx_get('poll_id');
-
-        $aParams = bx_get_with_prefix('param');
-        array_walk($aParams, function(&$sValue) {
-            $sValue = bx_process_input($sValue);
-        });
-
-        $this->_oTemplate->embedPollItem($iPollId, $aParams);
-    }
-
-    public function actionEmbedPolls($iId = 0)
-    {
-        list($iContentId, $aContentInfo) = $this->_getContent($iId);
-        if($iContentId === false)
-            return;
-
-        $aParams = bx_get_with_prefix('param');
-        array_walk($aParams, function(&$sValue) {
-            $sValue = bx_process_input($sValue);
-        });
-
-        $this->_oTemplate->embedPollItems($aContentInfo, $aParams);
-    }
-
-    public function actionGetPoll()
-    {
-        $iPollId = (int)bx_get('poll_id');
-        $sView = bx_process_input(bx_get('view'));
-
-        $sMethod = 'serviceGetBlockPoll' . bx_gen_method_name($sView);
-        if(!method_exists($this, $sMethod))
-            return echoJson(array());
-
-        $aBlock = $this->$sMethod($iPollId, true);
-        if(empty($aBlock) || !is_array($aBlock))
-            return echoJson(array());
-
-        return echoJson(array(
-            'content' => $aBlock['content']
-        ));
-    }
-    public function actionDeletePoll()
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if(empty($iId))
-            return echoJson(array());
-
-        $aResult = array();
-        if($this->_oDb->deletePolls(array($CNF['FIELD_POLL_ID'] => $iId)))
-            $aResult = array('code' => 0);
-        else
-            $aResult = array('code' => 1, 'message' => _t($CNF['txt_err_cannot_perform_action']));
-
-        echoJson($aResult);
-    }
-
-    public function actionGetPollForm()
-    {
-        echo $this->_oTemplate->getPollForm();
-    }
-
-    public function actionSubmitPollForm()
-    {
-        echoJson($this->getPollForm());
-    }
-
     public function actionFileEmbedVideo($iFileId)
     {
         $this->_oTemplate->embedVideo($iFileId);
@@ -183,54 +111,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             return '';
 
         return $this->_oTemplate->parseHtmlByName('category_list_multi.html', $aVars);
-    }
-
-    /**
-     * @page service Service Calls
-     * @section bx_base_text Base Text
-     * @subsection bx_base_text-polls Polls Blocks
-     * @subsubsection bx_base_text-get_block_poll_answers get_block_poll_answers
-     * 
-     * @code bx_srv('bx_posts', 'get_block_poll_answers', [...]); @endcode
-     * 
-     * Get block with poll answers
-     * @param $iPollId poll ID
-     * 
-     * @see BxBaseModTextModule::serviceGetBlockPollAnswers
-     */
-    /** 
-     * @ref bx_base_text-get_block_poll_answers "get_block_poll_answers"
-     */
-    public function serviceGetBlockPollAnswers($iPollId, $bForceDisplay = false)
-    {
-        if(!$iPollId)
-            return false;
-
-        if(!$bForceDisplay && $this->isPollPerformed($iPollId))
-            return $this->serviceGetBlockPollResults($iPollId);
-
-        return $this->_serviceTemplateFunc('entryPollAnswers', $iPollId, 'getPollInfoById');
-    }
-
-    /**
-     * @page service Service Calls
-     * @section bx_base_text Base Text
-     * @subsection bx_base_text-polls Polls Blocks
-     * @subsubsection bx_base_text-get_block_poll_results get_block_poll_results
-     * 
-     * @code bx_srv('bx_posts', 'get_block_poll_results', [...]); @endcode
-     * 
-     * Get block with poll results
-     * @param $iPollId poll ID
-     * 
-     * @see BxBaseModTextModule::serviceGetBlockPollResults
-     */
-    /** 
-     * @ref bx_base_text-get_block_poll_results "get_block_poll_results"
-     */
-    public function serviceGetBlockPollResults($iPollId)
-    {
-        return $this->_serviceTemplateFunc('entryPollResults', $iPollId, 'getPollInfoById');
     }
     
     /**
@@ -452,27 +332,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         return $this->_serviceTemplateFunc ('entryAuthor', $iContentId);
     }
-    
-    /**
-     * @page service Service Calls
-     * @section bx_base_text Base Text
-     * @subsection bx_base_text-page_blocks Page Blocks
-     * @subsubsection bx_base_text-entity_polls entity_polls
-     * 
-     * @code bx_srv('bx_posts', 'entity_polls', [...]); @endcode
-     * 
-     * Display polls for the specified post
-     * @param $iContentId content ID
-     * 
-     * @see BxBaseModTextModule::serviceEntityPolls
-     */
-    /** 
-     * @ref bx_base_text-entity_polls "entity_polls"
-     */
-    public function serviceEntityPolls ($iContentId = 0)
-    {
-        return $this->_serviceTemplateFunc ('entryPolls', $iContentId);
-    }
 
     /**
      * @page service Service Calls
@@ -563,16 +422,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         
         return _t($sTxtError);
     }    
-
-    public function isPollPerformed($iObjectId, $iAuthorId = 0, $iAuthorIp = 0)
-    {
-        if(empty($iAuthorId)) {
-            $iAuthorId = bx_get_logged_profile_id();
-            $iAuthorIp = bx_get_ip_hash(getVisitorIP());
-        }
-
-        return $this->_oDb->isPollPerformed($iObjectId, $iAuthorId, $iAuthorIp);
-    }
 
 
     // ====== COMMON METHODS   
@@ -764,32 +613,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         ];
     }
 
-    public function getPollForm()
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        if(empty($CNF['OBJECT_FORM_POLL']))
-            return array('code' => 1, 'message' => '_sys_txt_error_occured');
-
-        $iProfileId = bx_get_logged_profile_id();
-
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_POLL'], $CNF['OBJECT_FORM_POLL_DISPLAY_ADD'], $this->_oTemplate);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'submit_poll_form/';
-
-        $oForm->initChecker();
-        if($oForm->isSubmittedAndValid()) {
-            $iId = $oForm->insert();
-            if($iId)
-                return array('code' => 0, 'id' => $iId, 'item' => $this->_oTemplate->getPollItem($iId, $iProfileId, array(
-                    'manage' => true
-                )));
-            else
-                return array('code' => 2, 'message' => '_sys_txt_error_entry_creation');
-        }
-
-        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
-    }
-    
     public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = array())
     {
         $CNF = &$this->_oConfig->CNF;

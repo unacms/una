@@ -18,6 +18,7 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     protected $_aJsClasses;
     protected $_aJsObjects;
     protected $_aHtmlIds;
+    protected $_aHtmlIdsPoll;
     protected $_aGridObjects;
 
     protected $_bIsApi;
@@ -33,13 +34,65 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     {
         parent::__construct($aModule);
 
-        $this->CNF = array();
+        $this->CNF = [
+            // modules icon
+            'ICON_POLLS_ANSWERS' => 'vote-yea',
+            'ICON_POLLS_RESULTS' => 'poll-h',
 
-        $this->_aObjects = array();
-        $this->_aPrefixes = array();
-        $this->_aJsClasses = array();
-        $this->_aJsObjects = array();
-        $this->_aGridObjects = array();
+            // database tables
+            'TABLE_POLLS' => $aModule['db_prefix'] . 'polls',
+            'TABLE_POLLS_ANSWERS' => $aModule['db_prefix'] . 'polls_answers',
+            'TABLE_POLLS_ANSWERS_VOTES' => $aModule['db_prefix'] . 'polls_answers_votes',
+            'TABLE_POLLS_ANSWERS_VOTES_TRACK' => $aModule['db_prefix'] . 'polls_answers_votes_track',
+            
+            // database fields
+            'FIELD_POLL_ID' => 'id',
+            'FIELD_POLL_AUTHOR_ID' => 'author_id',
+            'FIELD_POLL_CONTENT_ID' => 'content_id',
+            'FIELD_POLL_TEXT' => 'text',
+            'FIELD_POLL_ANSWERS' => 'answers',
+
+            // some params
+            'PARAM_POLL_ENABLED' => true,
+            'PARAM_POLL_HIDDEN_RESULTS' => false,
+            'PARAM_POLL_ANONYMOUS_VOTING' => true,
+
+            // objects
+            'OBJECT_VOTES_POLL_ANSWERS' => $this->_sName . '_poll_answers',
+
+            // styles
+            'STYLES_POLLS_EMBED_CLASS' => 'body.bx-page-iframe.bx-def-color-bg-page',
+            'STYLES_POLLS_EMBED_CONTENT' => [
+                'background-color' => '#ffffff'
+            ]
+        ];
+
+        $sPrefix = str_replace('_', '-', $this->_sName);
+
+        $this->_aObjects = [];
+
+        $this->_aPrefixes = [];
+
+        $this->_aJsClasses = [
+            'poll' => $this->_sClassPrefix . 'Polls'
+        ];
+        $this->_aJsObjects = [
+            'poll' => 'o' . $this->_sClassPrefix . 'Polls'
+        ];
+
+        $this->_aGridObjects = [];
+
+        $this->_aHtmlIds = [];
+        $this->_aHtmlIdsPoll = [
+            'add_poll_popup' =>  $sPrefix . '-add-poll-popup',
+            'add_poll_form_field' => $sPrefix . '-add-poll-form-field',
+            'polls_showcase' => $sPrefix . '-polls-showcase-',
+            'poll' => $sPrefix . '-poll-',
+            'poll_content' => $sPrefix . '-poll-content-',
+            'poll_view_menu' => $sPrefix . '-poll-view-menu',
+            'poll_view_link_answers' => $sPrefix . '-poll-view-answers-',
+            'poll_view_link_results' => $sPrefix . '-poll-view-results-',
+        ];
 
         $this->_bIsApi = bx_is_api();
 

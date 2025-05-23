@@ -28,84 +28,47 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
     {
         parent::__construct($aModule);
 
-        $this->CNF = array(
-            // modules icon
-            'ICON_POLLS_ANSWERS' => 'vote-yea',
-            'ICON_POLLS_RESULTS' => 'poll-h',
-
-            // database tables
-            'TABLE_POLLS' => $aModule['db_prefix'] . 'polls',
-            'TABLE_POLLS_ANSWERS' => $aModule['db_prefix'] . 'polls_answers',
-            'TABLE_POLLS_ANSWERS_VOTES' => $aModule['db_prefix'] . 'polls_answers_votes',
-            'TABLE_POLLS_ANSWERS_VOTES_TRACK' => $aModule['db_prefix'] . 'polls_answers_votes_track',
-            
+        $this->CNF = array_merge($this->CNF, [
+            // database tables            
             'TABLE_LINKS' => $aModule['db_prefix'] . 'links',
             'TABLE_LINKS2CONTENT' => $aModule['db_prefix'] . 'links2content',
 
             // database fields
-            'FIELD_POLL_ID' => 'id',
-            'FIELD_POLL_AUTHOR_ID' => 'author_id',
-            'FIELD_POLL_CONTENT_ID' => 'content_id',
-            'FIELD_POLL_TEXT' => 'text',
-            'FIELD_POLL_ANSWERS' => 'answers',
-
             'FIELD_ATTACH_LINK_CONTENT_ID' => 'content_id',
             'FIELD_ATTACH_LINK_URL' => 'url',
             'FIELD_ATTACH_LINK_CONTROLS' => 'controls',
 
             // some params
-            'PARAM_POLL_ENABLED' => true,
-            'PARAM_POLL_HIDDEN_RESULTS' => false,
-            'PARAM_POLL_ANONYMOUS_VOTING' => true,
             'PARAM_MULTICAT_ENABLED' => false,
             'PARAM_LINKS_ENABLED' => false,
             'PARAM_LINKS_LIMIT' => 'sys_attach_links_max',
 
             // objects
-            'OBJECT_VOTES_POLL_ANSWERS' => $this->_sName . '_poll_answers',
             'OBJECT_FORM_ATTACH_LINK' => $this->_sName . '_attach_link',
             'OBJECT_FORM_ATTACH_LINK_DISPLAY_ADD' => $this->_sName . '_attach_link_add',
-            
-
-            // styles
-            'STYLES_POLLS_EMBED_CLASS' => 'body.bx-page-iframe.bx-def-color-bg-page',
-            'STYLES_POLLS_EMBED_CONTENT' => array(
-                'background-color' => '#ffffff'
-            ),
-        );
+        ]);
 
         $sPrefix = str_replace('_', '-', $this->_sName);
         $this->_aPrefixes = [
             'style' => $sPrefix,
         ];
 
-        $this->_aJsClasses = array(
-            'poll' => $this->_sClassPrefix . 'Polls',
+        $this->_aJsClasses = array_merge($this->_aJsClasses, [
             'links' => $this->_sClassPrefix . 'Links',
             'categories' => $this->_sClassPrefix . 'Categories'
-        );
+        ]);
 
-        $this->_aJsObjects = array(
-            'poll' => 'o' . $this->_sClassPrefix . 'Polls',
+        $this->_aJsObjects = $this->_aJsObjects = array_merge($this->_aJsObjects, [
             'links' => 'o' . $this->_sClassPrefix . 'Links',
             'categories' => 'o' . $this->_sClassPrefix . 'Categories'
-        );
+        ]);
 
-        $this->_aHtmlIds = array(
-            'add_poll_popup' =>  $sPrefix . '-add-poll-popup',
-            'add_poll_form_field' => $sPrefix . '-add-poll-form-field',
-            'polls_showcase' => $sPrefix . '-polls-showcase-',
-            'poll' => $sPrefix . '-poll-',
-            'poll_content' => $sPrefix . '-poll-content-',
-            'poll_view_menu' => $sPrefix . '-poll-view-menu',
-            'poll_view_link_answers' => $sPrefix . '-poll-view-answers-',
-            'poll_view_link_results' => $sPrefix . '-poll-view-results-',
-            
+        $this->_aHtmlIds = array_merge($this->_aHtmlIds, $this->_aHtmlIdsPoll, [
             'attach_link_popup' =>  $sPrefix . '-attach-link-popup',
             'attach_link_form_field' => $sPrefix . '-attach-link-form-field-',
             'attach_link_item' => $sPrefix . '-attach-link-item-',
-        );
-        
+        ]);
+
         $this->_aPregPatterns = array(
             "meta_title" => "/<title>(.*)<\/title>/",
             "meta_description" => "/<meta[\s]+[^>]*?name[\s]?=[\s\"\']+description[\s\"\']+content[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",

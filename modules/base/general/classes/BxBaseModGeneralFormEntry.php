@@ -140,7 +140,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
             $sResult .= ($bDynamicMode ? $sInclude2 : '') . $this->_oModule->_oTemplate->getJsCode('categories');
         }
-        
+
+        if(isset($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] === true)
+            $sResult .= $this->addCssJsPolls($bDynamicMode) . $this->_oModule->_oTemplate->getJsCode('poll');
+
         return $sResult;
     }
     
@@ -835,6 +838,34 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         return true;
     }
 
+    public function processPolls ($sFieldPoll, $iContentId = 0)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (!isset($this->aInputs[$sFieldPoll]))
+            return true;
+
+        $aPollIds = $this->getCleanValue($sFieldPoll);
+        if(empty($aPollIds) || !is_array($aPollIds))
+            return true;
+
+        $iProfileId = $this->getContentOwnerProfileId($iContentId);
+
+        $aPollsDbIds = $this->_oModule->_oDb->getPolls(array('type' => 'content_id_ids', 'content_id' => $iContentId));
+
+        //--- Remove deleted
+        $this->_oModule->_oDb->deletePollsByIds(array_diff($aPollsDbIds, $aPollIds));
+
+        //--- Add new
+        if($iContentId) {
+            $aPollsAddIds = array_diff($aPollIds, $aPollsDbIds);
+            foreach($aPollsAddIds as $iPollId)
+                $this->_oModule->_oDb->updatePolls(array($CNF['FIELD_POLL_CONTENT_ID'] => $iContentId), array($CNF['FIELD_POLL_ID'] => $iPollId, $CNF['FIELD_POLL_CONTENT_ID'] => 0));
+        }
+
+        return true;
+    }
+
     function _deleteFile ($iFileId, $sStorage = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -864,7 +895,15 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         return parent::addCssJs ();
     }
-    
+
+    function addCssJsPolls($bDynamicMode = false)
+    {
+        $sInclude = '';
+        $sInclude .= $this->_oModule->_oTemplate->addCss(['polls.css'], $bDynamicMode);
+        $sInclude .= $this->_oModule->_oTemplate->addJs(['modules/base/general/js/|polls.js'], $bDynamicMode);
+        return $bDynamicMode ? $sInclude : '';
+    }
+
     function genViewRowValue(&$aInput)
     {
         $s = parent::genViewRowValue($aInput);
@@ -1281,7 +1320,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
         return $this->genCustomInputUsernamesSuggestions($aInput);
     }
-    
+
+    protected function genCustomInputPolls ($aInput)
+    {
+        return $this->_oModule->_oTemplate->getPollField(!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0);
+    }
+
     protected function _isMulticatEnabled(){
         $CNF = $this->_oModule->_oConfig->CNF;
         return isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true && isset($CNF['FIELD_MULTICAT']);

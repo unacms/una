@@ -23,6 +23,13 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         parent::__construct($aInfo, $oTemplate);
     }
 
+    function addCssJsPolls($bDynamicMode = false)
+    {
+        $sInclude = parent::addCssJsPolls($bDynamicMode);
+        $sInclude .= $this->_oModule->_oTemplate->addJs(['modules/base/text/js/|polls.js', 'polls.js'], $bDynamicMode);
+        return $bDynamicMode ? $sInclude : '';
+    }
+
     function getCode($bDynamicMode = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -35,14 +42,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 'attachments_menu' =>  $oMenu->getCode()
             ));
         }
-
-        if(isset($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] === true) {
-            $sInclude = '';
-            $sInclude .= $this->_oModule->_oTemplate->addCss(array('polls.css'), $bDynamicMode);
-            $sInclude .= $this->_oModule->_oTemplate->addJs(array('modules/base/text/js/|polls.js', 'polls.js'), $bDynamicMode);
-
-            $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('poll');
-        }  
         
         if(isset($CNF['PARAM_LINKS_ENABLED']) && $CNF['PARAM_LINKS_ENABLED'] === true) {
             $sInclude = '';
@@ -114,39 +113,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     protected function genCustomInputAttachments ($aInput)
     {
         return '__attachments_menu__' . $this->_oModule->_oTemplate->parseHtmlByName('uploader_progress.html', []);
-    }
-
-    protected function genCustomInputPolls ($aInput)
-    {
-        return $this->_oModule->_oTemplate->getPollField(!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0);
-    }
-
-    public function processPolls ($sFieldPoll, $iContentId = 0)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if (!isset($this->aInputs[$sFieldPoll]))
-            return true;
-
-        $aPollIds = $this->getCleanValue($sFieldPoll);
-        if(empty($aPollIds) || !is_array($aPollIds))
-            return true;
-
-        $iProfileId = $this->getContentOwnerProfileId($iContentId);
-
-        $aPollsDbIds = $this->_oModule->_oDb->getPolls(array('type' => 'content_id_ids', 'content_id' => $iContentId));
-
-        //--- Remove deleted
-        $this->_oModule->_oDb->deletePollsByIds(array_diff($aPollsDbIds, $aPollIds));
-
-        //--- Add new
-        if($iContentId) {
-            $aPollsAddIds = array_diff($aPollIds, $aPollsDbIds);
-            foreach($aPollsAddIds as $iPollId)
-                $this->_oModule->_oDb->updatePolls(array($CNF['FIELD_POLL_CONTENT_ID'] => $iContentId), array($CNF['FIELD_POLL_ID'] => $iPollId, $CNF['FIELD_POLL_CONTENT_ID'] => 0));
-        }
-
-        return true;
     }
     
     public function processLinks ($sFieldLink, $iContentId = 0)
