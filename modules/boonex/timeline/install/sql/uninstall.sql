@@ -32,6 +32,8 @@ DROP TABLE IF EXISTS `bx_timeline_scores`, `bx_timeline_scores_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_cmts_notes`;
 
+DROP TABLE IF EXISTS `bx_timeline_polls`, `bx_timeline_polls_answers`, `bx_timeline_polls_answers_votes`, `bx_timeline_polls_answers_votes_track`;
+
 
 -- STORAGES, TRANSCODERS, UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_timeline%';
@@ -58,7 +60,7 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_timeline' LIMIT 1;
 
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_timeline', 'bx_timeline_reactions');
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_timeline', 'bx_timeline_reactions', 'bx_timeline_poll_answers');
 
 
 -- SCORES

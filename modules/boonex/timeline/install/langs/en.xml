@@ -115,12 +115,13 @@
     <string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Cannot remove the link. Please report.]]></string>
     <string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Photo]]></string>
     <string name="_bx_timeline_form_post_input_photo"><![CDATA[]]></string>
+    <string name="_bx_timeline_form_post_input_photo_alt"><![CDATA[Add Photo]]></string>
     <string name="_bx_timeline_form_post_input_sys_files"><![CDATA[File]]></string>
     <string name="_bx_timeline_form_post_input_files"><![CDATA[]]></string>
-    <string name="_bx_timeline_form_post_input_photo_alt"><![CDATA[Add Photo]]></string>
     <string name="_bx_timeline_form_post_input_sys_video"><![CDATA[Video]]></string>
     <string name="_bx_timeline_form_post_input_video"><![CDATA[]]></string>
     <string name="_bx_timeline_form_post_input_video_alt"><![CDATA[Add Video]]></string>
+    <string name="_bx_timeline_form_post_input_sys_polls"><![CDATA[Polls]]></string>
     <string name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Post]]></string>
     <string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Post]]></string>
@@ -136,6 +137,19 @@
     <string name="_bx_timeline_form_attach_link_input_sys_do_submit"><![CDATA[Add]]></string>
     <string name="_bx_timeline_form_attach_link_input_do_submit"><![CDATA[Add]]></string>
     <string name="_bx_timeline_form_attach_link_input_do_cancel"><![CDATA[Close]]></string>
+
+    <string name="_bx_timeline_form_poll"><![CDATA[Polls]]></string>
+    <string name="_bx_timeline_form_poll_display_add"><![CDATA[Add Poll]]></string>
+    <string name="_bx_timeline_form_poll_input_sys_text"><![CDATA[Question]]></string>
+    <string name="_bx_timeline_form_poll_input_text"><![CDATA[Question]]></string>
+    <string name="_bx_timeline_form_poll_input_text_err"><![CDATA[Question is essential. Please, fill in this field]]></string>
+    <string name="_bx_timeline_form_poll_input_sys_answers"><![CDATA[Answers]]></string>
+    <string name="_bx_timeline_form_poll_input_answers"><![CDATA[Answers]]></string>
+    <string name="_bx_timeline_form_poll_input_answers_err"><![CDATA[Poll should have at least 2 non-empty answers.]]></string>
+    <string name="_bx_timeline_form_poll_input_answers_add"><![CDATA[Add More]]></string>
+    <string name="_bx_timeline_form_poll_input_sys_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_timeline_form_poll_input_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_timeline_form_poll_input_do_cancel"><![CDATA[Close]]></string>
 
     <string name="_bx_timeline_form_repost"><![CDATA[Repost]]></string>
     <string name="_bx_timeline_form_repost_display_with"><![CDATA[Repost With Text]]></string>
@@ -209,6 +223,7 @@
     <string name="_bx_timeline_page_block_title_item"><![CDATA[Item]]></string>
     <string name="_bx_timeline_page_block_title_item_content"><![CDATA[Content]]></string>
     <string name="_bx_timeline_page_block_title_item_info"><![CDATA[Info]]></string>
+    <string name="_bx_timeline_page_block_title_item_polls"><![CDATA[Polls]]></string>
     <string name="_bx_timeline_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_timeline_page_block_title_item_comments"><![CDATA[Comments]]></string>
     <string name="_bx_timeline_page_block_title_system_post_account"><![CDATA[Post to Feed]]></string>
@@ -352,21 +367,20 @@
     <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Add Photo]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_simple"><![CDATA[Add Video (Simple)]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_html5"><![CDATA[Add Video (HTML5)]]></string>
-
     <string name="_bx_timeline_menu_item_title_add_file"><![CDATA[Add File]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_file_simple"><![CDATA[Add File (Simple)]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_file_html5"><![CDATA[Add File (HTML5)]]></string>
-
     <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_record"><![CDATA[Record Video]]></string>
     <string name="_bx_timeline_menu_item_title_add_video_record"><![CDATA[Record Video]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_poll"><![CDATA[Add Poll]]></string>
+    <string name="_bx_timeline_menu_item_title_add_poll"><![CDATA[Add Poll]]></string>
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Update]]></string>
     <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Update]]></string>
     <string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Timeline]]></string>
-
     <string name="_bx_timeline_menu_item_title_system_manage_my_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_manage_my_timeline"><![CDATA[Timeline]]></string>
 
@@ -462,6 +476,12 @@
     <string name="_bx_timeline_txt_err_already_reposted"><![CDATA[You already reposted the item.]]></string>
     <string name="_bx_timeline_txt_msg_success_repost"><![CDATA[The item was successfully reposted.]]></string>
     <string name="_bx_timeline_txt_object_reposted"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> reposted a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_timeline_txt_poll_view_answers"><![CDATA[poll]]></string>
+    <string name="_bx_timeline_txt_poll_view_results"><![CDATA[results]]></string>
+    <string name="_bx_timeline_txt_poll_answer_vote_do_by"><![CDATA[Voted for]]></string>
+    <string name="_bx_timeline_txt_poll_answer_vote_counter"><![CDATA[{0} votes]]></string>
+    <string name="_bx_timeline_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
     <!-- EMAIL TEMPLATES -->
     <string name="_bx_timeline_et_txt_name_send"><![CDATA[Send to Friend.]]></string>

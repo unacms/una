@@ -56,6 +56,13 @@
         </bx_repeat:items>
     </div>
 </bx_if:show_attachments_files>
+<bx_if:show_attachments_polls>
+    <div class="__style_prefix__-item-polls px-3 md:px-4">
+        <bx_repeat:polls>
+            <div class="__style_prefix__-item-link mt-3 md:mt-4">__poll__</div>
+        </bx_repeat:polls>
+    </div>
+</bx_if:show_attachments_polls>
 <bx_if:show_raw>
     <div class="__style_prefix__-item-raw px-3 md:px-4 mt-3 md:mt-4">__item_content_raw__</div>
 </bx_if:show_raw>

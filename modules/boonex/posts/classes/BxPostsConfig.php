@@ -227,15 +227,15 @@ class BxPostsConfig extends BxBaseModTextConfig
             'style' => 'bx-posts',
         );
         
-        $this->_aJsClasses = array_merge($this->_aJsClasses, array(
+        $this->_aJsClasses = array_merge($this->_aJsClasses, [
             'manage_tools' => 'BxPostsManageTools',
             'categories' => 'BxDolCategories'
-        ));
+        ]);
 
-        $this->_aJsObjects = array_merge($this->_aJsObjects, array(
+        $this->_aJsObjects = array_merge($this->_aJsObjects, [
             'manage_tools' => 'oBxPostsManageTools',
-             'categories' => 'oBxDolCategories'
-        ));
+            'categories' => 'oBxDolCategories'
+        ]);
 
         $this->_aGridObjects = array(
             'common' => $this->CNF['OBJECT_GRID_COMMON'],

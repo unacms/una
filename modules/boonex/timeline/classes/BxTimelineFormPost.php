@@ -55,6 +55,13 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $this->_aUploadersInfo = [];
     }
 
+    public function addCssJsPolls($bDynamicMode = false)
+    {
+        $sInclude = parent::addCssJsPolls($bDynamicMode);
+        $sInclude .= $this->_oModule->_oTemplate->addJs(['polls.js'], $bDynamicMode);
+        return $bDynamicMode ? $sInclude : '';
+    }
+
     public function getUploadersInfo($sField = '')
     {
         if(empty($sField))
@@ -245,7 +252,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             if(empty($this->aInputs['text']['attrs']) || !is_array($this->aInputs['text']['attrs']))
                 $this->aInputs['text']['attrs'] = array();
 
-            $this->aInputs['text']['attrs']['id'] = $this->_oModule->_oConfig->getHtmlIds('post', 'textarea') . time();
+            $this->aInputs['text']['attrs']['id'] = $this->_oModule->_oConfig->getEditorId();
         }
 
         $this->_initPrivacyFields();

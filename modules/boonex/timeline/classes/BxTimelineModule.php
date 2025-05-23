@@ -3904,8 +3904,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             //--- Process Files ---//
             $aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
             $bFileIds = !empty($aFileIds) && is_array($aFileIds);
+            
+            //--- Process Polls ---//
+            $aPollIds = $oForm->getCleanValue($CNF['FIELD_POLL']);
+            $bPollIds = !empty($aPollIds) && is_array($aPollIds);            
 
-            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds) {
+            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds && !$bPollIds) {
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
@@ -3985,6 +3989,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId, true);
                 $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId, true);
                 $this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId, true);
+
+                //--- Process Poll ---//
+                $oForm->processPolls($CNF['FIELD_POLL'], $iId);
 
                 //--- Process Privacy
                 $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
@@ -4134,8 +4141,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
             $bFileIds = !empty($aFileIds) && is_array($aFileIds);
+            
+            //--- Process Poll ---//
+            $aPollIds = $oForm->getCleanValue($CNF['FIELD_POLL']);
+            $bPollIds = !empty($aPollIds) && is_array($aPollIds);
 
-            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds) {
+            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds && !$bPollIds) {
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
@@ -4162,6 +4173,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId);
             $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId);
             $this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId);
+
+            //--- Process Poll ---//
+            $oForm->processPolls($CNF['FIELD_POLL'], $iId);
 
             //--- Process Privacy
             $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
@@ -5319,6 +5333,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $this->_deleteMedia($CNF['FIELD_VIDEO'], $aEvent[$CNF['FIELD_ID']]);
             $this->_deleteMedia($CNF['FIELD_FILE'], $aEvent[$CNF['FIELD_ID']]);
             $this->_deleteLinks($aEvent[$CNF['FIELD_ID']]);
+
+            $this->_oDb->deletePolls(['content_id' => $aEvent[$CNF['FIELD_ID']]]);
     	}
 
     	//--- Update parent event when repost event was deleted.
@@ -5648,6 +5664,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'title' => $aFileFile['file_name']
             ];
         }
+
+        return $aResult;
+    }
+
+    public function getEventPolls($iEventId)
+    {
+        $aPolls = $this->_oDb->getPolls([
+            'type' => 'content_id', 
+            'content_id' => $iEventId, 
+        ]);
+        if(empty($aPolls) || !is_array($aPolls))
+            return;
+
+        $aResult = [];
+        foreach($aPolls as $aPoll)
+            $aResult[$aPoll['id']] = $aPoll;
 
         return $aResult;
     }

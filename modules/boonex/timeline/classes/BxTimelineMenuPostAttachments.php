@@ -27,9 +27,10 @@ class BxTimelineMenuPostAttachments extends BxTemplMenu
 
         $this->_oModule = BxDolModule::getInstance('bx_timeline');
 
-        $this->addMarkers(array(
+        $this->addMarkers([
             'js_object' => $this->_oModule->_oConfig->getJsObject('post'),
-        ));
+            'js_object_poll' => $this->_oModule->_oConfig->getJsObject('poll'),
+        ]);
     }
 
     public function setEventById($iEventId, $aBrowseParams = array())

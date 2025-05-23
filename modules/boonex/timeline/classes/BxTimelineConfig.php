@@ -67,6 +67,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iForYouThdRecomFrds;
     protected $_iForYouThdRecomSbns;
 
+    protected $_sEditorId;
     protected $_bEditorToolbar;
     protected $_bEditorAutoAttach;
     protected $_bEnableMediaPriority;
@@ -101,7 +102,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     {
         parent::__construct($aModule);
 
-        $this->CNF = array (
+        $this->CNF = array_merge($this->CNF, [
             'ICON' => 'far clock col-green1',
 
             // database tables
@@ -129,6 +130,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_PHOTO' => 'photo',
             'FIELD_VIDEO' => 'video',
             'FIELD_FILE' => 'file',
+            'FIELD_POLL' => 'polls',
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_STICKED' => 'sticked',
@@ -183,6 +185,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => $this->_sName . '_post_edit',
             'OBJECT_FORM_ATTACH_LINK' => $this->_sName . '_attach_link',
             'OBJECT_FORM_ATTACH_LINK_DISPLAY_ADD' => $this->_sName . '_attach_link_add',
+            'OBJECT_FORM_POLL' => $this->_sName . '_poll',
+            'OBJECT_FORM_POLL_DISPLAY_ADD' => $this->_sName . '_poll_add',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_GRID_COMMON' => $this->_sName . '_common',
             'OBJECT_GRID_MUTE' => $this->_sName . '_mute',
@@ -213,6 +217,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'txt_sample_with_video' => '_bx_timeline_txt_sample_with_video',
                 'txt_sample_with_file' => '_bx_timeline_txt_sample_with_file',
                 'txt_sample_with_media' => '_bx_timeline_txt_sample_with_media',
+                'txt_poll_form_answers_add' => '_bx_posts_form_poll_input_answers_add',
+                'txt_poll_menu_view_answers' => '_bx_posts_txt_poll_view_answers',
+                'txt_poll_menu_view_results' => '_bx_posts_txt_poll_view_results',
+                'txt_poll_menu_view_' => '_bx_posts_txt_poll_view_',
+                'txt_poll_answer_vote_do_by' => '_bx_posts_txt_poll_answer_vote_do_by',
+                'txt_poll_answer_vote_counter' => '_bx_posts_txt_poll_answer_vote_counter',
+                'txt_poll_answer_vote_percent' => '_bx_posts_txt_poll_answer_vote_percent',
                 'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
                 'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',
                 'filter_item_active' => '_bx_timeline_grid_filter_item_title_adm_active',
@@ -238,7 +249,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'option_fyfs_recom_friends' => '_bx_timeline_option_for_you_sources_recom_friends',
                 'option_fyfs_recom_subscriptions' => '_bx_timeline_option_for_you_sources_recom_subscriptions',
             ),
-        );
+        ]);
 
         $this->_aTypeToFormDisplay = array(
             BX_BASE_MOD_NTFS_TYPE_OWNER => 'form_display_post_add_profile',
@@ -328,21 +339,21 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'add-file-html5' => $this->CNF['OBJECT_UPLOADER_FILE_HTML5'],
         );
 
-        $this->_aJsClasses = array(
+        $this->_aJsClasses = array_merge($this->_aJsClasses, [
             'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',
             'view_filters' => 'BxTimelineViewFilters',
             'post' => 'BxTimelinePost',
             'repost' => 'BxTimelineRepost',
             'manage_tools' => 'BxTimelineManageTools'
-        );
-        $this->_aJsObjects = array(
+        ]);
+        $this->_aJsObjects = array_merge($this->_aJsObjects, [
             'view' => 'oTimelineView',
             'view_filters' => 'oTimelineViewFilters',
             'post' => 'oTimelinePost',
             'repost' => 'oTimelineRepost',
             'manage_tools' => 'oBxTimelineManageTools'
-        );
+        ]);
 
         $this->_aGridObjects = array(
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
@@ -352,7 +363,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sHp = str_replace('_', '-', $this->_sName);
         $sHpT = BX_TIMELINE_VIEW_TIMELINE;
         $sHpO = BX_TIMELINE_VIEW_OUTLINE;
-        $this->_aHtmlIds = array(
+        $this->_aHtmlIds = array_merge($this->_aHtmlIds, [
             'view' => array(
                 'edit_form' => $sHp . '-edit-',
                 'attach_link_form_field' => $sHp . '-attach-link-form-field-',
@@ -380,7 +391,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'with_popup' => $sHp . '-repost-with',
                 'to_popup' => $sHp . '-repost-to',
             )
-        );
+        ]);
 
         $this->_aRepostDefaults = [
             'do' => 'repost',
@@ -527,6 +538,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iForYouThdRecomFrds = (int)getParam($sOptionPrefix . 'for_you_threshold_recom_friends');
         $this->_iForYouThdRecomSbns = (int)getParam($sOptionPrefix . 'for_you_threshold_recom_subscriptions');
 
+        $this->_sEditorId = $this->getHtmlIds('post', 'textarea') . time();
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
         $this->_bEditorAutoAttach = getParam($sOptionPrefix . 'editor_auto_attach_insertion') == 'on';
         $this->_bEnableMediaPriority = getParam($sOptionPrefix . 'enable_media_priority') == 'on';
@@ -706,6 +718,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isEditorAutoAttach()
     {
     	return $this->_bEditorAutoAttach;
+    }
+
+    public function getEditorId()
+    {
+        return $this->_sEditorId;
     }
 
     public function isMediaPriority()

@@ -52,14 +52,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aCss = array();
         switch($sType) {
             case 'view':
-                $aCss = array(
+                $aCss = [
                     BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
                     'cmts.css',
                     'view.css',
                     'view-media-tablet.css',
                     'view-media-desktop.css',
                     'repost.css',
-                );
+                    'polls.css'
+                ];
 
                 if($this->_oConfig->isJumpTo()) {
                     list($aCssCalendar, $aJsCalendar) = BxBaseFormView::getCssJsCalendar();
@@ -68,7 +69,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 break;
 
             case 'post':
-                $aCss[] = 'post.css';
+                $aCss = [
+                    'post.css',
+                    'polls.css'
+                ];
                 break;
         }
 
@@ -93,6 +97,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'BxDolCmts.js',
                     'view.js',
                     'repost.js',
+                    'modules/base/general/js/|polls.js',
+                    'polls.js'
                 ));
 
                 if ($this->_oConfig->isJumpTo()) {
@@ -111,6 +117,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aJs = array_merge($aJs, array(
                     'jquery.form.min.js',
                     'post.js',
+                    'modules/base/general/js/|polls.js',
+                    'polls.js'
                 ));
                 break;
         }
@@ -147,7 +155,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return parent::getJsCode('view_filters', $aParams, $bWrap, $bDynamic);
     }
     
-    public function getJsCodePost($iOwnerId, $aParams = array(), $bWrap = true, $bDynamic = false)
+    public function getJsCodePost($iOwnerId, $aParams = [], $bWrap = true, $bDynamic = false)
     {
         $aGeneralParams = [];
         $aRequestParams = $aParams;
@@ -156,24 +164,34 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aRequestParams = $aParams['rparams'];
         }
 
-        return $this->getJsCode('post', array_merge(array(
+        return $this->getJsCode('post', array_merge([
             'bAutoAttach' => $this->_oConfig->isEditorAutoAttach(),
             'bMediaPriority' => $this->_oConfig->isMediaPriority(),
             'iLimitAttachLinks' => $this->_oConfig->getLimitAttachLinks(),
             'sLimitAttachLinksErr' => bx_js_string(_t('_bx_timeline_txt_err_attach_links')),
-            'oAttachedLinks' => $this->_oDb->getLinksBy(array(
+            'oAttachedLinks' => $this->_oDb->getLinksBy([
                 'type' => 'unused', 
                 'profile_id' => $this->getModule()->getUserId(), 
                 'short' => true
-            )),
+            ]),
             'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
-            'oRequestParams' => array_merge(array(
+            'oRequestParams' => array_merge([
                 'type' => isset($aRequestParams['type']) ? $aRequestParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
                 'owner_id' => $iOwnerId
-            ), $aRequestParams)
-        ), $aGeneralParams), $bWrap, $bDynamic);
+            ], $aRequestParams)
+        ], $aGeneralParams), $bWrap, $bDynamic);
     }
 
+    public function getJsCode($sType, $aParams = [], $bWrap = true, $bDynamic = false)
+    {
+        $aParams = array_merge([
+            'sEditorId' => $this->_oConfig->getEditorId(),
+        ], $aParams);
+        
+        return parent::getJsCode($sType, $aParams, $bWrap, $bDynamic);
+    }
+    
+    
     public function getPostBlock($iOwnerId, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -190,7 +208,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 ];
         }
 
-        if(bx_is_api()) {
+        if($this->_bIsApi) {
             $aType2Uri = [
                 '' => 'get_block_post_account',
                 'account' => 'get_block_post_account',
@@ -548,7 +566,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ), array(
             'wrap' => true,
             'mask_markers' => array('object' => $sJsObject)
-        )) . $this->getJsCode('repost');
+        )) . $this->getJsCode('repost') . $this->getJsCode('poll');
 
         /**
          * @hooks
@@ -2653,6 +2671,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 ];
             }
 
+        //--- Process Polls ---//
+        $aTmplVarsAttachmentsPolls = [];
+        if(!$bViewItem && !empty($aContent['polls_attach']) && is_array($aContent['polls_attach'])) {
+            $iProfile = bx_get_logged_profile_id();
+
+            $aPollsAttach = [];
+            foreach($aContent['polls_attach'] as $aPoll)
+                $aPollsAttach[] = [
+                    'style_prefix' => $sStylePrefix,
+                    'poll' => $this->getPollItem($aPoll, $iProfile)
+                ];
+
+            if(!empty($aPollsAttach)) {
+                $aTmplVarsAttachmentsPolls = [
+                    'style_prefix' => $sStylePrefix,
+                    'bx_repeat:polls' => $aPollsAttach
+                ];
+            }
+        }
+
         /*
          * View Item page and Snippet in Search Results should use Gallery layout.
          */
@@ -2661,7 +2699,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sAttachmentsLayout = BX_TIMELINE_ML_GALLERY;
 
         $iAttachmentsTotal = 0;
-        $aTmplVarsImages = $aTmplVarsVideos = $aTmplVarsFiles = $aTmplVarsAttachments = $aTmplVarsAttachmentsFiles = array();
+        $aTmplVarsImages = $aTmplVarsVideos = $aTmplVarsFiles = $aTmplVarsAttachments = $aTmplVarsAttachmentsFiles = [];
 
         //--- Process Photos ---//
         $bImages = !empty($aContent['images']) && is_array($aContent['images']);
@@ -2822,7 +2860,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'bx_if:show_attachments_files' => [
                 'condition' => !empty($aTmplVarsAttachmentsFiles),
                 'content' => $aTmplVarsAttachmentsFiles
-            ]
+            ],
+            'bx_if:show_attachments_polls' => [
+                'condition' => !empty($aTmplVarsAttachmentsPolls),
+                'content' => $aTmplVarsAttachmentsPolls
+            ],
         ];
     }
 
@@ -3342,6 +3384,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aResult['content']['images_attach'] = $oModule->getEventImages($aEvent['id']);
                 $aResult['content']['videos_attach'] = $oModule->getEventVideos($aEvent['id']);
                 $aResult['content']['files_attach'] = $oModule->getEventFiles($aEvent['id']);
+                $aResult['content']['polls_attach'] = $oModule->getEventPolls($aEvent['id']);
+
                 if($this->_bIsApi) {
                     $aResult['content']['videos_attach'] = array_values($aResult['content']['videos_attach']);
                     $aResult['content']['files_attach'] = array_values($aResult['content']['files_attach']);
