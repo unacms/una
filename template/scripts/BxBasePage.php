@@ -683,16 +683,16 @@ class BxBasePage extends BxDolPage
                 if(strcmp($_sSample, $sSample) == 0)
                     $sSample = _t('_Context');
 
-                
-                
                 $a['context'] = [
                     'list' => $aContexts,
-                    'current' => $aCurrent,
-                    'create' => [
+                    'current' => $aCurrent
+                ];
+
+                if(bx_srv($sContextSwitcher, 'check_allowed', ['add']) === CHECK_ACTION_RESULT_ALLOWED)
+                    $a['context']['create'] = [
                         'title' => _t('_api_create_context', $sSample),
                         'url' => bx_api_get_relative_url(bx_srv($sContextSwitcher, 'get_link_add'))
-                    ]
-                ];
+                    ];
             }
         }
 
