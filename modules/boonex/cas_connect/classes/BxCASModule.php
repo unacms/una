@@ -33,6 +33,10 @@ class BxCASModule extends BxBaseModConnectModule
             $this->_oTemplate->getPage(_t('_bx_cas'), $sCode);            
         } 
 	    else {
+            // add referrer to the session to redirect after login
+            if(isset($_SERVER['HTTP_REFERER']) && mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT) === 0)
+                BxDolSession::getInstance()->setValue($this->_oConfig->getName() . '_relocate', $_SERVER['HTTP_REFERER']);
+
             require_once(getParam('bx_cas_path_simplesamlphp') . '/lib/_autoload.php');
 
             $as = new \SimpleSAML\Auth\Simple('default-sp');
