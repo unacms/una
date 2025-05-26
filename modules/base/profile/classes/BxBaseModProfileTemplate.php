@@ -399,7 +399,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                    'content_id' => $aData[$CNF['FIELD_ID']],
                    'is_allow_edit' => $bIsAllowEditCover,
                    'image_type' => 'cover',
-                   'image_url' => $aData[$CNF['FIELD_COVER']] ? $sUrlCover : '',
+                   'image_url' => $CNF['FIELD_COVER'] && $aData[$CNF['FIELD_COVER']] ? $sUrlCover : '',
                    'uploader' => $CNF['OBJECT_UPLOADERS_COVER'][0],
                    'storage' => $CNF['OBJECT_STORAGE_COVER'],
                    'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER'],
@@ -472,7 +472,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                    'content_id' => $aData[$CNF['FIELD_ID']],
                    'is_allow_edit' => $bIsAllowEditPicture,
                    'image_type' => 'avatar',
-                   'image_url' =>  $aData[$CNF['FIELD_PICTURE']] ? $sUrlPicture : '',
+                   'image_url' => $CNF['FIELD_PICTURE'] && $aData[$CNF['FIELD_PICTURE']] ? $sUrlPicture : '',
                    'uploader' => $CNF['OBJECT_UPLOADERS_PICTURE'][0],
                    'storage' => $CNF['OBJECT_STORAGE'],
                    'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR_BIG'],
@@ -519,10 +519,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'unique_id' => $sUniqIdPicture,
                 'picture_tweak' => $sPictureTweak, 
                 'cover_settins' => isset($CNF['FIELD_PICTURE_POSITION']) ? $this->_getImageSettings($aData[$CNF['FIELD_PICTURE_POSITION']]) : '',
-                'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
+                'picture_href' => (!$CNF['FIELD_PICTURE'] || !$aData[$CNF['FIELD_PICTURE']]) && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
             );
 
-            if($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
+            if($bProfileViewAllowed && $CNF['FIELD_PICTURE'] && $aData[$CNF['FIELD_PICTURE']]) {
                 $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', [
                     'image_url' => $sUrlPicture,
                 ]), true, true);
@@ -743,7 +743,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     function _image ($sField, $sTranscodeObject, $sNoImage, $aData, $bSubstituteNoImage = true)
     {
         $sImageUrl = false;
-        if ($aData[$sField]) {
+        if (isset($aData[$sField]) && $aData[$sField]) {
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscodeObject);
             if ($oImagesTranscoder)
                 $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$sField]);
