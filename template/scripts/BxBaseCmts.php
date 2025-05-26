@@ -1439,6 +1439,8 @@ class BxBaseCmts extends BxDolCmts
                 if($this->isAttachImageEnabled())
                     $oForm->processImages($this, 'cmt_image', $iCmtUniqId, $iCmtId, $iCmtAuthorId, false);
 
+                $this->_triggerComment();
+
                 $this->isEditAllowed($aCmt, true);
 
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
