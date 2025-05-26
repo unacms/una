@@ -662,7 +662,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_events_administration', 'actions', '', '20%', 0, '', '', 7),
 
 ('bx_events_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_events_common', 'switcher', '_bx_groups_grid_column_title_adm_active', '8%', 0, '', '', 2),
+('bx_events_common', 'switcher', '_bx_events_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_events_common', 'name', '_bx_events_grid_column_title_adm_name', '40%', 0, '', '', 3),
 ('bx_events_common', 'added_ts', '_bx_events_grid_column_title_adm_added', '30%', 1, '25', '', 4),
 ('bx_events_common', 'actions', '', '20%', 0, '', '', 5);
