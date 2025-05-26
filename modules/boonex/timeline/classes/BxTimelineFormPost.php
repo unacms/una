@@ -495,16 +495,23 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
         $iGroupId = !empty($aValues[$sField]) ? $aValues[$sField] : 0;
 
-        if(!isset($this->aInputs[$sField]['content']))
-            $this->aInputs[$sField]['content'] = '';
+        if(!$this->_bIsApi) {
+            if(!isset($this->aInputs[$sField]['content']))
+                $this->aInputs[$sField]['content'] = '';
 
-        $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacyObject, $iProfileId, array(
-            'content_id' => $iContentId,
-            'group_id' => $iGroupId,
-            'html_ids' => array(
-                'form' => $this->getId()
-            )
-        ));
+            $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacyObject, $iProfileId, array(
+                'content_id' => $iContentId,
+                'group_id' => $iGroupId,
+                'html_ids' => array(
+                    'form' => $this->getId()
+                )
+            ));
+        }
+        else 
+            $this->aInputs[$sField]['subvalue'] = $oPrivacy->initGroupChooserAPI($sPrivacyObject, $iProfileId, [
+                'content_id' => $iContentId,
+                'group_id' => $iGroupId,
+            ]);
     }
 
     protected function _getGhostTmplVars($sName, $aContentInfo = [])
