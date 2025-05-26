@@ -3536,7 +3536,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_con_friend_requested"><![CDATA[Sent Friend Requests]]></string>
     <string name="_sys_menu_item_title_con_following"><![CDATA[Following]]></string>
     <string name="_sys_menu_item_title_con_followers"><![CDATA[Followers]]></string>
-    <string name="_sys_menu_item_title_recom_friends"><![CDATA[Friend Suggestions]]></string>
+    <string name="_sys_menu_item_title_recom_friends"><![CDATA[Suggestions]]></string>
     <string name="_sys_menu_item_title_recom_subscriptions"><![CDATA[Who to follow]]></string>    
     <string name="_sys_metatags_mention_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> mentioned <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_sys_mobile_friends"><![CDATA[Friends]]></string>

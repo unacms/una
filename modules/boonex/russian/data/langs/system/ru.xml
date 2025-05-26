@@ -3497,7 +3497,7 @@
     <string name="_sys_menu_item_title_con_friend_requested"><![CDATA[Запрошенная дружба]]></string>
     <string name="_sys_menu_item_title_con_following"><![CDATA[Подписан на]]></string>
     <string name="_sys_menu_item_title_con_followers"><![CDATA[Подписчики]]></string>
-    <string name="_sys_menu_item_title_recom_friends"><![CDATA[Предложения друзей]]></string>
+    <string name="_sys_menu_item_title_recom_friends"><![CDATA[Предложения]]></string>
     <string name="_sys_menu_item_title_recom_subscriptions"><![CDATA[На кого подписаться]]></string>
     <string name="_sys_metatags_mention_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> упомянул <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_sys_mobile_friends"><![CDATA[Друзья]]></string>
