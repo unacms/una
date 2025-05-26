@@ -89,11 +89,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
             $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateFile, $this->_getFileGhostTmplVars($aContentInfo));
         }
-
-        if (isset($CNF['FIELD_POLL']) && isset($this->aInputs[$CNF['FIELD_POLL']])) {
-            if ($bValues)
-                $this->aInputs[$CNF['FIELD_POLL']]['content_id'] = $aValues['id'];
-        }
         
         parent::initChecker ($aValues, $aSpecificValues);
 

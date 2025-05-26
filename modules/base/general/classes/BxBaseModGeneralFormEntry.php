@@ -400,6 +400,11 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getPhotoGhostTmplVars($aContentInfo));
         }
 
+        if (isset($CNF['FIELD_POLL']) && isset($this->aInputs[$CNF['FIELD_POLL']])) {
+            if ($bValues)
+                $this->aInputs[$CNF['FIELD_POLL']]['content_id'] = $aValues['id'];
+        }
+
         if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']]) && !empty($CNF['OBJECT_METATAGS']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->keywordsIsEnabled() && !empty($aValues['id'])) {
             $this->aInputs[$CNF['FIELD_LABELS']]['content_id'] = $aValues['id'];
             if(($aLabels = $oMetatags->keywordsGet($aValues['id'])))
