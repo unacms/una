@@ -133,4 +133,6 @@ bx_check_maintenance_mode_soft();
 $o = new BxDolAlerts('system', 'begin', 0);
 $o->alert();
 
+check_logged();
+
 /** @} */
