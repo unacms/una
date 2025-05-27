@@ -1143,6 +1143,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $sJsName = $sJsCode = '';
         foreach ($aUploaders as $sUploaderObject) {
             $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorage, $sUniqId, $this);
+            if (!$oUploader)
+                continue;
             $sGhostTemplate = '{file_id}';
 
             $sJsCode .= $oUploader->getUploaderJs($sGhostTemplate, $bAllowMultiple, array_merge($oUploader->getUploaderJsParams(), [
@@ -1163,10 +1165,10 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'unique_id' => $sUniqId,
             'id' => $aData['id'],
             'allow_tweak' => $bAllowTweak,
-            'image_exists' => $aData[$sField] == 0 ? 'bx-image-edit-buttons-no-image' : '',
+            'image_exists' => !$sField || $aData[$sField] == 0 ? 'bx-image-edit-buttons-no-image' : '',
             'field' => $sField,
             'action_url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri(),
-            'uploader' => $oUploader->getUploaderButton([
+            'uploader' => !$oUploader ? '' : $oUploader->getUploaderButton([
                 'content_id' => $aData['id'],
                 'storage_private' => '0',
                 'btn_class' => '',
