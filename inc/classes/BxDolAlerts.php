@@ -146,13 +146,15 @@ class BxDolAlerts extends BxDol
 
         // call automators
         $oAi = BxDolAI::getInstance();
-
-        $aAutomators = $oAi->getAutomatorsEvent($this->sUnit, $this->sAction);
-        foreach($aAutomators as $aAutomator)
-            $oAi->callAutomator(BX_DOL_AI_AUTOMATOR_EVENT, [
-                'automator' => $aAutomator,
-                'alert' => $this
-            ]);
+        if ($oAi) {
+            $aAutomators = $oAi->getAutomatorsEvent($this->sUnit, $this->sAction);
+            foreach($aAutomators as $aAutomator) {
+                $oAi->callAutomator(BX_DOL_AI_AUTOMATOR_EVENT, [
+                    'automator' => $aAutomator,
+                    'alert' => $this
+                ]);
+            }
+        }
     }
 
     /**

@@ -63,8 +63,9 @@ class BxDolAI extends BxDolFactory implements iBxDolSingleton
      */
     public static function getInstance()
     {
-        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
-            $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolAI();
+        if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
+            $GLOBALS['bxDolClasses'][__CLASS__] = BxDolDb::getInstance()->isTableExists('sys_agents_automators') ? new BxDolAI() : null;
+        }
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
