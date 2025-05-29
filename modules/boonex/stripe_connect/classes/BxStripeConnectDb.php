@@ -11,70 +11,101 @@
 
 class BxStripeConnectDb extends BxBaseModConnectDb
 {
-    function __construct(&$oConfig)
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
     }
 
-	public function getAccount($aParams = array())
+    public function getAccount($aParams = [])
     {
     	$CNF = &$this->_oConfig->CNF;
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
 
     	$sJoinClause = $sWhereClause = "";
-        switch($aParams['type']) {
+        switch($aParams['sample']) {
             case 'id':
             	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = array(
-                	'id' => $aParams['id']
-                );
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
 
                 $sWhereClause = " AND `te`.`id`=:id";
                 break;
 
-			case 'author':
-				$aMethod['name'] = 'getRow';
-				$aMethod['params'][1] = array(
-                	'author' => $aParams['author']
-                );
+            case 'profile_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'profile_id' => $aParams['profile_id']
+                ];
 
-				$sWhereClause = " AND `te`.`author`=:author";
-				break;
+                $sWhereClause = " AND `te`.`profile_id`=:profile_id";
+                break;
+            
+            case 'account_id':
+                $aMethod['name'] = 'getRow';
+                
+                if(!empty($aParams['live_account_id'])) {
+                    $aMethod['params'][1] = [
+                        'live_account_id' => $aParams['live_account_id']
+                    ];
+
+                    $sWhereClause = " AND `te`.`live_account_id`=:live_account_id";
+                }
+
+                if(!empty($aParams['test_account_id'])) {
+                    $aMethod['params'][1] = [
+                        'test_account_id' => $aParams['test_account_id']
+                    ];
+
+                    $sWhereClause = " AND `te`.`test_account_id`=:test_account_id";
+                }
+                break;
         }
 
-        $aMethod['params'][0] = "SELECT
-        		`te`.*
-            FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
+        $aMethod['params'][0] = "SELECT `te`.*
+            FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
             WHERE 1" . $sWhereClause;
 
-        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
 
-	public function insertAccount($aSet)
+    public function insertAccount($aSet)
     {
-        $sQuery = "REPLACE INTO `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet);
-        return (int)$this->query($sQuery) > 0;
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($aSet[$CNF['FIELD_ADDED']]))
+            $aSet[$CNF['FIELD_ADDED']] = time();
+
+        if(!isset($aSet[$CNF['FIELD_CHANGED']]))
+            $aSet[$CNF['FIELD_CHANGED']] = time();
+
+        return (int)$this->query("REPLACE INTO `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet)) > 0;
     }
 
-	public function updateAccount($aSet, $aWhere)
+    public function updateAccount($aSet, $aWhere)
     {
-        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1");
-        return (int)$this->query($sQuery) > 0;
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($aSet[$CNF['FIELD_CHANGED']]))
+            $aSet[$CNF['FIELD_CHANGED']] = time();
+
+        return (int)$this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
     }
 
-	public function deleteAccount($aWhere)
+    public function deleteAccount($aWhere)
     {
     	if(empty($aWhere))
-    		return false;
+            return false;
 
         return $this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ')) !== false;
     }
 
-    public function hasAccount($iAuthor)
+    public function hasAccount($iProfileId, $sMode)
     {
-        return (int)$this->getOne("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `author` = :author LIMIT 1", array(
-    		'author' => $iAuthor,
-    	)) > 0;
+        return (int)$this->getOne("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `profile_id` = :profile_id AND `" . $sMode . "_account_id` <> '' LIMIT 1", [
+            'profile_id' => $iProfileId,
+    	]) > 0;
     }
 }
 

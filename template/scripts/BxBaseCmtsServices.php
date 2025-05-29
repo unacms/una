@@ -442,9 +442,21 @@ class BxBaseCmtsServices extends BxDol
         $sCmtUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->serviceGetLink($iCmtId));
         $sCmtCaption = strmaxtextlen($oCmts->serviceGetText($iCmtId), 20, '...');
 
+        //TODO: Add setting in API app and use the same for another comments' related notifications.
+        $sCmtUrlApi = '';
+        if(bx_is_api()) {
+            $aCmt = $oCmts->getCommentsBy(['type' => 'uniq_id', 'uniq_id' => $iCmtIdUnique]);
+            if(!empty($aCmt) && is_array($aCmt)) {
+                $oCmts->init($aCmt['cmt_object_id']);
+
+                $sCmtUrlApi = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->getBaseUrl() . '#cid=' . $iCmtId);
+            }
+        }
+
         return array(
             'entry_sample' => $oCmts->getLanguageKey('txt_sample_single'),
             'entry_url' => $sCmtUrl,
+            'entry_url_api' => $sCmtUrlApi,
             'entry_caption' => $sCmtCaption,
             'entry_author' => $aCmtInfo['author_id'],
             'subentry_sample' => $oCmts->getLanguageKey('txt_sample_vote_single'),

@@ -2,17 +2,18 @@ SET @sName = 'bx_stripe_connect';
 
 
 -- TABLES
-CREATE TABLE `bx_stripe_connect_accounts` (
+CREATE TABLE IF NOT EXISTS `bx_stripe_connect_accounts` (
   `id` int(11) NOT NULL auto_increment,
-  `author` int(11) NOT NULL default '0',
   `added` int(11) NOT NULL default '0',
-  `user_id` varchar(64) NOT NULL default '',
-  `public_key` varchar(128) NOT NULL default '',
-  `access_token` varchar(128) NOT NULL default '',
-  `refresh_token` varchar(128) NOT NULL default '',
+  `changed` int(11) NOT NULL default '0',
+  `profile_id` int(11) NOT NULL default '0',
+  `live_account_id` varchar(64) NOT NULL default '',
+  `live_details` tinyint(4) NOT NULL default '0',
+  `test_account_id` varchar(64) NOT NULL default '',
+  `test_details` tinyint(4) NOT NULL default '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `author` (`author`),
-  UNIQUE KEY `user_id` (`user_id`)
+  UNIQUE KEY `profile_id` (`profile_id`),
+  UNIQUE KEY `live_account_id` (`live_account_id`)
 );
 
 -- Logs Objects

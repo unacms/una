@@ -11,8 +11,8 @@
 
 class BxStripeConnectGridAccounts extends BxTemplGrid
 {
-	protected $_sModule;
-	protected $_oModule;
+    protected $_sModule;
+    protected $_oModule;
 	
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -22,17 +22,42 @@ class BxStripeConnectGridAccounts extends BxTemplGrid
         parent::__construct ($aOptions, $oTemplate);
     }
 
-	protected function _isVisibleGrid ($a)
+    protected function _isVisibleGrid ($a)
     {
         return isAdmin();
     }
 
-	protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellProfileId($mixedValue, $sKey, $aField, $aRow)
     {
     	return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
     }
 
-	protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellLiveDetails($mixedValue, $sKey, $aField, $aRow)
+    {
+        return $this->__getCellDetails($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellTestDetails($mixedValue, $sKey, $aField, $aRow)
+    {
+        return $this->__getCellDetails($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function __getCellDetails($mixedValue, $sKey, $aField, $aRow)
+    {
+    	return parent::_getCellDefault(_t((int)$mixedValue != 0 ? '_Yes' : '_No'), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
+    {
+    	return $this->__getCellDate($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellChanged($mixedValue, $sKey, $aField, $aRow)
+    {
+    	return $this->__getCellDate($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function __getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
     	return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }

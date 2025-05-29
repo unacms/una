@@ -9,79 +9,68 @@
  * @{
  */
 
-class BxStripeConnectTemplate extends BxBaseModConnectTemplate
+require_once('BxStripeConnectApi.php');
+
+class BxStripeConnectTemplate extends BxBaseModGeneralTemplate
 {
-    function __construct($oConfig, $oDb)
+    public function __construct($oConfig, $oDb)
     {
     	$this->MODULE = 'bx_stripe_connect';
 
         parent::__construct($oConfig, $oDb);
     }
 
-    public function displayBlockConnect()
+    public function getConnectCode($iVendorId, $aParams = [])
     {
-    	$CNF = $this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
-    	$sApiId = $this->_oConfig->getApiId();
-    	if(empty($sApiId))
-    		return '';
+        $sJsObject = $this->_oConfig->getJsObject('main');        
+ 
+        $sModeUc = strtoupper($this->_oConfig->getMode());
+        $sAccIdField = $CNF['FIELD_' . $sModeUc . '_ACCOUNT_ID'];
+        $sAccDetailsField = $CNF['FIELD_' . $sModeUc . '_DETAILS'];
+ 
+        $bShowContinue = false;
+        $sActionMethod = $sActionTitle = '';
+        if(($aAccount = $this->_oDb->getAccount(['sample' => 'profile_id', 'profile_id' => $iVendorId])) && is_array($aAccount) && $aAccount[$sAccIdField] != '') {
+            if(($bShowContinue = (int)$aAccount[$sAccDetailsField] == 0)) {
+                $oAccount = BxStripeConnectApi::getInstance()->retrieveAccount($aAccount[$sAccIdField]);
+                if($oAccount->details_submitted) {
+                    $this->_oDb->updateAccount([$sAccDetailsField => 1], [$CNF['FIELD_ID'] => $aAccount[$CNF['FIELD_ID']]]);
 
-		$iVendor = bx_get_logged_profile_id();
-		$aVendorAccount = $this->_oDb->getAccount(array('type' => 'author', 'author' => $iVendor));
-		if(!empty($aVendorAccount) && is_array($aVendorAccount))
-			return $this->displayBlockAccount($aVendorAccount);
+                    $bShowContinue = false;
+                }
+            }
 
-		$aVendor = BxDolModule::getInstance($this->MODULE)->getProfileInfo($iVendor);
-    	$bVendorStripe = BxDolPayments::getInstance()->isPaymentProvider($iVendor, $CNF['STRIPE']);
+            $sActionMethod = 'accountDelete';
+            $sActionTitle = '_bx_stripe_connect_btn_account_delete';
+        }
+        else {
+            $sActionMethod = 'accountCreate';
+            $sActionTitle = '_bx_stripe_connect_btn_account_create';
+        }
 
-    	$aRequestParams = array(
-			'response_type' => 'code',
-			'client_id' => $sApiId,
-			'scope' => $this->_oDb->getParam($CNF['PARAM_API_SCOPE']),
-			'redirect_uri' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . $CNF['URI_REDIRECT'],
-			'stripe_landing' => $bVendorStripe ? 'login' : 'register'
-		);
-
-		if(!$bVendorStripe)
-			$aRequestParams = array_merge($aRequestParams, array(
-				'stripe_user[email]' => $aVendor['email'],
-				'stripe_user[url]' => urlencode($aVendor['link']),
-				'stripe_user[first_name]' => $aVendor['name']
-			));
-
-    	$this->addCss(array('main.css'));
-    	return $this->parseHtmlByName('block_connect.html', array(
-    		'link' => bx_append_url_params($CNF['URL_API_AUTHORIZE'], $aRequestParams, false)
-    	));
-    }
-    
-    public function displayBlockAccount($aAccount)
-    {
-    	$CNF = $this->_oConfig->CNF;
-
-    	$sApiId = $this->_oConfig->getApiId();
-    	if(empty($sApiId))
-    		return '';
-
-		$this->addCss(array('main.css'));
-		$this->addJs(array('main.js'));
-    	$this->addJsTranslation(array('_bx_stripe_connect_wrn_disconnect'));
-    	return $this->parseHtmlByName('block_account.html', array(
-    		'js_object' => $this->_oConfig->getJsObject('main'),
-    		'id' => $aAccount['id'],
-    		'user_id' => $aAccount['user_id'],
-    	    'public_key' => $aAccount['public_key'],
-    		'access_token' => $aAccount['access_token'],
-	    	'added' => bx_time_js($aAccount['added']),
-    	    'keys_usage' => _t('_bx_stripe_connect_txt_keys_usage', BxDolPayments::getInstance()->getDetailsUrl()),
-    		'js_code' => $this->getJsCode('main')
-    	));
+        $this->addJs(['main.js']);
+        return $this->parseHtmlByName('connect_code.html', [
+            'js_object' => $sJsObject,
+            'js_code' => $this->getJsCode('main'),
+            'profile_id' => $iVendorId,
+            'action_method' => $sActionMethod,
+            'action_title' => _t($sActionTitle),
+            'bx_if:show_continue' => [
+                'condition' => $bShowContinue,
+                'content' => [
+                    'js_object' => $sJsObject,
+                    'profile_id' => $iVendorId,
+                ]
+            ]
+        ]);
     }
 
-	public function displayProfileLink($mixedProfile)
+    public function displayProfileLink($mixedProfile)
     {
     	if(!is_array($mixedProfile))
-    		$mixedProfile = BxDolModule::getInstance($this->MODULE)->getProfileInfo((int)$mixedProfile);
+            $mixedProfile = BxDolModule::getInstance($this->MODULE)->getProfileInfo((int)$mixedProfile);
 
     	return $this->parseHtmlByName('link.html', array(
             'href' => $mixedProfile['link'],
@@ -89,6 +78,7 @@ class BxStripeConnectTemplate extends BxBaseModConnectTemplate
             'content' => $mixedProfile['name']
         ));
     }
+
 }
 
 /** @} */

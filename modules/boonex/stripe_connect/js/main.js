@@ -1,5 +1,5 @@
 function BxStripeConnectMain(oOptions) {
-	this._sActionsUri = oOptions.sActionUri;
+    this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oStripeConnectMain' : oOptions.sObjName;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
@@ -7,28 +7,70 @@ function BxStripeConnectMain(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
 }
 
-BxStripeConnectMain.prototype.disconnect = function(iId, oLink) {
-	var $this = this;
-	var oDate = new Date();
+BxStripeConnectMain.prototype.accountCreate = function(iId, oLink) {
+    var $this = this;
+    var oDate = new Date();
 
-	bx_confirm(_t('_bx_stripe_connect_wrn_disconnect'), function() {
-		$this.loadingInButton(oLink, true);
+    this.loadingInButton(oLink, true);
 
-	    $.get(
-	        this._sActionsUrl + 'delete/',
-	        {
-	        	id: iId,
-	        	_t: oDate.getTime()
-	        },
-	        function(oData) {
-	        	if(parseInt(oData.code) != 0)
-	        		$this.loadingInButton(oLink, false);
+    $.get(
+        this._sActionsUrl + 'account_create/',
+        {
+            id: iId,
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            if(parseInt(oData.code) != 0)
+                $this.loadingInButton(oLink, false);
 
-	        	processJsonData(oData);
-	        },
-	        'json'
-	    );
-	});    
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
+BxStripeConnectMain.prototype.accountContinue = function(iId, oLink) {
+    var $this = this;
+    var oDate = new Date();
+
+    this.loadingInButton(oLink, true);
+
+    $.get(
+        this._sActionsUrl + 'account_continue/',
+        {
+            id: iId,
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            if(parseInt(oData.code) != 0)
+                $this.loadingInButton(oLink, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
+BxStripeConnectMain.prototype.accountDelete = function(iId, oLink) {
+    var $this = this;
+    var oDate = new Date();
+
+    this.loadingInButton(oLink, true);
+
+    $.get(
+        this._sActionsUrl + 'account_delete/',
+        {
+            id: iId,
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            if(parseInt(oData.code) != 0)
+                $this.loadingInButton(oLink, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
 };
 
 BxStripeConnectMain.prototype.loadingInButton = function(e, bShow) {
