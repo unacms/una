@@ -11,8 +11,10 @@
 
 require_once('BxPaymentProviderStripeBasic.php');
 
-class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements iBxBaseModPaymentProvider
+class BxPaymentProviderStripeConnect extends BxPaymentProviderStripeBasic implements iBxBaseModPaymentProvider
 {
+    protected $_sModuleSc;
+
     protected $_oStripe;
 
     protected $_iAmountPrecision;
@@ -25,9 +27,43 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'stripe_v3.js'
         );
 
+        $this->_sModuleSc = 'bx_stripe_connect';
+                
         $this->_oStripe = null;
 
         $this->_iAmountPrecision = 2;
+    }
+
+    public function getMode($iVendorId, $aParams = [])
+    {
+        if(($sMethod = 'get_option_value_mode') && bx_is_srv($this->_sModuleSc, $sMethod))
+            return bx_srv($this->_sModuleSc, $sMethod, [$iVendorId, $aParams]);
+        else
+            return _t('_undefined');
+    }
+
+    public function getConnect($iVendorId, $aParams = [])
+    {
+        if(($sMethod = 'get_connect_code') && bx_is_srv($this->_sModuleSc, $sMethod))
+            return bx_srv($this->_sModuleSc, $sMethod, [$iVendorId, $aParams]);
+        else
+            return _t('_undefined');
+    }
+
+    public function getLiveAccountId($iVendorId, $aParams = [])
+    {
+        if(($sMethod = 'get_option_value_live_account_id') && bx_is_srv($this->_sModuleSc, $sMethod) && ($sAccountId = bx_srv($this->_sModuleSc, $sMethod, [$iVendorId, $aParams])))
+            return $sAccountId;
+        else
+            return _t('_undefined');
+    }
+
+    public function getTestAccountId($iVendorId, $aParams = [])
+    {
+        if(($sMethod = 'get_option_value_test_account_id') && bx_is_srv($this->_sModuleSc, $sMethod) && ($sAccountId = bx_srv($this->_sModuleSc, $sMethod, [$iVendorId, $aParams])))
+            return $sAccountId;
+        else
+            return _t('_undefined');
     }
 
     public function actionGetSessionRecurring()
@@ -1078,7 +1114,6 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             $sClientEmail = $oClient->getAccountObject()->getEmail();
 
         $sPublicKey = '';
-        $sConnectedAccountId = '';
         
         /**
          * @hooks
@@ -1093,11 +1128,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
          * @hook @ref hook-bx_payment-stripe_v3_get_button
          */
     	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, [
-            'client_id' => $iClientId,
-            'vendor_id' => $iVendorId,
             'type' => &$sType, 
-            'public_key' => &$sPublicKey,
-            'connected_account_id' => &$sConnectedAccountId
+            'public_key' => &$sPublicKey
         ]);
 
         $sJsMethod = '';
@@ -1112,16 +1144,15 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 break;
         }
 
-        return [$this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge([
+        return array($this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
             'js_object' => $sJsObject,
             'sProvider' => $this->_sName,
             'sPublicKey' => !empty($sPublicKey) ? $sPublicKey : $this->_getPublicKey(),
-            'sConnectedAccountId' => $sConnectedAccountId,
             'sVendorName' => '',
             'sVendorCurrency' => '',
             'sVendorIcon' => '',
             'sClientEmail' => $sClientEmail,
-        ], $aParams)), $sJsMethod];
+        ), $aParams)), $sJsMethod);
     }
 
     protected function _getVerificationCodeSession($iVendorId, $iCustomerId, $fAmount, $sCurrency)

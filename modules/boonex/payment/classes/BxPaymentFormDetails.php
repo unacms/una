@@ -134,6 +134,12 @@ class BxPaymentFormDetails extends BxTemplFormView
                        if(method_exists($oProvider, $sMethod))
                             $this->aInputs[$aInput['name']]['value'] = $oProvider->$sMethod($this->_iProfileId);
                        break;
+
+                case 'custom':
+                    $sMethod = 'get' . bx_gen_method_name(str_replace($aInput['provider_option_prefix'], '', $aInput['name']));
+                    if(method_exists($oProvider, $sMethod))
+                         $this->aInputs[$aInput['name']]['content'] = $oProvider->$sMethod($this->_iProfileId);
+                    break;
             }
 
             if(!empty($aAddon) && is_array($aAddon))
