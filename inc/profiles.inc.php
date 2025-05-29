@@ -441,6 +441,4 @@ function bx_login_form($bStudio = false, $bAjaxMode = false, $sForceRelocate = '
     exit;
 }
 
-check_logged();
-
 /** @} */
