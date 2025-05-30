@@ -21,6 +21,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stripe_connect_fee_single', '', @iCategId, '_bx_stripe_connect_option_fee_single', 'digit', '', '', 70, ''),
 ('bx_stripe_connect_fee_recurring', '', @iCategId, '_bx_stripe_connect_option_fee_recurring', 'digit', '', '', 80, '');
 
+
 -- GRIDS: Manage
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_stripe_connect_accounts', 'Sql', 'SELECT * FROM `bx_stripe_connect_accounts`', 'bx_stripe_connect_accounts', 'id', '', '', 20, NULL, 'start', '', 'live_account_id,test_account_id', 'auto', 'live_account_id,test_account_id', 128, 'BxStripeConnectGridAccounts', 'modules/boonex/stripe_connect/classes/BxStripeConnectGridAccounts.php');
@@ -48,14 +49,5 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_payment', 'stripe_v3_get_button', @iHandler),
-('bx_payment', 'stripe_v3_create_session', @iHandler);
-
--- INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
--- ('bx_payment', 'stripe_get_button', @iHandler),
--- ('bx_payment', 'stripe_create_customer', @iHandler),
--- ('bx_payment', 'stripe_retrieve_customer', @iHandler),
--- ('bx_payment', 'stripe_create_charge', @iHandler),
--- ('bx_payment', 'stripe_retrieve_charge', @iHandler),
--- ('bx_payment', 'stripe_create_subscription', @iHandler);
-
-
+('bx_payment', 'stripe_v3_create_session', @iHandler),
+('bx_payment', 'stripe_v3_retrieve_customer', @iHandler);

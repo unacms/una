@@ -74,13 +74,13 @@ BxStripeConnectMain.prototype.accountDelete = function(iId, oLink) {
 };
 
 BxStripeConnectMain.prototype.loadingInButton = function(e, bShow) {
-	if($(e).length)
-		bx_loading_btn($(e), bShow);
-	else
-		bx_loading($('body'), bShow);	
+    if($(e).length)
+        bx_loading_btn($(e), bShow);
+    else
+        bx_loading($('body'), bShow);
 };
 
 BxStripeConnectMain.prototype.loadingInBlock = function(e, bShow) {
-	var oParent = $(e).length ? $(e).parents('.bx-db-container:first') : $('body'); 
-	bx_loading(oParent, bShow);
+    var oParent = $(e).length ? $(e).parents('.bx-db-container:first') : $('body'); 
+    bx_loading(oParent, bShow);
 };

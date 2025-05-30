@@ -273,20 +273,26 @@ class BxStripeConnectModule extends BxBaseModConnectModule
                     foreach($aParams['session_params']['line_items'] as $aLineItem)
                         $fAmount += (float)$aLineItem['price_data']['unit_amount'] * (int)$aLineItem['quantity'];
 
-                    $aParams['session_params']['payment_intent_data'] = [
-                        'application_fee_amount' => $this->_oConfig->getFee(BX_PAYMENT_TYPE_SINGLE, $fAmount)
-                    ];
+                    if($fAmount && ($fAmount = $this->_oConfig->getFee(BX_PAYMENT_TYPE_SINGLE, $fAmount))) {
+                        if(!isset($aParams['session_params']['payment_intent_data']))
+                            $aParams['session_params']['payment_intent_data'] = [];
+
+                        $aParams['session_params']['payment_intent_data']['application_fee_amount'] = $fAmount;
+                    }
                     break;
 
-                //TODO: Need to complete create Subscription flow.
                 case 'subscription':
                     $fAmount = 0;
                     foreach($aParams['session_params']['line_items'] as $aLineItem)
-                        $fAmount += (float)$aLineItem['price'] * (int)$aLineItem['quantity'];
+                        $fAmount += (float)$aLineItem['price_data']['unit_amount'] * (int)$aLineItem['quantity'];
 
-                    $aParams['session_params']['payment_intent_data'] = [
-                        'application_fee_amount' => $this->_oConfig->getFee(BX_PAYMENT_TYPE_SINGLE, $fAmount)
-                    ];
+                    if($fAmount && ($fAmount = $this->_oConfig->getFee(BX_PAYMENT_TYPE_RECURRING, $fAmount))) {
+                        if(!isset($aParams['session_params']['subscription_data']))
+                            $aParams['session_params']['subscription_data'] = [];
+
+                        $aParams['session_params']['subscription_data']['application_fee_percent'] = $fAmount;
+                    }
+
                     break;
             }
 
@@ -306,44 +312,12 @@ class BxStripeConnectModule extends BxBaseModConnectModule
     /**
      * Methods related to old Stripe integration (which starts with 'processAlertStripe') are outdated.
      */
-    public function processAlertStripeCreateCustomer($iObject, $iSender, $aParams)
-    {
-        if(empty($aParams['type']) || empty($aParams['customer_params']['card']))
-            return false;
-
-        $sPayMode = $this->_oConfig->getPayMode($aParams['type']);
-
-        try {
-            switch($sPayMode) {
-                case BX_STRIPE_CONNECT_PMODE_DIRECT:
-                    /*
-                     * Do nothing in this case because a Customer 
-                     * should be created in Connected Stripe account.
-                     */
-                    break;
-
-                case BX_STRIPE_CONNECT_PMODE_PLATFORM:
-                    \Stripe\Stripe::setApiKey($this->_oConfig->getApiSecretKey());
-
-                    $aParams['customer_object'] = \Stripe\Customer::create($aParams['customer_params']);
-                    break;
-            }
-		}
-		catch (Exception $oException) {
-		    $aParams['customer_object'] = null;
-
-		    return $this->_processException('Create Customer Error: ', $oException);
-		}
-
-		return !empty($aParams['customer_object']);
-    }
-
-    public function processAlertStripeRetrieveCustomer($iObject, $iSender, $aParams)
+    public function processAlertStripeV3RetrieveCustomer($iObject, $iSender, $aParams)
     {
         if(empty($aParams['type']) || empty($aParams['customer_id']))
             return false;
 
-        $sPayMode = $this->_oConfig->getPayMode($aParams['type']);
+        $sPayMode = $this->_oConfig->getPayMode();
 
         try {
             switch($sPayMode) {
@@ -355,111 +329,17 @@ class BxStripeConnectModule extends BxBaseModConnectModule
                     break;
 
                 case BX_STRIPE_CONNECT_PMODE_PLATFORM:
-                    \Stripe\Stripe::setApiKey($this->_oConfig->getApiSecretKey());
-
-                    $aParams['customer_object'] = \Stripe\Customer::retrieve($aParams['customer_id']);
+                    $aParams['customer_object'] = BxStripeConnectApi::getInstance()->getStripe()->customers->retrieve($aParams['customer_id']);
                     break;
             }
-		}
-		catch (Exception $oException) {
-		    $aParams['customer_object'] = null;
+        }
+        catch (Exception $oException) {
+            $aParams['customer_object'] = null;
 
-		    return $this->_processException('Retrieve Customer Error: ', $oException);
-		}
+            return $this->_processException('Retrieve Customer Error: ', $oException);
+        }
 
-		return !empty($aParams['customer_object']);
-    }
-
-    public function processAlertStripeCreateCharge($iObject, $iSender, $aParams)
-    {
-        if(empty($iObject) || empty($aParams['charge_params']['amount']))
-            return false;
-
-        $aAccount = $this->_getAccount($iObject, BX_PAYMENT_TYPE_SINGLE);
-        if($aAccount === false)
-            return false;
-
-        $sPayMode = $this->_oConfig->getPayMode(BX_PAYMENT_TYPE_SINGLE);
-        $aParams['charge_params']['application_fee'] = $this->_oConfig->getFee(BX_PAYMENT_TYPE_SINGLE, (float)$aParams['charge_params']['amount']);
-
-        \Stripe\Stripe::setApiKey($this->_oConfig->getApiSecretKey());
-
-        try {
-            switch($sPayMode) {
-                case BX_STRIPE_CONNECT_PMODE_DIRECT:
-                    $aParams['charge_object'] = \Stripe\Charge::create($aParams['charge_params'], array('stripe_account' => $aAccount['user_id']));
-                    break;
-
-                case BX_STRIPE_CONNECT_PMODE_PLATFORM:
-                    $aParams['charge_params']['destination'] = $aAccount['user_id'];
-                    $aParams['charge_object'] = \Stripe\Charge::create($aParams['charge_params']);
-                    break;
-            }
-		}
-		catch (Exception $oException) {
-		    $aParams['charge_object'] = null;
-
-			return $this->_processException('Create Charge Error: ', $oException);
-		}
-
-		return !empty($aParams['charge_object']);
-    }
-
-    public function processAlertStripeRetrieveCharge($iObject, $iSender, $aParams)
-    {
-        if(empty($aParams['charge_id']))
-            return false;
-
-        $sPayMode = $this->_oConfig->getPayMode(BX_PAYMENT_TYPE_SINGLE);
-
-        try {
-            switch($sPayMode) {
-                case BX_STRIPE_CONNECT_PMODE_DIRECT:
-                    /*
-                     * Do nothing in this case because a Charge 
-                     * should be stored on Connected Stripe account.
-                     */
-                    break;
-
-                case BX_STRIPE_CONNECT_PMODE_PLATFORM:
-                    \Stripe\Stripe::setApiKey($this->_oConfig->getApiSecretKey());
-
-                    $aParams['charge_object'] = \Stripe\Charge::retrieve($aParams['charge_id']);
-                    break;
-            }
-		}
-		catch (Exception $oException) {
-		    $aParams['charge_object'] = null;
-
-		    return $this->_processException('Retrieve Customer Error: ', $oException);
-		}
-
-		return !empty($aParams['charge_object']);
-    }
-    
-    public function processAlertStripeCreateSubscription($iObject, $iSender, $aParams)
-    {
-        if(empty($iObject) || empty($aParams['subscription_params']['plan']))
-            return false;
-
-        $aAccount = $this->_getAccount($iObject, BX_PAYMENT_TYPE_RECURRING);
-        if($aAccount === false)
-            return false;
-
-        $aParams['subscription_params']['application_fee_percent'] = $this->_oConfig->getFee(BX_PAYMENT_TYPE_RECURRING);
-
-        \Stripe\Stripe::setApiKey($this->_oConfig->getApiSecretKey());
-
-        try {
-             $aParams['subscription_object'] = $aParams['customer']->subscriptions->create($aParams['subscription_params'], array('stripe_account' => $aAccount['user_id']));
-		}
-		catch (Exception $oException) {
-		    $aParams['subscription_object'] = null;
-
-			return $this->_processException('Create Subscription Error: ', $oException);
-		}
-
-		return !empty($aParams['subscription_object']);
+        return !empty($aParams['customer_object']);
     }
 
     protected function _processEvent()

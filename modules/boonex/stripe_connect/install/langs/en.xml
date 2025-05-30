@@ -16,6 +16,9 @@
     <string name="_bx_stripe_connect_option_fee_single"><![CDATA[One-time fee (in cents, percent)]]></string>
     <string name="_bx_stripe_connect_option_fee_recurring"><![CDATA[Subscription fee (percent only)]]></string>
 
+    <!-- MENUS -->
+    <string name="_bx_stripe_connect_menu_item_title_accounts"><![CDATA[Accounts]]></string>
+        
     <!-- GRIDS -->
     <string name="_bx_stripe_connect_grid_column_title_profile_id"><![CDATA[Profile]]></string>
     <string name="_bx_stripe_connect_grid_column_title_live_account_id"><![CDATA[Account ID (live)]]></string>
