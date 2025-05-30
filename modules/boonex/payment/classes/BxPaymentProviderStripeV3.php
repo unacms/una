@@ -631,42 +631,12 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 $sMode = 'payment';
 
                 foreach($aCartInfo['items'] as $aItem) {
-                    $aProductData = [
-                        'name' => $aItem['title']
-                    ];
-                    if(!empty($aItem['description']))
-                        $aProductData['description'] = strmaxtextlen(strip_tags($aItem['description']), 60, '...');
+                    list($_aLineItems, $_aMetaItems) = $this->_getLineItems($sType, $aItem, [
+                        'vendor_currency_code' => $aCartInfo['vendor_currency_code']
+                    ]);
 
-                    $aLineItems[] = [
-                        'price_data' => [
-                            'currency' => $aCartInfo['vendor_currency_code'],
-                            'product_data' => $aProductData,
-                            'unit_amount' => 100 * $this->_oModule->_oConfig->getPrice($sType, $aItem, $this->_iAmountPrecision),
-                        ],
-                        'quantity' => $aItem['quantity'],
-                    ];
-
-                    $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
-
-                    if(!empty($aItem['addons']) && is_array($aItem['addons']))
-                        foreach($aItem['addons'] as $aAddon) {
-                            $aAddonData = [
-                                'name' => $aAddon['title']
-                            ];
-                            if(!empty($aAddon['description']))
-                                $aAddonData['description'] = strmaxtextlen(strip_tags($aAddon['description']), 60, '...');
-
-                            $aLineItems[] = [
-                                'price_data' => [
-                                    'currency' => $aCartInfo['vendor_currency_code'],
-                                    'product_data' => $aAddonData,
-                                    'unit_amount' => 100 * $this->_oModule->_oConfig->getPrice($sType, $aAddon, $this->_iAmountPrecision),
-                                ],
-                                'quantity' => $aAddon['quantity'],
-                            ];
-
-                            $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
-                        }
+                    $aLineItems = array_merge($aLineItems, $_aLineItems);
+                    $aMetaItems = array_merge($aMetaItems, $_aMetaItems);
                 }
 
                 $aParams['customer_creation'] = 'always';
@@ -677,25 +647,15 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 $iTrial = 0;
 
                 foreach($aCartInfo['items'] as $aItem) {
-                    $aLineItems[] = [
-                        'price' => $aItem['name'],
-                        'quantity' => $aItem['quantity'],
-                    ];
+                    list($_aLineItems, $_aMetaItems) = $this->_getLineItems($sType, $aItem, [
+                        'vendor_currency_code' => $aCartInfo['vendor_currency_code']
+                    ]);
+
+                    $aLineItems = array_merge($aLineItems, $_aLineItems);
+                    $aMetaItems = array_merge($aMetaItems, $_aMetaItems);
 
                     if((int)$aItem['trial_recurring'] > 0)
                         $iTrial = (int)$aItem['trial_recurring'];
-
-                    $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
-                    
-                    if(!empty($aItem['addons']) && is_array($aItem['addons']))
-                        foreach($aItem['addons'] as $aAddon) {
-                            $aLineItems[] = [
-                                'price' => $aAddon['name'],
-                                'quantity' => $aAddon['quantity'],
-                            ];
-
-                            $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
-                        }
                 }
 
                 if($iTrial > 0) {
@@ -1139,11 +1099,76 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         return !empty($aResult['metadata']['verification']) && $aResult['metadata']['verification'] == $this->getVerificationCodeSession($iVendorId, $iCustomerId, $aResult['amount_total'], $aResult['currency']);
     }
 
+    protected function _getLineItems($sType, $aItem, $aParams = [])
+    {
+        $aLineItems = $aMetaItems = [];
+
+        $bRecurring = $sType == BX_PAYMENT_TYPE_RECURRING;
+        $sCurrency = ($sKey = 'vendor_currency_code') && !empty($aParams[$sKey]) ? $aParams[$sKey] : $this->_oModule->_oConfig->getDefaultCurrencyCode();
+
+        $aProductData = [
+            'name' => $aItem['title']
+        ];
+        if(!empty($aItem['description']))
+            $aProductData['description'] = strmaxtextlen(strip_tags($aItem['description']), 60, '...');
+
+        $aLineItem = [
+            'price_data' => [
+                'currency' => $sCurrency,
+                'product_data' => $aProductData,
+                'unit_amount' => 100 * $this->_oModule->_oConfig->getPrice($sType, $aItem, $this->_iAmountPrecision),
+            ],
+            'quantity' => $aItem['quantity'],
+        ];
+        
+        if($bRecurring && ($mixedPeriod = $this->_oModule->_oConfig->getPeriod($sType, $aItem)) !== false) {
+            list($iPeriod, $sPeriodUnit) = $mixedPeriod;
+            $aLineItem['price_data']['recurring'] = [
+                'interval' => $sPeriodUnit,
+                'interval_count' => $iPeriod
+            ];
+        }
+
+        $aLineItems[] = $aLineItem;
+        $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
+
+        if(!empty($aItem['addons']) && is_array($aItem['addons']))
+            foreach($aItem['addons'] as $aAddon) {
+                $aAddonData = [
+                    'name' => $aAddon['title']
+                ];
+                if(!empty($aAddon['description']))
+                    $aAddonData['description'] = strmaxtextlen(strip_tags($aAddon['description']), 60, '...');
+
+                $aLineItem = [
+                    'price_data' => [
+                        'currency' => $sCurrency,
+                        'product_data' => $aAddonData,
+                        'unit_amount' => 100 * $this->_oModule->_oConfig->getPrice($sType, $aAddon, $this->_iAmountPrecision),
+                    ],
+                    'quantity' => $aAddon['quantity'],
+                ];
+                
+                if($bRecurring && ($mixedPeriod = $this->_oModule->_oConfig->getPeriod($sType, $aAddon)) !== false) {
+                    list($iPeriod, $sPeriodUnit) = $mixedPeriod;
+                    $aLineItem['price_data']['recurring'] = [
+                        'interval' => $sPeriodUnit,
+                        'interval_count' => $iPeriod
+                    ];
+                }
+
+                $aLineItems[] = $aLineItem;
+                $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
+            }
+
+        return [$aLineItems, $aMetaItems];
+    }
+
     protected function _processException($sMessage, &$oException)
     {
-        if(method_exists($oException, 'getError')) {
-            $sError = $oException->getError()->message;
-            $aError = $oException->getError()->toArray();
+        if(method_exists($oException, 'getError') && ($oError = $oException->getError())) {
+            $sError = $oError->message;
+            $aError = $oError->toArray();
         }
         else { 
             $sError = $oException->getMessage();

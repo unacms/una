@@ -50,6 +50,8 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
             'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
             'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
+            'KEY_ARRAY_PERIOD_RECURRING' => 'period_recurring',
+            'KEY_ARRAY_PERIOD_UNIT_RECURRING' => 'period_unit_recurring',
             'KEY_ARRAY_TRIAL_RECURRING' => 'trial_recurring',
 
             // some params
@@ -195,6 +197,22 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         return round((float)$fPrice, $iPrecision);
     }
 
+    public function getPeriod($sType, $aItem)
+    {
+        $mixedResult = false;
+
+        switch($sType) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                break;
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                $mixedResult = [$aItem[$this->getKey('KEY_ARRAY_PERIOD_RECURRING')], $aItem[$this->getKey('KEY_ARRAY_PERIOD_UNIT_RECURRING')]];
+                break;
+        }
+
+        return $mixedResult;
+    }
+
     public function getTrial($sType, $aItem)
     {
         $iTrial = 0;
@@ -227,12 +245,12 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
     public function a2s($a)
     {
-        return base64_encode(json_encode($a));
+        return base64_encode(serialize($a));
     }
 
     public function s2a($s)
     {
-        return json_decode(base64_decode($s), true);
+        return unserialize(base64_decode($s));
     }
 
     public function urlEncode($s)

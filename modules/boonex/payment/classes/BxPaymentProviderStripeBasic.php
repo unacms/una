@@ -575,12 +575,12 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
         if($mixedResult === false)
             return false;
 
-        list($mixedPending, $oCharge) = $mixedResult;
-        if(empty($mixedPending) || empty($oCharge))
+        list($mixedPending, $aPaid) = $mixedResult;
+        if(empty($mixedPending) || empty($aPaid))
             return false;
 
-        $fChargeAmount = (float)$oCharge->amount / 100;
-        $sChargeCurrency = strtoupper($oCharge->currency);
+        $fChargeAmount = (float)$aPaid['amount'] / 100;
+        $sChargeCurrency = strtoupper($aPaid['currency']);
 
         if(is_string($mixedPending))
             return $this->_oModule->_oDb->insertStrpPaymentPending($mixedPending, $fChargeAmount, $sChargeCurrency);
@@ -660,12 +660,36 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
         if(empty($oEvent))
             return false;
 
-        $sSubscriptionId = $oEvent->data->object->subscription;
+        /**
+         * Note. $oEvent->data->object->subscription and $oEvent->data->object->charge 
+         * are checked for backward compatibility.
+         */
+        $sSubscriptionId = '';
+        if(!empty($oEvent->data->object->subscription))
+            $sSubscriptionId = $oEvent->data->object->subscription;
+        else if(!empty($oEvent->data->object->parent) && $oEvent->data->object->parent->type == 'subscription_details')
+            $sSubscriptionId = $oEvent->data->object->parent->subscription_details->subscription;
+        if(!$sSubscriptionId)
+            return false;
 
         $aPending = $this->_oModule->_oDb->getOrderPending(['type' => 'order', 'order' => $sSubscriptionId]);
-        $oCharge = $this->_retrieveCharge($oEvent->data->object->charge);
 
-        return [!empty($aPending) && is_array($aPending) ? $aPending : $sSubscriptionId, $oCharge];
+        $aPaid = [];
+        if(!empty($oEvent->data->object->charge)) {
+            $oCharge = $this->_retrieveCharge($oEvent->data->object->charge);
+            if($oCharge)
+                $aPaid = [
+                    'amount' => $oCharge->amount,
+                    'currency' => $oCharge->currency
+                ];
+        }
+        else if(!empty($oEvent->data->object->amount_paid) && !empty($oEvent->data->object->currency))
+            $aPaid = [
+                'amount' => $oEvent->data->object->amount_paid,
+                'currency' => $oEvent->data->object->currency
+            ];            
+
+        return [!empty($aPending) && is_array($aPending) ? $aPending : $sSubscriptionId, $aPaid];
     }
 
     protected function _getDataChangeDetailsRecurring($iPendingId)
