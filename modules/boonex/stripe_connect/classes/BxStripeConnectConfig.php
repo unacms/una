@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxStripeConnectConfig extends BxBaseModConnectConfig
+class BxStripeConnectConfig extends BxBaseModGeneralConfig
 {
     protected $_oDb;
 
@@ -69,10 +69,19 @@ class BxStripeConnectConfig extends BxBaseModConnectConfig
 
         $this->_aJsClasses = [
             'main' => 'BxStripeConnectMain',
+            'embeds' => 'BxStripeConnectEmbeds',
         ];
 
         $this->_aJsObjects = [
             'main' => 'oStripeConnectMain',
+            'embeds' => 'oBxStripeConnectEmbeds',
+        ];
+
+        $sPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = [
+            'balances' => $sPrefix . '-balances',
+            'notification-banner' => $sPrefix . '-notification-banner',
+            'payments' => $sPrefix . '-payments',
         ];
 
         $this->_sAccountType = 'standard'; //'express'
@@ -133,6 +142,14 @@ class BxStripeConnectConfig extends BxBaseModConnectConfig
         }
 
         return $iResult;
+    }
+
+    public function getHtmlIds($sKey = '')
+    {
+        if(empty($sKey))
+            return $this->_aHtmlIds;
+
+        return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
 }
 

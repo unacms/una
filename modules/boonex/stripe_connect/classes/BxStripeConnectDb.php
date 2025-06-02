@@ -80,7 +80,7 @@ class BxStripeConnectDb extends BxBaseModConnectDb
         if(!isset($aSet[$CNF['FIELD_CHANGED']]))
             $aSet[$CNF['FIELD_CHANGED']] = time();
 
-        return (int)$this->query("REPLACE INTO `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet)) > 0;
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet)) > 0;
     }
 
     public function updateAccount($aSet, $aWhere)

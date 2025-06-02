@@ -733,7 +733,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     {
         $oSession = $this->_retrieveSession($sId);
         if($oSession === false)
-            return array();
+            return false;
 
         $aSession = $oSession->jsonSerialize();
         if(empty($aSession) || !is_array($aSession))

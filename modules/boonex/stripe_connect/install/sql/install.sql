@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS `bx_stripe_connect_accounts` (
   `test_account_id` varchar(64) NOT NULL default '',
   `test_details` tinyint(4) NOT NULL default '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `profile_id` (`profile_id`),
-  UNIQUE KEY `live_account_id` (`live_account_id`)
+  UNIQUE KEY `profile_id` (`profile_id`)
 );
 
 -- Logs Objects

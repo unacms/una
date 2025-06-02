@@ -51,6 +51,25 @@ class BxStripeConnectApi extends BxDol
         return $this->_oStripe;
     }
 
+    public function createAccount($sEmail)
+    {        
+        $oAccount = null;
+
+        try {
+            $oAccount = $this->getStripe()->accounts->create([
+                'type' => $this->_oModule->_oConfig->getAccountType(),
+                'email' => $sEmail,
+            ]);
+        }
+        catch (Exception $oException) {
+            $oAccount = null;
+
+            return $this->_processException('Create Account Error: ', $oException);
+        }
+
+        return $oAccount;
+    }
+
     public function retrieveAccount($sAccountId)
     {
         try {
@@ -61,6 +80,89 @@ class BxStripeConnectApi extends BxDol
         }
 
         return $oAccount;
+    }
+    
+    public function deleteAccount($sAccountId)
+    {        
+        $oAccount = null;
+
+        try {
+            $oAccount = $this->getStripe()->accounts->delete($sAccountId, []);
+        }
+        catch (Exception $oException) {
+            $oAccount = null;
+
+            return $this->_processException('Delete Account Error: ', $oException);
+        }
+
+        return $oAccount;
+    }
+
+    public function createAccountLinks($sAccountId, $sRefreshLink, $sReturnLink)
+    {
+        $oAccountLink = null;
+
+        try {
+            $oAccountLink = $this->getStripe()->accountLinks->create([
+                'account' => $sAccountId,
+                'refresh_url' => $sRefreshLink,
+                'return_url' => $sReturnLink,
+                'type' => 'account_onboarding',
+            ]);
+        }
+        catch (Exception $oException) {
+            $oAccountLink = null;
+
+            return $this->_processException('Create Account Links Error: ', $oException);
+        }
+
+        return $oAccountLink;
+    }
+
+    /**
+     * https://docs.stripe.com/connect/get-started-connect-embedded-components
+     */
+    public function createAccountSessions($sAccountId)
+    {
+        $oAccountSession = null;
+
+        try {
+            $oAccountSession = $this->getStripe()->accountSessions->create([
+                'account' => $sAccountId,
+                'components' => [
+                    'balances' => [
+                        'enabled' => true,
+                        'features' => [
+                            'instant_payouts' => true,
+                            'standard_payouts' => true,
+                            'edit_payout_schedule' => true,
+                            'external_account_collection' => true
+                        ],
+                    ],
+                    'notification_banner' => [
+                        'enabled' => true,
+                        'features' => [
+                            'external_account_collection' => true
+                        ]
+                    ],
+                    'payments' => [
+                        'enabled' => true,
+                        'features' => [
+                            'refund_management' => true,
+                            'dispute_management' => true,
+                            'capture_payments' => true,
+                        ],
+                    ],
+                ]
+            ]);
+        }
+        catch (Exception $oException) {
+            $oAccountSession = null;
+
+            return $this->_processException('Create Account Session Error: ', $oException);
+        }
+
+        return $oAccountSession;
     }
 
     protected function _processException($sMessage, &$oException)

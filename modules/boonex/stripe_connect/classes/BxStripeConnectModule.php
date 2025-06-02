@@ -15,7 +15,7 @@ define('BX_STRIPE_CONNECT_MODE_TEST', 'test');
 define('BX_STRIPE_CONNECT_PMODE_DIRECT', 'direct');
 define('BX_STRIPE_CONNECT_PMODE_PLATFORM', 'platform');
 
-class BxStripeConnectModule extends BxBaseModConnectModule
+class BxStripeConnectModule extends BxBaseModGeneralModule
 {
     function __construct(&$aModule)
     {
@@ -106,6 +106,30 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         return $this->_oTemplate->getConnectCode($iVendorId, $aParams);
     }
 
+    public function serviceGetBlockPayments()
+    {
+        if(!isLogged())
+            return '';
+
+        return $this->_oTemplate->getBlockPayments();
+    }
+
+    public function serviceGetBlockBalances()
+    {
+        if(!isLogged())
+            return '';
+
+        return $this->_oTemplate->getBlockBalances();
+    }
+
+    public function serviceGetBlockNotifications()
+    {
+        if(!isLogged())
+            return '';
+
+        return $this->_oTemplate->getBlockNotifications();
+    }
+
     /**
      * 
      * ACTION METHODS
@@ -133,13 +157,8 @@ class BxStripeConnectModule extends BxBaseModConnectModule
 
         $sAccIdField = $CNF['FIELD_' . strtoupper($this->_oConfig->getMode()) . '_ACCOUNT_ID'];
 
-        //TODO: Replace with call to $this->_oConfig->getStripe() method.
-        $oStripe = new \Stripe\StripeClient($this->_oConfig->getApiSecretKey());
-        $oAccount = $oStripe->accounts->create([
-            'type' => $this->_oConfig->getAccountType(),
-            'email' => $oProfile->getAccountObject()->getEmail(),
-        ]);
-
+        $oApi = BxStripeConnectApi::getInstance();        
+        $oAccount = $oApi->createAccount($oProfile->getAccountObject()->getEmail());
         if(!$oAccount)
             return echoJson(['code' => 1, 'message' => $sError]);
 
@@ -149,12 +168,9 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         ]);
 
         $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=payment-details');
-        $oAccountLink = $oStripe->accountLinks->create([
-            'account' => $oAccount->id,
-            'refresh_url' => $sLink,
-            'return_url' => $sLink,
-            'type' => 'account_onboarding',
-        ]);
+        $oAccountLink = $oApi->createAccountLinks($oAccount->id, $sLink, $sLink);
+        if(!$oAccountLink)
+            return echoJson(['code' => 1, 'message' => $sError]);
 
         return echoJson(['code' => 0, 'redirect' => $oAccountLink->url]);
     }
@@ -180,17 +196,9 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         if((int)$aAccount[$sAccDetailsField] != 0)
             return echoJson(['code' => 0]);
 
-        $oStripe = new \Stripe\StripeClient($this->_oConfig->getApiSecretKey());
-
         $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=payment-details');
-        $oAccountLink = $oStripe->accountLinks->create([
-            'account' => $aAccount[$sAccIdField],
-            'refresh_url' => $sLink,
-            'return_url' => $sLink,
-            'type' => 'account_onboarding',
-        ]);
-
-        if(empty($oAccountLink))
+        $oAccountLink = BxStripeConnectApi::getInstance()->createAccountLinks($aAccount[$sAccIdField], $sLink, $sLink);
+        if(!$oAccountLink)
             return echoJson(['code' => 1, 'message' => $sError]);
 
         return echoJson(['code' => 0, 'redirect' => $oAccountLink->url]);
@@ -212,9 +220,7 @@ class BxStripeConnectModule extends BxBaseModConnectModule
 
         $sAccIdField = $CNF['FIELD_' . strtoupper($this->_oConfig->getMode()) . '_ACCOUNT_ID'];
 
-        $oStripe = new \Stripe\StripeClient($this->_oConfig->getApiSecretKey());
-        $oAccount = $oStripe->accounts->delete($aAccount[$sAccIdField], []);
-
+        $oAccount = BxStripeConnectApi::getInstance()->deleteAccount($aAccount[$sAccIdField]);
         if(!$oAccount || !$oAccount->deleted)
             return echoJson(['code' => 2, 'message' => _t('_bx_stripe_connect_err_delete')]);
 
@@ -226,11 +232,42 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         return echoJson(['code' => 0, 'reload' => 1]);
     }
 
+    public function actionAccountSessionCreate($iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId || ($iProfileId != $this->_iProfileId && !isAdmin()))
+            $iProfileId = $this->_iProfileId;
+        if(!$iProfileId)
+            return echoJson(['code' => 1]);
+
+        $sModeUc = strtoupper($this->_oConfig->getMode());
+        $sAccIdField = $CNF['FIELD_' . $sModeUc . '_ACCOUNT_ID'];
+
+        $aAccount = $this->_oDb->getAccount(['sample' => 'profile_id', 'profile_id' => $iProfileId]);
+        if(empty($aAccount) || !is_array($aAccount) || $aAccount[$sAccIdField] == '')
+            return echoJson(['code' => 1]);
+
+        $oAccountSession = BxStripeConnectApi::getInstance()->createAccountSessions($aAccount[$sAccIdField]);
+        if(!$oAccountSession)
+            return echoJson(['code' => 1]);
+
+        return echoJson([
+            'code' => 0,
+            'secret' => $oAccountSession->client_secret
+        ]);
+    }
+
     /**
      * 
      * OTHER METHODS
      * 
-     */   
+     */
+    public function hasAccount($iVendorId)
+    {
+        return $this->_oDb->hasAccount($iVendorId, $this->_oConfig->getMode());
+    }
+
     public function processAlertStripeV3GetButton($iObject, $iSender, $aParams)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -309,39 +346,6 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         return !empty($aParams['session_object']);
     }
 
-    /**
-     * Methods related to old Stripe integration (which starts with 'processAlertStripe') are outdated.
-     */
-    public function processAlertStripeV3RetrieveCustomer($iObject, $iSender, $aParams)
-    {
-        if(empty($aParams['type']) || empty($aParams['customer_id']))
-            return false;
-
-        $sPayMode = $this->_oConfig->getPayMode();
-
-        try {
-            switch($sPayMode) {
-                case BX_STRIPE_CONNECT_PMODE_DIRECT:
-                    /*
-                     * Do nothing in this case because a Customer 
-                     * should be retreived from Connected Stripe account.
-                     */
-                    break;
-
-                case BX_STRIPE_CONNECT_PMODE_PLATFORM:
-                    $aParams['customer_object'] = BxStripeConnectApi::getInstance()->getStripe()->customers->retrieve($aParams['customer_id']);
-                    break;
-            }
-        }
-        catch (Exception $oException) {
-            $aParams['customer_object'] = null;
-
-            return $this->_processException('Retrieve Customer Error: ', $oException);
-        }
-
-        return !empty($aParams['customer_object']);
-    }
-
     protected function _processEvent()
     {
         $sInput = @file_get_contents("php://input");
@@ -393,27 +397,6 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         $this->_log($aError);
 
         return false;
-    }
-
-    protected function _getAccount($iPending, $sType)
-    {
-        $aPending = BxDolPayments::getInstance()->getPendingOrdersInfo(array('id' => $iPending));
-        if(!empty($aPending) && is_array($aPending) && count($aPending) == 1)
-            $aPending = array_shift($aPending);
-
-        if(empty($aPending) || !is_array($aPending) || $aPending['type'] != $sType)
-            return false;
-
-        $iSeller = (int)$aPending['seller_id'];
-        $oSeller = BxDolProfile::getInstance($iSeller);
-        if(!$oSeller)
-            return false;
-
-        $aAccount = $this->_oDb->getAccount(array('type' => 'author', 'author' => $iSeller));
-        if(empty($aAccount) || !is_array($aAccount))
-            return false;
-
-        return $aAccount;
     }
 
     protected function _log($sContents)

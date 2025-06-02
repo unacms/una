@@ -22,6 +22,22 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stripe_connect_fee_recurring', '', @iCategId, '_bx_stripe_connect_option_fee_recurring', 'digit', '', '', 80, '');
 
 
+-- PAGES
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_stripe_connect_activity', 'connected-activity', '_bx_stripe_connect_page_title_sys_connected_activity', '_bx_stripe_connect_page_title_connected_activity', @sName, 12, 2147483647, 0, '', '', '', '', 0, 1, 0, 'BxStripeConnectPageActivity', 'modules/boonex/stripe_connect/classes/BxStripeConnectPageActivity.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_stripe_connect_activity', 2, @sName, '_bx_stripe_connect_page_block_title_payments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:17:"bx_stripe_connect";s:6:"method";s:18:"get_block_payments";}', 0, 0, 1, 1),
+('bx_stripe_connect_activity', 3, @sName, '_bx_stripe_connect_page_block_title_balances', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:17:"bx_stripe_connect";s:6:"method";s:18:"get_block_balances";}', 0, 0, 1, 1),
+('bx_stripe_connect_activity', 3, @sName, '_bx_stripe_connect_page_block_title_notifications', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:17:"bx_stripe_connect";s:6:"method";s:23:"get_block_notifications";}', 0, 0, 1, 2);
+
+
+-- MENUS
+SET @iAccountDashboardMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('sys_account_dashboard', @sName, 'connected-activity', '_bx_stripe_connect_menu_item_title_system_connected_activity', '_bx_stripe_connect_menu_item_title_connected_activity', 'page.php?i=connected-activity', '', '', 'cc-stripe col-blue1', '', '', 2147483646, 1, 0, 1, @iAccountDashboardMenuOrder + 1);
+
+
 -- GRIDS: Manage
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_stripe_connect_accounts', 'Sql', 'SELECT * FROM `bx_stripe_connect_accounts`', 'bx_stripe_connect_accounts', 'id', '', '', 20, NULL, 'start', '', 'live_account_id,test_account_id', 'auto', 'live_account_id,test_account_id', 128, 'BxStripeConnectGridAccounts', 'modules/boonex/stripe_connect/classes/BxStripeConnectGridAccounts.php');
@@ -49,5 +65,4 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_payment', 'stripe_v3_get_button', @iHandler),
-('bx_payment', 'stripe_v3_create_session', @iHandler),
-('bx_payment', 'stripe_v3_retrieve_customer', @iHandler);
+('bx_payment', 'stripe_v3_create_session', @iHandler);

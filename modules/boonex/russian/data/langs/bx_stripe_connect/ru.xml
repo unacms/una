@@ -14,8 +14,18 @@
     <string name="_bx_stripe_connect_option_pmode_direct"><![CDATA[Прямой]]></string>
     <string name="_bx_stripe_connect_option_pmode_platform"><![CDATA[Платформа]]></string>
 
+    <!-- PAGES and BLOCKS -->
+    <string name="_bx_stripe_connect_page_title_sys_connected_activity"><![CDATA[Активность подключенного аккаунта]]></string>
+    <string name="_bx_stripe_connect_page_title_connected_activity"><![CDATA[Активность подключенного аккаунта]]></string>
+    <string name="_bx_stripe_connect_page_block_title_payments"><![CDATA[Платежи]]></string>
+    <string name="_bx_stripe_connect_page_block_title_balances"><![CDATA[Остатки]]></string>
+    <string name="_bx_stripe_connect_page_block_title_notifications"><![CDATA[Уведомления]]></string>
+    <string name="_bx_stripe_connect_page_block_title_warning"><![CDATA[Предупреждение]]></string>
+
     <!-- MENUS -->
     <string name="_bx_stripe_connect_menu_item_title_accounts"><![CDATA[Аккаунты]]></string>
+    <string name="_bx_stripe_connect_menu_item_title_system_connected_activity"><![CDATA[Связанная деятельность]]></string>
+    <string name="_bx_stripe_connect_menu_item_title_connected_activity"><![CDATA[Связанная деятельность]]></string>
         
     <!-- GRIDS -->
     <string name="_bx_stripe_connect_grid_column_title_profile_id"><![CDATA[Профиль]]></string>
@@ -31,6 +41,7 @@
     <string name="_bx_stripe_connect_btn_account_create"><![CDATA[Создать подключенную учетную запись]]></string>
     <string name="_bx_stripe_connect_btn_account_delete"><![CDATA[Удалить подключенную учетную запись]]></string>
     <string name="_bx_stripe_connect_btn_account_continue"><![CDATA[Продолжить создание учетной записи]]></string>
+    <string name="_bx_stripe_connect_msg_create_account"><![CDATA[Сначала вам необходимо <a href="{0}"><b>создать</b></a> подключенную учетную запись.]]></string>
     <string name="_bx_stripe_connect_err_delete"><![CDATA[Невозможно удалить аккаунт.]]></string>
     <string name="_bx_stripe_connect_err_perform"><![CDATA[Не удается выполнить действие. Пожалуйста сообщите.]]></string>
     <string name="_bx_stripe_connect_log"><![CDATA[Stripe Connect]]></string>

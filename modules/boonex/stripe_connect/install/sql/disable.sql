@@ -7,7 +7,13 @@ DELETE FROM `tot`, `toc`, `to` USING `sys_options_types` AS `tot` LEFT JOIN `sys
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = @sName;
-DELETE FROM `sys_pages_blocks` WHERE `module` = @sName;
+DELETE FROM `sys_pages_blocks` WHERE `module` = @sName OR `object` IN('bx_stripe_connect_activity');
+
+
+-- MENUS
+DELETE FROM `sys_objects_menu` WHERE `module` = @sName;
+DELETE FROM `sys_menu_sets` WHERE `module` = @sName;
+DELETE FROM `sys_menu_items` WHERE `module` = @sName; -- OR `set_name` IN();
 
 
 -- GRIDS

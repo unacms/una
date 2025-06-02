@@ -24,7 +24,7 @@ class BxStripeConnectTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sJsObject = $this->_oConfig->getJsObject('main');        
+        $sJsObject = $this->_oConfig->getJsObject('main');
  
         $sModeUc = strtoupper($this->_oConfig->getMode());
         $sAccIdField = $CNF['FIELD_' . $sModeUc . '_ACCOUNT_ID'];
@@ -64,6 +64,56 @@ class BxStripeConnectTemplate extends BxBaseModGeneralTemplate
                     'profile_id' => $iVendorId,
                 ]
             ]
+        ]);
+    }
+
+    public function getJsCodeEmbeds($iProfileId)
+    {
+        $this->addJs([
+            'https://connect-js.stripe.com/v1.0/connect.js',
+            'embeds.js'
+        ]);
+
+        return $this->getJsCode('embeds', [
+            'aHtmlIds' => $this->_oConfig->getHtmlIds(),
+            'sPublicKey' => $this->_oConfig->getApiPublicKey(),
+            'iProfileId' => $iProfileId
+        ], [
+            'wrap' => true,
+            'mask' => "if(window['{object}'] == undefined) {var} {object} = new {class}({params});"
+        ]);
+    }
+
+    public function getBlockPayments()
+    {
+        $sEmbed = 'payments';
+
+        return $this->parseHtmlByName('embed_block.html', [
+            'js_object' => $this->_oConfig->getJsObject('embeds'),
+            'html_id' => $this->_oConfig->getHtmlIds($sEmbed),
+            'embed' => $sEmbed
+        ]);
+    }
+
+    public function getBlockBalances()
+    {
+        $sEmbed = 'balances';
+
+        return $this->parseHtmlByName('embed_block.html', [
+            'js_object' => $this->_oConfig->getJsObject('embeds'),
+            'html_id' => $this->_oConfig->getHtmlIds($sEmbed),
+            'embed' => $sEmbed
+        ]);
+    }
+    
+    public function getBlockNotifications()
+    {
+        $sEmbed = 'notification-banner';
+
+        return $this->parseHtmlByName('embed_block.html', [
+            'js_object' => $this->_oConfig->getJsObject('embeds'),
+            'html_id' => $this->_oConfig->getHtmlIds($sEmbed),
+            'embed' => $sEmbed
         ]);
     }
 
