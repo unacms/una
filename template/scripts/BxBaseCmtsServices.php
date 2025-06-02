@@ -448,7 +448,7 @@ class BxBaseCmtsServices extends BxDol
             if(!empty($aCmt) && is_array($aCmt)) {
                 $oCmts->init($aCmt['cmt_object_id']);
 
-                $sCmtUrlApi = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->getBaseUrl() . '#cid=' . $iCmtId);
+                $sCmtUrlApi = $oCmts->getBaseUrl('{bx_url_root}') . '#cid=' . $iCmtId
             }
         }
 
@@ -503,7 +503,7 @@ class BxBaseCmtsServices extends BxDol
             if(!empty($aCmt) && is_array($aCmt)) {
                 $oCmts->init($aCmt['cmt_object_id']);
 
-                $sCmtUrlApi = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->getBaseUrl() . '#cid=' . $iCmtId);
+                $sCmtUrlApi = $oCmts->getBaseUrl('{bx_url_root}') . '#cid=' . $iCmtId
             }
         }
 
@@ -561,7 +561,7 @@ class BxBaseCmtsServices extends BxDol
             if(!empty($aCmt) && is_array($aCmt)) {
                 $oCmts->init($aCmt['cmt_object_id']);
 
-                $sCmtUrlApi = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->getBaseUrl() . '#cid=' . $iCmtId);
+                $sCmtUrlApi = $oCmts->getBaseUrl('{bx_url_root}') . '#cid=' . $iCmtId
             }
         }
 
