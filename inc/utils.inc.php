@@ -2116,6 +2116,11 @@ function bx_check_redirect_to_remove_install_folder ($bProcessRedirect = false)
  */
 function bx_show_service_unavailable_error_and_exit ($sMsg = false, $iRetryAfter = 86400)
 {
+    if (defined('BX_DOL_HEALTHCHECK') && BX_DOL_HEALTHCHECK) {
+        echo 'OK';
+        exit;
+    }
+
     header('HTTP/1.0 503 Service Unavailable', true, 503);
     header('Retry-After: 600');
     echo $sMsg ? $sMsg : 'Service temporarily unavailable';
