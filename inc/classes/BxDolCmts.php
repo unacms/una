@@ -532,13 +532,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_prepareTextForOutput($mixedItem['cmt_text'], (int)$mixedItem['cmt_id']);
     }
 
-    public function getBaseUrl()
+    public function getBaseUrl($sPrefix = BX_DOL_URL_ROOT)
     {
         $sUrl = $this->_replaceMarkers($this->_sBaseUrl);
         $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
-        if(get_mb_substr($sUrl, 0, 6) != 'http:/' && get_mb_substr($sUrl, 0, 7) != 'https:/')
-            $sUrl = BX_DOL_URL_ROOT . $sUrl;
-        return $sUrl;
+        return bx_absolute_url($sUrl, $sPrefix);
     }
 
     public function getListUrl()

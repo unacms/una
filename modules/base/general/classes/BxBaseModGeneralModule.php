@@ -2731,6 +2731,10 @@ class BxBaseModGeneralModule extends BxDolModule
         $iObjectId = (int)$aParentInfo['cmt_object_id'];
         $oComment->init($iObjectId);
 
+        $sCmtUrlApi = '';
+        if($this->_bIsApi && getParam('sys_api_comment_notif_link_content') == 'on')
+            $sCmtUrlApi = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oComment->getBaseUrl('{bx_url_root}') . '#cid=' . $iParentId);
+
         $iCommentId = (int)$aEvent['subobject_id'];
 
         return [
