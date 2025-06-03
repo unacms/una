@@ -204,7 +204,10 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 
     public function getHtmlIdsList($sKey)
     {
-        $aResult = $this->_aHtmlIds['general'];
+        $aResult = [];
+        if(!empty($this->_aHtmlIds['general']) && is_array($this->_aHtmlIds['general']))
+            $aResult = $this->_aHtmlIds['general'];
+
         if(!empty($this->_aHtmlIds[$sKey]) && is_array($this->_aHtmlIds[$sKey]))
             $aResult = array_merge($aResult, $this->_aHtmlIds[$sKey]);
 
