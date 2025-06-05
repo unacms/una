@@ -236,6 +236,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'GetQuestionnaire' => '',
             'GetInitialMembers' => '',
             'EntityInvite' => '',
+            'FansWithoutAdmins' => '',
         ]);
     }
 
@@ -540,7 +541,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ]);
         }
         // send notification to group's admins that new connection is pending confirmation 
-        elseif (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
+        elseif (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation'] && $aContentInfo[$CNF['FIELD_AUTHOR']] != $iProfileId) {
             /**
              * @hooks
              * @hookdef hook-bx_base_groups-join_request '{module_name}', 'join_request' - hook before adding new join to context request
@@ -601,23 +602,25 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                  $this->addFollower((int)$iInitiatorId, $oGroupProfile->id()); 
             }
 
-            /**
-             * @hooks
-             * @hookdef hook-bx_base_groups-fan_added '{module_name}', 'fan_added' - hook before adding (registering) new context member
-             * It's equivalent to @ref hook-bx_base_groups-join_request
-             * @hook @ref hook-bx_base_groups-fan_added
-             */
-            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
-            	'object_author_id' => $iGroupProfileId,
-            	'performer_id' => $iProfileId,
+            if ($aContentInfo[$CNF['FIELD_AUTHOR']] != $iProfileId) {
+                /**
+                 * @hooks
+                 * @hookdef hook-bx_base_groups-fan_added '{module_name}', 'fan_added' - hook before adding (registering) new context member
+                 * It's equivalent to @ref hook-bx_base_groups-join_request
+                 * @hook @ref hook-bx_base_groups-fan_added
+                 */
+                bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
+                    'object_author_id' => $iGroupProfileId,
+                    'performer_id' => $iProfileId,
 
-            	'content' => $aContentInfo,
-            	'entry_title' => $sEntryTitle, 
-            	'entry_url' => $sEntryUrl,
+                    'content' => $aContentInfo,
+                    'entry_title' => $sEntryTitle, 
+                    'entry_url' => $sEntryUrl,
 
-            	'group_profile' => $iGroupProfileId, 
-            	'profile' => $iProfileId,
-            ]);
+                    'group_profile' => $iGroupProfileId, 
+                    'profile' => $iProfileId,
+                ]);
+            }
 
             $this->doAudit($iGroupProfileId, $iInitiatorId, '_sys_audit_action_group_join_request_accepted');
             
@@ -768,15 +771,43 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         $aAdmins = $this->_oDb->getAdmins($oGroupProfile->id());
-        if(!empty($aAdmins) && is_array($aAdmins))
-            $aFans = array_diff($aFans, $aAdmins);
+        if(!empty($aAdmins) && is_array($aAdmins) && !($aFans = array_diff($aFans, $aAdmins)))
+            return false;
 
-        $iStart = (int)bx_get('start');
-        $iLimit = !empty($CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? getParam($CNF['PARAM_NUM_CONNECTIONS_QUICK']) : 4;
-        if(!$iLimit)
-            $iLimit = 4;
+        if(!$this->_bIsApi && $bAsArray)
+            return $aFans;
 
-        return $this->_serviceBrowseQuick($aFans, $iStart, $iLimit);
+        $iStart = $iLimit = 0;
+        if($this->_bIsApi) {
+            $aParams = bx_api_get_browse_params($bAsArray);
+
+            $iStart = isset($aParams['start']) ? (int)$aParams['start'] : 0;
+            $iLimit = isset($aParams['per_page']) ? (int)$aParams['per_page'] : 0;
+        }
+        else {
+            $iStart = (int)bx_get('start');
+            $iLimit = (int)bx_get('per_page');
+        }
+
+        $iLimit = !$iLimit && ($sKey = 'PARAM_NUM_CONNECTIONS_QUICK') && !empty($CNF[$sKey]) && ($iValue = (int)getParam($CNF[$sKey])) ? $iValue : 4;
+
+        if($this->_bIsApi) {
+            $aData = [
+                'data' => [],
+                'request_url' => '/api.php?r=' . $this->_oConfig->getName() . '/fans_without_admins/&params[]=' . $iContentId . '&params[]=',
+                'params' => [
+                    'start' => $iStart,
+                    'per_page' => $iLimit
+                ]
+            ];
+
+            foreach($aProfiles as $iProfileId)
+                $aData['data'][] = BxDolProfile::getData($iProfileId);
+
+            return [bx_api_get_block('profiles_list', $aData)];
+        }
+        else
+            return $this->_serviceBrowseQuick($aFans, $iStart, $iLimit);
     }
 
     public function serviceAdmins ($iContentId = 0, $sParams = '')
