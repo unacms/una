@@ -1406,6 +1406,17 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetOptionsApiContextConnection()
+    {
+        $aConnections = ['subscriptions', 'fans', 'participants'];
+
+        $aResults = ['' => _t('_sys_please_select')];
+        foreach($aConnections as $sConnection)
+            $aResults[$sConnection] = _t('_adm_stg_cpt_option_sys_api_cnt_cnn_' . $sConnection);
+
+        return $aResults;
+    }
+
     public function serviceGetOptionsAgentsModel()
     {
         return ['' => _t('_Select_one')] + BxDolAI::getInstance()->getModels(['active' => true, 'hidden' => false]);

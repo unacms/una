@@ -1802,6 +1802,10 @@
     <string name="_adm_stg_cpt_option_sys_api_cookie_samesite"><![CDATA[Cookies SameSite attribute]]></string>
     <string name="_adm_stg_cpt_option_sys_api_menu_top"><![CDATA[Top Menu]]></string>
     <string name="_adm_stg_cpt_option_sys_api_context_switcher"><![CDATA[Context switcher]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_context_connection"><![CDATA[Context connection]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_cnt_cnn_subscriptions"><![CDATA[following]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_cnt_cnn_fans"><![CDATA[membership]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_cnt_cnn_participants"><![CDATA[any participation]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Flat comments]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comment_notif_link_content"><![CDATA[Link notifications related to actions with a comment to commented content]]></string>
     <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Search sections]]></string>

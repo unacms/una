@@ -1778,6 +1778,10 @@
     <string name="_adm_stg_cpt_option_sys_api_cookie_samesite"><![CDATA[Значение для SameSite атрибута]]></string>
     <string name="_adm_stg_cpt_option_sys_api_menu_top"><![CDATA[Главное меню]]></string>
     <string name="_adm_stg_cpt_option_sys_api_context_switcher"><![CDATA[Переключатель контекста]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_context_connection"><![CDATA[Связь с контекстом]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_cnt_cnn_subscriptions"><![CDATA[отслеживание]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_cnt_cnn_fans"><![CDATA[членство]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_cnt_cnn_participants"><![CDATA[любое участие]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Линейные комментарии]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comment_notif_link_content"><![CDATA[Связывать уведомления, связанные с действиями с комментарием, с комментируемым контентом]]></string>
     <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Искать в]]></string>

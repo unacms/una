@@ -214,11 +214,20 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */ 
     public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects = false)
     {
-        if (isset($this->_oConfig->CNF['OBJECT_CONNECTIONS'])){
-            $aConnectionObjects = array($this->_oConfig->CNF['OBJECT_CONNECTIONS'], 'sys_profiles_subscriptions');
-            return parent::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);
-        }
-        return parent::serviceGetParticipatingProfiles($iProfileId);
+        $CNF = &$this->_oConfig->CNF;
+
+        $mixedCo = $aConnectionObjects;
+        $bCoEmpty = $mixedCo === false;
+        $bCoString = !$bCoEmpty && is_string($mixedCo);
+
+        $aConnectionObjects = [];
+        if($bCoEmpty || ($bCoString && $mixedCo == 'subscriptions'))
+            $aConnectionObjects[] = 'sys_profiles_subscriptions';
+        
+        if(($bCoEmpty || ($bCoString && $mixedCo == 'fans')) && !empty($CNF['OBJECT_CONNECTIONS']))
+            $aConnectionObjects[] = $CNF['OBJECT_CONNECTIONS'];
+
+        return parent::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);
     }
 
     public function serviceGetSafeServices()

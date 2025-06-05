@@ -648,10 +648,10 @@ class BxBasePage extends BxDolPage
 
             $a['user'] = BxDolProfile::getDataForPage($o);
 
-            if(($sContextSwitcher = getParam('sys_api_context_switcher'))) {
-                $aContexts = [];
+            if(($sContextSwitcher = getParam('sys_api_context_switcher')) && ($sContextConnection = getParam('sys_api_context_connection'))) {
+                $aCpIds = bx_srv($sContextSwitcher, 'get_participating_profiles', [$iLogged, ($sContextConnection != 'participants' ? $sContextConnection : false)]);
 
-                $aCpIds = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentByType($iLogged, $sContextSwitcher);
+                $aContexts = [];
                 foreach($aCpIds as $iCpId)
                     $aContexts[] = BxDolProfile::getData($iCpId);
 
