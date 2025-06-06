@@ -109,15 +109,11 @@ class BxBaseEmbedSystem extends BxDolEmbed
             ];
         }
 
-        if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
-            $iMediaId = $oStorage->storeFileFromUrl($a['image'], false);
-            $a['image'] = $iMediaId;
-        }
+        if($a['image'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false && ($iMediaId = $oStorage->storeFileFromUrl($a['image'], false)))
+            $a['image'] = $oStorage->getFileUrlById($iMediaId);
 
-        if($a['logo'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false) {
-            $iMediaId = $oStorage->storeFileFromUrl($a['logo'], false);
-            $a['logo'] = $iMediaId;
-        }
+        if($a['logo'] && ($oStorage = BxDolStorage::getObjectInstance('sys_images')) !== false && ($iMediaId = $oStorage->storeFileFromUrl($a['logo'], false)))
+            $a['logo'] = $oStorage->getFileUrlById($iMediaId);
 
         $aUrl = parse_url($sUrl);
         $a['domain'] = $aUrl['host'];
