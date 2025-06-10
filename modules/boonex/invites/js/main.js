@@ -48,61 +48,114 @@ BxInvMain.prototype.showLinkPopup = function(oElement) {
         this._sActionsUrl + 'get_link/',
         this._getDefaultData(),
         function(oData) {
-        	$this.loadingInButton(oElement, false);
+            $this.loadingInButton(oElement, false);
 
-        	if(oData && oData.popup != undefined) {
-        		var oPopup = $(oData.popup);
-        		var sPopupId = oPopup.attr('id');
-        		var oClipboard = null;
+            if(oData && oData.popup != undefined) {
+                var oPopup = $(oData.popup);
+                var sPopupId = oPopup.attr('id');
+                var oClipboard = null;
 
-            	$('#' + sPopupId).remove();
+                $('#' + sPopupId).remove();
                 oPopup.hide().prependTo('body').dolPopup({
-                    fog: {
-        				color: '#fff',
-        				opacity: .7
-                    },
                     onShow: function () {
-                    	oClipboard = new ClipboardJS('#' + $this._aHtmlIds['link_popup'] + ' .bx-btn[name = "clipboard"]', {
-                    	    target: function(oTrigger) {
-                    	        return $('#' + sPopupId).find('[name = "link"]').get(0);
-                    	    }
-                    	});
-                    	oClipboard.on('success', function(oObject) {
-                    		$this.hideLinkPopup();
-                    	});
+                        oClipboard = new ClipboardJS('#' + $this._aHtmlIds['link_popup'] + ' .bx-btn[name = "clipboard"]', {
+                            target: function(oTrigger) {
+                                return $('#' + sPopupId).find('[name = "link"]').get(0);
+                            }
+                        });
+                        oClipboard.on('success', function(oObject) {
+                            $this.hideLinkPopup();
+                        });
                     },
                     onHide: function () {
-                    	if(oClipboard)
-                    		oClipboard.destroy();
+                        if(oClipboard)
+                            oClipboard.destroy();
                     }
                 });
-        	}
+            }
 
-        	if(oData && oData.message != undefined)
-        		bx_alert(oData.message);
+            if(oData && oData.message != undefined)
+                    bx_alert(oData.message);
+        },
+        'json'
+    );
+};
+
+BxInvMain.prototype.showCodePopup = function(oElement) {
+    var $this = this;
+
+    this.loadingInButton(oElement, true);
+
+    jQuery.get(
+        this._sActionsUrl + 'get_code/',
+        this._getDefaultData(),
+        function(oData) {
+            $this.loadingInButton(oElement, false);
+
+            if(oData && oData.popup != undefined) {
+                var oPopup = $(oData.popup);
+                var sPopupId = oPopup.attr('id');
+                var oClipboard = oClipboardLink = null;
+
+                $('#' + sPopupId).remove();
+                oPopup.hide().prependTo('body').dolPopup({
+                    onShow: function () {
+                        oClipboard = new ClipboardJS('#' + $this._aHtmlIds['code_popup'] + ' .bx-btn[name = "clipboard"]', {
+                            target: function(oTrigger) {
+                                return $('#' + sPopupId).find('[name = "code"]').get(0);
+                            }
+                        });
+                        oClipboard.on('success', function(oObject) {
+                            $this.hideCodePopup();
+                        });
+                        
+                        oClipboardLink = new ClipboardJS('#' + $this._aHtmlIds['code_popup'] + ' .bx-btn[name = "clipboard_link"]', {
+                            target: function(oTrigger) {
+                                return $('#' + sPopupId).find('[name = "link"]').get(0);
+                            }
+                        });
+                        oClipboardLink.on('success', function(oObject) {
+                            $this.hideCodePopup();
+                        });
+                    },
+                    onHide: function () {
+                        if(oClipboard)
+                            oClipboard.destroy();
+                        if(oClipboardLink)
+                            oClipboardLink.destroy();
+                    }
+                });
+            }
+
+            if(oData && oData.message != undefined)
+                bx_alert(oData.message);
         },
         'json'
     );
 };
 
 BxInvMain.prototype.hideLinkPopup = function() {
-	$('#' + this._aHtmlIds['link_popup']).dolPopupHide();	
+    $('#' + this._aHtmlIds['link_popup']).dolPopupHide();	
+};
+
+BxInvMain.prototype.hideCodePopup = function() {
+    $('#' + this._aHtmlIds['code_popup']).dolPopupHide();	
 };
 
 BxInvMain.prototype.loadingInButton = function(e, bShow) {
-	if($(e).length)
-		bx_loading_btn($(e), bShow);
-	else
-		bx_loading($('body'), bShow);	
+    if($(e).length)
+        bx_loading_btn($(e), bShow);
+    else
+        bx_loading($('body'), bShow);
 };
 
 BxInvMain.prototype._loading = function(e, bShow) {
-	var oParent = $(e).length ? $(e) : $('body'); 
-	bx_loading(oParent, bShow);
+    var oParent = $(e).length ? $(e) : $('body'); 
+    bx_loading(oParent, bShow);
 };
 
 BxInvMain.prototype._getDefaultData = function () {
-	var oDate = new Date();
+    var oDate = new Date();
     return jQuery.extend({}, this._oRequestParams, {_t:oDate.getTime()});
 };
 

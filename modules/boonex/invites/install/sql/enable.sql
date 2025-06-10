@@ -122,7 +122,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`, `AllowedCount`) VALUES
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_invites_requests', 'Sql', 'SELECT `bx_inv_requests`.* FROM `bx_inv_requests` WHERE 1', 'bx_inv_requests', 'id', 'status, date', '', '', 20, NULL, 'start', '', 'bx_inv_requests`.`name, bx_inv_requests`.`email', '', 'like', '', '', 192, 'BxInvGridRequests', 'modules/boonex/invites/classes/BxInvGridRequests.php'),
-('bx_invites_invites', 'Sql', 'SELECT `bx_inv_invites`.* FROM `bx_inv_invites` WHERE 1', 'bx_inv_invites', 'id', 'date', '', '', 20, NULL, 'start', '', 'email', '', 'like', '', '', 192, 'BxInvGridInvites', 'modules/boonex/invites/classes/BxInvGridInvites.php');
+('bx_invites_invites', 'Sql', 'SELECT `bx_inv_invites`.* FROM `bx_inv_invites` WHERE 1', 'bx_inv_invites', 'id', 'date', '', '', 20, NULL, 'start', '', 'email', '', 'like', 'email,date,date_seen,date_joined', '', 192, 'BxInvGridInvites', 'modules/boonex/invites/classes/BxInvGridInvites.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_invites_requests', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
@@ -135,14 +135,16 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_invites_requests', 'actions', '', '20%', 0, '', '', 8),
 
 ('bx_invites_invites', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_invites_invites', 'email', '_bx_invites_grid_invites_column_title_email', '15%', 1, '25', '', 2),
-('bx_invites_invites', 'who_send', '_bx_invites_grid_invites_column_title_who_sent', '15%', 0, '', '', 3),
-('bx_invites_invites', 'date', '_bx_invites_grid_invites_column_title_date', '10%', 0, '20', '', 4),
-('bx_invites_invites', 'date_seen', '_bx_invites_grid_invites_column_title_date_seen', '10%', 0, '20', '', 5),
-('bx_invites_invites', 'joined_account', '_bx_invites_grid_invites_column_title_joined_account', '15%', 0, '20', '', 6),
-('bx_invites_invites', 'date_joined', '_bx_invites_grid_invites_column_title_date_joined', '10%', 0, '20', '', 7),
-('bx_invites_invites', 'request', '_bx_invites_grid_invites_column_title_request', '13%', 0, '20', '', 8),
-('bx_invites_invites', 'actions', '', '20%', 0, '', '', 8);
+('bx_invites_invites', 'who_send', '_bx_invites_grid_invites_column_title_who_sent', '12%', 0, '', '', 2),
+('bx_invites_invites', 'multi', '_bx_invites_grid_invites_column_title_multi', '5%', 0, '16', '', 3),
+('bx_invites_invites', 'email', '_bx_invites_grid_invites_column_title_email', '15%', 1, '25', '', 4),
+('bx_invites_invites', 'aj', '_bx_invites_grid_invites_column_title_aj', '10%', 0, '16', '', 5),
+('bx_invites_invites', 'date', '_bx_invites_grid_invites_column_title_date', '8%', 0, '20', '', 6),
+('bx_invites_invites', 'date_seen', '_bx_invites_grid_invites_column_title_date_seen', '8%', 0, '20', '', 7),
+('bx_invites_invites', 'joined_account', '_bx_invites_grid_invites_column_title_joined_account', '12%', 0, '20', '', 8),
+('bx_invites_invites', 'date_joined', '_bx_invites_grid_invites_column_title_date_joined', '8%', 0, '20', '', 9),
+('bx_invites_invites', 'request', '_bx_invites_grid_invites_column_title_request', '8%', 0, '20', '', 10),
+('bx_invites_invites', 'actions', '', '12%', 0, '', '', 11);
 
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
@@ -173,11 +175,14 @@ INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUE
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('account', 'add_form_check', @iHandler),
 ('account', 'add_form', @iHandler),
 ('account', 'added', @iHandler),
 ('account', 'delete', @iHandler),
+
 ('profile', 'delete', @iHandler),
 ('profile', 'add', @iHandler),
+
 ('bx_analytics', 'get_modules', @iHandler),
 ('bx_analytics', 'get_reports', @iHandler),
 ('bx_analytics', 'get_chart_data_line', @iHandler);

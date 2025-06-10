@@ -107,6 +107,16 @@ class BxInvDb extends BxDolModuleDb
                 $sWhereClause = "AND `{$this->_sTableInvites}`.`key`=:key ";
                 $sLimitClause = "LIMIT 1";
                 break;
+            
+            case 'by_joined_account_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'account_id' => $aParams['account_id']
+                ];
+
+                $sWhereClause = "AND `{$this->_sTableInvites}`.`joined_account_id`=:account_id ";
+                $sLimitClause = "LIMIT 1";
+                break;
 
             case 'all':
                 $aMethod['name'] = 'getAll';
@@ -155,22 +165,22 @@ class BxInvDb extends BxDolModuleDb
      
     public function attachAccountIdToInvite($iAccountId, $sKey)
     {
-        $aBindings = array(
+        $this->query("UPDATE `{$this->_sTableInvites}` SET `joined_account_id`=:joined_account_id, `date_joined`=:date_joined WHERE `key`=:keyvalue", [
             'joined_account_id' => $iAccountId,
             'keyvalue' => $sKey,
             'date_joined' => time(),
-        );
-        $this->query("UPDATE `{$this->_sTableInvites}` SET `joined_account_id`=:joined_account_id, `date_joined`=:date_joined WHERE `key`=:keyvalue", $aBindings);
+        ]);
+
         $this->updateRequestStatusByInviteCode(3, $sKey);
     }
-    
+
     public function updateDateSeenForInvite($sKey)
     {
-        $aBindings = array(
+        $this->query("UPDATE `{$this->_sTableInvites}` SET `date_seen`=:date_seen WHERE `key`=:keyvalue", [
             'date_seen' => time(),
             'keyvalue' => $sKey
-        );
-        $this->query("UPDATE `{$this->_sTableInvites}` SET `date_seen`=:date_seen WHERE `key`=:keyvalue", $aBindings);
+        ]);
+
         $this->updateRequestStatusByInviteCode(2, $sKey);
     }
 

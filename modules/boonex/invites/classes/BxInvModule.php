@@ -16,12 +16,16 @@ define('BX_INV_TYPE_FROM_SYSTEM', 'from_system');
 
 class BxInvModule extends BxDolModule
 {
+    protected $_bIsApi;
+
     /**
      * Constructor
      */
-    function __construct($aModule)
+    public function __construct($aModule)
     {
         parent::__construct($aModule);
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_oConfig->init($this->_oDb);
     }
@@ -29,9 +33,50 @@ class BxInvModule extends BxDolModule
     /**
      * ACTION METHODS
      */
-    function serviceGetLink()
+    public function serviceGetCode($aParams)
     {
-        
+        $iProfileId = $this->getProfileId();
+        $iAccountId = $this->getAccountId($iProfileId);
+
+        $mixedAllowed = $this->isAllowedInvite($iProfileId);
+        if($mixedAllowed !== true)
+            return echoJson(['message' => $mixedAllowed]);
+
+        $bContextAdmin = false;
+        if(isset($aParams['aj_action'], $aParams['aj_params']) && $aParams['aj_action'] == 'invite_to_context' && ($iContextPid = (int)$aParams['aj_params']) != 0)
+            $bContextAdmin = ($oContext = BxDolProfile::getInstance($iContextPid)) !== false && bx_srv($oContext->getModule(), 'is_admin', [$iContextPid, $iProfileId]);
+
+        if(!isAdmin($iAccountId) && !$bContextAdmin && $this->_oConfig->getCountPerUser() <= 0)
+            return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_limit_reached'))] : echoJson(['message' => _t('_bx_invites_err_limit_reached')]);
+
+        $oKeys = BxDolKey::getInstance();
+        if(!$oKeys)
+            return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_not_available'))] : echoJson(['message' => _t('_bx_invites_err_not_available')]);
+
+        $sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());
+
+        $this->getFormObjectInvite()->insert(array_merge([
+            'account_id' => $iAccountId,
+            'profile_id' => $iProfileId,
+            'key' => $sKey,
+            'multi' => 1,
+            'date' => time()
+        ], $aParams));
+        $this->onInvite($iProfileId);
+
+        $sLink = $this->getJoinLink($sKey);
+
+        if($this->_bIsApi)
+            return [
+                'code' => $sKey,
+                'link' => bx_api_get_relative_url($sLink)
+            ];
+
+        echoJson(['popup' => $this->_oTemplate->getCodePopup($sKey, $sLink)]);
+    }
+
+    function serviceGetLink($aParams)
+    {
         $iProfileId = $this->getProfileId();
         $iAccountId = $this->getAccountId($iProfileId);
 
@@ -41,43 +86,43 @@ class BxInvModule extends BxDolModule
 
         if(!isAdmin($iAccountId)) {
             if($this->_oConfig->getCountPerUser() <= 0)
-                return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_limit_reached'))] : echoJson(array('message' => _t('_bx_invites_err_limit_reached')));
+                return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_limit_reached'))] : echoJson(array('message' => _t('_bx_invites_err_limit_reached')));
         }
 
         $oKeys = BxDolKey::getInstance();
         if(!$oKeys)
-            return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_not_available'))] : echoJson(array('message' => _t('_bx_invites_err_not_available')));
+            return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_err_not_available'))] : echoJson(array('message' => _t('_bx_invites_err_not_available')));
 
-        $sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());       
+        $sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());
 
-        $sRedirectUrl = '';
-        $sRedirectCode = $this->_oConfig->getRedirectCode();
-        if(($oSession = BxDolSession::getInstance()) && $oSession->isValue($sRedirectCode))
-            $sRedirectUrl = $oSession->getValue($sRedirectCode);
-
-        $oForm = $this->getFormObjectInvite();
-        $oForm->insert(array(
+        $this->getFormObjectInvite()->insert(array_merge([
             'account_id' => $iAccountId,
             'profile_id' => $iProfileId,
             'key' => $sKey,
-            'redirect' => $sRedirectUrl,
-            'email' => '',
             'date' => time()
-        ));
+        ], $aParams));
         $this->onInvite($iProfileId);
 
-        if (bx_is_api()){
-            return ['link' => bx_api_get_relative_url($this->getJoinLink($sKey))];
-        }
-        
-        echoJson(array('popup' => $this->_oTemplate->getLinkPopup(
-            $this->getJoinLink($sKey)
-        )));
+        $sLink = $this->getJoinLink($sKey);
+
+        if($this->_bIsApi)
+            return ['link' => bx_api_get_relative_url($sLink)];
+
+        echoJson(['popup' => $this->_oTemplate->getLinkPopup($sLink)]);
     }
-    
-    function actionGetLink()
+
+    public function actionGetCode()
     {
-        $this->serviceGetLink();
+        $aParams = $this->_prepareParamsGet();
+
+        $this->serviceGetCode($aParams);
+    }
+
+    public function actionGetLink()
+    {
+        $aParams = $this->_prepareParamsGet();
+
+        $this->serviceGetLink($aParams);
     }
     
     public function actionSetSeenMark($Code)
@@ -95,6 +140,7 @@ class BxInvModule extends BxDolModule
     {
         return array (
             'GetBlockInvite' => '',
+            'GetBlockInviteToContext' => '',
             'GetBlockFormInvite' => '',
             'GetBlockFormRequest' => '',
             'GetLink' => '',
@@ -131,7 +177,7 @@ class BxInvModule extends BxDolModule
      * 
      * @code bx_srv('bx_invites', 'get_block_invite', [...]); @endcode
      * 
-     * Get page block for member's Dashboard which displays invitations related info and action(s).
+     * Get page block which displays invitations related info and action(s).
      *
      * @return an array describing a block to display on the site or empty string if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
@@ -143,17 +189,61 @@ class BxInvModule extends BxDolModule
     public function serviceGetBlockInvite($bRedirect = false)
     {
         $iProfileId = $this->getProfileId();
-        $iAccountId = $this->getAccountId($iProfileId);
-
-        $mixedAllowed = $this->isAllowedInvite($iProfileId);
-        if($mixedAllowed !== true)
+        if(($mixedAllowed = $this->isAllowedInvite($iProfileId)) !== true)
             return '';
 
+        $iAccountId = $this->getAccountId($iProfileId);
         if(!isAdmin($iAccountId) && $this->_oConfig->getCountPerUser() <= 0)
             return '';
 
         return [
-            'content' => $this->_oTemplate->getBlockInvite($iAccountId, $iProfileId, (bool)$bRedirect)
+            'content' => $this->_oTemplate->getBlockInvite($iAccountId, $iProfileId, [
+                'redirect' => (bool)$bRedirect
+            ])
+        ];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-page_blocks Page Blocks
+     * @subsubsection bx_invites-get_block_invite get_block_invite_to_context
+     * 
+     * @code bx_srv('bx_invites', 'get_block_invite_to_context', [...]); @endcode
+     * 
+     * Get page block which displays invitations related info and action(s). It's similar to BxInvModule::serviceGetBlockInvite 
+     * but should be used on View Context page (should receive Context Profile ID). It invites to the context after joining the site.
+     *
+     * @return an array describing a block to display on the site or empty string if something is wrong. 
+     * All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxInvModule::serviceGetBlockInviteToContext
+     */
+    /** 
+     * @ref bx_invites-get_block_invite_to_context "get_block_invite_to_context"
+     */
+    public function serviceGetBlockInviteToContext($iContextPid)
+    {
+        $oContext = false;
+        if(!$iContextPid || !($oContext = BxDolProfile::getInstance($iContextPid)))
+            return '';
+
+        $sContext = $oContext->getModule();
+        if(!bx_srv('system', 'is_module_context', [$sContext]))
+            return '';
+
+        $iProfileId = $this->getProfileId();
+        if(($mixedAllowed = $this->isAllowedInvite($iProfileId)) !== true)
+            return '';
+
+        $iAccountId = $this->getAccountId($iProfileId);
+        if(!isAdmin($iAccountId) && !bx_srv($sContext, 'is_admin', [$iContextPid, $iProfileId]) && $this->_oConfig->getCountPerUser() <= 0)
+            return '';
+
+        return [
+            'content' => $this->_oTemplate->getBlockInvite($iAccountId, $iProfileId, [
+                'context' => (int)$iContextPid
+            ])
         ];
     }
 
@@ -174,25 +264,34 @@ class BxInvModule extends BxDolModule
     /** 
      * @ref bx_invites-get_block_form_invite "get_block_form_invite"
      */
-    public function serviceGetBlockFormInvite()
+    public function serviceGetBlockFormInvite($aParams = [])
     {
+        if(!isset($aParams['aj_action'], $aParams['aj_params']))
+            $aParams = array_merge($aParams, $this->_prepareParamsGet());
+
         $oForm = $this->getFormObjectInvite();
+
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
 
-       
-        
+        foreach(['aj_action', 'aj_params'] as $sKey)
+            if(!empty($aParams[$sKey]))
+                $oForm->aInputs[$sKey] = [
+                    'name' => $sKey,
+                    'type' => 'hidden',
+                    'value' => $aParams[$sKey]
+                ];
+
         $sResult = '';
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()){
             $sResult = MsgBox($this->processFormObjectInvite($oForm));
-            if (bx_is_api()){
+            if($this->_bIsApi)
                 return [bx_api_get_msg($sResult)];
-            }
         }
 
-        if (bx_is_api())
+        if($this->_bIsApi)
             return [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->getName() . '/get_block_form_invite', 'immutable' => true]]])];
-        
+
         return [
             'content' => $sResult . $oForm->getCode()
         ];
@@ -219,7 +318,7 @@ class BxInvModule extends BxDolModule
     {
         $mixedResult = $this->_oTemplate->getBlockFormRequest();
         
-        if (bx_is_api())
+        if ($this->_bIsApi)
             return $mixedResult;
         
         if(is_array($mixedResult)) {
@@ -319,26 +418,25 @@ class BxInvModule extends BxDolModule
     {
         $sReturn = '';
 
-        $oSession = BxDolSession::getInstance();
-        $sKeyCode = $this->_oConfig->getKeyCode();
-
-        $bKey = bx_get($sKeyCode) !== false;
+        $sKey = bx_get($this->_oConfig->getKeyCode());
+        $bKey = $sKey !== false;
         if($bKey) {
-            $sKey = bx_process_input(bx_get($sKeyCode));
+            $sKey = bx_process_input($sKey);
 
             $oKeys = BxDolKey::getInstance();
-            if($oKeys && $oKeys->isKeyExists($sKey))
-                $oSession->setValue($sKeyCode, $sKey);
+            if($oKeys->isKeyExists($sKey))
+                $this->_oConfig->setKey($sKey);
+            else
+                $this->_oConfig->unsetKey();
         }
 
-        $sKey = $oSession->getValue($sKeyCode);
-        if($sKey !== false)
+        if($this->_oConfig->getKey() !== false)
             return $sReturn;
 
         if($bKey)
             $sReturn .= MsgBox(_t('_bx_invites_err_used'));
-        
-        if ($this->_oConfig->isRegistrationByInvitation())
+
+        if($this->_oConfig->isRegistrationByInvitation())
             $sReturn .= $this->_oTemplate->getBlockRequest();
 
         return $sReturn;
@@ -397,8 +495,8 @@ class BxInvModule extends BxDolModule
     {
         $this->_oDb->attachAccountIdToInvite($iAccountId, $sKey);
     }
-    
-    public function invite($sType, $aEmails, $sText, $mixedLimit)
+
+    public function invite($sType, $aEmails, $sText, $aParams = [])
     {
         if(empty($aEmails) || !is_array($aEmails))
             return false;
@@ -408,11 +506,6 @@ class BxInvModule extends BxDolModule
             return false;
 
         $iKeyLifetime = $this->_oConfig->getKeyLifetime();
-
-        $sRedirectUrl = '';
-        $sRedirectCode = $this->_oConfig->getRedirectCode();
-        if(($oSession = BxDolSession::getInstance()) && $oSession->isValue($sRedirectCode))
-            $sRedirectUrl = $oSession->getValue($sRedirectCode);
 
         $sEmailTemplate = '';
         switch($sType) {
@@ -432,11 +525,11 @@ class BxInvModule extends BxDolModule
             'text' => $sText
         ), $iAccountId, $iProfileId);
 
+        $iEmailUse = !empty($aParams['email_use']) ? (int)$aParams['email_use'] : 0;
+        $bLimit = !empty($aParams['limit']) && is_numeric($aParams['limit']);
+
         $aResults = [];
         foreach($aEmails as $sEmail) {
-            if($mixedLimit !== false && (int)$mixedLimit <= 0)
-                break;
-
             $sEmail = trim($sEmail);
             if(empty($sEmail))
                 continue;
@@ -452,16 +545,18 @@ class BxInvModule extends BxDolModule
                     'account_id' => $iAccountId, 
                     'profile_id' => $iProfileId, 
                     'key' => $sKey, 
-                    'redirect' => $sRedirectUrl,
                     'email' => $sEmail, 
+                    'email_use' => $iEmailUse,
+                    'aj_action' => !empty($aParams['aj_action']) ? $aParams['aj_action'] : '',
+                    'aj_params' => !empty($aParams['aj_params']) ? $aParams['aj_params'] : '',
                     'date' => $iDate
                 ]);
 
                 $this->onInvite($iProfileId);
 
                 $aResults[$iInviteId] = $sEmail;
-                if($mixedLimit !== false)
-                    $mixedLimit -= 1;
+                if($bLimit && count($aResults) == (int)$aParams['limit'])
+                    break;
             }
         }
 
@@ -477,19 +572,25 @@ class BxInvModule extends BxDolModule
         if($mixedAllowed !== true)
             return $mixedAllowed;
 
-        $mixedInvites = false;
-        if(!isAdmin($iAccountId)) {
-            if(($mixedInvites = $this->_oConfig->getCountPerUser()) <= 0)
-                return _t('_bx_invites_err_limit_reached');
-        }
+        $aInviteParams = [];
+        if(!isAdmin($iAccountId) && ($aInviteParams['limit'] = $this->_oConfig->getCountPerUser()) <= 0)
+            return _t('_bx_invites_err_limit_reached');
 
         $sEmails = bx_process_input($oForm->getCleanValue('emails'));
         $aEmails = preg_split("/[\s\n,;]+/", $sEmails);
 
+        $aInviteParams['email_use'] = (int)$oForm->getCleanValue('email_use');
+
+        if(($sA = 'aj_action') && ($$sA = $oForm->getCleanValue($sA)) && ($sP = 'aj_params') && ($$sP = $oForm->getCleanValue($sP))) 
+            $aInviteParams = array_merge($aInviteParams, [
+                $sA => $$sA,
+                $sP => $$sP
+            ]);
+
         $sText = bx_process_pass($oForm->getCleanValue('text'));
 
         $sResult = _t('_bx_invites_err_not_available');
-        if(($aEmailsSent = $this->invite(BX_INV_TYPE_FROM_MEMBER, $aEmails, $sText, $mixedInvites)) !== false) {
+        if(($aEmailsSent = $this->invite(BX_INV_TYPE_FROM_MEMBER, $aEmails, $sText, $aInviteParams)) !== false) {
             $sEmailsResult = '';
             if(count($aEmails) != count($aEmailsSent))
                 $sEmailsResult = implode('; ', array_diff($aEmails, $aEmailsSent));
@@ -589,24 +690,23 @@ class BxInvModule extends BxDolModule
     
     protected function getBlockManage($sType)
     {
-        $this->_oTemplate->addJs('jquery.form.min.js');
-        $this->_oTemplate->addJs('main.js');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_' . $sType));
         if(!$oGrid)
             return '';
         
-        if (bx_is_api())
+        if($this->_bIsApi)
             return [
                 bx_api_get_block('grid', $oGrid->getCodeAPI())
             ];
 
-        $this->_oTemplate->addCss(array('main.css'));
-        $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
-       
-        return array(
+        $this->_oTemplate->addCss(['main.css']);
+        $this->_oTemplate->addJs(['jquery.form.min.js', 'main.js']);
+        $this->_oTemplate->addJsTranslation(['_sys_grid_search']);
+
+        return [
            'menu' => $this->_oTemplate->getMenuForManageBlocks($sType),
-           'content' => $this->_oTemplate->getJsCode('main', array('grid' => $sType)) . $oGrid->getCode()
-       );
+           'content' => $this->_oTemplate->getJsCode('main', ['grid' => $sType]) . $oGrid->getCode()
+        ];
     }
 
     public function onInvite($iProfileId)
@@ -638,6 +738,30 @@ class BxInvModule extends BxDolModule
         return  BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'SetSeenMark/' . $sKey . "/";
     }
 
+    protected function _prepareParamsGet()
+    {
+        $sAjAction = bx_get('aja');
+        if(!$sAjAction || !($sAjAction = bx_process_input($sAjAction)) || !in_array($sAjAction, ['redirect', 'invite_to_context']))
+            return [];
+
+        $sAjParams = bx_get('ajp');
+        if(!$sAjParams)
+            return [];
+        
+        switch($sAjAction) {
+            case 'redirect':
+                $sAjParams = bx_process_input($sAjParams);
+                break;
+            case 'invite_to_context':
+                $sAjParams = bx_process_input($sAjParams, BX_DATA_INT);
+                break;
+        }
+        
+        return [
+            'aj_action' => $sAjAction, 
+            'aj_params' => $sAjParams
+        ]; 
+    }
 }
 
 /** @} */

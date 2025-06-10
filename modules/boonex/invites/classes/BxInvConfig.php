@@ -12,11 +12,11 @@
 class BxInvConfig extends BxBaseModGeneralConfig
 {
     protected $_oDb;
+    protected $_oSession;
 
     protected $_iCountPerUser;
     protected $_sKeyCode;
     protected $_iKeyLifetime;
-    protected $_sRedirectCode;
     protected $_bRequestInvite;
     protected $_sRequestsEmail;
     protected $_bRegistrationByInvitation;
@@ -27,6 +27,8 @@ class BxInvConfig extends BxBaseModGeneralConfig
     public function __construct($aModule)
     {
         parent::__construct($aModule);
+
+        $this->_oSession = BxDolSession::getInstance();
 
         $this->CNF = array (
             'URL_INVITE' => 'page.php?i=invites-invite',
@@ -59,7 +61,6 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_iCountPerUser = 0;
         $this->_sKeyCode = 'icode';
         $this->_iKeyLifetime = 86400;
-        $this->_sRedirectCode = 'iredirect';
         $this->_bRequestInvite = true;
         $this->_sRequestsEmail = '';
         $this->_bRegistrationByInvitation = true;
@@ -72,10 +73,14 @@ class BxInvConfig extends BxBaseModGeneralConfig
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
-        $this->_aHtmlIds = array(
+        $this->_aHtmlIds = [
             'link_popup' => $sHtmlPrefix . '-link-popup',
             'link_input' => $sHtmlPrefix . '-link-input',
-        );
+
+            'code_popup' => $sHtmlPrefix . '-code-popup',
+            'code_input' => $sHtmlPrefix . '-code-input',
+            'code_link_input' => $sHtmlPrefix . '-code-link-input'            
+        ];
     }
 
     public function init(&$oDb)
@@ -106,9 +111,24 @@ class BxInvConfig extends BxBaseModGeneralConfig
         return $this->_iKeyLifetime;
     }
 
-    public function getRedirectCode()
+    public function setKey($sKey)
     {
-        return $this->_sRedirectCode;
+        return $this->_oSession->setValue($this->_sKeyCode, $sKey);
+    }
+
+    public function getKey()
+    {
+        return $this->_oSession->getValue($this->_sKeyCode);
+    }
+
+    public function getUnsetKey()
+    {
+        return $this->_oSession->getUnsetValue($this->_sKeyCode);
+    }
+
+    public function unsetKey()
+    {
+        return $this->_oSession->unsetValue($this->_sKeyCode);
     }
 
     public function isRequestInvite()

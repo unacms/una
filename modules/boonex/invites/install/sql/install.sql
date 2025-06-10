@@ -7,8 +7,11 @@ CREATE TABLE IF NOT EXISTS `bx_inv_invites` (
   `account_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
   `key` varchar(128) NOT NULL,
-  `redirect` varchar(255) NOT NULL default '',
+  `multi` tinyint(4) DEFAULT '0',
   `email` varchar(128) NOT NULL,
+  `email_use` tinyint(4) DEFAULT '0',
+  `aj_action` varchar(32) NOT NULL default '',
+  `aj_params` varchar(255) NOT NULL default '',
   `date` int(11) NOT NULL default '0',
   `date_seen` int(11) DEFAULT NULL,
   `date_joined` int(11) DEFAULT NULL,
@@ -38,13 +41,15 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_invites_invite', @sName, 'emails', '', '', 0, 'textarea', '_bx_invites_form_invite_input_sys_emails', '_bx_invites_form_invite_input_emails', '_bx_invites_form_invite_input_emails_inf', 1, 0, 0, '', '', '', 'Emails', '', '_bx_invites_form_invite_input_emails_err', '', '', 0, 0),
+('bx_invites_invite', @sName, 'email_use', 1, '', 0, 'switcher', '_bx_invites_form_invite_input_sys_email_use', '_bx_invites_form_invite_input_email_use', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_invites_invite', @sName, 'text', '', '', 0, 'textarea', '_bx_invites_form_invite_input_sys_text', '_bx_invites_form_invite_input_text', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:10;s:3:"max";i:5000;}', '_bx_invites_form_invite_input_text_err', '', '', 0, 0),
 ('bx_invites_invite', @sName, 'ifi_do_submit', '_bx_invites_form_invite_input_do_submit', '', 0, 'submit', '_bx_invites_form_invite_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_invites_invite_send', 'emails', 2147483647, 1, 1),
-('bx_invites_invite_send', 'text', 2147483647, 1, 2),
-('bx_invites_invite_send', 'ifi_do_submit', 2147483647, 1, 3);
+('bx_invites_invite_send', 'email_use', 2147483647, 1, 2),
+('bx_invites_invite_send', 'text', 2147483647, 1, 3),
+('bx_invites_invite_send', 'ifi_do_submit', 2147483647, 1, 4);
 
 
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

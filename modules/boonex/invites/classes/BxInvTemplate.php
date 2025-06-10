@@ -64,40 +64,71 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName('invite_info.html', $aVars);
     }
     
-    public function getBlockInvite($iAccountId, $iProfileId, $bRedirect = false)
+    public function getBlockInvite($iAccountId, $iProfileId, $aParams = [])
     {
+        $aRequestParams = [];
+
+        //-- Process 'redirect to URL'.
+        if(isset($aParams['redirect']) && $aParams['redirect'] === true) {
+            list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+
+            if(!$this->_bIsApi) {
+                if(isset($aPageParams['_q']))
+                    unset($aPageParams['_q']);
+
+                $sRedirect = bx_append_url_params($sPageLink, $aPageParams);
+            }
+            else
+                $sRedirect = $aPageParams['params'][0];
+
+            $aRequestParams = array_merge($aRequestParams, [
+                'aja' => 'redirect',
+                'ajp' => $sRedirect
+            ]);
+        }
+
+        $sJsObject = $this->_oConfig->getJsObject('main');
+        $sInviteUrl = BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
         $mInvitesRemain = $this->_oConfig->getCountPerUser();
+
+        $aTmplVarsShowByCode = isAdmin($iAccountId) ? ['js_object' => $sJsObject] : [];
+
+        //-- Process 'invite to context'.
+        if(isset($aParams['context']) && ($iContext = (int)$aParams['context']) != 0) {
+            $sInviteUrl = bx_append_url_params($sInviteUrl, ['aja' => 'invite_to_context', 'ajp' => $iContext]);
+
+            $aRequestParams = array_merge($aRequestParams, [
+                'aja' => 'invite_to_context',
+                'ajp' => $iContext
+            ]);
+
+            $sContext = BxDolProfile::getInstance($iContext)->getModule();
+            if(!$aTmplVarsShowByCode && bx_srv($sContext, 'is_admin', [$iContext, $iProfileId])) {
+                $mInvitesRemain = true;
+
+                $aTmplVarsShowByCode = ['js_object' => $sJsObject];
+            }
+        }
+
         if($mInvitesRemain === true)
             $mInvitesRemain = _t('_bx_invites_txt_unlimited');
-        
-        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']));
 
-        if($bRedirect) {
-            $sRedirectCode = $this->_oConfig->getRedirectCode();
-
-            list($sPageLink, $aPageParams) = bx_get_base_url_inline();
-            $sRedirectValue = bx_append_url_params($sPageLink, $aPageParams);
-            if($this->_bIsApi){
-                $sRedirectValue = $aPageParams['params'][0];
-            }
-
-            $oSession = BxDolSession::getInstance();
-            if($oSession->isValue($sRedirectCode))
-                $oSession->unsetValue($sRedirectCode);
-            $oSession->setValue($sRedirectCode, $sRedirectValue);
-        }
-        
-        if($this->_bIsApi){
+        if($this->_bIsApi)
             return [bx_api_get_block('invite', ['remain' => $mInvitesRemain, 'request_url' => 'bx_invites/get_link/'])];
-        }
 
         $this->getCssJs();
         return $this->parseHtmlByName('block_invite.html', [
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'js_object' => $this->_oConfig->getJsObject('main'),
+            'js_object' => $sJsObject,
             'text' => _t('_bx_invites_txt_invite_block_text', $mInvitesRemain),
-            'url' => $sUrl,
-            'js_code' => $this->getJsCode('main')
+            'url' => bx_absolute_url($sInviteUrl),
+            'bx_if:show_by_code' => [
+                'condition' => !empty($aTmplVarsShowByCode),
+                'content' => $aTmplVarsShowByCode
+            ],
+            'js_code' => $this->getJsCode('main', [
+                'oRequestParams' => $aRequestParams
+            ])
         ]);
     }
 
@@ -187,6 +218,21 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         }
 
         return $this->_bIsApi ? [bx_api_get_msg(_t('_bx_invites_msg_request_sent'))] : array('content' => MsgBox(_t('_bx_invites_msg_request_sent')), 'content_id' => $sFormId, 'eval' => $sEval);
+    }
+
+    public function getCodePopup($sKey, $sLink)
+    {
+        $sId = $this->_oConfig->getHtmlIds('code_popup');
+        $sTitle = _t('_bx_invites_txt_code_popup_title');
+        $sContent = $this->parseHtmlByName('popup_code.html', [
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'html_id_code' => $this->_oConfig->getHtmlIds('code_input'),
+            'html_id_code_link' => $this->_oConfig->getHtmlIds('code_link_input'),
+            'code' => $sKey,
+            'link' => $sLink
+        ]);
+
+        return BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $sContent, true);
     }
 
     public function getLinkPopup($sLink)

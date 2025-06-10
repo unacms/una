@@ -36,24 +36,59 @@ class BxInvResponse extends BxDolAlertsResponse
         return $this->$sMethod($oAlert);
     }
 
+    protected function _processAccountAddFormCheck($oAlert)
+    {
+        $sKey = $this->_oModule->_oConfig->getKey();
+        if($sKey === false)
+            return;
+
+        $aInvite = $this->_oModule->_oDb->getInvites(['type' => 'by_key', 'key' => $sKey]);
+        if(!empty($aInvite) && is_array($aInvite) && (int)$aInvite['email_use'] != 0) {
+            $oForm = &$oAlert->aExtras['form_object'];
+            if($oForm->isSubmittedAndValid() && $oForm->aInputs['email']['value'] != $aInvite['email']) {
+                $oForm->aInputs['email']['error'] = _t('_bx_invites_err_wrong_email');
+
+                $oForm->setValid(false);
+            }
+        }
+    }
+
     protected function _processAccountAddForm($oAlert)
     {
         if(!($sCode = $this->_oModule->serviceAccountAddFormCheck())) {
-            $sKeyCode = $this->_oModule->_oConfig->getKeyCode();
-            $sKeyValue = BxDolSession::getInstance()->getValue($sKeyCode);
+            $aInvite = $this->_oModule->_oDb->getInvites([
+                'type' => 'by_key', 
+                'key' => $this->_oModule->_oConfig->getKey()
+            ]);
 
-            $aInvite = $this->_oModule->_oDb->getInvites(['type' => 'by_key', 'key' => $sKeyValue]);
-            if(!empty($aInvite) && is_array($aInvite) && !empty($aInvite['redirect'])) {
-                $oAlert->aExtras['form_object']->aInputs['relocate'] = [
-                    'name' => 'relocate',
-                    'type' => 'hidden',
-                    'value' => BxDolPermalinks::getInstance()->permalink($aInvite['redirect'])
-                ];
+            if(!empty($aInvite) && is_array($aInvite)) {
+                $bGetCode = false;
 
-                $oAlert->aExtras['form_code'] = $oAlert->aExtras['form_object']->getCode();
+                if(!empty($aInvite['email_use'])) {
+                    $oAlert->aExtras['form_object']->aInputs['email']['value'] = $aInvite['email'];
+
+                    if(!is_array($oAlert->aExtras['form_object']->aInputs['email']['attrs']))
+                        $oAlert->aExtras['form_object']->aInputs['email']['attrs'] = [];
+                    $oAlert->aExtras['form_object']->aInputs['email']['attrs']['readonly'] = 'readonly';
+
+                    $bGetCode = true;
+                }
+
+                if(!empty($aInvite['aj_action']) && $aInvite['aj_action'] == 'redirect' && !empty($aInvite['aj_params'])) {
+                    $oAlert->aExtras['form_object']->aInputs['relocate'] = [
+                        'name' => 'relocate',
+                        'type' => 'hidden',
+                        'value' => BxDolPermalinks::getInstance()->permalink($aInvite['aj_params'])
+                    ];
+
+                    $bGetCode = true;
+                }
+
+                if($bGetCode)
+                    $oAlert->aExtras['form_code'] = $oAlert->aExtras['form_object']->getCode();
             }
         }
-        else{
+        else {
             $oAlert->aExtras['form_code'] = $sCode;
             $oAlert->aExtras['form_object'] = false;
         }
@@ -61,12 +96,17 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAdded($oAlert)
     {
-        $sKeyCode = $this->_oModule->_oConfig->getKeyCode();
-        $sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
+        $sKey = $this->_oModule->_oConfig->getUnsetKey();
         if($sKey === false)
             return;
 
         $this->_oModule->attachAccountIdToInvite($oAlert->iObject, $sKey);
+
+        /**
+         * Don't remove key if multi join invitation was used.
+         */
+        if(($aInvite = $this->_oModule->_oDb->getInvites(['type' => 'by_key', 'key' => $sKey])) && is_array($aInvite) && (int)$aInvite['multi'] != 0)
+            return;
 
         $aKeysToRemove = [$sKey];
         if(($sKeysToRemove = $this->_oModule->_oDb->getInvites(['type' => 'invites_code_by_single', 'value' => $sKey])))
@@ -80,39 +120,58 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processProfileAdd($oAlert)
     {
-        if (getParam('bx_invites_automatically_befriend') != 'on')
+        $oProfile = BxDolProfile::getInstanceMagic($oAlert->iObject);
+        if(!$oProfile || !$oProfile->isActAsProfile())
             return;
+
+        $aInvite = $this->_oModule->_oDb->getInvites([
+            'type' => 'by_joined_account_id', 
+            'account_id' => $oProfile->getAccountId()
+        ]);
+        $bInvite = !empty($aInvite) && is_array($aInvite);
+
+        //--- Check 'invite_to_context'
+        if($bInvite && !empty($aInvite['aj_action']) && $aInvite['aj_action'] == 'invite_to_context' && ($iContextPid = (int)$aInvite['aj_params']) != 0) {
+            $oContext = BxDolProfile::getInstance($iContextPid);
+            if($oContext && ($sContext = $oContext->getModule()) && bx_srv('system', 'is_module_context', [$sContext]))
+                bx_srv($sContext, 'add_mutual_connection', [$iContextPid, $oAlert->iObject, true]);
+        }
+
+        //--- Check automatic befriending
+        if(getParam('bx_invites_automatically_befriend') == 'on') {
+            $bNeedToFriend = true;
+
+            /**
+             * @hooks
+             * @hookdef hook-bx_invites-add_friend 'bx_invites', 'add_friend' - hook on add friend on new user registred by invitaion
+             * - $unit_name - equals `add_friend`
+             * - $action - equals `invite` 
+             * - $object_id - not used
+             * - $sender_id - not used
+             * - $extra_params - array of additional params with the following array keys:
+             *      - `profile_id` - [int] profile_id for user registred by invitaion
+             *      - `override_result` - [bool] by ref, if true friend will be added, can be overridden in hook processing
+             * @hook @ref hook-bx_invites-add_friend
+             */
+            bx_alert($this->_sModule, 'add_friend', 0, 0, [
+                'profile_id' => $oAlert->iObject,
+                'override_result' => &$bNeedToFriend,
+            ]);
+
+            if($bNeedToFriend) {
+                $iProfileInvitor = $this->_oModule->_oDb->getInvites([
+                    'type' => 'profile_id_by_joined_account_id', 
+                    'value' => $oProfile->getAccountId()
+                ]);
+
+                if($iProfileInvitor && ($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false){
+                    $oConnection->addConnection($oAlert->iObject, $iProfileInvitor);
+                    $oConnection->addConnection($iProfileInvitor, $oAlert->iObject);
+                }
+            }
+        }
         
-		$bNeedToFriend = true;
         
-        /**
-         * @hooks
-         * @hookdef hook-bx_invites-add_friend 'bx_invites', 'add_friend' - hook on add friend on new user registred by invitaion
-         * - $unit_name - equals `add_friend`
-         * - $action - equals `invite` 
-         * - $object_id - not used
-         * - $sender_id - not used
-         * - $extra_params - array of additional params with the following array keys:
-         *      - `profile_id` - [int] profile_id for user registred by invitaion
-         *      - `override_result` - [bool] by ref, if true friend will be added, can be overridden in hook processing
-         * @hook @ref hook-bx_invites-add_friend
-         */
-		bx_alert($this->_sModule, 'add_friend', 0, 0, [
-			'profile_id' => $oAlert->iObject,
-			'override_result' => &$bNeedToFriend,
-		]);
-		
-		if ($bNeedToFriend){
-			$oProfile = BxDolProfile::getInstanceMagic($oAlert->iObject);
-			if ($oProfile && $oProfile->isActAsProfile()){
-				$iProfileInvitor = $this->_oModule->_oDb->getInvites(array('type' => 'profile_id_by_joined_account_id', 'value' => $oProfile->getAccountId()));
-				if ($iProfileInvitor){
-					$oConnFrinds = BxDolConnection::getObjectInstance('sys_profiles_friends');
-					$oConnFrinds->addConnection($oAlert->iObject, $iProfileInvitor);
-					$oConnFrinds->addConnection($iProfileInvitor, $oAlert->iObject);
-				}
-			}  
-		}
     }
     
     protected function _processProfileDelete($oAlert)

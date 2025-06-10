@@ -27,7 +27,9 @@ class BxInvGridInvites extends BxTemplGrid
 
         $this->_sModule = 'bx_invites';
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
-       
+
+        $this->_sDefaultSortingOrder = 'DESC';
+
         $this->_sFilter1Name = 'filter1';
         $this->_aFilter1Values = array(
             '' => _t('_bx_invites_invites_status_for_filter_all'),
@@ -165,37 +167,63 @@ class BxInvGridInvites extends BxTemplGrid
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputModules);
     }
+
+    protected function _getCellEmail($mixedValue, $sKey, $aField, $aRow)
+    {
+        if((int)$aRow['email_use'] != 0) {
+            $sTitle = bx_html_attribute(_t('_bx_invites_txt_email_use'));
+
+            $mixedValue .= $this->_oModule->_oTemplate->parseIconInline('ui-alert.svg', ['alt' => $sTitle, 'title' => $sTitle]);
+        }
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellMulti($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(_t((int)$mixedValue != 0 ? '_Yes' : '_No'), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellAj($mixedValue, $sKey, $aField, $aRow)
+    {
+        switch($aRow['aj_action']) {
+            case 'redirect':
+                $mixedValue = $this->_getAjLink($aRow['aj_action'], BxDolPermalinks::getInstance()->permalink($aRow['aj_params']));
+                break;
+
+            case 'invite_to_context':
+                $mixedValue = '#';
+                if(($oContext = BxDolProfile::getInstanceMagic((int)$aRow['aj_params'])) !== false)
+                    $mixedValue = $oContext->getUrl();
+
+                $mixedValue = $this->_getAjLink($aRow['aj_action'], $mixedValue);
+                break;
+
+            default:
+                $mixedValue = '';
+        }
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
     
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
         if($this->_bIsApi)
-            return ['type' => 'time', 'data' => $mixedValue];
+            return ['type' => 'time', 'data' => (int)$mixedValue];
 
-        return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+        return parent::_getCellDefault($mixedValue && $mixedValue != 'undefined' ? bx_time_js($mixedValue) : '', $sKey, $aField, $aRow);
     }
-    
+
     protected function _getCellDateSeen($mixedValue, $sKey, $aField, $aRow)
     {
-        if($this->_bIsApi)
-            return ['type' => 'time', 'data' => (int)$mixedValue];
-
-        if($mixedValue == 'undefined')
-            return parent::_getCellDefault('', $sKey, $aField, $aRow);
-
-        return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+        return $this->_getCellDate($mixedValue, $sKey, $aField, $aRow);
     }
-    
+
     protected function _getCellDateJoined($mixedValue, $sKey, $aField, $aRow)
     {
-        if($this->_bIsApi)
-            return ['type' => 'time', 'data' => (int)$mixedValue];
-
-        if($mixedValue == 'undefined')
-            return parent::_getCellDefault('', $sKey, $aField, $aRow);
-
-        return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+        return $this->_getCellDate($mixedValue, $sKey, $aField, $aRow);
     }
-    
+
     protected function _getCellWhoSend($mixedValue, $sKey, $aField, $aRow)
     {
         if(($oProfile = BxDolProfile::getInstanceMagic($aRow['profile_id'])) !== false) {
@@ -274,7 +302,7 @@ class BxInvGridInvites extends BxTemplGrid
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
-    
+
     protected function _getManageAccountUrl($sFilter = '')
     {
     	$sModuleAccounts = 'bx_accounts';
@@ -293,6 +321,14 @@ class BxInvGridInvites extends BxTemplGrid
             $sLink = bx_append_url_params($sLink, array('filter' => $sFilter));
 
         return $sLink;
+    }
+
+    protected function _getAjLink($sAction, $sLink)
+    {
+        return $this->_oModule->_oTemplate->parseHtmlByName('invite_aj_link.html', [
+            'href' => $sLink,
+            'content' => _t('_bx_invites_invites_aj_' . $sAction)
+        ]);
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
