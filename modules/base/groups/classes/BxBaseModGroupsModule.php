@@ -236,6 +236,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'GetQuestionnaire' => '',
             'GetInitialMembers' => '',
             'EntityInvite' => '',
+            'Invitations' => '',
             'FansWithoutAdmins' => '',
         ]);
     }
@@ -712,6 +713,52 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ];
 
         return $oGrid->getCode();
+    }
+
+    public function serviceInvitations ($iInvitedPid = 0, $bAsArray = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iInvitedPid)
+            $iInvitedPid = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iInvitedPid)
+            return false;
+
+        $aInvites = $this->_oDb->getInvites(['sample' => 'invited_pid', 'invited_pid' => $iInvitedPid]);
+        if($bAsArray)
+            return $aInvites;
+
+        $iStart = $iLimit = 0;
+        if($this->_bIsApi) {
+            $aParams = bx_api_get_browse_params($bAsArray);
+
+            $iStart = isset($aParams['start']) ? (int)$aParams['start'] : 0;
+            $iLimit = isset($aParams['per_page']) ? (int)$aParams['per_page'] : 0;
+        }
+        else {
+            $iStart = (int)bx_get('start');
+            $iLimit = (int)bx_get('per_page');
+        }
+
+        $iLimit = !$iLimit && ($sKey = 'PARAM_NUM_CONNECTIONS_QUICK') && !empty($CNF[$sKey]) && ($iValue = (int)getParam($CNF[$sKey])) ? $iValue : 4;
+
+        if($this->_bIsApi) {
+            $aData = [
+                'data' => [],
+                'request_url' => '/api.php?r=' . $this->_oConfig->getName() . '/invites/&params[]=' . $iInvitedPid . '&params[]=',
+                'params' => [
+                    'start' => $iStart,
+                    'per_page' => $iLimit
+                ]
+            ];
+
+            foreach($aInvites as $aInvite)
+                $aData['data'][] = BxDolProfile::getData($aInvite['group_profile_id']);
+
+            return [bx_api_get_block('profiles_list', $aData)];
+        }
+        else
+            return $this->_serviceBrowseQuick(array_keys($aInvites), $iStart, $iLimit);
     }
 
     public function serviceFans ($iContentId = 0, $bAsArray = false)

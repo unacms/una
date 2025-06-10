@@ -655,6 +655,11 @@ class BxBasePage extends BxDolPage
                 foreach($aCpIds as $iCpId)
                     $aContexts[] = BxDolProfile::getData($iCpId);
 
+                $aInvitedTo = [];
+                $aInvitations = bx_srv($sContextSwitcher, 'invitations', [$iLogged, true]);
+                foreach($aInvitations as $aInvitation)
+                    $aInvitedTo[] = BxDolProfile::getData($aInvitation['group_profile_id']);
+
                 $aInfo = [];
                 if(($iId = bx_get('id')) !== false) {
                     $aInfo = bx_srv($sModule, 'get_info', [(int)$iId, false]);
@@ -685,6 +690,7 @@ class BxBasePage extends BxDolPage
 
                 $a['context'] = [
                     'list' => $aContexts,
+                    'invitations' => $aInvitedTo,
                     'current' => $aCurrent,
                     'links' => []
                 ];
