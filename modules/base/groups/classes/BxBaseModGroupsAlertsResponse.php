@@ -47,20 +47,22 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
             return;
 
         // join group events
-        switch ($oAlert->sAction) {
-            case 'join_invitation':
-                $this->sendMailInvitation($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-                break;
+        if($this->_bUseIn) {
+            $iInviter = bx_get_logged_profile_id();
 
-            case 'join_request':
-                if($this->_bUseIn)
-                    $this->sendMailJoinRequest($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-                break;
+            switch ($oAlert->sAction) {
+                case 'join_invitation':
+                    $this->sendMailInvitation($oAlert, $oAlert->aExtras['profile'], $iInviter);
+                    break;
 
-            case 'join_request_accepted':
-                if($this->_bUseIn)
-                    $this->sendMailJoinRequestAccepted($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-                break;
+                case 'join_request':
+                    $this->sendMailJoinRequest($oAlert, $oAlert->aExtras['profile'], $iInviter);
+                    break;
+
+                case 'join_request_accepted':
+                    $this->sendMailJoinRequestAccepted($oAlert, $oAlert->aExtras['profile'], $iInviter);
+                    break;
+            }
         }
     }
 
@@ -68,35 +70,14 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $bTrackInvites = isset($CNF["TABLE_INVITES"]) && isset($CNF['OBJECT_CONNECTIONS']);
-        if(!$this->_bUseIn && !$bTrackInvites)
-            return;
+        $oInviter = BxDolProfile::getInstanceMagic($iInviter);
 
-        $sEntryUrl = $oAlert->aExtras['entry_url'];
-        if($bTrackInvites) {
-            if(!($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
-                return;
-
-            if($iInviter != $oAlert->iSender && !$oConnection->isConnected($iInviter, $oAlert->iSender))
-                return;
-
-            if($this->_oModule->_oDb->isInviteByInvited($iInvited, $oAlert->iSender))
-                return;
-
-            $sKey = BxDolKey::getInstance()->getNewKey(false, $CNF["INVITES_KEYS_LIFETIME"]);
-            $this->_oModule->_oDb->insertInvite($sKey, $oAlert->iSender, $iInviter, $iInvited);
-            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], [
-                'id' => $oAlert->iObject,
-                'key' => $sKey
-            ]));
-        }
-
-        sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_INVITATION'], 0, $iInvited, array(
-            'InviterUrl' => BxDolProfile::getInstance($iInviter)->getUrl(),
-            'InviterDisplayName' => BxDolProfile::getInstance($iInviter)->getDisplayName(),
-            'EntryUrl' => $sEntryUrl,
+        sendMailTemplate($CNF['EMAIL_INVITATION'], 0, $iInvited, [
+            'InviterUrl' => $oInviter->getUrl(),
+            'InviterDisplayName' => $oInviter->getDisplayName(),
+            'EntryUrl' => $oAlert->aExtras['entry_url'],
             'EntryTitle' => $oAlert->aExtras['entry_title'],
-        ), BX_EMAIL_NOTIFY);
+        ], BX_EMAIL_NOTIFY);
     }
 
     protected function sendMailJoinRequest ($oAlert, $iProfileId, $iSender = 0)

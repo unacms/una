@@ -482,15 +482,33 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if (!($aContentInfo = $this->_oDb->getContentInfoById((int)BxDolProfile::getInstance($iGroupProfileId)->getContentId())))
             return false;
 
+        $oConnection = false;
         if (!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             return false;
 
+        $oPermalinks = BxDolPermalinks::getInstance();
+
         $sEntryTitle = $aContentInfo[$CNF['FIELD_NAME']];
-        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
+        $sEntryUrl = bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
 
         // send invitation to the group 
         $sModule = $this->getName();
-        if ($bSendInviteOnly && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
+        $iPerformerId = bx_get_logged_profile_id();
+        if ($bSendInviteOnly && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $iProfileId != $iPerformerId) {
+            /**
+             * Insert invitation.
+             */
+            if(!empty($CNF['TABLE_INVITES']) && !$this->_oDb->isInviteByInvited($iProfileId, $iGroupProfileId)) {
+                $sKey = BxDolKey::getInstance()->getNewKey(false, $CNF['INVITES_KEYS_LIFETIME']);
+
+                $this->_oDb->insertInvite($sKey, $iGroupProfileId, $iPerformerId, $iProfileId);
+
+                $sEntryUrl = bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], [
+                    'id' => $aContentInfo[$CNF['FIELD_ID']],
+                    'key' => $sKey
+                ]));
+            }
+
             /**
              * @hooks
              * @hookdef hook-bx_base_groups-join_invitation '{module_name}', 'join_invitation' - hook before adding (sending) new join to context invitation

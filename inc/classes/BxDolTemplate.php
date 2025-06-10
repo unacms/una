@@ -2100,13 +2100,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * @param string $sLink URL to image source 
      * @param array $aAttrs an array of key => value pairs
      */
-    function parseImage($sLink, $aAttrs = array())
+    function parseImage($sLink, $aAttrs = [])
     {
         $sAttrs = '';
         foreach($aAttrs as $sKey => $sValue)
             $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
         return '<img src="' . $sLink . '"' . $sAttrs . ' />';
+    }
+    
+    function parseImageInline($sName, $aAttrs = [])
+    {
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
+
+        return '<img src="' . $this->_getInlineData('image', $sName, BX_DOL_TEMPLATE_CHECK_IN_BOTH, true) . '"' . $sAttrs . ' />';
     }
 
     /**
@@ -2115,13 +2124,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * @param string $sName font icon name
      * @param array $aAttrs an array of key => value pairs
      */
-    function parseIcon($sName, $aAttrs = array())
+    function parseIcon($sName, $aAttrs = [])
     {
         $aIcons = BxTemplFunctions::getInstance()->getIcon($sName, $aAttrs);
         if($aIcons[0] != '')
             $aIcons[0] = '';
 
         return implode($aIcons);
+    }
+    
+    function parseIconInline($sName, $aAttrs = [])
+    {
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
+
+        return '<img src="' . $this->_getInlineData('icon', $sName, BX_DOL_TEMPLATE_CHECK_IN_BOTH, true) . '"' . $sAttrs . ' />';
     }
 
     function getCacheFilePrefix($sType)
@@ -3426,7 +3444,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * @param  string  $sCheckIn where the content would be searched(base, template, both)
      * @return unknown
      */
-    function _getInlineData($sType, $sName, $sCheckIn)
+    function _getInlineData($sType, $sName, $sCheckIn, $bForceInline = false)
     {
         switch($sType) {
             case 'image':
@@ -3439,7 +3457,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sPath = $this->_getAbsoluteLocation('path', $sFolder, $sName, $sCheckIn);
 
         $iFileSize = 0;
-        if($this->_bImagesInline && ($iFileSize = filesize($sPath)) !== false && $iFileSize < $this->_iImagesMaxSize) {
+        if(($this->_bImagesInline && ($iFileSize = filesize($sPath)) !== false && $iFileSize < $this->_iImagesMaxSize) || $bForceInline) {
             $aFileInfo = pathinfo($sPath);
             return $this->getImageMimeType($aFileInfo['extension']) . ";base64," . base64_encode(file_get_contents($sPath));
         }

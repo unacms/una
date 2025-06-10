@@ -627,7 +627,7 @@ class BxBaseGrid extends BxDolGrid
     {
         $sRow = '';
         if(is_string($mixedRow))
-            $sRow = '<td class="bx-def-padding-sec-topbottom bx-def-font-bold" colspan="' . count($this->_aOptions['fields']) . '">' . $mixedRow . '</td>';
+            $sRow = '<td class="bx-grid-cell bx-gc-string bx-def-padding-sec-topbottom bx-def-font-bold" colspan="' . count($this->_aOptions['fields']) . '">' . $mixedRow . '</td>';
         else
             foreach($this->_aOptions['fields'] as $sKey => $aField)
                 $sRow .= $this->_getCellDesign($sKey, $aField, $mixedRow);
@@ -738,7 +738,7 @@ class BxBaseGrid extends BxDolGrid
 
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_cell',
-            'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
+            'bx-grid-cell' . (!empty($aField['name']) ? ' bx-gc-' . $aField['name'] : '') . ' bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
             isset($aField['width']) ? 'width:' . $aField['width'] : false // add default styles
         );
         return '<td ' . $sAttr . '>' . $mixedValue . '</td>';
