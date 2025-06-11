@@ -1123,29 +1123,78 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             $aParamsBrowse['section'] = explode(',', $aParamsBrowse['section']);
 
         $sClass = 'BxTemplSearch';
-        $oSearch = new $sClass($aParamsBrowse['section']);
-        $oSearch->setLiveSearch(true);
-        $oSearch->setDataProcessing(true);
-        $oSearch->setCustomSearchCondition(['keyword' => $aParamsBrowse['keyword']]);
-        $oSearch->setCustomCurrentCondition([
-            'paginate' => [
-                'forceStart' => $aParamsBrowse['start'],
-                'perPage' => $aParamsBrowse['per_page'],
-            ]
-        ]);
+        
+        $sSections = $aParamsBrowse['section'];
+        if ($aParamsBrowse['live'] !== true && count($sSections) > 1){
+            
+            $aParamsBrowse['section'] = [];
+            $aParamsBrowse['sections'] = [];
+            
+            $aDataRv = [];
+            foreach ($sSections as $sSection) {
+                $oSearch = new $sClass($sSection);
+                $oSearch->setLiveSearch(true);
+                $oSearch->setDataProcessing(true);
+                $oSearch->setCustomSearchCondition(['keyword' => $aParamsBrowse['keyword']]);
+                $oSearch->setCustomCurrentCondition([
+                    'paginate' => [
+                        'forceStart' => $aParamsBrowse['start'],
+                        'perPage' => $aParamsBrowse['per_page'],
+                    ]
+                ]);
 
-        $aData = $oSearch->response();
-        if(count($aData) > $aParamsBrowse['per_page'])
-            $aData = array_slice($aData, $aParamsBrowse['start'], $aParamsBrowse['per_page']);
+                $aData = $oSearch->response();
+                if(count($aData) > $aParamsBrowse['per_page'])
+                    $aData = array_slice($aData, $aParamsBrowse['start'], $aParamsBrowse['per_page']);
+                
+                
+                if (count($aData) > 0){
+                    $oModule = BxDolModule::getInstance($sSection);
+                    $aParamsBrowse['section'][] = $sSection;
+                    $aParamsBrowse['sections'][] = ['name' => $sSection, 'title' => $oModule->getModuleTitle()];
+                   
+                    $bIsProfile = BxDolRequest::serviceExists($sSection, 'act_as_profile') && BxDolService::call($sSection, 'act_as_profile');
+                    
+                    $aDataRv[] = [
+                        'section' => $sSection, 
+                        'section_name' => $oModule->getModuleTitle(), 
+                        'data' => $aData,
+                        'is_profile' => $bIsProfile
+                    ];
+                }
+                
+            }
+            return [bx_api_get_block('search_sections', [
+                'data' => $aDataRv,
+                'params' => $aParamsBrowse
+            ])];
 
-        return [
-            bx_api_get_block('browse', [
-                'unit' => 'search-results',  
-                'request_url' => '/api.php?r=system/get_data_search_api/TemplServices&params[]=',
-                'params' => $aParamsBrowse,
-                'data' => $aData
-            ])
-        ];
+        }
+        else{
+            $oSearch = new $sClass($aParamsBrowse['section']);
+            $oSearch->setLiveSearch(true);
+            $oSearch->setDataProcessing(true);
+            $oSearch->setCustomSearchCondition(['keyword' => $aParamsBrowse['keyword']]);
+            $oSearch->setCustomCurrentCondition([
+                'paginate' => [
+                    'forceStart' => $aParamsBrowse['start'],
+                    'perPage' => $aParamsBrowse['per_page'],
+                ]
+            ]);
+
+            $aData = $oSearch->response();
+            if(count($aData) > $aParamsBrowse['per_page'])
+                $aData = array_slice($aData, $aParamsBrowse['start'], $aParamsBrowse['per_page']);
+
+            return [
+                bx_api_get_block('browse', [
+                    'unit' => 'search-results',  
+                    'request_url' => '/api.php?r=system/get_data_search_api/TemplServices&params[]=',
+                    'params' => $aParamsBrowse,
+                    'data' => $aData
+                ])
+            ];
+        }
     }
 
     /**
