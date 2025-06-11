@@ -1146,20 +1146,19 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
                 $aData = $oSearch->response();
                 if(count($aData) > $aParamsBrowse['per_page'])
                     $aData = array_slice($aData, $aParamsBrowse['start'], $aParamsBrowse['per_page']);
-                
-                
-                if (count($aData) > 0){
-                    $oModule = BxDolModule::getInstance($sSection);
+
+                if (count($aData) > 0) {
+                    $oSearchResult = $oSearch->getSearchResultObject($sSection);
+                    $sSectionTitle = $oSearchResult->aCurrent['title'];
+
                     $aParamsBrowse['section'][] = $sSection;
-                    $aParamsBrowse['sections'][] = ['name' => $sSection, 'title' => $oModule->getModuleTitle()];
-                   
-                    $bIsProfile = BxDolRequest::serviceExists($sSection, 'act_as_profile') && BxDolService::call($sSection, 'act_as_profile');
-                    
+                    $aParamsBrowse['sections'][] = ['name' => $sSection, 'title' => $sSectionTitle];
+
                     $aDataRv[] = [
                         'section' => $sSection, 
-                        'section_name' => $oModule->getModuleTitle(), 
+                        'section_name' => $sSectionTitle, 
                         'data' => $aData,
-                        'is_profile' => $bIsProfile
+                        'is_profile' => bx_srv('system', 'is_module_profile', [$oSearchResult->aCurrent['module_name']])
                     ];
                 }
                 
@@ -1168,7 +1167,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
                 'data' => $aDataRv,
                 'params' => $aParamsBrowse
             ])];
-
         }
         else{
             $oSearch = new $sClass($aParamsBrowse['section']);

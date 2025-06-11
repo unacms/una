@@ -164,6 +164,29 @@ class BxDolSearch extends BxDol
         return DesignBoxContent($sKey, MsgBox($sKey), BX_DB_PADDING_DEF);
     }
 
+    public function getSearchResultObject($sChoice = '')
+    {
+        $aSearchResult = [];
+
+        if($sChoice) {
+            if(empty($this->aChoice[$sChoice]) || !is_array($this->aChoice[$sChoice]))
+                return false;
+
+            $aSearchResult = $this->aChoice[$sChoice];
+        }
+        else
+            $aSearchResult = reset($this->aChoice);
+
+        $sClassName = 'BxTemplSearchResult';
+        if(!empty($aSearchResult['class'])) {
+            $sClassName = $aSearchResult['class'];
+            if(!empty($aSearchResult['file']))
+                require_once(BX_DIRECTORY_PATH_ROOT . $aSearchResult['file']);
+        }
+
+        return new $sClassName();
+    }
+
     protected function getKeyTitlesPairs ()
     {
         $a = array();
