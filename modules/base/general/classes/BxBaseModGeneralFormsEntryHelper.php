@@ -216,7 +216,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 $aValues[$sSubmitName] = $oForm->aInputs[$sSubmitName]['value'];
         }
 
-        //TODO: Use in Edit too.
         $oForm->initChecker([], $aValues);
         if($this->_bValidMode && !$oForm->isValid())
             $oForm->setValid(true);
