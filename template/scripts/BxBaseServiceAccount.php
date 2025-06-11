@@ -69,7 +69,22 @@ class BxBaseServiceAccount extends BxDol
             else if($mixedResult === true){
                 $sRedirectUrl = BxDolForm::getSubmittedValue('relocate','post');
                 if(empty($sRedirectUrl)){
-                    $sRedirectUrl = '/';
+                    if (!getParam('sys_account_auto_profile_creation')){
+                        
+                        $aModulesProfile = bx_srv('system', 'get_modules_by_type', ['profile']);
+
+                        $sDefaultProfileType = getParam('sys_account_default_profile_type');
+                        if(count($aModulesProfile) == 1)
+                            $sProfileModule = $aModulesProfile[0]['name'];
+                        else if(!empty($sDefaultProfileType)) 
+                            $sProfileModule = $sDefaultProfileType;
+                        
+                        $sRedirectUrl = !empty($sProfileModule) ? bx_api_get_relative_url(BxDolPermalinks::getInstance()->permalink(BxDolService::call($sProfileModule, 'profile_create_url', array(false)))) : '/';
+
+                    }
+                    else{
+                        $sRedirectUrl = '/';
+                    }    
                 }
                 else{
                     $parts = parse_url($sRedirectUrl);
