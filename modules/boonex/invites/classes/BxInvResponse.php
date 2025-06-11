@@ -131,11 +131,8 @@ class BxInvResponse extends BxDolAlertsResponse
         $bInvite = !empty($aInvite) && is_array($aInvite);
 
         //--- Check 'invite_to_context'
-        if($bInvite && !empty($aInvite['aj_action']) && $aInvite['aj_action'] == 'invite_to_context' && ($iContextPid = (int)$aInvite['aj_params']) != 0) {
-            $oContext = BxDolProfile::getInstance($iContextPid);
-            if($oContext && ($sContext = $oContext->getModule()) && bx_srv('system', 'is_module_context', [$sContext]))
-                bx_srv($sContext, 'add_mutual_connection', [$iContextPid, $oAlert->iObject, true]);
-        }
+        if($bInvite && !empty($aInvite['aj_action']) && $aInvite['aj_action'] == 'invite_to_context')
+            $this->_oModule->processInviteToContext($oAlert->iObject, (int)$aInvite['aj_params']);
 
         //--- Check automatic befriending
         if(getParam('bx_invites_automatically_befriend') == 'on') {

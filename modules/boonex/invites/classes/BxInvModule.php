@@ -251,6 +251,39 @@ class BxInvModule extends BxDolModule
      * @page service Service Calls
      * @section bx_invites Invitations
      * @subsection bx_invites-page_blocks Page Blocks
+     * @subsubsection bx_invites-get_block_accept_by_code get_block_accept_by_code
+     * 
+     * @code bx_srv('bx_invites', 'get_block_accept_by_code', [...]); @endcode
+     * 
+     * Get page block with accept invitation (by code) form.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxInvModule::serviceGetBlockAcceptByCode
+     */
+    /** 
+     * @ref bx_invites-get_block_accept_by_code "get_block_accept_by_code"
+     */
+    public function serviceGetBlockAcceptByCode()
+    {
+        $mixedResult = $this->_oTemplate->getBlockAcceptByCode();
+        if($this->_bIsApi)
+            return $mixedResult;
+
+        if(is_array($mixedResult)) {
+            echoJson($mixedResult);
+            exit;
+        }
+
+        return [
+            'content' => $mixedResult
+        ];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-page_blocks Page Blocks
      * @subsubsection bx_invites-get_block_form_invite get_block_form_invite
      * 
      * @code bx_srv('bx_invites', 'get_block_form_invite', [...]); @endcode
@@ -602,6 +635,19 @@ class BxInvModule extends BxDolModule
         return $sResult;
     }
 
+    public function processInviteToContext($iPid, $iContextPid)
+    {
+        $oContext = null;
+        if(!$iPid || !$iContextPid || !($oContext = BxDolProfile::getInstance($iContextPid)))
+            return false;
+
+        $sContext = $oContext->getModule();
+        if(!bx_srv('system', 'is_module_context', [$sContext]))
+            return false;
+
+        return bx_srv($sContext, 'add_invitation', [$iContextPid, $iPid]);
+    }
+
     public function isAllowedInvite($iProfileId, $bPerform = false)
     {
         $aCheckResult = checkActionModule($iProfileId, 'invite', $this->getName(), $bPerform);
@@ -724,13 +770,12 @@ class BxInvModule extends BxDolModule
          */
         bx_alert($this->_oConfig->getObject('alert'), 'invite', 0, $iProfileId);
     }
-    
+
     public function getJoinLink($sKey)
     {
-        $sKeyCode = $this->_oConfig->getKeyCode();
-
-        $sJoinUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'));
-        return bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey));
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=create-account', [
+            $this->_oConfig->getKeyCode() => $sKey
+        ]));
     }
     
     public function getSeenImageUrl($sKey)
