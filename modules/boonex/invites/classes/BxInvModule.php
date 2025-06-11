@@ -795,8 +795,9 @@ class BxInvModule extends BxDolModule
         
         switch($sAjAction) {
             case 'redirect':
-                $sAjParams = bx_process_input($sAjParams);
+                $sAjParams = $this->_oConfig->urlDecode(bx_process_input($sAjParams));
                 break;
+
             case 'invite_to_context':
                 $sAjParams = bx_process_input($sAjParams, BX_DATA_INT);
                 break;

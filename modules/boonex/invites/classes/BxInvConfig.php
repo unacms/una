@@ -154,6 +154,16 @@ class BxInvConfig extends BxBaseModGeneralConfig
 
         return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
+
+    public function urlEncode($s)
+    {
+        return urlencode(base64_encode($s));
+    }
+
+    public function urlDecode($s)
+    {
+        return base64_decode(urldecode($s));
+    }
 }
 
 /** @} */

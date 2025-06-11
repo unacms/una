@@ -68,6 +68,8 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
     {
         $aRequestParams = [];
 
+        $sInviteUrl = BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
+
         //-- Process 'redirect to URL'.
         if(isset($aParams['redirect']) && $aParams['redirect'] === true) {
             list($sPageLink, $aPageParams) = bx_get_base_url_inline();
@@ -81,6 +83,11 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             else
                 $sRedirect = $aPageParams['params'][0];
 
+            $sInviteUrl = bx_append_url_params($sInviteUrl, [
+                'aja' => 'redirect', 
+                'ajp' => $this->_oConfig->urlEncode($sRedirect)
+            ]);
+
             $aRequestParams = array_merge($aRequestParams, [
                 'aja' => 'redirect',
                 'ajp' => $sRedirect
@@ -88,14 +95,16 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         }
 
         $sJsObject = $this->_oConfig->getJsObject('main');
-        $sInviteUrl = BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
         $mInvitesRemain = $this->_oConfig->getCountPerUser();
 
         $aTmplVarsShowByCode = isAdmin($iAccountId) ? ['js_object' => $sJsObject] : [];
 
         //-- Process 'invite to context'.
         if(isset($aParams['context']) && ($iContext = (int)$aParams['context']) != 0) {
-            $sInviteUrl = bx_append_url_params($sInviteUrl, ['aja' => 'invite_to_context', 'ajp' => $iContext]);
+            $sInviteUrl = bx_append_url_params($sInviteUrl, [
+                'aja' => 'invite_to_context', 
+                'ajp' => $iContext
+            ]);
 
             $aRequestParams = array_merge($aRequestParams, [
                 'aja' => 'invite_to_context',
