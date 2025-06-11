@@ -1625,22 +1625,32 @@ class BxBaseModGeneralModule extends BxDolModule
         return new $sClass($this);
     }
 
-    public function serviceFormsHelper ()
+    public function serviceFormsHelper()
     {
         return $this->getFormsHelper();
     }
 
-	/**
+    /**
      * Add entry using provided fields' values.
-     * @return array with result: 'code' is 0 on success or non-zero on error, 'message' is error message in case of error, 'content' is content info array in case of success
+     * @return array with result: 
+     * 'code' is 0 on success or non-zero on error, 
+     * 'message' is error message in case of error, 
+     * 'content' is content info array in case of success
      */
-    public function serviceEntityAdd ($iProfile, $aValues, $sDisplay = false)
+    public function serviceEntityAdd($iProfile, $aValues, $sDisplay = false)
     {
         $oFormsHelper = $this->getFormsHelper();
         return $oFormsHelper->addData($iProfile, $aValues, $sDisplay);
     }
 
-	/**
+    public function serviceEntityAddForcedly($iProfile, $aValues, $sDisplay = false)
+    {
+        $oFormsHelper = $this->getFormsHelper();
+        $oFormsHelper->setValidMode(true);
+        return $oFormsHelper->addData($iProfile, $aValues, $sDisplay);
+    }
+
+    /**
      * Perform redirect after content creation
      * @return nothing, rediret header is sent
      */    

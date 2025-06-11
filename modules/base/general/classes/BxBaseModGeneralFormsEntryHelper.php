@@ -28,6 +28,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     protected $_bAjaxMode;
 
     /**
+     * 'Valid Mode' allows to create content even if some fields values 
+     * didn't pass checking. It's needed when content was created 
+     * with a service call. For example, automatic profile creation after join.
+     */
+    protected $_bValidMode;
+
+    /**
      * Use absolute Action URL in generated form object. 
      * It's needed in Ajax Mode.
      */
@@ -62,6 +69,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_bAjaxMode = (bool)$bAjaxMode;
         if($this->_bAjaxMode)
             $this->setDynamicMode(true);
+    }
+
+    public function setValidMode($bValidMode)
+    {
+        $this->_bValidMode = (bool)$bValidMode;
     }
 
     public function setAbsoluteActionUrl($bAbsoluteActionUrl)
@@ -204,8 +216,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 $aValues[$sSubmitName] = $oForm->aInputs[$sSubmitName]['value'];
         }
 
-        $oForm->initChecker(array(), $aValues);
-        if (!$oForm->isSubmittedAndValid()) {
+        //TODO: Use in Edit too.
+        $oForm->initChecker([], $aValues);
+        if($this->_bValidMode && !$oForm->isValid())
+            $oForm->setValid(true);
+
+        if(!$oForm->isSubmittedAndValid()) {
             $aErrors = array();
             array_walk($oForm->aInputs, function($aInput, $sKey) use (&$aErrors) {
                 if(!empty($aInput['error']))

@@ -239,32 +239,25 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
                 // perform action
                 BxDolAccount::isAllowedCreate ($iProfileId, true);
-                
-                // check
-                $aModulesProfile = array(); 
-                $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
-                foreach($aModules as $aModule) {
-                    $oModule = BxDolModule::getInstance($aModule['name']);
-                    if($oModule instanceof iBxDolProfileService && BxDolService::call($aModule['name'], 'act_as_profile') === true)
-                        $aModulesProfile[] = $aModule;
-                }
 
-                $sDefaultProfileType = getParam('sys_account_default_profile_type');
+                // check
+                $aModulesProfile = bx_srv('system', 'get_modules_by_type', ['profile']);
+
                 if(count($aModulesProfile) == 1)
-                    $sProfileModule = $aModulesProfile[0]['name'];
-                else if(!empty($sDefaultProfileType)) 
+                    $sProfileModule = reset($aModulesProfile)['name'];
+                else if(($sDefaultProfileType = getParam('sys_account_default_profile_type')) !== '') 
                     $sProfileModule = $sDefaultProfileType;
 
-                if (getParam('sys_account_auto_profile_creation') && !empty($sProfileModule)) {
-                    $oAccount = BxDolAccount::getInstance($iAccountId);
-                    $aProfileInfo = BxDolService::call($sProfileModule, 'prepare_fields', array(array(
+                if(!empty($sProfileModule) && getParam('sys_account_auto_profile_creation') == 'on') {
+                    $aProfileFields = bx_srv($sProfileModule, 'prepare_fields', [[
                         'author' => $iProfileId,
-                        'name' => $oAccount->getDisplayName(),
-                    )));
-                    $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
-                    if (isset($a['content']['profile_id']) && (int)$a['content']['profile_id'] > 0){
+                        'name' => BxDolAccount::getInstance($iAccountId)->getDisplayName(),
+                    ]]);
+
+                    $a = bx_srv($sProfileModule, 'entity_add_forcedly', [$iProfileId, $aProfileFields]);
+                    if(isset($a['content']['profile_id']) && (int)$a['content']['profile_id'] > 0)
                         BxDolAcl::getInstance()->setMembership((int)$a['content']['profile_id'], MEMBERSHIP_ID_STANDARD);
-                    }
+
                     echoJson($aRes);
                 }
             }

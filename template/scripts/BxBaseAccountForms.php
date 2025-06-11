@@ -142,28 +142,20 @@ class BxBaseAccountForms extends BxDolProfileForms
         $bRelocateCustom = !empty($sRelocateCustom);
 
         // check and redirect
-        $aModulesProfile = array(); 
-        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
-        foreach($aModules as $aModule) {
-        	$oModule = BxDolModule::getInstance($aModule['name']);
-        	if($oModule instanceof iBxDolProfileService && BxDolService::call($aModule['name'], 'act_as_profile') === true)
-        		$aModulesProfile[] = $aModule;
-        }
+        $aModulesProfile = bx_srv('system', 'get_modules_by_type', ['profile']);
 
-        $sDefaultProfileType = getParam('sys_account_default_profile_type');
         if(count($aModulesProfile) == 1)
-        	$sProfileModule = $aModulesProfile[0]['name'];
-        else if(!empty($sDefaultProfileType)) 
+            $sProfileModule = reset($aModulesProfile)['name'];
+        else if(($sDefaultProfileType = getParam('sys_account_default_profile_type')) !== '') 
             $sProfileModule = $sDefaultProfileType;
 
-        if (getParam('sys_account_auto_profile_creation') && !empty($sProfileModule)) {
-            $oAccount = BxDolAccount::getInstance($iAccountId);
-            $aProfileInfo = BxDolService::call($sProfileModule, 'prepare_fields', array(array(
+        if(!empty($sProfileModule) && getParam('sys_account_auto_profile_creation') == 'on') {
+            $aProfileFields = BxDolService::call($sProfileModule, 'prepare_fields', [[
                 'author' => $iProfileId,
-                'name' => $oAccount->getDisplayName(),
-            )));
-            
-            $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
+                'name' => BxDolAccount::getInstance($iAccountId)->getDisplayName(),
+            ]]);
+
+            $a = BxDolService::call($sProfileModule, 'entity_add_forcedly', [$iProfileId, $aProfileFields]);
 
             // in case of successful profile add redirect to the page after profile creation
             if (0 == $a['code'] && !$bIsApi) {
