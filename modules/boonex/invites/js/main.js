@@ -1,5 +1,5 @@
 function BxInvMain(oOptions) {
-	this._sActionsUri = oOptions.sActionUri;
+    this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oInvMain' : oOptions.sObjName;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
@@ -11,32 +11,52 @@ function BxInvMain(oOptions) {
 }
 
 BxInvMain.prototype.initRequestForm = function(sFormId) {
-	var oForm = $('#' + sFormId);
-	if(!oForm.length)
-		return;
+    var oForm = $('#' + sFormId);
+    if(!oForm.length)
+        return;
 
-	oForm.ajaxForm({ 
+    oForm.ajaxForm({
         dataType: 'json',
         beforeSubmit: function (formData, jqForm, options) {
             bx_loading(oForm, true);
         },
         success: function (oData) {
+            bx_loading(oForm, false);
+
             processJsonData(oData);
         }
     });
 };
 
 BxInvMain.prototype.onRequestFormSubmit = function(oData) {
-	var $this = this;
+    var $this = this;
 
-	if(!oData || !oData.content || !oData.content_id)
-		return;
+    if(!oData || !oData.content || !oData.content_id)
+        return;
 
-	$('#' + oData.content_id).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-		$(this).replaceWith(oData.content);
+    $('#' + oData.content_id).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+        $(this).replaceWith(oData.content);
 
-		$this.initRequestForm(oData.content_id);
-	});
+        $this.initRequestForm(oData.content_id);
+    });
+};
+
+BxInvMain.prototype.initAcceptForm = function(sFormId) {
+    var oForm = $('#' + sFormId);
+    if(!oForm.length)
+        return;
+
+    oForm.ajaxForm({
+        dataType: 'json',
+        beforeSubmit: function (formData, jqForm, options) {
+            bx_loading(oForm, true);
+        },
+        success: function (oData) {
+            bx_loading(oForm, false);
+
+            processJsonData(oData);
+        }
+    });
 };
 
 BxInvMain.prototype.showLinkPopup = function(oElement) {

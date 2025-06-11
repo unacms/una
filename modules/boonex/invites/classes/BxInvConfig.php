@@ -50,6 +50,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
             'form_invite' => $this->_sName . '_invite',
             'form_request' => $this->_sName . '_request',
             'form_display_invite_send' => $this->_sName . '_invite_send',
+            'form_display_invite_accept_by_code' => $this->_sName . '_invite_accept_by_code',
             'form_display_request_send' => $this->_sName . '_request_send',
         );
 

@@ -132,6 +132,65 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         ]);
     }
 
+    public function getBlockAcceptByCode()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oModule = $this->getModule();
+        $sJsObject = $this->_oConfig->getJsObject('main');
+
+        $oForm = $oModule->getFormObjectInvite($this->_oConfig->getObject('form_display_invite_accept_by_code'));
+        $sFormId = $oForm->getId();
+
+        $oForm->initChecker();
+        if(!$oForm->isSubmittedAndValid()) {
+            $sForm = $oForm->getCode();
+
+            if(!$oForm->isSubmitted()) {
+                $this->getCssJs();
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_accept_by_code', 'immutable' => true]]])] : $this->parseHtmlByName('block_accept_form.html', [
+                    'style_prefix' => $this->_oConfig->getPrefix('style'),
+                    'js_object' => $sJsObject,
+                    'js_code' => $this->getJsCode('main'),
+                    'form' => $sForm,
+                    'form_id' => $sFormId,
+                ]);
+            }
+
+            if(!$oForm->isValid())
+                return $this->_bIsApi ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_accept_by_code', 'immutable' => true]]])] : ['form' => $sForm, 'form_id' => $sFormId];
+        }
+
+        $sKey = $oForm->getCleanValue('key');
+
+        $aInvite = $this->_oDb->getInvites(['type' => 'by_key', 'key' => $sKey]);
+        if(empty($aInvite) || !is_array($aInvite))
+            return ($sMsg = _t('_bx_invites_err_code_not_found')) && $this->_bIsApi ? [bx_api_get_msg($sMsg)] : ['msg' => $sMsg];
+
+        if(!isLogged())
+            return ($sJoinLink = $oModule->getJoinLink($sKey)) && $this->_bIsApi ? [bx_api_get_msg('TODO: Need redirect to join.')] : ['redirect' => $sJoinLink];
+
+        $iProfileId = bx_get_logged_profile_id();
+
+        $sRedirectUrl = '';
+        if(!empty($aInvite['aj_action']))
+            switch($aInvite['aj_action']) {
+                case 'redirect':
+                    $sRedirectUrl = $aInvite['aj_params'];
+                    break;
+
+                case 'invite_to_context':
+                    if(($iContextPid = (int)$aInvite['aj_params']) && ($oContext = BxDolProfile::getInstanceMagic($iContextPid)) && $oModule->processInviteToContext($iProfileId, $iContextPid))
+                        $sRedirectUrl = $oContext->getUrl();
+                    break;
+            }
+
+        if(!$sRedirectUrl)
+            return ($sMsg = _t('_bx_invites_err_code_not_applicable')) && $this->_bIsApi ? [bx_api_get_msg($sMsg)] : ['msg' => $sMsg];
+
+        return $this->_bIsApi ? [bx_api_get_msg('TODO: Need redirect to ' . $sRedirectUrl)] : ['redirect' => $sRedirectUrl];
+    }
+
     public function getBlockRequest()
     {
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_REQUEST']));

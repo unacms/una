@@ -472,95 +472,120 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return false;
     }
 
+    public function serviceAddInvitation ($iContextPid, $iPid, $iPerformerPid = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oGroupProfile = false;
+        if(!($oGroupProfile = BxDolProfile::getInstance($iContextPid)))
+            return false;
+
+        if(!($aContentInfo = $this->_oDb->getContentInfoById((int)$oGroupProfile->getContentId())))
+            return false;
+
+        $oConnection = false;
+        if(!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
+            return false;
+
+        if($oConnection->isConnected((int)$iPid, $iContextPid) || $oConnection->isConnected($iContextPid, (int)$iPid))
+            return false;
+
+        if(!$iPerformerPid)
+            $iPerformerPid = bx_get_logged_profile_id();
+
+        $sEntryUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        if(!empty($CNF['TABLE_INVITES']) && !$this->_oDb->isInviteByInvited($iPid, $iContextPid)) {
+            $sKey = BxDolKey::getInstance()->getNewKey(false, $CNF['INVITES_KEYS_LIFETIME']);
+
+            $this->_oDb->insertInvite($sKey, $iContextPid, $iPerformerPid, $iPid);
+
+            $sEntryUrl = bx_append_url_params($sEntryUrl, [
+                'key' => $sKey
+            ]);
+        }
+
+        $sModule = $this->getName();
+
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_groups-join_invitation '{module_name}', 'join_invitation' - hook before adding (sending) new join to context invitation
+         * - $unit_name - module name
+         * - $action - equals `join_invitation`
+         * - $object_id - context id
+         * - $sender_id - context profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `content` - [array] context info array as key&value pairs
+         *      - `entry_title` - [string] context title
+         *      - `entry_url` - [string] context URL
+         *      - `group_profile` - [int] context profile id
+         *      - `profile` - [int] profile id who was invited
+         *      - `notification_subobject_id` - [int] profile id who was invited
+         *      - `object_author_id` - [int] context profile id
+         * @hook @ref hook-bx_base_groups-join_invitation
+         */
+        bx_alert($sModule, 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iContextPid, [
+            'content' => $aContentInfo, 
+            'entry_title' => $aContentInfo[$CNF['FIELD_NAME']], 
+            'entry_url' => bx_absolute_url($sEntryUrl), 
+            'group_profile' => $iContextPid, 
+            'profile' => $iPid, 
+            'notification_subobject_id' => $iPid, 
+            'object_author_id' => $iContextPid
+        ]);
+
+        /**
+         * 'Invitation Received' alert for Notifications module.
+         * Note. It's essential to use Recipient ($iPid) in 'object_author_id' parameter. 
+         * In this case notification will be received by Recipient profile.
+         */
+        /**
+         * @hooks
+         * @hookdef hook-bx_base_groups-join_invitation_notif '{module_name}', 'join_invitation_notif' - hook before adding new join to context invitation. Is needed for Notifications module.
+         * - $unit_name - module name
+         * - $action - equals `join_invitation_notif`
+         * - $object_id - context id
+         * - $sender_id - context profile id
+         * - $extra_params - array of additional params with the following array keys:
+         *      - `object_author_id` - [int] profile id who was invited
+         *      - `privacy_view` - [int] or [string] privacy for view context action, @see BxDolPrivacy
+         * @hook @ref hook-bx_base_groups-join_invitation_notif
+         */
+        bx_alert($sModule, 'join_invitation_notif', $aContentInfo[$CNF['FIELD_ID']], $iContextPid, [
+            'object_author_id' => $iPid, 
+            'privacy_view' => isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 3, 
+        ]);
+
+        return true;
+    }
+
     public function serviceAddMutualConnection ($iGroupProfileId, $iInitiatorId, $bSendInviteOnly = false)
     {        
         $CNF = &$this->_oConfig->CNF;
 
-        list ($iProfileId, $iGroupProfileId, $oGroupProfile) = $this->_prepareProfileAndGroupProfile($iGroupProfileId, $iInitiatorId);
-        if (!$oGroupProfile)
+        list($iProfileId, $iGroupProfileId, $oGroupProfile) = $this->_prepareProfileAndGroupProfile($iGroupProfileId, $iInitiatorId);
+        if(!$oGroupProfile)
             return false;
 
-        if (!($aContentInfo = $this->_oDb->getContentInfoById((int)BxDolProfile::getInstance($iGroupProfileId)->getContentId())))
+        if(!($aContentInfo = $this->_oDb->getContentInfoById((int)BxDolProfile::getInstance($iGroupProfileId)->getContentId())))
             return false;
 
         $oConnection = false;
-        if (!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
+        if(!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             return false;
 
-        $oPermalinks = BxDolPermalinks::getInstance();
-
         $sEntryTitle = $aContentInfo[$CNF['FIELD_NAME']];
-        $sEntryUrl = bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
+        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
 
         // send invitation to the group 
-        $sModule = $this->getName();
         $iPerformerId = bx_get_logged_profile_id();
-        if ($bSendInviteOnly && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $iProfileId != $iPerformerId) {
-            /**
-             * Insert invitation.
-             */
-            if(!empty($CNF['TABLE_INVITES']) && !$this->_oDb->isInviteByInvited($iProfileId, $iGroupProfileId)) {
-                $sKey = BxDolKey::getInstance()->getNewKey(false, $CNF['INVITES_KEYS_LIFETIME']);
+        if($bSendInviteOnly)
+            return $iProfileId != $iPerformerId ? $this->serviceAddInvitation($oGroupProfile->id(), $iInitiatorId, $iPerformerId) : false;
 
-                $this->_oDb->insertInvite($sKey, $iGroupProfileId, $iPerformerId, $iProfileId);
+        $sModule = $this->getName();
+        $sModuleGroup = $oGroupProfile->getModule();
 
-                $sEntryUrl = bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], [
-                    'id' => $aContentInfo[$CNF['FIELD_ID']],
-                    'key' => $sKey
-                ]));
-            }
-
-            /**
-             * @hooks
-             * @hookdef hook-bx_base_groups-join_invitation '{module_name}', 'join_invitation' - hook before adding (sending) new join to context invitation
-             * - $unit_name - module name
-             * - $action - equals `join_invitation`
-             * - $object_id - context id
-             * - $sender_id - context profile id
-             * - $extra_params - array of additional params with the following array keys:
-             *      - `content` - [array] context info array as key&value pairs
-             *      - `entry_title` - [string] context title
-             *      - `entry_url` - [string] context URL
-             *      - `group_profile` - [int] context profile id
-             *      - `profile` - [int] profile id who was invited
-             *      - `notification_subobject_id` - [int] profile id who was invited
-             *      - `object_author_id` - [int] context profile id
-             * @hook @ref hook-bx_base_groups-join_invitation
-             */
-            bx_alert($sModule, 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
-                'content' => $aContentInfo, 
-                'entry_title' => $sEntryTitle, 
-                'entry_url' => $sEntryUrl, 
-                'group_profile' => $iGroupProfileId, 
-                'profile' => $iProfileId, 
-                'notification_subobject_id' => $iProfileId, 
-                'object_author_id' => $iGroupProfileId
-            ]);
-
-            /**
-             * 'Invitation Received' alert for Notifications module.
-             * Note. It's essential to use Recipient ($iInitiatorId) in 'object_author_id' parameter. 
-             * In this case notification will be received by Recipient profile.
-             */
-            /**
-             * @hooks
-             * @hookdef hook-bx_base_groups-join_invitation_notif '{module_name}', 'join_invitation_notif' - hook before adding new join to context invitation. Is needed for Notifications module.
-             * - $unit_name - module name
-             * - $action - equals `join_invitation_notif`
-             * - $object_id - context id
-             * - $sender_id - context profile id
-             * - $extra_params - array of additional params with the following array keys:
-             *      - `object_author_id` - [int] profile id who was invited
-             *      - `privacy_view` - [int] or [string] privacy for view context action, @see BxDolPrivacy
-             * @hook @ref hook-bx_base_groups-join_invitation_notif
-             */
-            bx_alert($sModule, 'join_invitation_notif', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, [
-                'object_author_id' => $iInitiatorId, 
-                'privacy_view' => isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 3, 
-            ]);
-        }
         // send notification to group's admins that new connection is pending confirmation 
-        elseif (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation'] && $aContentInfo[$CNF['FIELD_AUTHOR']] != $iProfileId) {
+        if($oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation'] && $aContentInfo[$CNF['FIELD_AUTHOR']] != $iProfileId) {
             /**
              * @hooks
              * @hookdef hook-bx_base_groups-join_request '{module_name}', 'join_request' - hook before adding new join to context request
@@ -591,7 +616,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ]);
         }
         // send notification that join request was accepted 
-        else if (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
+        else if($oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $sModuleGroup != $sModule && $iProfileId != $iPerformerId) {
             /**
              * @hooks
              * @hookdef hook-bx_base_groups-join_request_accepted '{module_name}', 'join_request_accepted' - hook before accepting join to context request
@@ -612,16 +637,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         }
 
         // new fan was added
-        if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
+        if($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
             // follow group on join
-            if (BxDolService::call($oGroupProfile->getModule(), 'act_as_profile')){
+            if(bx_srv($sModuleGroup, 'act_as_profile'))
                  $this->addFollower($oGroupProfile->id(), (int)$iInitiatorId);
-            }
-            else{
+            else
                  $this->addFollower((int)$iInitiatorId, $oGroupProfile->id()); 
-            }
 
-            if ($aContentInfo[$CNF['FIELD_AUTHOR']] != $iProfileId) {
+            if($aContentInfo[$CNF['FIELD_AUTHOR']] != $iProfileId) {
                 /**
                  * @hooks
                  * @hookdef hook-bx_base_groups-fan_added '{module_name}', 'fan_added' - hook before adding (registering) new context member
@@ -647,14 +670,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         }
 
         // don't automatically add connection (mutual) if group requires manual join confirmation
-        if ($bSendInviteOnly || $aContentInfo['join_confirmation'])
+        if($aContentInfo['join_confirmation'])
             return false;
 
         // check if connection already exists
-        if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true) || $oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId))
+        if($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true) || $oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId))
             return false;
 
-        if (!$oConnection->addConnection($oGroupProfile->id(), (int)$iInitiatorId))
+        if(!$oConnection->addConnection($oGroupProfile->id(), (int)$iInitiatorId))
             return false;
 
         return true;
@@ -725,6 +748,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         $aInvites = $this->_oDb->getInvites(['sample' => 'invited_pid', 'invited_pid' => $iInvitedPid]);
+        if(empty($aInvites) || !is_array($aInvites))
+            return false;
+
         if($bAsArray)
             return $aInvites;
 

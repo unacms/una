@@ -6,6 +6,7 @@
     <!-- Forms -->
     <string name="_bx_invites_form_invite"><![CDATA[Пригласить]]></string>
     <string name="_bx_invites_form_invite_display_send"><![CDATA[Послать]]></string>
+    <string name="_bx_invites_form_invite_display_accept_by_code"><![CDATA[Принять (по коду)]]></string>
     <string name="_bx_invites_form_invite_input_sys_emails"><![CDATA[Электронные адреса]]></string>
     <string name="_bx_invites_form_invite_input_emails"><![CDATA[Электронные адреса]]></string>
     <string name="_bx_invites_form_invite_input_emails_inf"><![CDATA[Для разделения адресов используйте точку с запятой.]]></string>
@@ -15,8 +16,13 @@
     <string name="_bx_invites_form_invite_input_sys_text"><![CDATA[Текст]]></string>
     <string name="_bx_invites_form_invite_input_text"><![CDATA[Текст]]></string>
     <string name="_bx_invites_form_invite_input_text_err"><![CDATA[Нужно ввести текст, который будет добавлен в приглашение.]]></string>
-    <string name="_bx_invites_form_invite_input_sys_do_submit"><![CDATA[Послать]]></string>
-    <string name="_bx_invites_form_invite_input_do_submit"><![CDATA[Послать]]></string>
+    <string name="_bx_invites_form_invite_input_sys_key"><![CDATA[Код]]></string>
+    <string name="_bx_invites_form_invite_input_key"><![CDATA[Код]]></string>
+    <string name="_bx_invites_form_invite_input_key_err"><![CDATA[Здесь вам необходимо ввести действительный код приглашения.]]></string>
+    <string name="_bx_invites_form_invite_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_invites_form_invite_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_invites_form_invite_input_sys_do_send"><![CDATA[Послать]]></string>
+    <string name="_bx_invites_form_invite_input_do_send"><![CDATA[Послать]]></string>
 
     <string name="_bx_invites_form_request"><![CDATA[Запросить приглашение]]></string>
     <string name="_bx_invites_form_request_display_send"><![CDATA[Послать]]></string>
@@ -78,13 +84,18 @@
     <string name="_bx_invites_page_title_requests"><![CDATA[Управление запросами]]></string>
     <string name="_bx_invites_page_block_title_requests"><![CDATA[Управление запросами]]></string>
 
+    <string name="_bx_invites_page_title_sys_invites"><![CDATA[Управление приглашениями]]></string>
     <string name="_bx_invites_page_title_invites"><![CDATA[Управление приглашениями]]></string>
     <string name="_bx_invites_page_block_title_invites"><![CDATA[Управление приглашениями]]></string>
-    <string name="_bx_invites_page_block_title_system_invite_with_redirect"><![CDATA[Пригласить (с перенаправлением)]]></string>
-    <string name="_bx_invites_page_block_title_invite"><![CDATA[Пригласить]]></string>
-    <string name="_bx_invites_page_title_sys_invites"><![CDATA[Управление приглашениями]]></string>
 
-  
+    <string name="_bx_invites_page_block_title_system_invite_with_redirect"><![CDATA[Пригласить (с перенаправлением)]]></string>
+    <string name="_bx_invites_page_block_title_system_invite_to_context"><![CDATA[Пригласить (в контекст)]]></string>
+    <string name="_bx_invites_page_block_title_invite"><![CDATA[Пригласить]]></string>
+
+    <string name="_bx_invites_page_block_title_system_accept_by_code"><![CDATA[Принять приглашение (по коду)]]></string>
+    <string name="_bx_invites_page_block_title_accept_by_code"><![CDATA[Принять приглашение]]></string>
+
+
     <!-- Menus -->
     <string name="_bx_invites_menu_item_title_system_admt_requests"><![CDATA[Запросы на приглашение]]></string>
     <string name="_bx_invites_menu_item_title_admt_requests"><![CDATA[Приглашения]]></string>
@@ -162,6 +173,8 @@
     <string name="_bx_invites_err_delete_request"><![CDATA[Невозможно удалить запрос.]]></string>
     <string name="_bx_invites_err_wrong_email"><![CDATA[Можно использовать только эл. адрес, указанный в приглашении.]]></string>
     <string name="_bx_invites_err_used"><![CDATA[Приглашение не доступно или уже использовано.]]></string>
+    <string name="_bx_invites_err_code_not_found"><![CDATA[Код приглашения недействителен.]]></string>
+    <string name="_bx_invites_err_code_not_applicable"><![CDATA[Код приглашения не применим.]]></string>
     <string name="_bx_invites_err_already_send"><![CDATA[Приглашение уже было отправлено на этот эл. адрес]]></string>
     <string name="_bx_invites_err_already_registed"><![CDATA[Пользователь с таким  эл. адресом уже зарегистрирован. Пожалуйста, воспользуйтесь <a href="{0}">восстановлением пароля</a> чтобы получить доступ к аккаунту.]]></string>
     <string name="_bx_invites_request_status_new"><![CDATA[Новый]]></string>
