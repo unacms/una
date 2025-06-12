@@ -68,7 +68,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_invites_requests_email', '', @iCategId, '_bx_invites_option_requests_email', 'digit', '', '', '', 4),
 ('bx_invites_enable_reg_by_inv', 'on', @iCategId, '_bx_invites_option_enable_reg_by_inv', 'checkbox', '', '', '', 5),
 ('bx_invites_requests_notifications', 'on', @iCategId, '_bx_invites_option_requests_notifications', 'checkbox', '', '', '', 6),
-('bx_invites_automatically_befriend', 'on', @iCategId, '_bx_invites_option_automatically_befriend', 'checkbox', '', '', '', 7);
+('bx_invites_automatically_befriend', 'on', @iCategId, '_bx_invites_option_automatically_befriend', 'checkbox', '', '', '', 7),
+('bx_invites_context_auto_join', '', @iCategId, '_bx_invites_option_context_auto_join', 'checkbox', '', '', '', 8);
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES

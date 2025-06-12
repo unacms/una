@@ -20,6 +20,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
     protected $_bRequestInvite;
     protected $_sRequestsEmail;
     protected $_bRegistrationByInvitation;
+    protected $_bContextAutoJoin;
 
     /**
      * Constructor
@@ -65,13 +66,14 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_bRequestInvite = true;
         $this->_sRequestsEmail = '';
         $this->_bRegistrationByInvitation = true;
+        $this->_bContextAutoJoin = false;
 
-        $this->_aJsClasses = array(
+        $this->_aJsClasses = [
             'main' => 'BxInvMain',
-        );
-        $this->_aJsObjects = array(
+        ];
+        $this->_aJsObjects = [
             'main' => 'oInvMain',
-        );
+        ];
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = [
@@ -95,6 +97,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_bRequestInvite = getParam($sOptionPrefix . 'enable_request_invite') == 'on';
         $this->_sRequestsEmail = getParam($sOptionPrefix . 'requests_email');
         $this->_bRegistrationByInvitation = getParam($sOptionPrefix . 'enable_reg_by_inv') == 'on';
+        $this->_bContextAutoJoin = getParam($sOptionPrefix . 'context_auto_join') == 'on';
     }
 
     public function getCountPerUser()
@@ -145,6 +148,11 @@ class BxInvConfig extends BxBaseModGeneralConfig
     public function isRegistrationByInvitation()
     {
         return $this->_bRegistrationByInvitation;
+    }
+
+    public function isContextAutoJoin()
+    {
+        return $this->_bContextAutoJoin;
     }
 
     public function getHtmlIds($sKey = '')

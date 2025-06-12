@@ -102,6 +102,7 @@
     <string name="_bx_invites_menu_item_title_manage_requests"><![CDATA[Manage requests]]></string>
     <string name="_bx_invites_menu_item_title_manage_invites"><![CDATA[Manage invites]]></string>
 
+
     <!-- Options -->
     <string name="_bx_invites_option_automatically_befriend"><![CDATA[Enable automatically befriend inviter and invited]]></string>
     <string name="_bx_invites_option_key_lifetime"><![CDATA[Invitation key lifetime (in days)]]></string>
@@ -109,6 +110,7 @@
     <string name="_bx_invites_option_requests_notifications"><![CDATA[Enable invitation requests in notifications]]></string>
     <string name="_bx_invites_option_requests_email"><![CDATA[Emails to send invitation requests to (comma separated)]]></string>
     <string name="_bx_invites_option_enable_reg_by_inv"><![CDATA[Enable registration by invitation only]]></string>
+    <string name="_bx_invites_option_context_auto_join"><![CDATA[Enable auto join when 'Invite to Context' is used]]></string>
 
 
     <!-- ACL -->

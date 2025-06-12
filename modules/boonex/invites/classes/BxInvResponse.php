@@ -74,12 +74,27 @@ class BxInvResponse extends BxDolAlertsResponse
                     $bGetCode = true;
                 }
 
-                if(!empty($aInvite['aj_action']) && $aInvite['aj_action'] == 'redirect' && !empty($aInvite['aj_params'])) {
-                    $oAlert->aExtras['form_object']->aInputs['relocate'] = [
-                        'name' => 'relocate',
-                        'type' => 'hidden',
-                        'value' => BxDolPermalinks::getInstance()->permalink($aInvite['aj_params'])
-                    ];
+                if(!empty($aInvite['aj_action']) && in_array($aInvite['aj_action'], ['redirect', 'invite_to_context'])) {
+                    $sRedirectUrl = '';
+
+                    switch($aInvite['aj_action']) {
+                        case 'redirect':
+                            if(!empty($aInvite['aj_params']))
+                                $sRedirectUrl = BxDolPermalinks::getInstance()->permalink($aInvite['aj_params']);
+                            break;
+
+                        case 'invite_to_context':
+                            if(($iContextPid = (int)$aInvite['aj_params']) && ($oContext = BxDolProfile::getInstanceMagic($iContextPid)))
+                                $sRedirectUrl = $oContext->getUrl();
+                            break;
+                    }
+
+                    if($sRedirectUrl)
+                        $oAlert->aExtras['form_object']->aInputs['relocate'] = [
+                            'name' => 'relocate',
+                            'type' => 'hidden',
+                            'value' => $sRedirectUrl
+                        ];
 
                     $bGetCode = true;
                 }

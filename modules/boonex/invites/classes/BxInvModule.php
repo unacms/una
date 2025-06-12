@@ -645,7 +645,13 @@ class BxInvModule extends BxDolModule
         if(!bx_srv('system', 'is_module_context', [$sContext]))
             return false;
 
-        return bx_srv($sContext, 'add_invitation', [$iContextPid, $iPid]);
+        $bResult = false;
+        if($this->_oConfig->isContextAutoJoin())
+            $bResult = bx_srv($sContext, 'add_mutual_connection', [$iContextPid, $iPid]);
+        else
+            $bResult = bx_srv($sContext, 'add_invitation', [$iContextPid, $iPid]);
+
+        return $bResult;
     }
 
     public function isAllowedInvite($iProfileId, $bPerform = false)
