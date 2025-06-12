@@ -83,15 +83,13 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             else
                 $sRedirect = $aPageParams['params'][0];
 
-            $sInviteUrl = bx_append_url_params($sInviteUrl, [
+            $aParamsAdd = [
                 'aja' => 'redirect', 
                 'ajp' => $this->_oConfig->urlEncode($sRedirect)
-            ]);
+            ];
 
-            $aRequestParams = array_merge($aRequestParams, [
-                'aja' => 'redirect',
-                'ajp' => $sRedirect
-            ]);
+            $sInviteUrl = bx_append_url_params($sInviteUrl, $aParamsAdd);
+            $aRequestParams = array_merge($aRequestParams, $aParamsAdd);
         }
 
         $sJsObject = $this->_oConfig->getJsObject('main');
@@ -101,22 +99,20 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 
         //-- Process 'invite to context'.
         if(isset($aParams['context']) && ($iContext = (int)$aParams['context']) != 0) {
-            $sInviteUrl = bx_append_url_params($sInviteUrl, [
-                'aja' => 'invite_to_context', 
-                'ajp' => $iContext
-            ]);
-
-            $aRequestParams = array_merge($aRequestParams, [
-                'aja' => 'invite_to_context',
-                'ajp' => $iContext
-            ]);
-
             $sContext = BxDolProfile::getInstance($iContext)->getModule();
             if(!$aTmplVarsShowByCode && bx_srv($sContext, 'is_admin', [$iContext, $iProfileId])) {
                 $mInvitesRemain = true;
 
                 $aTmplVarsShowByCode = ['js_object' => $sJsObject];
             }
+
+            $aParamsAdd = [
+                'aja' => 'invite_to_context', 
+                'ajp' => $iContext
+            ];
+
+            $sInviteUrl = bx_append_url_params($sInviteUrl, $aParamsAdd);
+            $aRequestParams = array_merge($aRequestParams, $aParamsAdd);
         }
 
         if($mInvitesRemain === true)
