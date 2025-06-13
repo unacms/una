@@ -4891,6 +4891,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `config_api` text NOT NULL,
   `primary` tinyint(4) NOT NULL DEFAULT '0',
   `collapsed` tinyint(4) NOT NULL DEFAULT '0',
+  `persistent` tinyint(4) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `active_api` tinyint(4) NOT NULL DEFAULT '0',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',

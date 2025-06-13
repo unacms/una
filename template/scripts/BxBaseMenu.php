@@ -207,6 +207,7 @@ class BxBaseMenu extends BxDolMenu
                 'addon' => $this->_bDisplayAddons ? $this->_getMenuAddon($a) : '',
                 'config' => isset($a['config_api']) ? $a['config_api'] : '',
                 'primary' => isset($a['primary']) ? $a['primary'] : 0,
+                'persistent' => isset($a['persistent']) ? $a['persistent'] : 0,
             ];
 
             if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
