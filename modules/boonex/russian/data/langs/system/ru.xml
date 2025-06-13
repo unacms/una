@@ -3367,6 +3367,7 @@
     <string name="_sys_menu_set_title_account_popup"><![CDATA[Аккаунт - Всплывающее меню]]></string>
     <string name="_sys_menu_set_title_account_notifications"><![CDATA[Аккаунт - Уведомления]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Добавить содержимое]]></string>
+    <string name="_sys_menu_set_title_create_post"><![CDATA[Создать пост]]></string>
     <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Управление контентом]]></string>
     <string name="_sys_menu_set_title_dashboard_reports_manage"><![CDATA[Управление жалобами]]></string>
     <string name="_sys_menu_set_title_add_profile"><![CDATA[Добавить профиль]]></string>

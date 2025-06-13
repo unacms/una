@@ -209,6 +209,11 @@ SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 's
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_add_content_links', @sName, 'create-discussion', '_bx_forum_menu_item_title_system_create_entry', '_bx_forum_menu_item_title_create_entry', 'page.php?i=create-discussion', '', '', 'far comments col-blue2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
+-- MENU: add to "create post" menu
+SET @iCreatePostOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_create_post' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_create_post', @sName, 'create-discussion', '_bx_forum_menu_item_title_system_create_entry', '_bx_forum_menu_item_title_create_entry', 'page.php?i=create-discussion', '', '', 'far comments col-blue2', '', 2147483647, 1, 0, IFNULL(@iCreatePostOrder, 0) + 1);
+
 -- MENU: create post form attachments (link, photo, video, etc)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_forum_entry_attachments', '_bx_forum_menu_title_entry_attachments', 'bx_forum_entry_attachments', @sName, 23, 0, 1, 'BxForumMenuAttachments', 'modules/boonex/forum/classes/BxForumMenuAttachments.php');

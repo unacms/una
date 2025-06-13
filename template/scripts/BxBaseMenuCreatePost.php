@@ -37,9 +37,9 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
 
     protected function getMenuItemsRaw ()
     {
-    	$aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'all_pairs_name_uri', 'active' => 1));
+    	$aModules = BxDolModuleQuery::getInstance()->getModulesBy(['type' => 'all_pairs_name_uri', 'active' => 1]);
 
-        $aResult = array();
+        $aResult = [];
     	$aMenuItems = $this->_oQuery->getMenuItems();
     	foreach($aMenuItems as $iKey => $aMenuItem) {
             if((int)$aMenuItem['active'] == 0)
@@ -50,22 +50,22 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
                 continue;
 
             if($this->_mixedContextId !== false && ($aContextInfo = BxDolProfileQuery::getInstance()->getInfoById(abs($this->_mixedContextId)))) {
-                if(BxDolRequest::serviceExists($sModule, 'act_as_profile'))
+                if(bx_srv($sModule, 'act_as_profile'))
                     continue;
 
                 if(bx_srv($aContextInfo['type'], 'check_allowed_post_in_profile', [$aContextInfo['content_id'], $sModule]) !== CHECK_ACTION_RESULT_ALLOWED)
                     continue;
             }
 
-            $aResult[$iKey] = array_merge($aMenuItem, array(
+            $aResult[$iKey] = array_merge($aMenuItem, [
                 'id' => $sModule,
                 'name' => $sModule,
                 'onclick' => "return " . $this->_sJsObject . ".getForm('" . $sModule . "', '" . $aModules[$sModule] . "', this)"
-            ));
+            ]);
     	}
 
         if(!empty($aResult) && is_array($aResult))
-            $aResult['more-auto'] = array(
+            $aResult['more-auto'] = [
                 'module' => 'system', 
                 'id' => 'more-auto', 
                 'name' => 'more-auto',
@@ -73,7 +73,7 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
                 'href' => 'javascript:void(0)', 
                 'icon' => 'ellipsis-v',
                 'active' => 1
-            );
+            ];
 
         return $aResult;
     }
