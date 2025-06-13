@@ -843,6 +843,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Int',
                     )
                 ),
+                'persistant' => array(
+                    'type' => 'switcher',
+                    'name' => 'persistant',
+                    'caption' => _t('_adm_nav_txt_items_persistant'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => isset($aItem['persistant']) && (int)$aItem['persistant'] == 1,
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
                 'active_api' => array(
                     'type' => 'switcher',
                     'name' => 'active_api',
