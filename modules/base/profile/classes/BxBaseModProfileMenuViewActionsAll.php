@@ -76,8 +76,10 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
                 'iid' => $iInitiatorProfile,
                 'cid' => $iContentProfile,
                 'title' => $sTitle,
-                'primary' => !empty($aItem['primary']),
-            ]
+                'primary' => $aItem['primary'],
+                
+            ],
+            'persistent' => $aItem['persistent']
         ];
     }
 
@@ -243,6 +245,7 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
                 'on_callback' => 'redirect'
             ],
             'primary' => $aItem['primary'],
+            'persistent' => $aItem['persistent'],
         ];
     }
 }
