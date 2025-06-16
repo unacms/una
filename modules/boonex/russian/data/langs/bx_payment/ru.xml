@@ -524,6 +524,7 @@
     <string name="_bx_payment_pp_api_err_cannot_authorize"><![CDATA[Не удалось авторизовать одобренный заказ.]]></string>
     <string name="_bx_payment_pp_api_err_cannot_capture"><![CDATA[Не удалось завершить оплату.]]></string>
     <string name="_bx_payment_pp_api_err_no_item"><![CDATA[Объект для создания подписки отсутствует.]]></string>
+    <string name="_bx_payment_pp_api_err_wrong_item"><![CDATA[Продукт, на который вы хотите подписаться, имеет неверные данные на стороне PayPal. Пожалуйста, сообщите.]]></string>
     <string name="_bx_payment_pp_api_err_no_subscription"><![CDATA[Данные подписки недоступны или неверны.]]></string>
     <string name="_bx_payment_pp_api_err_subscription_not_confirmed"><![CDATA[Подписка не подтверждена.]]></string>
     <string name="_bx_payment_pp_api_msg_authorized"><![CDATA[Заказ авторизован.]]></string>

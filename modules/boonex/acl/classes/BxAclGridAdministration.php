@@ -57,7 +57,7 @@ class BxAclGridAdministration extends BxAclGridLevels
             if(!empty($aPrice) && is_array($aPrice))
                 return echoJson(array('msg' => _t('_bx_acl_err_price_duplicate')));
 
-            $iId = (int)$oForm->insert(array('order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iLevelId) + 1));
+            $iId = (int)$oForm->insert(array('added' => time(), 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iLevelId) + 1));
             if($iId != 0) {
             	//TODO: May be we don't need to have this 'Purchasable' flag at all or at least we shouldn't update it from here.
                 $this->_oModule->_oDb->updateLevels(array('Purchasable' => 'yes'), array('ID' => $this->_iLevelId));

@@ -332,9 +332,12 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
                 return $this->_sLangsPrefix . 'err_cannot_perform';
         }
 
-        $aProductPlan = array();
+        $aProductPlan = [];
 
         $aPlans = $this->_getPlans($aProduct['id']);
+        if(!$this->_validateProduct($aItem, $aProduct, $aPlans))
+            return $this->_sLangsPrefix . 'pp_api_err_wrong_item';
+
         if(!empty($aPlans)) 
             foreach($aPlans as $aPlan)
                 if(strcmp($aPlan['name'], $aItem['name']) == 0) {
@@ -438,6 +441,15 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         }
 
         return $mixedResult;
+    }
+    
+    protected function _validateProduct($aItem, $aProduct, $aPlans)
+    {
+        //--- by date creation.
+        if(isset($aItem['added'], $aProduct['create_time']) && $aItem['added'] > strtotime($aProduct['create_time']))
+            return false;
+
+        return true;
     }
 
     protected function _createPlan($sProductId, $aItem)

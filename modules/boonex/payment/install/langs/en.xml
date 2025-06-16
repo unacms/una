@@ -522,6 +522,7 @@
     <string name="_bx_payment_pp_api_err_cannot_authorize"><![CDATA[Can't authorize the approved order.]]></string>
     <string name="_bx_payment_pp_api_err_cannot_capture"><![CDATA[Can't finalize checkout.]]></string>
     <string name="_bx_payment_pp_api_err_no_item"><![CDATA[There is nothing to subscribe.]]></string>
+    <string name="_bx_payment_pp_api_err_wrong_item"><![CDATA[The product you want to subscribe to has incorrect data on PayPal end. Please report.]]></string>
     <string name="_bx_payment_pp_api_err_no_subscription"><![CDATA[The subscription data isn't available or incorrect.]]></string>
     <string name="_bx_payment_pp_api_err_subscription_not_confirmed"><![CDATA[Subscription wasn't confirmed.]]></string>
     <string name="_bx_payment_pp_api_msg_authorized"><![CDATA[The order was successfully authorized.]]></string>

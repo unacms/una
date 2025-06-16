@@ -221,7 +221,8 @@ class BxAclModule extends BxDolModule
             'price_recurring' => $aItem['price'],
             'period_recurring' => $aItem['period'],
             'period_unit_recurring' => $aItem['period_unit'],
-            'trial_recurring' => $aItem['trial']
+            'trial_recurring' => $aItem['trial'],
+            'added' => $aItem['added'],
         );
     }
 
