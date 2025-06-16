@@ -17,6 +17,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
     protected $_sEndpointMessages;
 
     protected $_sEndpointAssistants;
+    protected $_sEndpointAssistantsModify;
     protected $_sEndpointAssistantsDelete;
 
     protected $_sEndpointFiles;
@@ -45,6 +46,7 @@ class BxDolAIModelGpt40 extends BxDolAIModel
         $this->_sEndpointMessages = $this->_sEndpoint . '/%s/messages';
 
         $this->_sEndpointAssistants = 'https://api.openai.com/v1/assistants';
+        $this->_sEndpointAssistantsModify = $this->_sEndpointAssistants . '/%s';
         $this->_sEndpointAssistantsDelete = $this->_sEndpointAssistants . '/%s';
 
         $this->_sEndpointFiles = 'https://api.openai.com/v1/files';
@@ -190,6 +192,16 @@ class BxDolAIModelGpt40 extends BxDolAIModel
             'vector_store_id' => $sVectorStoreId,
             'assistant_id' => $sAssistantId
         ];
+    }
+
+    public function editAssistant($sId, $aParams = [])
+    {
+        $aResponseAsst = $this->callAssistantsModify($sId, [
+            'name' => $aParams['name'], 
+            'instructions' => $aParams['prompt']
+        ]);
+
+        return $aResponseAsst !== false;
     }
 
     public function call($aParams = [])
@@ -344,7 +356,22 @@ class BxDolAIModelGpt40 extends BxDolAIModel
 
         return $mixedResponse;
     }
-    
+
+    public function callAssistantsModify($sAsstId, $aParams = [])
+    {
+        $aData = [];
+        if(($sKey = 'call_assts_modify') && !empty($this->_aParams[$sKey]) && is_array($this->_aParams[$sKey]))
+            $aData = array_merge($aData, $this->_aParams[$sKey]);
+        if(!empty($aParams) && is_array($aParams))
+            $aData = array_merge($aData, $aParams);
+
+        $mixedResponse = $this->_call(sprintf($this->_sEndpointAssistantsModify, $sAsstId), $aData);
+        if(empty($mixedResponse) || !is_array($mixedResponse) || $mixedResponse['object'] != 'assistant')
+            return false;
+
+        return $mixedResponse;
+    }
+
     public function callAssistantsDelete($sAsstId, $aParams = [])
     {
         $aData = [];
