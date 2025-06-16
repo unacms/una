@@ -113,7 +113,7 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
             if(!empty($aPrice) && is_array($aPrice))
                 return ($sMsg = _t($CNF['T']['err_price_duplicate'])) && $this->_bIsApi ? [bx_api_get_msg($sMsg)] : echoJson(['msg' => $sMsg]);
 
-            $iId = (int)$oForm->insert(['profile_id' => $this->_iGroupProfileId, 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iRoleId) + 1]);
+            $iId = (int)$oForm->insert(['profile_id' => $this->_iGroupProfileId, 'added' => time(), 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iRoleId) + 1]);
             if($iId != 0)
                 $aRes = ['grid' => $this->getCode(false), 'blink' => $iId];
             else

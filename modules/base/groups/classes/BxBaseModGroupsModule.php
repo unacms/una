@@ -1301,22 +1301,22 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $CNF = &$this->_oConfig->CNF;
 
         if(!$mixedItemId)
-            return array();
+            return [];
 
         if(is_numeric($mixedItemId))
-            $aItem = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => (int)$mixedItemId));
+            $aItem = $this->_oDb->getPrices(['type' => 'by_id', 'value' => (int)$mixedItemId]);
         else 
-            $aItem = $this->_oDb->getPrices(array('type' => 'by_name', 'value' => $mixedItemId));
+            $aItem = $this->_oDb->getPrices(['type' => 'by_name', 'value' => $mixedItemId]);
 
         if(empty($aItem) || !is_array($aItem))
-            return array();
+            return [];
 
         if(!$this->isPaidJoinByProfile($aItem['profile_id']))
-            return array();
+            return [];
 
         $oGroupProfile = BxDolProfile::getInstance($aItem['profile_id']);
         if(!$oGroupProfile)
-            return array();
+            return [];
 
         $aGroupProfile = $this->_oDb->getContentInfoById($oGroupProfile->getContentId());
         
@@ -1328,7 +1328,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         else
             $sTitle = _t($CNF['T']['txt_cart_item_title_lifetime'], $oGroupProfile->getDisplayName(), $aRoles[$aItem['role_id']]);
 
-        return array (
+        return [
             'id' => $aItem['id'],
             'author_id' => $aGroupProfile[$CNF['FIELD_AUTHOR']],
             'name' => $aItem['name'],
@@ -1339,8 +1339,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'price_recurring' => $aItem['price'],
             'period_recurring' => $aItem['period'],
             'period_unit_recurring' => $aItem['period_unit'],
-            'trial_recurring' => 0
-        );
+            'trial_recurring' => 0,
+            'added' => $aItem['added']
+        ];
     }
 
     public function serviceGetCartItems($iSellerId)

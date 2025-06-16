@@ -334,6 +334,7 @@ CREATE TABLE IF NOT EXISTS `bx_spaces_prices` (
   `period` int(11) unsigned NOT NULL default '1',
   `period_unit` varchar(32) NOT NULL default '',
   `price` float unsigned NOT NULL default '1',
+  `added` int(11) NOT NULL default '0',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
