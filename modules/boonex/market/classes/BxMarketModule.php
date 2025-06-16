@@ -892,7 +892,8 @@ class BxMarketModule extends BxBaseModTextModule
             'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
             'period_recurring' => 1,
             'period_unit_recurring' => $aItem[$CNF['FIELD_DURATION_RECURRING']],
-            'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']]
+            'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']],
+            'added' => $aItem[$CNF['FIELD_ADDED']],
         );
     }
 
