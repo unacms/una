@@ -1212,6 +1212,7 @@
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Link name displayed in site menus. Use at least 3 characters.]]></string>
         <string name="_adm_nav_dsc_items_title_attr"><![CDATA[A text which will be used in 'title' attribute of the link.]]></string>
 	<string name="_adm_nav_dsc_items_title_system"><![CDATA[Item name, displayed in Studio only.]]></string>
+        <string name="_adm_nav_dsc_items_info"><![CDATA[The value can be shown below the link name as short description.]]></string>
 	<string name="_adm_nav_dsc_items_visible_for_levels"><![CDATA[Select user levels that can see this menu item]]></string>
 	<string name="_adm_nav_dsc_menus_persistent"><![CDATA[Number of persistent menu items. Applicable for menus with 'Auto More' mechanism only.]]></string>
         <string name="_adm_nav_dsc_menus_set_name"><![CDATA[Assign a Set of menu Items]]></string>
@@ -1280,6 +1281,7 @@
 	<string name="_adm_nav_txt_items_title"><![CDATA[Name]]></string>
         <string name="_adm_nav_txt_items_title_attr"><![CDATA[Title]]></string>
 	<string name="_adm_nav_txt_items_title_system"><![CDATA[System Name]]></string>
+        <string name="_adm_nav_txt_items_info"><![CDATA[Info]]></string>
 	<string name="_adm_nav_txt_items_visible_for"><![CDATA[Visible For]]></string>
 	<string name="_adm_nav_txt_items_visible_for_all"><![CDATA[Anyone]]></string>
 	<string name="_adm_nav_txt_items_visible_for_levels"><![CDATA[Select Levels]]></string>
@@ -3178,6 +3180,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_manage_txt_approved"><![CDATA[The content was approved.]]></string>
     <string name="_sys_manage_txt_sent"><![CDATA[Message was sent.]]></string>
     <string name="_sys_manage_err_cannot_perform_action"><![CDATA[Cannot perform the action. Please report.]]></string>
+    <string name="_sys_menu_item_info_audit_administration"><![CDATA[For content moderation activity.]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>
     <string name="_sys_menu_item_title_copyright"><![CDATA[Copyright]]></string>
     <string name="_sys_menu_item_title_privacy"><![CDATA[Privacy]]></string>

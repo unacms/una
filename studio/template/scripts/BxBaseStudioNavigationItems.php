@@ -634,6 +634,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Xss',
                     ),
                 ),
+                'info' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'info',
+                    'caption' => _t('_adm_nav_txt_items_info'),
+                    'info' => _t('_adm_nav_dsc_items_info'),
+                    'value' => isset($aItem['info']) ? $aItem['info'] : '_adm_nav_txt_item',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
                 'parent_id' => array(
                     'type' => 'select',
                     'name' => 'parent_id',

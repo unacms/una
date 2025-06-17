@@ -200,6 +200,7 @@ class BxBaseMenu extends BxDolMenu
                 'id' => $a['id'],
                 'name' => $a['name'],
                 'title' => _t($a['title']),
+                'info' => isset($a['info']) ? _t($a['info']) : '',
                 'link' => isset($a['link']) ? $a['link'] : '',
                 'icon' => $sIcon ? $sIcon : ($sIconHtml ? $sIconHtml : ''),
                 'image' => $sIconUrl ? $sIconUrl : '',
@@ -228,6 +229,7 @@ class BxBaseMenu extends BxDolMenu
 
         $a['title'] = _t($a['title']);
         $a['title_attr'] = $this->_getMenuTitle($a);
+        $a['info'] = isset($a['info']) ? _t($a['info']) : '';
 
         $this->removeMarker('addon');
 
@@ -299,6 +301,12 @@ class BxBaseMenu extends BxDolMenu
             'content' => [
                 'title' => $a['title'],
                 'title_attr' => $a['title_attr']
+            ],
+        ];
+        $a['bx_if:info'] = [
+            'condition' => (bool)$a['info'],
+            'content' => [
+                'info' => $a['info'],
             ],
         ];
 
