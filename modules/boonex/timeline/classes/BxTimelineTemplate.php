@@ -969,6 +969,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getPosts($aParams)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $bReturnArray = isset($aParams['return_data_type']) && $aParams['return_data_type'] == 'array';
         $bViewTimeline = $aParams['view'] == BX_TIMELINE_VIEW_TIMELINE;
 
@@ -1022,7 +1024,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(empty($sEvent))
                 continue;
 
-            if(!$iFirst)
+            if(!$iFirst && (int)$aEvent[$CNF['FIELD_STICKED']] == 0)
                 $iFirst = $aEvent['id'];
 
             if($bReturnArray)
