@@ -17,7 +17,7 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop
 
     function getCss()
     {
-        return array('menu_top.css');
+        return array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icons/css/|flag-icons.min.css', 'menu_top.css');
     }
 
     function getJs()
