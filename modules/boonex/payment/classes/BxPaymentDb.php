@@ -56,41 +56,53 @@ class BxPaymentDb extends BxBaseModPaymentDb
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
-        $sWhereClause = "";
+        $sWhereClause = $sOrderClause = "";
         if(!empty($aParams['type']))
-	        switch($aParams['type']) {
-                    case 'by_name':
-                        $aMethod['name'] = 'getRow';
-                        $aMethod['params'][1] = array(
-                            'name' => $aParams['name']
-                        );
+            switch($aParams['type']) {
+                case 'by_name':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1] = array(
+                        'name' => $aParams['name']
+                    );
 
-                        $sWhereClause = " AND `tp`.`name`=:name";
-                        break;
+                    $sWhereClause = " AND `tp`.`name`=:name";
+                    break;
 
-                    case 'for_single':
-                        $aMethod['name'] = 'getAllWithKey';
-                        $aMethod['params'][1] = 'name';
+                case 'for_single':
+                    $aMethod['name'] = 'getAllWithKey';
+                    $aMethod['params'][1] = 'name';
 
-                        $sWhereClause = " AND `tp`.`for_single`='1'";
-                        break;
+                    $sWhereClause = " AND `tp`.`for_single`='1'";
 
-                    case 'for_recurring':
-                        $aMethod['name'] = 'getAllWithKey';
-                        $aMethod['params'][1] = 'name';
+                    if(isset($aParams['order']) && $aParams['order'] === true)
+                        $sOrderClause = "`tp`.`order` ASC";
+                    break;
 
-                        $sWhereClause = " AND `tp`.`for_recurring`='1'";
-                        break;
+                case 'for_recurring':
+                    $aMethod['name'] = 'getAllWithKey';
+                    $aMethod['params'][1] = 'name';
 
-                    case 'all':
-                        $aMethod['name'] = 'getAllWithKey';
-                        $aMethod['params'][1] = 'name';
+                    $sWhereClause = " AND `tp`.`for_recurring`='1'";
 
-                        if(!empty($aParams['active'])) 
-                            $sWhereClause = " AND `tp`.`active`='1'";
-                        break;
-	        }          
+                    if(isset($aParams['order']) && $aParams['order'] === true)
+                        $sOrderClause = "`tp`.`order` ASC";
+                    break;
 
+                case 'all':
+                    $aMethod['name'] = 'getAllWithKey';
+                    $aMethod['params'][1] = 'name';
+
+                    if(!empty($aParams['active'])) 
+                        $sWhereClause = " AND `tp`.`active`='1'";
+
+                    if(isset($aParams['order']) && $aParams['order'] === true)
+                        $sOrderClause = "`tp`.`order` ASC";
+                    break;
+            }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = " ORDER BY " . $sOrderClause;
+                
         $aMethod['params'][0] = "SELECT
                 `tp`.`id` AS `id`,
                 `tp`.`name` AS `name`,
@@ -103,7 +115,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 `tp`.`class_name` AS `class_name`,
                 `tp`.`class_file` AS `class_file`
             FROM `" . $this->_sPrefix . "providers` AS `tp`
-            WHERE 1" . $sWhereClause;
+            WHERE 1" . $sWhereClause . $sOrderClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
@@ -224,38 +236,39 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
 	public function getVendorInfoProvidersSingle($iVendorId)
     {
-    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_single'));
+    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_single', 'order' => true));
     }
 
 	public function getVendorInfoProvidersRecurring($iVendorId)
     {
-    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_recurring'));
+    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_recurring', 'order' => true));
     }
 
-    public function getVendorInfoProviders($iVendorId, $aParams = array())
+    public function getVendorInfoProviders($iVendorId, $aParams = [])
     {
-    	if(empty($aParams))
-    		$aParams = array('type' => 'all');
+        if(empty($aParams))
+            $aParams = ['type' => 'all', 'order' => true];
 
-		$aProviders = $this->getProviders($aParams);
-		$aOptions = $this->getOptions($iVendorId);
+        $aProviders = $this->getProviders($aParams);
+        $aOptions = $this->getOptions($iVendorId);
 
-		$aResult = array();
-		foreach($aProviders as $sProvider => $aProvider) {
-			if(!isset($aOptions[$aProvider['option_prefix'] . 'active']) || $aOptions[$aProvider['option_prefix'] . 'active']['value'] != 'on') 
-                            continue;
+        $aResult = [];
+        foreach($aProviders as $sProvider => $aProvider) {
+            if(!isset($aOptions[$aProvider['option_prefix'] . 'active']) || $aOptions[$aProvider['option_prefix'] . 'active']['value'] != 'on') 
+                continue;
 
-                        if(isset($aOptions[$aProvider['option_prefix'] . 'hidden']) && $aOptions[$aProvider['option_prefix'] . 'hidden']['value'] == 'on') 
-                            continue;
+            if(isset($aOptions[$aProvider['option_prefix'] . 'hidden']) && $aOptions[$aProvider['option_prefix'] . 'hidden']['value'] == 'on') 
+                continue;
 
-                        foreach($aOptions as $sName => $aOption)
-                                if(strpos($sName, $aProvider['option_prefix']) !== false)
-                                        $aProvider['options'][$sName] = $aOption;
-                        $aResult[$sProvider] = $aProvider;
-                }
+            foreach($aOptions as $sName => $aOption)
+                if(strpos($sName, $aProvider['option_prefix']) !== false)
+                    $aProvider['options'][$sName] = $aOption;
 
-		return $aResult;
-	}
+            $aResult[$sProvider] = $aProvider;
+        }
+
+        return $aResult;
+    }
 
     public function getAdminsIds()
     {
