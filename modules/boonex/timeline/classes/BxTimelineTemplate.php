@@ -3393,6 +3393,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if($this->_bIsApi) {
                     $aResult['content']['videos_attach'] = array_values($aResult['content']['videos_attach']);
                     $aResult['content']['files_attach'] = array_values($aResult['content']['files_attach']);
+                    $aResult['content']['polls_attach'] = array_values($aResult['content']['polls_attach']);
                 }
                 break;
 
@@ -3457,7 +3458,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         if($this->_bIsApi)
             $aResult['content'] = array_intersect_key($aResult['content'], array_flip([
-                'object_id', 'url', 'title', 'text', 'links', 'images', 'images_attach', 'videos', 'videos_attach', 'files', 'files_attach', 'parse_type', 'owner_name', 'embed'
+                'object_id', 'url', 'title', 'text', 'links', 'images', 'images_attach', 'videos', 'videos_attach', 'files', 'files_attach', 'polls_attach', 'parse_type', 'owner_name', 'embed'
             ]));
 
         return $aResult;

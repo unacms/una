@@ -387,6 +387,43 @@ class BxBaseModGeneralModule extends BxDolModule
         echoJson($this->getPollForm());
     }
 
+    public function serviceGetPollForm()
+    {
+        if(!$this->_bIsApi)
+            return false;
+
+        $aResult = $this->getPollForm();
+
+        if(isset($aResult['code'])) {
+            if((int)$aResult['code'] == 0) {
+                return [
+                    'id' => $aResult['id'],
+                    'item' => 'TODO: return newly created poll'
+                ];
+            }
+            else
+                return isset($aResult['message']) ? [bx_api_get_msg($aResult['message'])] : [];
+        }
+        else if(isset($aResult['form'])) {
+            $sModule = $this->getName();
+
+            return [bx_api_get_block('form', $aResult['form'], [
+                'ext' => [
+                    'name' => $sModule, 
+                    'request' => ['url' => '/api.php?r=' . $sModule . '/submit_poll_form', 'immutable' => true]
+                ]
+            ])];
+        }
+    }
+
+    public function serviceSubmitPollForm()
+    {
+        if(!$this->_bIsApi)
+            return false;
+
+        return $this->serviceGetPollForm();
+    }
+
     public function getPollForm()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -410,7 +447,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 return array('code' => 2, 'message' => '_sys_txt_error_entry_creation');
         }
 
-        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+        return array('form' => $oForm->{'getCode' . ($this->_bIsApi ? 'API' : '')}(), 'form_id' => $oForm->id);
     }
 
     public function actionGetCreatePostForm()
@@ -673,6 +710,9 @@ class BxBaseModGeneralModule extends BxDolModule
             'EntityEdit' => '',
             'EntityDelete' => '',
             'UpdateImage' => '',
+            // polls
+            'GetPollForm' => '',
+            'SubmitPollForm' => '',
             // page blocks
             'EntityTextBlock' => '',
             'EntityInfo' => '',
@@ -3704,6 +3744,14 @@ class BxBaseModGeneralModule extends BxDolModule
         }
 
         return $this->_oDb->isPollPerformed($iObjectId, $iAuthorId, $iAuthorIp);
+    }
+
+    public function getPollPerformedValue($iObjectId, $iAuthorId = 0)
+    {
+        if(empty($iAuthorId))
+            $iAuthorId = bx_get_logged_profile_id();
+
+        return $this->_oDb->getPollPerformedValue($iObjectId, $iAuthorId);
     }
 
     public function onPublished($iContentId)

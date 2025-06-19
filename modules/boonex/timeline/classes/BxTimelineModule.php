@@ -5675,11 +5675,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'content_id' => $iEventId, 
         ]);
         if(empty($aPolls) || !is_array($aPolls))
-            return;
+            return [];
+
+        $iProfile = bx_get_logged_profile_id();
 
         $aResult = [];
         foreach($aPolls as $aPoll)
-            $aResult[$aPoll['id']] = $aPoll;
+            $aResult[$aPoll['id']] = $this->_bIsApi ? $this->_oTemplate->getPollItem($aPoll, $iProfile) : $aPoll;
 
         return $aResult;
     }

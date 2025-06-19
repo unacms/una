@@ -675,7 +675,17 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         return $mixedResult;
     }
-    
+
+    public function getCleanValue($sName)
+    {
+        $mixedValue = parent::getCleanValue($sName);
+
+        if($this->_bIsApi && !empty($mixedValue) && isset($this->aInputs[$sName]['type']) && in_array($this->aInputs[$sName]['type'], ['polls']))
+            $mixedValue = explode(',', $mixedValue);
+
+        return $mixedValue;
+    }
+
     function getHtmlEditorQueryParams($aInput)
     {
         $aQueryParams = parent::getHtmlEditorQueryParams($aInput);
@@ -1328,6 +1338,16 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     protected function genCustomInputPolls ($aInput)
     {
+        if($this->_bIsApi) {
+            $sModule = $this->_oModule->getName();
+
+            return array_merge($aInput, [
+                'type' => 'polls',
+                'form_get' => '/api.php?r=' . $sModule . '/get_poll_form',
+                'form_submit' => '/api.php?r=' . $sModule . '/submit_poll_form'
+            ]);
+        }
+
         return $this->_oModule->_oTemplate->getPollField(!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0);
     }
 

@@ -301,6 +301,21 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aAnswers)) . ") " . $sWhereClause . " LIMIT 1", $aBindings) != 0;
     }
 
+    public function getPollPerformedValue($iPollId, $iAuthorId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aBindings = ['author_id' => $iAuthorId];
+        $sWhereClause = "AND `author_id`=:author_id";
+
+        $aSubentries = $this->getPollAnswers([
+            'type' => 'poll_id_pairs', 
+            'entry_id' => $iPollId
+        ]);
+
+        return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aSubentries)) . ") " . $sWhereClause . " LIMIT 1", $aBindings);
+    }
+
     public function getPolls($aParams)
     {
         $CNF = &$this->_oConfig->CNF;

@@ -65,6 +65,16 @@ class BxBaseModGeneralFormPoll extends BxTemplFormView
         return $iResult;
     }
 
+    public function getCleanValue ($sName)
+    {
+        $mixedValue = parent::getCleanValue($sName);
+
+        if($this->_bIsApi && !empty($mixedValue) && in_array($sName, ['answers', 'answers_ids']))
+            $mixedValue = explode(',', $mixedValue);
+
+        return $mixedValue;
+    }
+
     public function processAnswersAdd ($sField, $iContentId = 0)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -129,6 +139,12 @@ class BxBaseModGeneralFormPoll extends BxTemplFormView
 
     protected function genCustomInputAnswers(&$aInput)
     {
+        if($this->_bIsApi)
+            return array_merge($aInput, [
+                'type' => 'multi_field',
+                'subtype' => 'text'
+            ]);
+
         $sJsObject = $this->_oModule->_oConfig->getJsObject('poll');
 
         $aTmplVarsAnswers = array(
