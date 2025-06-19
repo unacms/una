@@ -398,7 +398,7 @@ class BxBaseModGeneralModule extends BxDolModule
             if((int)$aResult['code'] == 0) {
                 return [
                     'id' => $aResult['id'],
-                    'item' => 'TODO: return newly created poll'
+                    'item' => $aResult['item']
                 ];
             }
             else

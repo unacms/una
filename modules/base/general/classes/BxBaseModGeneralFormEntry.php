@@ -678,9 +678,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     public function getCleanValue($sName)
     {
-        $mixedValue = parent::getCleanValue($sName);
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if($this->_bIsApi && !empty($mixedValue) && isset($this->aInputs[$sName]['type']) && in_array($this->aInputs[$sName]['type'], ['polls']))
+        $mixedValue = parent::getCleanValue($sName);
+        if($this->_bIsApi && !empty($mixedValue) && in_array($sName, [$CNF['FIELD_POLL']]))
             $mixedValue = explode(',', $mixedValue);
 
         return $mixedValue;

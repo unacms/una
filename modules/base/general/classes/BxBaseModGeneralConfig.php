@@ -46,6 +46,8 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
             'TABLE_POLLS_ANSWERS_VOTES_TRACK' => $aModule['db_prefix'] . 'polls_answers_votes_track',
             
             // database fields
+            'FIELD_POLL' => 'polls',
+
             'FIELD_POLL_ID' => 'id',
             'FIELD_POLL_AUTHOR_ID' => 'author_id',
             'FIELD_POLL_CONTENT_ID' => 'content_id',

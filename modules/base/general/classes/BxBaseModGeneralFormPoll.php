@@ -213,7 +213,7 @@ class BxBaseModGeneralFormPollCheckerHelper extends BxDolFormCheckerHelper
 {
     static public function checkAvailAnswers ($s)
     {
-        return !self::_isEmptyArray($s) && count($s) >= 2;
+        return bx_is_api() ? self::checkAvail($s) : !self::_isEmptyArray($s) && count($s) >= 2;
     }
 }
 
