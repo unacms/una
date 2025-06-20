@@ -143,6 +143,14 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     {
         return isset($this->_aJsObjects[$sType]) ? $this->_aJsObjects[$sType] : '';
     }
+    
+    public function getJsObjectPoll($iId = 0)
+    {
+        if(($sJsObject = $this->getJsObject('poll')) !== '')
+            return $sJsObject .= (int)$iId == 0 ? 'Add' : 'Edit' . $iId;
+
+        return '';
+    }
 
     public function getGridObject($sType)
     {

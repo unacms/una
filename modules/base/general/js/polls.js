@@ -13,6 +13,8 @@ function BxBaseModGeneralPolls(oOptions) {
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oBxBaseModGeneralPolls' : oOptions.sObjName;
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
+    this._iParentContentId = oOptions.iParentContentId == undefined ? 0 : oOptions.iParentContentId;
+    this._sParentFormId = oOptions.sParentFormId == undefined ? '' : oOptions.sParentFormId;
     this._sEditorId = oOptions.sEditorId == undefined ? '' : oOptions.sEditorId;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
@@ -78,7 +80,7 @@ BxBaseModGeneralPolls.prototype.afterPollFormSubmit = function (oForm, oData)
                 return;
 
             var oItem = $(oData.item).hide();
-            $('#' + $this._aHtmlIds['add_poll_form_field']).append(oItem).find('#' + $this._aHtmlIds['poll'] + oData.id).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
+            $('#' + $this._sParentFormId).find('#' + $this._aHtmlIds['add_poll_form_field']).append(oItem).find('#' + $this._aHtmlIds['poll'] + oData.id).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
 
             return;
         }
@@ -114,8 +116,8 @@ BxBaseModGeneralPolls.prototype.deletePoll = function(oLink, iId, aEditors)
     bx_confirm('', function() {
         var oData = $this._getDefaultData();
         oData['id'] = iId;
-
-        var oPoll = $('#' + $this._aHtmlIds['poll'] + iId);
+console.log('#' + $this._sParentFormId, $('#' + $this._sParentFormId).find('#' + $this._aHtmlIds['poll'] + iId));
+        var oPoll = $('#' + $this._sParentFormId).find('#' + $this._aHtmlIds['poll'] + iId);
 
         bx_loading(oPoll, true);
 
@@ -155,6 +157,7 @@ BxBaseModGeneralPolls.prototype.deletePoll = function(oLink, iId, aEditors)
 BxBaseModGeneralPolls.prototype.showPollForm = function(oLink)
 {
     var oData = this._getDefaultData();    
+    oData['parent_cid'] = this._iParentContentId;
 
     $(window).dolPopupAjax({
         id: {value: this._aHtmlIds['add_poll_popup'], force: true},

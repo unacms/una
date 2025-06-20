@@ -29,17 +29,17 @@ class BxTimelineMenuPostAttachments extends BxTemplMenu
 
         $this->addMarkers([
             'js_object' => $this->_oModule->_oConfig->getJsObject('post'),
-            'js_object_poll' => $this->_oModule->_oConfig->getJsObject('poll'),
         ]);
     }
 
-    public function setEventById($iEventId, $aBrowseParams = array())
+    public function setEventById($iEventId, $aBrowseParams = [])
     {
-        $this->_iEvent = $iEventId;
+        $this->_iEvent = (int)$iEventId;
 
-        $this->addMarkers(array(
+        $this->addMarkers([
+            'js_object_poll' => $this->_oModule->_oConfig->getJsObjectPoll($this->_iEvent),
             'content_id' => $this->_iEvent,
-        ));
+        ]);
     }
 
     public function setUploadersInfo($aUploadersInfo)

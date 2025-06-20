@@ -366,25 +366,25 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(empty($iId))
-            return echoJson(array());
+            return echoJson([]);
 
-        $aResult = array();
-        if($this->_oDb->deletePolls(array($CNF['FIELD_POLL_ID'] => $iId)))
-            $aResult = array('code' => 0);
+        $aResult = [];
+        if($this->serviceDeletePoll($iId))
+            $aResult = ['code' => 0];
         else
-            $aResult = array('code' => 1, 'message' => _t($CNF['txt_err_cannot_perform_action']));
+            $aResult = ['code' => 1, 'message' => _t($CNF['txt_err_cannot_perform_action'])];
 
         echoJson($aResult);
     }
 
     public function actionGetPollForm()
     {
-        echo $this->_oTemplate->getPollForm();
+        echo $this->_oTemplate->getPollForm((int)bx_get('parent_cid'));
     }
 
     public function actionSubmitPollForm()
     {
-        echoJson($this->getPollForm());
+        echoJson($this->getPollForm((int)bx_get('parent_cid')));
     }
 
     public function serviceGetPollForm()
@@ -424,30 +424,39 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->serviceGetPollForm();
     }
 
-    public function getPollForm()
+    public function serviceDeletePoll($iId)
+    {
+        return $this->_oDb->deletePolls([$this->_oConfig->CNF['FIELD_POLL_ID'] => $iId]);
+    }
+
+    public function getPollForm($iParentCid = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_FORM_POLL']))
-            return array('code' => 1, 'message' => '_sys_txt_error_occured');
+            return ['code' => 1, 'message' => '_sys_txt_error_occured'];
 
         $iProfileId = bx_get_logged_profile_id();
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_POLL'], $CNF['OBJECT_FORM_POLL_DISPLAY_ADD'], $this->_oTemplate);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'submit_poll_form/';
+        $oForm->setParentContentId($iParentCid);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
             $iId = $oForm->insert();
             if($iId)
-                return array('code' => 0, 'id' => $iId, 'item' => $this->_oTemplate->getPollItem($iId, $iProfileId, array(
+                return ['code' => 0, 'id' => $iId, 'item' => $this->_oTemplate->getPollItem($iId, $iProfileId, [
+                    'parent_cid' => $iParentCid,
                     'manage' => true
-                )));
+                ])];
             else
-                return array('code' => 2, 'message' => '_sys_txt_error_entry_creation');
+                return ['code' => 2, 'message' => '_sys_txt_error_entry_creation'];
         }
 
-        return array('form' => $oForm->{'getCode' . ($this->_bIsApi ? 'API' : '')}(), 'form_id' => $oForm->id);
+        return [
+            'form' => $oForm->{'getCode' . ($this->_bIsApi ? 'API' : '')}(), 
+            'form_id' => $oForm->id
+        ];
     }
 
     public function actionGetCreatePostForm()
@@ -713,6 +722,7 @@ class BxBaseModGeneralModule extends BxDolModule
             // polls
             'GetPollForm' => '',
             'SubmitPollForm' => '',
+            'DeletePoll' => '',
             // page blocks
             'EntityTextBlock' => '',
             'EntityInfo' => '',

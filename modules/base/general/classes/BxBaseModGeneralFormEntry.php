@@ -102,17 +102,32 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
     }
 
-    protected function _isChangeUserForAdmins($sDisplay)
+    protected function _isModeAdd($sDisplay = '')
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(!$sDisplay && !empty($this->aParams['display']))
+            $sDisplay = $this->aParams['display'];
+
+        return isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']) && $sDisplay == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'];
+    }
+
+    protected function _isModeEdit($sDisplay = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if(!$sDisplay && !empty($this->aParams['display']))
+            $sDisplay = $this->aParams['display'];
+
+        return isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']) && $sDisplay == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];
+    }
+
+    protected function _isChangeUserForAdmins($sDisplay)
+    {
         if(!$this->_bAllowChangeUserForAdmins)
             return false;
 
-        if(isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']) && $sDisplay == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])
-            return true;
-
-        if(isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']) && $sDisplay == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'])
+        if($this->_isModeAdd($sDisplay) || $this->_isModeEdit($sDisplay))
             return true;
 
         return false;
@@ -135,14 +150,21 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         if(isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true) {
             $sInclude2 = '';
-            $sInclude2 .= $this->_oModule->_oTemplate->addJs(array('BxDolCategories.js'), $bDynamicMode);
-            $sInclude2 .= $this->_oModule->_oTemplate->addCss(array('categories.css'), $bDynamicMode);
+            $sInclude2 .= $this->_oModule->_oTemplate->addJs(['BxDolCategories.js'], $bDynamicMode);
+            $sInclude2 .= $this->_oModule->_oTemplate->addCss(['categories.css'], $bDynamicMode);
 
             $sResult .= ($bDynamicMode ? $sInclude2 : '') . $this->_oModule->_oTemplate->getJsCode('categories');
         }
 
-        if(isset($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] === true)
-            $sResult .= $this->addCssJsPolls($bDynamicMode) . $this->_oModule->_oTemplate->getJsCode('poll');
+        if(($sKey = 'PARAM_POLL_ENABLED') && isset($CNF[$sKey]) && $CNF[$sKey] === true) {
+            $iContentId = $this->_isModeEdit() ? $this->_iContentId : 0;
+
+            $sResult .= $this->addCssJsPolls($bDynamicMode) . $this->_oModule->_oTemplate->getJsCode('poll', [
+                'js_object' => $this->_oModule->_oConfig->getJsObjectPoll($iContentId),
+                'iParentContentId' => $iContentId,
+                'sParentFormId' => $this->getId()
+            ]);
+        }
 
         return $sResult;
     }
@@ -1345,7 +1367,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             return array_merge($aInput, [
                 'type' => 'polls',
                 'form_get' => '/api.php?r=' . $sModule . '/get_poll_form',
-                'form_submit' => '/api.php?r=' . $sModule . '/submit_poll_form'
+                'form_submit' => '/api.php?r=' . $sModule . '/submit_poll_form',
+                'remove' => '/api.php?r=' . $sModule . '/delete_poll',
             ]);
         }
 

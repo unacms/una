@@ -14,6 +14,8 @@ class BxBaseModGeneralFormPoll extends BxTemplFormView
     protected $_sModule;
     protected $_oModule;
 
+    protected $_iParentCid;
+
     public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
@@ -21,6 +23,17 @@ class BxBaseModGeneralFormPoll extends BxTemplFormView
         $this->_aFieldsCheckForSpam = ['answers'];
 
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
+        $this->_iParentCid = 0;
+    }
+
+    public function setParentContentId($iParentCid)
+    {
+        $this->_iParentCid = $iParentCid;
+
+        $this->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params($this->_oModule->_oConfig->getBaseUri() . 'submit_poll_form/', [
+            'parent_cid' => $this->_iParentCid
+        ]);
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -145,7 +158,7 @@ class BxBaseModGeneralFormPoll extends BxTemplFormView
                 'subtype' => 'text'
             ]);
 
-        $sJsObject = $this->_oModule->_oConfig->getJsObject('poll');
+        $sJsObject = $this->_oModule->_oConfig->getJsObjectPoll($this->_iParentCid);
 
         $aTmplVarsAnswers = array(
             array('class' => 'bx-fi-answer-blank', 'js_object' => $sJsObject, 'input_text' => $this->genCustomInputAnswersText($aInput, '', true)),
@@ -203,7 +216,7 @@ class BxBaseModGeneralFormPoll extends BxTemplFormView
         $aInput['name'] .= '_add';
         $aInput['value'] = _t($CNF['T']['txt_poll_form_answers_add']);
         $aInput['attrs']['class'] = 'bx-def-margin-sec-top';
-        $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('poll') . ".addPollAnswer(this, '" . $sName . "');";
+        $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObjectPoll($this->_iParentCid) . ".addPollAnswer(this, '" . $sName . "');";
 
         return $this->genInputButton($aInput);
     }
@@ -213,6 +226,7 @@ class BxBaseModGeneralFormPollCheckerHelper extends BxDolFormCheckerHelper
 {
     static public function checkAvailAnswers ($s)
     {
+        //TODO: try to explode for API
         return bx_is_api() ? self::checkAvail($s) : !self::_isEmptyArray($s) && count($s) >= 2;
     }
 }

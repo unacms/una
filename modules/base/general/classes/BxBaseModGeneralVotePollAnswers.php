@@ -57,7 +57,7 @@ class BxBaseModGeneralVotePollAnswers extends BxTemplVoteLikes
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sJsObjectVote = $this->getJsObjectName();
-        $sJsObjectPoll = $this->_oModule->_oConfig->getJsObject('poll');
+        $sJsObjectPoll = $this->_oModule->_oConfig->getJsObjectPoll((int)$this->_aPollInfo[$CNF['FIELD_POLL_CONTENT_ID']]);
 
         return $sJsObjectVote . '.vote(this, ' . $this->getValue() . ', function(oLink, oData) {' . $sJsObjectPoll . '.onPollAnswerVote(oLink, oData, ' . $this->_aPollInfo[$CNF['FIELD_POLL_ID']] . ');})';
     }

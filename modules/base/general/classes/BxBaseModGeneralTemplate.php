@@ -791,15 +791,15 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         );  
     }
 
-    public function getPollForm()
+    public function getPollForm($iParentCid = 0)
     {
-        $aForm = $this->getModule()->getPollForm();
+        $aForm = $this->getModule()->getPollForm($iParentCid);
 
-        return $this->parseHtmlByName('poll_form.html', array(
-            'js_object' => $this->_oConfig->getJsObject('poll'),
+        return $this->parseHtmlByName('poll_form.html', [
+            'js_object' => $this->_oConfig->getJsObjectPoll($iParentCid),
             'form_id' => $aForm['form_id'],
             'form' => $aForm['form'],
-        ));
+        ]);
     }
     
     public function getPollField($iContentId = 0, $iProfileId = 0)
@@ -823,6 +823,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $sPolls = '';
         foreach($aPolls as $aPoll)
             $sPolls .= $this->getPollItem($aPoll, $iProfileId, array(
+                'parent_cid' => $iContentId,
                 'manage' => true
             ));
 
@@ -832,7 +833,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ));
     }
 
-    public function getPollItem($mixedPoll, $iProfileId = 0, $aParams = array())
+    public function getPollItem($mixedPoll, $iProfileId = 0, $aParams = [])
     {
         $oModule = $this->getModule();
         $CNF = &$oModule->_oConfig->CNF;
@@ -858,23 +859,26 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             ];
         }
 
-        $sJsObject = $this->_oConfig->getJsObject('poll');
-
         $bDynamic = isset($aParams['dynamic']) && $aParams['dynamic'] === true;
         $bManage = isset($aParams['manage']) && $aParams['manage'] === true;
         $bSwitchMenu = isset($aParams['switch_menu']) ? (bool)$aParams['switch_menu'] : true;
         $bForceDisplayAnswers = isset($aParams['force_display_answers']) && (bool)$aParams['force_display_answers'] === true;
+        $iParentСid = isset($aParams['parent_cid']) ? (int)$aParams['parent_cid'] : 0;
 
         $sPollView = !$bForceDisplayAnswers && $oModule->isPollPerformed($iPollId, $iProfileId) ? 'results' : 'answers';
-        
+
         $sMethod = '_getPoll' . ucfirst($sPollView);
         if(!method_exists($this, $sMethod))
             return '';
 
         $mixedMenu = '';
         if($bSwitchMenu)
-            $mixedMenu = $this->_getPollBlockMenu($aPoll, $sPollView, array('template' => 'menu_interactive.html'));
+            $mixedMenu = $this->_getPollBlockMenu($aPoll, $sPollView, [
+                'parent_cid' => $iParentСid,
+                'template' => 'menu_interactive.html'
+            ]);
 
+        $sJsObject = $this->_oConfig->getJsObjectPoll($iParentСid);
         return $this->parseHtmlByName('poll_item.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('poll') . $iPollId,
             'bx_if:show_input_hidden' => array(
@@ -954,16 +958,17 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $iPolls += 1;
         }
 
+        $sJsObjectType = 'poll';
         if(!empty($sContent) && isset($aParams['showcase']) && (bool)$aParams['showcase'] === true) {
             $this->addJs(array('flickity/flickity.pkgd.min.js'));
             $this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css');
 
-            $sContent = $this->parseHtmlByName('poll_items_showcase.html', array(
-                'js_object' => $this->_oConfig->getJsObject('poll'),
+            $sContent = $this->parseHtmlByName('poll_items_showcase.html', [
+                'js_object' => $this->_oConfig->getJsObject($sJsObjectType),
                 'html_id' => $this->_oConfig->getHtmlIds('polls_showcase') . $iContentId,
                 'type' => $iPolls == 1 ? 'single' : 'multiple',
                 'polls' => $sContent
-            ));
+            ]);
         }
 
         $sHeader = '';
@@ -971,7 +976,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $sHeader = $iPolls == 1 ? array_shift($aPolls)[$CNF['FIELD_POLL_TEXT']] : _t('_polls_from', $aContentInfo[$CNF['FIELD_TITLE']]);
             $sHeader = strmaxtextlen($sHeader, 32, '...');
 
-            $sContent = $this->getJsCode('poll') . $sContent;
+            $sContent = $this->getJsCode($sJsObjectType) . $sContent;
         }
 
         $this->_addCssJsPolls();
@@ -1055,19 +1060,17 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ));
     }
 
-    protected function _getPollBlockMenu($aPoll, $sSelected = '', $aParams = array())
+    protected function _getPollBlockMenu($aPoll, $sSelected = '', $aParams = [])
     {
-        $oModule = $this->getModule();
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
-        $sPostfix = '-' . time() . rand(0, PHP_INT_MAX);
-        $sJsObject = $this->_oConfig->getJsObject('poll');
+        $sJsObject = isset($aParams['parent_cid']) ? $this->_oConfig->getJsObjectPoll((int)$aParams['parent_cid']) : $this->_oConfig->getJsObject('poll');
         $iPollId = $aPoll[$CNF['FIELD_POLL_ID']];
 
-        $aViews = array(
+        $aViews = [
             'answers' => true, 
-            'results' => $CNF['PARAM_POLL_HIDDEN_RESULTS'] === false || $oModule->isPollPerformed($iPollId)
-        );
+            'results' => $CNF['PARAM_POLL_HIDDEN_RESULTS'] === false || $this->getModule()->isPollPerformed($iPollId)
+        ];
 
         $aMenu = array();
         foreach($aViews as $sView => $bActive) {
@@ -1093,11 +1096,11 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if(count($aMenu) <= 1)
             return '';
 
-        $oMenu = new BxTemplMenuInteractive(array(
+        $oMenu = new BxTemplMenuInteractive([
             'template' => !empty($aParams['template']) ? $aParams['template'] : 'menu_interactive_vertical.html', 
-            'menu_id' => $this->_oConfig->getHtmlIds('poll_view_menu') . $sPostfix, 
+            'menu_id' => $this->_oConfig->getHtmlIds('poll_view_menu') . '-' . time() . rand(0, PHP_INT_MAX), 
             'menu_items' => $aMenu
-        ));
+        ]);
 
         if(!empty($sSelected))
             $oMenu->setSelected('', $sSelected);
