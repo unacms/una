@@ -1374,7 +1374,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 			$sOutput .= '<div><b>Settings:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sSettings) . '</pre></div>';
 		}
 
-		$sOutput .= '<p><b>Called script:</b><br />' . $_SERVER['PHP_SELF'] . '</p>';
+        $sOutput .= '<p><b>Called script:</b><br />' . htmlspecialchars_adv($_SERVER['PHP_SELF']) . '</p>';
 
 		if(!empty($_REQUEST)) {
 			$sRequest = var_export($_REQUEST, true);
