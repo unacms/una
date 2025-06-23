@@ -147,8 +147,8 @@
     <string name="_bx_timeline_form_poll_input_answers"><![CDATA[Answers]]></string>
     <string name="_bx_timeline_form_poll_input_answers_err"><![CDATA[Poll should have at least 2 non-empty answers.]]></string>
     <string name="_bx_timeline_form_poll_input_answers_add"><![CDATA[Add More]]></string>
-    <string name="_bx_timeline_form_poll_input_sys_do_submit"><![CDATA[Add]]></string>
-    <string name="_bx_timeline_form_poll_input_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_timeline_form_poll_input_sys_do_submit"><![CDATA[Create]]></string>
+    <string name="_bx_timeline_form_poll_input_do_submit"><![CDATA[Create poll]]></string>
     <string name="_bx_timeline_form_poll_input_do_cancel"><![CDATA[Close]]></string>
 
     <string name="_bx_timeline_form_repost"><![CDATA[Repost]]></string>

@@ -723,6 +723,8 @@ class BxBaseModGeneralModule extends BxDolModule
             'GetPollForm' => '',
             'SubmitPollForm' => '',
             'DeletePoll' => '',
+            'GetBlockPollAnswers' => '',
+            'GetBlockPollResults' => '',
             // page blocks
             'EntityTextBlock' => '',
             'EntityInfo' => '',

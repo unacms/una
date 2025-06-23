@@ -773,22 +773,25 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if(empty($sContent))
             return '';
 
-    	return array(
+        return [
             'content' => $sContent,
             'menu' => $this->_getPollBlockMenu($aPoll, 'answers')
-        ); 
+        ]; 
     }
 
     public function entryPollResults($aPoll, $bDynamic = false)
     {
-        $sContent = $this->_getPollResults($aPoll, $bDynamic);
-        if(empty($sContent))
+        $mixedContent = $this->_getPollResults($aPoll, $bDynamic);
+        if($this->_bIsApi)
+            return $mixedContent;
+
+        if(empty($mixedContent))
             return '';
 
-        return array(
-            'content' => $sContent,
+        return [
+            'content' => $mixedContent,
             'menu' => $this->_getPollBlockMenu($aPoll, 'results')
-        );  
+        ];
     }
 
     public function getPollForm($iParentCid = 0)
@@ -807,30 +810,36 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if(empty($iProfileId))
             $iProfileId = bx_get_logged_profile_id();
 
-        $aPolls = array();
+        $aPolls = [];
         if(!empty($iContentId))
-            $aPolls = array_merge($aPolls, $this->_oDb->getPolls(array(
+            $aPolls = array_merge($aPolls, $this->_oDb->getPolls([
                 'type' => 'content_id', 
                 'content_id' => $iContentId, 
-            )));
+            ]));
 
-        $aPolls = array_merge($aPolls, $this->_oDb->getPolls(array(
+        $aPolls = array_merge($aPolls, $this->_oDb->getPolls([
             'type' => 'author_id', 
             'author_id' => $iProfileId, 
             'unused' => true
-        )));
+        ]));
 
-        $sPolls = '';
-        foreach($aPolls as $aPoll)
-            $sPolls .= $this->getPollItem($aPoll, $iProfileId, array(
+        $mixedPolls = $this->_bIsApi ? [] : '';
+        foreach($aPolls as $aPoll) {
+            $mixedPoll = $this->getPollItem($aPoll, $iProfileId, [
                 'parent_cid' => $iContentId,
                 'manage' => true
-            ));
+            ]);
 
-        return $this->parseHtmlByName('poll_form_field.html', array(
+            if($this->_bIsApi)
+                $mixedPolls[] = $mixedPoll;
+            else
+                $mixedPolls .= $mixedPoll;
+        }
+
+        return $this->_bIsApi ? $mixedPolls : $this->parseHtmlByName('poll_form_field.html', [
             'html_id' => $this->_oConfig->getHtmlIds('add_poll_form_field'),
-            'polls' => $sPolls
-        ));
+            'polls' => $mixedPolls
+        ]);
     }
 
     public function getPollItem($mixedPoll, $iProfileId = 0, $aParams = [])

@@ -1361,18 +1361,18 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     protected function genCustomInputPolls ($aInput)
     {
-        if($this->_bIsApi) {
-            $sModule = $this->_oModule->getName();
+        $mixedResult = $this->_oModule->_oTemplate->getPollField(!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0);
 
-            return array_merge($aInput, [
-                'type' => 'polls',
-                'form_get' => '/api.php?r=' . $sModule . '/get_poll_form',
-                'form_submit' => '/api.php?r=' . $sModule . '/submit_poll_form',
-                'remove' => '/api.php?r=' . $sModule . '/delete_poll',
-            ]);
-        }
-
-        return $this->_oModule->_oTemplate->getPollField(!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0);
+        $sModule = $this->_oModule->getName();
+        return $this->_bIsApi ? array_merge($aInput, [
+            'type' => 'polls',
+            'value' => implode(',', array_column($mixedResult, 'id')),
+            'values' => $mixedResult,
+            'request_get' => '/api.php?r=' . $sModule . '/get_poll_form',
+            'request_submit' => '/api.php?r=' . $sModule . '/submit_poll_form',
+            'request_remove' => '/api.php?r=' . $sModule . '/delete_poll',
+            'request_results' => '/api.php?r=' . $sModule . '/get_block_poll_results',
+        ]) : $mixedResult;
     }
 
     protected function _isMulticatEnabled(){

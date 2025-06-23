@@ -147,8 +147,8 @@
     <string name="_bx_timeline_form_poll_input_answers"><![CDATA[Ответы]]></string>
     <string name="_bx_timeline_form_poll_input_answers_err"><![CDATA[Голосование должно иметь как минимум 2 не пустых ответа.]]></string>
     <string name="_bx_timeline_form_poll_input_answers_add"><![CDATA[Добавить ещё]]></string>    
-    <string name="_bx_timeline_form_poll_input_sys_do_submit"><![CDATA[Добавить]]></string>
-    <string name="_bx_timeline_form_poll_input_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_timeline_form_poll_input_sys_do_submit"><![CDATA[Создать]]></string>
+    <string name="_bx_timeline_form_poll_input_do_submit"><![CDATA[Создать опрос]]></string>
     <string name="_bx_timeline_form_poll_input_do_cancel"><![CDATA[Закрыть]]></string>
 
     <string name="_bx_timeline_form_reposto"><![CDATA[Сделать репост]]></string>
