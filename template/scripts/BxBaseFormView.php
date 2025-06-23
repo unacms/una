@@ -1290,7 +1290,13 @@ BLAH;
             case 'hidden':
                 $sInput = $this->genInputStandard($aInput);
             break;
-            
+
+            case 'phone':
+                $aInput['type'] = 'text';
+
+                $sInput = $this->genInputStandard($aInput);
+            break;
+
             case 'password':
             	$sInput = $this->genInputPassword($aInput);
             	break;
