@@ -297,7 +297,10 @@ class BxBaseModGeneralDb extends BxDolModuleDb
             $sWhereClause .= " AND `author_nip`=:author_nip";
         }
 
-        $aAnswers = $this->getPollAnswers(array('type' => 'poll_id_pairs', 'poll_id' => $iPollId));
+        $aAnswers = $this->getPollAnswers([
+            'type' => 'poll_id_pairs', 
+            'poll_id' => $iPollId
+        ]);
         return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aAnswers)) . ") " . $sWhereClause . " LIMIT 1", $aBindings) != 0;
     }
 
@@ -310,9 +313,8 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
         $aSubentries = $this->getPollAnswers([
             'type' => 'poll_id_pairs', 
-            'entry_id' => $iPollId
+            'poll_id' => $iPollId
         ]);
-
         return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aSubentries)) . ") " . $sWhereClause . " LIMIT 1", $aBindings);
     }
 

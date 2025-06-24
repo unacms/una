@@ -56,11 +56,6 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
         $this->_iOwnerId = 0;
     }
 
-    public function serviceGetSafeServices()
-    {
-        return array();
-    }
-
     /**
      * @page service Service Calls
      * @section bx_base_notifications Base Notifications
