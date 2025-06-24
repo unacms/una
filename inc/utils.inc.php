@@ -659,14 +659,14 @@ function getVisitorIP()
     $ip = "0.0.0.0";
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    } elseif (isset( $_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP'])) {
-        $ip = explode(".",$_SERVER['HTTP_CLIENT_IP']);
-        $ip = $ip[3].".".$ip[2].".".$ip[1].".".$ip[0];
+    } elseif (isset($_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
     } elseif (!isset( $_SERVER['HTTP_X_FORWARDED_FOR']) || empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         if (!isset( $_SERVER['HTTP_CLIENT_IP']) && empty($_SERVER['HTTP_CLIENT_IP']) && isset($_SERVER['REMOTE_ADDR']))
             $ip = $_SERVER['REMOTE_ADDR'];
     }
-    return $ip;
+
+    return filter_var($ip, FILTER_VALIDATE_IP) ? $ip : "0.0.0.0";
 }
 
 function genFlag($sLang = '', $oTemplate = null)
