@@ -538,6 +538,7 @@ class BxBasePage extends BxDolPage
             'type' => $this->getType (),
             'layout' => str_replace('.html', '', $this->_aObject['template']),
             'cover_block' => '',
+            'cover' => $this->_aObject['cover'],
             'menu_top' => '',
             'menu' => '',
             'menu_bottom' => '',
