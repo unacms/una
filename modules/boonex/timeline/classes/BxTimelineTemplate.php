@@ -1746,7 +1746,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getDataCached($aEvent, $aBrowseParams = array())
     {
-        if(!$this->_oConfig->isCacheItem())
+        /**
+         * Item Cache is disabled for API calls to avoid issues with personalized 
+         * content in items (like attched polls, etc).
+         */
+        if($this->_bIsApi || !$this->_oConfig->isCacheItem())
             return $this->getData($aEvent, $aBrowseParams);
 
         /**
