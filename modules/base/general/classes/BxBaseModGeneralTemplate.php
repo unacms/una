@@ -769,7 +769,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
     public function entryPollAnswers($aPoll, $bDynamic = false)
     {
-        $sContent = $this->_getPollAnswers($aPoll, $bDynamic);
+        $sContent = $this->_getPollAnswers($aPoll, ['dynamic' => $bDynamic]);
         if(empty($sContent))
             return '';
 
@@ -781,7 +781,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
     public function entryPollResults($aPoll, $bDynamic = false)
     {
-        $mixedContent = $this->_getPollResults($aPoll, $bDynamic);
+        $mixedContent = $this->_getPollResults($aPoll, ['dynamic' => $bDynamic]);
         if($this->_bIsApi)
             return $mixedContent;
 
@@ -872,7 +872,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $bManage = isset($aParams['manage']) && $aParams['manage'] === true;
         $bSwitchMenu = isset($aParams['switch_menu']) ? (bool)$aParams['switch_menu'] : true;
         $bForceDisplayAnswers = isset($aParams['force_display_answers']) && (bool)$aParams['force_display_answers'] === true;
-        $iParentСid = isset($aParams['parent_cid']) ? (int)$aParams['parent_cid'] : 0;
+        $iParentСid = isset($aParams['parent_cid']) ? (int)$aParams['parent_cid'] : false;
 
         $sPollView = !$bForceDisplayAnswers && $oModule->isPollPerformed($iPollId, $iProfileId) ? 'results' : 'answers';
 
@@ -887,7 +887,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 'template' => 'menu_interactive.html'
             ]);
 
-        $sJsObject = $this->_oConfig->getJsObjectPoll($iParentСid);
+        $sJsObject = $iParentСid !== false ? $this->_oConfig->getJsObjectPoll($iParentСid) : $this->_oConfig->getJsObject('poll');
         return $this->parseHtmlByName('poll_item.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('poll') . $iPollId,
             'bx_if:show_input_hidden' => array(
@@ -914,7 +914,10 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 )
             ),
             'text' => $sPollText,
-            'content' => $this->$sMethod($aPoll, $bDynamic)
+            'content' => $this->$sMethod($aPoll, [
+                'dynamic' => $bDynamic,
+                'parent_cid' => $iParentСid
+            ])
         ));
     }
 
@@ -1007,39 +1010,48 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $bDynamic ? $sInclude : '';
     }
     
-    protected function _getPollAnswers($aPoll, $bDynamic = false)
+    protected function _getPollAnswers($aPoll, $aParams = [])
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
-        
-        $aAnswers = $this->_oDb->getPollAnswers(array('type' => 'poll_id', 'poll_id' => $aPoll[$CNF['FIELD_POLL_ID']]));
+
+        $bDynamic = isset($aParams['dynamic']) && $aParams['dynamic'] === true;
+        $iParentСid = isset($aParams['parent_cid']) && $aParams['parent_cid'] !== false ? (int)$aParams['parent_cid'] : false;
+
+        $aAnswers = $this->_oDb->getPollAnswers(['type' => 'poll_id', 'poll_id' => $aPoll[$CNF['FIELD_POLL_ID']]]);
         if($this->_bIsApi)
             return $aAnswers;
 
         if(empty($aAnswers) || !is_array($aAnswers))
             return '';
 
-        $aTmplVarsAnswers = array();
+        $aTmplVarsAnswers = [];
         foreach($aAnswers as $aAnswer) {
             $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_POLL_ANSWERS'], $aAnswer['id']);
+            if(!$oVotes)
+                continue;
 
-            $aTmplVarsAnswers[] = array(
-                'answer' => $oVotes->getElementBlock(array(
-                    'dynamic_mode' => $bDynamic
-                ))
-            );
+            $aTmplVarsAnswers[] = [
+                'answer' => $oVotes->getElementBlock([
+                    'dynamic_mode' => $bDynamic,
+                    'form_mode' => $iParentСid !== false
+                ])
+            ];
         }
 
-    	return $this->parseHtmlByName('poll_item_answers.html', array(
+    	return $this->parseHtmlByName('poll_item_answers.html', [
             'html_id' => $this->_oConfig->getHtmlIds('poll_content') . $aPoll[$CNF['FIELD_POLL_ID']],
             'bx_repeat:answers' => $aTmplVarsAnswers
-        ));
+        ]);
     }
 
-    protected function _getPollResults($aPoll, $bDynamic = false)
+    protected function _getPollResults($aPoll, $aParams = [])
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        $aAnswers = $this->_oDb->getPollAnswers(array('type' => 'poll_id', 'poll_id' => $aPoll[$CNF['FIELD_POLL_ID']]));
+        $bDynamic = isset($aParams['dynamic']) && $aParams['dynamic'] === true;
+        $iParentСid = isset($aParams['parent_cid']) && $aParams['parent_cid'] !== false ? (int)$aParams['parent_cid'] : false;
+
+        $aAnswers = $this->_oDb->getPollAnswers(['type' => 'poll_id', 'poll_id' => $aPoll[$CNF['FIELD_POLL_ID']]]);
         if(empty($aAnswers) || !is_array($aAnswers))
             return $this->_bIsApi ? [] : '';
 
@@ -1050,6 +1062,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $aTmplVarsAnswers = [];
         foreach($aAnswers as $aAnswer) {
             $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_POLL_ANSWERS'], $aAnswer['id']);
+            if(!$oVotes)
+                continue;
 
             $fPercent = $iTotal > 0 ? 100 * (float)$aAnswer['votes']/$iTotal : 0;
             $aTmplVarsAnswers[] = array_merge([
@@ -1057,9 +1071,17 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 'width' => (int)round($fPercent) . '%',
                 'percent' => _t($CNF['T']['txt_poll_answer_vote_percent'], $iTotal > 0 ? round($fPercent, 2) : 0),
             ], ($this->_bIsApi ? [
-                'votes' => $oVotes->getCounterAPI(['show_counter_empty' => true, 'show_counter_in_brackets' => false]),
+                'votes' => $oVotes->getCounterAPI([
+                    'show_counter_empty' => true, 
+                    'show_counter_in_brackets' => false
+                ]),
             ] : [
-                'votes' => $oVotes->getCounter(['show_counter_empty' => true, 'show_counter_in_brackets' => false, 'dynamic_mode' => $bDynamic]),
+                'votes' => $oVotes->getCounter([
+                    'show_counter_empty' => true, 
+                    'show_counter_in_brackets' => false, 
+                    'dynamic_mode' => $bDynamic, 
+                    'form_mode' => $iParentСid !== false
+                ]),
             ]));
         }
 
@@ -1073,7 +1095,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sJsObject = isset($aParams['parent_cid']) ? $this->_oConfig->getJsObjectPoll((int)$aParams['parent_cid']) : $this->_oConfig->getJsObject('poll');
+        $sJsObject = isset($aParams['parent_cid']) && $aParams['parent_cid'] !== false ? $this->_oConfig->getJsObjectPoll((int)$aParams['parent_cid']) : $this->_oConfig->getJsObject('poll');
         $iPollId = $aPoll[$CNF['FIELD_POLL_ID']];
 
         $aViews = [

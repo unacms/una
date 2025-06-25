@@ -20,6 +20,7 @@ class BxBaseModGeneralVotePollAnswers extends BxTemplVoteLikes
     protected $_bContentInfo;
     protected $_aContentInfo;
 
+    protected $_bFormMode;
     protected $_bHiddenResults;
     protected $_bAnonymousVoting;
 
@@ -46,6 +47,7 @@ class BxBaseModGeneralVotePollAnswers extends BxTemplVoteLikes
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aPollInfo[$CNF['FIELD_POLL_CONTENT_ID']]);
         $this->_bContentInfo = !empty($this->_aContentInfo) && is_array($this->_aContentInfo);
 
+        $this->_bFormMode = false;
         $this->_bHiddenResults = $CNF['PARAM_POLL_HIDDEN_RESULTS'];
         $this->_bAnonymousVoting = $CNF['PARAM_POLL_ANONYMOUS_VOTING'];
 
@@ -57,25 +59,29 @@ class BxBaseModGeneralVotePollAnswers extends BxTemplVoteLikes
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sJsObjectVote = $this->getJsObjectName();
-        $sJsObjectPoll = $this->_oModule->_oConfig->getJsObjectPoll((int)$this->_aPollInfo[$CNF['FIELD_POLL_CONTENT_ID']]);
+        $sJsObjectPoll = $this->_bFormMode ? $this->_oModule->_oConfig->getJsObjectPoll($this->_bContentInfo ? (int)$this->_aPollInfo[$CNF['FIELD_POLL_CONTENT_ID']] : 0) : $this->_oModule->_oConfig->getJsObject('poll');
 
         return $sJsObjectVote . '.vote(this, ' . $this->getValue() . ', function(oLink, oData) {' . $sJsObjectPoll . '.onPollAnswerVote(oLink, oData, ' . $this->_aPollInfo[$CNF['FIELD_POLL_ID']] . ');})';
     }
-
-    public function getCounter($aParams = array())
+    
+    public function getElement($aParams = [])
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        $this->_bFormMode = isset($aParams['form_mode']) ? $aParams['form_mode'] : false;
 
-        $bShowInBrackets = !isset($aParams['show_counter_in_brackets']) || $aParams['show_counter_in_brackets'] == true;
+        return parent::getElement($aParams);
+    }
+
+    public function getCounter($aParams = [])
+    {
+        $this->_bFormMode = isset($aParams['form_mode']) ? $aParams['form_mode'] : false;
 
         $iObjectId = $this->getId();
         $iAuthorId = $this->_getAuthorId();
-        if($this->_bHiddenResults)
-            if(!$this->isPerformed($iObjectId, $iAuthorId))
-                return '';
+        if($this->_bHiddenResults && !$this->isPerformed($iObjectId, $iAuthorId))
+            return '';
 
         $sResult = parent::getCounter($aParams);
-        if($bShowInBrackets)
+        if(!isset($aParams['show_counter_in_brackets']) || $aParams['show_counter_in_brackets'] == true)
             $sResult = '(' . $sResult . ')';
 
         return $sResult;
