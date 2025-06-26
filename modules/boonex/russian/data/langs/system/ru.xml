@@ -2466,6 +2466,14 @@
     <string name="_sys_close"><![CDATA[Закрыть]]></string>
     <string name="_sys_confirm"><![CDATA[Подтвердить]]></string>
     <string name="_sys_confirmed"><![CDATA[Подтвержденный]]></string>
+    <string name="_sys_conn_do_by"><![CDATA[Присоединились]]></string>
+    <string name="_sys_conn_friends_counter"><![CDATA[Друзья: {0}]]></string>
+    <string name="_sys_conn_friends_do_initiator"><![CDATA[Друзья]]></string>
+    <string name="_sys_conn_friends_do_content"><![CDATA[Ответить]]></string>
+    <string name="_sys_conn_subscriptions_do_initiator"><![CDATA[Слежу]]></string>
+    <string name="_sys_conn_subscriptions_counter"><![CDATA[Подписчики: {0}]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
     <string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>
     <string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Связь не существует]]></string>
     <string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Запрос на связь ожидает подтверждения]]></string>

@@ -2491,6 +2491,14 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_close"><![CDATA[Close]]></string>
     <string name="_sys_confirm"><![CDATA[Confirm]]></string>
     <string name="_sys_confirmed"><![CDATA[Confirmed]]></string>
+    <string name="_sys_conn_do_by"><![CDATA[Connected by]]></string>
+    <string name="_sys_conn_friends_counter"><![CDATA[{0} friends]]></string>
+    <string name="_sys_conn_friends_do_initiator"><![CDATA[Friends]]></string>
+    <string name="_sys_conn_friends_do_content"><![CDATA[Respond]]></string>
+    <string name="_sys_conn_subscriptions_do_initiator"><![CDATA[Following]]></string>
+    <string name="_sys_conn_subscriptions_counter"><![CDATA[{0} followers]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
     <string name="_sys_conn_err_connection_already_exists"><![CDATA[Connection already exists]]></string>
     <string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Connection doesn't exist]]></string>
     <string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Connection request is awaiting confirmation]]></string>
@@ -3250,7 +3258,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sm_befriend"><![CDATA[Add friend]]></string>
     <string name="_sys_menu_item_title_sm_befriend_sent"><![CDATA[Add friend (requested)]]></string>
     <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Accept friend request]]></string>
-    <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Remove friend]]></string>
+    <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Unfriend]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Cancel friend request]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_reject"><![CDATA[Reject friend request]]></string>
     <string name="_sys_menu_item_title_sm_join_paid"><![CDATA[Pay & Join]]></string>

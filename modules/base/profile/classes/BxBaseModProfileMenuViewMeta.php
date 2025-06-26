@@ -109,7 +109,7 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
 
         if(!$this->_oModule->_oConfig->isFriends() || !$this->_bContentPublic || !$this->_oContentProfile)
             return false;
-        
+
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
         if(!$oConnection)
             return false;
@@ -117,7 +117,10 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         $iContentProfileId = $this->_oContentProfile->id();
 
         if($this->_bIsApi) {
-            $aCounter = $oConnection->getCounterAPI($iContentProfileId, true, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, true, [
+                'content_type' => BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 
+                'caption' => $aItem['title']
+            ]);
 
             $sUrl = $this->_oContentProfile->getUrl();
             if(!empty($CNF['URI_VIEW_FRIENDS']))
@@ -130,8 +133,11 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
             ]);
         }
 
-        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
-        return $oConnection->getCounter($iContentProfileId, true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        return $oConnection->getCounter($iContentProfileId, true, [
+            'content_type' => BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 
+            'caption' => $aItem['title'], 
+            'custom_icon' => BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '')
+        ]);
     }
 
     protected function _getMenuItemSubscribers($aItem)
@@ -148,7 +154,10 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         $iContentProfileId = $this->_oContentProfile->id();
 
         if($this->_bIsApi) {
-            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, [
+                'content_type' => BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 
+                'caption' => $aItem['title']
+            ]);
 
             $sUrl = $this->_oContentProfile->getUrl();
             if(!empty($CNF['URI_VIEW_SUBSCRIPTIONS']))
@@ -161,8 +170,11 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
             ]);
         }
 
-        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
-        return $oConnection->getCounter($iContentProfileId, false, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        return $oConnection->getCounter($iContentProfileId, false, [
+            'content_type' => BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 
+            'caption' => $aItem['title'], 
+            'custom_icon' => BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '')
+        ]);
     }
 
     protected function _getMenuItemRelations($aItem)
@@ -179,7 +191,10 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         $iContentProfileId = $this->_oContentProfile->id();
 
         if($this->_bIsApi) {
-            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, [
+                'content_type' => BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 
+                'caption' => $aItem['title']
+            ]);
 
             $sUrl = $this->_oContentProfile->getUrl();
             if(!empty($CNF['URI_VIEW_RELATIONS']))
@@ -192,8 +207,11 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
             ]);
         }
 
-        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
-        return $oConnection->getCounter($iContentProfileId, true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        return $oConnection->getCounter($iContentProfileId, true, [
+            'content_type' => BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 
+            'caption' => $aItem['title'], 
+            'custom_icon' => BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '')
+        ]);
     }
 
     protected function _getMenuItemViews($aItem)

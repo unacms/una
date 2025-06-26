@@ -129,10 +129,13 @@ define('BX_CONNECTIONS_TRIGGER_TYPE_CONTENT', 'content');
  */
 class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
 {
+    protected $_oQuery;
+
     protected $_sObject;
     protected $_aObject;
-    protected $_oQuery;
     protected $_sType;
+    protected $_bMutual;
+
     protected $_aTriggerTypes;
 
     /**
@@ -148,6 +151,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         $this->_aObject['per_page_default'] = 20;
 
         $this->_sType = $aObject['type'];
+        $this->_bMutual = $this->_sType == BX_CONNECTIONS_TYPE_MUTUAL;
 
         $this->_aTriggerTypes = [BX_CONNECTIONS_TRIGGER_TYPE_INITIATOR, BX_CONNECTIONS_TRIGGER_TYPE_CONTENT];
 
