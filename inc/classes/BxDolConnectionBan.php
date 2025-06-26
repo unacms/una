@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolBan extends BxDolConnection
+class BxDolConnectionBan extends BxDolConnection
 {
     protected function __construct($aObject)
     {

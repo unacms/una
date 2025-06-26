@@ -5730,7 +5730,7 @@ INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `p
 ('sys_profiles_friends', 'sys_profiles_conn_friends', 1, 1, 'mutual', 'BxTemplConnectionFriend', ''),
 ('sys_profiles_subscriptions', 'sys_profiles_conn_subscriptions', 1, 1, 'one-way', 'BxTemplConnectionSubscription', ''),
 ('sys_profiles_relations', 'sys_profiles_conn_relations', 1, 1, 'mutual', 'BxDolRelation', ''),
-('sys_profiles_bans', 'sys_profiles_conn_bans', 1, 1, 'one-way', 'BxDolBan', '');
+('sys_profiles_bans', 'sys_profiles_conn_bans', 1, 1, 'one-way', 'BxDolConnectionBan', '');
 
 CREATE TABLE IF NOT EXISTS `sys_profiles_conn_bans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
