@@ -9,6 +9,10 @@
  * @{
  */
 
+/**
+ * General docs: https://docs.stripe.com/connect/how-connect-works
+ * Testing: https://docs.stripe.com/connect/testing
+ */
 class BxStripeConnectApi extends BxDol
 {
     protected $_sModule;

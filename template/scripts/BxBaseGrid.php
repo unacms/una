@@ -831,7 +831,6 @@ class BxBaseGrid extends BxDolGrid
         $sImage = '';
         if (!empty($a['icon'])) {
             list($sIconFont, $sIconUrl, $sIconA, $sIconHtml) = $this->_oFunctions->getIcon($a['icon']);
-            //var_dump($a['icon'], $sIconFont, $sIconUrl, $sIconA, $sIconHtml, $sIconFontWithHtml); 
 
             if ($sIconFont)
                 $sIcon = '<i class="sys-icon ' . $sIconFont . '"></i>';
