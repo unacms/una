@@ -1288,7 +1288,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileRelations ($iContentId = 0, $aParams = array())
     {
-        if(!BxDolRelation::isEnabled())
+        if(!BxDolConnectionRelation::isEnabled())
             return false;
 
         $mixedContent = $this->_getContent($iContentId);
@@ -1307,7 +1307,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileRelatedMe ($iContentId = 0)
     {
-        if(!BxDolRelation::isEnabled())
+        if(!BxDolConnectionRelation::isEnabled())
             return false;
 
         $mixedContent = $this->_getContent($iContentId);
@@ -1340,7 +1340,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceIsEnableRelations()
     {
-        if(!BxDolRelation::isEnabled())
+        if(!BxDolConnectionRelation::isEnabled())
             return false;
 
         $sModule = $this->_oConfig->getName();
@@ -1955,7 +1955,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function checkAllowedRelationAdd (&$aDataEntry, $isPerformAction = false)
     {
         $sResult = _t('_sys_txt_access_denied');
-        if(!BxDolRelation::isEnabled())
+        if(!BxDolConnectionRelation::isEnabled())
             return $sResult;
 
         if(($sMsg = $this->checkAllowedView($aDataEntry)) !== CHECK_ACTION_RESULT_ALLOWED)
@@ -1970,7 +1970,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function checkAllowedRelationRemove (&$aDataEntry, $isPerformAction = false)
     {
         $sResult = _t('_sys_txt_access_denied');
-        if(!BxDolRelation::isEnabled())
+        if(!BxDolConnectionRelation::isEnabled())
             return $sResult;
 
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_relations', false, true);
@@ -1979,7 +1979,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function checkAllowedRelationsView (&$aDataEntry, $isPerformAction = false)
     {
         $sResult = _t('_sys_txt_access_denied');
-        if(!BxDolRelation::isEnabled())
+        if(!BxDolConnectionRelation::isEnabled())
             return $sResult;
 
         $sModule = $this->_oConfig->getName();

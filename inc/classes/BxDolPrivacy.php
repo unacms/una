@@ -936,7 +936,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
     public function isAllowedRelations($iUserId)
     {
-        return BxDolRelation::isEnabled();
+        return BxDolConnectionRelation::isEnabled();
     }
 
     public function isAllowedMemberships($iUserId)

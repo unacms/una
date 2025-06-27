@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolRelation extends BxTemplConnection
+class BxDolConnectionRelation extends BxTemplConnection
 {
     protected static $_sParamEnabled = 'sys_relations_enable';
     protected static $_sParamTypes = 'sys_relations';
@@ -19,7 +19,7 @@ class BxDolRelation extends BxTemplConnection
     {
         parent::__construct($aObject);
 
-        $this->_oQuery = new BxDolRelationQuery($aObject);
+        $this->_oQuery = new BxDolConnectionRelationQuery($aObject);
 
         $this->_sParamDivider = '_';
         $this->_sPreList = 'sys_relations';
@@ -132,7 +132,7 @@ class BxDolRelation extends BxTemplConnection
          *      - `initiator` - [int] profile id who created the connection
          *      - `content` - [int] profile id with whom the connection was created
          *      - `mutual` - [int] if the relation is mutual or not
-         *      - `object` - [object] an instance of relation, @see BxDolRelation
+         *      - `object` - [object] an instance of relation, @see BxDolConnectionRelation
          * @hook @ref hook-bx_dol_relation-connection_confirmed
          */
         bx_alert($this->_sObject, 'connection_confirmed', 0, bx_get_logged_profile_id(), [

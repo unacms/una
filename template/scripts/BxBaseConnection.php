@@ -106,6 +106,8 @@ class BxBaseConnection extends BxDolConnection
 
         if(!$iInitiator)
             $iInitiator = bx_get_logged_profile_id();
+        if($iInitiator && $iInitiator == $iContent)
+            return '';
 
         $aActions = $this->_getActions($iInitiator, $iContent, $aParams);
 
@@ -139,18 +141,21 @@ class BxBaseConnection extends BxDolConnection
 
             $aMenuItems = [];
             foreach($aActions['items'] as $aItem)
-                if(!empty($aItem) && is_array($aItem))
-                    $aMenuItems[] = [
-                        'id' => $aItem['name'], 
-                        'name' => $aItem['name'], 
-                        'class' => '', 
-                        'icon' => $this->_getActionIcon($aItem, $aParams), 
-                        'link' => 'javascript:void(0)', 
-                        'onclick' => 'javascript:bx_conn_action(this, \'' . $this->_sObject . '\', \'' . $aItem['name'] . '\', ' . $iContent . ')', 
-                        'target' => '_self', 
-                        'title' => !empty($aItem['title']) ? _t($aItem['title']) : '', 
-                        'active' => 1
-                    ];
+                if(!empty($aItem) && is_array($aItem)) {
+                    if(!isset($aItem['link'], $aItem['onclick']))    
+                        $aMenuItems[] = [
+                            'id' => $aItem['name'], 
+                            'name' => $aItem['name'], 
+                            'icon' => $this->_getActionIcon($aItem, $aParams), 
+                            'link' => 'javascript:void(0)', 
+                            'onclick' => "javascript:bx_conn_action(this, '" . $this->_sObject . "', '" . $aItem['name'] . "', " . $iContent . ")", 
+                            'target' => '_self', 
+                            'title' => !empty($aItem['title']) ? _t($aItem['title']) : '', 
+                            'active' => 1
+                        ];
+                    else
+                        $aMenuItems[] = $aItem;
+                }
 
             $oMenu = new BxTemplMenu(['template' => 'menu_vertical.html', 'menu_id'=> $sHtmlIdDoMenu, 'menu_items' => $aMenuItems]);
 

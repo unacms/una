@@ -7,3 +7,9 @@
 .sys-action-counter-profile .bx-base-pofile-unit-online {
     display: none;
 }
+
+
+/*-- Relations: Do menu --*/
+.bx-menu-add-relation-hidden {
+    display: none;
+}

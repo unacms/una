@@ -2497,6 +2497,9 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_conn_friends_do_content"><![CDATA[Respond]]></string>
     <string name="_sys_conn_subscriptions_do_initiator"><![CDATA[Following]]></string>
     <string name="_sys_conn_subscriptions_counter"><![CDATA[{0} followers]]></string>
+    <string name="_sys_conn_relations_do_initiator"><![CDATA[Add Relationship]]></string>
+    <string name="_sys_conn_relations_do_initiator_done"><![CDATA[Relations]]></string>
+    <string name="_sys_conn_relations_do_initiator_undo"><![CDATA[Remove Relationship]]></string>
     <string name=""><![CDATA[]]></string>
     <string name=""><![CDATA[]]></string>
     <string name="_sys_conn_err_connection_already_exists"><![CDATA[Connection already exists]]></string>

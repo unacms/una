@@ -2472,6 +2472,9 @@
     <string name="_sys_conn_friends_do_content"><![CDATA[Ответить]]></string>
     <string name="_sys_conn_subscriptions_do_initiator"><![CDATA[Слежу]]></string>
     <string name="_sys_conn_subscriptions_counter"><![CDATA[Подписчики: {0}]]></string>
+    <string name="_sys_conn_relations_do_initiator"><![CDATA[Добавить связь]]></string>
+    <string name="_sys_conn_relations_do_initiator_done"><![CDATA[Отношения]]></string>
+    <string name="_sys_conn_relations_do_initiator_undo"><![CDATA[Удалить связь]]></string>
     <string name=""><![CDATA[]]></string>
     <string name=""><![CDATA[]]></string>
     <string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>

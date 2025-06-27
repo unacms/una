@@ -11,7 +11,7 @@
  * Database queries for Relation objects.
  * @see BxDolConnection
  */
-class BxDolRelationQuery extends BxDolConnectionQuery
+class BxDolConnectionRelationQuery extends BxDolConnectionQuery
 {
     public function __construct($aObject)
     {

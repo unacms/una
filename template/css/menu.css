@@ -1045,9 +1045,6 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     text-transform: capitalize;
 }
 
-.bx-menu-add-relation-hidden {
-    display: none;
-}
 
 /* --------------- footer menu */
 #bx-menu-footer.bx-menu-hor li {

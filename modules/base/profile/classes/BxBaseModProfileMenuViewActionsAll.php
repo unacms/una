@@ -123,6 +123,13 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
         ]));
     }
 
+    protected function _getMenuItemProfileRelations($aItem, $aParams = [])
+    {
+        return $this->_getMenuItemConnection($aItem, array_merge($aParams, [
+            'object' => 'sys_profiles_relations'
+        ]));
+    }
+
     protected function _getMenuItemProfileSubscriptions($aItem, $aParams = [])
     {
         return $this->_getMenuItemConnection($aItem, array_merge($aParams, [
