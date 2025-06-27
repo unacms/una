@@ -1924,6 +1924,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function checkAllowedFriends (&$aDataEntry, $isPerformAction = false)
+    {
+        if(!$this->_oConfig->isFriends() || ($oProfile = BxDolProfile::getInstance($this->_iProfileId)) === false || !bx_srv($oProfile->getModule(), 'is_enable_friends'))
+            return _t('_sys_txt_access_denied');
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
@@ -1947,6 +1955,27 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, ['sys_profiles_friends', 'checkAllowedRemoveConnection'], false, true, false);
+    }
+
+    public function checkAllowedRelations (&$aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sResult = _t('_sys_txt_access_denied');
+        if(!BxDolConnectionRelation::isEnabled())
+            return $sResult;
+
+        if(($sMsg = $this->checkAllowedView($aDataEntry)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $sMsg;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->_aModule['name']);
+        if(!$oProfile || $oProfile->id() == $this->_iProfileId)
+            return $sResult;
+
+        if(!BxDolConnection::getObjectInstance('sys_profiles_relations')->isRelationAvailable($this->_iProfileId, $oProfile->id()))
+            return $sResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     /**
@@ -1989,6 +2018,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         if(empty($aDataEntry) || !is_array($aDataEntry))
             return $sResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedSubscriptions(&$aDataEntry, $isPerformAction = false)
+    {
+        if(($sMsg = $this->checkAllowedView($aDataEntry)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $sMsg;
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }

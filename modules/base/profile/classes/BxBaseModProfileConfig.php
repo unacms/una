@@ -28,10 +28,13 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
         );
         
         $this->_aMenuItems2MethodsActions = array (
+            'profile-friends' => 'checkAllowedFriends',
             'profile-friend-add' => 'checkAllowedFriendAdd',
             'profile-friend-remove' => 'checkAllowedFriendRemove',
+            'profile-relations' => 'checkAllowedRelations',
             'profile-relation-add' => 'checkAllowedRelationAdd',
             'profile-relation-remove' => 'checkAllowedRelationRemove',
+            'profile-subscriptions' => 'checkAllowedSubscriptions',
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
