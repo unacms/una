@@ -29,7 +29,7 @@ class BxBaseConnectionFriend extends BxDolConnectionFriend
         $aActions = [];
 
         if($this->isConnectedNotMutual($iInitiator, $iContent)) {
-            $sName = 'remove';
+            $sName = 'default';
             $sTitle = $this->_aT['do_initiator'];
             $aActions = [[
                 'name' => 'add',
@@ -50,11 +50,18 @@ class BxBaseConnectionFriend extends BxDolConnectionFriend
                 'title' => ($sKey = 'txt_unfriend_reject') && !empty($aParams[$sKey]) ? $aParams[$sKey] : '_sys_menu_item_title_sm_unfriend_reject'
             ]];
         }
-        else if($this->isConnected($iInitiator, $iContent, true))
+        else if($this->isConnected($iInitiator, $iContent, true)) {
+            $sTitle = $this->_aT['do_initiator'];
             $aActions = [[
                 'name' => 'remove',
                 'title' => ($sKey = 'txt_unfriend') && !empty($aParams[$sKey]) ? $aParams[$sKey] : '_sys_menu_item_title_sm_unfriend'
+            ], [
+                /*
+                 * An empty array item to show all items in popup.
+                 * More actions will be added later.
+                 */
             ]];
+        }
         else
             $aActions = [[
                 'name' => 'add',
@@ -80,14 +87,13 @@ class BxBaseConnectionFriend extends BxDolConnectionFriend
         return isset($aA2I[$sAction]) ? $aA2I[$sAction] : $sDefault;
     }
 
-    //TODO: Get emoji similar to 
     protected function _getActionIconAsEmoji($sAction)
     {
-        $sDefault = '';
+        $sDefault = '💕';
 
         $aA2I = [
-            'add' => '',
-            'remove' => ''
+            'add' => '❤️',
+            'remove' => '💔'
         ];
 
         return isset($aA2I[$sAction]) ? $aA2I[$sAction] : $sDefault;

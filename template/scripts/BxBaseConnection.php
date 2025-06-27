@@ -133,7 +133,7 @@ class BxBaseConnection extends BxDolConnection
                 'action' => $aAction['name'],
                 'profile_id' => $iContent,
                 'title' => $bShowDoLabel && !empty($aAction['title']) ? _t($aAction['title']) : ''
-            ], $this->_getTmplVarsAction($aAction));
+            ], $this->_getTmplVarsAction($aAction, $aParams));
         }
         else {
             $sHtmlIdDoPopup = $this->_aHtmlIds['do_popup'] . $iContent;
@@ -167,7 +167,7 @@ class BxBaseConnection extends BxDolConnection
             ], $this->_getTmplVarsAction([
                 'name' => $aActions['name'],
                 'title' => $bShowDoLabel && !empty($aActions['title']) ? $aActions['title'] : ''
-            ]));
+            ], $aParams));
         }
 
         $bTmplVarsAction = !empty($aTmplVarsAction) && is_array($aTmplVarsAction);

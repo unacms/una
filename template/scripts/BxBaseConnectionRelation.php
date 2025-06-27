@@ -24,7 +24,6 @@ class BxBaseConnectionRelation extends BxDolConnectionRelation
         ]);
     }
 
-    //TODO: Continue from here. Copy actions (relation types: mom, dad, etc) from menu into actions list.
     protected function _getActions($iInitiator, $iContent, $aParams = [])
     {
         $sName = $sTitle = '';
@@ -95,10 +94,9 @@ class BxBaseConnectionRelation extends BxDolConnectionRelation
         return isset($aA2I[$sAction]) ? $aA2I[$sAction] : $sDefault;
     }
 
-    //TODO: Get emoji similar to 
     protected function _getActionIconAsEmoji($sAction)
     {
-        $sDefault = '';
+        $sDefault = '🔁';
 
         $aA2I = [
             'add' => $sDefault,

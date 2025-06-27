@@ -64,10 +64,9 @@ class BxBaseConnectionSubscription extends BxDolConnectionSubscription
         return isset($aA2I[$sAction]) ? $aA2I[$sAction] : $sDefault;
     }
 
-    //TODO: Get emoji similar to 
     protected function _getActionIconAsEmoji($sAction)
     {
-        $sDefault = '';
+        $sDefault = '✔️';
 
         $aA2I = [
             'add' => $sDefault,
