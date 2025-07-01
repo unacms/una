@@ -3262,7 +3262,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sm_befriend_sent"><![CDATA[Add friend (requested)]]></string>
     <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Accept friend request]]></string>
     <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Unfriend]]></string>
-    <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Cancel friend request]]></string>
+    <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Cancel request]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_reject"><![CDATA[Reject friend request]]></string>
     <string name="_sys_menu_item_title_sm_join_paid"><![CDATA[Pay & Join]]></string>
     <string name="_sys_menu_item_title_sm_join"><![CDATA[Join]]></string>
@@ -3402,6 +3402,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Members]]></string>
     <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Membership]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Followers]]></string>
+    <string name="_sys_menu_item_title_system_sm_subscriptions"><![CDATA[Following]]></string>
     <string name="_sys_menu_item_title_system_sm_relations"><![CDATA[Relations]]></string>
     <string name="_sys_menu_item_title_system_sm_country"><![CDATA[Country]]></string>
     <string name="_sys_menu_item_title_system_sm_country_city"><![CDATA[Country and City]]></string>

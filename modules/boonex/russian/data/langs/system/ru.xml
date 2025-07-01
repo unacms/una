@@ -3232,7 +3232,7 @@
     <string name="_sys_menu_item_title_sm_befriend_sent"><![CDATA[Добавить в друзья (запрошено)]]></string>
     <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Принять запрос о дружбе]]></string>
     <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Удалить из друзей]]></string>
-    <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Отменить запрос о дружбе]]></string>
+    <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Отменить запрос]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_reject"><![CDATA[Отвергнуть запрос о дружбе]]></string>
     <string name="_sys_menu_item_title_sm_join_paid"><![CDATA[Оплатить и присоединиться]]></string>
     <string name="_sys_menu_item_title_sm_join"><![CDATA[Присоединиться]]></string>
@@ -3370,6 +3370,7 @@
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Участники]]></string>
     <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Подписки]]></string>
+    <string name="_sys_menu_item_title_system_sm_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_sys_menu_item_title_system_sm_relations"><![CDATA[Связи]]></string>
     <string name="_sys_menu_item_title_system_sm_ignore"><![CDATA[Игнорировать рекомендацию]]></string>
     <string name="_sys_menu_item_title_system_sm_ignore_befriend"><![CDATA[Игнорировать рекомендацию: Дружба]]></string>

@@ -45,10 +45,12 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
 
         $this->_aConnectionToFunctionCheck = [
             'sys_profiles_friends' => [
+                'friends' => 'checkAllowedFriends',
             	'add' => 'checkAllowedFriendAdd', 
             	'remove' => 'checkAllowedFriendRemove'
             ],
             'sys_profiles_subscriptions' => [
+                'subscriptions' => 'checkAllowedSubscriptions',
                 'add' => 'checkAllowedSubscribeAdd',
                 'remove' => 'checkAllowedSubscribeRemove'
             ]

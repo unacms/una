@@ -41,8 +41,8 @@ class BxDolConnectionRelation extends BxTemplConnection
      */
     public function actionAdd($mixedContent = 0, $iInitiator = false)
     {
-        if(empty($mixedContent))
-            $mixedContent = bx_process_input($_POST['id'], BX_DATA_INT);
+        if(!$mixedContent && ($_iContent = bx_get('id')) !== false)
+            $mixedContent = bx_process_input($_iContent, BX_DATA_INT);
 
         $iContent = 0;
         $iRelation = 0;
@@ -73,10 +73,14 @@ class BxDolConnectionRelation extends BxTemplConnection
      */
     public function actionConfirm($iContent = 0, $iInitiator = false)
     {
-        if(!$iContent)
-            $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+        if(!$iContent && ($_iContent = bx_get('id')) !== false)
+            $iContent = bx_process_input($_iContent, BX_DATA_INT);
 
-        return $this->_action($iContent, $iInitiator ? $iInitiator : bx_get_logged_profile_id(), 'confirmConnection', '_sys_conn_err_connection_does_not_exists');
+        if($iInitiator)
+            $this->_iInitiator = $iInitiator;
+        $this->_iContent = $iContent;
+
+        return $this->_action($this->_iContent, $this->_iInitiator, 'confirmConnection', '_sys_conn_err_connection_does_not_exists');
     }
 
     /**
@@ -86,10 +90,14 @@ class BxDolConnectionRelation extends BxTemplConnection
      */
     public function actionRemove($iContent = 0, $iInitiator = false)
     {
-        if(!$iContent)
-            $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+        if(!$iContent && ($_iContent = bx_get('id')) !== false)
+            $iContent = bx_process_input($_iContent, BX_DATA_INT);
 
-        return $this->_action($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
+        if($iInitiator)
+            $this->_iInitiator = $iInitiator;
+        $this->_iContent = $iContent;
+
+        return $this->_action($this->_iInitiator, $this->_iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
     }
 
     /**

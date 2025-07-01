@@ -51,6 +51,7 @@ class BxBaseConnectionRelation extends BxDolConnectionRelation
             $aRelations = $this->getRelations($iInitiator, $iContent, $aSuggestions);
             $bSuggestions = !empty($aSuggestions) && is_array($aSuggestions);
 
+            $sJsObject = $this->getJsObjectName($iContent, $aParams);
             $sClassHidden = 'bx-menu-add-relation-hidden';
             foreach($aRelations as $iId => $aRelation) {
                 $aActions[] = [
@@ -60,7 +61,7 @@ class BxBaseConnectionRelation extends BxDolConnectionRelation
                     'title' => _t($aRelation[BX_DATA_VALUES_DEFAULT]),
                     'icon' => '',
                     'link' => 'javascript:void(0);',
-                    'onclick' => "bx_conn_action(this, '" . $this->_sObject . "', 'add', " . bx_js_string(json_encode(['content' => $iContent, 'relation' => $iId])) . ")"
+                    'onclick' => $sJsObject . ".connect(this, 'add', " . bx_js_string(json_encode(['content' => $iContent, 'relation' => $iId])) . ")"
                 ];
             }
 

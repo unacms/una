@@ -29,12 +29,7 @@ class BxBaseConnectionFriend extends BxDolConnectionFriend
         $aActions = [];
 
         if($this->isConnectedNotMutual($iInitiator, $iContent)) {
-            $sName = 'default';
-            $sTitle = $this->_aT['do_initiator'];
             $aActions = [[
-                'name' => 'add',
-                'title' => ($sKey = 'txt_befriend_sent') && !empty($aParams[$sKey]) ? $aParams[$sKey] : '_sys_menu_item_title_sm_befriend_sent'
-            ], [
                 'name' => 'remove',
                 'title' => ($sKey = 'txt_unfriend_cancel') && !empty($aParams[$sKey]) ? $aParams[$sKey] : '_sys_menu_item_title_sm_unfriend_cancel'
             ]];
@@ -51,6 +46,7 @@ class BxBaseConnectionFriend extends BxDolConnectionFriend
             ]];
         }
         else if($this->isConnected($iInitiator, $iContent, true)) {
+            $sName = 'default';
             $sTitle = $this->_aT['do_initiator'];
             $aActions = [[
                 'name' => 'remove',

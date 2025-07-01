@@ -133,6 +133,8 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
 
     protected $_sObject;
     protected $_aObject;
+    protected $_iInitiator;
+    protected $_iContent;
     protected $_sType;
     protected $_bMutual;
 
@@ -150,6 +152,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         $this->_aObject = $aObject;
         $this->_aObject['per_page_default'] = 20;
 
+        $this->_iInitiator = bx_get_logged_profile_id();
         $this->_sType = $aObject['type'];
         $this->_bMutual = $this->_sType == BX_CONNECTIONS_TYPE_MUTUAL;
 
@@ -259,10 +262,14 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function actionAdd ($iContent = 0, $iInitiator = false)
     {
-        if (!$iContent)
-            $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+        if(!$iContent && ($_iContent = bx_get('id')) !== false)
+            $iContent = bx_process_input($_iContent, BX_DATA_INT);
 
-        return $this->_action ($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'addConnection', '_sys_conn_err_connection_already_exists', true);
+        if($iInitiator)
+            $this->_iInitiator = $iInitiator;
+        $this->_iContent = $iContent;
+
+        return $this->_action ($this->_iInitiator, $this->_iContent, 'addConnection', '_sys_conn_err_connection_already_exists', true);
     }
 
     /**
@@ -272,8 +279,8 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function actionRemove ($iContent = 0, $iInitiator = false)
     {
-        if (!$iContent)
-            $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+        if (!$iContent && ($_iContent = bx_get('id')) !== false)
+            $iContent = bx_process_input($_iContent, BX_DATA_INT);
 
         if ($iContent != bx_get_logged_profile_id() && BX_CONNECTIONS_TYPE_MUTUAL == $this->_aObject['type']) {
             $a = $this->actionReject($iContent, $iInitiator);
@@ -281,7 +288,11 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
                 return $a;
         }
 
-        return $this->_action ($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
+        if($iInitiator)
+            $this->_iInitiator = $iInitiator;
+        $this->_iContent = $iContent;
+
+        return $this->_action ($this->_iInitiator, $this->_iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
     }
 
     /**
@@ -291,10 +302,14 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function actionReject ($iContent = 0, $iInitiator = false)
     {
-        if (!$iContent)
-            $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+        if (!$iContent && ($_iContent = bx_get('id')) !== false)
+            $iContent = bx_process_input($_iContent, BX_DATA_INT);
 
-        return $this->_action($iContent, $iInitiator ? $iInitiator : bx_get_logged_profile_id(), 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
+        if($iInitiator)
+            $this->_iInitiator = $iInitiator;
+        $this->_iContent = $iContent;
+
+        return $this->_action($this->_iContent, $this->_iInitiator, 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
     }
 
     protected function _action ($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual = false, $isInvert = false)

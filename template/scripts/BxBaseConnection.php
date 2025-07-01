@@ -55,6 +55,7 @@ class BxBaseConnection extends BxDolConnection
         $this->_sTmplContentCounter = $this->_oTemplate->getHtml('connection_counter.html');
 
         $this->_aElementDefaults = [
+            'uniq_id' => '',
             'dynamic_mode' => true,
             'show_do_as_button_small' => false,
             'show_do_as_button' => false,
@@ -71,7 +72,9 @@ class BxBaseConnection extends BxDolConnection
         $sContentType = bx_process_input(bx_get('content_type'));
         $iProfileId = (int)bx_get('id');
         $bIsMutual = (bool)bx_get('mutual');
-        return $this->_getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart, $iPerPage);
+        $aRequestParamsData = $this->_getRequestParamsData();
+
+        return $this->_getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart, $iPerPage, $aRequestParamsData);
     }
     
     public function actionGetUsers ($iStart = 0, $iPerPage = 0)
@@ -81,28 +84,29 @@ class BxBaseConnection extends BxDolConnection
         $bIsMutual = (bool)bx_get('mutual');
         $iStart = (int)bx_get('start');
         $iPerPage = (int)bx_get('per_page');
+        $aRequestParamsData = $this->_getRequestParamsData();
 
         return [
-            'content' => $this->_getConnected($sContentType, $iProfileId, $bIsMutual, $iStart, $iPerPage),
-            'eval' => $this->getJsObjectName($iProfileId) . '.onGetUsers(oData)'
+            'content' => $this->_getConnected($sContentType, $iProfileId, $bIsMutual, $iStart, $iPerPage, $aRequestParamsData),
+            'eval' => $this->getJsObjectName($iProfileId, $aRequestParamsData) . '.onGetUsers(oData)'
         ];
     }
     
-    public function getJsObjectName($iProfileId)
+    public function getJsObjectName($iProfileId, $aParams = [])
     {
-        return $this->_sJsObjName . $iProfileId;
+        return $this->_sJsObjName . (!empty($aParams['uniq_id']) ? $aParams['uniq_id'] : '') . $iProfileId;
     }
 
     public function getElement($iContent, $iInitiator = false, $aParams = [])
     {
-    	$aParams = array_merge($this->_aElementDefaults, $aParams);
-    	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
+    	$aParams = $this->_prepareParamsData($aParams);
 
+    	$bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
         $bShowDo = !isset($aParams['show_do']) || (bool)$aParams['show_do'] === true;
-        $bShowDoAsButtonSmall = isset($aParams['show_do_as_button_small']) && $aParams['show_do_as_button_small'] == true;
-        $bShowDoAsButton = !$bShowDoAsButtonSmall && isset($aParams['show_do_as_button']) && $aParams['show_do_as_button'] == true;
-        $bShowDoLabel = isset($aParams['show_do_label']) && $aParams['show_do_label'] === true;
-        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
+        $bShowDoAsButtonSmall = isset($aParams['show_do_as_button_small']) && (bool)$aParams['show_do_as_button_small'] === true;
+        $bShowDoAsButton = !$bShowDoAsButtonSmall && isset($aParams['show_do_as_button']) && (bool)$aParams['show_do_as_button'] === true;
+        $bShowDoLabel = isset($aParams['show_do_label']) && (bool)$aParams['show_do_label'] === true;
+        $bShowCounter = isset($aParams['show_counter']) && (bool)$aParams['show_counter'] === true;
 
         if(!$iInitiator)
             $iInitiator = bx_get_logged_profile_id();
@@ -110,11 +114,11 @@ class BxBaseConnection extends BxDolConnection
             return '';
 
         $aActions = $this->_getActions($iInitiator, $iContent, $aParams);
-
         $iCount = $this->_getCounterCount($iContent, $this->_bMutual, $aParams);
-
         if((empty($aActions['items']) || !is_array($aActions['items'])) && (!$bShowCounter || !$iCount))
             return '';        
+
+        $sJsObject = $this->getJsObjectName($iContent, $aParams);
 
         $sClassDo = '';
         if($bShowDoAsButton)
@@ -128,8 +132,8 @@ class BxBaseConnection extends BxDolConnection
 
             $aTmplVarsAction = array_merge([
                 'style_prefix' => $this->_sStylePrefix,
+                'js_object' => $sJsObject,
                 'class' => $sClassDo,
-                'object' => $this->_sObject, 
                 'action' => $aAction['name'],
                 'profile_id' => $iContent,
                 'title' => $bShowDoLabel && !empty($aAction['title']) ? _t($aAction['title']) : ''
@@ -148,7 +152,7 @@ class BxBaseConnection extends BxDolConnection
                             'name' => $aItem['name'], 
                             'icon' => $this->_getActionIcon($aItem, $aParams), 
                             'link' => 'javascript:void(0)', 
-                            'onclick' => "javascript:bx_conn_action(this, '" . $this->_sObject . "', '" . $aItem['name'] . "', " . $iContent . ")", 
+                            'onclick' => "javascript:" . $sJsObject . ".connect(this, '" . $aItem['name'] . "', " . $iContent . ")", 
                             'target' => '_self', 
                             'title' => !empty($aItem['title']) ? _t($aItem['title']) : '', 
                             'active' => 1
@@ -161,8 +165,9 @@ class BxBaseConnection extends BxDolConnection
 
             $aTmplVarsActions = array_merge([
                 'style_prefix' => $this->_sStylePrefix,
+                'js_object' => $sJsObject,
                 'class' => $sClassDo,
-                'html_id_popup' => $sHtmlIdDoPopup,
+                'profile_id' => $iContent,
                 'do_popup' => $this->_oFunctions->transBox($sHtmlIdDoPopup, $oMenu->getCode(), true),
             ], $this->_getTmplVarsAction([
                 'name' => $aActions['name'],
@@ -204,25 +209,24 @@ class BxBaseConnection extends BxDolConnection
 
     public function getCounter($iProfileId, $bIsMutual = false, $aParams = [])
     {
+        $aParams = $this->_prepareParamsData($aParams);
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
         if($this->_aObject['type'] != 'mutual')
             $bIsMutual = false;
 
-        $aParams = array_merge($this->_aElementDefaults, (!empty($aParams) ? $aParams : []));
-
         $iCount = !empty($aParams['count']) ? $aParams['count'] : $this->_getCounterCount($iProfileId, $bIsMutual, $aParams);
         if(!$iCount)
             return '';
 
-        $sJsObject = $this->getJsObjectName($iProfileId);
-        $sHtmlIdCounter = $this->_aHtmlIds['counter'] . $iProfileId;
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
+        $bShowDoAsButtonSmall = isset($aParams['show_do_as_button_small']) && (bool)$aParams['show_do_as_button_small'] === true;
+        $bShowDoAsButton = !$bShowDoAsButtonSmall && isset($aParams['show_do_as_button']) && (bool)$aParams['show_do_as_button'] === true;
+        $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
 
-        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
-        $bShowDoAsButtonSmall = isset($aParams['show_do_as_button_small']) && $aParams['show_do_as_button_small'] === true;
-        $bShowDoAsButton = !$bShowDoAsButtonSmall && isset($aParams['show_do_as_button']) && $aParams['show_do_as_button'] === true;
-        $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
+        $sJsObject = $this->getJsObjectName($iProfileId, $aParams);
 
         $sClass = $this->_sStylePrefix . '-counter';
         if($bShowDoAsButtonSmall)
@@ -230,37 +234,38 @@ class BxBaseConnection extends BxDolConnection
         if($bShowDoAsButton)
             $sClass .= ' bx-btn-height';
 
+        $sHtmlIdCounter = $this->_aHtmlIds['counter'] . $iProfileId;
         $sContent = $this->_getCounterLabel($iCount, $iProfileId, $bIsMutual, $aParams);
 
         $this->_oTemplate->addCss(['connection.css']);
-        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), [
             'html_id' => $sHtmlIdCounter,
             'style_prefix' => $this->_sStylePrefix,
-            'bx_if:show_text' => array(
+            'bx_if:show_text' => [
                 'condition' => false,
-                'content' => array(
+                'content' => [
                     'class' => $sClass,
-                    'bx_repeat:attrs' => array(
-                        array('key' => 'id', 'value' => $sHtmlIdCounter),
-                    ),
+                    'bx_repeat:attrs' => [
+                        ['key' => 'id', 'value' => $sHtmlIdCounter],
+                    ],
                     'content' => $sContent
-                )
-            ),
-            'bx_if:show_link' => array(
+                ]
+            ],
+            'bx_if:show_link' => [
                 'condition' => true,
-                'content' => array(
+                'content' => [
                     'class' => $sClass,
-                    'bx_repeat:attrs' => array(
-                        array('key' => 'id', 'value' => $sHtmlIdCounter),
-                        array('key' => 'href', 'value' => 'javascript:void(0)'),
-                        array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)'),
-                        array('key' => 'title', 'value' => _t('_sys_conn_do_by'))
-                    ),
+                    'bx_repeat:attrs' => [
+                        ['key' => 'id', 'value' => $sHtmlIdCounter],
+                        ['key' => 'href', 'value' => 'javascript:void(0)'],
+                        ['key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)'],
+                        ['key' => 'title', 'value' => _t('_sys_conn_do_by')]
+                    ],
                     'content' => $sContent
-                )
-            ),
+                ]
+            ],
             'script' => $bShowScript ? $this->_getJsScript($iProfileId, $bIsMutual, $aParams) : ''
-        ));
+        ]);
     }
 
     public function getCounterAPI($iProfileId, $bIsMutual = false, $aParams = [])
@@ -296,18 +301,34 @@ class BxBaseConnection extends BxDolConnection
         return $aProfiles;
     }
 
-    protected function _getJsScript($iProfileId, $bIsMutual = false, $aParams = [])
+    protected function _action($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual = false, $isInvert = false)
     {
-        $sJsObject = $this->getJsObjectName($iProfileId);
+        $aResult = parent::_action($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual, $isInvert);
+        if(!$aResult['err'] && ($sOut = bx_get('out')) !== false && $sOut == 'eval') {
+            $aRequestParamsData = $this->_getRequestParamsData();
+
+            $aResult = array_merge($aResult, [
+                'data' => $this->getElement($this->_iContent, $this->_iInitiator, $aRequestParamsData),
+                'eval' => $this->getJsObjectName($this->_iContent, $aRequestParamsData) . '.onConnect(oData)',
+            ]);
+        }
+
+        return $aResult;
+    }
+
+    protected function _getJsScript($iContentId, $bIsMutual = false, $aParams = [])
+    {
+        $sJsObject = $this->getJsObjectName($iContentId, $aParams);
 
         $aParamsJs = [
             'sSystem' => $this->_sObject,
-            'iObjId' => $iProfileId,
+            'iContentId' => $iContentId,
             'bIsMutual' => $bIsMutual ? 1 : 0,
             'sObjName' => $sJsObject,
             'sRootUrl' => BX_DOL_URL_ROOT,
             'sStylePrefix' => $this->_sStylePrefix,
-            'aHtmlIds' => $this->_aHtmlIds
+            'aHtmlIds' => $this->_aHtmlIds,
+            'aRequestParams' => $this->_prepareRequestParamsData($aParams)
         ];
         if(($sKey = 'content_type') && !empty($aParams[$sKey]))
             $aParamsJs['sContentType'] = $aParams[$sKey];
@@ -381,7 +402,7 @@ class BxBaseConnection extends BxDolConnection
             return 'users';
     }
     
-    public function _getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart = 0, $iPerPage = 0)
+    public function _getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart = 0, $iPerPage = 0, $aParams = [])
     {
         if ('mutual' != $this->_aObject['type'])
             $bIsMutual = false;
@@ -392,7 +413,7 @@ class BxBaseConnection extends BxDolConnection
         $aUsers = $this->getConnectionsAsArray($sContentType, $iProfileId, null, $bIsMutual, $iStart, $iPerPage + 1);
 
         $oPaginate = new BxTemplPaginate([
-            'on_change_page' => $this->getJsObjectName($iProfileId) . '.getUsers(this, {start}, {per_page})',
+            'on_change_page' => $this->getJsObjectName($iProfileId, $aParams) . '.getUsers(this, {start}, {per_page})',
             'start' => $iStart,
             'per_page' => $iPerPage,
         ]);
@@ -480,5 +501,38 @@ class BxBaseConnection extends BxDolConnection
                 ]
             ]
         ];
+    }
+
+    protected function _prepareParamsData($aParams)
+    {        
+        $aResult = $this->_aElementDefaults;
+        if(!empty($aParams) && is_array($aParams))
+            $aResult = array_merge($aResult, $aParams);
+
+        return $aResult;
+    }
+
+    protected function _getRequestParamsData($aKeys = [])
+    {
+        $sParams = bx_get('params');
+        if($sParams === false)
+            return [];
+
+        $aParams = [];
+        parse_str(bx_process_input($sParams), $aParams);
+
+        return $aParams;
+    }
+
+    protected function _prepareRequestParamsData($aParams, $aParamsAdd = [])
+    {
+        $aRequestParams = array_intersect_key($aParams, $this->_aElementDefaults);
+        $aRequestParams = array_merge($aRequestParams, $aParamsAdd);
+
+        foreach($aRequestParams as $sKey => $mixedValue)
+            if(is_bool($mixedValue))
+                $aRequestParams[$sKey] = (int)$mixedValue;
+
+        return $aRequestParams;
     }
 }
