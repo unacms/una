@@ -278,6 +278,7 @@
     <string name="_bx_groups_menu_item_title_unfriend_cancel_request"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_bx_groups_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
 
+    <string name="_bx_groups_menu_item_title_system_fans"><![CDATA[Участники]]></string>
     <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_groups_menu_item_title_become_fan_sent"><![CDATA[Присоединение запрошено]]></string>
@@ -290,6 +291,7 @@
     <string name="_bx_groups_menu_item_title_system_pay_and_join"><![CDATA[Оплатить и присоединиться]]></string>
     <string name="_bx_groups_menu_item_title_pay_and_join"><![CDATA[Оплатить и присоединиться]]></string>
 
+    <string name="_bx_groups_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_groups_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>

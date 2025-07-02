@@ -22,6 +22,7 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
         
         if(isset($CNF['OBJECT_CONNECTIONS']))
             $this->_aConnectionToFunctionCheck[$CNF['OBJECT_CONNECTIONS']] = [
+                'fans' => 'checkAllowedFans', 
                 'add' => 'checkAllowedFanAdd', 
                 'remove' => 'checkAllowedFanRemove'
             ];
@@ -30,6 +31,18 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
     protected function _isContentPublic($iContentId, $aPublicGroups = [])
     {
         return parent::_isContentPublic($iContentId, [BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS, 'c']);
+    }
+
+    protected function _getMenuItemProfileFans($aItem, $aParams = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_CONNECTIONS']))
+            return false;
+
+        return $this->_getMenuItemConnection($aItem, array_merge($aParams, [
+            'object' => $CNF['OBJECT_CONNECTIONS']
+        ]));
     }
 
     protected function _getMenuItemProfileFanAdd($aItem)

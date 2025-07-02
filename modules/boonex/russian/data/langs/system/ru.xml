@@ -2475,8 +2475,6 @@
     <string name="_sys_conn_relations_do_initiator"><![CDATA[Добавить связь]]></string>
     <string name="_sys_conn_relations_do_initiator_done"><![CDATA[Отношения]]></string>
     <string name="_sys_conn_relations_do_initiator_undo"><![CDATA[Удалить связь]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
     <string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>
     <string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Связь не существует]]></string>
     <string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Запрос на связь ожидает подтверждения]]></string>
@@ -3246,6 +3244,7 @@
     <string name="_sys_menu_item_title_sm_friends"><![CDATA[Друзья: {0}]]></string>
     <string name="_sys_menu_item_title_sm_friends_mutual"><![CDATA[Общие друзья: {0}]]></string>
     <string name="_sys_menu_item_title_sm_members"><![CDATA[Участники: {0}]]></string>
+    <string name="_sys_menu_item_title_sm_membership_respond"><![CDATA[Ответить фанату]]></string>
     <string name="_sys_menu_item_title_sm_subscribers"><![CDATA[Подписчики: {0}]]></string>
     <string name="_sys_menu_item_title_sm_relations"><![CDATA[Связи: {0}]]></string>
     <string name="_sys_menu_item_title_sm_country"><![CDATA[Страна]]></string>

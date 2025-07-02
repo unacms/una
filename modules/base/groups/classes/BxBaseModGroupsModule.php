@@ -1867,6 +1867,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return parent::checkAllowedCompose ($aDataEntry, $isPerformAction);
     }
 
+    public function checkAllowedFans(&$aDataEntry, $isPerformAction = false)
+    {
+        if(($sMsg = $this->checkAllowedView($aDataEntry)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $sMsg;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */

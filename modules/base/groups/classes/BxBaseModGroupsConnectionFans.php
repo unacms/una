@@ -29,6 +29,12 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
 
         $this->_bBan = false;
         $this->_oBanConnection = null;
+
+        $this->_aT = array_merge($this->_aT, [
+            'do_initiator' => $this->_getLKey('menu_item_title_sm_membership'),
+            'do_content' => $this->_getLKey('menu_item_title_sm_membership_respond'),
+            'counter' => $this->_getLKey('menu_item_title_sm_members')
+        ]);
     }
 
     public function init()
@@ -220,6 +226,100 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         }
 
         return parent::_checkAllowedConnectContent($oContent);
+    }
+
+    protected function _getActions($iInitiator, $iContent, $aParams = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        $sName = $sTitle = '';
+        $aActions = [];
+
+        if($this->isConnectedNotMutual($iInitiator, $iContent)) {
+            $aActions = [[
+                'name' => 'remove',
+                'title' => $this->_getLKey('menu_item_title_sm_leave_cancel')
+            ]];
+        }
+        else if($this->isConnectedNotMutual($iContent, $iInitiator)) {
+            $sName = 'add';
+            $sTitle = $this->_aT['do_content'];
+            $aActions = [[
+                'name' => 'add',
+                'title' => $this->_getLKey('menu_item_title_sm_join_confirm')
+            ], [
+                'name' => 'remove',
+                'title' => $this->_getLKey('menu_item_title_sm_leave_reject')
+            ]];
+        }
+        else if($this->isConnected($iInitiator, $iContent, true)) {
+            $sName = 'default';
+            $sTitle = $this->_aT['do_initiator'];
+            $aActions = [[
+                'name' => 'remove',
+                'title' => $this->_getLKey('menu_item_title_sm_leave')
+            ], [
+                /*
+                 * An empty array item to show all items in popup.
+                 * More actions will be added later.
+                 */
+            ]];
+        }
+        else
+            $aActions = [[
+                'name' => 'add',
+                'title' => $this->_getLKey('menu_item_title_sm_join')
+            ]];
+
+        return [
+            'name' => $sName,
+            'title' => $sTitle,
+            'items' => $aActions
+        ];
+    }
+
+    protected function _getActionIconAsIcon($sAction)
+    {
+        $sDefault = 'users';
+
+        $aA2I = [
+            'add' => 'sign-in-alt',
+            'remove' => 'sign-out-alt'
+        ];
+
+        return isset($aA2I[$sAction]) ? $aA2I[$sAction] : $sDefault;
+    }
+
+    protected function _getActionIconAsEmoji($sAction)
+    {
+        $sDefault = '🔄';
+
+        $aA2I = [
+            'add' => '✅️️',
+            'remove' => '❎'
+        ];
+
+        return isset($aA2I[$sAction]) ? $aA2I[$sAction] : $sDefault;
+    }
+
+    protected function _getActionIconAsImage($sAction)
+    {
+        $sDefault = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round-icon lucide-users-round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>';
+
+        $aA2I = [
+            'add' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in-icon lucide-log-in"><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>',
+            'remove' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>'
+        ];
+
+        return isset($aA2I[$sAction]) ? $aA2I[$sAction] : $sDefault;
+    }
+
+    protected function _getLKey($sKey, $bTranslate = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sLKey = !empty($CNF['T'][$sKey]) ? $CNF['T'][$sKey] : '_sys_' . $sKey;
+        return $bTranslate ? _t($sLKey) : $sLKey;
     }
 
     protected function _getTriggerObject($sType, $iInitiator, $iContent)
