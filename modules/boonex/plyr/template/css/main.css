@@ -15,7 +15,7 @@
 }
 
 .bx-tl-item-attachment .bx-player-plyr-wrapper {
-    height: 11.25rem;
+    width: 100%;
     aspect-ratio: 16 / 9;
 }
 .bx-base-general-attachment .bx-player-plyr-wrapper {
