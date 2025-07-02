@@ -359,10 +359,12 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_events_view_actions_all', 'bx_events', 'join-event-profile', '_bx_events_menu_item_title_system_pay_and_join', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
-('bx_events_view_actions_all', 'bx_events', 'profile-fan-add', '_bx_events_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
-('bx_events_view_actions_all', 'bx_events', 'profile-fan-remove', '_bx_events_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
-('bx_events_view_actions_all', 'bx_events', 'profile-subscribe-add', '_bx_events_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
-('bx_events_view_actions_all', 'bx_events', 'profile-subscribe-remove', '_bx_events_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
+('bx_events_view_actions_all', 'bx_events', 'profile-fans', '_bx_events_menu_item_title_system_fans', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_events_view_actions_all', 'bx_events', 'profile-fan-add', '_bx_events_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 12),
+('bx_events_view_actions_all', 'bx_events', 'profile-fan-remove', '_bx_events_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 14),
+('bx_events_view_actions_all', 'bx_events', 'profile-subscriptions', '_bx_events_menu_item_title_system_subscriptions', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_events_view_actions_all', 'bx_events', 'profile-subscribe-add', '_bx_events_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 32),
+('bx_events_view_actions_all', 'bx_events', 'profile-subscribe-remove', '_bx_events_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 34),
 ('bx_events_view_actions_all', 'bx_events', 'profile-check-in', '_bx_events_menu_item_title_system_check_in', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 45),
 ('bx_events_view_actions_all', 'bx_events', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 50),
 ('bx_events_view_actions_all', 'bx_events', 'ical-export', '', '_bx_events_menu_item_title_ical_export', 'modules/?r=events/calendar_sync/{content_id}', '', '', 'calendar-plus', '', '', 0, 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:24:"is_ical_export_avaliable";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 60),

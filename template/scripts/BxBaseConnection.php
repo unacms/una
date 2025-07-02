@@ -468,7 +468,7 @@ class BxBaseConnection extends BxDolConnection
         if(!empty($aParams['use_icon_as']) && in_array($aParams['use_icon_as'], ['icon', 'emoji', 'image']))
             return $aParams['use_icon_as'];
 
-        return 'image';
+        return 'icon';
     }
 
     protected function _getTmplContentElement()

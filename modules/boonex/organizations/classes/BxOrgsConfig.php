@@ -271,6 +271,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
                 'menu_item_title_unfriend_reject_request' => '_bx_orgs_menu_item_title_unfriend_reject_request',
                 'menu_item_title_befriend' => '_bx_orgs_menu_item_title_befriend',
                 'menu_item_title_unfriend' => '_bx_orgs_menu_item_title_unfriend',
+                'menu_item_title_sm_fans' => '_bx_orgs_menu_item_title_fans',
                 'menu_item_title_sm_join' => '_bx_orgs_menu_item_title_become_fan',
                 'menu_item_title_sm_join_requested' => '_bx_orgs_menu_item_title_become_fan_sent',
                 'menu_item_title_sm_leave' => '_bx_orgs_menu_item_title_leave_organization',

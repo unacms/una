@@ -188,6 +188,7 @@
 	<string name="_bx_channels_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
 	<string name="_bx_channels_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
 	
+        <string name="_bx_channels_menu_item_title_system_subscriptions"><![CDATA[Following]]></string>
 	<string name="_bx_channels_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
 	<string name="_bx_channels_menu_item_title_subscribe"><![CDATA[Follow]]></string>
 	<string name="_bx_channels_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
@@ -202,8 +203,8 @@
 	<string name="_bx_channels_menu_item_title_entries_recent"><![CDATA[New]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_channels_menu_item_title_entries_search"><![CDATA[Search]]></string>
-  <string name="_bx_channels_menu_item_title_system_entries_toplevel"><![CDATA[Top level]]></string>
-  <string name="_bx_channels_menu_item_title_entries_toplevel"><![CDATA[Top level]]></string>
+        <string name="_bx_channels_menu_item_title_system_entries_toplevel"><![CDATA[Top level]]></string>
+        <string name="_bx_channels_menu_item_title_entries_toplevel"><![CDATA[Top level]]></string>
         <string name="_bx_channels_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_channels_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_home"><![CDATA[Channels]]></string>

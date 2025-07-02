@@ -348,6 +348,8 @@
     <string name="_bx_events_menu_item_title_unfriend_cancel_request"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_bx_events_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
 
+    <string name="_bx_events_menu_item_title_system_fans"><![CDATA[Гости]]></string>
+    <string name="_bx_events_menu_item_title_fans"><![CDATA[Гости]]></string>
     <string name="_bx_events_menu_item_title_system_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_events_menu_item_title_become_fan"><![CDATA[Пойду]]></string>
     <string name="_bx_events_menu_item_title_become_fan_sent"><![CDATA[Запрошено]]></string>
@@ -359,6 +361,7 @@
     <string name="_bx_events_menu_item_title_sm_members"><![CDATA[{0} гостей]]></string>
     <string name="_bx_events_menu_item_title_sm_subscribers"><![CDATA[{0} заинтересованных]]></string>
 
+    <string name="_bx_events_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Заинтересован]]></string>
     <string name="_bx_events_menu_item_title_system_check_in"><![CDATA[Зарегистрироваться]]></string>

@@ -277,6 +277,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'filter_item_select_one_filter2' => '_bx_events_grid_filter_item_title_adm_select_one_filter2',
             	'menu_item_manage_my' => '_bx_events_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_events_menu_item_title_manage_all',
+                'menu_item_title_sm_fans' => '_bx_events_menu_item_title_fans',
                 'menu_item_title_sm_join' => '_bx_events_menu_item_title_become_fan',
                 'menu_item_title_sm_join_requested' => '_bx_events_menu_item_title_become_fan_sent',
                 'menu_item_title_sm_leave' => '_bx_events_menu_item_title_leave_group',

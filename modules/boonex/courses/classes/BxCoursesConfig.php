@@ -264,6 +264,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'filter_item_select_one_filter2' => '_bx_courses_grid_filter_item_title_adm_select_one_filter2',
                 'menu_item_manage_my' => '_bx_courses_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_courses_menu_item_title_manage_all',
+                'menu_item_title_sm_fans' => '_bx_courses_menu_item_title_fans',
                 'menu_item_title_sm_join' => '_bx_courses_menu_item_title_sm_join',
                 'menu_item_title_sm_join_paid' => '_bx_courses_menu_item_title_sm_join_paid',
                 'menu_item_title_sm_join_requested' => '_bx_courses_menu_item_title_become_fan_sent',

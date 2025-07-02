@@ -306,6 +306,8 @@
     <string name="_bx_courses_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
     <string name="_bx_courses_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
 
+    <string name="_bx_courses_menu_item_title_system_fans"><![CDATA[Attendants]]></string>
+    <string name="_bx_courses_menu_item_title_fans"><![CDATA[Attendants]]></string>
     <string name="_bx_courses_menu_item_title_system_become_fan"><![CDATA[Attend Course]]></string>
     <string name="_bx_courses_menu_item_title_become_fan"><![CDATA[Attend Course]]></string>
     <string name="_bx_courses_menu_item_title_become_fan_sent"><![CDATA[Attend Course (requested)]]></string>
@@ -318,6 +320,7 @@
     <string name="_bx_courses_menu_item_title_system_pay_and_join"><![CDATA[Pay & Join]]></string>
     <string name="_bx_courses_menu_item_title_pay_and_join"><![CDATA[Pay & Join]]></string>
 
+    <string name="_bx_courses_menu_item_title_system_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_courses_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_courses_menu_item_title_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_courses_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>

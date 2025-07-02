@@ -283,6 +283,7 @@
     <string name="_bx_groups_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
 
     <string name="_bx_groups_menu_item_title_system_fans"><![CDATA[Fans]]></string>
+    <string name="_bx_groups_menu_item_title_fans"><![CDATA[Fans]]></string>
     <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Join Group]]></string>
     <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Join Group]]></string>
     <string name="_bx_groups_menu_item_title_become_fan_sent"><![CDATA[Join Group (requested)]]></string>

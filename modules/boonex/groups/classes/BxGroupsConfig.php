@@ -244,6 +244,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'filter_item_select_one_filter2' => '_bx_groups_grid_filter_item_title_adm_select_one_filter2',
                 'menu_item_manage_my' => '_bx_groups_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_groups_menu_item_title_manage_all',
+                'menu_item_title_sm_fans' => '_bx_groups_menu_item_title_fans',
                 'menu_item_title_sm_join' => '_bx_groups_menu_item_title_become_fan',
                 'menu_item_title_sm_join_requested' => '_bx_groups_menu_item_title_become_fan_sent',
                 'menu_item_title_sm_leave' => '_bx_groups_menu_item_title_leave_group',

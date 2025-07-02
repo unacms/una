@@ -31,8 +31,8 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         $this->_oBanConnection = null;
 
         $this->_aT = array_merge($this->_aT, [
-            'do_initiator' => $this->_getLKey('menu_item_title_sm_membership'),
-            'do_content' => $this->_getLKey('menu_item_title_sm_membership_respond'),
+            'do_initiator' => $this->_getLKey('menu_item_title_sm_fans'),
+            'do_content' => $this->_getLKey('menu_item_title_sm_fans_respond'),
             'counter' => $this->_getLKey('menu_item_title_sm_members')
         ]);
     }

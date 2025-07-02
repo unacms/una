@@ -313,10 +313,12 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_jobs_view_actions_all', 'bx_jobs', 'join-job-profile', '_bx_jobs_menu_item_title_system_pay_and_join', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
-('bx_jobs_view_actions_all', 'bx_jobs', 'profile-fan-add', '_bx_jobs_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
-('bx_jobs_view_actions_all', 'bx_jobs', 'profile-fan-remove', '_bx_jobs_menu_item_title_system_leave_job', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
-('bx_jobs_view_actions_all', 'bx_jobs', 'profile-subscribe-add', '_bx_jobs_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
-('bx_jobs_view_actions_all', 'bx_jobs', 'profile-subscribe-remove', '_bx_jobs_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
+('bx_jobs_view_actions_all', 'bx_jobs', 'profile-fans', '_bx_jobs_menu_item_title_system_fans', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_jobs_view_actions_all', 'bx_jobs', 'profile-fan-add', '_bx_jobs_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 12),
+('bx_jobs_view_actions_all', 'bx_jobs', 'profile-fan-remove', '_bx_jobs_menu_item_title_system_leave_job', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 14),
+('bx_jobs_view_actions_all', 'bx_jobs', 'profile-subscriptions', '_bx_jobs_menu_item_title_system_subscriptions', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_jobs_view_actions_all', 'bx_jobs', 'profile-subscribe-add', '_bx_jobs_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 32),
+('bx_jobs_view_actions_all', 'bx_jobs', 'profile-subscribe-remove', '_bx_jobs_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 34),
 ('bx_jobs_view_actions_all', 'bx_jobs', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:7:"bx_jobs";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 50),
 ('bx_jobs_view_actions_all', 'bx_jobs', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_jobs_view_actions_all', 'bx_jobs', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),

@@ -333,8 +333,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_organizations_view_actions_all', 'bx_organizations', 'join-organization-profile', '_bx_orgs_menu_item_title_system_pay_and_join', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
-('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-add', '_bx_orgs_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
-('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-remove', '_bx_orgs_menu_item_title_system_leave_organization', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fans', '_bx_orgs_menu_item_title_system_fans', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-add', '_bx_orgs_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 12),
+('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-remove', '_bx_orgs_menu_item_title_system_leave_organization', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 14),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'profile-friends', '_bx_orgs_menu_item_title_system_friends', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'profile-friend-add', '_bx_orgs_menu_item_title_system_befriend', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 32),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'profile-friend-remove', '_bx_orgs_menu_item_title_system_unfriend', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 34),

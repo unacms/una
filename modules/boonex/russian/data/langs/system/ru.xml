@@ -3244,7 +3244,8 @@
     <string name="_sys_menu_item_title_sm_friends"><![CDATA[Друзья: {0}]]></string>
     <string name="_sys_menu_item_title_sm_friends_mutual"><![CDATA[Общие друзья: {0}]]></string>
     <string name="_sys_menu_item_title_sm_members"><![CDATA[Участники: {0}]]></string>
-    <string name="_sys_menu_item_title_sm_membership_respond"><![CDATA[Ответить фанату]]></string>
+    <string name="_sys_menu_item_title_sm_fans"><![CDATA[Участники]]></string>
+    <string name="_sys_menu_item_title_sm_fans_respond"><![CDATA[Ответить фанату]]></string>
     <string name="_sys_menu_item_title_sm_subscribers"><![CDATA[Подписчики: {0}]]></string>
     <string name="_sys_menu_item_title_sm_relations"><![CDATA[Связи: {0}]]></string>
     <string name="_sys_menu_item_title_sm_country"><![CDATA[Страна]]></string>

@@ -279,6 +279,7 @@
     <string name="_bx_groups_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
 
     <string name="_bx_groups_menu_item_title_system_fans"><![CDATA[Участники]]></string>
+    <string name="_bx_groups_menu_item_title_fans"><![CDATA[Участники]]></string>
     <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_groups_menu_item_title_become_fan_sent"><![CDATA[Присоединение запрошено]]></string>

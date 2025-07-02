@@ -389,6 +389,8 @@
     <string name="_bx_events_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
     <string name="_bx_events_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
 
+    <string name="_bx_events_menu_item_title_system_fans"><![CDATA[Going]]></string>
+    <string name="_bx_events_menu_item_title_fans"><![CDATA[Going]]></string>
     <string name="_bx_events_menu_item_title_system_become_fan"><![CDATA[Join Event]]></string>
     <string name="_bx_events_menu_item_title_become_fan"><![CDATA[Going]]></string>
     <string name="_bx_events_menu_item_title_become_fan_sent"><![CDATA[Requested]]></string>
@@ -402,6 +404,7 @@
 
     <string name="_bx_events_menu_item_title_system_pay_and_join"><![CDATA[Pay & Join]]></string>
     <string name="_bx_events_menu_item_title_pay_and_join"><![CDATA[Pay & Join]]></string>
+    <string name="_bx_events_menu_item_title_system_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Interested]]></string>
     <string name="_bx_events_menu_item_title_system_check_in"><![CDATA[Check In]]></string>

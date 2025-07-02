@@ -296,10 +296,12 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_spaces_view_actions_all', 'bx_spaces', 'join-space-profile', '_bx_spaces_menu_item_title_system_pay_and_join', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
-('bx_spaces_view_actions_all', 'bx_spaces', 'profile-fan-add', '_bx_spaces_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
-('bx_spaces_view_actions_all', 'bx_spaces', 'profile-fan-remove', '_bx_spaces_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
-('bx_spaces_view_actions_all', 'bx_spaces', 'profile-subscribe-add', '_bx_spaces_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
-('bx_spaces_view_actions_all', 'bx_spaces', 'profile-subscribe-remove', '_bx_spaces_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
+('bx_spaces_view_actions_all', 'bx_spaces', 'profile-fans', '_bx_spaces_menu_item_title_system_fans', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_spaces_view_actions_all', 'bx_spaces', 'profile-fan-add', '_bx_spaces_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 12),
+('bx_spaces_view_actions_all', 'bx_spaces', 'profile-fan-remove', '_bx_spaces_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 14),
+('bx_spaces_view_actions_all', 'bx_spaces', 'profile-subscriptions', '_bx_spaces_menu_item_title_system_subscriptions', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_spaces_view_actions_all', 'bx_spaces', 'profile-subscribe-add', '_bx_spaces_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 32),
+('bx_spaces_view_actions_all', 'bx_spaces', 'profile-subscribe-remove', '_bx_spaces_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 34),
 ('bx_spaces_view_actions_all', 'bx_spaces', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:9:"bx_spaces";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 50),
 ('bx_spaces_view_actions_all', 'bx_spaces', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_spaces_view_actions_all', 'bx_spaces', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
