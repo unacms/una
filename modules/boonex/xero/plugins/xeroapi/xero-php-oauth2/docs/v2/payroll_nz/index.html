@@ -1048,7 +1048,7 @@ ul.nav-tabs {
 };
       defs["Deduction"] = {
   "title" : "",
-  "required" : [ "calculationType", "deductionCategory", "deductionName", "liabilityAccountId" ],
+  "required" : [ "deductionCategory", "deductionName", "liabilityAccountId" ],
   "type" : "object",
   "properties" : {
     "deductionId" : {
@@ -1422,7 +1422,7 @@ ul.nav-tabs {
 };
       defs["Employee"] = {
   "title" : "",
-  "required" : [ "Address", "DateOfBirth", "FirstName", "LastName" ],
+  "required" : [ "address", "dateOfBirth", "firstName", "lastName" ],
   "type" : "object",
   "properties" : {
     "employeeID" : {
@@ -2463,7 +2463,7 @@ ul.nav-tabs {
 };
       defs["Employment"] = {
   "title" : "",
-  "required" : [ "EngagementType", "PayrollCalendarID", "StartDate" ],
+  "required" : [ "engagementType", "payrollCalendarID", "startDate" ],
   "type" : "object",
   "properties" : {
     "payrollCalendarID" : {
@@ -4086,7 +4086,7 @@ ul.nav-tabs {
           <nav id="scrollingNav">
             <ul class="sidenav nav nav-list">
               <li class="nav-header" data-group="PayrollNz"><strong>SDK: </strong><span id='sdk-name'></span></li>
-              <li class="nav-header" data-group="PayrollNz"><strong>VSN: </strong>8.0.0</li>
+              <li class="nav-header" data-group="PayrollNz"><strong>VSN: </strong>10.0.0</li>
               <li class="nav-header" data-group="PayrollNz"><a href="#api-PayrollNz">Methods</a></li>
               <li data-group="PayrollNz" data-name="approveTimesheet" class="">
                 <a href="#api-PayrollNz-approveTimesheet">approveTimesheet</a>
@@ -4603,7 +4603,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Deduction"
       },
-      "example" : "{ \"deductionName\": \"My new deduction\", \"deductionCategory\": \"NzOther\", \"liabilityAccountId\": \"568f2e9a-0870-46cc-8678-f83f132ed4e3\" }"
+      "example" : {
+        "deductionName" : "My new deduction",
+        "deductionCategory" : "NzOther",
+        "liabilityAccountId" : "568f2e9a-0870-46cc-8678-f83f132ed4e3"
+      }
     }
   },
   "required" : true
@@ -4752,7 +4756,13 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EarningsRate"
       },
-      "example" : "{ \"name\": \"My Earnings Rate\", \"earningsType\": \"RegularEarnings\", \"rateType\": \"RatePerUnit\", \"typeOfUnits\": \"hours\", \"expenseAccountID\": \"e4eb36f6-97e3-4427-a394-dd4e1b355c2e\" }"
+      "example" : {
+        "name" : "My Earnings Rate",
+        "earningsType" : "RegularEarnings",
+        "rateType" : "RatePerUnit",
+        "typeOfUnits" : "hours",
+        "expenseAccountID" : "e4eb36f6-97e3-4427-a394-dd4e1b355c2e"
+      }
     }
   },
   "required" : true
@@ -4909,7 +4919,20 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Employee"
       },
-      "example" : "{ \"title\": \"Mr\", \"firstName\": \"Mike\", \"lastName\": \"Johntzxzpxhmkgson\", \"dateOfBirth\": \"2000-01-01\", \"address\": { \"addressLine1\": \"101 Green St\", \"city\": \"San Francisco\", \"postCode\": \"4351\", \"countryName\": \"United Kingdom\" }, \"email\": \"83139@starkindustries.com\", \"gender\": \"M\" }"
+      "example" : {
+        "title" : "Mr",
+        "firstName" : "Mike",
+        "lastName" : "Johntzxzpxhmkgson",
+        "dateOfBirth" : "2000-01-01",
+        "address" : {
+          "addressLine1" : "101 Green St",
+          "city" : "San Francisco",
+          "postCode" : "4351",
+          "countryName" : "United Kingdom"
+        },
+        "email" : "83139@starkindustries.com",
+        "gender" : "M"
+      }
     }
   },
   "required" : true
@@ -5097,7 +5120,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EarningsTemplate"
       },
-      "example" : "{ \"ratePerUnit\": 20, \"numberOfUnits\": 8, \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"name\": \"My New One\" }"
+      "example" : {
+        "ratePerUnit" : 20,
+        "numberOfUnits" : 8,
+        "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+        "name" : "My New One"
+      }
     }
   },
   "required" : true
@@ -5284,7 +5312,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeLeave"
       },
-      "example" : "{ \"leaveTypeID\": \"b0b1b79e-2a25-46c2-ad08-ca25ef48d7e4\", \"description\": \"Creating a Description\", \"startDate\": \"2020-04-24\", \"endDate\": \"2020-04-26\" }"
+      "example" : {
+        "leaveTypeID" : "b0b1b79e-2a25-46c2-ad08-ca25ef48d7e4",
+        "description" : "Creating a Description",
+        "startDate" : "2020-04-24",
+        "endDate" : "2020-04-26"
+      }
     }
   },
   "required" : true
@@ -5475,7 +5508,16 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeLeaveSetup"
       },
-      "example" : "{ \"holidayPayOpeningBalance\": 10, \"annualLeaveOpeningBalance\": 100, \"sickLeaveHoursToAccrueAnnually\": 20, \"sickLeaveToAccrueAnnually\": 20, \"sickLeaveOpeningBalance\": 10, \"sickLeaveScheduleOfAccrual\": \"OnAnniversaryDate\", \"sickLeaveAnniversaryDate\": \"2023-12-31\", \"annualLeaveAnniversaryDate\": \"2023-12-31\" }"
+      "example" : {
+        "holidayPayOpeningBalance" : 10,
+        "annualLeaveOpeningBalance" : 100,
+        "sickLeaveHoursToAccrueAnnually" : 20,
+        "sickLeaveToAccrueAnnually" : 20,
+        "sickLeaveOpeningBalance" : 10,
+        "sickLeaveScheduleOfAccrual" : "OnAnniversaryDate",
+        "sickLeaveAnniversaryDate" : "2023-12-31",
+        "annualLeaveAnniversaryDate" : "2023-12-31"
+      }
     }
   },
   "required" : true
@@ -5659,7 +5701,17 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeLeaveType"
       },
-      "example" : "{ \"leaveTypeID\": \"35da97ae-05b9-427f-9a98-69157ba42cec\", \"scheduleOfAccrual\": \"AnnuallyAfter6Months\", \"hoursAccruedAnnually\": 10, \"unitsAccruedAnnually\": 10, \"typeOfUnitsToAccrue\": \"Hours\", \"openingBalanceTypeOfUnits\": \"Hours\" \"maximumToAccrue\": 80, \"openingBalance\": 100, \"rateAccruedHourly\": 3.5 }"
+      "example" : {
+        "leaveTypeID" : "35da97ae-05b9-427f-9a98-69157ba42cec",
+        "scheduleOfAccrual" : "AnnuallyAfter6Months",
+        "hoursAccruedAnnually" : 10,
+        "unitsAccruedAnnually" : 10,
+        "typeOfUnitsToAccrue" : "Hours",
+        "openingBalanceTypeOfUnits" : "Hours",
+        "maximumToAccrue" : 80,
+        "openingBalance" : 100,
+        "rateAccruedHourly" : 3.5
+      }
     }
   },
   "required" : true
@@ -6033,6 +6085,18 @@ This allows you to safely retry requests without the risk of duplicate processin
     "application/json" : {
       "schema" : {
         "$ref" : "#/components/schemas/PaymentMethod"
+      },
+      "example" : {
+        "bankAccounts" : [ {
+          "accountName" : "Casual Worker",
+          "accountNumber" : "0607050201419000",
+          "sortCode" : null,
+          "particulars" : null,
+          "code" : null,
+          "dollarAmount" : null,
+          "reference" : "",
+          "calculationType" : "Balance"
+        } ]
       }
     }
   },
@@ -6217,7 +6281,17 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/SalaryAndWage"
       },
-      "example" : "{ \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"numberOfUnitsPerWeek\": 2, \"ratePerUnit\": 10, \"numberOfUnitsPerDay\": 2, \"daysPerWeek\": 1, \"effectiveFrom\": \"2020-05-01\", \"annualSalary\": 100, \"status\": \"Active\", \"paymentType\": \"Salary\" }"
+      "example" : {
+        "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+        "numberOfUnitsPerWeek" : 2,
+        "ratePerUnit" : 10,
+        "numberOfUnitsPerDay" : 2,
+        "daysPerWeek" : 1,
+        "effectiveFrom" : "2020-05-01",
+        "annualSalary" : 100,
+        "status" : "Active",
+        "paymentType" : "Salary"
+      }
     }
   },
   "required" : true
@@ -6405,7 +6479,18 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeWorkingPatternWithWorkingWeeksRequest"
       },
-      "example" : "{ \"effectiveFrom\": \"2020-01-01T00:00:00\", \"workingWeeks\": [ { \"monday\": 0.0, \"tuesday\": 3.0000, \"wednesday\": 0.0, \"thursday\": 0.0, \"friday\": 0.0, \"saturday\": 0.0, \"sunday\": 0.0 } ] }"
+      "example" : {
+        "effectiveFrom" : "2020-01-01T00:00:00",
+        "workingWeeks" : [ {
+          "monday" : 0.0,
+          "tuesday" : 3.0,
+          "wednesday" : 0.0,
+          "thursday" : 0.0,
+          "friday" : 0.0,
+          "saturday" : 0.0,
+          "sunday" : 0.0
+        } ]
+      }
     }
   },
   "required" : true
@@ -6590,7 +6675,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Employment"
       },
-      "example" : "{ \"payrollCalendarID\": \"9aa56064-990f-4ad3-a189-d966d8f6a030\", \"startDate\": \"2020-09-02\", \"engagementType\": \"FixedTerm\", \"fixedTermEndDate\": \"2026-01-01\" }"
+      "example" : {
+        "payrollCalendarID" : "9aa56064-990f-4ad3-a189-d966d8f6a030",
+        "startDate" : "2020-09-02",
+        "engagementType" : "FixedTerm",
+        "fixedTermEndDate" : "2026-01-01"
+      }
     }
   },
   "required" : true
@@ -6739,7 +6829,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/LeaveType"
       },
-      "example" : "{ \"name\": \"My wqwhhiktun Leave\", \"isPaidLeave\": false, \"showOnPayslip\": true }"
+      "example" : {
+        "name" : "My wqwhhiktun Leave",
+        "isPaidLeave" : false,
+        "showOnPayslip" : true
+      }
     }
   },
   "required" : true
@@ -7075,7 +7169,15 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/PayRun"
       },
-      "example" : "{ \"payrollCalendarID\": \"9aa56064-990f-4ad3-a189-d966d8f6a030\", \"periodStartDate\": \"2020-09-08\", \"periodEndDate\": \"2020-09-15\", \"paymentDate\": \"2020-09-20\", \"payRunStatus\": \"Draft\", \"payRunType\": \"Scheduled\", \"calendarType\": \"Weekly\" }"
+      "example" : {
+        "payrollCalendarID" : "9aa56064-990f-4ad3-a189-d966d8f6a030",
+        "periodStartDate" : "2020-09-08",
+        "periodEndDate" : "2020-09-15",
+        "paymentDate" : "2020-09-20",
+        "payRunStatus" : "Draft",
+        "payRunType" : "Scheduled",
+        "calendarType" : "Weekly"
+      }
     }
   },
   "required" : true
@@ -7226,7 +7328,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/PayRunCalendar"
       },
-      "example" : "{ \"name\": \"My Weekly Cal\", \"calendarType\": \"Weekly\", \"periodStartDate\": \"2020-05-01\", \"paymentDate\": \"2020-05-15\" }"
+      "example" : {
+        "name" : "My Weekly Cal",
+        "calendarType" : "Weekly",
+        "periodStartDate" : "2020-05-01",
+        "paymentDate" : "2020-05-15"
+      }
     }
   },
   "required" : true
@@ -7376,7 +7483,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Reimbursement"
       },
-      "example" : "{ \"name\": \"My new Reimburse\", \"accountID\": \"fa5cdc43-643b-4ad8-b4ac-3ffe0d0f4488\", \"reimbursementCategory\": \"GSTInclusive\", \"calculationType\": \"FixedAmount\" }"
+      "example" : {
+        "name" : "My new Reimburse",
+        "accountID" : "fa5cdc43-643b-4ad8-b4ac-3ffe0d0f4488",
+        "reimbursementCategory" : "GSTInclusive",
+        "calculationType" : "FixedAmount"
+      }
     }
   },
   "required" : true
@@ -7528,7 +7640,14 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Benefit"
       },
-      "example" : "{ \"name\": \"SidSaver\", \"category\": \"Other\", \"liabilityAccountId\": \"568f2e9a-0870-46cc-8678-f83f132ed4e3\", \"expenseAccountId\": \"e4eb36f6-97e3-4427-a394-dd4e1b355c2e\", \"CalculationTypeNZ\": \"FixedAmount\", \"standardAmount\": 10 }"
+      "example" : {
+        "name" : "SidSaver",
+        "category" : "Other",
+        "liabilityAccountId" : "568f2e9a-0870-46cc-8678-f83f132ed4e3",
+        "expenseAccountId" : "e4eb36f6-97e3-4427-a394-dd4e1b355c2e",
+        "CalculationTypeNZ" : "FixedAmount",
+        "standardAmount" : 10
+      }
     }
   },
   "required" : true
@@ -7680,7 +7799,21 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Timesheet"
       },
-      "example" : "{ \"payrollCalendarID\": \"9aa56064-990f-4ad3-a189-d966d8f6a030\", \"employeeID\": \"68342973-c405-4b86-b5d3-d7b877c27995\", \"startDate\": \"2020-04-13\", \"endDate\": \"2020-04-19\", \"timesheetLines\": [ { \"date\": \"2020-04-13\", \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"numberOfUnits\": 8 }, { \"date\": \"2020-04-15\", \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"numberOfUnits\": 6 } ] }"
+      "example" : {
+        "payrollCalendarID" : "9aa56064-990f-4ad3-a189-d966d8f6a030",
+        "employeeID" : "68342973-c405-4b86-b5d3-d7b877c27995",
+        "startDate" : "2020-04-13",
+        "endDate" : "2020-04-19",
+        "timesheetLines" : [ {
+          "date" : "2020-04-13",
+          "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+          "numberOfUnits" : 8
+        }, {
+          "date" : "2020-04-15",
+          "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+          "numberOfUnits" : 6
+        } ]
+      }
     }
   },
   "required" : true
@@ -7866,7 +7999,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/TimesheetLine"
       },
-      "example" : "{ \"date\": \"2020-08-03\", \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"numberOfUnits\": 1 }"
+      "example" : {
+        "date" : "2020-08-03",
+        "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+        "numberOfUnits" : 1
+      }
     }
   },
   "required" : true
@@ -13794,7 +13931,20 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Employee"
       },
-      "example" : "{ \"title\": \"Mr\", \"firstName\": \"Tony\", \"lastName\": \"Starkgtrzgquusrson\", \"dateOfBirth\": \"1999-01-01\", \"address\": { \"addressLine1\": \"101 Green St\", \"city\": \"San Francisco\", \"postCode\": \"4432\", \"countryName\": \"United Kingdom\" }, \"email\": \"58315@starkindustries.com\", \"gender\": \"M\" }"
+      "example" : {
+        "title" : "Mr",
+        "firstName" : "Tony",
+        "lastName" : "Starkgtrzgquusrson",
+        "dateOfBirth" : "1999-01-01",
+        "address" : {
+          "addressLine1" : "101 Green St",
+          "city" : "San Francisco",
+          "postCode" : "4432",
+          "countryName" : "United Kingdom"
+        },
+        "email" : "58315@starkindustries.com",
+        "gender" : "M"
+      }
     }
   },
   "required" : true
@@ -14009,7 +14159,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EarningsTemplate"
       },
-      "example" : "{ \"ratePerUnit\": 25, \"numberOfUnits\": 4, \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\" }"
+      "example" : {
+        "ratePerUnit" : 25,
+        "numberOfUnits" : 4,
+        "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5"
+      }
     }
   },
   "required" : true
@@ -14221,7 +14375,18 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeLeave"
       },
-      "example" : "{ \"leaveTypeID\": \"b0b1b79e-2a25-46c2-ad08-ca25ef48d7e4\", \"description\": \"Creating a Description\", \"startDate\": \"2020-04-24\", \"endDate\": \"2020-04-26\", \"periods\": [ { \"periodStartDate\": \"2020-04-20\", \"periodEndDate\": \"2020-04-26\", \"numberOfUnits\": 1, \"periodStatus\": \"Approved\" } ] }"
+      "example" : {
+        "leaveTypeID" : "b0b1b79e-2a25-46c2-ad08-ca25ef48d7e4",
+        "description" : "Creating a Description",
+        "startDate" : "2020-04-24",
+        "endDate" : "2020-04-26",
+        "periods" : [ {
+          "periodStartDate" : "2020-04-20",
+          "periodEndDate" : "2020-04-26",
+          "numberOfUnits" : 1,
+          "periodStatus" : "Approved"
+        } ]
+      }
     }
   },
   "required" : true
@@ -14432,7 +14597,17 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/SalaryAndWage"
       },
-      "example" : "{ \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"numberOfUnitsPerWeek\": 3, \"ratePerUnit\": 11, \"numberOfUnitsPerDay\": 3, \"daysPerWeek\": 1, \"effectiveFrom\": \"2020-05-15\", \"annualSalary\": 101, \"status\": \"Active\", \"paymentType\": \"Salary\" }"
+      "example" : {
+        "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+        "numberOfUnitsPerWeek" : 3,
+        "ratePerUnit" : 11,
+        "numberOfUnitsPerDay" : 3,
+        "daysPerWeek" : 1,
+        "effectiveFrom" : "2020-05-15",
+        "annualSalary" : 101,
+        "status" : "Active",
+        "paymentType" : "Salary"
+      }
     }
   },
   "required" : true
@@ -14624,6 +14799,24 @@ This allows you to safely retry requests without the risk of duplicate processin
     "application/json" : {
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeTax"
+      },
+      "example" : {
+        "irdNumber" : "111111111",
+        "taxCode" : "M",
+        "esctRatePercentage" : 17.5,
+        "isEligibleForKiwiSaver" : true,
+        "hasSpecialStudentLoanRate" : false,
+        "specialStudentLoanRatePercentage" : null,
+        "specialTaxRatePercentage" : null,
+        "kiwiSaverContributions" : "MakeContributions",
+        "kiwiSaverOptOutDate" : null,
+        "kiwiSaverContributionHolidayEndDate" : null,
+        "kiwiSaverEmployeeContributionRatePercentage" : 3,
+        "kiwiSaverEmployerContributionRatePercentage" : 3,
+        "kiwiSaverEmployerSalarySacrificeContributionRatePercentage" : 0,
+        "hasStudentLoanBalance" : false,
+        "studentLoanBalance" : null,
+        "studentLoanAsAt" : null
       }
     }
   },
@@ -14809,7 +15002,9 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/PayRun"
       },
-      "example" : "{ \"paymentDate\": \"2019-07-01\" }"
+      "example" : {
+        "paymentDate" : "2019-07-01"
+      }
     }
   },
   "required" : true
@@ -15000,7 +15195,81 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/PaySlip"
       },
-      "example" : "{ \"earningsLines\": [ { \"earningsLineID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"displayName\": \"Ordinary Time\", \"ratePerUnit\": 25, \"numberOfUnits\": 0, \"amount\": 0, \"isLinkedToTimesheet\": false, \"isSystemGenerated\": true }, { \"earningsLineID\": \"65b83d94-f20f-45e1-85ae-387fcf460c26\", \"earningsRateID\": \"65b83d94-f20f-45e1-85ae-387fcf460c26\", \"displayName\": \"Salary\", \"ratePerUnit\": 0, \"numberOfUnits\": 8, \"amount\": 0, \"isLinkedToTimesheet\": false, \"isSystemGenerated\": false } ], \"leaveEarningsLines\": [ { \"earningsLineID\": \"0441497f-5dc7-4cd3-a90d-f2e07e21b2a6\", \"earningsRateID\": \"39b3560a-5d2f-4538-924a-4349dc86396e\", \"displayName\": \"Holiday Pay\", \"fixedAmount\": 268.8, \"amount\": 268.8, \"isLinkedToTimesheet\": false, \"isSystemGenerated\": true } ], \"deductionLines\": [ { \"deductionTypeID\": \"a3760fe4-68a4-4e38-8326-fe616af7dc74\", \"amount\": 100 } ], \"leaveAccrualLines\": [ { \"leaveTypeID\": \"0441497f-5dc7-4cd3-a90d-f2e07e21b2a6\", \"numberOfUnits\": 268.8 }, { \"leaveTypeID\": \"b0b1b79e-2a25-46c2-ad08-ca25ef48d7e4\", \"numberOfUnits\": 0 }, { \"leaveTypeID\": \"f2f994cf-1899-46f3-ad4f-5d92d78c3719\", \"numberOfUnits\": 0 }, { \"leaveTypeID\": \"34129765-11cb-4d8c-b568-84a2219beda3\", \"numberOfUnits\": 0 } ], \"superannuationLines\": [ { \"superannuationTypeID\": \"563273ea-0dae-4f82-86a4-e0db77c008ea\", \"displayName\": \"KiwiSaver\", \"amount\": 108.86, \"fixedAmount\": 3, \"percentage\": 3, \"manualAdjustment\": false } ], \"employeeTaxLines\": [ { \"taxLineID\": \"1084146b-e890-489c-aed3-06de80f63d84\", \"amount\": 1057.22, \"globalTaxTypeID\": \"11\", \"manualAdjustment\": false } ], \"employerTaxLines\": [ { \"taxLineID\": \"6f9eb8cd-0f4a-440b-939c-bdb0f6ad694c\", \"amount\": 18.9, \"globalTaxTypeID\": \"10\", \"manualAdjustment\": false } ], \"statutoryDeductionLines\": [ { \"statutoryDeductionTypeID\": \"b5efd8d1-0c93-4a14-a314-b5cba4a4e6b3\", \"amount\": 108.86 } ], \"grossEarningsHistory\": { \"daysPaid\": 3, \"unpaidWeeks\": 0 } }"
+      "example" : {
+        "earningsLines" : [ {
+          "earningsLineID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+          "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+          "displayName" : "Ordinary Time",
+          "ratePerUnit" : 25,
+          "numberOfUnits" : 0,
+          "amount" : 0,
+          "isLinkedToTimesheet" : false,
+          "isSystemGenerated" : true
+        }, {
+          "earningsLineID" : "65b83d94-f20f-45e1-85ae-387fcf460c26",
+          "earningsRateID" : "65b83d94-f20f-45e1-85ae-387fcf460c26",
+          "displayName" : "Salary",
+          "ratePerUnit" : 0,
+          "numberOfUnits" : 8,
+          "amount" : 0,
+          "isLinkedToTimesheet" : false,
+          "isSystemGenerated" : false
+        } ],
+        "leaveEarningsLines" : [ {
+          "earningsLineID" : "0441497f-5dc7-4cd3-a90d-f2e07e21b2a6",
+          "earningsRateID" : "39b3560a-5d2f-4538-924a-4349dc86396e",
+          "displayName" : "Holiday Pay",
+          "fixedAmount" : 268.8,
+          "amount" : 268.8,
+          "isLinkedToTimesheet" : false,
+          "isSystemGenerated" : true
+        } ],
+        "deductionLines" : [ {
+          "deductionTypeID" : "a3760fe4-68a4-4e38-8326-fe616af7dc74",
+          "amount" : 100
+        } ],
+        "leaveAccrualLines" : [ {
+          "leaveTypeID" : "0441497f-5dc7-4cd3-a90d-f2e07e21b2a6",
+          "numberOfUnits" : 268.8
+        }, {
+          "leaveTypeID" : "b0b1b79e-2a25-46c2-ad08-ca25ef48d7e4",
+          "numberOfUnits" : 0
+        }, {
+          "leaveTypeID" : "f2f994cf-1899-46f3-ad4f-5d92d78c3719",
+          "numberOfUnits" : 0
+        }, {
+          "leaveTypeID" : "34129765-11cb-4d8c-b568-84a2219beda3",
+          "numberOfUnits" : 0
+        } ],
+        "superannuationLines" : [ {
+          "superannuationTypeID" : "563273ea-0dae-4f82-86a4-e0db77c008ea",
+          "displayName" : "KiwiSaver",
+          "amount" : 108.86,
+          "fixedAmount" : 3,
+          "percentage" : 3,
+          "manualAdjustment" : false
+        } ],
+        "employeeTaxLines" : [ {
+          "taxLineID" : "1084146b-e890-489c-aed3-06de80f63d84",
+          "amount" : 1057.22,
+          "globalTaxTypeID" : "11",
+          "manualAdjustment" : false
+        } ],
+        "employerTaxLines" : [ {
+          "taxLineID" : "6f9eb8cd-0f4a-440b-939c-bdb0f6ad694c",
+          "amount" : 18.9,
+          "globalTaxTypeID" : "10",
+          "manualAdjustment" : false
+        } ],
+        "statutoryDeductionLines" : [ {
+          "statutoryDeductionTypeID" : "b5efd8d1-0c93-4a14-a314-b5cba4a4e6b3",
+          "amount" : 108.86
+        } ],
+        "grossEarningsHistory" : {
+          "daysPaid" : 3,
+          "unpaidWeeks" : 0
+        }
+      }
     }
   },
   "required" : true
@@ -15213,7 +15482,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/TimesheetLine"
       },
-      "example" : "{ \"date\": \"2020-08-04\", \"earningsRateID\": \"f9d8f5b5-9049-47f4-8541-35e200f750a5\", \"numberOfUnits\": 2 }"
+      "example" : {
+        "date" : "2020-08-04",
+        "earningsRateID" : "f9d8f5b5-9049-47f4-8541-35e200f750a5",
+        "numberOfUnits" : 2
+      }
     }
   },
   "required" : true

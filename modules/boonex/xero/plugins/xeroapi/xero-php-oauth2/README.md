@@ -57,7 +57,7 @@ Sample apps can get you started quickly with simple auth flows and advanced usag
 # Installation
 To install this SDK in your project we recommend using [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) (For OSX we recommend using [Homebrew](https://formulae.brew.sh/formula/composer)).
 
-All third party libraries dependencies managed with Composer and the SDK requires `PHP 5.6` and later.
+All third party libraries dependencies managed with Composer and the SDK requires `PHP 8.1` and later.
 
 To install the bindings via [Composer](http://getcomposer.org/), and add the xero-php-oauth2 sdk to your `composer.json` and navigate to where your composer.json file is and run the command:
 ```

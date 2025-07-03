@@ -398,6 +398,7 @@ class Organisation implements ModelInterface, ArrayAccess
     const MODEL_CLASS_IGNITE = 'IGNITE';
     const MODEL_CLASS_GROW = 'GROW';
     const MODEL_CLASS_COMPREHENSIVE = 'COMPREHENSIVE';
+    const MODEL_CLASS_SIMPLE = 'SIMPLE';
     const EDITION_BUSINESS = 'BUSINESS';
     const EDITION_PARTNER = 'PARTNER';
     
@@ -545,6 +546,7 @@ class Organisation implements ModelInterface, ArrayAccess
             self::MODEL_CLASS_IGNITE,
             self::MODEL_CLASS_GROW,
             self::MODEL_CLASS_COMPREHENSIVE,
+            self::MODEL_CLASS_SIMPLE,
         ];
     }
     
