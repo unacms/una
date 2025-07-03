@@ -135,10 +135,6 @@ div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu
     width: 2.5rem;
     height: 2.5rem;
 }
-.bx-tl-item-content video,
-.bx-tl-item-attachment:not(.flickity-cell) img{
-    border-radius: .25rem;
-}
 
 /*--- Menu: Item Manage ---*/
 .bx-menu-object-bx_timeline_menu_item_manage .sys-action-do-text {
@@ -219,12 +215,32 @@ div.bx-tl-view div.bx-tl-item-attachments {
 }
 
 div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment {
-    display: inline-block;
+    height:auto;
 }
-div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment,
 div.bx-tl-view div.bx-tl-item-attachments div.bx-tl-item-attachment img {
-    height: 11.25rem;
+    height: auto;
+    max-height:25.5rem;
+    max-width:100%;
+    margin-left:auto;
+    margin-right:auto;
 }
+.bx-tl-item-attachments.bx-tl-ia-gallery {
+    text-align:center;
+}
+
+div.bx-tl-view div.bx-tl-item-attachments .flickity-slider div.bx-tl-item-attachment {
+    width: 100%;
+    height: 25.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+.flickity-slider .bx-tl-item-attachment img {
+    display: block;
+    max-height: 100%;
+}
+
 div.bx-tl-view-outline div.bx-tl-item-attachment img {
     max-width: 100%;
     object-fit: cover;
