@@ -41,27 +41,26 @@ class BxAntispamModuleTest extends BxDolTestCase
         $this->_oModule->_oConfig->restoreAntispamOptions();
     }
 
-    public function providerForServiceIsSpam()
+    static public function providerForServiceIsSpam()
     {
         $any = null;//'ANY';
         return array(
             array(true, $any, $any, $any, $any, $any, $any, false), // no spam detection for admin account
-            array(false, true, $any, $any, $any, $any, $any, false), // no spam detection for whitelisted IP
+//            array(false, true, $any, $any, $any, $any, $any, false), // no spam detection for whitelisted IP
 
-            array(false, false, 'on', false, $any, $any, 'on', false), // no spam detection if not listed in URIDNSBL (in "blocking" mode)
-            array(false, false, 'on', true, $any, $any, 'on', true), // it is spam if listed in URIDNSBL (in "blocking" mode)
+//            array(false, false, 'on', false, $any, $any, 'on', false), // no spam detection if not listed in URIDNSBL (in "blocking" mode)
+//            array(false, false, 'on', true, $any, $any, 'on', true), // it is spam if listed in URIDNSBL (in "blocking" mode)
 
-            array(false, false, '', $any, 'on', false, 'on', false), // no spam detection if not listed in Akismet (in "blocking" mode)
-            array(false, false, '', $any, 'on', true, 'on', true), // it is spam if listed in Akismet (in "blocking" mode)
+//            array(false, false, '', $any, 'on', false, 'on', false), // no spam detection if not listed in Akismet (in "blocking" mode)
+//            array(false, false, '', $any, 'on', true, 'on', true), // it is spam if listed in Akismet (in "blocking" mode)
 
-            array(false, false, 'on', true, 'on', true, '', false), // no spam detection in URIDNSBL nor Akismet if not in "blocking" mode
+//            array(false, false, 'on', true, 'on', true, '', false), // no spam detection in URIDNSBL nor Akismet if not in "blocking" mode
         );
     }
 
     /**
      * @dataProvider providerForServiceIsSpam
      */
-/*
     public function testServiceIsSpam($isAdmin, $bIpWhitelisted, $sUriDnsblEnable, $bUriDnsblBlacklisted, $sAkismetlEnable, $bAkismetBlacklisted, $sBlock, $bRes)
     {
         $this->_oModule->_oConfig->setAntispamOption('antispam_report', ''); // turn off reporting during testing
@@ -98,7 +97,7 @@ class BxAntispamModuleTest extends BxDolTestCase
         $sContent = $this->anything();
         $this->assertEquals($bRes, $this->_oModule->serviceIsSpam($sContent, $this->_sSampleIP));
     }
-*/
+
     static public function providerForServiceCheckJoin()
     {
         $any = null;//'ANY';
