@@ -33,7 +33,6 @@
     "grapesjs-style-bg": "^2.0.2",
     "headroom.js": "^0.12.0",
     "highlight.js": "github:highlightjs/highlight.js",
-    "historyjs": "^1.8.0-b2",
     "hls.js": "^1.5.18",
     "htmx.org": "^1.9.12",
     "jquery": "^3.7.1",
@@ -79,7 +78,8 @@
     "jush": "https://github.com/vrana/jush",
     "select2-to-tree": "https://github.com/clivezhg/select2-to-tree",
     "jquery-jfeed": "https://github.com/jfhovinne/jFeed",
-    "jekyll-toc": "https://github.com/ghiculescu/jekyll-table-of-contents"
+    "jekyll-toc": "https://github.com/ghiculescu/jekyll-table-of-contents",
+    "historyjs": "https://github.com/browserstate/history.js"
   },
   "napa-config": {
     "cache": false
