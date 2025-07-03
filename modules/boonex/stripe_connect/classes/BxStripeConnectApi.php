@@ -157,6 +157,11 @@ class BxStripeConnectApi extends BxDol
                             'capture_payments' => true,
                         ],
                     ],
+                    /*
+                    'reporting_chart' => [
+                        'enabled' => true
+                    ],
+                    */
                 ]
             ]);
         }

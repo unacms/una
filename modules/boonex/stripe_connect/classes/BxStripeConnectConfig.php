@@ -31,6 +31,7 @@ class BxStripeConnectConfig extends BxBaseModGeneralConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'accounts',
+            'TABLE_COMMISSIONS' => $aModule['db_prefix'] . 'commissions',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -41,6 +42,12 @@ class BxStripeConnectConfig extends BxBaseModGeneralConfig
             'FIELD_LIVE_DETAILS' => 'live_details',
             'FIELD_TEST_ACCOUNT_ID' => 'test_account_id',
             'FIELD_TEST_DETAILS' => 'test_details',
+
+            'FIELD_CMS_ID' => 'id',
+            'FIELD_CMS_NAME' => 'name',
+            'FIELD_CMS_ACL_ID' => 'acl_id',
+            'FIELD_CMS_FEE_SINGLE' => 'fee_single',
+            'FIELD_CMS_FEE_RECURRING' => 'fee_recurring',
 
             // page URIs
             'URL_API_AUTHORIZE' => 'https://connect.stripe.com/oauth/authorize',
@@ -61,7 +68,11 @@ class BxStripeConnectConfig extends BxBaseModGeneralConfig
             'PARAM_FEE_RECURRING' => 'bx_stripe_connect_fee_recurring',
 
             // objects
+            'OBJECT_FORM_COMMISSIONS' => 'bx_stripe_connect_form_commissions',
+            'OBJECT_FORM_COMMISSIONS_DISPLAY_ADD' => 'bx_stripe_connect_form_commissions_add',
+            'OBJECT_FORM_COMMISSIONS_DISPLAY_EDIT' => 'bx_stripe_connect_form_commissions_edit',
             'OBJECT_GRID_ACCOUNTS' => 'bx_stripe_connect_accounts',
+            'OBJECT_GRID_COMMISSIONS' => 'bx_stripe_connect_commissions',
 
             // Related Stripe payment provider name in Payments module 
             'STRIPE' => 'stripe_connect',
@@ -82,6 +93,10 @@ class BxStripeConnectConfig extends BxBaseModGeneralConfig
             'balances' => $sPrefix . '-balances',
             'notification-banner' => $sPrefix . '-notification-banner',
             'payments' => $sPrefix . '-payments',
+            'reporting-chart' => $sPrefix . '-reporting-chart',
+
+            'commissions_form' => $sPrefix . '-commissions-form-',
+            'commissions_popup' => $sPrefix . '-commissions-popup-',
         ];
 
         $this->_sAccountType = 'standard'; //'express'
@@ -123,21 +138,30 @@ class BxStripeConnectConfig extends BxBaseModGeneralConfig
         return $this->_sPayMode;
     }
 
-    public function getFee($sType, $fAmount = 0)
+    public function getFee($sType, $iVendorId, $fAmount = 0)
     {
         $iResult = 0;
 
+        $aVendorCms = [];
+        if(($aVendorAcl = BxDolAcl::getInstance()->getMemberMembershipInfo($iVendorId)) && is_array($aVendorAcl))
+            $aVendorCms = $this->_oDb->getCommissions(['type' => 'acl_id', 'acl_id' => (int)$aVendorAcl['id']]);
+        $bVendorCms = !empty($aVendorCms) && is_array($aVendorCms);
+
         switch($sType) {
             case BX_PAYMENT_TYPE_SINGLE:
-                $mixedValue = getParam($this->CNF['PARAM_FEE_SINGLE']);
-                if(is_numeric($mixedValue))
-                    $iResult = (int)(100 * (float)$mixedValue);
-                else if(strpos($mixedValue, '%') !== false)
-                    $iResult = (int)round($fAmount * (int)trim($mixedValue, '%') / 100);
+                if($bVendorCms && !empty($aVendorCms['fee_single']))
+                    $iResult = $this->_getFeeSingle($aVendorCms['fee_single'], $fAmount);
+
+                if(!$iResult && ($mixedFee = getParam($this->CNF['PARAM_FEE_SINGLE'])))
+                    $iResult = $this->_getFeeSingle($mixedFee, $fAmount);
                 break;
 
             case BX_PAYMENT_TYPE_RECURRING:
-                $iResult = (int)trim(getParam($this->CNF['PARAM_FEE_RECURRING']), '%');
+                if($bVendorCms && !empty($aVendorCms['fee_recurring']))
+                    $iResult = $this->_getFeeRecurring($aVendorCms['fee_recurring']);
+
+                if(!$iResult && ($mixedFee = getParam($this->CNF['PARAM_FEE_RECURRING'])))
+                    $iResult = $this->_getFeeRecurring($mixedFee);
                 break;
         }
 
@@ -150,6 +174,26 @@ class BxStripeConnectConfig extends BxBaseModGeneralConfig
             return $this->_aHtmlIds;
 
         return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
+    }
+
+    protected function _getFeeSingle($mixedFee, $fAmount = false)
+    {
+        $iResult = 0;
+
+        if(strpos($mixedFee, '%') !== false) {
+            $iResult = (int)trim($mixedFee, '%');
+            if($fAmount !== false)
+                $iResult = (int)round($fAmount * $iResult / 100);
+        }
+        else if(is_numeric($mixedFee))
+            $iResult = (int)(100 * (float)$mixedFee);
+
+        return $iResult;
+    }
+
+    protected function _getFeeRecurring($mixedFee)
+    {
+        return (int)trim($mixedFee, '%');
     }
 }
 

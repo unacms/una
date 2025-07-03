@@ -9,8 +9,6 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS', 'accounts');
-
 class BxStripeConnectStudioPage extends BxTemplStudioModule
 {
     protected $_sModule;
@@ -23,12 +21,24 @@ class BxStripeConnectStudioPage extends BxTemplStudioModule
         $this->_sModule = 'bx_stripe_connect';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS] = array('name' => BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS, 'icon' => 'users', 'title' => '_bx_stripe_connect_menu_item_title_accounts');
+        $this->aMenuItems = array_merge($this->aMenuItems, [
+            'accounts' => ['name' => 'accounts', 'icon' => 'users', 'title' => '_bx_stripe_connect_menu_item_title_accounts'],
+            'commissions' => ['name' => 'commissions', 'icon' => 'percent', 'title' => '_bx_stripe_connect_menu_item_title_commissions']
+        ]);
     }
 
     protected function getAccounts()
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_GRID_ACCOUNTS'], BxDolStudioTemplate::getInstance());
+        if(!$oGrid)
+            return '';
+
+        return $oGrid->getCode();
+    }
+
+    protected function getCommissions()
+    {
+        $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_GRID_COMMISSIONS'], BxDolStudioTemplate::getInstance());
         if(!$oGrid)
             return '';
 

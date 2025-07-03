@@ -17,9 +17,9 @@ DELETE FROM `sys_menu_items` WHERE `module` = @sName; -- OR `set_name` IN();
 
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_stripe_connect_accounts');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_stripe_connect_accounts');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_stripe_connect_accounts');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_stripe_connect_accounts', 'bx_stripe_connect_commissions');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_stripe_connect_accounts', 'bx_stripe_connect_commissions');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_stripe_connect_accounts', 'bx_stripe_connect_commissions');
 
 
 -- ALERTS

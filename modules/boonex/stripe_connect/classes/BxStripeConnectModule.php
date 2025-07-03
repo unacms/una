@@ -114,6 +114,18 @@ class BxStripeConnectModule extends BxBaseModGeneralModule
         return $this->_oTemplate->getBlockPayments();
     }
 
+    /*
+     * Isn't supported with the current SDK. It's still in Beta mode.
+     * https://docs.stripe.com/connect/supported-embedded-components/reporting-chart
+     */
+    public function serviceGetBlockReportingChart()
+    {
+        if(!isLogged())
+            return '';
+
+        return $this->_oTemplate->getBlockReportingChart();
+    }
+
     public function serviceGetBlockBalances()
     {
         if(!isLogged())
@@ -310,7 +322,7 @@ class BxStripeConnectModule extends BxBaseModGeneralModule
                     foreach($aParams['session_params']['line_items'] as $aLineItem)
                         $fAmount += (float)$aLineItem['price_data']['unit_amount'] * (int)$aLineItem['quantity'];
 
-                    if($fAmount && ($fAmount = $this->_oConfig->getFee(BX_PAYMENT_TYPE_SINGLE, $fAmount))) {
+                    if($fAmount && ($fAmount = $this->_oConfig->getFee(BX_PAYMENT_TYPE_SINGLE, $iVendorId, $fAmount))) {
                         if(!isset($aParams['session_params']['payment_intent_data']))
                             $aParams['session_params']['payment_intent_data'] = [];
 
@@ -323,7 +335,7 @@ class BxStripeConnectModule extends BxBaseModGeneralModule
                     foreach($aParams['session_params']['line_items'] as $aLineItem)
                         $fAmount += (float)$aLineItem['price_data']['unit_amount'] * (int)$aLineItem['quantity'];
 
-                    if($fAmount && ($fAmount = $this->_oConfig->getFee(BX_PAYMENT_TYPE_RECURRING, $fAmount))) {
+                    if($fAmount && ($fAmount = $this->_oConfig->getFee(BX_PAYMENT_TYPE_RECURRING, $iVendorId, $fAmount))) {
                         if(!isset($aParams['session_params']['subscription_data']))
                             $aParams['session_params']['subscription_data'] = [];
 

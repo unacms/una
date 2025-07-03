@@ -107,6 +107,60 @@ class BxStripeConnectDb extends BxBaseModConnectDb
             'profile_id' => $iProfileId,
     	]) > 0;
     }
+
+    /*
+     * Commissions methods
+     */
+    public function getCommissions($aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+        $sSelectClause = "`tc`.*";
+        $sWhereClause = $sOrderClause = "";
+        if(!empty($aParams['type']))
+            switch($aParams['type']) {
+                case 'max_order':
+                    $aMethod['name'] = 'getOne';
+                    $aMethod['params'][1] = [];
+
+                    $sSelectClause = "IFNULL(MAX(`tc`.`order`), 0)";
+                    break;
+
+                case 'id':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1] = [
+                        'id' => $aParams['id']
+                    ];
+
+                    $sWhereClause = " AND `tc`.`id`=:id";
+                    break;
+
+                case 'acl_id':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1] = [
+                        'acl_id' => $aParams['acl_id']
+                    ];
+
+                    $sWhereClause = " AND `tc`.`acl_id`=:acl_id";
+                    break;
+
+                case 'all':
+                    if(!empty($aParams['active'])) 
+                        $sWhereClause = " AND `tc`.`active`='1'";
+                    break;
+            }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = " ORDER BY " . $sOrderClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `" . $CNF['TABLE_COMMISSIONS'] . "` AS `tc`
+            WHERE 1" . $sWhereClause . $sOrderClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
 }
 
 /** @} */

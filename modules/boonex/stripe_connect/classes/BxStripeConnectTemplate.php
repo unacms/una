@@ -84,6 +84,17 @@ class BxStripeConnectTemplate extends BxBaseModGeneralTemplate
         ]);
     }
 
+    public function getBlockReportingChart()
+    {
+        $sEmbed = 'reporting-chart';
+
+        return $this->parseHtmlByName('embed_block.html', [
+            'js_object' => $this->_oConfig->getJsObject('embeds'),
+            'html_id' => $this->_oConfig->getHtmlIds($sEmbed),
+            'embed' => $sEmbed
+        ]);
+    }
+
     public function getBlockPayments()
     {
         $sEmbed = 'payments';
