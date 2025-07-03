@@ -1240,6 +1240,16 @@ class BxMarketModule extends BxBaseModTextModule
     	return true;
     }
 
+    public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(getParam($CNF['PARAM_USE_ICON']) == 'on' && !empty($aContentInfo[$CNF[$sField]]))
+            return parent::getEntryImageData($aContentInfo, $sField, $aTranscoders);
+
+        return parent::getEntryImageData($aContentInfo, 'FIELD_COVER', $aTranscoders);
+    }
+
     public function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
     {
     	$CNF = &$this->_oConfig->CNF;
