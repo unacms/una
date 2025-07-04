@@ -96,6 +96,7 @@ class BxAclDb extends BxDolModuleDb
             `tap`.`id` AS `id`,
             `tap`.`level_id` AS `level_id`,
             `tap`.`name` AS `name`,
+            `tap`.`caption` AS `caption`,
             `tap`.`period` AS `period`,
             `tap`.`period_unit` AS `period_unit`,
             `tap`.`price` AS `price`,
@@ -189,8 +190,19 @@ class BxAclDb extends BxDolModuleDb
 
     public function deletePrices($aWhere)
     {
-        $sSql = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` WHERE " . $this->arrayToSQL($aWhere, " AND ");
-        return (int)$this->query($sSql) > 0;
+        $CNF = &$this->_oConfig->CNF;
+
+        $sWhereClause = $this->arrayToSQL($aWhere, " AND ");
+
+        $aPrices = $this->getAll("SELECT * FROM `" . $CNF['TABLE_PRICES'] . "` WHERE " . $sWhereClause);
+        if(!empty($aPrices) && is_array($aPrices)) {
+            $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+
+            foreach($aPrices as $aPrice)
+                $oLanguage->deleteLanguageString($aPrice['caption']);
+        }
+
+        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_PRICES'] . "` WHERE " . $sWhereClause) > 0;
     }
     
     public function getLicenses($aParams, $bReturnCount = false)

@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxAclFormPrice extends BxTemplFormView
+class BxAclFormPrice extends BxTemplStudioFormView
 {
     protected $_sModule;
     protected $_oModule;
@@ -22,6 +22,17 @@ class BxAclFormPrice extends BxTemplFormView
         parent::__construct($aInfo, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(isset($this->aInputs[$CNF['FIELD_LEVEL_ID']])) {
+            $aLevels = $this->_oModule->_oDb->getLevels(['type' => 'for_selector']);
+
+            $this->aInputs[$CNF['FIELD_LEVEL_ID']]['values'][] = ['key' => 0, 'value' => _t('_sys_please_select')];
+            foreach($aLevels as $iId => $sTitle)
+                $this->aInputs[$CNF['FIELD_LEVEL_ID']]['values'][] = [
+                    'key' => $iId, 
+                    'value' => _t($sTitle)
+                ];
+        }
 
         if(isset($this->aInputs[$CNF['FIELD_NAME']])) {
             $sJsObject = $this->_oModule->_oConfig->getJsObject('form');

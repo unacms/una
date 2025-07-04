@@ -24,11 +24,17 @@
     <string name="_bx_acl_form_price_display_add"><![CDATA[Add]]></string>
     <string name="_bx_acl_form_price_display_edit"><![CDATA[Edit]]></string>
     <string name="_bx_acl_form_price_input_sys_id"><![CDATA[ID]]></string>
-    <string name="_bx_acl_form_price_input_sys_level_id"><![CDATA[Level ID]]></string>
+    <string name="_bx_acl_form_price_input_sys_level_id"><![CDATA[Level]]></string>
+    <string name="_bx_acl_form_price_input_level_id"><![CDATA[Level]]></string>
+    <string name="_bx_acl_form_price_input_err_level_id"><![CDATA[You need to select a level here.]]></string>
     <string name="_bx_acl_form_price_input_sys_name"><![CDATA[Name]]></string>
     <string name="_bx_acl_form_price_input_name"><![CDATA[Name]]></string>
     <string name="_bx_acl_form_price_input_inf_name"><![CDATA[Unique value which will be used in back end and API calls]]></string>
-    <string name="_bx_acl_form_price_input_err_name"><![CDATA[You need to enter a unique value here]]></string>
+    <string name="_bx_acl_form_price_input_err_name"><![CDATA[Field's value should be unique and is needed for internal usage.]]></string>
+    <string name="_bx_acl_form_price_input_sys_caption"><![CDATA[Caption]]></string>
+    <string name="_bx_acl_form_price_input_caption"><![CDATA[Caption]]></string>
+    <string name="_bx_acl_form_price_input_inf_caption"><![CDATA[The caption will be used in user end.]]></string>
+    <string name="_bx_acl_form_price_input_err_caption"><![CDATA[You need to enter a value here.]]></string>
     <string name="_bx_acl_form_price_input_sys_period"><![CDATA[Period]]></string>
     <string name="_bx_acl_form_price_input_period"><![CDATA[Period]]></string>
     <string name="_bx_acl_form_price_input_inf_period"><![CDATA[Use 0 for lifetime]]></string>
@@ -61,7 +67,9 @@
     <!-- Grids -->
     <string name="_bx_acl_grid_column_level_icon"><![CDATA[]]></string>
     <string name="_bx_acl_grid_column_level_name"><![CDATA[Level]]></string>
+    <string name="_bx_acl_grid_column_level_id"><![CDATA[Level]]></string>
     <string name="_bx_acl_grid_column_name"><![CDATA[Name]]></string>
+    <string name="_bx_acl_grid_column_caption"><![CDATA[Caption]]></string>
     <string name="_bx_acl_grid_column_period"><![CDATA[Period]]></string>
     <string name="_bx_acl_grid_column_price"><![CDATA[Price]]></string>
     <string name="_bx_acl_grid_column_price_value"><![CDATA[{0}{1}]]></string>
@@ -99,10 +107,10 @@
     <!-- Common Texts -->
     <string name="_bx_acl_msg_empty_owner"><![CDATA['Main seller' is empty. You need to mark some profile as 'Main seller' in Settings of currently active Payment app.]]></string>
     <string name="_bx_acl_msg_performed"><![CDATA[The action was successfully performed.]]></string>
-    <string name="_bx_acl_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>
+    <string name="_bx_acl_err_price_duplicate"><![CDATA[Note! Similar pricing plan is already exists.]]></string>
     <string name="_bx_acl_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
 
-    <string name="_bx_acl_txt_select_level"><![CDATA[Select level...]]></string>
+    <string name="_bx_acl_txt_all_level"><![CDATA[All levels]]></string>
     <string name="_bx_acl_txt_cart_item_title"><![CDATA[{0} ({1} {2})]]></string>
     <string name="_bx_acl_txt_cart_item_title_lifetime"><![CDATA[{0} (lifetime)]]></string>
     <string name="_bx_acl_txt_cart_item_description"><![CDATA[Membership level on {0} site.]]></string>
