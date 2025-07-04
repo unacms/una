@@ -121,10 +121,10 @@
         <echo msg="Prepage: installing necessary components" />
         <exec executable="yarn" dir="${project.basedir}" checkreturn="true" />
         <exec executable="${php}" dir="${project.basedir}" checkreturn="true">
-            <arg value="${composer} install" />
+            <arg line="${composer} install" />
         </exec>
         <exec executable="${php}" dir="${project.basedir}/tests" checkreturn="true">
-            <arg value="${composer} install" />
+            <arg line="${composer} install" />
         </exec>
     </target>
 
@@ -138,7 +138,7 @@
             <then><property name="install_base_dir" value="${project.basedir}" /></then>
         </if>
         <exec executable="${php}" dir="${install_base_dir}/install" checkreturn="true">
-            <arg value="cmd.php -m ${modules} --db_host=${db_host} --db_name=${db_name} --db_user=${db_user} --db_password=${db_password} --server_http_host=${http_host} --server_php_self=${php_self} --server_doc_root=${doc_root}" />
+            <arg line="cmd.php -m ${modules} --db_host=${db_host} --db_name=${db_name} --db_user=${db_user} --db_password=${db_password} --server_http_host=${http_host} --server_php_self=${php_self} --server_doc_root=${doc_root}" />
         </exec>
     </target>
 
@@ -148,7 +148,7 @@
     <target name="test">
         <echo msg="Testing..." />
         <exec executable="${php}" dir="${project.basedir}/tests" checkreturn="true">
-            <arg value="vendor/bin/phpunit" />
+            <arg line="vendor/bin/phpunit" />
         </exec>
     </target>
 
