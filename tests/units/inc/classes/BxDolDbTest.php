@@ -13,7 +13,7 @@ class BxDolDbTest extends BxDolTestCase
         $this->assertEquals($bRes, (bool)BxDolDb::getInstance()->isValidFieldName($s));
     }
 
-    public function providerForIsValidFieldName()
+    static public function providerForIsValidFieldName()
     {
         return array(
             array('', false),

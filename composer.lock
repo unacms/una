@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d384a42e79efa0ea59eda1dd298b636",
+    "content-hash": "2404a77bf9dfe90fbd0a166b35626c0d",
     "packages": [
         {
             "name": "achingbrain/php5-akismet",
@@ -215,16 +215,16 @@
         },
         {
             "name": "chargebee/chargebee-php",
-            "version": "v3.41.0",
+            "version": "v3.44.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chargebee/chargebee-php.git",
-                "reference": "6a5c12589a4625b9c67e30af6df6140521c3b57e"
+                "reference": "3ba52efe3657ae32aa2287a831225b76d2a7918f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/6a5c12589a4625b9c67e30af6df6140521c3b57e",
-                "reference": "6a5c12589a4625b9c67e30af6df6140521c3b57e",
+                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/3ba52efe3657ae32aa2287a831225b76d2a7918f",
+                "reference": "3ba52efe3657ae32aa2287a831225b76d2a7918f",
                 "shasum": ""
             },
             "require": {
@@ -258,9 +258,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chargebee/chargebee-php/issues",
-                "source": "https://github.com/chargebee/chargebee-php/tree/v3.41.0"
+                "source": "https://github.com/chargebee/chargebee-php/tree/v3.44.0"
             },
-            "time": "2025-03-19T04:44:50+00:00"
+            "time": "2025-06-19T11:02:22+00:00"
         },
         {
             "name": "curl/cacert",
@@ -277,12 +277,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "c9dc49f68f7bd14e5aa107d86a08ce59203f02ee"
+                "reference": "5b74b74145aa14653d3285d793cf7fa817b3f7e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/c9dc49f68f7bd14e5aa107d86a08ce59203f02ee",
-                "reference": "c9dc49f68f7bd14e5aa107d86a08ce59203f02ee",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/5b74b74145aa14653d3285d793cf7fa817b3f7e7",
+                "reference": "5b74b74145aa14653d3285d793cf7fa817b3f7e7",
                 "shasum": ""
             },
             "require": {
@@ -320,7 +320,7 @@
                 "issues": "https://github.com/erusev/parsedown/issues",
                 "source": "https://github.com/erusev/parsedown/tree/master"
             },
-            "time": "2024-12-01T16:36:17+00:00"
+            "time": "2025-06-05T05:59:58+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -874,16 +874,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.73",
+            "version": "1.3.75",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "cb7a9297b4ab070909cefade30ee95054d4ae87a"
+                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/cb7a9297b4ab070909cefade30ee95054d4ae87a",
-                "reference": "cb7a9297b4ab070909cefade30ee95054d4ae87a",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/76ba4a5f555fd7bf4aa408af608e991569076671",
+                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671",
                 "shasum": ""
             },
             "require": {
@@ -894,8 +894,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": ">=2.0",
                 "matthiasmullie/scrapbook": ">=1.3",
-                "phpunit/phpunit": ">=4.8",
-                "squizlabs/php_codesniffer": ">=3.0"
+                "phpunit/phpunit": ">=4.8"
             },
             "suggest": {
                 "psr/cache-implementation": "Cache implementation to use with Minify::cache"
@@ -933,7 +932,7 @@
             ],
             "support": {
                 "issues": "https://github.com/matthiasmullie/minify/issues",
-                "source": "https://github.com/matthiasmullie/minify/tree/1.3.73"
+                "source": "https://github.com/matthiasmullie/minify/tree/1.3.75"
             },
             "funding": [
                 {
@@ -941,7 +940,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-15T10:27:10+00:00"
+            "time": "2025-06-25T09:56:19+00:00"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -1252,20 +1251,21 @@
                 "issues": "https://github.com/paypal/paypalhttp_php/issues",
                 "source": "https://github.com/paypal/paypalhttp_php/tree/1.0.1"
             },
+            "abandoned": true,
             "time": "2021-09-14T21:35:26+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.9.3",
+            "version": "v6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "2f5c94fe7493efc213f643c23b1b1c249d40f47e"
+                "reference": "bf74d75a1fde6beaa34a0ddae2ec5fce0f72a144"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/2f5c94fe7493efc213f643c23b1b1c249d40f47e",
-                "reference": "2f5c94fe7493efc213f643c23b1b1c249d40f47e",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/bf74d75a1fde6beaa34a0ddae2ec5fce0f72a144",
+                "reference": "bf74d75a1fde6beaa34a0ddae2ec5fce0f72a144",
                 "shasum": ""
             },
             "require": {
@@ -1325,7 +1325,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.9.3"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.10.0"
             },
             "funding": [
                 {
@@ -1333,7 +1333,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-24T18:04:13+00:00"
+            "time": "2025-04-24T15:19:31+00:00"
         },
         {
             "name": "psr/http-client",
@@ -1764,16 +1764,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v16.5.0",
+            "version": "v16.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "3fb22256317344e049fce02ff289af3b776b0464"
+                "reference": "d6de0a536f00b5c5c74f36b8f4d0d93b035499ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/3fb22256317344e049fce02ff289af3b776b0464",
-                "reference": "3fb22256317344e049fce02ff289af3b776b0464",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/d6de0a536f00b5c5c74f36b8f4d0d93b035499ff",
+                "reference": "d6de0a536f00b5c5c74f36b8f4d0d93b035499ff",
                 "shasum": ""
             },
             "require": {
@@ -1817,22 +1817,22 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v16.5.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v16.6.0"
             },
-            "time": "2025-01-27T20:20:33+00:00"
+            "time": "2025-02-24T22:35:29+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.5.1",
+            "version": "v3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6"
+                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6",
-                "reference": "74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/63afe740e99a13ba87ec199bb07bbdee937a5b62",
+                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62",
                 "shasum": ""
             },
             "require": {
@@ -1845,7 +1845,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.5-dev"
+                    "dev-main": "3.6-dev"
                 }
             },
             "autoload": {
@@ -1870,7 +1870,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.5.1"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.6.0"
             },
             "funding": [
                 {
@@ -1886,7 +1886,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:20:29+00:00"
+            "time": "2024-09-25T14:21:43+00:00"
         },
         {
             "name": "tpyo/amazon-s3-php-class",
@@ -1930,22 +1930,23 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "8.4.1",
+            "version": "8.6.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "637358562caf326883f2ad0ed77c487bc6f2cdc9"
+                "url": "https://github.com/twilio/twilio-php",
+                "reference": "d8c69844909eb73f1870a2398f6b87309ea29918"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/637358562caf326883f2ad0ed77c487bc6f2cdc9",
-                "reference": "637358562caf326883f2ad0ed77c487bc6f2cdc9",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/d8c69844909eb73f1870a2398f6b87309ea29918",
+                "reference": "d8c69844909eb73f1870a2398f6b87309ea29918",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "guzzlehttp/guzzle": "^6.3 || ^7.0",
                 "phpunit/phpunit": ">=7.0 < 10"
             },
@@ -1975,11 +1976,7 @@
                 "sms",
                 "twilio"
             ],
-            "support": {
-                "issues": "https://github.com/twilio/twilio-php/issues",
-                "source": "https://github.com/twilio/twilio-php/tree/8.4.1"
-            },
-            "time": "2025-03-20T10:30:10+00:00"
+            "time": "2025-07-03T09:44:09+00:00"
         },
         {
             "name": "unaio/amazon-s3-php-class-hmac-v2",
@@ -1993,16 +1990,16 @@
         },
         {
             "name": "wikimedia/less.php",
-            "version": "v5.2.2",
+            "version": "v5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/less.php.git",
-                "reference": "0c64fe7477dbd491b27d3b10fc74a577d3bd66ec"
+                "reference": "fb0ed6296bb69cad225dd49b7e93765aab9ae88b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/less.php/zipball/0c64fe7477dbd491b27d3b10fc74a577d3bd66ec",
-                "reference": "0c64fe7477dbd491b27d3b10fc74a577d3bd66ec",
+                "url": "https://api.github.com/repos/wikimedia/less.php/zipball/fb0ed6296bb69cad225dd49b7e93765aab9ae88b",
+                "reference": "fb0ed6296bb69cad225dd49b7e93765aab9ae88b",
                 "shasum": ""
             },
             "require": {
@@ -2062,9 +2059,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wikimedia/less.php/issues",
-                "source": "https://github.com/wikimedia/less.php/tree/v5.2.2"
+                "source": "https://github.com/wikimedia/less.php/tree/v5.3.1"
             },
-            "time": "2025-03-24T15:30:20+00:00"
+            "time": "2025-04-16T22:21:45+00:00"
         }
     ],
     "packages-dev": [],
@@ -2072,16 +2069,16 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "akeeba/s3": 20,
-        "tpyo/amazon-s3-php-class": 20,
-        "snipe/banbuilder": 20,
+        "avto-dev/composer-cleanup-plugin": 20,
         "erusev/parsedown": 20,
-        "avto-dev/composer-cleanup-plugin": 20
+        "snipe/banbuilder": 20,
+        "tpyo/amazon-s3-php-class": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.1"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

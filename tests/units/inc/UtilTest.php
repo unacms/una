@@ -47,7 +47,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
         clear_xss('test');
     }
 
-    public function providerForClearXssNotAdmin()
+    static public function providerForClearXssNotAdmin()
     {
         return array(
             array('test<script>alert(1);</script>', 'test'),
@@ -55,7 +55,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function providerForClearXssAdmin() 
+    static public function providerForClearXssAdmin() 
     {
         // TODO: for admin all tags should be allowed including script and style
         return array(
@@ -73,7 +73,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(return_bytes($sInput), $sOutput);
     }
 
-    public function providerForReturnBytes()
+    static public function providerForReturnBytes()
     {
         return array(
             array('2k', 2048),
@@ -93,7 +93,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(title2uri($sIn), $sOut);
     }
-    public function providerForTitleToUri()
+    static public function providerForTitleToUri()
     {
         return array(
             array('test', 'test'),
@@ -113,7 +113,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(uri2title($sIn), $sOut);
     }
-    public function providerForUriToTitle()
+    static public function providerForUriToTitle()
     {
         return array(
             array('test', 'test'),
@@ -133,7 +133,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(bx_is_serialized($sIn), $sOut);
     }
-    public function providerForBxIsSerialized()
+    static public function providerForBxIsSerialized()
     {
         return array(
             array([], false),
@@ -152,7 +152,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(bx_process_output($sIn, BX_DATA_HTML), $sOut);
     }
-    public function providerForBxProcessOutputHtml()
+    static public function providerForBxProcessOutputHtml()
     {
         return [
             ['<p>text</p><iframe src="https://example.com" /><p>text</p>', '<p>text</p><iframe src="https://example.com"></iframe><p>text</p>'],
@@ -171,7 +171,7 @@ class UtilTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(bx_process_output($sIn, BX_DATA_TEXT), $sOut);
     }
-    public function providerForBxProcessOutputText()
+    static public function providerForBxProcessOutputText()
     {
         return [
             ['text <script>alert(1);</script>', 'text &lt;script&gt;alert(1);&lt;/script&gt;'],

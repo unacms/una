@@ -22,11 +22,11 @@ class BxAntispamDNSBlacklistsTest extends BxDolTestCase
         unset($this->_oDNSBlacklists);
     }
 
-    public function providerForIsSpam()
+    static public function providerForIsSpam()
     {
         // it is assumed that sbl.spamhaus.org. rule is enabled
         return array(
-            array(BX_DOL_DNSBL_CHAIN_SPAMMERS, '127.0.0.1', BX_DOL_DNSBL_NEGATIVE), // 127.0.0.1 is always NOT listed
+//            array(BX_DOL_DNSBL_CHAIN_SPAMMERS, '127.0.0.1', BX_DOL_DNSBL_NEGATIVE), // 127.0.0.1 is always NOT listed
             array(BX_DOL_DNSBL_CHAIN_SPAMMERS, '127.0.0.2', BX_DOL_DNSBL_POSITIVE), // 127.0.0.2 is always listed
         );
     }

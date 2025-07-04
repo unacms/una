@@ -1461,7 +1461,7 @@ ul.nav-tabs {
           <nav id="scrollingNav">
             <ul class="sidenav nav nav-list">
               <li class="nav-header" data-group="Project"><strong>SDK: </strong><span id='sdk-name'></span></li>
-              <li class="nav-header" data-group="Project"><strong>VSN: </strong>8.0.0</li>
+              <li class="nav-header" data-group="Project"><strong>VSN: </strong>10.0.0</li>
               <li class="nav-header" data-group="Project"><a href="#api-Project">Methods</a></li>
               <li data-group="Project" data-name="createProject" class="">
                 <a href="#api-Project-createProject">createProject</a>
@@ -2022,7 +2022,13 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/TimeEntryCreateOrUpdate"
       },
-      "example" : "{ \"userId\": \"00000000-0000-0000-0000-000000000000\", \"taskId\": \"00000000-0000-0000-0000-000000000000\", \"dateUtc\": \"2020-02-26T15:00:00Z\", \"duration\":30, \"description\": \"My description\" }"
+      "example" : {
+        "userId" : "00000000-0000-0000-0000-000000000000",
+        "taskId" : "00000000-0000-0000-0000-000000000000",
+        "dateUtc" : "2020-02-26T15:00:00Z",
+        "duration" : 30,
+        "description" : "My description"
+      }
     }
   },
   "required" : true
@@ -4448,7 +4454,13 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/TimeEntryCreateOrUpdate"
       },
-      "example" : "{ \"userId\": \"00000000-0000-0000-0000-000000000000\", \"taskId\": \"00000000-0000-0000-0000-000000000000\", \"dateUtc\": \"2020-02-27T15:00:00Z\", \"duration\":45, \"description\": \"My UPDATED description\" }"
+      "example" : {
+        "userId" : "00000000-0000-0000-0000-000000000000",
+        "taskId" : "00000000-0000-0000-0000-000000000000",
+        "dateUtc" : "2020-02-27T15:00:00Z",
+        "duration" : 45,
+        "description" : "My UPDATED description"
+      }
     }
   },
   "required" : true

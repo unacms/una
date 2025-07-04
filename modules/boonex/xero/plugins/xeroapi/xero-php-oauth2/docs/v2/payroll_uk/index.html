@@ -1381,7 +1381,7 @@ ul.nav-tabs {
     "earningsType" : {
       "type" : "string",
       "description" : "Indicates how an employee will be paid when taking this type of earning",
-      "enum" : [ "Allowance", "BackPay", "Bonus", "Commission", "LumpSum", "OtherEarnings", "OvertimeEarnings", "RegularEarnings", "StatutoryAdoptionPay", "StatutoryAdoptionPayNonPensionable", "StatutoryBereavementPay", "StatutoryMaternityPay", "StatutoryMaternityPayNonPensionable", "StatutoryPaternityPay", "StatutoryPaternityPayNonPensionable", "StatutoryParentalBereavementPayNonPensionable", "StatutorySharedParentalPay", "StatutorySharedParentalPayNonPensionable", "StatutorySickPay", "StatutorySickPayNonPensionable", "TipsNonDirect", "TipsDirect", "TerminationPay" ]
+      "enum" : [ "Allowance", "BackPay", "Bonus", "Commission", "LumpSum", "OtherEarnings", "OvertimeEarnings", "RegularEarnings", "StatutoryAdoptionPay", "StatutoryAdoptionPayNonPensionable", "StatutoryBereavementPay", "StatutoryMaternityPay", "StatutoryMaternityPayNonPensionable", "StatutoryPaternityPay", "StatutoryPaternityPayNonPensionable", "StatutoryParentalBereavementPayNonPensionable", "StatutorySharedParentalPay", "StatutorySharedParentalPayNonPensionable", "StatutorySickPay", "StatutorySickPayNonPensionable", "TipsNonDirect", "TipsDirect", "TerminationPay", "StatutoryNeonatalCarePay", "StatutoryNeonatalCarePayNonPensionable" ]
     },
     "rateType" : {
       "type" : "string",
@@ -1514,7 +1514,7 @@ ul.nav-tabs {
 };
       defs["Employee"] = {
   "title" : "",
-  "required" : [ "Address", "DateOfBirth", "FirstName", "Gender", "LastName", "Title" ],
+  "required" : [ "address", "dateOfBirth", "firstName", "gender", "lastName", "title" ],
   "type" : "object",
   "properties" : {
     "employeeID" : {
@@ -1594,6 +1594,16 @@ ul.nav-tabs {
       "description" : "UTC timestamp when the employee was created in Xero",
       "format" : "date-time",
       "x-is-datetime" : true
+    },
+    "niCategory" : {
+      "$ref" : "#/components/schemas/NICategoryLetter"
+    },
+    "niCategories" : {
+      "type" : "array",
+      "description" : "The employee's NI categories",
+      "items" : {
+        "$ref" : "#/components/schemas/NICategory"
+      }
     },
     "nationalInsuranceNumber" : {
       "type" : "string",
@@ -1944,7 +1954,7 @@ ul.nav-tabs {
     "leaveType" : {
       "type" : "string",
       "description" : "The type of statutory leave",
-      "enum" : [ "Sick", "Adoption", "Maternity", "Paternity", "Sharedparental" ]
+      "enum" : [ "Sick", "Adoption", "Maternity", "Paternity", "Sharedparental", "Bereavement", "NeonatalCare" ]
     },
     "balanceRemaining" : {
       "type" : "number",
@@ -1992,7 +2002,7 @@ ul.nav-tabs {
     "type" : {
       "type" : "string",
       "description" : "The category of statutory leave",
-      "enum" : [ "Sick", "Adoption", "Maternity", "Paternity", "Sharedparental" ]
+      "enum" : [ "Sick", "Adoption", "Maternity", "Paternity", "Sharedparental", "Bereavement", "NeonatalCare" ]
     },
     "startDate" : {
       "type" : "string",
@@ -2262,7 +2272,7 @@ ul.nav-tabs {
 };
       defs["Employment"] = {
   "title" : "",
-  "required" : [ "EmployeeNumber", "NICategory", "PayrollCalendarID", "StartDate" ],
+  "required" : [ "employeeNumber", "niCategories", "payrollCalendarID", "startDate" ],
   "type" : "object",
   "properties" : {
     "payrollCalendarID" : {
@@ -2282,10 +2292,14 @@ ul.nav-tabs {
       "example" : "7"
     },
     "niCategory" : {
-      "type" : "string",
-      "description" : "The NI Category of the employee",
-      "example" : "A",
-      "enum" : [ "A", "B", "C", "F", "H", "I", "J", "L", "M", "S", "V", "X", "Z" ]
+      "$ref" : "#/components/schemas/NICategoryLetter"
+    },
+    "niCategories" : {
+      "type" : "array",
+      "description" : "The employee's NI categories",
+      "items" : {
+        "$ref" : "#/components/schemas/NICategory"
+      }
     }
   },
   "description" : ""
@@ -2499,6 +2513,75 @@ ul.nav-tabs {
       "items" : {
         "$ref" : "#/components/schemas/LeaveType"
       }
+    }
+  },
+  "description" : ""
+};
+      defs["NICategory"] = {
+  "title" : "",
+  "required" : [ "niCategory", "workplacePostcode" ],
+  "type" : "object",
+  "properties" : {
+    "startDate" : {
+      "type" : "string",
+      "description" : "The start date of the NI category (YYYY-MM-DD)",
+      "format" : "date",
+      "example" : "2024-12-02",
+      "x-is-date" : true
+    },
+    "niCategory" : {
+      "$ref" : "#/components/schemas/NICategoryLetter"
+    },
+    "niCategoryID" : {
+      "type" : "number",
+      "description" : "Xero unique identifier for the NI category",
+      "example" : 15
+    },
+    "dateFirstEmployedAsCivilian" : {
+      "type" : "string",
+      "description" : "The date in which the employee was first employed as a civilian (YYYY-MM-DD)",
+      "format" : "date",
+      "example" : "2024-12-02",
+      "x-is-date" : true
+    },
+    "workplacePostcode" : {
+      "type" : "string",
+      "description" : "The workplace postcode",
+      "example" : "SW1A 1AA"
+    }
+  },
+  "description" : "",
+  "oneOf" : [ {
+    "$ref" : "#/components/schemas/NICategory_oneOf"
+  }, {
+    "$ref" : "#/components/schemas/NICategory_oneOf_1"
+  } ]
+};
+      defs["NICategoryLetter"] = {
+  "title" : "",
+  "type" : "string",
+  "description" : "The employee's NI Category letter.",
+  "example" : "I",
+  "enum" : [ "A", "B", "C", "F", "H", "I", "J", "L", "M", "S", "V", "X", "Z", "D", "E", "K", "N" ]
+};
+      defs["NICategory_oneOf"] = {
+  "title" : "",
+  "required" : [ "workplacePostcode" ],
+  "properties" : {
+    "niCategory" : {
+      "type" : "string",
+      "enum" : [ "F", "I", "L", "S", "N", "E", "D", "K" ]
+    }
+  },
+  "description" : ""
+};
+      defs["NICategory_oneOf_1"] = {
+  "title" : "",
+  "required" : [ "dateFirstEmployedAsCivilian" ],
+  "properties" : {
+    "niCategory" : {
+      "type" : "string",
+      "enum" : [ "V" ]
     }
   },
   "description" : ""
@@ -3516,7 +3599,7 @@ ul.nav-tabs {
           <nav id="scrollingNav">
             <ul class="sidenav nav nav-list">
               <li class="nav-header" data-group="PayrollUk"><strong>SDK: </strong><span id='sdk-name'></span></li>
-              <li class="nav-header" data-group="PayrollUk"><strong>VSN: </strong>8.0.0</li>
+              <li class="nav-header" data-group="PayrollUk"><strong>VSN: </strong>10.0.0</li>
               <li class="nav-header" data-group="PayrollUk"><a href="#api-PayrollUk">Methods</a></li>
               <li data-group="PayrollUk" data-name="approveTimesheet" class="">
                 <a href="#api-PayrollUk-approveTimesheet">approveTimesheet</a>
@@ -4028,7 +4111,15 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Benefit"
       },
-      "example" : "{ \"name\": \"My Big Bennie\", \"category\": \"StakeholderPension\", \"liabilityAccountId\": \"e0faa299-ca0d-4b0a-9e32-0dfabdf9179a\", \"expenseAccountId\": \"4b03500d-32fd-4616-8d70-e1e56e0519c6\", \"standardAmount\": 50, \"percentage\": 25, \"calculationType\": \"PercentageOfGross\" }"
+      "example" : {
+        "name" : "My Big Bennie",
+        "category" : "StakeholderPension",
+        "liabilityAccountId" : "e0faa299-ca0d-4b0a-9e32-0dfabdf9179a",
+        "expenseAccountId" : "4b03500d-32fd-4616-8d70-e1e56e0519c6",
+        "standardAmount" : 50,
+        "percentage" : 25,
+        "calculationType" : "PercentageOfGross"
+      }
     }
   },
   "required" : true
@@ -4178,7 +4269,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Deduction"
       },
-      "example" : "{ \"deductionName\": \"My new deduction\", \"deductionCategory\": \"SalarySacrifice\", \"liabilityAccountId\": \"e0faa299-ca0d-4b0a-9e32-0dfabdf9179a\", \"calculationType\": \"FixedAmount\" }"
+      "example" : {
+        "deductionName" : "My new deduction",
+        "deductionCategory" : "SalarySacrifice",
+        "liabilityAccountId" : "e0faa299-ca0d-4b0a-9e32-0dfabdf9179a",
+        "calculationType" : "FixedAmount"
+      }
     }
   },
   "required" : true
@@ -4328,7 +4424,13 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EarningsRate"
       },
-      "example" : "{ \"name\": \"My Earnings Rate\", \"earningsType\": \"RegularEarnings\", \"rateType\": \"RatePerUnit\", \"typeOfUnits\": \"hours\", \"expenseAccountID\": \"4b03500d-32fd-4616-8d70-e1e56e0519c6\" }"
+      "example" : {
+        "name" : "My Earnings Rate",
+        "earningsType" : "RegularEarnings",
+        "rateType" : "RatePerUnit",
+        "typeOfUnits" : "hours",
+        "expenseAccountID" : "4b03500d-32fd-4616-8d70-e1e56e0519c6"
+      }
     }
   },
   "required" : true
@@ -4485,7 +4587,20 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Employee"
       },
-      "example" : "{ \"title\":\"Mr\", \"firstName\":\"Mike\", \"lastName\":\"Fancy\", \"dateOfBirth\":\"1999-01-01T00:00:00\", \"gender\":\"M\", \"email\":\"mike@starkindustries.com\", \"isOffPayrollWorker\": false, \"address\": { \"addressLine1\": \"171 Midsummer\", \"city\": \"Milton Keyness\", \"postCode\": \"MK9 1EB\" } }"
+      "example" : {
+        "title" : "Mr",
+        "firstName" : "Mike",
+        "lastName" : "Fancy",
+        "dateOfBirth" : "1999-01-01T00:00:00Z",
+        "gender" : "M",
+        "email" : "mike@starkindustries.com",
+        "isOffPayrollWorker" : false,
+        "address" : {
+          "addressLine1" : "171 Midsummer",
+          "city" : "Milton Keyness",
+          "postCode" : "MK9 1EB"
+        }
+      }
     }
   },
   "required" : true
@@ -4857,7 +4972,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeLeave"
       },
-      "example" : "{ \"leaveTypeID\": \"1d2778ee-86ea-45c0-bbf8-1045485f6b3f\", \"description\": \"Creating a Description\", \"startDate\": \"2020-03-24\", \"endDate\": \"2020-03-26\" }"
+      "example" : {
+        "leaveTypeID" : "1d2778ee-86ea-45c0-bbf8-1045485f6b3f",
+        "description" : "Creating a Description",
+        "startDate" : "2020-03-24",
+        "endDate" : "2020-03-26"
+      }
     }
   },
   "required" : true
@@ -5041,7 +5161,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeLeaveType"
       },
-      "example" : "{ \"leaveTypeID\": \"4918f233-bd31-43f9-9633-bcc6de1178f2\", \"scheduleOfAccrual\": \"BeginningOfCalendarYear\", \"hoursAccruedAnnually\": 10 }"
+      "example" : {
+        "leaveTypeID" : "4918f233-bd31-43f9-9633-bcc6de1178f2",
+        "scheduleOfAccrual" : "BeginningOfCalendarYear",
+        "hoursAccruedAnnually" : 10
+      }
     }
   },
   "required" : true
@@ -5226,7 +5350,14 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeOpeningBalances"
       },
-      "example" : "{ \"statutoryAdoptionPay\": 10, \"statutoryMaternityPay\": 10, \"statutoryPaternityPay\": 10, \"statutorySharedParentalPay\": 10, \"statutorySickPay\": 10, \"priorEmployeeNumber\": 10 }"
+      "example" : {
+        "statutoryAdoptionPay" : 10,
+        "statutoryMaternityPay" : 10,
+        "statutoryPaternityPay" : 10,
+        "statutorySharedParentalPay" : 10,
+        "statutorySickPay" : 10,
+        "priorEmployeeNumber" : 10
+      }
     }
   },
   "required" : true
@@ -5414,7 +5545,14 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/PaymentMethod"
       },
-      "example" : "{ \"paymentMethod\": \"Electronically\", \"bankAccounts\": [ { \"accountName\": \"Sid BofA\", \"accountNumber\": \"24987654\", \"sortCode\": \"287654\" } ] }"
+      "example" : {
+        "paymentMethod" : "Electronically",
+        "bankAccounts" : [ {
+          "accountName" : "Sid BofA",
+          "accountNumber" : "24987654",
+          "sortCode" : "287654"
+        } ]
+      }
     }
   },
   "required" : true
@@ -5599,7 +5737,16 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/SalaryAndWage"
       },
-      "example" : "{ \"earningsRateID\": \"87f5b43a-cf51-4b74-92de-94c819e82d27\", \"numberOfUnitsPerWeek\": 2, \"ratePerUnit\": 10, \"numberOfUnitsPerDay\": 2, \"effectiveFrom\": \"2020-05-01\", \"annualSalary\": 100, \"status\": \"ACTIVE\", \"paymentType\": \"Salary\" }"
+      "example" : {
+        "earningsRateID" : "87f5b43a-cf51-4b74-92de-94c819e82d27",
+        "numberOfUnitsPerWeek" : 2,
+        "ratePerUnit" : 10,
+        "numberOfUnitsPerDay" : 2,
+        "effectiveFrom" : "2020-05-01",
+        "annualSalary" : 100,
+        "status" : "ACTIVE",
+        "paymentType" : "Salary"
+      }
     }
   },
   "required" : true
@@ -5751,7 +5898,15 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeStatutorySickLeave"
       },
-      "example" : "{ \"employeeID\": \"aad6b292-7b94-408b-93f6-e489867e3fb0\", \"leaveTypeID\": \"aab78802-e9d3-4bbd-bc87-df858054988f\", \"startDate\": \"2020-04-21\", \"endDate\": \"2020-04-24\", \"workPattern\": [ \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\" ], \"isPregnancyRelated\": false, \"sufficientNotice\": true }"
+      "example" : {
+        "employeeID" : "aad6b292-7b94-408b-93f6-e489867e3fb0",
+        "leaveTypeID" : "aab78802-e9d3-4bbd-bc87-df858054988f",
+        "startDate" : "2020-04-21",
+        "endDate" : "2020-04-24",
+        "workPattern" : [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ],
+        "isPregnancyRelated" : false,
+        "sufficientNotice" : true
+      }
     }
   },
   "required" : true
@@ -5802,6 +5957,8 @@ $startDate = new DateTime('2020-10-28');
 $employment = new XeroAPI\XeroPHP\Models\PayrollUk\Employment;
 $employment->setPayrollCalendarID('00000000-0000-0000-0000-000000000000');
 $employment->setStartDate($startDate);
+
+$niCategories = new XeroAPI\XeroPHP\Models\PayrollUk\NICategories;
 
 try {
   $result = $apiInstance->createEmployment($xeroTenantId, $employeeID, $employment, $idempotencyKey);
@@ -5934,7 +6091,16 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Employment"
       },
-      "example" : "{ \"PayrollCalendarID\": \"216d80e6-af55-47b1-b718-9457c3f5d2fe\", \"StartDate\": \"2020-04-01\", \"EmployeeNumber\": \"123ABC\", \"NICategory\": \"A\" }"
+      "example" : {
+        "payrollCalendarID" : "cdfb8371-0b21-4b8a-8903-1024df6c391e",
+        "startDate" : "2024-04-01",
+        "niCategories" : [ {
+          "niCategory" : "I",
+          "startDate" : "2020-05-01",
+          "workplacePostcode" : "SW1A 1AA"
+        } ],
+        "employeeNumber" : "123ABC"
+      }
     }
   },
   "required" : true
@@ -6083,7 +6249,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/LeaveType"
       },
-      "example" : "{ \"name\": \"My opebvwbfxf Leave\", \"isPaidLeave\": false, \"showOnPayslip\": true }"
+      "example" : {
+        "name" : "My opebvwbfxf Leave",
+        "isPaidLeave" : false,
+        "showOnPayslip" : true
+      }
     }
   },
   "required" : true
@@ -6422,7 +6592,12 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/PayRunCalendar"
       },
-      "example" : "{ \"name\": \"My Weekly Cal\", \"calendarType\": \"Weekly\", \"periodStartDate\": \"2020-05-01\", \"paymentDate\": \"2020-05-15\" }"
+      "example" : {
+        "name" : "My Weekly Cal",
+        "calendarType" : "Weekly",
+        "periodStartDate" : "2020-05-01",
+        "paymentDate" : "2020-05-15"
+      }
     }
   },
   "required" : true
@@ -6570,7 +6745,10 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Reimbursement"
       },
-      "example" : "{ \"name\": \"My new Reimburse\", \"accountID\": \"9ee28149-32a9-4661-8eab-a28738696983\" }"
+      "example" : {
+        "name" : "My new Reimburse",
+        "accountID" : "9ee28149-32a9-4661-8eab-a28738696983"
+      }
     }
   },
   "required" : true
@@ -6722,7 +6900,21 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Timesheet"
       },
-      "example" : "{ \"payrollCalendarID\": \"216d80e6-af55-47b1-b718-9457c3f5d2fe\", \"employeeID\": \"aad6b292-7b94-408b-93f6-e489867e3fb0\", \"startDate\": \"2020-04-13\", \"endDate\": \"2020-04-19\", \"timesheetLines\": [ { \"date\": \"2020-04-13\", \"earningsRateID\": \"87f5b43a-cf51-4b74-92de-94c819e82d27\", \"numberOfUnits\": 8 }, { \"date\": \"2020-04-15\", \"earningsRateID\": \"87f5b43a-cf51-4b74-92de-94c819e82d27\", \"numberOfUnits\": 6 } ] }"
+      "example" : {
+        "payrollCalendarID" : "216d80e6-af55-47b1-b718-9457c3f5d2fe",
+        "employeeID" : "aad6b292-7b94-408b-93f6-e489867e3fb0",
+        "startDate" : "2020-04-13",
+        "endDate" : "2020-04-19",
+        "timesheetLines" : [ {
+          "date" : "2020-04-13",
+          "earningsRateID" : "87f5b43a-cf51-4b74-92de-94c819e82d27",
+          "numberOfUnits" : 8
+        }, {
+          "date" : "2020-04-15",
+          "earningsRateID" : "87f5b43a-cf51-4b74-92de-94c819e82d27",
+          "numberOfUnits" : 6
+        } ]
+      }
     }
   },
   "required" : true
@@ -6908,7 +7100,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/TimesheetLine"
       },
-      "example" : "{ \"date\": \"2020-04-14\", \"earningsRateID\": \"87f5b43a-cf51-4b74-92de-94c819e82d27\", \"numberOfUnits\": 1 }"
+      "example" : {
+        "date" : "2020-04-14",
+        "earningsRateID" : "87f5b43a-cf51-4b74-92de-94c819e82d27",
+        "numberOfUnits" : 1
+      }
     }
   },
   "required" : true
@@ -13020,7 +13216,21 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Employee"
       },
-      "example" : "{ \"title\": \"Mr.\", \"firstName\": \"TestDataUK\", \"lastName\": \"Tester\", \"dateOfBirth\": \"1992-11-22T00:00:00\", \"gender\": \"M\", \"email\": \"tester@gmail.com\", \"phoneNumber\": \"0400123456\", \"isOffPayrollWorker\": false, \"address\": { \"addressLine1\": \"171 Midsummer\", \"city\": \"Milton Keyness\", \"postCode\": \"MK9 1EB\" } }"
+      "example" : {
+        "title" : "Mr.",
+        "firstName" : "TestDataUK",
+        "lastName" : "Tester",
+        "dateOfBirth" : "1992-11-22T00:00:00Z",
+        "gender" : "M",
+        "email" : "tester@gmail.com",
+        "phoneNumber" : "0400123456",
+        "isOffPayrollWorker" : false,
+        "address" : {
+          "addressLine1" : "171 Midsummer",
+          "city" : "Milton Keyness",
+          "postCode" : "MK9 1EB"
+        }
+      }
     }
   },
   "required" : true
@@ -13235,7 +13445,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EarningsTemplate"
       },
-      "example" : "{ \"ratePerUnit\": 30, \"numberOfUnits\": 4, \"earningsRateID\": \"87f5b43a-cf51-4b74-92de-94c819e82d27\" }"
+      "example" : {
+        "ratePerUnit" : 30,
+        "numberOfUnits" : 4,
+        "earningsRateID" : "87f5b43a-cf51-4b74-92de-94c819e82d27"
+      }
     }
   },
   "required" : true
@@ -13447,7 +13661,18 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeLeave"
       },
-      "example" : "{ \"leaveTypeID\": \"ed08dffe-788e-4b24-9630-f0fa2f4d164c\", \"description\": \"Creating a Description\", \"startDate\": \"2020-04-24\", \"endDate\": \"2020-04-26\", \"periods\": [ { \"periodStartDate\": \"2020-04-20\", \"periodEndDate\": \"2020-04-26\", \"numberOfUnits\": 1, \"periodStatus\": \"Approved\" } ] }"
+      "example" : {
+        "leaveTypeID" : "ed08dffe-788e-4b24-9630-f0fa2f4d164c",
+        "description" : "Creating a Description",
+        "startDate" : "2020-04-24",
+        "endDate" : "2020-04-26",
+        "periods" : [ {
+          "periodStartDate" : "2020-04-20",
+          "periodEndDate" : "2020-04-26",
+          "numberOfUnits" : 1,
+          "periodStatus" : "Approved"
+        } ]
+      }
     }
   },
   "required" : true
@@ -13632,7 +13857,14 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/EmployeeOpeningBalances"
       },
-      "example" : "{ \"statutoryAdoptionPay\": 20, \"statutoryMaternityPay\": 20, \"statutoryPaternityPay\": 20, \"statutorySharedParentalPay\": 20, \"statutorySickPay\": 20, \"priorEmployeeNumber\": 20 }"
+      "example" : {
+        "statutoryAdoptionPay" : 20,
+        "statutoryMaternityPay" : 20,
+        "statutoryPaternityPay" : 20,
+        "statutorySharedParentalPay" : 20,
+        "statutorySickPay" : 20,
+        "priorEmployeeNumber" : 20
+      }
     }
   },
   "required" : true
@@ -13844,7 +14076,15 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/SalaryAndWage"
       },
-      "example" : "{ \"earningsRateID\": \"87f5b43a-cf51-4b74-92de-94c819e82d27\", \"numberOfUnitsPerWeek\": 3, \"ratePerUnit\": 11, \"effectiveFrom\": \"2020-05-15\", \"annualSalary\": 101, \"status\": \"ACTIVE\", \"paymentType\": \"Salary\" }"
+      "example" : {
+        "earningsRateID" : "87f5b43a-cf51-4b74-92de-94c819e82d27",
+        "numberOfUnitsPerWeek" : 3,
+        "ratePerUnit" : 11,
+        "effectiveFrom" : "2020-05-15",
+        "annualSalary" : 101,
+        "status" : "ACTIVE",
+        "paymentType" : "Salary"
+      }
     }
   },
   "required" : true
@@ -14029,7 +14269,9 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/PayRun"
       },
-      "example" : "{ \"paymentDate\": \"2020-05-01\" }"
+      "example" : {
+        "paymentDate" : "2020-05-01"
+      }
     }
   },
   "required" : true
@@ -14242,7 +14484,11 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/TimesheetLine"
       },
-      "example" : "{ \"date\": \"2020-04-14\", \"earningsRateID\": \"87f5b43a-cf51-4b74-92de-94c819e82d27\", \"numberOfUnits\": 2 }"
+      "example" : {
+        "date" : "2020-04-14",
+        "earningsRateID" : "87f5b43a-cf51-4b74-92de-94c819e82d27",
+        "numberOfUnits" : 2
+      }
     }
   },
   "required" : true

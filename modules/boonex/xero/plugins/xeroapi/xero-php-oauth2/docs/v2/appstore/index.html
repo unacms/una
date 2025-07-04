@@ -976,8 +976,8 @@ ul.nav-tabs {
     },
     "type" : {
       "type" : "string",
-      "description" : "The pricing model of the product:\n* FIXED: Customers are charged a fixed amount for each billing period\n* PER_SEAT: Customers are charged based on the number of units they purchase\n* METERED: Customers are charged per use of this product\n",
-      "enum" : [ "FIXED", "PER_SEAT", "METERED" ]
+      "description" : "The pricing model of the product:\n* FIXED: Customers are charged a fixed amount for each billing period\n* PER_SEAT: Customers are charged based on the number of units they purchase\n* METERED: Customers are charged per use of this product\n* SIMPLE: Customers are charged on a fixed amount for each billing period with an optional add-on feature\n",
+      "enum" : [ "FIXED", "PER_SEAT", "METERED", "SIMPLE" ]
     },
     "usageUnit" : {
       "type" : "string",
@@ -1240,7 +1240,7 @@ ul.nav-tabs {
           <nav id="scrollingNav">
             <ul class="sidenav nav nav-list">
               <li class="nav-header" data-group="AppStore"><strong>SDK: </strong><span id='sdk-name'></span></li>
-              <li class="nav-header" data-group="AppStore"><strong>VSN: </strong>8.0.0</li>
+              <li class="nav-header" data-group="AppStore"><strong>VSN: </strong>10.0.0</li>
               <li class="nav-header" data-group="AppStore"><a href="#api-AppStore">Methods</a></li>
               <li data-group="AppStore" data-name="getSubscription" class="">
                 <a href="#api-AppStore-getSubscription">getSubscription</a>
@@ -1624,7 +1624,10 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/CreateUsageRecord"
       },
-      "example" : "{ \"timestamp\": \"2022-01-21T13:01:00\", \"quantity\": 10 }"
+      "example" : {
+        "timestamp" : "2022-01-21T13:01:00",
+        "quantity" : 10
+      }
     }
   },
   "required" : true
@@ -1833,7 +1836,9 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/UpdateUsageRecord"
       },
-      "example" : "{ \"quantity\": 10 }"
+      "example" : {
+        "quantity" : 10
+      }
     }
   },
   "required" : true

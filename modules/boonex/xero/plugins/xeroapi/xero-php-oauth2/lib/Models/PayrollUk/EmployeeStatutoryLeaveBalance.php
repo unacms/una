@@ -174,6 +174,8 @@ class EmployeeStatutoryLeaveBalance implements ModelInterface, ArrayAccess
     const LEAVE_TYPE_MATERNITY = 'Maternity';
     const LEAVE_TYPE_PATERNITY = 'Paternity';
     const LEAVE_TYPE_SHAREDPARENTAL = 'Sharedparental';
+    const LEAVE_TYPE_BEREAVEMENT = 'Bereavement';
+    const LEAVE_TYPE_NEONATAL_CARE = 'NeonatalCare';
     const UNITS_HOURS = 'Hours';
     
 
@@ -191,6 +193,8 @@ class EmployeeStatutoryLeaveBalance implements ModelInterface, ArrayAccess
             self::LEAVE_TYPE_MATERNITY,
             self::LEAVE_TYPE_PATERNITY,
             self::LEAVE_TYPE_SHAREDPARENTAL,
+            self::LEAVE_TYPE_BEREAVEMENT,
+            self::LEAVE_TYPE_NEONATAL_CARE,
         ];
     }
     

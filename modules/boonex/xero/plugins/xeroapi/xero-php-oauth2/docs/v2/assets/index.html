@@ -1030,7 +1030,6 @@ ul.nav-tabs {
 };
       defs["BookDepreciationDetail"] = {
   "title" : "",
-  "required" : [ "name" ],
   "properties" : {
     "currentCapitalGain" : {
       "type" : "number",
@@ -1084,7 +1083,6 @@ ul.nav-tabs {
 };
       defs["BookDepreciationSetting"] = {
   "title" : "",
-  "required" : [ "name" ],
   "properties" : {
     "depreciationMethod" : {
       "type" : "string",
@@ -1391,7 +1389,7 @@ ul.nav-tabs {
           <nav id="scrollingNav">
             <ul class="sidenav nav nav-list">
               <li class="nav-header" data-group="Asset"><strong>SDK: </strong><span id='sdk-name'></span></li>
-              <li class="nav-header" data-group="Asset"><strong>VSN: </strong>8.0.0</li>
+              <li class="nav-header" data-group="Asset"><strong>VSN: </strong>10.0.0</li>
               <li class="nav-header" data-group="Asset"><a href="#api-Asset">Methods</a></li>
               <li data-group="Asset" data-name="createAsset" class="">
                 <a href="#api-Asset-createAsset">createAsset</a>
@@ -1569,7 +1567,28 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/Asset"
       },
-      "example" : "{ \"assetName\":\"Computer74863\", \"assetNumber\":\"123477544\", \"purchaseDate\":\"2020-01-01\", \"purchasePrice\":100.0, \"disposalPrice\":23.23, \"assetStatus\":\"Draft\", \"bookDepreciationSetting\":{ \"depreciationMethod\":\"StraightLine\", \"averagingMethod\":\"ActualDays\", \"depreciationRate\":0.5, \"depreciationCalculationMethod\":\"None\" }, \"bookDepreciationDetail\":{ \"currentCapitalGain\":5.32, \"currentGainLoss\":3.88, \"depreciationStartDate\":\"2020-01-02\", \"costLimit\":100.0, \"currentAccumDepreciationAmount\":2.25 }, \"AccountingBookValue\":99.5 }"
+      "example" : {
+        "assetName" : "Computer74863",
+        "assetNumber" : "123477544",
+        "purchaseDate" : "2020-01-01",
+        "purchasePrice" : 100.0,
+        "disposalPrice" : 23.23,
+        "assetStatus" : "Draft",
+        "bookDepreciationSetting" : {
+          "depreciationMethod" : "StraightLine",
+          "averagingMethod" : "ActualDays",
+          "depreciationRate" : 0.5,
+          "depreciationCalculationMethod" : "None"
+        },
+        "bookDepreciationDetail" : {
+          "currentCapitalGain" : 5.32,
+          "currentGainLoss" : 3.88,
+          "depreciationStartDate" : "2020-01-02",
+          "costLimit" : 100.0,
+          "currentAccumDepreciationAmount" : 2.25
+        },
+        "AccountingBookValue" : 99.5
+      }
     }
   },
   "required" : true
@@ -1727,7 +1746,18 @@ This allows you to safely retry requests without the risk of duplicate processin
       "schema" : {
         "$ref" : "#/components/schemas/AssetType"
       },
-      "example" : "{ \"assetTypeName\":\"Machinery11004\", \"fixedAssetAccountId\":\"3d8d063a-c148-4bb8-8b3c-a5e2ad3b1e82\", \"depreciationExpenseAccountId\":\"d1602f69-f900-4616-8d34-90af393fa368\", \"accumulatedDepreciationAccountId\":\"9195cadd-8645-41e6-9f67-7bcd421defe8\", \"bookDepreciationSetting\":{ \"depreciationMethod\":\"DiminishingValue100\", \"averagingMethod\":\"ActualDays\", \"depreciationRate\":0.05, \"depreciationCalculationMethod\":\"None\" } }"
+      "example" : {
+        "assetTypeName" : "Machinery11004",
+        "fixedAssetAccountId" : "3d8d063a-c148-4bb8-8b3c-a5e2ad3b1e82",
+        "depreciationExpenseAccountId" : "d1602f69-f900-4616-8d34-90af393fa368",
+        "accumulatedDepreciationAccountId" : "9195cadd-8645-41e6-9f67-7bcd421defe8",
+        "bookDepreciationSetting" : {
+          "depreciationMethod" : "DiminishingValue100",
+          "averagingMethod" : "ActualDays",
+          "depreciationRate" : 0.05,
+          "depreciationCalculationMethod" : "None"
+        }
+      }
     }
   },
   "required" : true
