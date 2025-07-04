@@ -119,9 +119,13 @@
     <!-- ============================================  -->
     <target name="prepare">
         <echo msg="Prepage: installing necessary components" />
-        <exec command="yarn" dir="${project.basedir}" checkreturn="true" />
-        <exec command="${php} ${composer} install" dir="${project.basedir}" checkreturn="true" />
-        <exec command="${php} ${composer} install" dir="${project.basedir}/tests" checkreturn="true" />
+        <exec executable="yarn" dir="${project.basedir}" checkreturn="true" />
+        <exec executable="${php}" dir="${project.basedir}" checkreturn="true">
+            <arg value="${composer} install" />
+        </exec>
+        <exec executable="${php}" dir="${project.basedir}/tests" checkreturn="true">
+            <arg value="${composer} install" />
+        </exec>
     </target>
 
     <!-- ============================================  -->
@@ -133,7 +137,9 @@
             <not><isset property="install_base_dir" /></not>
             <then><property name="install_base_dir" value="${project.basedir}" /></then>
         </if>
-        <exec command="${php} cmd.php -m ${modules} --db_host=${db_host} --db_name=${db_name} --db_user=${db_user} --db_password=${db_password} --server_http_host=${http_host} --server_php_self=${php_self} --server_doc_root=${doc_root}" dir="${install_base_dir}/install" checkreturn="true" />
+        <exec executable="${php}" dir="${install_base_dir}/install" checkreturn="true">
+            <arg value="cmd.php -m ${modules} --db_host=${db_host} --db_name=${db_name} --db_user=${db_user} --db_password=${db_password} --server_http_host=${http_host} --server_php_self=${php_self} --server_doc_root=${doc_root}" />
+        </exec>
     </target>
 
     <!-- ============================================  -->
@@ -141,7 +147,9 @@
     <!-- ============================================  -->
     <target name="test">
         <echo msg="Testing..." />
-        <exec command="${php} vendor/bin/phpunit" dir="${project.basedir}/tests" checkreturn="true" />
+        <exec executable="${php}" dir="${project.basedir}/tests" checkreturn="true">
+            <arg value="vendor/bin/phpunit" />
+        </exec>
     </target>
 
     <!-- ============================================  -->
