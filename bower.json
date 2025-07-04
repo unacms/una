@@ -10,6 +10,7 @@
   ],
   "dependencies": {
     "combodate": "^1.1.0",
-    "jqueryui-touch-punch": "*"
+    "jqueryui-touch-punch": "*",
+    "history": "*"
   }
 }

@@ -72,20 +72,13 @@
     "stackedit-js": "^1.0.7",
     "tablesorter": "^2.32.0",
     "theia-sticky-sidebar": "^1.7.0",
-    "urijs": "^1.19.11"
-  },
-  "napa": {
+    "urijs": "^1.19.11",
     "jush": "https://github.com/vrana/jush",
     "select2-to-tree": "https://github.com/clivezhg/select2-to-tree",
     "jquery-jfeed": "https://github.com/jfhovinne/jFeed",
-    "jekyll-toc": "https://github.com/ghiculescu/jekyll-table-of-contents",
-    "historyjs": "https://github.com/browserstate/history.js"
-  },
-  "napa-config": {
-    "cache": false
+    "jekyll-toc": "https://github.com/ghiculescu/jekyll-table-of-contents"
   },
   "scripts": {
-    "install-napa-components": "napa",
     "install-bower-components": "bower install",
     "build:at.js": "mkdir -p plugins_public/at.js; cd node_modules/at.js; cp -r dist/* ../../plugins_public/at.js",
     "build:codemirror": "mkdir -p plugins_public/codemirror; cd node_modules/codemirror; cp -r lib/* ../../plugins_public/codemirror; uglifyjs lib/codemirror.js mode/clike/clike.js mode/coffeescript/coffeescript.js mode/commonlisp/commonlisp.js mode/css/css.js mode/diff/diff.js mode/dtd/dtd.js mode/fortran/fortran.js mode/go/go.js mode/htmlembedded/htmlembedded.js mode/htmlmixed/htmlmixed.js mode/javascript/javascript.js mode/lua/lua.js mode/markdown/markdown.js mode/pascal/pascal.js mode/perl/perl.js mode/php/php.js mode/properties/properties.js mode/python/python.js mode/ruby/ruby.js mode/sass/sass.js mode/shell/shell.js mode/sql/sql.js mode/sparql/sparql.js mode/turtle/turtle.js mode/vb/vb.js mode/vbscript/vbscript.js mode/xml/xml.js mode/xquery/xquery.js mode/yaml/yaml.js addon/edit/matchbrackets.js -c -m > ../../plugins_public/codemirror/codemirror-ext.min.js; uglifyjs lib/codemirror.js -c -m > ../../plugins_public/codemirror/codemirror.min.js",
@@ -130,7 +123,7 @@
     "build:embedly-player": "cp node_modules/player.js/dist/player-0.1.0.min.js plugins_public/embedly-player.min.js",
     "build:hammerjs": "cp node_modules/@egjs/hammerjs/dist/hammer.min.js plugins_public",
     "build:headroom": "cp node_modules/headroom.js/dist/headroom.min.js plugins_public",
-    "build:historyjs": "cp node_modules/historyjs/scripts/compressed/history.js node_modules/historyjs/scripts/compressed/history.adapter.jquery.js plugins_public",
+    "build:historyjs": "cp bower_components/history/scripts/compressed/history.js bower_components/history/scripts/compressed/history.adapter.jquery.js plugins_public",
     "build:jquery-resize": "cp node_modules/jquery-resize-benalman/jquery.ba-resize.min.js plugins_public",
     "build:jquery-cookie": "uglifyjs --compress --mangle -- node_modules/jquery.cookie/jquery.cookie.js > plugins_public/jquery.cookie.min.js",
     "build:jquery-easing": "cp node_modules/jquery.easing/jquery.easing.js plugins_public",
@@ -146,7 +139,7 @@
     "build:jekyll-toc": "cp node_modules/jekyll-toc/toc.js plugins_public; patch -p1 < patches/plugins_public_toc-js.txt",
     "build:urijs": "cp node_modules/urijs/src/URI.min.js plugins_public",
     "build:stripe": "mkdir -p plugins_public/stripe; cp -r node_modules/@stripe/connect-js/dist/ plugins_public/stripe",
-    "build": "mkdir -p plugins_public; rm -rf plugins_public/*; npm run install-bower-components; npm run install-napa-components; npm-run-all --parallel build:*",
+    "build": "mkdir -p plugins_public; rm -rf plugins_public/*; npm run install-bower-components; npm run; npm-run-all --parallel build:*",
     "postinstall": "npm run build"
   },
   "devDependencies": {
@@ -154,7 +147,6 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.16",
     "bower": "^1.8.14",
-    "napa": "^3.0.0",
     "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.4.17",
     "uglify-js": "^3.19.3"
